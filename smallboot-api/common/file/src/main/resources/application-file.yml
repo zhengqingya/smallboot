@@ -1,0 +1,15 @@
+spring:
+  servlet:
+    multipart:
+      enabled: true # 是否开启文件上传支持，默认为true
+      #      location: E:/tmp # 指定文件上传路径 【注：文件路径必须存在！  windows： "E:/tmp" liunx： "/tmp"】
+      max-file-size: 100MB # 指定文件大小最大值，默认1MB
+      max-request-size: 100MB # 指定每次请求的最大值，默认为10MB
+      file-size-threshold: 0 # 设定文件写入磁盘的阈值，单位为MB或KB，默认为0。表示收到文件到达这么大后，不在放入缓存，而是写入临时文件
+
+# ====================== ↓↓↓↓↓↓ MinIO文件服务器 ↓↓↓↓↓↓ ======================
+minio:
+  url: ${smallboot.minio.url}              # TODO 不能使用内网ip -- 下载文件的时候无法下载 403...
+  accessKey: ${smallboot.minio.accessKey}
+  secretKey: ${smallboot.minio.secretKey}
+  bucketName: ${smallboot.minio.bucketName}

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhengqing.system.mapper.SysOauthMapper">
+
+    <select id="detail" resultType="com.zhengqing.system.entity.SysOauth">
+        SELECT
+        tso.user_re_oauth_id userReOauthId,
+        tso.user_id userId,
+        tso.open_id openId,
+        tso.oauth_type oauthType
+        FROM t_sys_user_re_oauth tso
+        <where>
+            <if test="oauthType!=null">
+                AND tso.oauth_type = #{oauthType}
+            </if>
+            <if test="openId!=null">
+                AND tso.open_id = #{openId}
+            </if>
+        </where>
+        ORDER BY tso.user_re_oauth_id DESC
+        LIMIT 1
+    </select>
+
+    <select id="selectDataList"
+            resultType="com.zhengqing.system.model.vo.SysOauthListVO">
+        SELECT
+        tso.user_re_oauth_id userReOauthId,
+        tso.user_id userId,
+        tso.open_id openId,
+        tso.oauth_type oauthType
+        FROM t_sys_user_re_oauth tso
+        <where>
+            <if test="filter.userId!=null">
+                AND tso.user_id = #{filter.userId}
+            </if>
+        </where>
+        ORDER BY tso.user_re_oauth_id DESC
+    </select>
+
+</mapper>

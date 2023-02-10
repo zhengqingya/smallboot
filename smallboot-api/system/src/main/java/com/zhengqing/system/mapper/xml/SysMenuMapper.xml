@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhengqing.system.mapper.SysMenuMapper">
+
+    <select
+            id="selectMenus"
+            resultType="com.zhengqing.system.entity.SysMenu">
+        SELECT
+        *
+        FROM t_sys_menu
+        WHERE
+        is_deleted = 0
+        <if test="filter.id!=null">
+            AND id = #{filter.id}
+        </if>
+        ORDER BY id DESC
+    </select>
+
+    <select id="selectMenuTree" resultType="com.zhengqing.system.model.vo.SysMenuTreeVO">
+        SELECT sm.menu_id,
+               sm.title,
+               sm.name,
+               sm.icon,
+               sm.path,
+               sm.parent_id,
+               IF(sm.parent_id = 0, NULL,
+                  (SELECT m.title FROM t_sys_menu m WHERE m.menu_id = sm.parent_id)) parentName,
+               sm.sort,
+               sm.component,
+               sm.hidden,
+               sm.redirect,
+               sm.status,
+               sm.type,
+               sm.always_show,
+               sm.breadcrumb
+        FROM t_sys_menu sm
+        WHERE sm.is_deleted = 0
+        ORDER BY sm.sort ASC
+    </select>
+
+</mapper>

@@ -1,0 +1,32 @@
+# TODO 在这里修改相关配置信息
+# ================================== ↓↓↓↓↓↓ smallboot配置 ↓↓↓↓↓↓ ==================================
+smallboot:
+  ip: 127.0.0.1
+  minio:
+    url: http://172.16.16.244:9001
+    accessKey: admin
+    secretKey: password
+    bucketName: test
+  # redis密码
+  redis:
+    database: 0
+    host: ${smallboot.ip}
+    port: 6379
+    password: 123456
+  # mysql数据源连接参数
+  mysql:
+    # MySQL在高版本需要指明是否进行SSL连接 解决则加上 &useSSL=false
+    # &serverTimezone=Asia/Shanghai ：解决fastjson时差13小时问题
+    # rewriteBatchedStatements=true =》可实现多条sql合并提交给mysql，解决MybatisPlus批量插入慢问题
+    url-params: ?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true
+    master:
+      ip: ${smallboot.ip}
+      port: 3306
+      db-name: smallboot
+      username: root
+      password: root
+      url-params: ${smallboot.mysql.url-params}
+  # sql日志，默认关闭  true:开启  false:关闭
+  mybatis-plus-sql-log: false
+  # api日志，默认关闭 true:开启  false:关闭
+  api-log: true

@@ -1,0 +1,24 @@
+// sidebar
+$menuText: #bfcbd9;
+$menuActiveText: #409eff;
+$subMenuActiveText: #f4f4f5;
+
+// 菜单栏背景色
+$menuBg: #021b32;
+$menuHover: #263445;
+
+$subMenuBg: #00284c;
+$subMenuHover: $subMenuBg;
+
+$sideBarWidth: 210px;
+
+:export {
+  menuText: $menuText;
+  menuActiveText: $menuActiveText;
+  subMenuActiveText: $subMenuActiveText;
+  menuBg: $menuBg;
+  menuHover: $menuHover;
+  subMenuBg: $subMenuBg;
+  subMenuHover: $subMenuHover;
+  sideBarWidth: $sideBarWidth;
+}

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhengqing.system.mapper.SysRoleMenuMapper">
+
+    <insert id="batchInsertRoleMenuIds">
+        INSERT INTO t_sys_role_menu (role_id,menu_id) VALUES
+        <foreach collection="menuIdList" item="menuId" separator=",">
+            (#{roleId},#{menuId})
+        </foreach>
+    </insert>
+
+    <select
+            id="selectMenuIdsByRoleIds"
+            resultType="java.lang.Integer">
+        SELECT DISTINCT(menu_id)
+        FROM t_sys_role_menu
+        WHERE role_id IN
+        <foreach collection="roleIdList" item="roleId" open="(" close=")" separator=",">
+            #{roleId}
+        </foreach>
+        ORDER BY menu_id
+    </select>
+
+
+</mapper>

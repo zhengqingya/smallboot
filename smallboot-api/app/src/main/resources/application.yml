@@ -1,0 +1,27 @@
+server:
+  port: 888
+
+spring:
+  application:
+    name: app # 应用名称
+  profiles:
+    active: dev # 环境配置
+    # 聚合各个基础组件配置
+    include:
+      - auth
+      - base
+      - db
+      - file
+      - log
+      - redis
+      - swagger
+      - web
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'  # 暴露监控端点
+#  security:
+#    enabled: false   # 关闭安全验证
+

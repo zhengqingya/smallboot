@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhengqing.system.mapper.SysDictTypeMapper">
+
+    <select id="selectDataList" resultType="com.zhengqing.system.model.bo.SysDictTypeBO">
+        SELECT
+        id,
+        code
+        FROM t_sys_dict_type
+        WHERE is_deleted = 0
+        AND status = 1
+        <if test="codeList != null and codeList.size() > 0">
+            AND code IN
+            <foreach item="code" index="index" collection="codeList" open="(" separator="," close=")">
+                #{code}
+            </foreach>
+        </if>
+    </select>
+
+</mapper>
