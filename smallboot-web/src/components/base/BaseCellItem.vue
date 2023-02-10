@@ -62,7 +62,7 @@ export default {
     }
 
     div.val {
-      color: #fff;
+      // color: #fff;
     }
 
     & {

@@ -1,6 +1,6 @@
 @import './variables.module';
 @import './mixin.scss';
-@import './element-plus-theme';
+// @import './element-plus-theme';
 @import './sidebar.scss';
 @import './app-theme';
 
@@ -12,7 +12,7 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
-  background-color: #021b32;
+  background-color: $dark_main_color;
 }
 
 label {

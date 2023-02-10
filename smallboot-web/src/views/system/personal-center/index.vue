@@ -95,7 +95,7 @@ export default {
         { key: 2, display_name: '女' },
       ],
       tableOauthDataListQuery: { userId: useStore().user.userId },
-      // oauthUrl: process.env.VUE_APP_BASE_API + '/system/web/api/oauth/',
+      oauthUrl: import.meta.env.VITE_APP_SERVICE_API + '/system/web/api/oauth/',
       // oauthType: this.$route.query.oauthType,
       // openId: this.$route.query.openId,
     }

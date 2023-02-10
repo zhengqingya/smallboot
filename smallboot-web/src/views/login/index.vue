@@ -212,7 +212,7 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
-$bg: $dark_main_color;
+$bg: #021b32;
 $light_gray: #fff;
 $cursor: #fff;
 
@@ -294,7 +294,7 @@ $cursor: #fff;
 </style>
 
 <style lang="scss" scoped>
-$bg: $dark_main_color;
+$bg: #021b32;
 $dark_gray: #889aa4;
 $light_gray: #eee;
 

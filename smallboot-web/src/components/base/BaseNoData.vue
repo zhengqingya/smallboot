@@ -13,7 +13,7 @@
 
   &.no-data-dark {
     background: $dark_main_color;
-    color: #fff;
+    // color: #fff;
   }
 }
 </style>

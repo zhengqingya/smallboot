@@ -1,16 +1,25 @@
+// // sidebar
+// $menuText: #bfcbd9;
+// $menuActiveText: #409eff;
+// $subMenuActiveText: #f4f4f5;
+// // 菜单栏背景色
+// $menuBg: #021b32;
+// $menuHover: #263445;
+// $subMenuBg: #00284c;
+// $subMenuHover: $subMenuBg;
+
 // sidebar
-$menuText: #bfcbd9;
-$menuActiveText: #409eff;
-$subMenuActiveText: #f4f4f5;
-
+$menuText: rgba(0, 0, 0, 0.7);
+$menuActiveText: #409EFF;
+$subMenuActiveText: rgba(0, 0, 0, 0.7); // 父
 // 菜单栏背景色
-$menuBg: #021b32;
-$menuHover: #263445;
+$menuBg: $dark_main_color;
+$menuHover: #e7f9f9;  // 父
+$subMenuBg: $dark_main_color; // 父
+$subMenuHover: #e7f9f9;
 
-$subMenuBg: #00284c;
-$subMenuHover: $subMenuBg;
 
-$sideBarWidth: 210px;
+$sideBarWidth: 200px;
 
 :export {
   menuText: $menuText;

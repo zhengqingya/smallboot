@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ 'has-logo': true }">
+  <div>
     <logo :collapse="isCollapse" />
     <el-scrollbar wrap-class="scrollbar-wrapper">
       <el-menu
@@ -42,3 +42,8 @@ const activeMenu = computed(() => {
   return path
 })
 </script>
+<style lang="scss" scoped>
+.container {
+  background-c: #000;
+}
+</style>

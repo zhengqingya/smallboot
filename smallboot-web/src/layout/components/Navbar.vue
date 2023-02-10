@@ -7,8 +7,7 @@
     <div class="right-menu">
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div>
-          <el-avatar src="https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png" />
-          <!-- <el-avatar /> -->
+          <el-avatar :src="avatarUrl" />
           <div class="user-info">
             <span>{{ nickname }}</span>
             <CaretBottom style="width: 0.6em; height: 0.6em; margin-left: 5px" />
@@ -22,13 +21,10 @@
             </router-link>
             <!-- <router-link to="/system/personal-center">
               <el-dropdown-item>个人中心</el-dropdown-item>
-            </router-link>
+            </router-link> -->
             <a target="_blank" href="https://gitee.com/zhengqingya">
               <el-dropdown-item>Gitee</el-dropdown-item>
             </a>
-            <router-link to="/other/anonymity">
-              <el-dropdown-item>提建议</el-dropdown-item>
-            </router-link> -->
             <el-dropdown-item divided @click="logout"> 退出 </el-dropdown-item>
           </el-dropdown-menu>
         </template>

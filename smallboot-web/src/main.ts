@@ -11,11 +11,12 @@ app.use(router)
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+import zhCn from 'element-plus/es/locale/lang/zh-cn'
 // 注册所有图标
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }
-app.use(ElementPlus)
+app.use(ElementPlus, { locale: zhCn })
 
 // 自定义样式
 import '@/styles/index.scss'
