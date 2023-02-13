@@ -9,14 +9,15 @@ import com.zhengqing.system.model.dto.SysMenuSaveDTO;
 import com.zhengqing.system.model.vo.SysMenuReBtnPermListVO;
 import com.zhengqing.system.model.vo.SysMenuTreeVO;
 import com.zhengqing.system.service.ISysMenuService;
+import com.zhengqing.system.service.ISysPermissionBusinessService;
 import com.zhengqing.system.service.ISysPermissionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -30,15 +31,16 @@ import java.util.List;
  */
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(ServiceConstant.SERVICE_API_PREFIX_WEB_SYSTEM + "/menu")
 @Api(tags = "系统管理 - 菜单表接口")
 public class SysMenuController extends BaseController {
 
-    @Resource
-    private ISysMenuService menuService;
+    private final ISysMenuService menuService;
 
-    @Resource
-    private ISysPermissionService sysPermissionService;
+    private final ISysPermissionService sysPermissionService;
+
+    private final ISysPermissionBusinessService sysPermissionBusinessService;
 
     // @GetMapping("/listPage")
     // @ApiOperation("列表分页")
@@ -90,6 +92,7 @@ public class SysMenuController extends BaseController {
     @ApiOperation("菜单关联按钮权限-删除")
     public void deleteMenuReBtnPerm(@RequestParam Integer id) {
         this.sysPermissionService.removeById(id);
+        this.sysPermissionBusinessService.refreshRedisPerm();
     }
 
     @NoRepeatSubmit
@@ -98,6 +101,7 @@ public class SysMenuController extends BaseController {
     public void addMenuReBtnPerm(@Validated @RequestBody SysMenuReBtnPermSaveDTO params) {
         params.setId(null);
         this.sysPermissionService.addOrUpdateData(params);
+        this.sysPermissionBusinessService.refreshRedisPerm();
     }
 
     @NoRepeatSubmit
@@ -105,6 +109,7 @@ public class SysMenuController extends BaseController {
     @ApiOperation("菜单关联按钮权限-更新")
     public void updateMenuReBtnPerm(@Validated(UpdateGroup.class) @RequestBody SysMenuReBtnPermSaveDTO params) {
         this.sysPermissionService.addOrUpdateData(params);
+        this.sysPermissionBusinessService.refreshRedisPerm();
     }
 
 }

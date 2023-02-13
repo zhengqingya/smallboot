@@ -1,8 +1,23 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import useStore from '@/store'
 
+export const Layout = () => import('@/layout/index.vue');
+
 // 静态路由
 export const constantRoutes: Array<RouteRecordRaw> = [
+  {
+    path: '/',
+    component: Layout,
+    redirect: 'dashboard',
+    children: [
+      {
+        path: 'dashboard',
+        component: () => import('@/views/dashboard/index.vue'),
+        name: 'Dashboard',
+        meta: { title: '首页', icon: 'House', affix: true }
+      }
+    ]
+  },
   {
     path: '/login',
     component: () => import('@/views/login/index.vue'),
@@ -12,7 +27,8 @@ export const constantRoutes: Array<RouteRecordRaw> = [
     component: () => import('@/views/test/index.vue'),
   },
   {
-    path: '/404',
+    // path: '/404',
+    path: '/:pathMatch(.*)*', // 防止浏览器刷新时路由未找到警告提示: vue-router.mjs:35 [Vue Router warn]: No match found for location with path "/xxx"
     component: () => import('@/views/error-page/404.vue'),
   },
   {

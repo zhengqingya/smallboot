@@ -1,19 +1,29 @@
 package com.zhengqing.common.core.config.interceptor;
 
 import cn.dev33.satoken.stp.StpUtil;
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.json.JSONUtil;
+import com.google.common.collect.Lists;
 import com.zhengqing.common.base.constant.AppConstant;
+import com.zhengqing.common.base.constant.SecurityConstant;
 import com.zhengqing.common.base.context.JwtUserContext;
 import com.zhengqing.common.base.context.SysUserContext;
 import com.zhengqing.common.base.context.UmsUserContext;
+import com.zhengqing.common.base.enums.ApiResultCodeEnum;
+import com.zhengqing.common.base.exception.MyException;
 import com.zhengqing.common.base.model.bo.JwtUserBO;
 import com.zhengqing.common.core.config.WebAppConfig;
+import com.zhengqing.common.redis.util.RedisUtil;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.util.AntPathMatcher;
+import org.springframework.util.PathMatcher;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p> 拦截器 -- token用户信息 </p>
@@ -22,7 +32,7 @@ import javax.servlet.http.HttpServletResponse;
  * @description 注册使用参考 {@link WebAppConfig}
  * @date 2022/1/10 16:28
  */
-public class HandlerInterceptorForTokenUser implements HandlerInterceptor {
+public class HandlerInterceptorForToken implements HandlerInterceptor {
 
     /**
      * 在业务处理器处理请求之前被调用。预处理，可以进行编码、安全控制、权限校验等处理
@@ -35,6 +45,10 @@ public class HandlerInterceptorForTokenUser implements HandlerInterceptor {
             return true;
         }
         JwtUserBO jwtUserBO = JSONUtil.toBean(StpUtil.getLoginId().toString(), JwtUserBO.class);
+
+        // 校验权限
+        this.checkPermission(request, jwtUserBO);
+
         JwtUserContext.set(jwtUserBO);
         switch (jwtUserBO.getAuthSourceEnum()) {
             case B:
@@ -49,6 +63,57 @@ public class HandlerInterceptorForTokenUser implements HandlerInterceptor {
                 break;
         }
         return true;
+    }
+
+    /**
+     * 校验权限
+     *
+     * @param request   请求
+     * @param jwtUserBO 用户信息
+     * @return void
+     * @author zhengqingya
+     * @date 2023/2/13 15:52
+     */
+    private void checkPermission(HttpServletRequest request, JwtUserBO jwtUserBO) {
+        String method = request.getMethod();
+        String path = request.getRequestURI();
+        // "GET:/web/api/user/*"
+        String restfulPath = method + ":" + path;
+
+        /**
+         * URL鉴权
+         * [URL-角色集合]
+         * [{'key':'GET:/web/api/user/*','value':['ADMIN','TEST']},...]
+         */
+        Map<Object, Object> urlPermReRoleMap = RedisUtil.hGetAll(SecurityConstant.URL_PERM_RE_ROLES);
+
+        // 根据请求路径获取有访问权限的角色列表
+        List<String> authorizedRoleList = Lists.newLinkedList();
+        // 是否需要鉴权，默认未设置拦截规则不需鉴权
+        boolean isCheck = false;
+        PathMatcher pathMatcher = new AntPathMatcher();
+        for (Map.Entry<Object, Object> permRoles : urlPermReRoleMap.entrySet()) {
+            String perm = (String) permRoles.getKey();
+            if (pathMatcher.match(perm, restfulPath)) {
+                List<String> roleCodeList = JSONUtil.toList((String) permRoles.getValue(), String.class);
+                authorizedRoleList.addAll(roleCodeList);
+                isCheck = true;
+            }
+        }
+
+        if (!isCheck) {
+            return;
+        }
+
+        if (CollectionUtil.isNotEmpty(authorizedRoleList)) {
+            List<String> roleCodeList = jwtUserBO.getRoleCodeList();
+            for (String roleCodeItem : roleCodeList) {
+                if (authorizedRoleList.contains(roleCodeItem)) {
+                    return;
+                }
+            }
+        }
+        throw new MyException(ApiResultCodeEnum.UN_LOGIN.getCode(), "无操作权限");
     }
 
     /**

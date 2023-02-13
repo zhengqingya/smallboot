@@ -1,6 +1,6 @@
 package com.zhengqing.common.core.config;
 
-import com.zhengqing.common.core.config.interceptor.HandlerInterceptorForTokenUser;
+import com.zhengqing.common.core.config.interceptor.HandlerInterceptorForToken;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -20,7 +20,7 @@ public class WebAppConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 可添加多个
-        registry.addInterceptor(new HandlerInterceptorForTokenUser()).addPathPatterns("/**");
+        registry.addInterceptor(new HandlerInterceptorForToken()).addPathPatterns("/**");
     }
 
 }

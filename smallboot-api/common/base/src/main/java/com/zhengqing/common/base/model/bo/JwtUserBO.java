@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.util.List;
+
 /**
  * <p>
  * 用户token信息
@@ -22,14 +24,17 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 public class JwtUserBO extends BaseBO {
 
-    @ApiModelProperty(value = "认证来源")
+    @ApiModelProperty("认证来源")
     private AuthSourceEnum authSourceEnum;
 
-    @ApiModelProperty(value = "用户ID")
+    @ApiModelProperty("用户ID")
     private String userId;
 
-    @ApiModelProperty(value = "用户名")
+    @ApiModelProperty("用户名")
     private String userName;
+
+    @ApiModelProperty("角色编码")
+    private List<String> roleCodeList;
 
     /**
      * 获取B端用户ID

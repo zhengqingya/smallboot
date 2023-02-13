@@ -99,5 +99,4 @@ async function deleteData(id: number) {
   refreshTableData()
 }
 </script>
-<style scoped>
-</style>
+<style scoped></style>

@@ -8,7 +8,8 @@ import com.zhengqing.common.auth.model.vo.AuthLoginVO;
 import com.zhengqing.common.auth.service.IAuthService;
 import com.zhengqing.common.base.enums.AuthSourceEnum;
 import com.zhengqing.common.base.model.bo.JwtUserBO;
-import com.zhengqing.system.entity.SysUser;
+import com.zhengqing.system.model.dto.SysUserPermDTO;
+import com.zhengqing.system.model.vo.SysUserPermVO;
 import com.zhengqing.system.service.ISysUserService;
 import com.zhengqing.system.util.PasswordUtil;
 import lombok.RequiredArgsConstructor;
@@ -36,9 +37,8 @@ public class AuthServiceImpl implements IAuthService {
         String username = params.getUsername();
         String password = params.getPassword();
 
-        SysUser sysUser = this.sysUserService.getUserByUsername(username);
-        Assert.notNull(sysUser, "账号不存在！");
-        boolean isValid = PasswordUtil.isValidPassword(password, sysUser.getPassword());
+        SysUserPermVO userPerm = this.sysUserService.getUserPerm(SysUserPermDTO.builder().username(username).build());
+        boolean isValid = PasswordUtil.isValidPassword(password, userPerm.getPassword());
 
         // 校验原始密码是否正确
         Assert.isTrue(isValid, "密码错误！");
@@ -47,8 +47,9 @@ public class AuthServiceImpl implements IAuthService {
         StpUtil.login(JSONUtil.toJsonStr(
                 JwtUserBO.builder()
                         .authSourceEnum(AuthSourceEnum.B)
-                        .userId(String.valueOf(sysUser.getUserId()))
-                        .userName(sysUser.getUsername())
+                        .userId(String.valueOf(userPerm.getUserId()))
+                        .userName(userPerm.getUsername())
+                        .roleCodeList(userPerm.getRoleCodeList())
                         .build()
         ));
         return AuthLoginVO.builder()

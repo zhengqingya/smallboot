@@ -6,8 +6,9 @@ import 'nprogress/nprogress.css'
 NProgress.configure({ showSpinner: false }) // 进度环显示/隐藏
 
 // 白名单路由
-const whiteList = ['/login', '/auth-redirect', '/bus/model/detail']
+const whiteList = ['/login', '/auth-redirect']
 
+// 全局守卫
 router.beforeEach(async (to, from, next) => {
   NProgress.start()
   const { user, permission } = useStore()
@@ -31,7 +32,7 @@ router.beforeEach(async (to, from, next) => {
           const roleNames = user.roleNames
           const accessRoutes: any = await permission.generateRoutes(roleNames)
           accessRoutes.forEach((route: any) => {
-            router.addRoute(route)
+            router.addRoute(route)  // 动态添加可访问路由表
           })
           next({ ...to, replace: true })
         } catch (error) {
