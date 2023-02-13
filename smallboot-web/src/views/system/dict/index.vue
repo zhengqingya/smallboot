@@ -1,7 +1,7 @@
 <template>
   <base-wraper>
-    <el-row style="height: 100%" :gutter="15">
-      <el-col :span="5" style="height: 100%">
+    <el-row :gutter="15">
+      <el-col :span="5">
         <base-wraper full-height>
           <base-title-card title="字典类型">
             <el-button type="primary" @click="addDictType">添加</el-button>
@@ -27,10 +27,10 @@
         <base-title-card style="margin-top: 10px" title="字典列表">
           <el-button v-if="isShowAddDictButton" type="primary" @click="addDict">添加</el-button>
           <el-table v-loading.body="listLoading" :data="dicList" border :height="calcTableHeight">
-            <el-table-column prop="id" label="ID" />
-            <el-table-column prop="name" label="字典名称" />
-            <el-table-column prop="value" label="字典值" />
-            <el-table-column prop="sort" label="展示排序" />
+            <el-table-column type="index" label="序号" width="60px" align="center" />
+            <el-table-column prop="name" label="字典名称" align="center" />
+            <el-table-column prop="value" label="字典值" align="center" />
+            <el-table-column prop="sort" label="排序" align="center" />
             <el-table-column label="操作" align="center" width="150">
               <template v-slot="scope">
                 <el-button link @click="updateDict(scope.row)">编辑</el-button>
@@ -134,5 +134,4 @@ export default {
   },
 }
 </script>
-<style scoped>
-</style>
+<style scoped></style>

@@ -62,7 +62,7 @@ public class TestController {
     @GetMapping("logout")
     @ApiOperation("退出登录")
     public String logout(String loginId) {
-        StpUtil.logoutByLoginId(loginId);
+        StpUtil.logout(loginId);
         return "SUCCESS";
     }
 

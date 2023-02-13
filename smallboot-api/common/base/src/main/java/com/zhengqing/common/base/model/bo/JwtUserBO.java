@@ -1,6 +1,6 @@
-package com.zhengqing.common.auth.model.bo;
+package com.zhengqing.common.base.model.bo;
 
-import com.zhengqing.common.base.model.bo.BaseBO;
+import com.zhengqing.common.base.enums.AuthSourceEnum;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,10 +22,27 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 public class JwtUserBO extends BaseBO {
 
+    @ApiModelProperty(value = "认证来源")
+    private AuthSourceEnum authSourceEnum;
+
     @ApiModelProperty(value = "用户ID")
-    private Integer userId;
+    private String userId;
 
     @ApiModelProperty(value = "用户名")
     private String userName;
+
+    /**
+     * 获取B端用户ID
+     */
+    public Integer getUserIdForB() {
+        return Integer.valueOf(this.userId);
+    }
+
+    /**
+     * 获取C端用户ID
+     */
+    public Long getUserIdForC() {
+        return Long.valueOf(this.userId);
+    }
 
 }

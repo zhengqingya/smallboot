@@ -4,13 +4,16 @@
       <slot name="header" :res="res"></slot>
     </div>
     <slot name="zdy-header" :res="res"></slot>
-    <el-table ref="baseTable" v-loading="
-      loading &&
-      (isPage
-        ? res.records == null || res.records.length == 0
-        : tableDataList == null || tableDataList.length == 0)
-    " v-bind="$attrs" :data="isPage ? res.records : tableDataList" :class="{ pointer: pointer }" size="small" fit
-      highlight-current-row>
+    <el-table
+      ref="baseTable"
+      v-loading="loading && (isPage ? res.records == null || res.records.length == 0 : tableDataList == null || tableDataList.length == 0)"
+      v-bind="$attrs"
+      :data="isPage ? res.records : tableDataList"
+      :class="{ pointer: pointer }"
+      size="small"
+      fit
+      highlight-current-row
+    >
       <el-table-column v-if="selection" type="selection" :width="55"></el-table-column>
       <template v-if="indexCode">
         <el-table-column type="index" label="序号" width="60px"></el-table-column>
@@ -27,8 +30,13 @@
     </el-table>
 
     <div v-if="isPage" class="pagination-container">
-      <base-pagination v-if="res && res.total > 0" :total="res.total == null ? 0 : res.total"
-        v-model:page="pageParams.pageNum" v-model:limit="pageParams.pageSize" @pagination="getListPage" />
+      <base-pagination
+        v-if="res && res.total > 0"
+        :total="res.total == null ? 0 : res.total"
+        v-model:page="pageParams.pageNum"
+        v-model:limit="pageParams.pageSize"
+        @pagination="getListPage"
+      />
     </div>
   </div>
 </template>

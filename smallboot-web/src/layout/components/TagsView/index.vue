@@ -1,9 +1,16 @@
 <template>
   <div class="tags-view__container">
     <scroll-pane ref="scrollPaneRef" class="tags-view__wrapper" @scroll="handleScroll">
-      <router-link v-for="tag in visitedViews" :key="tag.path" :data-path="tag.path"
-        :class="isActive(tag) ? 'active' : ''" :to="{ path: tag.path, query: tag.query }" class="tags-view__item"
-        @click.middle="!isAffix(tag) ? closeSelectedTag(tag) : ''" @contextmenu.prevent="openMenu(tag, $event)">
+      <router-link
+        v-for="tag in visitedViews"
+        :key="tag.path"
+        :data-path="tag.path"
+        :class="isActive(tag) ? 'active' : ''"
+        :to="{ path: tag.path, query: tag.query }"
+        class="tags-view__item"
+        @click.middle="!isAffix(tag) ? closeSelectedTag(tag) : ''"
+        @contextmenu.prevent="openMenu(tag, $event)"
+      >
         {{ tag.meta.title }}
         <span v-if="!isAffix(tag)" class="icon-close" @click.prevent.stop="closeSelectedTag(tag)">
           <el-icon>
@@ -325,7 +332,7 @@ onMounted(() => {
       cursor: pointer;
 
       &:hover {
-        background: rgb(77, 156, 130);
+        background: #eee;
       }
     }
   }

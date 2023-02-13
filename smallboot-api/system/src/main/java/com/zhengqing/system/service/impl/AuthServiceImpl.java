@@ -3,10 +3,11 @@ package com.zhengqing.common.auth.service.impl;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.json.JSONUtil;
-import com.zhengqing.common.auth.model.bo.JwtUserBO;
 import com.zhengqing.common.auth.model.dto.AuthLoginDTO;
 import com.zhengqing.common.auth.model.vo.AuthLoginVO;
 import com.zhengqing.common.auth.service.IAuthService;
+import com.zhengqing.common.base.enums.AuthSourceEnum;
+import com.zhengqing.common.base.model.bo.JwtUserBO;
 import com.zhengqing.system.entity.SysUser;
 import com.zhengqing.system.service.ISysUserService;
 import com.zhengqing.system.util.PasswordUtil;
@@ -45,7 +46,8 @@ public class AuthServiceImpl implements IAuthService {
         // 登录
         StpUtil.login(JSONUtil.toJsonStr(
                 JwtUserBO.builder()
-                        .userId(sysUser.getUserId())
+                        .authSourceEnum(AuthSourceEnum.B)
+                        .userId(String.valueOf(sysUser.getUserId()))
                         .userName(sysUser.getUsername())
                         .build()
         ));

@@ -2,11 +2,11 @@ package com.zhengqing.common.core.config.interceptor;
 
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.json.JSONUtil;
-import com.zhengqing.common.auth.model.bo.JwtUserBO;
 import com.zhengqing.common.base.constant.AppConstant;
-import com.zhengqing.common.base.context.JwtCustomUserContext;
+import com.zhengqing.common.base.context.JwtUserContext;
 import com.zhengqing.common.base.context.SysUserContext;
 import com.zhengqing.common.base.context.UmsUserContext;
+import com.zhengqing.common.base.model.bo.JwtUserBO;
 import com.zhengqing.common.core.config.WebAppConfig;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -35,8 +35,19 @@ public class HandlerInterceptorForTokenUser implements HandlerInterceptor {
             return true;
         }
         JwtUserBO jwtUserBO = JSONUtil.toBean(StpUtil.getLoginId().toString(), JwtUserBO.class);
-        SysUserContext.setUserId(jwtUserBO.getUserId());
-        SysUserContext.setUsername(jwtUserBO.getUserName());
+        JwtUserContext.set(jwtUserBO);
+        switch (jwtUserBO.getAuthSourceEnum()) {
+            case B:
+                SysUserContext.setUserId(Integer.valueOf(jwtUserBO.getUserId()));
+                SysUserContext.setUsername(jwtUserBO.getUserName());
+                break;
+            case C:
+                UmsUserContext.setUserId(Long.valueOf(jwtUserBO.getUserId()));
+                UmsUserContext.setUsername(jwtUserBO.getUserName());
+                break;
+            default:
+                break;
+        }
         return true;
     }
 
@@ -57,7 +68,7 @@ public class HandlerInterceptorForTokenUser implements HandlerInterceptor {
         HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
         SysUserContext.remove();
         UmsUserContext.remove();
-        JwtCustomUserContext.remove();
+        JwtUserContext.remove();
     }
 
 }

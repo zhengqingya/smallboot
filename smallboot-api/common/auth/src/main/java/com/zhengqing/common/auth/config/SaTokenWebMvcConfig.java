@@ -1,6 +1,7 @@
 package com.zhengqing.common.auth.config;
 
-import cn.dev33.satoken.interceptor.SaRouteInterceptor;
+import cn.dev33.satoken.interceptor.SaInterceptor;
+import cn.dev33.satoken.stp.StpUtil;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -18,14 +19,14 @@ import javax.annotation.Resource;
 public class SaTokenWebMvcConfig implements WebMvcConfigurer {
 
     @Resource
-    private SaTokenUrlConfig saTokenUrlConfig;
+    private SaTokenProperty saTokenProperty;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        // 注册1个登录认证拦截器
-        registry.addInterceptor(new SaRouteInterceptor())
-                .addPathPatterns(this.saTokenUrlConfig.getInterceptUrlList())
-                .excludePathPatterns(this.saTokenUrlConfig.getOpenUrlList());
+        // 注册1个登录认证拦截器 -- 参考： https://sa-token.cc/doc.html#/use/route-check
+        registry.addInterceptor(new SaInterceptor(handle -> StpUtil.checkLogin()))
+                .addPathPatterns(this.saTokenProperty.getInterceptUrlList())
+                .excludePathPatterns(this.saTokenProperty.getOpenUrlList());
     }
 
 }

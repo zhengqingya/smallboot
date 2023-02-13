@@ -2,9 +2,8 @@ package com.zhengqing.common.db.config.mybatis;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.zhengqing.common.base.constant.BaseConstant;
-import com.zhengqing.common.base.context.JwtCustomUserContext;
-import com.zhengqing.common.base.enums.AuthSourceEnum;
-import com.zhengqing.common.base.model.bo.JwtCustomUserBO;
+import com.zhengqing.common.base.context.JwtUserContext;
+import com.zhengqing.common.base.model.bo.JwtUserBO;
 import com.zhengqing.common.db.constant.MybatisConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
@@ -74,13 +73,9 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
      * @date 2022/7/8 18:15
      */
     private Long getUserId() {
-        JwtCustomUserBO jwtCustomUserBO = JwtCustomUserContext.get();
-        if (jwtCustomUserBO != null) {
-            if (AuthSourceEnum.B.getValue().equals(jwtCustomUserBO.getAuthSource())) {
-                return Long.valueOf(jwtCustomUserBO.getSysUserId());
-            } else {
-                return Long.valueOf(jwtCustomUserBO.getUmsUserId());
-            }
+        JwtUserBO jwtUserBO = JwtUserContext.get();
+        if (jwtUserBO != null) {
+            return Long.valueOf(jwtUserBO.getUserId());
         }
         return Long.valueOf(BaseConstant.DEFAULT_CONTEXT_KEY_USER_ID);
     }

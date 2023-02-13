@@ -8,16 +8,16 @@ import java.util.List;
 
 
 /**
- * <p> Sa-Token 拦截/开放 URL 配置类 </p>
+ * <p> Sa-Token 配置属性 </p>
  *
  * @author zhengqingya
- * @description
+ * @description 拦截/开放 URL
  * @date 2021/11/3 8:54 下午
  */
 @Data
 @Configuration
 @ConfigurationProperties(prefix = "sa-token", ignoreUnknownFields = true)
-public class SaTokenUrlConfig {
+public class SaTokenProperty {
 
     /**
      * 拦截url
