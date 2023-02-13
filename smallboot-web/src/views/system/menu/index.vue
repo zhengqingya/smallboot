@@ -24,8 +24,7 @@
               <base-cell-item label="菜单链接">{{ currentClickMenu.path }}</base-cell-item>
               <base-cell-item label="重定向链接">{{ currentClickMenu.redirect }}</base-cell-item>
               <base-cell-item label="组件名">{{ currentClickMenu.component }}</base-cell-item>
-              <base-cell-item label="菜单图标"><i :class="currentClickMenu.icon" /> {{ currentClickMenu.icon }}
-              </base-cell-item>
+              <base-cell-item label="菜单图标"><i :class="currentClickMenu.icon" /> {{ currentClickMenu.icon }} </base-cell-item>
               <base-cell-item label="是否隐藏面包屑">{{ currentClickMenu.breadcrumb ? '显示' : '隐藏' }}</base-cell-item>
               <base-cell-item label="菜单状态">{{ currentClickMenu.status ? '启用' : '禁用' }}</base-cell-item>
               <base-cell-item label="显示顺序">{{ currentClickMenu.displayOrder }}</base-cell-item>
@@ -38,15 +37,14 @@
         </base-wraper>
       </el-col>
       <el-col :span="12" style="height: 100%">
-        <base-title-card v-if="hasEditBtnPermission" title="页面按钮权限" style="margin-top: 10px">
+        <base-title-card v-if="currentClickMenu" title="页面按钮权限" style="margin-top: 10px">
           <base-header>
             <template #right>
               <el-button type="primary" @click="refreshTableDataRePerm">刷新</el-button>
               <el-button type="primary" @click="addForMenuRePerm">添加</el-button>
             </template>
           </base-header>
-          <base-table-p ref="baseTableRePerm" :isPage="false" api="sys_menu.getPermListByMenuId"
-            :params="currentClickMenu.menuId">
+          <base-table-p :data="permDataList" :isPage="false">
             <el-table-column prop="id" label="ID" />
             <el-table-column prop="name" label="权限名称" />
             <el-table-column prop="btnPerm" label="按钮权限标识" />
@@ -58,8 +56,7 @@
               </template>
             </el-table-column>
           </base-table-p>
-          <base-dialog v-model="dialogVisibleForMenuRePerm" :title="textMapForMenuRePerm[dialogStatusForMenuRePerm]"
-            width="50%">
+          <base-dialog v-model="dialogVisibleForMenuRePerm" :title="textMapForMenuRePerm[dialogStatusForMenuRePerm]" width="50%">
             <el-form ref="roleForm" :model="menuRePermForm" label-width="120px">
               <el-form-item label="权限名称：" prop="name">
                 <el-input v-model="menuRePermForm.name" placeholder="添加按钮" />
@@ -90,6 +87,7 @@ export default {
     return {
       currentClickMenu: null,
       treeData: [],
+      permDataList: [],
       defaultProps: {
         children: 'children',
         label: 'title',
@@ -106,16 +104,10 @@ export default {
         menuId: undefined,
         btnPerm: '',
         urlPerm: '',
-      }
+      },
     }
   },
-  computed: {
-    hasEditBtnPermission() {
-      // 是否有编辑按钮的权限
-      const hasChildren = this.currentClickMenu && this.currentClickMenu.children.length === 0
-      return hasChildren
-    },
-  },
+  computed: {},
   mounted() {
     this.getMenuTree()
   },
@@ -130,39 +122,39 @@ export default {
     },
     handleNodeClick(data) {
       this.currentClickMenu = data
-      if (this.hasEditBtnPermission) {
-        this.refreshTableDataRePerm()
-      }
+      this.refreshTableDataRePerm()
     },
     addNextMenu() {
       if (!this.currentClickMenu) {
-        this.$message.error('请先选中你需要添加下级菜单的父级')
+        this.submitFail('请先选中你需要添加下级菜单的父级')
         return
       }
       this.$refs.edit.open(2, this.currentClickMenu)
     },
     handleEdit() {
       if (!this.currentClickMenu) {
-        this.$message.error('请先选中你需要添加下级菜单的父级')
+        this.submitFail('请先选中你需要添加下级菜单的父级')
         return
       }
       this.$refs.edit.open(3, this.currentClickMenu)
     },
     async handleDelete() {
       if (!this.currentClickMenu) {
-        this.$message.error('请先选中你需要删除的菜单')
+        this.submitFail('请先选中你需要删除的菜单')
         return
       }
       let res = await this.$api.sys_menu.delete(this.currentClickMenu.menuId)
       this.submitOk(res.msg)
       this.getMenuTree()
     },
-    refreshTableDataRePerm() {
-      this.$refs.baseTableRePerm.refresh()
+    async refreshTableDataRePerm() {
+      let res = await this.$api.sys_menu.getPermListByMenuId(this.currentClickMenu.menuId)
+      this.permDataList = res.data
     },
     async deleteMenuRePerm(id) {
       let res = await this.$api.sys_menu.deleteMenuReBtnPerm(id)
       this.submitOk(res.msg)
+      this.refreshTableDataRePerm()
     },
     async saveMenuRePermForm() {
       this.menuRePermForm.menuId = this.currentClickMenu.menuId
@@ -180,10 +172,8 @@ export default {
       this.dialogVisibleForMenuRePerm = true
       this.dialogStatusForMenuRePerm = 'create'
       this.menuRePermForm = {}
-    }
-
+    },
   },
 }
 </script>
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>
