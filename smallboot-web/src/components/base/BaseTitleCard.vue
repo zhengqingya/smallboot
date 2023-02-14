@@ -66,7 +66,7 @@ export default {
     border-bottom: 1px solid #1d2f5e;
 
     span {
-      color: #fff;
+      // color: #fff;
     }
   }
 }

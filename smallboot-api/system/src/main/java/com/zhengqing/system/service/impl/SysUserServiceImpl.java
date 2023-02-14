@@ -211,6 +211,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         List<SysMenuTreeVO> resultList = Lists.newArrayList();
         for (SysMenuTreeVO menu : menuTreeList) {
             Integer menuId = menu.getMenuId();
+            if (!menuIdList.contains(menuId)) {
+                break;
+            }
             List<SysMenuTreeVO> menuChildList = menu.getChildren();
             if (!CollectionUtils.isEmpty(menuChildList)) {
                 menu.setChildren(this.getUserPremTreeList(menuChildList, menuIdList, roleIdList, btnList));
@@ -219,7 +222,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             menu.setMeta(SysUserBtnVO.builder()
                     .title(menu.getTitle())
                     .icon(menu.getIcon())
-                    .breadcrumb(menu.getBreadcrumb())
                     .btnPermList(btnPermList)
                     .build());
             resultList.add(menu);

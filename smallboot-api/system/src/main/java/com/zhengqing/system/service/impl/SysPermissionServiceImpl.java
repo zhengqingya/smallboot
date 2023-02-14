@@ -6,7 +6,6 @@ import com.zhengqing.system.mapper.SysPermissionMapper;
 import com.zhengqing.system.model.dto.SysMenuReBtnPermSaveDTO;
 import com.zhengqing.system.model.vo.SysMenuReBtnPermListVO;
 import com.zhengqing.system.model.vo.SysRoleRePermListVO;
-import com.zhengqing.system.service.ISysDictService;
 import com.zhengqing.system.service.ISysPermissionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -30,14 +29,6 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
 
     @Resource
     private SysPermissionMapper sysPermissionMapper;
-
-    @Resource
-    private ISysDictService sysDictService;
-
-    @Override
-    public List<Integer> getBtnIdsByMenuId(Integer menuId) {
-        return this.sysPermissionMapper.getBtnIdsByMenuId(menuId);
-    }
 
     @Override
     @Transactional(rollbackFor = Exception.class)

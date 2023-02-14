@@ -23,7 +23,7 @@
               <base-cell-item label="菜单标题">{{ currentClickMenu.title }}</base-cell-item>
               <base-cell-item label="菜单名称">{{ currentClickMenu.name }}</base-cell-item>
               <base-cell-item label="菜单路径">{{ currentClickMenu.path }}</base-cell-item>
-              <base-cell-item label="重定向链接">{{ currentClickMenu.redirect }}</base-cell-item>
+              <base-cell-item label="重定向路径">{{ currentClickMenu.redirect }}</base-cell-item>
               <base-cell-item label="组件名称">{{ currentClickMenu.component }}</base-cell-item>
               <base-cell-item label="菜单图标"><i :class="currentClickMenu.icon" /> {{ currentClickMenu.icon }} </base-cell-item>
               <base-cell-item label="显示顺序">{{ currentClickMenu.sort }}</base-cell-item>

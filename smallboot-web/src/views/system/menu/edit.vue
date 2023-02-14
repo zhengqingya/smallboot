@@ -13,8 +13,8 @@
       <el-form-item label="菜单路径:" prop="path">
         <el-input v-model="form.path" placeholder="输入菜单链接" />
       </el-form-item>
-      <el-form-item label="重定向链接:">
-        <el-input v-model="form.redirect" placeholder="输入重定向链接" />
+      <el-form-item label="重定向路径:">
+        <el-input v-model="form.redirect" placeholder="输入重定向路径" />
       </el-form-item>
       <el-form-item label="组件名称:" prop="component">
         <el-input v-model="form.component" placeholder="输入菜单对应的文件路径" />

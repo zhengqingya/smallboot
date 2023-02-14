@@ -6,7 +6,6 @@ import com.zhengqing.system.model.vo.SysMenuReBtnPermListVO;
 import com.zhengqing.system.model.vo.SysRoleRePermListVO;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -20,17 +19,6 @@ import java.util.List;
  * @date 2020/4/15 19:00
  */
 public interface SysPermissionMapper extends BaseMapper<SysPermission> {
-
-    /**
-     * 根据菜单ID查询已经配置的按钮ids
-     *
-     * @param menuId 菜单id
-     * @return 按钮ids
-     * @author zhengqingya
-     * @date 2020/9/10 21:21
-     */
-    @Select("SELECT sd.id FROM t_sys_permission sp INNER JOIN t_sys_dict sd on sd.id = sp.btn_id WHERE sp.menu_id = #{menuId}")
-    List<Integer> getBtnIdsByMenuId(@Param("menuId") Integer menuId);
 
     /**
      * 根据菜单id删除所属的按钮ids

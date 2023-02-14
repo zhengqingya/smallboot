@@ -11,7 +11,7 @@
  Target Server Version : 50726 (5.7.26-log)
  File Encoding         : 65001
 
- Date: 14/02/2023 17:15:36
+ Date: 14/02/2023 17:49:16
 */
 
 SET NAMES utf8mb4;
@@ -41,27 +41,6 @@ CREATE TABLE `t_sys_dict`  (
 -- ----------------------------
 -- Records of t_sys_dict
 -- ----------------------------
-INSERT INTO `t_sys_dict` VALUES (75, 1, 'permission_btn', '添加', 'add', 1, 1, '', 1, '2020-08-22 15:01:51', 1, '2021-08-28 00:31:47', 0);
-INSERT INTO `t_sys_dict` VALUES (76, 1, 'permission_btn', '删除', 'delete', 1, 2, NULL, 1, '2020-08-22 15:01:51', 0, '2021-08-28 00:03:00', 0);
-INSERT INTO `t_sys_dict` VALUES (77, 1, 'permission_btn', '编辑', 'edit', 1, 3, NULL, 1, '2020-08-22 15:01:51', 0, '2021-08-28 00:03:00', 0);
-INSERT INTO `t_sys_dict` VALUES (78, 1, 'permission_btn', '查询', 'query', 1, 4, NULL, 1, '2020-08-22 15:01:51', 0, '2021-08-28 00:03:00', 0);
-INSERT INTO `t_sys_dict` VALUES (79, 1, 'permission_btn', '重置', 'reset', 1, 5, NULL, 1, '2020-08-22 15:01:51', 0, '2021-08-28 00:03:00', 0);
-INSERT INTO `t_sys_dict` VALUES (80, 1, 'permission_btn', '详情', 'detail', 1, 6, NULL, 1, '2020-08-22 15:01:51', 0, '2021-08-28 00:03:00', 0);
-INSERT INTO `t_sys_dict` VALUES (81, 1, 'permission_btn', '保存', 'save', 1, 7, NULL, 1, '2020-08-22 15:01:51', 0, '2021-08-28 00:03:00', 0);
-INSERT INTO `t_sys_dict` VALUES (98, 1, 'permission_btn', '权限', 'permission', 1, 24, NULL, 1, '2020-08-22 15:01:51', 0, '2021-08-28 00:03:01', 0);
-INSERT INTO `t_sys_dict` VALUES (117, 1, 'permission_btn', '开启授权', 'open_authorization', 1, 27, NULL, 1, '2020-08-22 15:01:51', 0, '2021-08-28 00:03:01', 0);
-INSERT INTO `t_sys_dict` VALUES (141, 1, 'permission_btn', '刷新', 'refresh', 1, 28, NULL, 1, '2020-08-22 15:01:51', 0, '2021-08-28 00:03:01', 0);
-INSERT INTO `t_sys_dict` VALUES (153, 1, 'permission_btn', '导出', 'export', 1, 29, NULL, 1, '2020-08-22 15:01:51', 0, '2021-08-28 00:03:01', 0);
-INSERT INTO `t_sys_dict` VALUES (154, 1, 'permission_btn', '表格列过滤', 'column_filter', 1, 30, NULL, 1, '2020-08-22 15:01:51', 0, '2021-08-28 00:03:01', 0);
-INSERT INTO `t_sys_dict` VALUES (155, 2, 'file_suffix', '.java', '.java', 1, 1, NULL, 1, '2020-08-22 15:01:51', 0, '2021-08-28 00:03:01', 0);
-INSERT INTO `t_sys_dict` VALUES (156, 2, 'file_suffix', '.xml', '.xml', 1, 2, NULL, 1, '2020-08-22 15:01:51', 0, '2021-08-28 00:03:01', 0);
-INSERT INTO `t_sys_dict` VALUES (157, 2, 'file_suffix', '.py', '.py', 1, 3, NULL, 1, '2020-08-22 15:01:51', 0, '2021-08-28 00:03:01', 0);
-INSERT INTO `t_sys_dict` VALUES (158, 2, 'file_suffix', '.vue', '.vue', 1, 4, NULL, 1, '2020-08-22 15:01:51', 0, '2021-08-28 00:03:01', 0);
-INSERT INTO `t_sys_dict` VALUES (159, 2, 'file_suffix', '.md', '.md', 1, 5, NULL, 1, '2020-08-22 15:01:51', 0, '2021-08-28 00:03:01', 0);
-INSERT INTO `t_sys_dict` VALUES (160, 2, 'file_suffix', '.php', '.php', 1, 6, NULL, 1, '2020-08-22 15:01:51', 0, '2021-08-28 00:03:01', 0);
-INSERT INTO `t_sys_dict` VALUES (161, 2, 'file_suffix', '.html', '.html', 1, 7, NULL, 1, '2020-08-22 15:01:51', 0, '2021-08-28 00:03:01', 0);
-INSERT INTO `t_sys_dict` VALUES (162, 2, 'file_suffix', '.js', '.js', 1, 8, NULL, 1, '2020-08-22 15:01:51', 0, '2021-08-28 00:03:01', 0);
-INSERT INTO `t_sys_dict` VALUES (163, 2, 'file_suffix', '.jsp', '.jsp', 1, 9, NULL, 1, '2020-08-22 15:01:51', 0, '2021-08-28 00:03:01', 0);
 INSERT INTO `t_sys_dict` VALUES (165, 3, 'element_icon', 'AddLocation', 'AddLocation', 1, 1, '', 1, '2020-08-30 03:05:05', 1, '2022-07-22 09:57:53', 0);
 INSERT INTO `t_sys_dict` VALUES (166, 3, 'element_icon', 'Aim', 'Aim', 1, 2, '', 1, '2020-08-30 03:05:24', 1, '2022-07-22 09:58:01', 0);
 INSERT INTO `t_sys_dict` VALUES (167, 3, 'element_icon', 'AlarmClock', 'AlarmClock', 1, 3, '', 1, '2020-08-30 03:05:31', 1, '2022-07-22 09:58:07', 0);
@@ -72,7 +51,6 @@ INSERT INTO `t_sys_dict` VALUES (171, 3, 'element_icon', 'ArrowLeft', 'ArrowLeft
 INSERT INTO `t_sys_dict` VALUES (172, 3, 'element_icon', 'ArrowRight', 'ArrowRight', 1, 8, '', 1, '2020-08-30 03:15:49', 1, '2022-07-22 09:59:05', 0);
 INSERT INTO `t_sys_dict` VALUES (173, 3, 'element_icon', 'ArrowRightBold', 'ArrowRightBold', 1, 9, '', 1, '2020-08-30 03:16:51', 1, '2022-07-22 09:59:13', 0);
 INSERT INTO `t_sys_dict` VALUES (174, 3, 'element_icon', 'ArrowUp', 'ArrowUp', 1, 10, '', 1, '2020-08-30 03:18:32', 1, '2022-07-22 09:59:19', 0);
-INSERT INTO `t_sys_dict` VALUES (180, 1, 'permission_btn', '设计表', 'design_table', 1, 31, NULL, 1, '2020-09-06 19:09:40', 0, '2021-08-28 00:03:02', 0);
 INSERT INTO `t_sys_dict` VALUES (181, 6, 'oauth_type', 'gitee', '1', 1, 1, '', 1, '2020-12-06 13:16:39', 0, '2023-02-13 11:17:41', 0);
 INSERT INTO `t_sys_dict` VALUES (182, 6, 'oauth_type', 'github', '2', 1, 2, NULL, 1, '2020-12-06 13:16:54', 0, '2021-08-28 00:03:02', 0);
 INSERT INTO `t_sys_dict` VALUES (183, 6, 'oauth_type', 'qq', '3', 1, 3, NULL, 1, '2020-12-06 13:17:03', 0, '2021-08-28 00:03:02', 0);
@@ -101,8 +79,6 @@ CREATE TABLE `t_sys_dict_type`  (
 -- ----------------------------
 -- Records of t_sys_dict_type
 -- ----------------------------
-INSERT INTO `t_sys_dict_type` VALUES (1, 'permission_btn', '权限按钮', 1, 1, 0, 1, '2020-08-22 15:01:51', 1, '2021-08-28 23:00:04', 0);
-INSERT INTO `t_sys_dict_type` VALUES (2, 'file_suffix', '文件后缀名', 1, 4, 0, 1, '2020-08-22 15:01:51', 1, '2020-08-22 15:01:51', 0);
 INSERT INTO `t_sys_dict_type` VALUES (3, 'element_icon', 'Element-Icon图标', 1, 2, 0, 1, '2020-08-30 02:52:36', 1, '2020-08-30 02:52:38', 0);
 INSERT INTO `t_sys_dict_type` VALUES (6, 'oauth_type', '第三方帐号授权类型', 1, 3, 0, 1, '2020-12-06 13:11:27', 1, '2020-12-06 13:21:45', 0);
 
@@ -143,36 +119,6 @@ INSERT INTO `t_sys_menu` VALUES (8, '个人中心', 'personal-center', NULL, 'pe
 INSERT INTO `t_sys_menu` VALUES (10, '数据字典', 'dict', NULL, 'dict', 2, 10, 'system/dict/index', 0, NULL, 1, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-22 15:01:51', 0);
 INSERT INTO `t_sys_menu` VALUES (11, '首页', 'dashboard', 'House', '/', 0, 0, 'Layout', 0, '/dashboard', 1, 0, 1, '2020-08-22 15:01:51', 1, '2023-02-14 17:07:35', 0);
 INSERT INTO `t_sys_menu` VALUES (12, '首页', 'dashboard', '', 'dashboard', 11, 1, 'dashboard/index', 0, '', 0, 1, 1, '2020-08-22 15:01:51', 1, '2023-02-14 15:37:51', 0);
-
--- ----------------------------
--- Table structure for t_sys_oauth_client
--- ----------------------------
-DROP TABLE IF EXISTS `t_sys_oauth_client`;
-CREATE TABLE `t_sys_oauth_client`  (
-  `client_id` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '客户端ID，唯一标识',
-  `client_secret` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '客户端访问秘钥，BCryptPasswordEncoder加密算法加密',
-  `resource_ids` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '可访问资源id(英文逗号分隔)',
-  `scope` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '授权范围(英文逗号分隔)',
-  `authorized_grant_types` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '授权类型(英文逗号分隔)',
-  `web_server_redirect_uri` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '重定向uri',
-  `authorities` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '@PreAuthorize(\"hasAuthority(\' admin \')\")可以在方法上标志 用户或者说client 需要说明样的权限\r\n\n\n指定客户端所拥有的Spring Security的权限值\r\n(英文逗号分隔)',
-  `access_token_validity` int(11) NOT NULL COMMENT '令牌有效期(单位:秒)',
-  `refresh_token_validity` int(11) NOT NULL COMMENT '刷新令牌有效期(单位:秒)',
-  `additional_information` varchar(4096) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预留字段,在Oauth的流程中没有实际的使用(JSON格式数据)',
-  `autoapprove` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '设置用户是否自动Approval操作, 默认值为 \' false \'\r\n可选值包括 \' true \',\' false \', \' read \',\' write \'.\r\n该字段只适用于grant_type=\"authorization_code\"的情况,当用户登录成功后,若该值为\' true \'或支持的scope值,则会跳过用户Approve的页面, 直接授权',
-  `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`client_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统管理-oauth2授权客户端' ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of t_sys_oauth_client
--- ----------------------------
-INSERT INTO `t_sys_oauth_client` VALUES ('app', '123456', '', 'all', 'password,refresh_token', '', NULL, 3600, 259200, NULL, 'true', '2022-04-02 09:31:10', '2022-06-16 12:25:03');
-INSERT INTO `t_sys_oauth_client` VALUES ('client', '123456', '', 'all', 'password,refresh_token', '', NULL, 3600, 259200, NULL, 'true', '2022-04-02 09:31:10', '2022-06-16 12:25:03');
-INSERT INTO `t_sys_oauth_client` VALUES ('mini', '123456', '', 'all', 'password,refresh_token', '', NULL, 3600, 259200, NULL, 'true', '2022-04-02 09:31:10', '2022-06-16 12:25:03');
-INSERT INTO `t_sys_oauth_client` VALUES ('web', '123456', '', 'all', 'password,refresh_token,captcha', '', NULL, 3600, 259200, NULL, NULL, '2022-04-02 09:31:10', '2022-06-16 12:39:37');
-INSERT INTO `t_sys_oauth_client` VALUES ('zq_app_id', '123456', 'res1', 'all', 'authorization_code,refresh_token', 'http://127.0.0.1:10020/index.html', NULL, 3600, 259200, NULL, 'true', '2022-04-02 09:31:10', '2022-06-16 12:25:03');
 
 -- ----------------------------
 -- Table structure for t_sys_permission
@@ -258,7 +204,7 @@ CREATE TABLE `t_sys_role_menu`  (
   `update_by` int(11) NOT NULL COMMENT '修改人',
   `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 183 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-角色菜单关联表' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 185 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-角色菜单关联表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_sys_role_menu
@@ -272,6 +218,8 @@ INSERT INTO `t_sys_role_menu` VALUES (179, 9, 5, 1, '2023-02-14 16:02:55', 1, '2
 INSERT INTO `t_sys_role_menu` VALUES (180, 9, 6, 1, '2023-02-14 16:02:55', 1, '2023-02-14 16:02:55');
 INSERT INTO `t_sys_role_menu` VALUES (181, 9, 3, 1, '2023-02-14 16:02:55', 1, '2023-02-14 16:02:55');
 INSERT INTO `t_sys_role_menu` VALUES (182, 9, 10, 1, '2023-02-14 16:02:55', 1, '2023-02-14 16:02:55');
+INSERT INTO `t_sys_role_menu` VALUES (183, 10, 11, 1, '2023-02-14 17:43:58', 1, '2023-02-14 17:43:58');
+INSERT INTO `t_sys_role_menu` VALUES (184, 10, 12, 1, '2023-02-14 17:43:58', 1, '2023-02-14 17:43:58');
 
 -- ----------------------------
 -- Table structure for t_sys_role_permission
@@ -364,26 +312,5 @@ CREATE TABLE `t_sys_user_role`  (
 -- ----------------------------
 INSERT INTO `t_sys_user_role` VALUES (17, 1, 9, 1, '2023-02-14 13:59:07', 1, '2023-02-14 13:59:07');
 INSERT INTO `t_sys_user_role` VALUES (18, 2, 10, 1, '2023-02-14 13:59:20', 1, '2023-02-14 13:59:20');
-
--- ----------------------------
--- Table structure for undo_log
--- ----------------------------
-DROP TABLE IF EXISTS `undo_log`;
-CREATE TABLE `undo_log`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `branch_id` bigint(20) NOT NULL,
-  `xid` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `context` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `rollback_info` longblob NOT NULL,
-  `log_status` int(11) NOT NULL,
-  `log_created` datetime NOT NULL,
-  `log_modified` datetime NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `ux_undo_log`(`xid`, `branch_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of undo_log
--- ----------------------------
 
 SET FOREIGN_KEY_CHECKS = 1;

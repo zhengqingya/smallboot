@@ -20,16 +20,6 @@ import java.util.List;
 public interface ISysPermissionService extends IService<SysPermission> {
 
     /**
-     * 通过菜单ID获取已经配置的按钮ids
-     *
-     * @param menuId 菜单id
-     * @return 按钮ids
-     * @author zhengqingya
-     * @date 2020/9/10 21:19
-     */
-    List<Integer> getBtnIdsByMenuId(Integer menuId);
-
-    /**
      * 保存菜单按钮ids
      *
      * @param params 提交参数

@@ -15,11 +15,10 @@
       </base-title-card>
       <base-title-card title="权限信息">
         <el-row :gutter="20">
-          <el-col :span="14">
-            <el-tree ref="menuTree" :data="allMenus" :props="defaultProps" show-checkbox node-key="menuId"
-              @node-click="handleNodeClick" />
+          <el-col :span="12">
+            <el-tree ref="menuTree" :data="allMenus" :props="defaultProps" show-checkbox node-key="menuId" @node-click="handleNodeClick" />
           </el-col>
-          <el-col :span="10">
+          <el-col :span="12">
             <el-card v-if="permissionBtns.length > 0 && showConfigContainer" class="box-card">
               <template #header>
                 <div class="card-header">
@@ -27,11 +26,11 @@
                   <el-button style="float: right; padding: 3px 0" link @click="handleSavePermissionBtns">保存</el-button>
                 </div>
               </template>
-              <el-checkbox v-model="checkAll" :indeterminate="isIndeterminate" style="margin-bottom: 10px"
-                @change="handleCheckAllBtnsChange">全选</el-checkbox>
+              <el-checkbox v-model="checkAll" :indeterminate="isIndeterminate" style="margin-bottom: 10px" @change="handleCheckAllBtnsChange"
+                >全选</el-checkbox
+              >
               <el-checkbox-group v-model="currentSelectedBtns" @change="handleCheckedBtnsChange">
-                <el-checkbox v-for="(item, index) in permissionBtns" :key="index" :label="item.id">{{ item.name }}
-                </el-checkbox>
+                <el-checkbox v-for="(item, index) in permissionBtns" :key="index" :label="item.id">{{ item.name }} </el-checkbox>
               </el-checkbox-group>
             </el-card>
             <base-no-data v-else>该菜单暂未分配按钮权限</base-no-data>
@@ -189,5 +188,4 @@ export default {
   },
 }
 </script>
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>
