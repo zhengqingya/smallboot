@@ -5,19 +5,19 @@ export const Layout = () => import('@/layout/index.vue');
 
 // 静态路由
 export const constantRoutes: Array<RouteRecordRaw> = [
-  {
-    path: '/',
-    component: Layout,
-    redirect: 'dashboard',
-    children: [
-      {
-        path: 'dashboard',
-        component: () => import('@/views/dashboard/index.vue'),
-        name: 'Dashboard',
-        meta: { title: '首页', icon: 'House', affix: true }
-      }
-    ]
-  },
+  // {
+  //   path: '/',
+  //   component: Layout,
+  //   redirect: 'dashboard',
+  //   children: [
+  //     {
+  //       path: 'dashboard',
+  //       component: () => import('@/views/dashboard/index.vue'),
+  //       name: 'Dashboard',
+  //       meta: { title: '首页', icon: 'House', affix: true }
+  //     }
+  //   ]
+  // },
   {
     path: '/login',
     component: () => import('@/views/login/index.vue'),

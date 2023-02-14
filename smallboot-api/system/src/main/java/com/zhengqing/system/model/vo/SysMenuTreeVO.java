@@ -59,17 +59,11 @@ public class SysMenuTreeVO {
     @ApiModelProperty(value = "重定向url")
     private String redirect;
 
-    @ApiModelProperty(value = "菜单状态")
-    private Integer status;
-
-    @ApiModelProperty(value = "类型 0菜单  1按钮")
-    private Integer type;
-
-    @ApiModelProperty(value = "菜单只有一级的情况为true")
-    private Integer alwaysShow;
-
-    @ApiModelProperty(value = "面包屑")
+    @ApiModelProperty(value = "面包屑是否显示")
     private Boolean breadcrumb;
+
+    @ApiModelProperty(value = "是否显示子菜单(true:显示 false:隐藏)")
+    private Boolean isShowChildren;
 
     @ApiModelProperty(value = "下级菜单")
     private List<SysMenuTreeVO> children = new LinkedList<>();

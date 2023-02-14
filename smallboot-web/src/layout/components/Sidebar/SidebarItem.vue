@@ -1,16 +1,16 @@
 <template>
   <div v-if="!item.hidden">
-    <template v-if="
-      hasOneShowingChild(item.children, item) && (!onlyOneChild.children || onlyOneChild.noShowingChildren) && (!item.meta || !item.meta.alwaysShow)
-    ">
+    <template
+      v-if="
+        hasOneShowingChild(item.children, item) && (!onlyOneChild.children || onlyOneChild.noShowingChildren) && (!item.meta || !item.meta.alwaysShow)
+      "
+    >
       <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
         <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{ 'submenu-title-noDropdown': !isNest }">
           <el-icon v-if="onlyOneChild.meta && onlyOneChild.meta.icon">
             <component :is="onlyOneChild.meta.icon" />
           </el-icon>
-          <template #title>
-            {{ onlyOneChild.meta.title }}
-          </template>
+          <template #title> {{ onlyOneChild.meta.title }} </template>
         </el-menu-item>
       </app-link>
     </template>
@@ -23,8 +23,14 @@
         <span v-if="item.meta && item.meta.title">{{ item.meta.title }}</span>
       </template>
 
-      <sidebar-item v-for="child in item.children" :key="child.path" :item="child" :is-nest="true"
-        :base-path="resolvePath(child.path)" class="nest-menu" />
+      <sidebar-item
+        v-for="child in item.children"
+        :key="child.path"
+        :item="child"
+        :is-nest="true"
+        :base-path="resolvePath(child.path)"
+        class="nest-menu"
+      />
     </el-sub-menu>
   </div>
 </template>
@@ -69,6 +75,11 @@ function hasOneShowingChild(children = [] as any, parent: any) {
 
   // When there is only one child router, the child router is displayed by default
   if (showingChildren.length === 1) {
+    if (!parent.isShowChildren) {
+      // console.log(parent)
+      // 如果不显示当前子菜单，那么父菜单可直接跳转...
+      onlyOneChild.value = { ...parent, path: '', noShowingChildren: true }
+    }
     return true
   }
 
@@ -77,7 +88,6 @@ function hasOneShowingChild(children = [] as any, parent: any) {
     onlyOneChild.value = { ...parent, path: '', noShowingChildren: true }
     return true
   }
-
   return false
 }
 
@@ -92,5 +102,4 @@ function resolvePath(routePath: string) {
 }
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

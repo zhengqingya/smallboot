@@ -10,7 +10,7 @@
       <el-form-item label="菜单名称:">
         <el-input v-model="form.name" placeholder="输入菜单名称" />
       </el-form-item>
-      <el-form-item label="菜单链接:" prop="path">
+      <el-form-item label="菜单路径:" prop="path">
         <el-input v-model="form.path" placeholder="输入菜单链接" />
       </el-form-item>
       <el-form-item label="重定向链接:">
@@ -23,7 +23,7 @@
         <el-select v-model="form.icon" placeholder="请选择图标" style="width: 200px" clearable>
           <el-option v-for="item in elIconList" :key="item.name" :value="item.name" :label="item.name">
             <span style="float: left; color: #8492a6; font-size: 12px">{{ item.name }}</span>
-            <div style="float: right;">
+            <div style="float: right">
               <el-icon>
                 <component :is="item.name" />
               </el-icon>
@@ -32,30 +32,24 @@
         </el-select>
       </el-form-item>
       <el-form-item label="显示顺序:">
-        <el-input-number v-model="form.displayOrder" />
-      </el-form-item>
-      <el-form-item label="状态:">
-        <el-radio-group v-model="form.status">
-          <el-radio :label="1">启用</el-radio>
-          <el-radio :label="0">禁用</el-radio>
-        </el-radio-group>
+        <el-input-number v-model="form.sort" />
       </el-form-item>
       <el-form-item label="是否隐藏:">
         <el-radio-group v-model="form.hidden">
-          <el-radio :label="1">是</el-radio>
-          <el-radio :label="0">否</el-radio>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item label="是否一直显示:">
-        <el-radio-group v-model="form.alwaysShow">
-          <el-radio :label="1">是</el-radio>
-          <el-radio :label="0">否</el-radio>
+          <el-radio :label="true">是</el-radio>
+          <el-radio :label="false">否</el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="是否显示面包屑:">
         <el-radio-group v-model="form.breadcrumb">
-          <el-radio :label="1">是</el-radio>
-          <el-radio :label="0">否</el-radio>
+          <el-radio :label="true">是</el-radio>
+          <el-radio :label="false">否</el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item label="是否显示子菜单:">
+        <el-radio-group v-model="form.isShowChildren">
+          <el-radio :label="true">是</el-radio>
+          <el-radio :label="false">否</el-radio>
         </el-radio-group>
       </el-form-item>
     </el-form>
@@ -67,7 +61,7 @@
 </template>
 <script>
 export default {
-  emits: ["handleSucc"],
+  emits: ['handleSucc'],
   data() {
     return {
       dialogVisible: false,
@@ -76,21 +70,7 @@ export default {
       hasParent: false,
       parentName: '',
       elIconList: [],
-      form: {
-        parentId: 0,
-        title: '',
-        name: '',
-        path: '',
-        redirect: '',
-        component: '',
-        icon: '',
-        displayOrder: '',
-        status: 1, // 1启用 0 禁用
-        hidden: 1, // 1 显示 0 隐藏
-        alwaysShow: 1, // 1 true 0 false
-        breadcrumb: 1, // 1 true, 0 false
-        systemSource: 0, // 系统来源
-      },
+      form: {},
       rules: {
         title: [{ required: true, message: '菜单标题不得为空', trigger: 'blur' }],
         path: [{ required: true, message: '菜单链接不得为空', trigger: 'blur' }],
@@ -132,7 +112,6 @@ export default {
     handleSave() {
       this.$refs.form.validate(async (valid) => {
         if (valid) {
-          this.form.systemSource = 0
           let res = await this.$api.sys_menu[this.form.menuId ? 'update' : 'add'](this.form)
           this.submitOk(res.msg)
           this.$emit('handleSucc')
@@ -152,16 +131,14 @@ export default {
         redirect: '',
         component: '',
         icon: '',
-        displayOrder: '',
-        status: 1, // 1启用 0 禁用
-        hidden: 1, // 1 显示 0 隐藏
-        alwaysShow: 1, // 1 true 0 false
-        breadcrumb: 1, // 1 true, 0 false
+        sort: '',
+        hidden: 0, // 是否隐藏 1:隐藏 0:显示
+        breadcrumb: 1, // 面包屑是否显示
+        isShowChildren: 1, // 是否显示子菜单
       }
     },
-    handleClose() { },
+    handleClose() {},
   },
 }
 </script>
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

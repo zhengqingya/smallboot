@@ -19,17 +19,17 @@
               <el-button type="primary" @click="addNextMenu">添加下级菜单</el-button>
             </div>
             <base-table-cell v-if="currentClickMenu" label-width="130px">
-              <base-cell-item label="菜单编号">{{ currentClickMenu.menuId }}</base-cell-item>
-              <base-cell-item label="菜单名称">{{ currentClickMenu.title }}</base-cell-item>
-              <base-cell-item label="菜单链接">{{ currentClickMenu.path }}</base-cell-item>
+              <base-cell-item label="菜单ID">{{ currentClickMenu.menuId }}</base-cell-item>
+              <base-cell-item label="菜单标题">{{ currentClickMenu.title }}</base-cell-item>
+              <base-cell-item label="菜单名称">{{ currentClickMenu.name }}</base-cell-item>
+              <base-cell-item label="菜单路径">{{ currentClickMenu.path }}</base-cell-item>
               <base-cell-item label="重定向链接">{{ currentClickMenu.redirect }}</base-cell-item>
-              <base-cell-item label="组件名">{{ currentClickMenu.component }}</base-cell-item>
+              <base-cell-item label="组件名称">{{ currentClickMenu.component }}</base-cell-item>
               <base-cell-item label="菜单图标"><i :class="currentClickMenu.icon" /> {{ currentClickMenu.icon }} </base-cell-item>
-              <base-cell-item label="是否隐藏面包屑">{{ currentClickMenu.breadcrumb ? '显示' : '隐藏' }}</base-cell-item>
-              <base-cell-item label="菜单状态">{{ currentClickMenu.status ? '启用' : '禁用' }}</base-cell-item>
-              <base-cell-item label="显示顺序">{{ currentClickMenu.displayOrder }}</base-cell-item>
+              <base-cell-item label="显示顺序">{{ currentClickMenu.sort }}</base-cell-item>
               <base-cell-item label="是否隐藏">{{ currentClickMenu.hidden ? '是' : '否' }}</base-cell-item>
-              <base-cell-item label="是否一直显示">{{ currentClickMenu.alwaysShow ? '是' : '否' }}</base-cell-item>
+              <base-cell-item label="是否隐藏面包屑">{{ currentClickMenu.breadcrumb ? '显示' : '隐藏' }}</base-cell-item>
+              <base-cell-item label="是否显示子菜单">{{ currentClickMenu.isShowChildren ? '显示' : '隐藏' }}</base-cell-item>
               <base-cell-item label="上级菜单">{{ currentClickMenu.parentName }}</base-cell-item>
             </base-table-cell>
             <base-no-data v-else>请先选中左侧菜单</base-no-data>

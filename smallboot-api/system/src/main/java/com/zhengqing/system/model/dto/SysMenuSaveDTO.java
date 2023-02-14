@@ -33,7 +33,7 @@ public class SysMenuSaveDTO {
     @ApiModelProperty(value = "菜单图标")
     private String icon;
 
-    @ApiModelProperty(value = "菜单链接url")
+    @ApiModelProperty(value = "菜单访问路径")
     private String path;
 
     @ApiModelProperty(value = "父类菜单ID")
@@ -51,16 +51,10 @@ public class SysMenuSaveDTO {
     @ApiModelProperty(value = "重定向路径")
     private String redirect;
 
-    @ApiModelProperty(value = "菜单状态 1：启用  0：禁用")
-    private Integer status;
-
-    @ApiModelProperty(value = "菜单类型 0菜单 1按钮")
-    private Integer type;
-
-    @ApiModelProperty(value = "0 false 1 true")
-    private Integer alwaysShow;
-
-    @ApiModelProperty(value = "面包屑")
+    @ApiModelProperty(value = "面包屑是否显示")
     private Boolean breadcrumb;
+
+    @ApiModelProperty(value = "是否显示子菜单(true:显示 false:隐藏)")
+    private Boolean isShowChildren;
 
 }

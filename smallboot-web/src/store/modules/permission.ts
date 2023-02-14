@@ -15,7 +15,7 @@ export const filterAsyncRoutes = (routes: RouteRecordRaw[], roleNames: string[])
     if (tmp.component === 'Layout') {
       tmp.component = Layout
     } else if (tmp.component === 'parentView') {
-      tmp.component = parentView
+      tmp.component = parentView // 单独页面 -- 无左侧菜单等
     } else {
       const component = modules[`../../views/${tmp.component}.vue`] as any
       if (component) {

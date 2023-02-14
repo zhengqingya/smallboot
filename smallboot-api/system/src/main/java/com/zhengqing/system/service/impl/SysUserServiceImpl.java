@@ -13,7 +13,6 @@ import com.zhengqing.common.core.util.DesUtil;
 import com.zhengqing.common.db.constant.MybatisConstant;
 import com.zhengqing.system.entity.SysRole;
 import com.zhengqing.system.entity.SysUser;
-import com.zhengqing.system.enums.SysMenuTypeEnum;
 import com.zhengqing.system.enums.SysUserReRoleEnum;
 import com.zhengqing.system.mapper.SysUserMapper;
 import com.zhengqing.system.model.dto.*;
@@ -212,19 +211,18 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         List<SysMenuTreeVO> resultList = Lists.newArrayList();
         for (SysMenuTreeVO menu : menuTreeList) {
             Integer menuId = menu.getMenuId();
-            if (menuIdList.contains(menuId) && SysMenuTypeEnum.菜单.getType().equals(menu.getType())) {
-                List<SysMenuTreeVO> menuChildList = menu.getChildren();
-                if (!CollectionUtils.isEmpty(menuChildList)) {
-                    menu.setChildren(this.getUserPremTreeList(menuChildList, menuIdList, roleIdList, btnList));
-                }
-                List<String> btnPermList = this.getUserBtnPermList(menuId, roleIdList, btnList);
-                menu.setMeta(SysUserBtnVO.builder()
-                        .title(menu.getTitle())
-                        .icon(menu.getIcon())
-                        .btnPermList(btnPermList)
-                        .build());
-                resultList.add(menu);
+            List<SysMenuTreeVO> menuChildList = menu.getChildren();
+            if (!CollectionUtils.isEmpty(menuChildList)) {
+                menu.setChildren(this.getUserPremTreeList(menuChildList, menuIdList, roleIdList, btnList));
             }
+            List<String> btnPermList = this.getUserBtnPermList(menuId, roleIdList, btnList);
+            menu.setMeta(SysUserBtnVO.builder()
+                    .title(menu.getTitle())
+                    .icon(menu.getIcon())
+                    .breadcrumb(menu.getBreadcrumb())
+                    .btnPermList(btnPermList)
+                    .build());
+            resultList.add(menu);
         }
         return resultList;
     }

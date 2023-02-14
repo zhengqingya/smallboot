@@ -30,10 +30,8 @@
                sm.component,
                sm.hidden,
                sm.redirect,
-               sm.status,
-               sm.type,
-               sm.always_show,
-               sm.breadcrumb
+               sm.breadcrumb,
+               sm.is_show_children
         FROM t_sys_menu sm
         WHERE sm.is_deleted = 0
         ORDER BY sm.sort ASC

@@ -32,6 +32,9 @@ public class SysUserBtnVO extends BaseVO {
     @ApiModelProperty(value = "图标")
     private String icon;
 
+    @ApiModelProperty(value = "面包屑是否显示")
+    private Boolean breadcrumb;
+
     @ApiModelProperty(value = "按钮权限")
     private List<String> btnPermList;
 
