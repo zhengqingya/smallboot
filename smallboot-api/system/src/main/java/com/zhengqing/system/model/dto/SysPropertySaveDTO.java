@@ -1,6 +1,5 @@
 package com.zhengqing.system.model.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zhengqing.common.base.model.dto.BaseDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -27,8 +26,7 @@ import javax.validation.constraints.NotBlank;
 @ApiModel("系统管理-系统属性-保存-提交参数")
 public class SysPropertySaveDTO extends BaseDTO {
 
-    @JsonIgnore
-    @ApiModelProperty(value = "主键ID", hidden = true, example = "1")
+    @ApiModelProperty(value = "主键ID", example = "1")
     private Integer id;
 
     @NotBlank(message = "属性key不能为空!")
@@ -39,7 +37,8 @@ public class SysPropertySaveDTO extends BaseDTO {
     @ApiModelProperty(value = "属性value", required = true, example = "world")
     private String value;
 
-    @ApiModelProperty(value = "备注", example = "hello world !")
+    @NotBlank(message = "备注不能为空!")
+    @ApiModelProperty(value = "备注", example = "this is remark!")
     private String remark;
 
 }

@@ -1,10 +1,13 @@
 package com.zhengqing.system.api;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.common.core.custom.repeatsubmit.NoRepeatSubmit;
-import com.zhengqing.common.core.custom.validator.common.ValidList;
+import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
+import com.zhengqing.system.model.dto.SysPropertyPageDTO;
 import com.zhengqing.system.model.dto.SysPropertySaveDTO;
+import com.zhengqing.system.model.vo.SysPropertyPageVO;
 import com.zhengqing.system.model.vo.SysPropertyVO;
 import com.zhengqing.system.service.ISysPropertyService;
 import io.swagger.annotations.Api;
@@ -32,6 +35,35 @@ public class SysPropertyController extends BaseController {
     @Resource
     private ISysPropertyService sysPropertyService;
 
+    @GetMapping("listPage")
+    @ApiOperation("列表分页")
+    public IPage<SysPropertyPageVO> listPage(@ModelAttribute SysPropertyPageDTO params) {
+        return this.sysPropertyService.listPage(params);
+    }
+
+    @NoRepeatSubmit
+    @PostMapping("")
+    @ApiOperation("新增")
+    public void add(@Validated @RequestBody SysPropertySaveDTO params) {
+        params.setId(null);
+        this.sysPropertyService.addOrUpdateData(params);
+    }
+
+    @NoRepeatSubmit
+    @PutMapping("")
+    @ApiOperation("更新")
+    public void update(@Validated(UpdateGroup.class) @RequestBody SysPropertySaveDTO params) {
+        this.sysPropertyService.addOrUpdateData(params);
+    }
+
+    @DeleteMapping("")
+    @ApiOperation("删除")
+    public void delete(@RequestParam Integer id) {
+        this.sysPropertyService.removeById(id);
+    }
+
+    // ----------------------------------------------------------------------------------------
+
     @GetMapping("listByKey")
     @ApiOperation("根据属性key查询")
     public Map<String, SysPropertyVO> listByKey(@RequestParam List<String> keyList) {
@@ -44,17 +76,17 @@ public class SysPropertyController extends BaseController {
         return this.sysPropertyService.listByKey(keyList);
     }
 
-    @NoRepeatSubmit
-    @PostMapping("saveBatch")
-    @ApiOperation("批量保存")
-    public void saveBatch(@Validated @RequestBody ValidList<SysPropertySaveDTO> dataList) {
-        this.sysPropertyService.saveBatch(dataList);
-    }
+//    @NoRepeatSubmit
+//    @PostMapping("saveBatch")
+//    @ApiOperation("批量保存")
+//    public void saveBatch(@Validated @RequestBody ValidList<SysPropertySaveDTO> dataList) {
+//        this.sysPropertyService.saveBatch(dataList);
+//    }
 
-    @DeleteMapping("deleteByKey")
-    @ApiOperation("根据属性key删除数据")
-    public void deleteByKey(@RequestParam String key) {
-        this.sysPropertyService.deleteByKey(key);
-    }
+//    @DeleteMapping("deleteByKey")
+//    @ApiOperation("根据属性key删除数据")
+//    public void deleteByKey(@RequestParam String key) {
+//        this.sysPropertyService.deleteByKey(key);
+//    }
 
 }

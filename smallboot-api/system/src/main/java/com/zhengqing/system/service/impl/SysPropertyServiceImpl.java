@@ -4,6 +4,8 @@ import cn.hutool.core.lang.Assert;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -14,7 +16,9 @@ import com.zhengqing.common.redis.util.RedisUtil;
 import com.zhengqing.system.constant.SystemConstant;
 import com.zhengqing.system.entity.SysProperty;
 import com.zhengqing.system.mapper.SysPropertyMapper;
+import com.zhengqing.system.model.dto.SysPropertyPageDTO;
 import com.zhengqing.system.model.dto.SysPropertySaveDTO;
+import com.zhengqing.system.model.vo.SysPropertyPageVO;
 import com.zhengqing.system.model.vo.SysPropertyVO;
 import com.zhengqing.system.service.ISysPropertyService;
 import lombok.extern.slf4j.Slf4j;
@@ -41,6 +45,11 @@ public class SysPropertyServiceImpl extends ServiceImpl<SysPropertyMapper, SysPr
 
     @Resource
     private SysPropertyMapper sysPropertyMapper;
+
+    @Override
+    public IPage<SysPropertyPageVO> listPage(SysPropertyPageDTO params) {
+        return this.sysPropertyMapper.selectListPage(new Page(), params);
+    }
 
     @Override
     public Map<String, SysPropertyVO> mapByKey(List<String> keyList) {
@@ -120,6 +129,15 @@ public class SysPropertyServiceImpl extends ServiceImpl<SysPropertyMapper, SysPr
                         .last(MybatisConstant.LIMIT_ONE));
         Assert.notNull(detailData, "该数据不存在！");
         return detailData;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void addOrUpdateData(SysPropertySaveDTO params) {
+        // 保存新数据
+        this.sysPropertyMapper.batchInsertOrUpdate(Lists.newArrayList(params));
+        // 更新redis缓存
+        this.updateCache(Lists.newArrayList(params.getKey()));
     }
 
     @Override

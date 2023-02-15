@@ -1,9 +1,12 @@
 package com.zhengqing.system.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhengqing.common.core.custom.validator.common.ValidList;
 import com.zhengqing.system.entity.SysProperty;
+import com.zhengqing.system.model.dto.SysPropertyPageDTO;
 import com.zhengqing.system.model.dto.SysPropertySaveDTO;
+import com.zhengqing.system.model.vo.SysPropertyPageVO;
 import com.zhengqing.system.model.vo.SysPropertyVO;
 
 import javax.validation.constraints.NotBlank;
@@ -19,6 +22,16 @@ import java.util.Map;
  * @date 2021/09/06 22:57
  */
 public interface ISysPropertyService extends IService<SysProperty> {
+
+    /**
+     * 分页列表
+     *
+     * @param params 查询参数
+     * @return 结果
+     * @author zhengqingya
+     * @date 2020/9/10 14:44
+     */
+    IPage<SysPropertyPageVO> listPage(SysPropertyPageDTO params);
 
     /**
      * 通过属性key查询数据
@@ -79,6 +92,16 @@ public interface ISysPropertyService extends IService<SysProperty> {
      * @date 2021/09/06 22:57
      */
     SysProperty detailByKey(@NotBlank(message = "属性不能为空!") String key);
+
+    /**
+     * 新增或更新
+     *
+     * @param params 保存参数
+     * @return void
+     * @author zhengqingya
+     * @date 2021/09/06 22:57
+     */
+    void addOrUpdateData(SysPropertySaveDTO params);
 
     /**
      * 批量保存

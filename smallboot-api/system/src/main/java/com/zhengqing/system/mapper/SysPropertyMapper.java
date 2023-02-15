@@ -1,8 +1,11 @@
 package com.zhengqing.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.system.entity.SysProperty;
+import com.zhengqing.system.model.dto.SysPropertyPageDTO;
 import com.zhengqing.system.model.dto.SysPropertySaveDTO;
+import com.zhengqing.system.model.vo.SysPropertyPageVO;
 import com.zhengqing.system.model.vo.SysPropertyVO;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
@@ -17,6 +20,16 @@ import java.util.List;
  * @date 2021/09/06 22:57
  */
 public interface SysPropertyMapper extends BaseMapper<SysProperty> {
+
+    /**
+     * 分页列表
+     *
+     * @param filter 查询参数
+     * @return 查询结果
+     * @author zhengqingya
+     * @date 2021/09/06 22:57
+     */
+    IPage<SysPropertyPageVO> selectListPage(IPage<SysPropertyPageVO> page, @Param("filter") SysPropertyPageDTO filter);
 
     /**
      * 列表

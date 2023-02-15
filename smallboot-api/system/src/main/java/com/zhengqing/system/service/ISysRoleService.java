@@ -25,7 +25,7 @@ public interface ISysRoleService extends IService<SysRole> {
     /**
      * 列表分页
      *
-     * @param params:
+     * @param params 查询参数
      * @return 角色信息
      * @author zhengqingya
      * @date 2020/9/10 14:44
@@ -35,7 +35,7 @@ public interface ISysRoleService extends IService<SysRole> {
     /**
      * 列表
      *
-     * @param params: 查询参数
+     * @param params 查询参数
      * @return 角色信息
      * @author zhengqingya
      * @date 2020/9/10 14:45
@@ -45,7 +45,7 @@ public interface ISysRoleService extends IService<SysRole> {
     /**
      * 新增或更新
      *
-     * @param params: 提交参数
+     * @param params 提交参数
      * @return 角色id
      * @author zhengqingya
      * @date 2020/9/10 14:45
@@ -55,7 +55,7 @@ public interface ISysRoleService extends IService<SysRole> {
     /**
      * 根据角色ID获取角色信息详情（包含角色可访问的菜单ids）
      *
-     * @param roleId: 角色id
+     * @param roleId 角色id
      * @return 角色信息+菜单ids
      * @author zhengqingya
      * @date 2020/9/10 14:50
@@ -75,7 +75,7 @@ public interface ISysRoleService extends IService<SysRole> {
     /**
      * 根据角色id删除角色与关联菜单权限
      *
-     * @param roleId: 角色id
+     * @param roleId 角色id
      * @return void
      * @author zhengqingya
      * @date 2020/9/10 18:03
