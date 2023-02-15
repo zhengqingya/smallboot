@@ -18,7 +18,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 @Configuration
 public class SmallToolsThreadPoolConfig {
 
-    @Bean(ThreadPoolConstant.SMALL_TOOLS_THREAD_POOL)
+    @Bean(ThreadPoolConstant.SMALL_BOOT_THREAD_POOL)
     public Executor threadPoolExecutor() {
         ThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPoolTaskExecutor();
         // 核心线程池大小
@@ -30,8 +30,7 @@ public class SmallToolsThreadPoolConfig {
         // 活跃时间 60s
         threadPoolTaskExecutor.setKeepAliveSeconds(60);
         // 线程名字前缀
-        threadPoolTaskExecutor
-                .setThreadNamePrefix(ThreadPoolConstant.SMALL_TOOLS_THREAD_NAME_PREFIX);
+        threadPoolTaskExecutor.setThreadNamePrefix(ThreadPoolConstant.SMALL_BOOT_THREAD_NAME_PREFIX);
         // 设置在关闭线程池时是否等待任务完成
         threadPoolTaskExecutor.setWaitForTasksToCompleteOnShutdown(true);
         // 允许核心线程超时

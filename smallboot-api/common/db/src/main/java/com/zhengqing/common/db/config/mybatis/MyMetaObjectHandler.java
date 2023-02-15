@@ -1,9 +1,7 @@
 package com.zhengqing.common.db.config.mybatis;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
-import com.zhengqing.common.base.constant.BaseConstant;
 import com.zhengqing.common.base.context.JwtUserContext;
-import com.zhengqing.common.base.model.bo.JwtUserBO;
 import com.zhengqing.common.db.constant.MybatisConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
@@ -30,7 +28,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {
         // 用户id
-        Long userId = this.getUserId();
+        String userId = JwtUserContext.getUserId();
         // 当前时间
         Date nowDate = new Date();
 
@@ -58,26 +56,11 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void updateFill(MetaObject metaObject) {
         if (metaObject.hasGetter(MybatisConstant.UPDATE_BY)) {
-            this.setFieldValByName(MybatisConstant.UPDATE_BY, this.getUserId(), metaObject);
+            this.setFieldValByName(MybatisConstant.UPDATE_BY, JwtUserContext.getUserId(), metaObject);
         }
         if (metaObject.hasGetter(MybatisConstant.UPDATE_TIME)) {
             this.setFieldValByName(MybatisConstant.UPDATE_TIME, new Date(), metaObject);
         }
-    }
-
-    /**
-     * 获取上下文中的用户id
-     *
-     * @return 用户id
-     * @author zhengqingya
-     * @date 2022/7/8 18:15
-     */
-    private Long getUserId() {
-        JwtUserBO jwtUserBO = JwtUserContext.get();
-        if (jwtUserBO != null) {
-            return Long.valueOf(jwtUserBO.getUserId());
-        }
-        return Long.valueOf(BaseConstant.DEFAULT_CONTEXT_KEY_USER_ID);
     }
 
 }

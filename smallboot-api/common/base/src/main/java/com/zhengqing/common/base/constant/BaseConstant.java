@@ -24,9 +24,9 @@ public interface BaseConstant {
     /**
      * 用户ID、用户名、消息上下文Key 【注：key名称一定不要和前端请求参数中的属性名一样，否则会拿不到真正的值！！！】
      */
-    String CONTEXT_KEY_SYS_USER_ID = "small_tools_sys_user_id";
-    String CONTEXT_KEY_UMS_USER_ID = "small_tools_ums_user_id";
-    String CONTEXT_KEY_USERNAME = "small_tools_username";
+    String CONTEXT_KEY_SYS_USER_ID = "smallboot_sys_user_id";
+    String CONTEXT_KEY_UMS_USER_ID = "smallboot_ums_user_id";
+    String CONTEXT_KEY_USERNAME = "smallboot_username";
     String DEFAULT_CONTEXT_KEY_USER_ID = "0";
     String DEFAULT_CONTEXT_KEY_USERNAME = "未知";
 

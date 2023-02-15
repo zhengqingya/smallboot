@@ -14,9 +14,9 @@ public interface ThreadPoolConstant {
     // ===============================================================================
 
     /**
-     * SmallTools线程池
+     * SmallBoot线程池
      */
-    String SMALL_TOOLS_THREAD_POOL = "smallToolsThreadPoolTaskExecutor";
+    String SMALL_BOOT_THREAD_POOL = "smallBootThreadPoolTaskExecutor";
 
     // ===============================================================================
     // ============================ ↓↓↓↓↓↓ 线程池 - 线程名前缀 ↓↓↓↓↓↓ ===================
@@ -27,8 +27,8 @@ public interface ThreadPoolConstant {
      */
     String SPRING_DEFAULT_THREAD_NAME_PREFIX = "MyTaskExecutorInit-";
     /**
-     * SmallTools线程池-线程名前缀
+     * SmallBoot线程池-线程名前缀
      */
-    String SMALL_TOOLS_THREAD_NAME_PREFIX = "SmallToolsTaskExecutor-";
+    String SMALL_BOOT_THREAD_NAME_PREFIX = "SmallBootTaskExecutor-";
 
 }

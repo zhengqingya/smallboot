@@ -48,7 +48,7 @@ public class AuthServiceImpl implements IAuthService {
                 JwtUserBO.builder()
                         .authSourceEnum(AuthSourceEnum.B)
                         .userId(String.valueOf(userPerm.getUserId()))
-                        .userName(userPerm.getUsername())
+                        .username(userPerm.getUsername())
                         .roleCodeList(userPerm.getRoleCodeList())
                         .build()
         ));

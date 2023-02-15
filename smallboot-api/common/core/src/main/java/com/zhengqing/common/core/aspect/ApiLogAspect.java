@@ -1,14 +1,13 @@
 package com.zhengqing.common.core.aspect;
 
 import cn.hutool.json.JSONUtil;
-import com.zhengqing.common.base.context.SysUserContext;
+import com.zhengqing.common.base.context.JwtUserContext;
 import com.zhengqing.common.web.util.ServletUtil;
-import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -44,17 +43,17 @@ public class ApiLogAspect {
     public void logPointCut() {
     }
 
-    @Before("logPointCut()")
-    public void doAround(JoinPoint joinPoint) throws Throwable {
+    @Around("logPointCut()")
+    public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
+        long start = System.currentTimeMillis();
         HttpServletRequest request = ServletUtil.getRequest();
-        if (request != null) {
-            Integer userId = SysUserContext.getUserId();
-            String username = SysUserContext.getUsername();
+        String userId = JwtUserContext.getUserId();
+        String username = JwtUserContext.getUsername();
 
-            // 从切面织入点处通过反射机制获取织入点处的方法
-            MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-            // 获取切入点所在的方法
-            ApiOperation apiOperation = signature.getMethod().getAnnotation(ApiOperation.class);
+        // 从切面织入点处通过反射机制获取织入点处的方法
+        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+        // 获取切入点所在的方法
+//        ApiOperation apiOperation = signature.getMethod().getAnnotation(ApiOperation.class);
 
 //            log.debug("========================== ↓↓↓↓↓↓ 《ApiLogAspect》 Start... ↓↓↓↓↓↓ ==========================");
 //            log.debug("《ApiLogAspect》 controller method: {}",
@@ -69,12 +68,16 @@ public class ApiLogAspect {
 //            log.debug("《ApiLogAspect》 request params: {}", this.getRequestValue(request));
 //            log.debug("========================== ↑↑↑↑↑↑ 《ApiLogAspect》 End... ↑↑↑↑↑↑ ==========================");
 
-            log.debug("[{}] [{}] 请求参数：{}",
-                    request.getMethod(),
-                    signature.getDeclaringTypeName() + "." + signature.getName(),
-                    this.getRequestValue(request)
-            );
-        }
+        String url = request.getMethod() + ":" + request.getRequestURI();
+        log.debug("开始请求[{}] 操作人:[{}] 请求参数:{}", url, username, this.getRequestValue(request));
+
+        // 处理业务
+        Object result = joinPoint.proceed();
+
+        Long time = System.currentTimeMillis() - start;
+        log.debug("结束[{}] 耗时为:{}毫秒", url, time);
+
+        return result;
     }
 
     /**

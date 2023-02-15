@@ -31,7 +31,7 @@ public class JwtUserBO extends BaseBO {
     private String userId;
 
     @ApiModelProperty("用户名")
-    private String userName;
+    private String username;
 
     @ApiModelProperty("角色编码")
     private List<String> roleCodeList;

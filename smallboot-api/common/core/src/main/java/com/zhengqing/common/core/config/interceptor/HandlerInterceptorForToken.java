@@ -53,11 +53,11 @@ public class HandlerInterceptorForToken implements HandlerInterceptor {
         switch (jwtUserBO.getAuthSourceEnum()) {
             case B:
                 SysUserContext.setUserId(Integer.valueOf(jwtUserBO.getUserId()));
-                SysUserContext.setUsername(jwtUserBO.getUserName());
+                SysUserContext.setUsername(jwtUserBO.getUsername());
                 break;
             case C:
                 UmsUserContext.setUserId(Long.valueOf(jwtUserBO.getUserId()));
-                UmsUserContext.setUsername(jwtUserBO.getUserName());
+                UmsUserContext.setUsername(jwtUserBO.getUsername());
                 break;
             default:
                 break;
