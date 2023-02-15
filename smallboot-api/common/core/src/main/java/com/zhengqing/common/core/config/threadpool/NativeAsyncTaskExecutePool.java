@@ -36,8 +36,7 @@ public class NativeAsyncTaskExecutePool implements AsyncConfigurer {
         // 活跃时间 60s
         threadPoolTaskExecutor.setKeepAliveSeconds(60);
         // 线程名字前缀
-        threadPoolTaskExecutor
-                .setThreadNamePrefix(ThreadPoolConstant.SPRING_DEFAULT_THREAD_NAME_PREFIX);
+        threadPoolTaskExecutor.setThreadNamePrefix(ThreadPoolConstant.SPRING_DEFAULT_THREAD_NAME_PREFIX);
         // 设置在关闭线程池时是否等待任务完成
         threadPoolTaskExecutor.setWaitForTasksToCompleteOnShutdown(true);
         // 允许核心线程超时
@@ -47,8 +46,7 @@ public class NativeAsyncTaskExecutePool implements AsyncConfigurer {
         // 修改拒绝策略为使用当前线程执行
         // setRejectedExecutionHandler：当pool已经达到max size的时候，如何处理新任务
         // CallerRunsPolicy：不在新线程中执行任务，而是由调用者所在的线程来执行
-        threadPoolTaskExecutor
-                .setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+        threadPoolTaskExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
         //初始化线程池
         threadPoolTaskExecutor.initialize();
         return threadPoolTaskExecutor;
@@ -61,8 +59,7 @@ public class NativeAsyncTaskExecutePool implements AsyncConfigurer {
     public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
         return new AsyncUncaughtExceptionHandler() {
             @Override
-            public void handleUncaughtException(Throwable throwable, Method method,
-                                                Object... objects) {
+            public void handleUncaughtException(Throwable throwable, Method method, Object... objects) {
                 log.error("exception method: 【{}】", method);
                 log.error("exception msg: ", throwable);
             }

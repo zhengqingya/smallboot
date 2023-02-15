@@ -16,7 +16,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  * @date 2021/5/27 10:03
  */
 @Configuration
-public class SmallToolsThreadPoolConfig {
+public class SmallBootThreadPoolConfig {
 
     @Bean(ThreadPoolConstant.SMALL_BOOT_THREAD_POOL)
     public Executor threadPoolExecutor() {
@@ -40,8 +40,7 @@ public class SmallToolsThreadPoolConfig {
         // 修改拒绝策略为使用当前线程执行
         // setRejectedExecutionHandler：当pool已经达到max size的时候，如何处理新任务
         // CallerRunsPolicy：不在新线程中执行任务，而是由调用者所在的线程来执行
-        threadPoolTaskExecutor
-                .setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+        threadPoolTaskExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
         //初始化线程池
         threadPoolTaskExecutor.initialize();
         return threadPoolTaskExecutor;
