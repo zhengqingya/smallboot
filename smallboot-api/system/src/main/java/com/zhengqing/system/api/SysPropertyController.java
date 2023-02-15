@@ -3,7 +3,6 @@ package com.zhengqing.system.api;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.core.api.BaseController;
-import com.zhengqing.common.core.custom.repeatsubmit.NoRepeatSubmit;
 import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
 import com.zhengqing.system.model.dto.SysPropertyPageDTO;
 import com.zhengqing.system.model.dto.SysPropertySaveDTO;
@@ -41,7 +40,6 @@ public class SysPropertyController extends BaseController {
         return this.sysPropertyService.listPage(params);
     }
 
-    @NoRepeatSubmit
     @PostMapping("")
     @ApiOperation("新增")
     public void add(@Validated @RequestBody SysPropertySaveDTO params) {
@@ -49,7 +47,6 @@ public class SysPropertyController extends BaseController {
         this.sysPropertyService.addOrUpdateData(params);
     }
 
-    @NoRepeatSubmit
     @PutMapping("")
     @ApiOperation("更新")
     public void update(@Validated(UpdateGroup.class) @RequestBody SysPropertySaveDTO params) {

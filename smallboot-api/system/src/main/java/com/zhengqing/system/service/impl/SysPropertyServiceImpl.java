@@ -134,10 +134,21 @@ public class SysPropertyServiceImpl extends ServiceImpl<SysPropertyMapper, SysPr
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void addOrUpdateData(SysPropertySaveDTO params) {
+        Integer id = params.getId();
+        String key = params.getKey();
+
+        // 校验key是否重复
+        SysProperty sysPropertyOld = this.sysPropertyMapper.selectOne(
+                new LambdaQueryWrapper<SysProperty>()
+                        .eq(SysProperty::getKey, key)
+                        .last(MybatisConstant.LIMIT_ONE)
+        );
+        Assert.isTrue(sysPropertyOld == null || sysPropertyOld.getId().equals(id), "key重复，请重新输入！");
+        
         // 保存新数据
         this.sysPropertyMapper.batchInsertOrUpdate(Lists.newArrayList(params));
         // 更新redis缓存
-        this.updateCache(Lists.newArrayList(params.getKey()));
+        this.updateCache(Lists.newArrayList(key));
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.zhengqing.system.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.zhengqing.common.db.entity.BaseEntity;
@@ -28,6 +29,7 @@ public class SysProperty extends BaseEntity<SysProperty> {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
+    @TableField(value = "`key`")
     @ApiModelProperty("属性key")
     private String key;
 

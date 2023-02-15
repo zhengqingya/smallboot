@@ -1,6 +1,7 @@
 package com.zhengqing.system.model.dto;
 
 import com.zhengqing.common.base.model.dto.BaseDTO;
+import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * <p> 系统管理-系统属性-保存-提交参数 </p>
@@ -26,6 +28,7 @@ import javax.validation.constraints.NotBlank;
 @ApiModel("系统管理-系统属性-保存-提交参数")
 public class SysPropertySaveDTO extends BaseDTO {
 
+    @NotNull(message = "主键ID不能为空！", groups = UpdateGroup.class)
     @ApiModelProperty(value = "主键ID", example = "1")
     private Integer id;
 
