@@ -39,6 +39,15 @@
             <artifactId>system</artifactId>
         </dependency>
 
+        <!-- 解决mac启动项目时dns解析问题 -->
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-resolver-dns-native-macos</artifactId>
+            <scope>runtime</scope>
+            <classifier>osx-x86_64</classifier>
+            <version>4.1.59.Final</version>
+        </dependency>
+
     </dependencies>
 
 

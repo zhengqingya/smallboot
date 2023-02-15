@@ -55,10 +55,10 @@
             <artifactId>redis</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.zhengqing</groupId>
-            <artifactId>file</artifactId>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>com.zhengqing</groupId>-->
+        <!--            <artifactId>file</artifactId>-->
+        <!--        </dependency>-->
 
 
         <!-- AOP依赖 -->
