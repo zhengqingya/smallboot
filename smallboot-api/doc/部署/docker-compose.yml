@@ -45,7 +45,7 @@ services:
       - "./redis/data:/data"
       - "./redis/config/redis.conf:/etc/redis/redis.conf"  # `redis.conf`文件内容`http://download.redis.io/redis-stable/redis.conf`
     ports: # 映射端口
-      - "9379:6379"
+      - "6379:6379"
     networks:
       smallboot:
         ipv4_address: 172.28.0.11
