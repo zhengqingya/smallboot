@@ -1,4 +1,4 @@
-package com.zhengqing.common.auth.api;
+package com.zhengqing.system.api;
 
 
 import cn.dev33.satoken.stp.StpUtil;
