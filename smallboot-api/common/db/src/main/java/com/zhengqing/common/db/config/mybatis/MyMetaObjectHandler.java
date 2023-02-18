@@ -28,7 +28,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {
         // 用户id
-        String userId = JwtUserContext.getUserId();
+        Long userId = Long.valueOf(JwtUserContext.getUserId());
         // 当前时间
         Date nowDate = new Date();
 
@@ -56,7 +56,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void updateFill(MetaObject metaObject) {
         if (metaObject.hasGetter(MybatisConstant.UPDATE_BY)) {
-            this.setFieldValByName(MybatisConstant.UPDATE_BY, JwtUserContext.getUserId(), metaObject);
+            this.setFieldValByName(MybatisConstant.UPDATE_BY, Long.valueOf(JwtUserContext.getUserId()), metaObject);
         }
         if (metaObject.hasGetter(MybatisConstant.UPDATE_TIME)) {
             this.setFieldValByName(MybatisConstant.UPDATE_TIME, new Date(), metaObject);
