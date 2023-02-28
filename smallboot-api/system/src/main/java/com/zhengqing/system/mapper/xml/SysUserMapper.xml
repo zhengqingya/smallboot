@@ -38,4 +38,11 @@
         </if>
     </select>
 
+    <select id="testSqlmap">
+        select *
+        from t_sys_user
+--         where user_id in (${username})
+        ORDER BY ${username} LIMIT 1
+    </select>
+
 </mapper>

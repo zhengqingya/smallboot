@@ -64,4 +64,14 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
      */
     SysUserPermVO selectUserPerm(@Param("filter") SysUserPermDTO filter);
 
+    /**
+     * 测试sql注入问题
+     *
+     * @param username 用户名
+     * @return void
+     * @author zhengqingya
+     * @date 2023/2/28 11:07
+     */
+    void testSqlmap(@Param("username") String username);
+
 }

@@ -41,3 +41,4 @@ sa-token:
     - /favicon.ico
     # 其它
     - /auth/**
+    - /api/test/sql
