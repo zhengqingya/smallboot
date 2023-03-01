@@ -34,9 +34,8 @@ public class AppTestController extends BaseController {
      */
     @GetMapping("sql")
     @ApiOperation("sql注入")
-    public Object test(@RequestParam String username) {
-        this.sysUserMapper.testSqlmap(username);
-        return "OK";
+    public Object testSqlmap(@RequestParam String username) {
+        return this.sysUserMapper.testSqlmap(username);
     }
 
 

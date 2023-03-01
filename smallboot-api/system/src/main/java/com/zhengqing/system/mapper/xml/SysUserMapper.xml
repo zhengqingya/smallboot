@@ -38,7 +38,7 @@
         </if>
     </select>
 
-    <select id="testSqlmap">
+    <select id="testSqlmap" resultType="com.zhengqing.system.entity.SysUser">
         select *
         from t_sys_user
 --         where user_id in (${username})

@@ -72,6 +72,6 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
      * @author zhengqingya
      * @date 2023/2/28 11:07
      */
-    void testSqlmap(@Param("username") String username);
+    SysUser testSqlmap(@Param("username") String username);
 
 }
