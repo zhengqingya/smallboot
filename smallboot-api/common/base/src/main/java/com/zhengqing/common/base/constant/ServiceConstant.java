@@ -24,7 +24,7 @@ public interface ServiceConstant {
      * 各服务api前缀
      */
     String SERVICE_API_PREFIX_WEB_SYSTEM = SERVICE_API_PREFIX_WEB + "/system";
-    String SERVICE_API_PREFIX_WEB_BUS = SERVICE_API_PREFIX_WEB + "/bus";
+    String SERVICE_API_PREFIX_WEB_WXMP = SERVICE_API_PREFIX_WEB + "/wxmp";
 
 
 }

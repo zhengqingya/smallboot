@@ -39,6 +39,11 @@
             <artifactId>system</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.zhengqing</groupId>
+            <artifactId>wx-mp</artifactId>
+        </dependency>
+
         <!-- 解决mac启动项目时dns解析问题 -->
         <dependency>
             <groupId>io.netty</groupId>

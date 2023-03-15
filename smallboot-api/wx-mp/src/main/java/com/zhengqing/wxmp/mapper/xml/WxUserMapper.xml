@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhengqing.wxmp.mapper.WxUserMapper">
+
+    <select id="selectDataPage" resultType="com.zhengqing.wxmp.model.vo.WxUserPageVO">
+        SELECT
+        id,
+        app_id,
+        open_id,
+        nickname,
+        head_img_url,
+        create_time,
+        update_time,
+        create_by,
+        update_by
+        FROM t_wx_user
+        <where>
+            <if test="filter.appId!=null and filter.appId!=''">
+                AND app_id LIKE CONCAT( '%', #{filter.appId} , '%' )
+            </if>
+            <if test="filter.openId!=null and filter.openId!=''">
+                AND open_id LIKE CONCAT( '%', #{filter.openId} , '%' )
+            </if>
+        </where>
+        ORDER BY update_time DESC
+    </select>
+
+    <select id="detail" resultType="com.zhengqing.wxmp.model.vo.WxUserDetailVO">
+        SELECT
+        id,
+        app_id,
+        open_id,
+        nickname,
+        head_img_url,
+        create_time,
+        update_time,
+        create_by,
+        update_by
+        FROM t_wx_user
+        <where>
+            <if test="filter.appId!=null and filter.appId!=''">
+                AND app_id LIKE CONCAT( '%', #{filter.appId} , '%' )
+            </if>
+            <if test="filter.openId!=null and filter.openId!=''">
+                AND open_id LIKE CONCAT( '%', #{filter.openId} , '%' )
+            </if>
+        </where>
+        ORDER BY update_time DESC
+    </select>
+
+</mapper>
