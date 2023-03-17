@@ -4,8 +4,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
+import com.zhengqing.wxmp.model.dto.WxMpAccountListDTO;
 import com.zhengqing.wxmp.model.dto.WxMpAccountPageDTO;
 import com.zhengqing.wxmp.model.dto.WxMpAccountSaveDTO;
+import com.zhengqing.wxmp.model.vo.WxMpAccountListVO;
 import com.zhengqing.wxmp.model.vo.WxMpAccountPageVO;
 import com.zhengqing.wxmp.service.IWxMpAccountService;
 import io.swagger.annotations.Api;
@@ -13,6 +15,8 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 /**
@@ -34,6 +38,12 @@ public class WxMpAccountController extends BaseController {
     @ApiOperation("分页列表")
     public IPage<WxMpAccountPageVO> page(@Validated @ModelAttribute WxMpAccountPageDTO params) {
         return this.wxAccountService.page(params);
+    }
+
+    @GetMapping("list")
+    @ApiOperation("分页列表")
+    public List<WxMpAccountListVO> list(@Validated @ModelAttribute WxMpAccountListDTO params) {
+        return this.wxAccountService.list(params);
     }
 
     @PostMapping("add")

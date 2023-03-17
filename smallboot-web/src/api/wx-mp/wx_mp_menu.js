@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-const BASE_API = '/web/api/wx/mp/menu/xxx'
+const BASE_API = '/web/api/wx/mp/menu'
 
 export default {
   detail(query) {

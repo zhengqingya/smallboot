@@ -19,21 +19,21 @@ import org.springframework.web.bind.annotation.*;
  */
 @AllArgsConstructor
 @RestController
-@RequestMapping(ServiceConstant.SERVICE_API_PREFIX_WEB_WXMP + "/menu/{appId}")
+@RequestMapping(ServiceConstant.SERVICE_API_PREFIX_WEB_WXMP + "/menu")
 @Api(tags = {"微信公众号-自定义菜单"})
 public class WxMpMenuController {
     private final WxMpService wxService;
 
     @GetMapping("/detail")
     @ApiOperation("详情")
-    public WxMpMenu detail(@PathVariable String appId) throws WxErrorException {
-        return this.wxService.switchoverTo(appId).getMenuService().menuGet();
+    public WxMpMenu detail(@CookieValue String appid) throws WxErrorException {
+        return this.wxService.switchoverTo(appid).getMenuService().menuGet();
     }
 
     @PutMapping("/update")
     @ApiOperation("更新")
-    public void update(@PathVariable String appId, @RequestBody WxMenu menu) throws WxErrorException {
-        this.wxService.switchoverTo(appId).getMenuService().menuCreate(menu);
+    public void update(@CookieValue String appid, @RequestBody WxMenu menu) throws WxErrorException {
+        this.wxService.switchoverTo(appid).getMenuService().menuCreate(menu);
     }
 
 }

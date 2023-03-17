@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">
+  <base-wraper>
     <el-row :gutter="15" style="height: 100%">
       <el-col :span="4" style="height: 100%">
         <base-wraper>
@@ -77,7 +77,7 @@
       </el-col>
     </el-row>
     <edit-menu ref="edit" @handleSucc="getMenuTree" />
-  </div>
+  </base-wraper>
 </template>
 <script>
 import EditMenu from './edit.vue'

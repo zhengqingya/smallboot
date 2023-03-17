@@ -3,9 +3,13 @@ package com.zhengqing.wxmp.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhengqing.wxmp.entity.WxMpAccount;
+import com.zhengqing.wxmp.model.dto.WxMpAccountListDTO;
 import com.zhengqing.wxmp.model.dto.WxMpAccountPageDTO;
 import com.zhengqing.wxmp.model.dto.WxMpAccountSaveDTO;
+import com.zhengqing.wxmp.model.vo.WxMpAccountListVO;
 import com.zhengqing.wxmp.model.vo.WxMpAccountPageVO;
+
+import java.util.List;
 
 /**
  * <p>  微信公众号-账号 服务类 </p>
@@ -25,6 +29,16 @@ public interface IWxMpAccountService extends IService<WxMpAccount> {
      * @date 2023/03/15 18:30
      */
     IPage<WxMpAccountPageVO> page(WxMpAccountPageDTO params);
+
+    /**
+     * 列表
+     *
+     * @param params 查询参数
+     * @return 查询结果
+     * @author zhengqingya
+     * @date 2023/03/15 18:30
+     */
+    List<WxMpAccountListVO> list(WxMpAccountListDTO params);
 
     /**
      * 新增或更新

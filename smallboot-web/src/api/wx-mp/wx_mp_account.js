@@ -11,6 +11,14 @@ export default {
       headers,
     })
   },
+  list(query, headers) {
+    return request({
+      url: BASE_API + '/list',
+      method: 'get',
+      params: query,
+      headers,
+    })
+  },
   add(form) {
     return request({
       url: BASE_API + '/add',

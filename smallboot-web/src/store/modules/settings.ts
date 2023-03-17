@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { SettingState } from '@/types/store/setting'
+
 import { localStorage } from '@/utils/storage'
 
 export const useSettingStore = defineStore({

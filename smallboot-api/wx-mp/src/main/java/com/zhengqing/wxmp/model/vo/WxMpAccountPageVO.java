@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 /**
- * <p>微信公众号-账号-响应参数</p>
+ * <p>微信公众号-账号-分页列表-响应参数</p>
  *
  * @author zhengqingya
  * @description
@@ -22,7 +22,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@ApiModel("微信公众号-账号-响应参数")
+@ApiModel("微信公众号-账号-分页列表-响应参数")
 public class WxMpAccountPageVO extends BaseVO {
 
     @ApiModelProperty("主键ID")

@@ -2,7 +2,41 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhengqing.wxmp.mapper.WxMpAccountMapper">
 
+    <sql id="condition_common_where">
+        <where>
+            <if test="filter.name!=null and filter.name!=''">
+                AND name LIKE CONCAT( '%', #{filter.name} , '%' )
+            </if>
+            <if test="filter.account!=null and filter.account!=''">
+                AND account LIKE CONCAT( '%', #{filter.account} , '%' )
+            </if>
+            <if test="filter.appId!=null and filter.appId!=''">
+                AND app_id LIKE CONCAT( '%', #{filter.appId} , '%' )
+            </if>
+        </where>
+    </sql>
+
     <select id="selectDataPage" resultType="com.zhengqing.wxmp.model.vo.WxMpAccountPageVO">
+        SELECT id,
+        name,
+        type,
+        account,
+        app_id,
+        app_secret,
+        url,
+        token,
+        aes_key,
+        qr_code_url,
+        create_time,
+        update_time,
+        create_by,
+        update_by
+        FROM t_wx_mp_account
+        <include refid="condition_common_where"/>
+        ORDER BY update_time DESC
+    </select>
+
+    <select id="selectDataList" resultType="com.zhengqing.wxmp.model.vo.WxMpAccountListVO">
         SELECT
         id,
         name,
@@ -19,17 +53,7 @@
         create_by,
         update_by
         FROM t_wx_mp_account
-        <where>
-            <if test="filter.name!=null and filter.name!=''">
-                AND name LIKE CONCAT( '%', #{filter.name} , '%' )
-            </if>
-            <if test="filter.account!=null and filter.account!=''">
-                AND account LIKE CONCAT( '%', #{filter.account} , '%' )
-            </if>
-            <if test="filter.appId!=null and filter.appId!=''">
-                AND app_id LIKE CONCAT( '%', #{filter.appId} , '%' )
-            </if>
-        </where>
+        <include refid="condition_common_where"/>
         ORDER BY update_time DESC
     </select>
 

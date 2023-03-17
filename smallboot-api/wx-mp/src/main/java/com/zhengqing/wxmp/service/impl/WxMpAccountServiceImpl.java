@@ -5,8 +5,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhengqing.wxmp.entity.WxMpAccount;
 import com.zhengqing.wxmp.mapper.WxMpAccountMapper;
+import com.zhengqing.wxmp.model.dto.WxMpAccountListDTO;
 import com.zhengqing.wxmp.model.dto.WxMpAccountPageDTO;
 import com.zhengqing.wxmp.model.dto.WxMpAccountSaveDTO;
+import com.zhengqing.wxmp.model.vo.WxMpAccountListVO;
 import com.zhengqing.wxmp.model.vo.WxMpAccountPageVO;
 import com.zhengqing.wxmp.service.IWxMpAccountService;
 import lombok.RequiredArgsConstructor;
@@ -38,6 +40,11 @@ public class WxMpAccountServiceImpl extends ServiceImpl<WxMpAccountMapper, WxMpA
         List<WxMpAccountPageVO> list = result.getRecords();
         list.forEach(WxMpAccountPageVO::handleData);
         return result;
+    }
+
+    @Override
+    public List<WxMpAccountListVO> list(WxMpAccountListDTO params) {
+        return this.wxMpAccountMapper.selectDataList(params);
     }
 
     @Override
