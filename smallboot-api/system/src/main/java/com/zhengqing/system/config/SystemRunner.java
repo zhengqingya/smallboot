@@ -29,7 +29,7 @@ public class SystemRunner extends AppCommonRunner {
     public void run(String... args) throws Exception {
         super.appRun();
 
-        log.info("服务初始化之后，执行方法 start...");
+//        log.info("服务初始化之后，执行方法 start...");
 
         // 数据字典
         this.dictService.initCache();
@@ -37,7 +37,7 @@ public class SystemRunner extends AppCommonRunner {
         // 权限缓存
         this.sysPermissionBusinessService.refreshRedisPerm();
 
-        log.info("服务初始化之后，执行方法 end...");
+//        log.info("服务初始化之后，执行方法 end...");
     }
 
 }

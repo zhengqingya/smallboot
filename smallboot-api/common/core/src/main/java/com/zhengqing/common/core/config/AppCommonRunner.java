@@ -18,9 +18,9 @@ import org.springframework.stereotype.Component;
 public abstract class AppCommonRunner implements CommandLineRunner {
 
     public void appRun() {
-        log.info("《AppCommonRunner》: 服务初始化之后，执行方法 start...");
+//        log.info("《AppCommonRunner》: 服务初始化之后，执行方法 start...");
 
-        log.info("《AppCommonRunner》: 服务初始化之后，执行方法 end...");
+//        log.info("《AppCommonRunner》: 服务初始化之后，执行方法 end...");
     }
 
 }

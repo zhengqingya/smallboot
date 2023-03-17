@@ -44,7 +44,8 @@ public interface BaseConstant {
     List<String> RETURN_VALUE_HANDLER_EXCLUDE_API_LIST = Lists.newArrayList(
             "*:/rpc/client/**/*",
             "POST:/oauth/token",
-            "POST:/auth/oauth/token"
+            "POST:/auth/oauth/token",
+            "*:/wx/portal/*"
     );
 
 }
