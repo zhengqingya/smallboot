@@ -3,9 +3,7 @@ package com.zhengqing.wxmp.api;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.core.api.BaseController;
-import com.zhengqing.wxmp.model.dto.WxMpTemplateMsgDetailDTO;
 import com.zhengqing.wxmp.model.dto.WxMpTemplateMsgPageDTO;
-import com.zhengqing.wxmp.model.vo.WxMpTemplateMsgDetailVO;
 import com.zhengqing.wxmp.model.vo.WxMpTemplateMsgPageVO;
 import com.zhengqing.wxmp.service.IWxMpTemplateMsgService;
 import io.swagger.annotations.Api;
@@ -24,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(ServiceConstant.SERVICE_API_PREFIX_WEB_WXMP + "/templateMsg")
+@RequestMapping(ServiceConstant.SERVICE_API_PREFIX_WEB_WXMP + "/templateMsg/{appId}")
 @Api(tags = {"微信公众号-模板消息"})
 public class WxMpTemplateMsgController extends BaseController {
 
@@ -32,20 +30,15 @@ public class WxMpTemplateMsgController extends BaseController {
 
     @GetMapping("page")
     @ApiOperation("分页列表")
-    public IPage<WxMpTemplateMsgPageVO> page(@Validated @ModelAttribute WxMpTemplateMsgPageDTO params) {
+    public IPage<WxMpTemplateMsgPageVO> page(@PathVariable String appId, @Validated @ModelAttribute WxMpTemplateMsgPageDTO params) {
+        params.setAppId(appId);
         return this.wxTemplateMsgService.page(params);
     }
 
-    @GetMapping("detail")
-    @ApiOperation("详情")
-    public WxMpTemplateMsgDetailVO detail(@Validated @ModelAttribute WxMpTemplateMsgDetailDTO params) {
-        return this.wxTemplateMsgService.detail(params);
-    }
-
-    @DeleteMapping("delete")
-    @ApiOperation("删除")
-    public void delete(@RequestParam Integer id) {
-        this.wxTemplateMsgService.deleteData(id);
+    @PostMapping("sync")
+    @ApiOperation("同步模板数据")
+    public void sync(@PathVariable String appId) {
+        this.wxTemplateMsgService.sync(appId);
     }
 
 }

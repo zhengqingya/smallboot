@@ -3,10 +3,8 @@ package com.zhengqing.wxmp.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhengqing.wxmp.entity.WxMpTemplateMsg;
-import com.zhengqing.wxmp.model.dto.WxMpTemplateMsgDetailDTO;
 import com.zhengqing.wxmp.model.dto.WxMpTemplateMsgPageDTO;
 import com.zhengqing.wxmp.model.dto.WxMpTemplateMsgSaveDTO;
-import com.zhengqing.wxmp.model.vo.WxMpTemplateMsgDetailVO;
 import com.zhengqing.wxmp.model.vo.WxMpTemplateMsgPageVO;
 
 /**
@@ -29,16 +27,6 @@ public interface IWxMpTemplateMsgService extends IService<WxMpTemplateMsg> {
     IPage<WxMpTemplateMsgPageVO> page(WxMpTemplateMsgPageDTO params);
 
     /**
-     * 详情
-     *
-     * @param params 查询参数
-     * @return 详情
-     * @author zhengqingya
-     * @date 2023/03/15 18:29
-     */
-    WxMpTemplateMsgDetailVO detail(WxMpTemplateMsgDetailDTO params);
-
-    /**
      * 新增或更新
      *
      * @param params 保存参数
@@ -49,13 +37,13 @@ public interface IWxMpTemplateMsgService extends IService<WxMpTemplateMsg> {
     void addOrUpdateData(WxMpTemplateMsgSaveDTO params);
 
     /**
-     * 删除数据
+     * 同步公众号模板数据
      *
-     * @param id 主键ID
+     * @param appId
      * @return void
      * @author zhengqingya
-     * @date 2023/03/15 18:29
+     * @date 2023/3/20 10:08
      */
-    void deleteData(Integer id);
+    void sync(String appId);
 
 }

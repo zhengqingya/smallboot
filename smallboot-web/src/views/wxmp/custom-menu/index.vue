@@ -1,6 +1,5 @@
 <template>
   <base-wraper>
-    <wx-mp-account />
     <div class="app-container" v-if="menu != null">
       <!-- 左边配置 -->
       <div class="left">
@@ -83,12 +82,8 @@
   </base-wraper>
 </template>
 <script>
-import WxMpAccount from '../component/WxMpAccount.vue'
 export default {
   name: 'WxMpMenu',
-  components: {
-    WxMpAccount,
-  },
   data() {
     return {
       selectedMenuLevel: null, // 选中的菜单级别
@@ -98,7 +93,7 @@ export default {
       menu: null, // 所有菜单数据
     }
   },
-  created() {
+  mounted() {
     this.init()
   },
   methods: {

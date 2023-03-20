@@ -1,7 +1,8 @@
 <template>
-  <div class="wx-mp-account">
+  <div class="wx-mp-account" v-show="$route.path.indexOf('/wx/mp') === 0 && !this.$route.path.includes('/wx/mp/account')">
     <div class="box">
-      <p>请选择公众号：</p>
+      <!-- <p>{{ $route.path }}</p> -->
+      <span>请选择公众号：</span>
       <el-select v-model="appId" placeholder="请选择账号" @change="changeData">
         <el-option v-for="item in list" :key="item.appId" :label="item.name" :value="item.appId" />
       </el-select>
@@ -33,9 +34,11 @@ export default {
       if (this.appId == null) {
         this.appId = this.list[0].appId
       }
+      this.changeData()
     },
     changeData() {
       localStorage.set('appId', this.appId)
+      // alert(localStorage.get('appId'))
     },
   },
 }
@@ -46,8 +49,10 @@ export default {
 
   .box {
     position: absolute;
-    right: 10px;
+    right: 200px;
     top: 10px;
+    text-align: center;
+
     background: #08c0ee8c;
     border-radius: 10%;
 

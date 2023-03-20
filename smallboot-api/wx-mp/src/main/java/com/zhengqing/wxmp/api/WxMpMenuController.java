@@ -26,14 +26,14 @@ public class WxMpMenuController {
 
     @GetMapping("/detail")
     @ApiOperation("详情")
-    public WxMpMenu detail(@CookieValue String appid) throws WxErrorException {
-        return this.wxService.switchoverTo(appid).getMenuService().menuGet();
+    public WxMpMenu detail(@RequestHeader String appId) throws WxErrorException {
+        return this.wxService.switchoverTo(appId).getMenuService().menuGet();
     }
 
     @PutMapping("/update")
     @ApiOperation("更新")
-    public void update(@CookieValue String appid, @RequestBody WxMenu menu) throws WxErrorException {
-        this.wxService.switchoverTo(appid).getMenuService().menuCreate(menu);
+    public void update(@RequestHeader String appId, @RequestBody WxMenu menu) throws WxErrorException {
+        this.wxService.switchoverTo(appId).getMenuService().menuCreate(menu);
     }
 
 }

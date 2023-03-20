@@ -24,6 +24,8 @@ service.interceptors.request.use(
     }
     // 租户ID
     config.headers['TENANT_ID'] = '1'
+    // 微信公众号appId
+    config.headers['appId'] = localStorage.get('appId')
     return config
   },
   (error) => {

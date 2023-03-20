@@ -4,6 +4,8 @@
 
     <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
 
+    <wx-mp-account />
+
     <div class="right-menu">
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div>
@@ -42,6 +44,7 @@ import useStore from '@/store'
 // 组件依赖
 import Breadcrumb from '@/components/Breadcrumb/index.vue'
 import Hamburger from '@/components/Hamburger/index.vue'
+import WxMpAccount from '@/components/WxMpAccount/index.vue'
 
 const { app, user, tagsView } = useStore()
 

@@ -1,5 +1,6 @@
 package com.zhengqing.wxmp.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zhengqing.common.base.model.dto.BaseDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -8,8 +9,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-
-import javax.validation.constraints.NotBlank;
 
 /**
  * <p> 微信公众号-模板消息-分页列表-请求参数 </p>
@@ -26,8 +25,8 @@ import javax.validation.constraints.NotBlank;
 @ApiModel("微信公众号-模板消息-分页列表-请求参数")
 public class WxMpTemplateMsgPageDTO extends BaseDTO {
 
-    @NotBlank(message = "AppID不能为空！")
-    @ApiModelProperty("AppID")
+    @JsonIgnore
+    @ApiModelProperty(value = "AppID", hidden = true)
     private String appId;
 
     @ApiModelProperty("模板标题")

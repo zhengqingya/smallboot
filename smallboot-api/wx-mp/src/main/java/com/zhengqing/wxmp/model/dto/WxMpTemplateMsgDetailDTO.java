@@ -1,5 +1,6 @@
 package com.zhengqing.wxmp.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zhengqing.common.base.model.dto.BaseDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -27,7 +28,8 @@ public class WxMpTemplateMsgDetailDTO extends BaseDTO {
     @ApiModelProperty("主键ID")
     private Integer id;
 
-    @ApiModelProperty("AppID")
+    @JsonIgnore
+    @ApiModelProperty(value = "AppID", hidden = true)
     private String appId;
 
     @ApiModelProperty("模板ID")
