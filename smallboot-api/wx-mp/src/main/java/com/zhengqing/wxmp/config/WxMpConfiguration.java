@@ -4,7 +4,6 @@ import com.zhengqing.wxmp.handler.*;
 import lombok.AllArgsConstructor;
 import me.chanjar.weixin.mp.api.WxMpMessageRouter;
 import me.chanjar.weixin.mp.api.WxMpService;
-import me.chanjar.weixin.mp.api.impl.WxMpServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -67,12 +66,6 @@ public class WxMpConfiguration {
 //                }).collect(Collectors.toMap(WxMpDefaultConfigImpl::getAppId, a -> a, (o, n) -> o)));
 //        return service;
 //    }
-    @Bean
-    public WxMpService wxMpService() {
-        WxMpService wxMpService = new WxMpServiceImpl();
-        wxMpService.setMaxRetryTimes(3);
-        return wxMpService;
-    }
 
     @Bean
     public WxMpMessageRouter messageRouter(WxMpService wxMpService) {

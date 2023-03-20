@@ -3,9 +3,13 @@ package com.zhengqing.wxmp.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhengqing.wxmp.entity.WxMpMsgAutoReply;
+import com.zhengqing.wxmp.model.dto.WxMpMsgAutoReplyListDTO;
 import com.zhengqing.wxmp.model.dto.WxMpMsgAutoReplyPageDTO;
 import com.zhengqing.wxmp.model.dto.WxMpMsgAutoReplySaveDTO;
+import com.zhengqing.wxmp.model.vo.WxMpMsgAutoReplyListVO;
 import com.zhengqing.wxmp.model.vo.WxMpMsgAutoReplyPageVO;
+
+import java.util.List;
 
 /**
  * <p>  微信公众号-消息自动回复 服务类 </p>
@@ -25,6 +29,16 @@ public interface IWxMpMsgAutoReplyService extends IService<WxMpMsgAutoReply> {
      * @date 2023/03/15 18:30
      */
     IPage<WxMpMsgAutoReplyPageVO> page(WxMpMsgAutoReplyPageDTO params);
+
+    /**
+     * 列表
+     *
+     * @param params 查询参数
+     * @return 查询结果
+     * @author zhengqingya
+     * @date 2023/03/15 18:30
+     */
+    List<WxMpMsgAutoReplyListVO> list(WxMpMsgAutoReplyListDTO params);
 
     /**
      * 新增或更新

@@ -4,7 +4,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.zhengqing.common.db.entity.BaseEntity;
-import com.zhengqing.wxmp.enums.WxMpMsgAutoReplyTypeEnum;
+import com.zhengqing.wxmp.enums.WxMpAutoReplyMsgTypeEnum;
+import com.zhengqing.wxmp.enums.WxMpAutoReplyTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -36,7 +37,7 @@ public class WxMpMsgAutoReply extends BaseEntity<WxMpMsgAutoReply> {
     private String name;
 
     /**
-     * {@link WxMpMsgAutoReplyTypeEnum}
+     * {@link WxMpAutoReplyTypeEnum}
      */
     @ApiModelProperty("类型（1：关注时回复；2：关键词回复）")
     private Byte type;
@@ -44,9 +45,12 @@ public class WxMpMsgAutoReply extends BaseEntity<WxMpMsgAutoReply> {
     @ApiModelProperty("关键词")
     private String matchValue;
 
-    @ApiModelProperty("是否精确匹配（0：否；1：是）")
-    private Byte isExactMatch;
+    @ApiModelProperty("是否精确匹配（false：否；true：是）")
+    private Boolean isExactMatch;
 
+    /**
+     * {@link WxMpAutoReplyMsgTypeEnum}
+     */
     @ApiModelProperty("回复消息类型（text：文本；image：图片；voice：语音；video：视频；music：音乐；news：图文）")
     private String replyType;
 

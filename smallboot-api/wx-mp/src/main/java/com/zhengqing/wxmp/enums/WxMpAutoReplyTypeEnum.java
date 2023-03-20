@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * <p> 微信公众号-消息自动回复类型 </p>
+ * <p> 微信公众号-自动回复的来源类型 </p>
  *
  * @author zhengqingya
  * @description
@@ -17,7 +17,7 @@ import java.util.List;
  */
 @Getter
 @AllArgsConstructor
-public enum WxMpMsgAutoReplyTypeEnum {
+public enum WxMpAutoReplyTypeEnum {
 
     关注时回复((byte) 1, "关注时回复"),
     关键词回复((byte) 2, "关键词回复");
@@ -25,19 +25,19 @@ public enum WxMpMsgAutoReplyTypeEnum {
     private final Byte type;
     private final String desc;
 
-    private static final List<WxMpMsgAutoReplyTypeEnum> LIST = Lists.newArrayList();
+    private static final List<WxMpAutoReplyTypeEnum> LIST = Lists.newArrayList();
 
     static {
-        LIST.addAll(Arrays.asList(WxMpMsgAutoReplyTypeEnum.values()));
+        LIST.addAll(Arrays.asList(WxMpAutoReplyTypeEnum.values()));
     }
 
-    public static WxMpMsgAutoReplyTypeEnum getEnum(Byte type) {
-        for (WxMpMsgAutoReplyTypeEnum itemEnum : LIST) {
+    public static WxMpAutoReplyTypeEnum getEnum(Byte type) {
+        for (WxMpAutoReplyTypeEnum itemEnum : LIST) {
             if (itemEnum.getType().equals(type)) {
                 return itemEnum;
             }
         }
-        throw new MyException("未找到指定的微信公众号消息自动回复类型！");
+        throw new MyException("未找到指定的微信公众号自动回复的来源类型！");
     }
 
 }

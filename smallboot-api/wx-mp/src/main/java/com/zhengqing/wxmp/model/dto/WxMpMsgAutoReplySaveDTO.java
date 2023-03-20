@@ -2,7 +2,8 @@ package com.zhengqing.wxmp.model.dto;
 
 import com.zhengqing.common.base.model.dto.BaseDTO;
 import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
-import com.zhengqing.wxmp.enums.WxMpMsgAutoReplyTypeEnum;
+import com.zhengqing.wxmp.enums.WxMpAutoReplyMsgTypeEnum;
+import com.zhengqing.wxmp.enums.WxMpAutoReplyTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -39,7 +40,7 @@ public class WxMpMsgAutoReplySaveDTO extends BaseDTO {
     private String name;
 
     /**
-     * {@link WxMpMsgAutoReplyTypeEnum}
+     * {@link WxMpAutoReplyTypeEnum}
      */
     @ApiModelProperty("类型（1：关注时回复；2：关键词回复）")
     private Byte type;
@@ -47,9 +48,12 @@ public class WxMpMsgAutoReplySaveDTO extends BaseDTO {
     @ApiModelProperty("关键词")
     private String matchValue;
 
-    @ApiModelProperty("是否精确匹配（0：否；1：是）")
-    private Byte isExactMatch;
+    @ApiModelProperty("是否精确匹配（false：否；true：是）")
+    private Boolean isExactMatch;
 
+    /**
+     * {@link WxMpAutoReplyMsgTypeEnum}
+     */
     @ApiModelProperty("回复消息类型（text：文本；image：图片；voice：语音；video：视频；music：音乐；news：图文）")
     private String replyType;
 

@@ -5,8 +5,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhengqing.wxmp.entity.WxMpMsgAutoReply;
 import com.zhengqing.wxmp.mapper.WxMpMsgAutoReplyMapper;
+import com.zhengqing.wxmp.model.dto.WxMpMsgAutoReplyListDTO;
 import com.zhengqing.wxmp.model.dto.WxMpMsgAutoReplyPageDTO;
 import com.zhengqing.wxmp.model.dto.WxMpMsgAutoReplySaveDTO;
+import com.zhengqing.wxmp.model.vo.WxMpMsgAutoReplyListVO;
 import com.zhengqing.wxmp.model.vo.WxMpMsgAutoReplyPageVO;
 import com.zhengqing.wxmp.service.IWxMpMsgAutoReplyService;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +41,11 @@ public class WxMpMsgAutoReplyServiceImpl extends ServiceImpl<WxMpMsgAutoReplyMap
     }
 
     @Override
+    public List<WxMpMsgAutoReplyListVO> list(WxMpMsgAutoReplyListDTO params) {
+        return this.wxMpMsgAutoReplyMapper.list(params);
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public void addOrUpdateData(WxMpMsgAutoReplySaveDTO params) {
         Integer id = params.getId();
@@ -46,7 +53,7 @@ public class WxMpMsgAutoReplyServiceImpl extends ServiceImpl<WxMpMsgAutoReplyMap
         String name = params.getName();
         Byte type = params.getType();
         String matchValue = params.getMatchValue();
-        Byte isExactMatch = params.getIsExactMatch();
+        Boolean isExactMatch = params.getIsExactMatch();
         String replyType = params.getReplyType();
         String replyContent = params.getReplyContent();
 

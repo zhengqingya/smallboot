@@ -34,4 +34,21 @@
         ORDER BY update_time DESC
     </select>
 
+    <select id="list" resultType="com.zhengqing.wxmp.model.vo.WxMpMsgAutoReplyListVO">
+        SELECT
+        name,
+        type,
+        match_value,
+        is_exact_match,
+        reply_type,
+        reply_content
+        FROM t_wx_mp_msg_auto_reply
+        <where>
+            <if test="filter.appId!=null and filter.appId!=''">
+                AND app_id LIKE CONCAT( '%', #{filter.appId} , '%' )
+            </if>
+        </where>
+        ORDER BY update_time DESC
+    </select>
+
 </mapper>
