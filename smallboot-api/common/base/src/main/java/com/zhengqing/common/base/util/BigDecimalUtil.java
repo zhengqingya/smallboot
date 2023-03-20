@@ -125,6 +125,19 @@ public class BigDecimalUtil {
     }
 
     /**
+     * 除法(向上取整)
+     *
+     * @param num1 数1
+     * @param num2 数2
+     * @return 计算结果 = 数1 / 数2
+     * @author zhengqingya
+     * @date 2021/8/24 10:54
+     */
+    public static int divide(int num1, int num2) {
+        return new BigDecimal(num1).divide(new BigDecimal(num2), 0, BigDecimal.ROUND_UP).intValue();
+    }
+
+    /**
      * 除法(默认四舍五入保留两位小数)
      *
      * @param num1 数1

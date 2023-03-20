@@ -170,6 +170,20 @@ public class MyDateUtil {
     }
 
     /**
+     * long(10位-秒级别) 转 Date
+     *
+     * @param time 时间
+     * @return Date时间
+     * @author zhengqingya
+     * @date 2020/8/22 13:07
+     */
+    @SneakyThrows(Exception.class)
+    public static Date longToDate(long time) {
+        return new Date(time * 1000);
+    }
+
+
+    /**
      * 获取服务器启动时间
      */
     public static Date getServerStartDate() {

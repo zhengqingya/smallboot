@@ -25,30 +25,4 @@
         ORDER BY update_time DESC
     </select>
 
-    <select id="detail" resultType="com.zhengqing.wxmp.model.vo.WxMpTemplateMsgDetailVO">
-        SELECT
-        id,
-        app_id,
-        tpl_id,
-        title,
-        content,
-        create_time,
-        update_time,
-        create_by,
-        update_by
-        FROM t_wx_mp_template_msg
-        <where>
-            <if test="filter.id!=null">
-                AND id = #{filter.id}
-            </if>
-            <if test="filter.appId!=null and filter.appId!=''">
-                AND app_id LIKE CONCAT( '%', #{filter.appId} , '%' )
-            </if>
-            <if test="filter.tplId!=null and filter.tplId!=''">
-                AND tpl_id LIKE CONCAT( '%', #{filter.tplId} , '%' )
-            </if>
-        </where>
-        ORDER BY update_time DESC
-    </select>
-
 </mapper>

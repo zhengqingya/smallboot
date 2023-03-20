@@ -39,7 +39,7 @@ public interface IWxMpTemplateMsgService extends IService<WxMpTemplateMsg> {
     /**
      * 同步公众号模板数据
      *
-     * @param appId
+     * @param appId 公众号appId
      * @return void
      * @author zhengqingya
      * @date 2023/3/20 10:08

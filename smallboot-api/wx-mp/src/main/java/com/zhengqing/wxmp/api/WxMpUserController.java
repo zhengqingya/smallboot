@@ -3,11 +3,7 @@ package com.zhengqing.wxmp.api;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.core.api.BaseController;
-import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
-import com.zhengqing.wxmp.model.dto.WxMpUserDetailDTO;
 import com.zhengqing.wxmp.model.dto.WxMpUserPageDTO;
-import com.zhengqing.wxmp.model.dto.WxMpUserSaveDTO;
-import com.zhengqing.wxmp.model.vo.WxMpUserDetailVO;
 import com.zhengqing.wxmp.model.vo.WxMpUserPageVO;
 import com.zhengqing.wxmp.service.IWxMpUserService;
 import io.swagger.annotations.Api;
@@ -38,29 +34,10 @@ public class WxMpUserController extends BaseController {
         return this.wxUserService.page(params);
     }
 
-    @GetMapping("detail")
-    @ApiOperation("详情")
-    public WxMpUserDetailVO detail(@Validated @ModelAttribute WxMpUserDetailDTO params) {
-        return this.wxUserService.detail(params);
-    }
-
-    @PostMapping("add")
-    @ApiOperation("新增")
-    public void add(@Validated @RequestBody WxMpUserSaveDTO params) {
-        params.setId(null);
-        this.wxUserService.addOrUpdateData(params);
-    }
-
-    @PutMapping("update")
-    @ApiOperation("更新")
-    public void update(@Validated(UpdateGroup.class) @RequestBody WxMpUserSaveDTO params) {
-        this.wxUserService.addOrUpdateData(params);
-    }
-
-    @DeleteMapping("delete")
-    @ApiOperation("删除")
-    public void delete(@RequestParam Integer id) {
-        this.wxUserService.deleteData(id);
+    @PostMapping("sync")
+    @ApiOperation("同步公众号用户数据")
+    public void sync(@RequestHeader String appId) {
+        this.wxUserService.sync(appId);
     }
 
 }

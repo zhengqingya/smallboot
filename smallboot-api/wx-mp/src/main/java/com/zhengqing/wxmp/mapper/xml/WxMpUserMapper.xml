@@ -6,9 +6,11 @@
         SELECT
         id,
         app_id,
-        open_id,
+        openid,
         nickname,
         head_img_url,
+        subscribe_scene,
+        subscribe_time,
         create_time,
         update_time,
         create_by,
@@ -18,8 +20,8 @@
             <if test="filter.appId!=null and filter.appId!=''">
                 AND app_id LIKE CONCAT( '%', #{filter.appId} , '%' )
             </if>
-            <if test="filter.openId!=null and filter.openId!=''">
-                AND open_id LIKE CONCAT( '%', #{filter.openId} , '%' )
+            <if test="filter.openid!=null and filter.openid!=''">
+                AND openid LIKE CONCAT( '%', #{filter.openid} , '%' )
             </if>
         </where>
         ORDER BY update_time DESC
@@ -29,9 +31,11 @@
         SELECT
         id,
         app_id,
-        open_id,
+        openid,
         nickname,
         head_img_url,
+        subscribe_scene,
+        subscribe_time,
         create_time,
         update_time,
         create_by,
@@ -41,8 +45,8 @@
             <if test="filter.appId!=null and filter.appId!=''">
                 AND app_id LIKE CONCAT( '%', #{filter.appId} , '%' )
             </if>
-            <if test="filter.openId!=null and filter.openId!=''">
-                AND open_id LIKE CONCAT( '%', #{filter.openId} , '%' )
+            <if test="filter.openid!=null and filter.openid!=''">
+                AND openid LIKE CONCAT( '%', #{filter.openid} , '%' )
             </if>
         </where>
         ORDER BY update_time DESC

@@ -4,9 +4,12 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.zhengqing.common.db.entity.BaseEntity;
+import com.zhengqing.wxmp.enums.WxMpUserSubscribeSceneEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+
+import java.util.Date;
 
 /**
  * <p>  微信公众号-用户 </p>
@@ -32,12 +35,21 @@ public class WxMpUser extends BaseEntity<WxMpUser> {
     private String appId;
 
     @ApiModelProperty("微信openid")
-    private String openId;
+    private String openid;
 
     @ApiModelProperty("昵称")
     private String nickname;
 
     @ApiModelProperty("头像")
     private String headImgUrl;
+
+    /**
+     * {@link WxMpUserSubscribeSceneEnum}
+     */
+    @ApiModelProperty("用户关注的渠道来源")
+    private String subscribeScene;
+
+    @ApiModelProperty("关注时间")
+    private Date subscribeTime;
 
 }

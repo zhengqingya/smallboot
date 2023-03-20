@@ -1,6 +1,7 @@
 package com.zhengqing.wxmp.model.vo;
 
 import com.zhengqing.common.base.model.vo.BaseVO;
+import com.zhengqing.wxmp.enums.WxMpUserSubscribeSceneEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -8,6 +9,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+
+import java.util.Date;
 
 /**
  * <p>微信公众号-用户-分页列表-响应参数</p>
@@ -31,7 +34,7 @@ public class WxMpUserPageVO extends BaseVO {
     private String appId;
 
     @ApiModelProperty("微信openid")
-    private String openId;
+    private String openid;
 
     @ApiModelProperty("昵称")
     private String nickname;
@@ -39,8 +42,20 @@ public class WxMpUserPageVO extends BaseVO {
     @ApiModelProperty("头像")
     private String headImgUrl;
 
-    public void handleData() {
+    /**
+     * {@link WxMpUserSubscribeSceneEnum}
+     */
+    @ApiModelProperty("用户关注的渠道来源")
+    private String subscribeScene;
 
+    @ApiModelProperty("用户关注的渠道来源")
+    private String subscribeSceneName;
+
+    @ApiModelProperty("关注时间")
+    private Date subscribeTime;
+
+    public void handleData() {
+        this.subscribeSceneName = WxMpUserSubscribeSceneEnum.getEnum(this.subscribeScene).getDesc();
     }
 
 }

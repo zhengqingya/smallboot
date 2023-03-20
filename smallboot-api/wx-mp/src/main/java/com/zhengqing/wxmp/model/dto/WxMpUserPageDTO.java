@@ -31,6 +31,6 @@ public class WxMpUserPageDTO extends BaseDTO {
     private String appId;
 
     @ApiModelProperty("微信openid")
-    private String openId;
+    private String openid;
 
 }
