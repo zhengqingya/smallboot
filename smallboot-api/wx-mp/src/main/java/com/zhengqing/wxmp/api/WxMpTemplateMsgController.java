@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.wxmp.model.dto.WxMpTemplateMsgPageDTO;
+import com.zhengqing.wxmp.model.dto.WxMpTemplateMsgSendDTO;
 import com.zhengqing.wxmp.model.vo.WxMpTemplateMsgPageVO;
 import com.zhengqing.wxmp.service.IWxMpTemplateMsgService;
 import io.swagger.annotations.Api;
@@ -39,6 +40,12 @@ public class WxMpTemplateMsgController extends BaseController {
     @ApiOperation("同步模板数据")
     public void sync(@PathVariable String appId) {
         this.wxTemplateMsgService.sync(appId);
+    }
+
+    @PostMapping("sendMsg")
+    @ApiOperation("发送消息")
+    public void sendMsg(@Validated @RequestBody WxMpTemplateMsgSendDTO params) {
+        this.wxTemplateMsgService.sendMsg(params);
     }
 
 }

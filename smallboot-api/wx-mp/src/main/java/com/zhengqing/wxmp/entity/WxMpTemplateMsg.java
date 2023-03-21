@@ -1,12 +1,19 @@
 package com.zhengqing.wxmp.entity;
 
+import cn.hutool.core.util.ReUtil;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.google.common.collect.Lists;
 import com.zhengqing.common.db.entity.BaseEntity;
+import com.zhengqing.wxmp.config.mybatis.handler.WxMpTemplateMsgDataTypeHandler;
+import com.zhengqing.wxmp.model.bo.WxMpTemplateMsgDataBO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+
+import java.util.List;
 
 /**
  * <p>  微信公众号-模板消息 </p>
@@ -39,5 +46,20 @@ public class WxMpTemplateMsg extends BaseEntity<WxMpTemplateMsg> {
 
     @ApiModelProperty("模板内容")
     private String content;
+
+    @ApiModelProperty("模板数据")
+    @TableField(typeHandler = WxMpTemplateMsgDataTypeHandler.class)
+    private List<WxMpTemplateMsgDataBO> dataList;
+
+    public WxMpTemplateMsg handleData() {
+        this.dataList = Lists.newArrayList();
+        List<String> list = ReUtil.findAll("\\{\\{(\\w*)\\.DATA\\}\\}", this.content, 1);
+        list.forEach(item -> this.dataList.add(WxMpTemplateMsgDataBO.builder()
+                .name(item)
+                .value("")
+                .color("#000")
+                .build()));
+        return this;
+    }
 
 }

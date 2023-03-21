@@ -1,6 +1,7 @@
 package com.zhengqing.wxmp.model.vo;
 
 import com.zhengqing.common.base.model.vo.BaseVO;
+import com.zhengqing.wxmp.model.bo.WxMpTemplateMsgDataBO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -8,6 +9,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+
+import java.util.List;
 
 /**
  * <p>微信公众号-模板消息-分页列表-响应参数</p>
@@ -38,6 +41,9 @@ public class WxMpTemplateMsgPageVO extends BaseVO {
 
     @ApiModelProperty("模板内容")
     private String content;
+
+    @ApiModelProperty("模板数据")
+    private List<WxMpTemplateMsgDataBO> dataList;
 
     public void handleData() {
 

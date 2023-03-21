@@ -2,13 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhengqing.wxmp.mapper.WxMpTemplateMsgMapper">
 
-    <select id="selectDataPage" resultType="com.zhengqing.wxmp.model.vo.WxMpTemplateMsgPageVO">
+    <resultMap id="page" type="com.zhengqing.wxmp.model.vo.WxMpTemplateMsgPageVO">
+        <result column="data_list"
+                property="dataList"
+                typeHandler="com.zhengqing.wxmp.config.mybatis.handler.WxMpTemplateMsgDataTypeHandler"></result>
+    </resultMap>
+
+    <select id="selectDataPage" resultMap="page">
         SELECT
         id,
         app_id,
         tpl_id,
         title,
         content,
+        data_list,
         create_time,
         update_time,
         create_by,

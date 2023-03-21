@@ -25,10 +25,26 @@
         <base-cell-item label="AppID11">{{ form.appId }}</base-cell-item>
         <base-cell-item label="模板ID">{{ form.tplId }}</base-cell-item>
         <base-cell-item label="模板标题">{{ form.title }}</base-cell-item>
-        <base-cell-item label="模板内容">{{ form.content }}</base-cell-item>
+        <base-cell-item label="模板内容">
+          <div class="content">
+            <div class="left">
+              <el-input type="textarea" disabled autosize v-model="form.content" />
+            </div>
+            <div class="right">
+              <div v-for="item in form.dataList" :key="item.name" class="item">
+                <el-input type="textarea" autosize rows="1" v-model="item.value" placeholder="内容"></el-input>
+                <el-color-picker v-model="item.color" />
+              </div>
+            </div>
+          </div>
+        </base-cell-item>
+        <base-cell-item label="openid">
+          <el-input v-model="form.openid" />
+        </base-cell-item>
       </base-table-cell>
-      <template #footer v-if="dialogStatus !== 'detail'">
+      <template #footer>
         <el-button @click="dialogVisible = false">关闭</el-button>
+        <el-button type="primary" @click="submitForm">发送消息</el-button>
       </template>
     </base-dialog>
   </base-wraper>
@@ -55,6 +71,7 @@ export default {
     },
     handleDetail(row) {
       this.form = Object.assign({}, row)
+      this.form.openid = 'ojplN5tMax4tNacU3tKeWCnL7qEU'
       this.dialogStatus = 'detail'
       this.dialogVisible = true
     },
@@ -63,7 +80,26 @@ export default {
       this.submitOk(res.message)
       this.refreshTableData()
     },
+    async submitForm() {
+      let res = await this.$api.wx_mp_template_msg.sendMsg(this.form)
+      this.submitOk(res.message)
+    },
   },
 }
 </script>
-<style scoped></style>
+<style lang="scss" scoped>
+.content {
+  display: flex;
+  // justify-content: space-around;
+  .left {
+    width: 300px;
+  }
+  .right {
+    width: 50%;
+    margin-left: 50px;
+    .item {
+      display: flex;
+    }
+  }
+}
+</style>

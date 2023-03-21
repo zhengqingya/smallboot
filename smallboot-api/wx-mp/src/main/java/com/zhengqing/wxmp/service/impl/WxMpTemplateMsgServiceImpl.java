@@ -1,13 +1,15 @@
 package com.zhengqing.wxmp.service.impl;
 
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhengqing.wxmp.entity.WxMpTemplateMsg;
 import com.zhengqing.wxmp.mapper.WxMpTemplateMsgMapper;
+import com.zhengqing.wxmp.model.bo.WxMpTemplateMsgDataBO;
 import com.zhengqing.wxmp.model.dto.WxMpTemplateMsgPageDTO;
-import com.zhengqing.wxmp.model.dto.WxMpTemplateMsgSaveDTO;
+import com.zhengqing.wxmp.model.dto.WxMpTemplateMsgSendDTO;
 import com.zhengqing.wxmp.model.vo.WxMpTemplateMsgPageVO;
 import com.zhengqing.wxmp.service.IWxMpTemplateMsgService;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,8 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplate;
+import me.chanjar.weixin.mp.bean.template.WxMpTemplateData;
+import me.chanjar.weixin.mp.bean.template.WxMpTemplateMessage;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,25 +49,6 @@ public class WxMpTemplateMsgServiceImpl extends ServiceImpl<WxMpTemplateMsgMappe
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void addOrUpdateData(WxMpTemplateMsgSaveDTO params) {
-        Integer id = params.getId();
-        String appId = params.getAppId();
-        String tplId = params.getTplId();
-        String title = params.getTitle();
-        String content = params.getContent();
-
-        WxMpTemplateMsg.builder()
-                .id(id)
-                .appId(appId)
-                .tplId(tplId)
-                .title(title)
-                .content(content)
-                .build()
-                .insertOrUpdate();
-    }
-
-    @Override
     @SneakyThrows(Exception.class)
     @Transactional(rollbackFor = Exception.class)
     public void sync(String appId) {
@@ -80,14 +65,51 @@ public class WxMpTemplateMsgServiceImpl extends ServiceImpl<WxMpTemplateMsgMappe
 
         // 4、保存db
         List<WxMpTemplateMsg> saveList = wxMpTemplateList.stream().map(
-                item -> WxMpTemplateMsg.builder()
-                        .appId(appId)
-                        .tplId(item.getTemplateId())
-                        .title(item.getTitle())
-                        .content(item.getContent())
-                        .build()
+                item -> {
+                    WxMpTemplateMsg templateMsg = WxMpTemplateMsg.builder()
+                            .appId(appId)
+                            .tplId(item.getTemplateId())
+                            .title(item.getTitle())
+                            .content(item.getContent())
+                            .build();
+                    return templateMsg.handleData();
+                }
         ).collect(Collectors.toList());
         this.saveBatch(saveList);
+    }
+
+    @Override
+    @SneakyThrows({Exception.class})
+    @Transactional(rollbackFor = Exception.class)
+    public void sendMsg(WxMpTemplateMsgSendDTO params) {
+        Integer id = params.getId();
+        String appId = params.getAppId();
+        String tplId = params.getTplId();
+        String title = params.getTitle();
+        String content = params.getContent();
+        List<WxMpTemplateMsgDataBO> dataList = params.getDataList();
+        String openid = params.getOpenid();
+
+        // 1、保存数据
+        WxMpTemplateMsg.builder()
+                .id(id)
+                .appId(appId)
+                .tplId(tplId)
+                .title(title)
+                .content(content)
+                .dataList(dataList)
+                .build()
+                .insertOrUpdate();
+
+        // 2、发送消息
+        this.wxMpService.switchover(appId);
+        this.wxMpService.getTemplateMsgService().sendTemplateMsg(
+                WxMpTemplateMessage.builder()
+                        .templateId(tplId)
+                        .data(JSONUtil.toList(JSONUtil.toJsonStr(dataList), WxMpTemplateData.class))
+                        .toUser(openid)
+                        .build()
+        );
     }
 
 }

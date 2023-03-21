@@ -11,7 +11,7 @@
  Target Server Version : 50726 (5.7.26-log)
  File Encoding         : 65001
 
- Date: 21/03/2023 15:21:03
+ Date: 21/03/2023 18:54:33
 */
 
 SET NAMES utf8mb4;
@@ -393,18 +393,19 @@ CREATE TABLE `t_wx_mp_template_msg`  (
   `tpl_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '模板ID',
   `title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '模板标题',
   `content` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '模板内容',
+  `data_list` json NOT NULL COMMENT '模板数据',
   `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `create_by` int(11) NULL DEFAULT NULL COMMENT '创建人id',
   `update_by` int(11) NULL DEFAULT NULL COMMENT '更新人id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信公众号-模板消息' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信公众号-模板消息' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_wx_mp_template_msg
 -- ----------------------------
-INSERT INTO `t_wx_mp_template_msg` VALUES (7, 'wxe01d9bde2cc81b89', 'alASmcPvowZ2ZgaK2BWMWHMvsnXyz_tP_vQH5EEY8Kc', '早上好，单身狗☀', '{{txt1.DATA}}\n\n单身狗所在地区：{{city.DATA}}\n日期：{{date.DATA}} {{week.DATA}}\n\n{{txt2.DATA}}\n\n天气：{{wea.DATA}}\n最高气温：{{tem1.DATA}}\n最低气温：{{tem2.DATA}}\n风向：{{win.DATA}}\n风力：{{win_speed.DATA}}\n风速：{{win_meter.DATA}}\n湿度：{{humidity.DATA}}\n能见度：{{visibility.DATA}}\n气压：{{pressure.DATA}}\n空气质量：{{air.DATA}}\npm2.5含量：{{air_pm25.DATA}}\n空气等级：{{air_level.DATA}}\n温馨小提示：{{air_tips.DATA}}\n\n{{end1.DATA}}\n{{end2.DATA}}\n\n{{author.DATA}}', '2023-03-20 10:25:47', '2023-03-20 10:25:47', 1, 1);
-INSERT INTO `t_wx_mp_template_msg` VALUES (8, 'wxe01d9bde2cc81b89', 'xEUCJF0EhbiHCIttO17lyXXmCxJHX6TeI9Sq7m6WV_I', 'test', '{{txt1.DATA}}\n\n所在地区：{{city.DATA}}', '2023-03-20 10:25:47', '2023-03-20 10:25:47', 1, 1);
+INSERT INTO `t_wx_mp_template_msg` VALUES (15, 'wxe01d9bde2cc81b89', 'alASmcPvowZ2ZgaK2BWMWHMvsnXyz_tP_vQH5EEY8Kc', '早上好，单身狗☀', '{{txt1.DATA}}\n\n单身狗所在地区：{{city.DATA}}\n日期：{{date.DATA}} {{week.DATA}}\n\n{{txt2.DATA}}\n\n天气：{{wea.DATA}}\n最高气温：{{tem1.DATA}}\n最低气温：{{tem2.DATA}}\n风向：{{win.DATA}}\n风力：{{win_speed.DATA}}\n风速：{{win_meter.DATA}}\n湿度：{{humidity.DATA}}\n能见度：{{visibility.DATA}}\n气压：{{pressure.DATA}}\n空气质量：{{air.DATA}}\npm2.5含量：{{air_pm25.DATA}}\n空气等级：{{air_level.DATA}}\n温馨小提示：{{air_tips.DATA}}\n\n{{end1.DATA}}\n{{end2.DATA}}\n\n{{author.DATA}}', '[{\"name\": \"txt1\", \"color\": \"#000\", \"value\": \"\"}, {\"name\": \"city\", \"color\": \"#000\", \"value\": \"\"}, {\"name\": \"date\", \"color\": \"#000\", \"value\": \"\"}, {\"name\": \"week\", \"color\": \"#000\", \"value\": \"\"}, {\"name\": \"txt2\", \"color\": \"#000\", \"value\": \"\"}, {\"name\": \"wea\", \"color\": \"#000\", \"value\": \"\"}, {\"name\": \"tem1\", \"color\": \"#000\", \"value\": \"\"}, {\"name\": \"tem2\", \"color\": \"#000\", \"value\": \"\"}, {\"name\": \"win\", \"color\": \"#000\", \"value\": \"\"}, {\"name\": \"win_speed\", \"color\": \"#000\", \"value\": \"\"}, {\"name\": \"win_meter\", \"color\": \"#000\", \"value\": \"\"}, {\"name\": \"humidity\", \"color\": \"#000\", \"value\": \"\"}, {\"name\": \"visibility\", \"color\": \"#000\", \"value\": \"\"}, {\"name\": \"pressure\", \"color\": \"#000\", \"value\": \"\"}, {\"name\": \"air\", \"color\": \"#000\", \"value\": \"\"}, {\"name\": \"air_pm25\", \"color\": \"#000\", \"value\": \"\"}, {\"name\": \"air_level\", \"color\": \"#000\", \"value\": \"\"}, {\"name\": \"air_tips\", \"color\": \"#000\", \"value\": \"\"}, {\"name\": \"end1\", \"color\": \"#000\", \"value\": \"\"}, {\"name\": \"end2\", \"color\": \"#000\", \"value\": \"\"}, {\"name\": \"author\", \"color\": \"#000\", \"value\": \"\"}]', '2023-03-21 18:52:15', '2023-03-21 18:52:15', 1, 1);
+INSERT INTO `t_wx_mp_template_msg` VALUES (16, 'wxe01d9bde2cc81b89', 'xEUCJF0EhbiHCIttO17lyXXmCxJHX6TeI9Sq7m6WV_I', 'test', '{{txt1.DATA}}\n\n所在地区：{{city.DATA}}', '[{\"name\": \"txt1\", \"color\": \"#E60E0E\", \"value\": \"测试\"}, {\"name\": \"city\", \"color\": \"#15F4D6\", \"value\": \"四川成都\"}]', '2023-03-21 18:52:15', '2023-03-21 18:54:12', 1, 1);
 
 -- ----------------------------
 -- Table structure for t_wx_mp_user

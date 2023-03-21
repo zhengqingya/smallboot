@@ -15,7 +15,7 @@
       <el-table-column label="关键词" prop="matchValue" align="center"></el-table-column>
       <el-table-column label="是否精确匹配" prop="isExactMatch" align="center"></el-table-column>
       <el-table-column label="回复消息类型" prop="replyTypeName" align="center"></el-table-column>
-      <el-table-column label="回复消息内容" prop="replyContent" align="center" show-overflow-tooltip></el-table-column>
+      <el-table-column label="回复消息内容" prop="replyContent" align="left" width="500px" show-overflow-tooltip></el-table-column>
       <el-table-column align="center" label="操作">
         <template v-slot="scope">
           <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
