@@ -31,6 +31,17 @@ public interface BaseConstant {
     String DEFAULT_CONTEXT_KEY_USERNAME = "未知";
 
     /**
+     * 当前页、每页显示数量
+     */
+    String PAGE_NUM = "pageNum";
+    String PAGE_SIZE = "pageSize";
+    /**
+     * 分页默认值
+     */
+    int DEFAULT_PAGE_NUM = 1;
+    int DEFAULT_PAGE_SIZE = 10;
+
+    /**
      * 请求头中的用户信息标识
      */
     String REQUEST_HEADER_TOKEN = "Authorization-smallboot";

@@ -1,8 +1,8 @@
 package com.zhengqing.common.core.aspect;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.zhengqing.common.base.constant.BaseConstant;
 import com.zhengqing.common.base.exception.ParameterException;
-import com.zhengqing.common.swagger.constant.SwaggerConstant;
 import com.zhengqing.common.web.util.ServletUtil;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -25,9 +25,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class MapperAspect {
 
-    private static final int DEFAULT_PAGE_NUM = 1;
-    private static final int DEFAULT_PAGE_SIZE = 10;
-
     /**
      * 配置织入点
      */
@@ -43,8 +40,8 @@ public class MapperAspect {
     @Before("mapperPointCut()")
     public void mapperPointCut(JoinPoint joinPoint) {
         Object[] paramObjArray = joinPoint.getArgs();
-        int pageNum = ServletUtil.getParameterToInt(SwaggerConstant.PAGE_NUM, DEFAULT_PAGE_NUM);
-        int pageSize = ServletUtil.getParameterToInt(SwaggerConstant.PAGE_SIZE, DEFAULT_PAGE_SIZE);
+        int pageNum = ServletUtil.getParameterToInt(BaseConstant.PAGE_NUM, BaseConstant.DEFAULT_PAGE_NUM);
+        int pageSize = ServletUtil.getParameterToInt(BaseConstant.PAGE_SIZE, BaseConstant.DEFAULT_PAGE_SIZE);
         // 遍历所有传入参数,赋值
         for (Object paramObj : paramObjArray) {
             if (paramObj instanceof IPage) {

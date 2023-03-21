@@ -4,8 +4,8 @@ import com.zhengqing.common.base.constant.ServiceConstant;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
 import me.chanjar.weixin.common.bean.menu.WxMenu;
-import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.menu.WxMpMenu;
 import org.springframework.web.bind.annotation.*;
@@ -26,13 +26,15 @@ public class WxMpMenuController {
 
     @GetMapping("/detail")
     @ApiOperation("详情")
-    public WxMpMenu detail(@RequestHeader String appId) throws WxErrorException {
+    @SneakyThrows(Exception.class)
+    public WxMpMenu detail(@RequestHeader String appId) {
         return this.wxService.switchoverTo(appId).getMenuService().menuGet();
     }
 
     @PutMapping("/update")
     @ApiOperation("更新")
-    public void update(@RequestHeader String appId, @RequestBody WxMenu menu) throws WxErrorException {
+    @SneakyThrows(Exception.class)
+    public void update(@RequestHeader String appId, @RequestBody WxMenu menu) {
         this.wxService.switchoverTo(appId).getMenuService().menuCreate(menu);
     }
 

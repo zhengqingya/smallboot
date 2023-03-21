@@ -102,7 +102,7 @@ export default {
       this.dialogVisible = true
     },
     showApiUrl(row) {
-      alert('接入地址：' + row.url)
+      alert('接入地址：http://{ip}' + row.url)
     },
     handleUpdate(row) {
       this.form = Object.assign({}, row)

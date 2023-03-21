@@ -1,8 +1,11 @@
 package com.zhengqing.common.core.aspect;
 
+import com.zhengqing.common.base.constant.BaseConstant;
 import com.zhengqing.common.base.context.SysUserContext;
 import com.zhengqing.common.base.model.dto.BaseDTO;
+import com.zhengqing.common.base.model.dto.BasePageDTO;
 import com.zhengqing.common.core.custom.parameter.ParamCheck;
+import com.zhengqing.common.web.util.ServletUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -47,6 +50,13 @@ public class ControllerAspect {
                 BaseDTO baseDTO = (BaseDTO) paramObj;
                 baseDTO.setCurrentUserId(SysUserContext.getUserId());
                 baseDTO.setCurrentUsername(SysUserContext.getUsername());
+            }
+
+            // page参数处理
+            if (paramObj instanceof BasePageDTO) {
+                BasePageDTO pageDTO = (BasePageDTO) paramObj;
+                pageDTO.setPageNum(ServletUtil.getParameterToInt(BaseConstant.PAGE_NUM, BaseConstant.DEFAULT_PAGE_NUM));
+                pageDTO.setPageSize(ServletUtil.getParameterToInt(BaseConstant.PAGE_SIZE, BaseConstant.DEFAULT_PAGE_SIZE));
             }
 
             // 参数校验处理

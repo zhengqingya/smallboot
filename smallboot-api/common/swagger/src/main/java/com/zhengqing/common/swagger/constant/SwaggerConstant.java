@@ -10,7 +10,7 @@ package com.zhengqing.common.swagger.constant;
 public interface SwaggerConstant {
 
     /**
-     * 当前页、每页显示数量
+     * 当前页、每页显示数量 {@link com.zhengqing.common.base.constant.BaseConstant#PAGE_NUM}
      */
     String PAGE_NUM = "pageNum";
     String PAGE_SIZE = "pageSize";

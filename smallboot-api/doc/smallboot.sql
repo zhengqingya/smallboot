@@ -11,7 +11,7 @@
  Target Server Version : 50726 (5.7.26-log)
  File Encoding         : 65001
 
- Date: 20/03/2023 19:50:13
+ Date: 21/03/2023 15:21:03
 */
 
 SET NAMES utf8mb4;
@@ -105,7 +105,7 @@ CREATE TABLE `t_sys_menu`  (
   `update_time` datetime NOT NULL COMMENT '修改时间',
   `is_deleted` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否删除(1->是，0->否)',
   PRIMARY KEY (`menu_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-菜单表' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-菜单表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_sys_menu
@@ -125,7 +125,8 @@ INSERT INTO `t_sys_menu` VALUES (13, '公众号列表', 'account', '', 'account'
 INSERT INTO `t_sys_menu` VALUES (14, '自定义菜单', 'custom-menu', '', 'custom-menu', 12, 2, 'wxmp/custom-menu/index', 0, '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-22 15:01:51', 0);
 INSERT INTO `t_sys_menu` VALUES (15, '模板消息', 'template-msg', '', 'template-msg', 12, 3, 'wxmp/template-msg/index', 0, '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-22 15:01:51', 0);
 INSERT INTO `t_sys_menu` VALUES (16, '用户', 'user', '', 'user', 12, 4, 'wxmp/user/index', 0, '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-22 15:01:51', 0);
-INSERT INTO `t_sys_menu` VALUES (17, '消息自动回复', 'msg-auto-reply', '', 'msg-auto-reply', 12, 5, 'wxmp/msg-auto-reply/index', 0, '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-22 15:01:51', 0);
+INSERT INTO `t_sys_menu` VALUES (17, '素材管理', 'material', '', 'material', 12, 5, 'wxmp/material/index', 0, '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-22 15:01:51', 0);
+INSERT INTO `t_sys_menu` VALUES (18, '消息自动回复', 'msg-auto-reply', '', 'msg-auto-reply', 12, 6, 'wxmp/msg-auto-reply/index', 0, '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-22 15:01:51', 0);
 
 -- ----------------------------
 -- Table structure for t_sys_permission
@@ -211,29 +212,30 @@ CREATE TABLE `t_sys_role_menu`  (
   `update_by` int(11) NOT NULL COMMENT '修改人',
   `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 280 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-角色菜单关联表' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 297 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-角色菜单关联表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_sys_role_menu
 -- ----------------------------
 INSERT INTO `t_sys_role_menu` VALUES (185, 10, 1, 1, '2023-02-15 09:49:12', 1, '2023-02-15 09:49:12');
 INSERT INTO `t_sys_role_menu` VALUES (186, 10, 2, 1, '2023-02-15 09:49:12', 1, '2023-02-15 09:49:12');
-INSERT INTO `t_sys_role_menu` VALUES (264, 9, 1, 1, '2023-03-20 16:40:01', 1, '2023-03-20 16:40:01');
-INSERT INTO `t_sys_role_menu` VALUES (265, 9, 2, 1, '2023-03-20 16:40:01', 1, '2023-03-20 16:40:01');
-INSERT INTO `t_sys_role_menu` VALUES (266, 9, 3, 1, '2023-03-20 16:40:01', 1, '2023-03-20 16:40:01');
-INSERT INTO `t_sys_role_menu` VALUES (267, 9, 4, 1, '2023-03-20 16:40:01', 1, '2023-03-20 16:40:01');
-INSERT INTO `t_sys_role_menu` VALUES (268, 9, 5, 1, '2023-03-20 16:40:01', 1, '2023-03-20 16:40:01');
-INSERT INTO `t_sys_role_menu` VALUES (269, 9, 6, 1, '2023-03-20 16:40:01', 1, '2023-03-20 16:40:01');
-INSERT INTO `t_sys_role_menu` VALUES (270, 9, 7, 1, '2023-03-20 16:40:01', 1, '2023-03-20 16:40:01');
-INSERT INTO `t_sys_role_menu` VALUES (271, 9, 9, 1, '2023-03-20 16:40:01', 1, '2023-03-20 16:40:01');
-INSERT INTO `t_sys_role_menu` VALUES (272, 9, 10, 1, '2023-03-20 16:40:01', 1, '2023-03-20 16:40:01');
-INSERT INTO `t_sys_role_menu` VALUES (273, 9, 11, 1, '2023-03-20 16:40:01', 1, '2023-03-20 16:40:01');
-INSERT INTO `t_sys_role_menu` VALUES (274, 9, 12, 1, '2023-03-20 16:40:01', 1, '2023-03-20 16:40:01');
-INSERT INTO `t_sys_role_menu` VALUES (275, 9, 13, 1, '2023-03-20 16:40:01', 1, '2023-03-20 16:40:01');
-INSERT INTO `t_sys_role_menu` VALUES (276, 9, 14, 1, '2023-03-20 16:40:01', 1, '2023-03-20 16:40:01');
-INSERT INTO `t_sys_role_menu` VALUES (277, 9, 15, 1, '2023-03-20 16:40:01', 1, '2023-03-20 16:40:01');
-INSERT INTO `t_sys_role_menu` VALUES (278, 9, 16, 1, '2023-03-20 16:40:01', 1, '2023-03-20 16:40:01');
-INSERT INTO `t_sys_role_menu` VALUES (279, 9, 17, 1, '2023-03-20 16:40:01', 1, '2023-03-20 16:40:01');
+INSERT INTO `t_sys_role_menu` VALUES (280, 9, 1, 1, '2023-03-21 11:48:01', 1, '2023-03-21 11:48:01');
+INSERT INTO `t_sys_role_menu` VALUES (281, 9, 2, 1, '2023-03-21 11:48:01', 1, '2023-03-21 11:48:01');
+INSERT INTO `t_sys_role_menu` VALUES (282, 9, 3, 1, '2023-03-21 11:48:01', 1, '2023-03-21 11:48:01');
+INSERT INTO `t_sys_role_menu` VALUES (283, 9, 4, 1, '2023-03-21 11:48:01', 1, '2023-03-21 11:48:01');
+INSERT INTO `t_sys_role_menu` VALUES (284, 9, 5, 1, '2023-03-21 11:48:01', 1, '2023-03-21 11:48:01');
+INSERT INTO `t_sys_role_menu` VALUES (285, 9, 6, 1, '2023-03-21 11:48:01', 1, '2023-03-21 11:48:01');
+INSERT INTO `t_sys_role_menu` VALUES (286, 9, 7, 1, '2023-03-21 11:48:01', 1, '2023-03-21 11:48:01');
+INSERT INTO `t_sys_role_menu` VALUES (287, 9, 9, 1, '2023-03-21 11:48:01', 1, '2023-03-21 11:48:01');
+INSERT INTO `t_sys_role_menu` VALUES (288, 9, 10, 1, '2023-03-21 11:48:01', 1, '2023-03-21 11:48:01');
+INSERT INTO `t_sys_role_menu` VALUES (289, 9, 11, 1, '2023-03-21 11:48:01', 1, '2023-03-21 11:48:01');
+INSERT INTO `t_sys_role_menu` VALUES (290, 9, 12, 1, '2023-03-21 11:48:01', 1, '2023-03-21 11:48:01');
+INSERT INTO `t_sys_role_menu` VALUES (291, 9, 13, 1, '2023-03-21 11:48:01', 1, '2023-03-21 11:48:01');
+INSERT INTO `t_sys_role_menu` VALUES (292, 9, 14, 1, '2023-03-21 11:48:01', 1, '2023-03-21 11:48:01');
+INSERT INTO `t_sys_role_menu` VALUES (293, 9, 15, 1, '2023-03-21 11:48:01', 1, '2023-03-21 11:48:01');
+INSERT INTO `t_sys_role_menu` VALUES (294, 9, 16, 1, '2023-03-21 11:48:01', 1, '2023-03-21 11:48:01');
+INSERT INTO `t_sys_role_menu` VALUES (295, 9, 17, 1, '2023-03-21 11:48:01', 1, '2023-03-21 11:48:01');
+INSERT INTO `t_sys_role_menu` VALUES (296, 9, 18, 1, '2023-03-21 11:48:01', 1, '2023-03-21 11:48:01');
 
 -- ----------------------------
 -- Table structure for t_sys_role_permission
@@ -352,7 +354,7 @@ CREATE TABLE `t_wx_mp_account`  (
 -- ----------------------------
 -- Records of t_wx_mp_account
 -- ----------------------------
-INSERT INTO `t_wx_mp_account` VALUES (1, '郑清的测试账号', 1, 'gh_42e1dbad014e', 'wxe01d9bde2cc81b89', 'f292d6cb69755a7105863d97910a9579', '/wx/portal/wxe01d9bde2cc81b89', 'test', '4J9GOBZ4VTElUFm0EvRDV6aJu5spvYXGkn1RJela56U', 'http://mmbiz.qpic.cn/mmbiz_jpg/8ytq3xBRtdhxHsM6bSCarSQKuCGcLHmMfwlJ9A6h1zYq86VXyGKxyNQ3fEib6AYOTsiaRibicsXskKKeh2YLxvx8CA/0', '2023-03-16 15:39:45', '2023-03-20 19:48:53', 1, 1);
+INSERT INTO `t_wx_mp_account` VALUES (1, '郑清的测试账号', 1, 'gh_42e1dbad014e', 'wxe01d9bde2cc81b89', 'f292d6cb69755a7105863d97910a9579', '/wx/portal/wxe01d9bde2cc81b89', 'test', '4J9GOBZ4VTElUFm0EvRDV6aJu5spvYXGkn1RJela56U', 'http://mmbiz.qpic.cn/mmbiz_jpg/8ytq3xBRtdjkBkb2JfibmdJCkT4t2ZSxo8PBwzZ6cgic64mMVicxibpqAyQY0kuiaHhMc3Yjh5J2ATy8kkQgfzbIFJA/0', '2023-03-16 15:39:45', '2023-03-21 11:14:37', 1, 1);
 
 -- ----------------------------
 -- Table structure for t_wx_mp_msg_auto_reply
@@ -372,13 +374,14 @@ CREATE TABLE `t_wx_mp_msg_auto_reply`  (
   `create_by` int(11) NULL DEFAULT NULL COMMENT '创建人id',
   `update_by` int(11) NULL DEFAULT NULL COMMENT '更新人id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信公众号-消息自动回复' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信公众号-消息自动回复' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_wx_mp_msg_auto_reply
 -- ----------------------------
 INSERT INTO `t_wx_mp_msg_auto_reply` VALUES (1, 'wxe01d9bde2cc81b89', '关注', 1, '', 1, 'text', '谢谢关注！', '2023-03-20 17:54:30', '2023-03-20 19:34:08', 1, 1);
 INSERT INTO `t_wx_mp_msg_auto_reply` VALUES (2, 'wxe01d9bde2cc81b89', '文本消息', 2, 'hello', 1, 'text', '自动回复：你好', '2023-03-20 19:30:47', '2023-03-20 19:30:47', 1, 1);
+INSERT INTO `t_wx_mp_msg_auto_reply` VALUES (3, 'wxe01d9bde2cc81b89', '图片消息', 2, '图片', 1, 'image', 'hm_a1Quvy6P39bspNEXRaIGBhVqBzDfHKxRCKhAZEtK7pyYDG2Hjc4B2L7Yg-p57', '2023-03-21 15:12:44', '2023-03-21 15:12:44', 1, 1);
 
 -- ----------------------------
 -- Table structure for t_wx_mp_template_msg

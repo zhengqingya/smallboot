@@ -76,6 +76,7 @@ public class WxMpMsgReplyServiceImpl implements IWxMpMsgReplyService {
                         this.wxMpService.getKefuService().sendKefuMessage(WxMpKefuMessage.TEXT().toUser(fromUser).content(replyContent).build());
                         break;
                     case 图片:
+                        this.wxMpService.getKefuService().sendKefuMessage(WxMpKefuMessage.IMAGE().toUser(fromUser).mediaId(replyContent).build());
                         break;
                     case 语音:
                         break;
