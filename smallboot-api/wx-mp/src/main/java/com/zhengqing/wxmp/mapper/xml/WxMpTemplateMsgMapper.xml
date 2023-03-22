@@ -12,7 +12,7 @@
         SELECT
         id,
         app_id,
-        tpl_id,
+        template_id,
         title,
         content,
         data_list,

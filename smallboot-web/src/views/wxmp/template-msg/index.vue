@@ -10,7 +10,7 @@
 
     <base-table-p ref="baseTable" api="wx_mp_template_msg.page" :params="listQuery">
       <el-table-column label="AppID" prop="appId" align="center"></el-table-column>
-      <el-table-column label="模板ID" prop="tplId" align="center"></el-table-column>
+      <el-table-column label="模板ID" prop="templateId" align="center"></el-table-column>
       <el-table-column label="模板标题" prop="title" align="center"></el-table-column>
       <el-table-column label="模板内容" prop="content" show-overflow-tooltip></el-table-column>
       <el-table-column align="center" label="操作">
@@ -23,7 +23,7 @@
     <base-dialog v-model="dialogVisible" :title="titleMap[dialogStatus]" width="50%">
       <base-table-cell label-width="100px">
         <base-cell-item label="AppID11">{{ form.appId }}</base-cell-item>
-        <base-cell-item label="模板ID">{{ form.tplId }}</base-cell-item>
+        <base-cell-item label="模板ID">{{ form.templateId }}</base-cell-item>
         <base-cell-item label="模板标题">{{ form.title }}</base-cell-item>
         <base-cell-item label="模板内容">
           <div class="content">
@@ -32,6 +32,7 @@
             </div>
             <div class="right">
               <div v-for="item in form.dataList" :key="item.name" class="item">
+                <span>{{ item.name }}：</span>
                 <el-input type="textarea" autosize rows="1" v-model="item.value" placeholder="内容"></el-input>
                 <el-color-picker v-model="item.color" />
               </div>

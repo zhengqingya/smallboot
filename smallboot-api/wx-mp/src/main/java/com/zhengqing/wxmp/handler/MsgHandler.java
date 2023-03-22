@@ -3,7 +3,7 @@ package com.zhengqing.wxmp.handler;
 import cn.hutool.json.JSONUtil;
 import com.zhengqing.wxmp.enums.WxMpAutoReplyTypeEnum;
 import com.zhengqing.wxmp.model.dto.WxMpReplyMsgDTO;
-import com.zhengqing.wxmp.service.IWxMpMsgReplyService;
+import com.zhengqing.wxmp.service.IWxMpMsgService;
 import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
@@ -29,7 +29,7 @@ import static me.chanjar.weixin.common.api.WxConsts.XmlMsgType;
 @RequiredArgsConstructor
 public class MsgHandler extends AbstractHandler {
 
-    private final IWxMpMsgReplyService wxMpMsgReplyService;
+    private final IWxMpMsgService wxMpMsgService;
 
     @Override
     public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage,
@@ -40,7 +40,7 @@ public class MsgHandler extends AbstractHandler {
         String appId = WxMpConfigStorageHolder.get();
 
         // 消息回复
-        this.wxMpMsgReplyService.replyMsg(WxMpReplyMsgDTO.builder()
+        this.wxMpMsgService.autoReplyMsg(WxMpReplyMsgDTO.builder()
                 .appId(appId)
                 .fromUser(wxMessage.getFromUser())
                 .type(WxMpAutoReplyTypeEnum.关键词回复.getType())

@@ -11,12 +11,12 @@
     </base-header>
 
     <base-table-p ref="baseTable" api="wx_mp_material.page" :params="listQuery">
-      <el-table-column label="mediaId" prop="mediaId" align="center"></el-table-column>
+      <el-table-column label="mediaId" prop="mediaId" width="500px" align="center"></el-table-column>
       <el-table-column label="名称" prop="name" align="center"></el-table-column>
       <el-table-column label="更新时间" prop="updateTime" align="center"></el-table-column>
       <el-table-column label="url" prop="url" align="center">
         <template v-slot="scope">
-          <el-image style="width: 100px; height: 100px" :src="scope.row.url" />
+          <el-image style="width: 50px; height: 50px" :src="scope.row.url" />
         </template>
       </el-table-column>
     </base-table-p>
@@ -33,7 +33,7 @@ export default {
       },
       form: {},
       materialTypeList: [
-        // { value: 'news', name: '图文' },
+        { value: 'news', name: '图文' },
         { value: 'voice', name: '语音' },
         { value: 'image', name: '图片' },
         { value: 'video', name: '视频' },

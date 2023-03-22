@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.google.common.collect.Lists;
-import com.zhengqing.common.db.entity.BaseEntity;
+import com.zhengqing.common.db.entity.IsDeletedBaseEntity;
 import com.zhengqing.wxmp.config.mybatis.handler.WxMpTemplateMsgDataTypeHandler;
 import com.zhengqing.wxmp.model.bo.WxMpTemplateMsgDataBO;
 import io.swagger.annotations.ApiModel;
@@ -27,9 +27,9 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("t_wx_mp_template_msg")
+@TableName(value = "t_wx_mp_template_msg", autoResultMap = true)
 @ApiModel("微信公众号-模板消息")
-public class WxMpTemplateMsg extends BaseEntity<WxMpTemplateMsg> {
+public class WxMpTemplateMsg extends IsDeletedBaseEntity<WxMpTemplateMsg> {
 
     @ApiModelProperty("主键ID")
     @TableId(value = "id", type = IdType.AUTO)
@@ -39,7 +39,7 @@ public class WxMpTemplateMsg extends BaseEntity<WxMpTemplateMsg> {
     private String appId;
 
     @ApiModelProperty("模板ID")
-    private String tplId;
+    private String templateId;
 
     @ApiModelProperty("模板标题")
     private String title;
@@ -52,13 +52,16 @@ public class WxMpTemplateMsg extends BaseEntity<WxMpTemplateMsg> {
     private List<WxMpTemplateMsgDataBO> dataList;
 
     public WxMpTemplateMsg handleData() {
-        this.dataList = Lists.newArrayList();
-        List<String> list = ReUtil.findAll("\\{\\{(\\w*)\\.DATA\\}\\}", this.content, 1);
-        list.forEach(item -> this.dataList.add(WxMpTemplateMsgDataBO.builder()
-                .name(item)
-                .value("")
-                .color("#000")
-                .build()));
+        if (super.getIsDeleted()) {
+            // 如果模板不存在才构建新数据
+            this.dataList = Lists.newArrayList();
+            List<String> list = ReUtil.findAll("\\{\\{(\\w*)\\.DATA\\}\\}", this.content, 1);
+            list.forEach(item -> this.dataList.add(WxMpTemplateMsgDataBO.builder()
+                    .name(item)
+                    .value("")
+                    .color("#000")
+                    .build()));
+        }
         return this;
     }
 

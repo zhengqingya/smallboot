@@ -3,15 +3,20 @@ package com.zhengqing.wxmp.service.impl;
 import cn.hutool.json.JSONUtil;
 import com.zhengqing.wxmp.enums.WxMpAutoReplyMsgTypeEnum;
 import com.zhengqing.wxmp.enums.WxMpAutoReplyTypeEnum;
+import com.zhengqing.wxmp.model.bo.WxMpTemplateMsgDataBO;
+import com.zhengqing.wxmp.model.bo.WxMpTemplateMsgSendBO;
 import com.zhengqing.wxmp.model.dto.WxMpMsgAutoReplyListDTO;
 import com.zhengqing.wxmp.model.dto.WxMpReplyMsgDTO;
 import com.zhengqing.wxmp.model.vo.WxMpMsgAutoReplyListVO;
 import com.zhengqing.wxmp.service.IWxMpMsgAutoReplyService;
-import com.zhengqing.wxmp.service.IWxMpMsgReplyService;
+import com.zhengqing.wxmp.service.IWxMpMsgService;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.kefu.WxMpKefuMessage;
+import me.chanjar.weixin.mp.bean.template.WxMpTemplateData;
+import me.chanjar.weixin.mp.bean.template.WxMpTemplateMessage;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -28,14 +33,14 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class WxMpMsgReplyServiceImpl implements IWxMpMsgReplyService {
+public class WxMpMsgServiceImpl implements IWxMpMsgService {
 
     private final IWxMpMsgAutoReplyService wxMpMsgAutoReplyService;
 
     private final WxMpService wxMpService;
 
     @Override
-    public void replyMsg(WxMpReplyMsgDTO params) {
+    public void autoReplyMsg(WxMpReplyMsgDTO params) {
         log.info("[wx-mp] 收到用户消息：[{}]", JSONUtil.toJsonStr(params));
         String appId = params.getAppId();
         String fromUser = params.getFromUser();
@@ -93,6 +98,26 @@ public class WxMpMsgReplyServiceImpl implements IWxMpMsgReplyService {
                 log.error("[wx-mp] 消息回复异常：", e);
             }
         });
+    }
+
+    @Override
+    @SneakyThrows(Exception.class)
+    public void sendTemplateMsg(WxMpTemplateMsgSendBO params) {
+        log.info("[wx-mp] 发送模板消息：[{}]", JSONUtil.toJsonStr(params));
+        String appId = params.getAppId();
+        String templateId = params.getTemplateId();
+        List<WxMpTemplateMsgDataBO> dataList = params.getDataList();
+        String openid = params.getOpenid();
+
+        // 发送消息
+        this.wxMpService.switchover(appId);
+        this.wxMpService.getTemplateMsgService().sendTemplateMsg(
+                WxMpTemplateMessage.builder()
+                        .templateId(templateId)
+                        .data(JSONUtil.toList(JSONUtil.toJsonStr(dataList), WxMpTemplateData.class))
+                        .toUser(openid)
+                        .build()
+        );
     }
 
 }

@@ -38,20 +38,14 @@ public class WxMpTemplateMsgSendDTO extends BaseDTO {
     @ApiModelProperty("AppID")
     private String appId;
 
+    @NotBlank(message = "模板ID不能为空！")
     @ApiModelProperty("模板ID")
-    private String tplId;
-
-    @ApiModelProperty("模板标题")
-    private String title;
-
-    @ApiModelProperty("模板内容")
-    private String content;
+    private String templateId;
 
     @NotEmpty
     @ApiModelProperty("模板数据")
     private List<WxMpTemplateMsgDataBO> dataList;
 
-    @NotBlank(message = "微信openid不能为空！")
     @ApiModelProperty("微信openid")
     private String openid;
 
