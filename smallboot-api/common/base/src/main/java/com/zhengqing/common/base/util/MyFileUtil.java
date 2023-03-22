@@ -4,9 +4,12 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.ZipUtil;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.charset.Charset;
 
 /**
@@ -155,6 +158,37 @@ public class MyFileUtil {
     @SneakyThrows(Exception.class)
     public static File writeFileContent(byte[] data, String filePath) {
         return FileUtil.writeBytes(data, filePath);
+    }
+
+    /**
+     * MultipartFile 转 File
+     *
+     * @param multipartFile multipartFile
+     * @return File文件信息
+     * @author zhengqingya
+     * @date 2020/11/24 14:36
+     */
+    @SneakyThrows(Exception.class)
+    public static File multipartFileToFile(MultipartFile multipartFile) {
+        File file = null;
+        if (!multipartFile.equals("") && !(multipartFile.getSize() <= 0)) {
+            InputStream ins = multipartFile.getInputStream();
+            file = new File(multipartFile.getOriginalFilename());
+            try {
+                OutputStream os = new FileOutputStream(file);
+                int bytesRead = 0;
+                byte[] buffer = new byte[8192];
+                while ((bytesRead = ins.read(buffer, 0, 8192)) != -1) {
+                    os.write(buffer, 0, bytesRead);
+                }
+                os.close();
+                ins.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            ins.close();
+        }
+        return file;
     }
 
     public static void main(String[] args) {

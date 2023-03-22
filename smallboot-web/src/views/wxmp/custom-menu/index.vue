@@ -56,7 +56,7 @@
           <div class="interval">
             <div v-if="selectedMenu.type == 'media_id'">
               <span>素材内容：</span>
-              <el-input v-model="selectedMenu.mediaId" placeholder="请输入链接" clearable></el-input>
+              <el-input v-model="selectedMenu.mediaId" placeholder="请输入mediaId" clearable></el-input>
             </div>
             <div v-if="selectedMenu.type == 'view'">
               <span>网页链接：</span>

@@ -1,8 +1,10 @@
 package com.zhengqing.wxmp.api;
 
+import cn.hutool.core.io.FileUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zhengqing.common.base.constant.ServiceConstant;
+import com.zhengqing.common.base.util.MyFileUtil;
 import com.zhengqing.wxmp.model.dto.WxMpMaterialPageDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -11,12 +13,14 @@ import lombok.SneakyThrows;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.mp.api.WxMpMaterialService;
 import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.bean.material.WxMpMaterial;
 import me.chanjar.weixin.mp.bean.material.WxMpMaterialFileBatchGetResult;
 import me.chanjar.weixin.mp.bean.material.WxMpMaterialNewsBatchGetResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import me.chanjar.weixin.mp.bean.material.WxMpMaterialUploadResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
 
 /**
  * <p> 微信公众号-素材管理 </p>
@@ -36,7 +40,7 @@ public class WxMpMaterialController {
     @ApiOperation("分页列表")
     @SneakyThrows(Exception.class)
     public Object page(@ModelAttribute WxMpMaterialPageDTO params) {
-        String type = params.getType();
+        String mediaType = params.getMediaType();
         Integer pageNum = params.getPageNum();
         Integer pageSize = params.getPageSize();
         int offset = (pageNum - 1) * pageSize;
@@ -47,7 +51,7 @@ public class WxMpMaterialController {
 
         WxMpMaterialService materialService = this.wxMpService.switchoverTo(params.getAppId()).getMaterialService();
 
-        if (WxConsts.MaterialType.NEWS.equals(type)) {
+        if (WxConsts.MaterialType.NEWS.equals(mediaType)) {
             // 图文素材
             WxMpMaterialNewsBatchGetResult wxMpMaterialNewsBatchGetResult = materialService.materialNewsBatchGet(offset, pageSize);
             result.setTotal(wxMpMaterialNewsBatchGetResult.getTotalCount());
@@ -56,10 +60,24 @@ public class WxMpMaterialController {
         }
 
         // 其它素材
-        WxMpMaterialFileBatchGetResult wxMpMaterialFileBatchGetResult = materialService.materialFileBatchGet(type, offset, pageSize);
+        WxMpMaterialFileBatchGetResult wxMpMaterialFileBatchGetResult = materialService.materialFileBatchGet(mediaType, offset, pageSize);
         result.setTotal(wxMpMaterialFileBatchGetResult.getTotalCount());
         result.setRecords(wxMpMaterialFileBatchGetResult.getItems());
         return result;
+    }
+
+    @PostMapping("/add")
+    @ApiOperation("新增")
+    @SneakyThrows(Exception.class)
+    public WxMpMaterialUploadResult add(@RequestPart @RequestParam MultipartFile file,
+                                        @RequestParam String appId,
+                                        @RequestParam String mediaType) {
+        File wxFile = MyFileUtil.multipartFileToFile(file);
+        WxMpMaterial wxMaterial = new WxMpMaterial();
+        wxMaterial.setFile(wxFile);
+        WxMpMaterialUploadResult wxMpMaterialUploadResult = this.wxMpService.switchoverTo(appId).getMaterialService().materialFileUpload(mediaType, wxMaterial);
+        FileUtil.del(wxFile);
+        return wxMpMaterialUploadResult;
     }
 
 

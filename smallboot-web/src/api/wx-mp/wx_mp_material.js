@@ -13,10 +13,12 @@ export default {
     })
   },
   add(form) {
+    form.appId = APP_ID
     return request({
       url: BASE_API + '/add',
       method: 'post',
       data: form,
+      headers: { 'Content-Type': 'multipart/form-data' },
     })
   },
   delete(form) {
