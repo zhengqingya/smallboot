@@ -4,7 +4,7 @@
 
 > 微服务版本：https://gitee.com/zhengqingya/small-tools
 
-`SmallBoot`：Vue+SpringBoot 前后端分离的项目快速开发脚手架
+`SmallBoot`：Vue+SpringBoot 前后端分离的项目快速开发脚手架 & 多微信公众号管理平台
 
 后端技术栈：
 
