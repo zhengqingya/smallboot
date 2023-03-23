@@ -83,7 +83,7 @@ public class IdGeneratorUtil {
             // 记录下重复数据
             RedisUtil.hPutIfAbsent(RedisConstant.ID_GENERATE_REPEAT_KEY, String.valueOf(id), MyDateUtil.nowStr());
             // 循环继续获取
-            return snowflakeId();
+            return nextId();
         }
         // 设置3分钟过期
         RedisUtil.expire(key, 3, TimeUnit.MINUTES);
