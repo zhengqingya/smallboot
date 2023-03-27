@@ -6,8 +6,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>smallboot-api</artifactId>
         <groupId>com.zhengqing</groupId>
+        <artifactId>service</artifactId>
         <version>${revision}</version>
     </parent>
 
