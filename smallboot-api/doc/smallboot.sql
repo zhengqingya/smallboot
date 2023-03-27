@@ -11,7 +11,7 @@
  Target Server Version : 50726 (5.7.26-log)
  File Encoding         : 65001
 
- Date: 22/03/2023 16:38:34
+ Date: 27/03/2023 15:09:41
 */
 
 SET NAMES utf8mb4;
@@ -124,7 +124,7 @@ INSERT INTO `t_sys_menu` VALUES (12, '微信公众号管理', 'wxmp', 'Setting',
 INSERT INTO `t_sys_menu` VALUES (13, '公众号列表', 'account', '', 'account', 12, 1, 'wxmp/account/index', 0, '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-22 15:01:51', 0);
 INSERT INTO `t_sys_menu` VALUES (14, '自定义菜单', 'custom-menu', '', 'custom-menu', 12, 2, 'wxmp/custom-menu/index', 0, '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-22 15:01:51', 0);
 INSERT INTO `t_sys_menu` VALUES (15, '模板消息', 'template-msg', '', 'template-msg', 12, 3, 'wxmp/template-msg/index', 0, '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-22 15:01:51', 0);
-INSERT INTO `t_sys_menu` VALUES (16, '用户', 'user', '', 'user', 12, 4, 'wxmp/user/index', 0, '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-22 15:01:51', 0);
+INSERT INTO `t_sys_menu` VALUES (16, '用户', 'wxmp-user', '', 'user', 12, 4, 'wxmp/user/index', 0, '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-22 15:01:51', 0);
 INSERT INTO `t_sys_menu` VALUES (17, '素材管理', 'material', '', 'material', 12, 5, 'wxmp/material/index', 0, '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-22 15:01:51', 0);
 INSERT INTO `t_sys_menu` VALUES (18, '消息自动回复', 'msg-auto-reply', '', 'msg-auto-reply', 12, 6, 'wxmp/msg-auto-reply/index', 0, '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-22 15:01:51', 0);
 
@@ -349,7 +349,7 @@ CREATE TABLE `t_wx_mp_account`  (
   `create_by` int(11) NULL DEFAULT NULL COMMENT '创建人id',
   `update_by` int(11) NULL DEFAULT NULL COMMENT '更新人id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信公众号-账号' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信公众号-账号' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_wx_mp_account

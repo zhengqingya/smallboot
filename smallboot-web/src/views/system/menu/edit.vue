@@ -132,9 +132,9 @@ export default {
         component: '',
         icon: '',
         sort: '',
-        hidden: 0, // 是否隐藏 1:隐藏 0:显示
-        breadcrumb: 1, // 面包屑是否显示
-        isShowChildren: 1, // 是否显示子菜单
+        hidden: false, // 是否隐藏
+        breadcrumb: true, // 面包屑是否显示
+        isShowChildren: true, // 是否显示子菜单
       }
     },
     handleClose() {},

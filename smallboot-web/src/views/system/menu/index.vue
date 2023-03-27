@@ -45,11 +45,11 @@
             </template>
           </base-header>
           <base-table-p :data="permDataList" :isPage="false">
-            <el-table-column prop="id" label="ID" />
+            <el-table-column prop="id" label="ID" width="50" />
             <el-table-column prop="name" label="权限名称" />
             <el-table-column prop="btnPerm" label="按钮权限标识" />
-            <el-table-column prop="urlPerm" label="URL权限标识" />
-            <el-table-column label="操作" align="center" width="250">
+            <el-table-column prop="urlPerm" label="URL权限标识" width="260" />
+            <el-table-column label="操作" align="center" width="100">
               <template v-slot="scope">
                 <el-button link @click="updateForMenuRePerm(scope.row)">编辑</el-button>
                 <base-delete-btn @ok="deleteMenuRePerm(scope.row.id)" />

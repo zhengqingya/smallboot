@@ -1,15 +1,16 @@
 package com.zhengqing.app.api;
 
+import cn.hutool.json.JSONUtil;
 import com.zhengqing.common.core.api.BaseController;
+import com.zhengqing.common.core.custom.limit.ApiLimit;
 import com.zhengqing.system.mapper.SysUserMapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 /**
  * <p>
@@ -38,5 +39,10 @@ public class AppTestController extends BaseController {
         return this.sysUserMapper.testSqlmap(username);
     }
 
+    @PostMapping("testMapSpringEl（获取map值）")
+    @ApiLimit(key = "'test' + ':' + #params['id']")
+    public void testMapSpringEl(@RequestBody Map<String, String> params) {
+        log.info("testMapSpringEl: " + JSONUtil.toJsonStr(params));
+    }
 
 }
