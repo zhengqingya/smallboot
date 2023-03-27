@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhengqing.mall.mapper.OmsOrderAfterSaleMapper">
+
+    <sql id="CONDITION_COMMON_PAGE">
+        FROM oms_order_after_sale oas
+        JOIN oms_order_after_sale_item oasi ON oas.after_sale_no = oasi.after_sale_no
+        JOIN oms_order_item oi ON oi.order_item_id = oasi.order_item_id
+        <where>
+            <if test="filter.afterStatusList!=null and filter.afterStatusList.size>0">
+                AND oas.after_status IN
+                <foreach collection="filter.afterStatusList" separator="," open="(" close=")" item="afterStatus">
+                    #{afterStatus}
+                </foreach>
+            </if>
+            <if test="filter.afterType!=null">
+                AND oas.after_type = #{filter.afterType}
+            </if>
+            <if test="filter.afterSaleNo!=null">
+                AND oas.after_sale_no LIKE CONCAT( #{filter.afterSaleNo} , '%' )
+            </if>
+            <if test="filter.userPhone!=null and filter.userPhone!=''">
+                AND oas.user_phone LIKE CONCAT( #{filter.userPhone} , '%' )
+            </if>
+            <if test="filter.receiverName!=null and filter.receiverName!=''">
+                AND oas.receiver_name LIKE CONCAT( #{filter.receiverName} , '%' )
+            </if>
+            <if test="filter.receiverPhone!=null and filter.receiverPhone!=''">
+                AND oas.receiver_phone LIKE CONCAT( #{filter.receiverPhone} , '%' )
+            </if>
+            <if test="filter.receiverPhoneAfterFour!=null and filter.receiverPhoneAfterFour!=''">
+                AND RIGHT(oas.receiver_phone, 4) = #{filter.receiverPhoneAfterFour}
+            </if>
+            <if test="filter.spuName!=null and filter.spuName!=''">
+                AND oi.name LIKE CONCAT( #{filter.spuName} , '%' )
+            </if>
+            <if test="filter.startTime!=null">
+                AND oas.apply_time >= #{filter.startTime}
+            </if>
+            <if test="filter.endTime!=null">
+                AND oas.apply_time &lt;= #{filter.endTime}
+            </if>
+        </where>
+    </sql>
+
+    <select id="selectTabCondition" resultType="com.zhengqing.mall.common.model.vo.MallTabConditionListVO">
+        SELECT
+        t.after_status value,
+        COUNT( t.after_sale_no ) num
+        FROM (
+        SELECT
+        oas.after_status,
+        oas.after_sale_no
+        <include refid="CONDITION_COMMON_PAGE"/>
+        GROUP BY oas.after_sale_no
+        ) t
+        GROUP BY t.after_status
+    </select>
+
+    <select id="selectDataListByWeb" resultType="com.zhengqing.mall.web.model.vo.WebOmsOrderAfterSalePageVO">
+        SELECT oas.after_sale_no,
+        oas.after_type,
+        oas.after_status,
+        oas.refund_price,
+        oas.user_phone,
+        oas.pay_price,
+        oas.freight,
+        oas.apply_time,
+        oas.receiver_name,
+        oas.receiver_phone,
+        oas.receiver_address,
+        GROUP_CONCAT(oasi.order_item_id) orderItemIds
+        <include refid="CONDITION_COMMON_PAGE"/>
+        GROUP BY oas.after_sale_no
+        ORDER BY oas.after_sale_no DESC
+    </select>
+
+    <select id="detailByWeb" resultType="com.zhengqing.mall.web.model.vo.WebOmsOrderAfterSaleDetailVO">
+        SELECT oas.after_sale_no,
+               oas.after_type,
+               oas.after_reason,
+               oas.after_explain,
+               oas.refund_price,
+               oas.refund_time,
+               oas.cert_img_json,
+               oas.apply_time,
+               oas.after_status,
+               oas.handler_result_for_refund,
+               oas.handler_remark_for_refund,
+               oas.handler_time_for_refund,
+               oas.handler_result_for_apply,
+               oas.handler_remark_for_apply,
+               oas.handler_time_for_apply,
+               oas.close_time,
+               oas.seller_auto_close_time,
+               oas.buyer_auto_close_time,
+               oas.receiver_name,
+               oas.receiver_phone,
+               oas.receiver_address,
+               oas.return_logistics_code,
+               oas.return_logistics_no,
+               GROUP_CONCAT(oasi.order_item_id) orderItemIds
+        FROM oms_order_after_sale oas
+                 JOIN oms_order_after_sale_item oasi ON oas.after_sale_no = oasi.after_sale_no
+        WHERE oas.after_sale_no = #{afterSaleNo}
+    </select>
+
+
+    <select id="selectSpuListByAfterSaleNo" resultType="com.zhengqing.mall.common.model.bo.PmsSkuStockBO">
+        SELECT oas.after_sale_no,
+               oas.order_no,
+               oi.sku_id,
+               oi.name,
+               oi.num
+        FROM oms_order_after_sale oas
+                 JOIN oms_order_after_sale_item oasi ON oas.after_sale_no = oasi.after_sale_no
+                 JOIN oms_order_item oi ON oi.order_item_id = oasi.order_item_id
+        WHERE oas.after_sale_no = #{afterSaleNo}
+    </select>
+
+    <!--  ==============================================================================================  -->
+
+    <select id="selectListByOrderNoList" resultType="com.zhengqing.mall.common.model.vo.OmsOrderAfterSaleVO">
+        SELECT
+        order_no,
+        MAX( IF( after_status IN ( 1, 3, 5, 8, 9 ) , 1, 0) ) isAfterSale
+        FROM oms_order_after_sale
+        <where>
+            <if test="orderNoList != null and orderNoList.size() > 0">
+                AND order_no IN
+                <foreach collection="orderNoList" separator="," open="(" close=")" item="orderNo">
+                    #{orderNo}
+                </foreach>
+            </if>
+        </where>
+        GROUP BY order_no
+    </select>
+
+    <select id="selectOrderItemIdsReAfterSaleStatus"
+            resultType="com.zhengqing.mall.common.model.vo.OmsOrderAfterSaleItemVO">
+        SELECT oas.after_sale_no,
+        oas.order_no,
+        oasi.order_item_id
+        FROM oms_order_after_sale oas
+        JOIN oms_order_after_sale_item oasi ON oasi.after_sale_no = oas.after_sale_no
+        WHERE oasi.order_no IN
+        <foreach collection="orderNoList" separator="," open="(" close=")" item="orderNo">
+            #{orderNo}
+        </foreach>
+        AND oas.after_status IN (1, 3, 5, 8, 9)
+        GROUP BY oasi.order_item_id
+    </select>
+
+    <select id="selectDataListByMini" resultType="com.zhengqing.mall.mini.model.vo.MiniOmsOrderAfterSalePageVO">
+        SELECT oas.after_sale_no,
+        oas.after_type,
+        oas.after_status,
+        oas.refund_price,
+        GROUP_CONCAT(oasi.order_item_id) orderItemIds
+        FROM oms_order_after_sale oas
+        JOIN oms_order_after_sale_item oasi ON oas.after_sale_no = oasi.after_sale_no
+        JOIN oms_order_item oi ON oi.order_item_id = oasi.order_item_id
+        WHERE oas.is_deleted = 0
+        <if test="filter.keyWord!=null and filter.keyWord!=''">
+            AND
+            (
+            oas.after_sale_no LIKE CONCAT( #{filter.keyWord} , '%' )
+            OR
+            oi.name LIKE CONCAT( #{filter.keyWord} , '%' )
+            )
+        </if>
+        <if test="filter.userId!=null">
+            AND oas.user_id = #{filter.userId}
+        </if>
+        GROUP BY oas.after_sale_no
+        ORDER BY oas.after_sale_no DESC
+    </select>
+
+    <select id="detailByMini" resultType="com.zhengqing.mall.mini.model.vo.MiniOmsOrderAfterSaleDetailVO">
+        SELECT oas.after_sale_no,
+               oas.order_no,
+               oas.after_type,
+               oas.after_status,
+               oas.after_reason,
+               oas.after_explain,
+               oas.refund_price,
+               oas.refund_time,
+               oas.cert_img_json,
+               oas.apply_time,
+               oas.handler_result_for_refund,
+               oas.handler_remark_for_refund,
+               oas.handler_time_for_refund,
+               oas.handler_result_for_apply,
+               oas.handler_remark_for_apply,
+               oas.handler_time_for_apply,
+               oas.close_time,
+               oas.update_time,
+               oas.seller_auto_close_time,
+               oas.buyer_auto_close_time,
+               oas.return_logistics_code,
+               oas.return_logistics_no,
+               GROUP_CONCAT(oasi.order_item_id) orderItemIds
+        FROM oms_order_after_sale oas
+                 JOIN oms_order_after_sale_item oasi ON oas.after_sale_no = oasi.after_sale_no
+        WHERE oas.is_deleted = 0
+          AND oas.after_sale_no = #{afterSaleNo}
+    </select>
+
+    <select id="selectHandleIngNum" resultType="java.lang.Integer">
+        SELECT count(1)
+        FROM oms_order_after_sale
+        WHERE is_deleted = 0
+        <if test="userId!=null">
+            AND user_id = #{userId}
+        </if>
+        AND after_status IN ( 1, 5 )
+    </select>
+
+    <select id="selectNoApplyReOrderItemIdListByOrderNo" resultType="java.lang.String">
+        SELECT oasi.order_item_id
+        FROM oms_order_after_sale oas
+                 JOIN oms_order_after_sale_item oasi ON oas.after_sale_no = oasi.after_sale_no
+        WHERE oas.is_deleted = 0
+          AND oasi.order_no = #{orderNo}
+          AND oas.after_status IN (1, 3, 5, 8, 9)
+    </select>
+
+</mapper>

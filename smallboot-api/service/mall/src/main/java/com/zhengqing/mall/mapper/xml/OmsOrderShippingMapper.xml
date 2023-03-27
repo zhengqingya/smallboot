@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhengqing.mall.mapper.OmsOrderShippingMapper">
+
+    <select id="selectDataListByOrderNo" resultType="com.zhengqing.mall.common.model.vo.OmsOrderShippingVO">
+        SELECT
+        os.id,
+        os.order_no,
+        os.receiver_name,
+        os.receiver_phone,
+        os.receiver_address,
+        os.deliverer_name,
+        os.deliverer_phone,
+        os.deliverer_address,
+        os.deliver_time,
+        os.logistics_company,
+        os.logistics_code,
+        os.logistics_no,
+        os.receipt_time,
+        os.auto_receipt_time,
+        oi.name spuName,
+        oi.cover_img spuCoverImg
+        FROM oms_order_shipping os
+        JOIN oms_order_shipping_item osi ON os.id = osi.shipping_id
+        JOIN oms_order_item oi ON osi.order_item_id = oi.id
+        <where>
+            <if test="orderNoList != null and orderNoList.size() > 0">
+                AND os.order_no IN
+                <foreach collection="orderNoList" separator="," open="(" close=")" item="orderNo">
+                    #{orderNo}
+                </foreach>
+            </if>
+        </where>
+        ORDER BY os.id DESC
+    </select>
+
+</mapper>

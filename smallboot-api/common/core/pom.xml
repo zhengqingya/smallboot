@@ -52,6 +52,11 @@
 
         <dependency>
             <groupId>com.zhengqing</groupId>
+            <artifactId>excel</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.zhengqing</groupId>
             <artifactId>redis</artifactId>
         </dependency>
 

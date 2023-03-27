@@ -30,3 +30,6 @@ smallboot:
   mybatis-plus-sql-log: false
   # api日志，默认关闭 true:开启  false:关闭
   api-log: true
+  # mq
+  rabbitmq:
+    addresses: ${smallboot.ip}:5672

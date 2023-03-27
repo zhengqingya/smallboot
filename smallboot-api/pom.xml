@@ -62,12 +62,27 @@
             </dependency>
             <dependency>
                 <groupId>com.zhengqing</groupId>
+                <artifactId>excel</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zhengqing</groupId>
                 <artifactId>file</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>com.zhengqing</groupId>
                 <artifactId>log</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zhengqing</groupId>
+                <artifactId>mq</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zhengqing</groupId>
+                <artifactId>pay</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
@@ -94,7 +109,17 @@
             </dependency>
             <dependency>
                 <groupId>com.zhengqing</groupId>
+                <artifactId>mall</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zhengqing</groupId>
                 <artifactId>system</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zhengqing</groupId>
+                <artifactId>ums</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>

@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhengqing.mall.mapper.OmsOrderMapper">
+
+    <sql id="CONDITION_COMMON_PAGE_WEB">
+        FROM oms_order o
+        JOIN oms_order_item oi ON o.order_no=oi.order_no
+        LEFT JOIN oms_order_shipping os ON o.order_no=os.order_no
+        <where>
+            <if test="filter.orderStatus!=null">
+                AND o.order_status = #{filter.orderStatus}
+            </if>
+            <if test="filter.orderNo!=null">
+                AND o.order_no LIKE CONCAT( #{filter.orderNo} , '%' )
+            </if>
+            <if test="filter.username!=null and filter.username!=''">
+                AND o.username LIKE CONCAT( #{filter.username} , '%' )
+            </if>
+            <if test="filter.userPhone!=null and filter.userPhone!=''">
+                AND o.user_phone LIKE CONCAT( #{filter.userPhone} , '%' )
+            </if>
+            <if test="filter.receiverName!=null and filter.receiverName!=''">
+                AND o.receiver_name LIKE CONCAT( #{filter.receiverName} , '%' )
+            </if>
+            <if test="filter.logisticsNo!=null and filter.logisticsNo!=''">
+                AND os.logistics_no LIKE CONCAT( #{filter.logisticsNo} , '%' )
+            </if>
+            <if test="filter.receiverPhone!=null and filter.receiverPhone!=''">
+                AND o.receiver_phone LIKE CONCAT( #{filter.receiverPhone} , '%' )
+            </if>
+            <if test="filter.receiverPhoneAfterFour!=null and filter.receiverPhoneAfterFour!=''">
+                AND RIGHT(o.receiver_phone, 4) = #{filter.receiverPhoneAfterFour}
+            </if>
+            <if test="filter.spuName!=null and filter.spuName!=''">
+                AND oi.name LIKE CONCAT( #{filter.spuName} , '%' )
+            </if>
+            <if test="filter.startTime!=null">
+                AND o.create_time >= #{filter.startTime}
+            </if>
+            <if test="filter.endTime!=null">
+                AND o.create_time &lt;= #{filter.endTime}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="CONDITION_COMMON_DETAIL">
+
+    </sql>
+
+    <update id="deleteBatchOrder">
+        UPDATE oms_order
+        SET is_deleted = 1
+        WHERE is_deleted = 0 AND order_no IN
+        <foreach collection="orderNoList" separator="," open="(" close=")" item="orderNo">
+            #{orderNo}
+        </foreach>
+    </update>
+
+    <select id="selectTabConditionByWeb" resultType="com.zhengqing.mall.common.model.vo.MallTabConditionListVO">
+        SELECT
+        t.order_status value,
+        COUNT( t.order_no ) num
+        FROM (
+        SELECT
+        o.order_status,
+        o.order_no
+        <include refid="CONDITION_COMMON_PAGE_WEB"/>
+        GROUP BY o.order_no
+        ) t
+        GROUP BY t.order_status
+    </select>
+
+    <select id="selectDataListByWeb" resultType="com.zhengqing.mall.web.model.vo.WebOmsOrderPageVO">
+        SELECT
+        o.order_no,
+        o.total_price,
+        o.pay_price,
+        o.freight,
+        o.user_id,
+        o.username,
+        o.user_phone,
+        o.order_status,
+        o.create_time,
+        o.un_pay_end_time,
+        o.receiver_name,
+        o.receiver_phone,
+        o.receiver_address
+        <include refid="CONDITION_COMMON_PAGE_WEB"/>
+        GROUP BY o.order_no
+        ORDER BY o.order_no DESC
+    </select>
+
+    <select id="selectExportDataListByWeb" resultType="com.zhengqing.mall.web.model.vo.WebOmsOrderExportVO">
+        SELECT
+        o.order_no,
+        o.order_status,
+        o.user_phone,
+        o.receiver_name,
+        o.receiver_phone,
+        o.total_price spuTotalPrice,
+        o.total_price+o.freight orderTotalPrice,
+        o.freight,
+        o.pay_price,
+        o.create_time,
+        o.pay_time
+        <include refid="CONDITION_COMMON_PAGE_WEB"/>
+        GROUP BY o.order_no
+        ORDER BY o.order_no DESC
+        LIMIT 10000
+    </select>
+
+    <select id="detailByWeb" resultType="com.zhengqing.mall.web.model.vo.WebOmsOrderDetailVO">
+        SELECT o.order_no,
+               o.total_price,
+               o.pay_price,
+               o.freight,
+               o.user_id,
+               o.username,
+               o.user_phone,
+               o.order_status,
+               o.create_time,
+               o.un_pay_end_time,
+               o.pay_no,
+               o.pay_time,
+               o.order_remark,
+               o.receiver_name,
+               o.receiver_phone,
+               o.receiver_address
+        FROM oms_order o
+        WHERE o.order_no = #{orderNo}
+    </select>
+
+    <!-- ============================================================================================================ -->
+
+    <sql id="CONDITION_COMMON_PAGE_MINI">
+        FROM oms_order o
+        LEFT JOIN oms_order_item oi ON o.order_no=oi.order_no
+        WHERE o.is_deleted = 0
+        <if test="filter.keyWord!=null and filter.keyWord!=''">
+            AND
+            (
+            o.order_no LIKE CONCAT( #{filter.keyWord} , '%' )
+            OR
+            oi.name LIKE CONCAT( #{filter.keyWord} , '%' )
+            )
+        </if>
+        <if test="filter.orderStatus!=null">
+            AND o.order_status = #{filter.orderStatus}
+        </if>
+        <if test="filter.userId!=null">
+            AND o.user_id = #{filter.userId}
+        </if>
+        <if test="filter.dataType == 1">
+            AND o.create_time >= DATE_FORMAT(now(),'%Y-%m-%d 00:00:00')
+        </if>
+        <if test="filter.dataType == 2">
+            AND o.create_time &lt; DATE_FORMAT(now(),'%Y-%m-%d 00:00:00')
+        </if>
+    </sql>
+
+    <select id="selectTabConditionByMini" resultType="com.zhengqing.mall.common.model.vo.MallTabConditionListVO">
+        SELECT
+        t.order_status value,
+        COUNT( t.order_no ) num
+        FROM (
+        SELECT
+        o.order_status,
+        o.order_no
+        <include refid="CONDITION_COMMON_PAGE_MINI"/>
+        GROUP BY o.order_no
+        ) t
+        GROUP BY t.order_status
+    </select>
+
+    <select id="selectDataListByMini" resultType="com.zhengqing.mall.mini.model.vo.MiniOmsOrderPageVO">
+        SELECT o.order_no,
+        o.order_status,
+        o.total_price,
+        o.pay_price,
+        o.pay_time,
+        o.create_time,
+        o.un_pay_end_time,
+        o.after_sale_end_time
+        <include refid="CONDITION_COMMON_PAGE_MINI"/>
+        GROUP BY o.order_no
+        ORDER BY o.order_no DESC
+    </select>
+
+    <select id="detailByMini" resultType="com.zhengqing.mall.mini.model.vo.MiniOmsOrderDetailVO">
+        SELECT o.order_no,
+               o.pay_no,
+               o.pay_time,
+               o.un_pay_end_time,
+               o.total_price,
+               o.pay_price,
+               o.freight,
+               o.order_status,
+               o.order_remark,
+               o.receiver_name,
+               o.receiver_phone,
+               o.receiver_address,
+               o.create_time,
+               o.update_time,
+               o.auto_receipt_time,
+               o.after_sale_end_time,
+               o.is_send_coupon
+        FROM oms_order o
+        WHERE o.is_deleted = 0
+          AND o.order_no = #{orderNo}
+    </select>
+
+    <select id="getAfterSaleEndTime" resultType="java.util.Date">
+        SELECT after_sale_end_time
+        FROM oms_order
+        WHERE is_deleted = 0
+          AND order_no = #{orderNo}
+    </select>
+
+</mapper>

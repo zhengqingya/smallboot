@@ -11,11 +11,15 @@ spring:
       - auth
       - base
       - db
+      - excel
       - file
       - log
+      - mq
+      - pay
       - redis
       - swagger
       - web
+      - ums
 
 management:
   endpoints:

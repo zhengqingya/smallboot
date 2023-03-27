@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhengqing.mall.mapper.PmsCategoryMapper">
+
+    <select id="selectPageForWeb" resultType="com.zhengqing.mall.web.model.vo.WebPmsCategoryPageVO">
+        SELECT
+        id,
+        parent_id,
+        name,
+        sort,
+        is_show
+        FROM pms_category
+        WHERE is_deleted = 0
+        <if test="filter.name!=null and filter.name!=''">
+            AND name LIKE CONCAT( #{filter.name} , '%' )
+        </if>
+        ORDER BY sort DESC, create_time DESC
+    </select>
+
+    <select id="selectDataList" resultType="com.zhengqing.mall.web.model.vo.WebPmsCategoryListVO">
+        SELECT
+        id,
+        parent_id,
+        name,
+        sort,
+        is_show
+        FROM pms_category
+        WHERE is_deleted = 0
+        <if test="filter.name!=null and filter.name!=''">
+            AND name LIKE CONCAT( #{filter.name} , '%' )
+        </if>
+        ORDER BY sort DESC, create_time DESC
+    </select>
+
+    <update id="updateBatchShow">
+        UPDATE pms_category
+        SET is_show = #{isShow}
+        WHERE is_deleted = 0 AND id IN
+        <foreach collection="idList" separator="," open="(" close=")" item="id">
+            #{id}
+        </foreach>
+    </update>
+
+    <select id="selectPageForMini" resultType="com.zhengqing.mall.mini.model.vo.MiniPmsCategoryPageVO">
+        SELECT
+        id,
+        name
+        FROM pms_category
+        WHERE is_deleted = 0
+        AND is_show = 1
+        <if test="filter.name!=null and filter.name!=''">
+            AND name LIKE CONCAT( #{filter.name} , '%' )
+        </if>
+        ORDER BY sort DESC
+    </select>
+
+    <select id="selectReSpuDataListForMini" resultType="com.zhengqing.mall.mini.model.vo.MiniPmsCategoryReSpuListVO">
+        SELECT
+        c.id,
+        c.name
+        FROM pms_category c
+        JOIN pms_category_spu_relation csr
+        ON ( c.id = csr.category_id AND csr.is_deleted = 0 AND c.is_deleted = 0 )
+        WHERE c.is_show = 1
+        <if test="filter.name!=null and filter.name!=''">
+            AND c.name LIKE CONCAT( #{filter.name} , '%' )
+        </if>
+        GROUP BY c.id
+        ORDER BY c.sort DESC, c.create_time DESC
+    </select>
+
+    <select id="selectListForMini" resultType="com.zhengqing.mall.mini.model.vo.MiniPmsCategoryListVO">
+        SELECT
+        id,
+        name
+        FROM pms_category
+        WHERE is_deleted = 0
+        AND is_show = 1
+        <if test="filter.name!=null and filter.name!=''">
+            AND name LIKE CONCAT( #{filter.name} , '%' )
+        </if>
+        ORDER BY sort DESC
+    </select>
+
+</mapper>

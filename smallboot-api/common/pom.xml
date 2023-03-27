@@ -20,8 +20,11 @@
         <module>base</module>
         <module>core</module>
         <module>db</module>
+        <module>excel</module>
         <module>file</module>
         <module>log</module>
+        <module>mq</module>
+        <module>pay</module>
         <module>redis</module>
         <module>swagger</module>
         <module>web</module>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhengqing.mall.mapper.PmsAttrKeyMapper">
+
+    <select id="selectDataList" resultType="com.zhengqing.mall.web.model.vo.WebPmsAttrKeyListVO">
+        SELECT
+        id,
+        attr_key_name,
+        sort
+        FROM pms_attr_key
+        WHERE is_deleted = 0
+        <if test="filter.attrKeyName!=null and filter.attrKeyName!=''">
+            AND attr_key_name LIKE CONCAT( #{filter.attrKeyName} , '%' )
+        </if>
+        <if test="filter.idList!=null and filter.idList.size>0">
+            AND id IN
+            <foreach collection="filter.idList" separator="," open="(" close=")" item="id">
+                #{id}
+            </foreach>
+        </if>
+        ORDER BY sort ASC,id DESC
+    </select>
+
+    <select id="selectDataListByIdList" resultType="com.zhengqing.mall.web.model.vo.WebPmsAttrVO">
+        SELECT
+        jat.id attrKeyId,
+        jat.attr_key_name,
+        jat.sort attrKeySort,
+        jav.id attrValueId,
+        jav.attr_key_id,
+        jav.attr_value_name,
+        jav.sort attrValueSort
+        FROM pms_attr_key jat
+        LEFT JOIN pms_attr_value jav ON ( jat.id=jav.attr_key_id AND jav.is_deleted=0)
+        WHERE jat.is_deleted = 0
+        <if test="idList!=null and idList.size>0">
+            AND jat.id IN
+            <foreach collection="idList" separator="," open="(" close=")" item="id">
+                #{id}
+            </foreach>
+        </if>
+    </select>
+
+</mapper>

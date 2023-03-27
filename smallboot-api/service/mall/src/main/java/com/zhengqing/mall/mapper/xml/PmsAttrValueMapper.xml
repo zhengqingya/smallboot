@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhengqing.mall.mapper.PmsAttrValueMapper">
+
+    <select id="selectDataList" resultType="com.zhengqing.mall.web.model.vo.WebPmsAttrValueListVO">
+        SELECT
+        id,
+        attr_key_id,
+        attr_value_name,
+        sort
+        FROM pms_attr_value
+        WHERE is_deleted = 0
+        <if test="filter.attrKeyId!=null">
+            AND attr_key_id = #{filter.attrKeyId}
+        </if>
+        <if test="filter.attrValueName!=null and filter.attrValueName!=''">
+            AND attr_value_name LIKE CONCAT( #{filter.attrValueName} , '%' )
+        </if>
+        ORDER BY sort ASC,id DESC
+    </select>
+
+</mapper>

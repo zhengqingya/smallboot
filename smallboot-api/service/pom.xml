@@ -17,7 +17,9 @@
     <properties></properties>
 
     <modules>
+        <module>mall</module>
         <module>system</module>
+        <module>ums</module>
         <module>wx-mp</module>
     </modules>
 

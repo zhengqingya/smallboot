@@ -25,6 +25,9 @@ public interface ServiceConstant {
      */
     String SERVICE_API_PREFIX_WEB_SYSTEM = SERVICE_API_PREFIX_WEB + "/system";
     String SERVICE_API_PREFIX_WEB_WXMP = SERVICE_API_PREFIX_WEB + "/wx/mp";
+    String SERVICE_API_PREFIX_WEB_MALL = SERVICE_API_PREFIX_WEB + "/mall";
+    String SERVICE_API_PREFIX_MINI_MALL = SERVICE_API_PREFIX_MINI + "/mall";
+    String SERVICE_API_PREFIX_MINI_UMS = SERVICE_API_PREFIX_WEB + "/ums";
 
 
 }

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhengqing.mall.mapper.PmsSpuRateMapper">
+
+    <select id="selectDataList" resultType="com.zhengqing.mall.mini.model.vo.MiniPmsSpuRatePageVO">
+        SELECT
+        id,
+        operator_id,
+        operator_name,
+        content,
+        resource_json,
+        attr_json,
+        create_time
+        FROM pms_spu_rate
+        WHERE is_deleted = 0
+        <if test="filter.spuId!=null">
+            AND spu_id = #{filter.spuId}
+        </if>
+        <if test="filter.isImg!=null">
+            AND is_img = #{filter.isImg}
+        </if>
+        <if test="filter.isVideo!=null">
+            AND is_video = #{filter.isVideo}
+        </if>
+        <if test="filter.rateType!=null">
+            AND rate_type = #{filter.rateType}
+        </if>
+        ORDER BY id DESC
+    </select>
+
+</mapper>

@@ -1,0 +1,6 @@
+# 微信小程序
+wx:
+  miniapp:
+    appid: xxx
+    secret: xxx
+    msgDataFormat: JSON

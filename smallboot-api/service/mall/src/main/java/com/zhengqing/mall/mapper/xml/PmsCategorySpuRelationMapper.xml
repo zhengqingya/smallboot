@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhengqing.mall.mapper.PmsCategorySpuRelationMapper">
+
+    <select id="selectDataPage" resultType="com.zhengqing.mall.web.model.vo.WebPmsCategorySpuRelationPageVO">
+        SELECT
+        jcpr.id,
+        jcpr.category_id,
+        jcpr.sort,
+        jcpr.is_show,
+        jcpr.is_put,
+        jcpr.category_id,
+        jcpr.spu_id,
+        jp.name spuName
+        FROM pms_category_spu_relation jcpr
+        JOIN pms_spu jp ON jcpr.spu_id = jp.id
+        WHERE jcpr.is_deleted = 0
+        <if test="filter.categoryId!=null">
+            AND jcpr.category_id = #{filter.categoryId}
+        </if>
+        ORDER BY jcpr.sort DESC, jcpr.create_time DESC
+    </select>
+
+    <select id="selectDataList" resultType="com.zhengqing.mall.web.model.vo.WebPmsCategorySpuRelationListVO">
+        SELECT
+        jcpr.id,
+        jcpr.category_id ,
+        jcpr.spu_id
+        FROM pms_category_spu_relation jcpr
+        WHERE jcpr.is_deleted = 0
+        <if test="filter.categoryId!=null">
+            AND jcpr.category_id = #{filter.categoryId}
+        </if>
+        ORDER BY jcpr.sort DESC
+    </select>
+
+    <update id="updateBatchShow">
+        UPDATE pms_category_spu_relation
+        SET is_show = #{isShow}
+        WHERE is_deleted = 0 AND id IN
+        <foreach collection="idList" separator="," open="(" close=")" item="id">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="updateBatchPut">
+        UPDATE pms_category_spu_relation
+        SET is_put = #{isPut}
+        WHERE is_deleted = 0 AND id IN
+        <foreach collection="idList" separator="," open="(" close=")" item="id">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="updateBatchShowBySpuIds">
+        UPDATE pms_category_spu_relation
+        SET is_show = #{isShow}
+        WHERE is_deleted = 0 AND spu_id IN
+        <foreach collection="spuIdList" separator="," open="(" close=")" item="spuId">
+            #{spuId}
+        </foreach>
+    </update>
+
+    <update id="updateBatchPutBySpuIds">
+        UPDATE pms_category_spu_relation
+        SET is_put = #{isPut}
+        WHERE is_deleted = 0 AND spu_id IN
+        <foreach collection="spuIdList" separator="," open="(" close=")" item="spuId">
+            #{spuId}
+        </foreach>
+    </update>
+
+    <update id="updateBatchSort">
+        <foreach collection="list" separator=";" item="item">
+            UPDATE pms_category_spu_relation
+            SET sort = #{item.sort}
+            WHERE id = #{item.id}
+        </foreach>
+    </update>
+
+    <select id="selectCategoryReSpu"
+            resultType="com.zhengqing.mall.common.model.vo.PmsCategoryReSpuListVO">
+        SELECT
+        jcpr.category_id,
+        jcpr.is_put categoryRespuIsPut,
+        jp.id,
+        jp.name,
+        jp.cover_img,
+        jp.is_put
+        FROM pms_category_spu_relation jcpr
+        JOIN pms_spu jp ON jcpr.spu_id = jp.id
+        WHERE jcpr.is_deleted = 0 AND jp.is_show=1 AND jcpr.is_show=1
+        <if test="filter.categoryIdList != null and filter.categoryIdList.size() > 0">
+            AND jcpr.category_id IN
+            <foreach collection="filter.categoryIdList" separator="," open="(" close=")" item="categoryId">
+                #{categoryId}
+            </foreach>
+        </if>
+        ORDER BY jcpr.sort DESC, jcpr.create_time DESC
+    </select>
+
+    <select id="selectReData" resultType="java.lang.Integer">
+        SELECT COUNT(jcpr.id)
+        FROM pms_category_spu_relation jcpr
+                 JOIN pms_category jc ON jcpr.category_id = jc.id
+                 JOIN pms_spu jp ON jcpr.spu_id = jp.id
+        WHERE jcpr.is_deleted = 0
+          AND jcpr.is_show = 1
+          AND jcpr.is_put = 1
+          AND jp.is_show = 1
+          AND jp.is_put = 1
+          AND jc.is_deleted = 0
+          AND jc.is_show = 1
+          AND jcpr.category_id = #{categoryId}
+          AND jcpr.spu_id = #{spuId}
+    </select>
+
+</mapper>

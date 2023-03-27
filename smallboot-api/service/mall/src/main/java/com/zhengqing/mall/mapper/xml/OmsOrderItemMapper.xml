@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhengqing.mall.mapper.OmsOrderItemMapper">
+
+    <select id="selectListStatusByIdList" resultType="com.zhengqing.mall.mini.model.bo.MiniOmsOrderItemStatusBO">
+        SELECT
+        id,
+        status
+        FROM oms_order_item
+        WHERE id IN
+        <foreach collection="orderItemIdList" separator="," open="(" close=")" item="orderItemId">
+            #{orderItemId}
+        </foreach>
+    </select>
+
+    <update id="updateBatchStatus">
+        UPDATE oms_order_item
+        SET status = #{status}
+        WHERE id IN
+        <foreach collection="orderItemIdList" separator="," open="(" close=")" item="orderItemId">
+            #{orderItemId}
+        </foreach>
+    </update>
+
+    <update id="updateBatchStatusForSendCoupon">
+        UPDATE oms_order_item
+        SET status = 5, is_send_coupon = 1
+        WHERE id IN
+        <foreach collection="orderItemIdList" separator="," open="(" close=")" item="orderItemId">
+            #{orderItemId}
+        </foreach>
+    </update>
+
+    <update id="updateBatchIsRate">
+        UPDATE oms_order_item
+        SET is_rate = #{isRate}
+        WHERE id IN
+        <foreach collection="orderItemIdList" separator="," open="(" close=")" item="orderItemId">
+            #{orderItemId}
+        </foreach>
+    </update>
+
+    <update id="updateBatchStatusByOrderNo">
+        UPDATE oms_order_item
+        SET status = #{status}
+        WHERE order_no = #{orderNo}
+    </update>
+
+    <select id="selectListForSkuLimit" resultType="com.zhengqing.mall.mini.model.bo.MiniOmsOrderItemBuyLimitBO">
+        SELECT
+        sku_id,
+        COUNT(num) num
+        FROM oms_order_item
+        WHERE user_id = #{userId}
+        AND status NOT IN (1,2)
+        AND sku_id IN
+        <foreach collection="skuIdList" separator="," open="(" close=")" item="skuId">
+            #{skuId}
+        </foreach>
+        GROUP BY sku_id
+    </select>
+
+    <resultMap id="selectItemList" type="com.zhengqing.mall.common.model.vo.OmsOrderItemVO">
+        <result column="spec_list"
+                property="specList"
+                typeHandler="com.zhengqing.mall.config.mybatis.handler.MallListSpecTypeHandler"></result>
+    </resultMap>
+
+    <select id="selectItemList" resultMap="selectItemList">
+        SELECT
+        id,
+        order_no,
+        status,
+        spu_id,
+        sku_id,
+        name,
+        cover_img,
+        num,
+        price,
+        total_price,
+        spec_list,
+        type,
+        is_rate
+        FROM oms_order_item
+        <where>
+            <if test="filter.keyWord!=null and filter.keyWord!=''">
+                AND
+                (
+                order_no LIKE CONCAT( #{filter.keyWord} , '%' )
+                OR
+                name LIKE CONCAT( #{filter.keyWord} , '%' )
+                )
+            </if>
+            <if test="filter.orderNoList != null and filter.orderNoList.size() > 0">
+                AND order_no IN
+                <foreach collection="filter.orderNoList" separator="," open="(" close=")" item="orderNo">
+                    #{orderNo}
+                </foreach>
+            </if>
+            <if test="filter.orderItemIdList != null and filter.orderItemIdList.size() > 0">
+                AND id IN
+                <foreach collection="filter.orderItemIdList" separator="," open="(" close=")" item="orderItemId">
+                    #{orderItemId}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+</mapper>

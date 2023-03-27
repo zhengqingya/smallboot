@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhengqing.mall.mapper.PmsSkuMapper">
+
+    <resultMap id="selectDataListBySpuIdList" type="com.zhengqing.mall.common.model.bo.PmsSkuBO">
+        <result column="spec_list"
+                property="specList"
+                typeHandler="com.zhengqing.mall.config.mybatis.handler.MallListSpecTypeHandler"></result>
+    </resultMap>
+
+    <select id="selectDataListBySpuIdList" resultMap="selectDataListBySpuIdList">
+        SELECT
+        id,
+        spu_id,
+        code,
+        spec_list ,
+        presell_price,
+        sell_price,
+        limit_count,
+        total_stock,
+        usable_stock,
+        use_stock,
+        cover_img,
+        sort,
+        is_show
+        FROM pms_sku
+        WHERE is_deleted = 0
+        <if test="spuIdList != null and spuIdList.size() > 0">
+            AND spu_id IN
+            <foreach collection="spuIdList" separator="," open="(" close=")" item="spuId">
+                #{spuId}
+            </foreach>
+        </if>
+        ORDER BY sort DESC
+    </select>
+
+    <update id="updateSkuStock">
+        <foreach collection="list" item="item" separator=";">
+            UPDATE pms_sku
+            SET usable_stock = (usable_stock + #{item.num}),
+            use_stock = (use_stock - #{item.num})
+            WHERE is_deleted = 0
+            AND id = #{item.skuId}
+            AND (usable_stock + #{item.num}) >= 0
+        </foreach>
+    </update>
+
+    <update id="updateBatchVirtualUseStock">
+        <foreach collection="list" separator=";" item="item">
+            UPDATE pms_sku
+            SET virtual_use_stock = (#{item.virtualUseStock} + virtual_use_stock),
+            use_stock = (use_stock + #{item.virtualUseStock}),
+            usable_stock = (usable_stock - #{item.virtualUseStock})
+            WHERE is_deleted = 0
+            AND id = #{item.id}
+            AND #{item.virtualUseStock} &lt;= usable_stock
+        </foreach>
+    </update>
+
+</mapper>

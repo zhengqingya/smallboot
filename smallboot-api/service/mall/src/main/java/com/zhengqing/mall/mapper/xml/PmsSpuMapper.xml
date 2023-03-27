@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhengqing.mall.mapper.PmsSpuMapper">
+
+    <sql id="PAGE_CONDITION">
+        FROM pms_spu spu
+        WHERE spu.is_deleted = 0
+        <if test="filter.name!=null and filter.name!=''">
+            AND spu.name LIKE CONCAT( #{filter.name} , '%' )
+        </if>
+        <if test="filter.isPut!=null">
+            AND spu.is_put = #{filter.isPut}
+        </if>
+        <if test="filter.isPresell!=null">
+            AND spu.is_presell = #{filter.isPresell}
+        </if>
+        <if test="filter.presellStartTime!=null">
+            AND spu.presell_start_time >= #{filter.presellStartTime}
+        </if>
+        <if test="filter.presellEndTime!=null">
+            AND spu.presell_end_time &lt;= #{filter.presellEndTime}
+        </if>
+        <if test="filter.type!=null">
+            AND spu.type = #{filter.type}
+        </if>
+    </sql>
+
+    <sql id="PAGE">
+        SELECT spu.id,
+               spu.name,
+               spu.cover_img,
+               spu.type,
+               spu.is_put,
+               spu.is_show,
+               spu.is_presell,
+               spu.presell_end_time,
+               spu.presell_start_time,
+               spu.presell_deliver_day,
+               spu.line_price,
+               spu.sort,
+               spu.freight
+    </sql>
+
+    <sql id="DETAIL">
+        SELECT id,
+               type,
+               name,
+               cover_img,
+               is_put,
+               is_show,
+               is_presell,
+               presell_end_time,
+               presell_start_time,
+               presell_deliver_day,
+               freight,
+               sort,
+               line_price,
+               attr_list,
+               slide_img_list,
+               detail_img_list,
+               service_list,
+               explain_list
+        FROM pms_spu
+        WHERE is_deleted = 0
+    </sql>
+
+    <select id="selectTabCondition" resultType="com.zhengqing.mall.common.model.vo.MallTabConditionListVO">
+        SELECT
+        spu.is_put value,
+        COUNT( DISTINCT spu.id ) num
+        <include refid="PAGE_CONDITION"/>
+        GROUP BY spu.is_put
+    </select>
+
+    <select id="selectDataListByWeb" resultType="com.zhengqing.mall.web.model.vo.WebPmsSpuPageVO">
+        <include refid="PAGE"/>
+        <include refid="PAGE_CONDITION"/>
+        GROUP BY spu.id
+        ORDER BY spu.sort DESC, spu.id DESC
+    </select>
+
+    <select id="selectDataTypeList" resultType="com.zhengqing.mall.common.model.vo.PmsSpuTypeVO">
+        SELECT
+        id,
+        type,
+        name,
+        coupon_id,
+        coupon_name,
+        coupon_num,
+        parent_id
+        FROM pms_spu
+        WHERE is_deleted = 0
+        AND id IN
+        <foreach collection="idList" separator="," open="(" close=")" item="id">
+            #{id}
+        </foreach>
+    </select>
+
+    <resultMap id="detailByWeb" type="com.zhengqing.mall.web.model.vo.WebPmsSpuDetailVO">
+        <result column="attr_list"
+                property="attrList"
+                typeHandler="com.zhengqing.mall.config.mybatis.handler.MallListAttrTypeHandler"></result>
+        <result column="slide_img_list"
+                property="slideImgList"
+                typeHandler="com.zhengqing.mall.config.mybatis.handler.MallListFileTypeHandler"></result>
+        <result column="detail_img_list"
+                property="detailImgList"
+                typeHandler="com.zhengqing.mall.config.mybatis.handler.MallListFileTypeHandler"></result>
+        <result column="service_list"
+                property="serviceList"
+                typeHandler="com.zhengqing.mall.config.mybatis.handler.MallListDictTypeHandler"></result>
+        <result column="explain_list"
+                property="explainList"
+                typeHandler="com.zhengqing.mall.config.mybatis.handler.MallListDictTypeHandler"></result>
+    </resultMap>
+
+    <select id="detailByWeb" resultMap="detailByWeb">
+        <include refid="DETAIL"/>
+        AND id = #{id}
+    </select>
+
+    <update id="updateBatchPut">
+        UPDATE pms_spu
+        SET is_put = #{isPut}
+        WHERE is_deleted = 0 AND id IN
+        <foreach collection="idList" separator="," open="(" close=")" item="id">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="updateBatchShow">
+        UPDATE pms_spu
+        SET is_show = #{isShow}
+        WHERE is_deleted = 0 AND id IN
+        <foreach collection="idList" separator="," open="(" close=")" item="id">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="updateBatchPresell">
+        UPDATE pms_spu
+        SET is_presell = #{filter.isPresell},
+        presell_start_time = #{filter.presellStartTime},
+        presell_end_time = #{filter.presellEndTime},
+        presell_deliver_day = #{filter.presellDeliverDay}
+        WHERE is_deleted = 0 AND id IN
+        <foreach collection="filter.idList" separator="," open="(" close=")" item="id">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="updateBatchSort">
+        <foreach collection="list" separator=";" item="item">
+            UPDATE pms_spu
+            SET sort = #{item.sort}
+            WHERE id = #{item.id}
+        </foreach>
+    </update>
+
+    <!-- ============================================================================================================ -->
+
+    <select id="selectDataListByMini" resultType="com.zhengqing.mall.mini.model.vo.MiniPmsSpuPageVO">
+        <include refid="PAGE"/>
+        FROM pms_spu spu
+        WHERE spu.is_deleted = 0 AND spu.is_show=1
+        <if test="filter.name!=null and filter.name!=''">
+            AND spu.name LIKE CONCAT( #{filter.name} , '%' )
+        </if>
+        ORDER BY spu.sort DESC, spu.id DESC
+    </select>
+
+    <resultMap id="selectSkuList" type="com.zhengqing.mall.common.model.vo.PmsSkuVO">
+        <result column="spec_list"
+                property="specList"
+                typeHandler="com.zhengqing.mall.config.mybatis.handler.MallListSpecTypeHandler"></result>
+    </resultMap>
+
+    <select id="selectSkuList" resultMap="selectSkuList">
+        SELECT
+        spu.id spuId,
+        spu.name,
+        spu.cover_img,
+        spu.type,
+        spu.freight,
+        spu.is_presell,
+        spu.presell_start_time,
+        spu.presell_end_time,
+        spu.description,
+        sku.id skuId,
+        sku.presell_price,
+        sku.spec_list,
+        sku.sell_price,
+        sku.usable_stock,
+        sku.limit_count
+        FROM pms_spu spu
+        JOIN pms_sku sku
+        ON ( sku.spu_id=spu.id AND sku.is_deleted=0 AND spu.is_deleted = 0 AND spu.is_show=1 AND spu.is_put=1 )
+        WHERE sku.id IN
+        <foreach collection="filter.skuIdList" separator="," open="(" close=")" item="skuId">
+            #{skuId}
+        </foreach>
+    </select>
+
+    <resultMap id="detailByMini" type="com.zhengqing.mall.mini.model.vo.MiniPmsSpuDetailVO">
+        <result column="attr_list"
+                property="attrList"
+                typeHandler="com.zhengqing.mall.config.mybatis.handler.MallListAttrTypeHandler"></result>
+        <result column="slide_img_list"
+                property="slideImgList"
+                typeHandler="com.zhengqing.mall.config.mybatis.handler.MallListFileTypeHandler"></result>
+        <result column="detail_img_list"
+                property="detailImgList"
+                typeHandler="com.zhengqing.mall.config.mybatis.handler.MallListFileTypeHandler"></result>
+        <result column="service_list"
+                property="serviceList"
+                typeHandler="com.zhengqing.mall.config.mybatis.handler.MallListDictTypeHandler"></result>
+        <result column="explain_list"
+                property="explainList"
+                typeHandler="com.zhengqing.mall.config.mybatis.handler.MallListDictTypeHandler"></result>
+    </resultMap>
+
+    <select id="detailByMini" resultMap="detailByMini">
+        <include refid="DETAIL"/>
+        AND id = #{id}
+        AND is_show = 1
+    </select>
+
+</mapper>
