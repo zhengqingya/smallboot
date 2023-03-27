@@ -152,5 +152,6 @@
     <logger name="org.thymeleaf" level="WARN"/>
     <logger name="com.yomahub.tlog" level="INFO"/>
     <logger name="com.xxl.job" level="INFO"/>
+    <logger name="com.github.xiaoymin.knife4j" level="INFO"/>
 
 </configuration>

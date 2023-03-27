@@ -12,3 +12,6 @@ spring:
     resources:
       add-mappings: true # 是否开启默认的资源处理，默认为true
 
+  # 模板引擎
+  freemarker:
+    checkTemplateLocation: false # 不检查模板位置是否存在 -- 解决启动警告问题 “Cannot find template location(s): [classpath:/templates/] (please add some templates, check your FreeMarker configuration, or set spring.freemarker.checkTemplateLocation=false)”
