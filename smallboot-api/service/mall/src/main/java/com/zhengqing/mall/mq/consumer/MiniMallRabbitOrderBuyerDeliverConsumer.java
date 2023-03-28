@@ -2,7 +2,7 @@ package com.zhengqing.mall.mq.consumer;
 
 import com.alibaba.fastjson.JSON;
 import com.zhengqing.common.base.context.TenantIdContext;
-import com.zhengqing.mall.common.model.bo.OmsOrderAfterSaleCloseBO;
+import com.zhengqing.mall.model.bo.OmsOrderAfterSaleCloseBO;
 import com.zhengqing.mall.constant.MallRabbitMqConstant;
 import com.zhengqing.mall.service.MiniOmsOrderAfterSaleService;
 import lombok.extern.slf4j.Slf4j;

@@ -3,7 +3,7 @@ package com.zhengqing.mall.mq.consumer;
 import com.alibaba.fastjson.JSON;
 import com.zhengqing.common.base.context.TenantIdContext;
 import com.zhengqing.mall.constant.MallRabbitMqConstant;
-import com.zhengqing.mall.mini.model.dto.MiniOmsOrderConfirmReceiptDTO;
+import com.zhengqing.mall.model.dto.MiniOmsOrderConfirmReceiptDTO;
 import com.zhengqing.mall.service.WebOmsOrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;

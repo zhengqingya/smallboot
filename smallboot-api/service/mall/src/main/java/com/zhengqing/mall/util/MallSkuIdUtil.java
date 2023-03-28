@@ -1,6 +1,6 @@
 package com.zhengqing.mall.util;
 
-import com.zhengqing.mall.common.model.bo.PmsSkuSpecBO;
+import com.zhengqing.mall.model.bo.PmsSkuSpecBO;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Comparator;

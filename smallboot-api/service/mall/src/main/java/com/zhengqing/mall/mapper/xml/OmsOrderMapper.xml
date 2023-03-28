@@ -56,7 +56,7 @@
         </foreach>
     </update>
 
-    <select id="selectTabConditionByWeb" resultType="com.zhengqing.mall.common.model.vo.MallTabConditionListVO">
+    <select id="selectTabConditionByWeb" resultType="com.zhengqing.mall.model.vo.MallTabConditionListVO">
         SELECT
         t.order_status value,
         COUNT( t.order_no ) num
@@ -70,7 +70,7 @@
         GROUP BY t.order_status
     </select>
 
-    <select id="selectDataListByWeb" resultType="com.zhengqing.mall.web.model.vo.WebOmsOrderPageVO">
+    <select id="selectDataListByWeb" resultType="com.zhengqing.mall.model.vo.WebOmsOrderPageVO">
         SELECT
         o.order_no,
         o.total_price,
@@ -90,7 +90,7 @@
         ORDER BY o.order_no DESC
     </select>
 
-    <select id="selectExportDataListByWeb" resultType="com.zhengqing.mall.web.model.vo.WebOmsOrderExportVO">
+    <select id="selectExportDataListByWeb" resultType="com.zhengqing.mall.model.vo.WebOmsOrderExportVO">
         SELECT
         o.order_no,
         o.order_status,
@@ -109,7 +109,7 @@
         LIMIT 10000
     </select>
 
-    <select id="detailByWeb" resultType="com.zhengqing.mall.web.model.vo.WebOmsOrderDetailVO">
+    <select id="detailByWeb" resultType="com.zhengqing.mall.model.vo.WebOmsOrderDetailVO">
         SELECT o.order_no,
                o.total_price,
                o.pay_price,
@@ -158,7 +158,7 @@
         </if>
     </sql>
 
-    <select id="selectTabConditionByMini" resultType="com.zhengqing.mall.common.model.vo.MallTabConditionListVO">
+    <select id="selectTabConditionByMini" resultType="com.zhengqing.mall.model.vo.MallTabConditionListVO">
         SELECT
         t.order_status value,
         COUNT( t.order_no ) num
@@ -172,7 +172,7 @@
         GROUP BY t.order_status
     </select>
 
-    <select id="selectDataListByMini" resultType="com.zhengqing.mall.mini.model.vo.MiniOmsOrderPageVO">
+    <select id="selectDataListByMini" resultType="com.zhengqing.mall.model.vo.MiniOmsOrderPageVO">
         SELECT o.order_no,
         o.order_status,
         o.total_price,
@@ -186,7 +186,7 @@
         ORDER BY o.order_no DESC
     </select>
 
-    <select id="detailByMini" resultType="com.zhengqing.mall.mini.model.vo.MiniOmsOrderDetailVO">
+    <select id="detailByMini" resultType="com.zhengqing.mall.model.vo.MiniOmsOrderDetailVO">
         SELECT o.order_no,
                o.pay_no,
                o.pay_time,

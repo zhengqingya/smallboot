@@ -43,7 +43,7 @@
         </where>
     </sql>
 
-    <select id="selectTabCondition" resultType="com.zhengqing.mall.common.model.vo.MallTabConditionListVO">
+    <select id="selectTabCondition" resultType="com.zhengqing.mall.model.vo.MallTabConditionListVO">
         SELECT
         t.after_status value,
         COUNT( t.after_sale_no ) num
@@ -57,7 +57,7 @@
         GROUP BY t.after_status
     </select>
 
-    <select id="selectDataListByWeb" resultType="com.zhengqing.mall.web.model.vo.WebOmsOrderAfterSalePageVO">
+    <select id="selectDataListByWeb" resultType="com.zhengqing.mall.model.vo.WebOmsOrderAfterSalePageVO">
         SELECT oas.after_sale_no,
         oas.after_type,
         oas.after_status,
@@ -75,7 +75,7 @@
         ORDER BY oas.after_sale_no DESC
     </select>
 
-    <select id="detailByWeb" resultType="com.zhengqing.mall.web.model.vo.WebOmsOrderAfterSaleDetailVO">
+    <select id="detailByWeb" resultType="com.zhengqing.mall.model.vo.WebOmsOrderAfterSaleDetailVO">
         SELECT oas.after_sale_no,
                oas.after_type,
                oas.after_reason,
@@ -106,7 +106,7 @@
     </select>
 
 
-    <select id="selectSpuListByAfterSaleNo" resultType="com.zhengqing.mall.common.model.bo.PmsSkuStockBO">
+    <select id="selectSpuListByAfterSaleNo" resultType="com.zhengqing.mall.model.bo.PmsSkuStockBO">
         SELECT oas.after_sale_no,
                oas.order_no,
                oi.sku_id,
@@ -120,7 +120,7 @@
 
     <!--  ==============================================================================================  -->
 
-    <select id="selectListByOrderNoList" resultType="com.zhengqing.mall.common.model.vo.OmsOrderAfterSaleVO">
+    <select id="selectListByOrderNoList" resultType="com.zhengqing.mall.model.vo.OmsOrderAfterSaleVO">
         SELECT
         order_no,
         MAX( IF( after_status IN ( 1, 3, 5, 8, 9 ) , 1, 0) ) isAfterSale
@@ -137,7 +137,7 @@
     </select>
 
     <select id="selectOrderItemIdsReAfterSaleStatus"
-            resultType="com.zhengqing.mall.common.model.vo.OmsOrderAfterSaleItemVO">
+            resultType="com.zhengqing.mall.model.vo.OmsOrderAfterSaleItemVO">
         SELECT oas.after_sale_no,
         oas.order_no,
         oasi.order_item_id
@@ -151,7 +151,7 @@
         GROUP BY oasi.order_item_id
     </select>
 
-    <select id="selectDataListByMini" resultType="com.zhengqing.mall.mini.model.vo.MiniOmsOrderAfterSalePageVO">
+    <select id="selectDataListByMini" resultType="com.zhengqing.mall.model.vo.MiniOmsOrderAfterSalePageVO">
         SELECT oas.after_sale_no,
         oas.after_type,
         oas.after_status,
@@ -176,7 +176,7 @@
         ORDER BY oas.after_sale_no DESC
     </select>
 
-    <select id="detailByMini" resultType="com.zhengqing.mall.mini.model.vo.MiniOmsOrderAfterSaleDetailVO">
+    <select id="detailByMini" resultType="com.zhengqing.mall.model.vo.MiniOmsOrderAfterSaleDetailVO">
         SELECT oas.after_sale_no,
                oas.order_no,
                oas.after_type,

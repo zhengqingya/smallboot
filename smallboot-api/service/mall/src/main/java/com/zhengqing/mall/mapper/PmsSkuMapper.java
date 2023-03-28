@@ -1,10 +1,10 @@
 package com.zhengqing.mall.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.zhengqing.mall.common.model.bo.PmsSkuBO;
-import com.zhengqing.mall.common.model.bo.PmsSkuStockBO;
 import com.zhengqing.mall.entity.PmsSku;
-import com.zhengqing.mall.web.model.dto.WebPmsSpuEditVirtualUseStockDTO;
+import com.zhengqing.mall.model.bo.PmsSkuBO;
+import com.zhengqing.mall.model.bo.PmsSkuStockBO;
+import com.zhengqing.mall.model.dto.WebPmsSpuEditVirtualUseStockDTO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

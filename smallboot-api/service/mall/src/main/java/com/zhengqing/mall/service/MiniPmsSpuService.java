@@ -1,12 +1,12 @@
 package com.zhengqing.mall.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.zhengqing.mall.common.model.dto.PmsSpuPresellDTO;
+import com.zhengqing.mall.model.dto.PmsSpuPresellDTO;
 import com.zhengqing.mall.entity.PmsSpu;
-import com.zhengqing.mall.mini.model.dto.MiniPmsSpuPageDTO;
-import com.zhengqing.mall.mini.model.dto.MiniPmsSpuPresellRemindDTO;
-import com.zhengqing.mall.mini.model.vo.MiniPmsSpuDetailVO;
-import com.zhengqing.mall.mini.model.vo.MiniPmsSpuPageVO;
+import com.zhengqing.mall.model.dto.MiniPmsSpuPageDTO;
+import com.zhengqing.mall.model.dto.MiniPmsSpuPresellRemindDTO;
+import com.zhengqing.mall.model.vo.MiniPmsSpuDetailVO;
+import com.zhengqing.mall.model.vo.MiniPmsSpuPageVO;
 
 /**
  * <p>  商城-商品 服务类 </p>

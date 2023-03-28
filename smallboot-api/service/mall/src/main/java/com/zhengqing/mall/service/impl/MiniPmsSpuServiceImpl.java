@@ -7,15 +7,15 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Sets;
 import com.zhengqing.common.base.context.TenantIdContext;
 import com.zhengqing.common.redis.util.RedisUtil;
-import com.zhengqing.mall.common.model.bo.PmsSkuBO;
-import com.zhengqing.mall.common.model.dto.PmsSpuPresellDTO;
 import com.zhengqing.mall.constant.MallRedisConstant;
 import com.zhengqing.mall.entity.PmsSpu;
 import com.zhengqing.mall.mapper.PmsSpuMapper;
-import com.zhengqing.mall.mini.model.dto.MiniPmsSpuPageDTO;
-import com.zhengqing.mall.mini.model.dto.MiniPmsSpuPresellRemindDTO;
-import com.zhengqing.mall.mini.model.vo.MiniPmsSpuDetailVO;
-import com.zhengqing.mall.mini.model.vo.MiniPmsSpuPageVO;
+import com.zhengqing.mall.model.bo.PmsSkuBO;
+import com.zhengqing.mall.model.dto.MiniPmsSpuPageDTO;
+import com.zhengqing.mall.model.dto.MiniPmsSpuPresellRemindDTO;
+import com.zhengqing.mall.model.dto.PmsSpuPresellDTO;
+import com.zhengqing.mall.model.vo.MiniPmsSpuDetailVO;
+import com.zhengqing.mall.model.vo.MiniPmsSpuPageVO;
 import com.zhengqing.mall.service.MiniPmsSkuService;
 import com.zhengqing.mall.service.MiniPmsSpuService;
 import lombok.extern.slf4j.Slf4j;
@@ -88,7 +88,7 @@ public class MiniPmsSpuServiceImpl extends PmsSpuServiceImpl<PmsSpuMapper, PmsSp
         Set<String> wxOpenidSaveSet = Sets.newHashSet(wxOpenid);
         /**
          * {@link MiniPmsSpuServiceImpl#presellRemindToSendUser}
-         * redis key: small-tools:mall:spu:presell_remind:63038
+         * redis key: smallboot:mall:spu:presell_remind:1
          *       value-map: key->商品id
          *                  value->用户id集合
          */
@@ -116,7 +116,7 @@ public class MiniPmsSpuServiceImpl extends PmsSpuServiceImpl<PmsSpuMapper, PmsSp
         }
         /**
          * {@link MiniPmsSpuServiceImpl#presellRemind}
-         * redis key: small-tools:mall:spu:presell_remind:63038
+         * redis key: smallboot:mall:spu:presell_remind:1
          *       value-map: key->商品id
          *                  value->用户id集合
          */

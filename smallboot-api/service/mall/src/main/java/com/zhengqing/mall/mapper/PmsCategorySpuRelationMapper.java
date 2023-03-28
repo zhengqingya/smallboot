@@ -2,15 +2,15 @@ package com.zhengqing.mall.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.zhengqing.mall.common.model.dto.PmsCategoryReSpuListDTO;
-import com.zhengqing.mall.common.model.vo.PmsCategoryReSpuListVO;
 import com.zhengqing.mall.entity.PmsCategorySpuRelation;
-import com.zhengqing.mall.web.model.dto.WebPmsCategorySpuRelationEditSortDTO;
-import com.zhengqing.mall.web.model.dto.WebPmsCategorySpuRelationListDTO;
-import com.zhengqing.mall.web.model.dto.WebPmsCategorySpuRelationPageDTO;
-import com.zhengqing.mall.web.model.vo.WebPmsCategorySpuRelationListVO;
-import com.zhengqing.mall.web.model.vo.WebPmsCategorySpuRelationPageVO;
-import com.zhengqing.mall.web.model.vo.WebPmsSpuPageVO;
+import com.zhengqing.mall.model.dto.PmsCategoryReSpuListDTO;
+import com.zhengqing.mall.model.dto.WebPmsCategorySpuRelationEditSortDTO;
+import com.zhengqing.mall.model.dto.WebPmsCategorySpuRelationListDTO;
+import com.zhengqing.mall.model.dto.WebPmsCategorySpuRelationPageDTO;
+import com.zhengqing.mall.model.vo.PmsCategoryReSpuListVO;
+import com.zhengqing.mall.model.vo.WebPmsCategorySpuRelationListVO;
+import com.zhengqing.mall.model.vo.WebPmsCategorySpuRelationPageVO;
+import com.zhengqing.mall.model.vo.WebPmsSpuPageVO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

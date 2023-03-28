@@ -1,10 +1,10 @@
 package com.zhengqing.mall.service;
 
 import com.zhengqing.mall.entity.PmsAttrKey;
-import com.zhengqing.mall.web.model.dto.WebPmsAttrListDTO;
-import com.zhengqing.mall.web.model.dto.WebPmsAttrSaveDTO;
-import com.zhengqing.mall.web.model.vo.WebPmsAttrKeyListVO;
-import com.zhengqing.mall.web.model.vo.WebPmsAttrVO;
+import com.zhengqing.mall.model.dto.WebPmsAttrListDTO;
+import com.zhengqing.mall.model.dto.WebPmsAttrSaveDTO;
+import com.zhengqing.mall.model.vo.WebPmsAttrKeyListVO;
+import com.zhengqing.mall.model.vo.WebPmsAttrVO;
 
 import java.util.List;
 

@@ -1,8 +1,8 @@
 package com.zhengqing.mall.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.zhengqing.mall.common.model.bo.PmsSkuBO;
-import com.zhengqing.mall.common.model.bo.PmsSkuStockBO;
+import com.zhengqing.mall.model.bo.PmsSkuBO;
+import com.zhengqing.mall.model.bo.PmsSkuStockBO;
 import com.zhengqing.mall.entity.PmsSku;
 
 import java.util.List;

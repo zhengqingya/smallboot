@@ -15,11 +15,11 @@ import com.zhengqing.system.service.ISysRolePermissionService;
 import com.zhengqing.system.service.ISysRoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -33,21 +33,15 @@ import java.util.List;
  */
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(ServiceConstant.SERVICE_API_PREFIX_WEB_SYSTEM + "/role")
 @Api(tags = "系统管理 - 角色管理接口")
 public class SysRoleController extends BaseController {
 
-    @Resource
-    private ISysRoleService roleService;
-
-    @Resource
-    private ISysPermissionService sysMenuBtnService;
-
-    @Resource
-    private ISysRoleMenuService sysRoleMenuService;
-
-    @Resource
-    private ISysRolePermissionService sysRoleMenuBtnService;
+    private final ISysRoleService roleService;
+    private final ISysPermissionService sysPermissionService;
+    private final ISysRoleMenuService sysRoleMenuService;
+    private final ISysRolePermissionService sysRolePermissionService;
 
     @GetMapping("listPage")
     @ApiOperation("列表分页")
@@ -99,7 +93,7 @@ public class SysRoleController extends BaseController {
     @ApiOperation("通过角色id和菜单id查询该菜单所拥有的所有按钮")
     public List<Integer> getPermissionBtnsByRoleIdAndMenuId(@RequestParam Integer roleId,
                                                             @RequestParam Integer menuId) {
-        return this.sysRoleMenuBtnService.getPermissionBtnsByRoleIdAndMenuId(roleId, menuId);
+        return this.sysRolePermissionService.getPermissionBtnsByRoleIdAndMenuId(roleId, menuId);
     }
 
     @NoRepeatSubmit
@@ -113,7 +107,7 @@ public class SysRoleController extends BaseController {
     @PostMapping("saveRoleMenuBtnIds")
     @ApiOperation("保存角色关联菜单按钮ids")
     public void saveRoleMenuBtnIds(@Validated @RequestBody SysRoleMenuBtnSaveDTO params) {
-        this.sysRoleMenuBtnService.saveRoleMenuBtnIds(params);
+        this.sysRolePermissionService.saveRoleReMenuBtnIds(params);
     }
 
     @NoRepeatSubmit

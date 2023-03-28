@@ -2,6 +2,8 @@ package com.zhengqing.mall.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.zhengqing.mall.model.enums.TpsLogisticsCodeEnum;
+import com.zhengqing.mall.model.enums.TpsLogisticsStatusEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -35,7 +37,7 @@ public class OmsLogistic extends Model<OmsLogistic> {
     private String logisticsCompany;
 
     /**
-     * {@link com.zhengqing.mall.common.model.enums.TpsLogisticsCodeEnum }
+     * {@link TpsLogisticsCodeEnum }
      */
     @ApiModelProperty("快递公司编码")
     private String logisticsCode;
@@ -59,13 +61,13 @@ public class OmsLogistic extends Model<OmsLogistic> {
     private String location;
 
     /**
-     * {@link com.zhengqing.mall.common.model.enums.TpsLogisticsStatusEnum }
+     * {@link TpsLogisticsStatusEnum }
      */
     @ApiModelProperty("物流状态")
     private Integer status;
 
     /**
-     * {@link com.zhengqing.mall.common.model.enums.TpsLogisticsStatusEnum }
+     * {@link TpsLogisticsStatusEnum }
      */
     @ApiModelProperty("增值物流状态")
     private Integer statusEx;

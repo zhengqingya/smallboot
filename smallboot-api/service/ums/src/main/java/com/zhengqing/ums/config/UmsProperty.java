@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Configuration;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Configuration
-@ConfigurationProperties(prefix = "small-tools")
+@ConfigurationProperties(prefix = "smallboot")
 public class UmsProperty extends CommonProperty {
 
 

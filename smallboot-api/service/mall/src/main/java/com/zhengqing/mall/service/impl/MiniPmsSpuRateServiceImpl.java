@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import com.zhengqing.common.core.util.IdGeneratorUtil;
 import com.zhengqing.mall.entity.PmsSpuRate;
 import com.zhengqing.mall.mapper.PmsSpuRateMapper;
-import com.zhengqing.mall.mini.model.dto.MiniPmsSpuRateSaveDTO;
+import com.zhengqing.mall.model.dto.MiniPmsSpuRateSaveDTO;
 import com.zhengqing.mall.service.MiniOmsOrderItemService;
 import com.zhengqing.mall.service.MiniPmsSpuRateService;
 import lombok.extern.slf4j.Slf4j;

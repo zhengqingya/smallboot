@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -53,4 +54,9 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
         return this.sysPermissionMapper.listRoleRePerm();
     }
 
+    @Override
+    public List<Integer> listPermissionId() {
+        return super.list().stream().map(SysPermission::getId).collect(Collectors.toList());
+    }
+    
 }

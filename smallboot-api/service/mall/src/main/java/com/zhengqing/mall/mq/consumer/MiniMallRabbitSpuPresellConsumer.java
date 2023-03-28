@@ -2,7 +2,7 @@ package com.zhengqing.mall.mq.consumer;
 
 import com.alibaba.fastjson.JSON;
 import com.zhengqing.common.base.context.TenantIdContext;
-import com.zhengqing.mall.common.model.dto.PmsSpuPresellDTO;
+import com.zhengqing.mall.model.dto.PmsSpuPresellDTO;
 import com.zhengqing.mall.constant.MallRabbitMqConstant;
 import com.zhengqing.mall.service.MiniPmsSpuService;
 import lombok.extern.slf4j.Slf4j;

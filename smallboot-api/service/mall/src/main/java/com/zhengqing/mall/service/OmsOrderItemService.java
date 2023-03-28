@@ -1,9 +1,9 @@
 package com.zhengqing.mall.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.zhengqing.mall.common.model.dto.OmsOrderItemDTO;
-import com.zhengqing.mall.common.model.enums.OmsOrderItemStatusEnum;
-import com.zhengqing.mall.common.model.vo.OmsOrderItemVO;
+import com.zhengqing.mall.model.dto.OmsOrderItemDTO;
+import com.zhengqing.mall.model.enums.OmsOrderItemStatusEnum;
+import com.zhengqing.mall.model.vo.OmsOrderItemVO;
 import com.zhengqing.mall.entity.OmsOrderItem;
 
 import java.util.List;

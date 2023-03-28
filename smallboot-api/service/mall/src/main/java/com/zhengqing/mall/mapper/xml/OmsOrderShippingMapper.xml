@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhengqing.mall.mapper.OmsOrderShippingMapper">
 
-    <select id="selectDataListByOrderNo" resultType="com.zhengqing.mall.common.model.vo.OmsOrderShippingVO">
+    <select id="selectDataListByOrderNo" resultType="com.zhengqing.mall.model.vo.OmsOrderShippingVO">
         SELECT
         os.id,
         os.order_no,

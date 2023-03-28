@@ -3,16 +3,8 @@ package com.zhengqing.mall.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.mall.entity.PmsCategory;
-import com.zhengqing.mall.mini.model.dto.MiniPmsCategoryListDTO;
-import com.zhengqing.mall.mini.model.dto.MiniPmsCategoryPageDTO;
-import com.zhengqing.mall.mini.model.dto.MiniPmsCategoryReSpuListDTO;
-import com.zhengqing.mall.mini.model.vo.MiniPmsCategoryListVO;
-import com.zhengqing.mall.mini.model.vo.MiniPmsCategoryPageVO;
-import com.zhengqing.mall.mini.model.vo.MiniPmsCategoryReSpuListVO;
-import com.zhengqing.mall.web.model.dto.WebPmsCategoryListDTO;
-import com.zhengqing.mall.web.model.dto.WebPmsCategoryPageDTO;
-import com.zhengqing.mall.web.model.vo.WebPmsCategoryListVO;
-import com.zhengqing.mall.web.model.vo.WebPmsCategoryPageVO;
+import com.zhengqing.mall.model.dto.*;
+import com.zhengqing.mall.model.vo.*;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

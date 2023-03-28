@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Configuration;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Configuration
-@ConfigurationProperties(prefix = "small-tools", ignoreUnknownFields = true)
+@ConfigurationProperties(prefix = "smallboot", ignoreUnknownFields = true)
 public class MallProperty extends CommonProperty {
 
 }

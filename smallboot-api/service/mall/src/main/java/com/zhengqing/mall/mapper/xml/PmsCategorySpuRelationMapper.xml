@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhengqing.mall.mapper.PmsCategorySpuRelationMapper">
 
-    <select id="selectDataPage" resultType="com.zhengqing.mall.web.model.vo.WebPmsCategorySpuRelationPageVO">
+    <select id="selectDataPage" resultType="com.zhengqing.mall.model.vo.WebPmsCategorySpuRelationPageVO">
         SELECT
         jcpr.id,
         jcpr.category_id,
@@ -21,7 +21,7 @@
         ORDER BY jcpr.sort DESC, jcpr.create_time DESC
     </select>
 
-    <select id="selectDataList" resultType="com.zhengqing.mall.web.model.vo.WebPmsCategorySpuRelationListVO">
+    <select id="selectDataList" resultType="com.zhengqing.mall.model.vo.WebPmsCategorySpuRelationListVO">
         SELECT
         jcpr.id,
         jcpr.category_id ,
@@ -79,7 +79,7 @@
     </update>
 
     <select id="selectCategoryReSpu"
-            resultType="com.zhengqing.mall.common.model.vo.PmsCategoryReSpuListVO">
+            resultType="com.zhengqing.mall.model.vo.PmsCategoryReSpuListVO">
         SELECT
         jcpr.category_id,
         jcpr.is_put categoryRespuIsPut,

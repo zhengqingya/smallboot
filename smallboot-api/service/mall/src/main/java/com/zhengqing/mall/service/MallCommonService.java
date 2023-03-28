@@ -1,9 +1,9 @@
 package com.zhengqing.mall.service;
 
-import com.zhengqing.mall.common.model.bo.PmsSpuBuyNumInfoBO;
-import com.zhengqing.mall.common.model.vo.MallFileVO;
-import com.zhengqing.mall.common.model.vo.MallTabConditionListVO;
-import com.zhengqing.mall.common.model.vo.PmsSkuVO;
+import com.zhengqing.mall.model.bo.PmsSpuBuyNumInfoBO;
+import com.zhengqing.mall.model.vo.MallFileVO;
+import com.zhengqing.mall.model.vo.MallTabConditionListVO;
+import com.zhengqing.mall.model.vo.PmsSkuVO;
 import com.zhengqing.system.enums.SysDictTypeEnum;
 import org.springframework.web.multipart.MultipartFile;
 

@@ -1,10 +1,10 @@
 package com.zhengqing.mall.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.zhengqing.mall.common.model.dto.OmsOrderCancelDTO;
-import com.zhengqing.mall.common.model.dto.OmsOrderDeleteDTO;
+import com.zhengqing.mall.model.dto.OmsOrderCancelDTO;
+import com.zhengqing.mall.model.dto.OmsOrderDeleteDTO;
 import com.zhengqing.mall.entity.OmsOrder;
-import com.zhengqing.mall.mini.model.dto.MiniOmsOrderConfirmReceiptDTO;
+import com.zhengqing.mall.model.dto.MiniOmsOrderConfirmReceiptDTO;
 
 /**
  * <p>  商城-订单信息 服务类 </p>

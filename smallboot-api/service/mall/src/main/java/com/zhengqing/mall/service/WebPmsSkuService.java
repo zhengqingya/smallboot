@@ -1,7 +1,7 @@
 package com.zhengqing.mall.service;
 
 import com.zhengqing.mall.entity.PmsSku;
-import com.zhengqing.mall.web.model.dto.WebPmsSpuEditVirtualUseStockDTO;
+import com.zhengqing.mall.model.dto.WebPmsSpuEditVirtualUseStockDTO;
 
 import java.util.List;
 

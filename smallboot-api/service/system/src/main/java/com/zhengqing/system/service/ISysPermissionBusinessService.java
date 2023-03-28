@@ -12,7 +12,20 @@ package com.zhengqing.system.service;
 public interface ISysPermissionBusinessService {
 
     /**
+     * 初始化超级管理员权限
+     *
+     * @return void
+     * @author zhengqingya
+     * @date 2023/3/28 11:24
+     */
+    void initSuperAdminPerm();
+
+    /**
      * 刷新Redis缓存中的角色菜单权限
+     *
+     * @return void
+     * @author zhengqingya
+     * @date 2023/3/28 11:24
      */
     void refreshRedisPerm();
 

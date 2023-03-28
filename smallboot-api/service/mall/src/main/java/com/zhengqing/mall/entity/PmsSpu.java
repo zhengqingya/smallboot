@@ -2,13 +2,13 @@ package com.zhengqing.mall.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.zhengqing.common.db.entity.BaseEntity;
-import com.zhengqing.mall.common.model.bo.MallDictBO;
-import com.zhengqing.mall.common.model.bo.MallFileBO;
-import com.zhengqing.mall.common.model.enums.PmsSpuTypeEnum;
 import com.zhengqing.mall.config.mybatis.handler.MallListAttrTypeHandler;
 import com.zhengqing.mall.config.mybatis.handler.MallListDictTypeHandler;
 import com.zhengqing.mall.config.mybatis.handler.MallListFileTypeHandler;
-import com.zhengqing.mall.web.model.bo.WebPmsAttrBO;
+import com.zhengqing.mall.model.bo.MallDictBO;
+import com.zhengqing.mall.model.bo.MallFileBO;
+import com.zhengqing.mall.model.bo.WebPmsAttrBO;
+import com.zhengqing.mall.model.enums.PmsSpuTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;

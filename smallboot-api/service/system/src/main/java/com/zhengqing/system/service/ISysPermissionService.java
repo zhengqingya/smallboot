@@ -48,4 +48,14 @@ public interface ISysPermissionService extends IService<SysPermission> {
      */
     List<SysRoleRePermListVO> listRoleRePerm();
 
+
+    /**
+     * 获取所有权限ids
+     *
+     * @return 权限ids
+     * @author zhengqingya
+     * @date 2022/6/14 14:55
+     */
+    List<Integer> listPermissionId();
+
 }

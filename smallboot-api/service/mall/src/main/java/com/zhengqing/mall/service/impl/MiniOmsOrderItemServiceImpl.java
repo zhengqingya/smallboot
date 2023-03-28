@@ -1,11 +1,11 @@
 package com.zhengqing.mall.service.impl;
 
 import com.google.common.collect.Lists;
-import com.zhengqing.mall.common.model.enums.OmsOrderStatusEnum;
+import com.zhengqing.mall.model.enums.OmsOrderStatusEnum;
 import com.zhengqing.mall.entity.OmsOrderItem;
 import com.zhengqing.mall.mapper.OmsOrderItemMapper;
-import com.zhengqing.mall.mini.model.bo.MiniOmsOrderItemBuyLimitBO;
-import com.zhengqing.mall.mini.model.bo.MiniOmsOrderItemStatusBO;
+import com.zhengqing.mall.model.bo.MiniOmsOrderItemBuyLimitBO;
+import com.zhengqing.mall.model.bo.MiniOmsOrderItemStatusBO;
 import com.zhengqing.mall.service.MiniOmsOrderItemService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

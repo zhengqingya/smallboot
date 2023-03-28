@@ -1,6 +1,6 @@
 package com.zhengqing.mall.service;
 
-import com.zhengqing.mall.common.model.enums.OmsOrderStatusEnum;
+import com.zhengqing.mall.model.enums.OmsOrderStatusEnum;
 import com.zhengqing.mall.entity.OmsOrderItem;
 
 import java.util.List;

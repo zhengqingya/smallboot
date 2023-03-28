@@ -2,10 +2,10 @@ package com.zhengqing.mall.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.mall.entity.OmsOrderAfterSale;
-import com.zhengqing.mall.mini.model.dto.MiniOmsOrderAfterSalePageDTO;
-import com.zhengqing.mall.mini.model.dto.MiniOmsOrderRepealAfterSaleDTO;
-import com.zhengqing.mall.mini.model.vo.MiniOmsOrderAfterSaleDetailVO;
-import com.zhengqing.mall.mini.model.vo.MiniOmsOrderAfterSalePageVO;
+import com.zhengqing.mall.model.dto.MiniOmsOrderAfterSalePageDTO;
+import com.zhengqing.mall.model.dto.MiniOmsOrderRepealAfterSaleDTO;
+import com.zhengqing.mall.model.vo.MiniOmsOrderAfterSaleDetailVO;
+import com.zhengqing.mall.model.vo.MiniOmsOrderAfterSalePageVO;
 
 /**
  * <p>  商城-售后表 服务类 </p>

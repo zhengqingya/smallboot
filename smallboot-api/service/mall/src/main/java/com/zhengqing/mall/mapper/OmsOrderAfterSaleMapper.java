@@ -2,17 +2,11 @@ package com.zhengqing.mall.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.zhengqing.mall.common.model.bo.PmsSkuStockBO;
-import com.zhengqing.mall.common.model.vo.MallTabConditionListVO;
-import com.zhengqing.mall.common.model.vo.OmsOrderAfterSaleItemVO;
-import com.zhengqing.mall.common.model.vo.OmsOrderAfterSaleVO;
 import com.zhengqing.mall.entity.OmsOrderAfterSale;
-import com.zhengqing.mall.mini.model.dto.MiniOmsOrderAfterSalePageDTO;
-import com.zhengqing.mall.mini.model.vo.MiniOmsOrderAfterSaleDetailVO;
-import com.zhengqing.mall.mini.model.vo.MiniOmsOrderAfterSalePageVO;
-import com.zhengqing.mall.web.model.dto.WebOmsOrderAfterSalePageDTO;
-import com.zhengqing.mall.web.model.vo.WebOmsOrderAfterSaleDetailVO;
-import com.zhengqing.mall.web.model.vo.WebOmsOrderAfterSalePageVO;
+import com.zhengqing.mall.model.bo.PmsSkuStockBO;
+import com.zhengqing.mall.model.dto.MiniOmsOrderAfterSalePageDTO;
+import com.zhengqing.mall.model.dto.WebOmsOrderAfterSalePageDTO;
+import com.zhengqing.mall.model.vo.*;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

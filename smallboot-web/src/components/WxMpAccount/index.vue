@@ -1,5 +1,5 @@
 <template>
-  <div class="wx-mp-account" v-show="$route.path.indexOf('/wx/mp') === 0 && !this.$route.path.includes('/wx/mp/account')">
+  <div class="wx-mp-account" v-show="this.isShow">
     <div class="box">
       <!-- <p>{{ $route.path }}</p> -->
       <span>请选择公众号：</span>
@@ -20,11 +20,21 @@ export default {
       list: [],
     }
   },
+  computed: {
+    isShow: function () {
+      let isShow = this.$route.path.indexOf('/wx/mp') === 0 && !this.$route.path.includes('/wx/mp/account')
+      this.init(isShow)
+      return isShow
+    },
+  },
   mounted() {
     this.init()
   },
   methods: {
-    async init() {
+    async init(isShow) {
+      if (!isShow) {
+        return
+      }
       let res = await this.$api.wx_mp_account.list()
       this.list = res.data
       if (this.list.length == 0) {

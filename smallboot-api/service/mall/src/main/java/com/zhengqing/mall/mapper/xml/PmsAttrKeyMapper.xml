@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhengqing.mall.mapper.PmsAttrKeyMapper">
 
-    <select id="selectDataList" resultType="com.zhengqing.mall.web.model.vo.WebPmsAttrKeyListVO">
+    <select id="selectDataList" resultType="com.zhengqing.mall.model.vo.WebPmsAttrKeyListVO">
         SELECT
         id,
         attr_key_name,
@@ -21,7 +21,7 @@
         ORDER BY sort ASC,id DESC
     </select>
 
-    <select id="selectDataListByIdList" resultType="com.zhengqing.mall.web.model.vo.WebPmsAttrVO">
+    <select id="selectDataListByIdList" resultType="com.zhengqing.mall.model.vo.WebPmsAttrVO">
         SELECT
         jat.id attrKeyId,
         jat.attr_key_name,

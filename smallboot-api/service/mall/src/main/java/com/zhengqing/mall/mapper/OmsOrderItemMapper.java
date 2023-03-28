@@ -1,11 +1,11 @@
 package com.zhengqing.mall.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.zhengqing.mall.common.model.dto.OmsOrderItemDTO;
-import com.zhengqing.mall.common.model.vo.OmsOrderItemVO;
+import com.zhengqing.mall.model.dto.OmsOrderItemDTO;
+import com.zhengqing.mall.model.vo.OmsOrderItemVO;
 import com.zhengqing.mall.entity.OmsOrderItem;
-import com.zhengqing.mall.mini.model.bo.MiniOmsOrderItemBuyLimitBO;
-import com.zhengqing.mall.mini.model.bo.MiniOmsOrderItemStatusBO;
+import com.zhengqing.mall.model.bo.MiniOmsOrderItemBuyLimitBO;
+import com.zhengqing.mall.model.bo.MiniOmsOrderItemStatusBO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

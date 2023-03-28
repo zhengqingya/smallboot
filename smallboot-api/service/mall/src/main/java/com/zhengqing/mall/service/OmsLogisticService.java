@@ -1,9 +1,10 @@
 package com.zhengqing.mall.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.zhengqing.mall.common.model.dto.OmsLogisticDTO;
-import com.zhengqing.mall.common.model.vo.OmsLogisticVO;
+import com.zhengqing.mall.model.dto.OmsLogisticDTO;
+import com.zhengqing.mall.model.vo.OmsLogisticVO;
 import com.zhengqing.mall.entity.OmsLogistic;
+import com.zhengqing.mall.model.enums.TpsLogisticsCodeEnum;
 
 /**
  * <p>  商城-物流信息表 服务类 </p>
@@ -27,7 +28,7 @@ public interface OmsLogisticService extends IService<OmsLogistic> {
     /**
      * 保存物流信息
      *
-     * @param logisticsCode 物流公司编码 {@link com.zhengqing.mall.common.model.enums.TpsLogisticsCodeEnum }
+     * @param logisticsCode 物流公司编码 {@link TpsLogisticsCodeEnum }
      * @param logisticsNo   快递公司快递号
      * @param receiverPhone 收货人电话
      * @return void

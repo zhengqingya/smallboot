@@ -1,7 +1,7 @@
 package com.zhengqing.mall.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.zhengqing.mall.common.model.vo.PmsCategoryReSpuListVO;
+import com.zhengqing.mall.model.vo.PmsCategoryReSpuListVO;
 import com.zhengqing.mall.entity.PmsCategorySpuRelation;
 
 import java.util.List;

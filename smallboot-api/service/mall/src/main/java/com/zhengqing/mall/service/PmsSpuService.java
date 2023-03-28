@@ -1,10 +1,10 @@
 package com.zhengqing.mall.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.zhengqing.mall.common.model.bo.PmsSkuStockBO;
-import com.zhengqing.mall.common.model.dto.PmsSkuDTO;
-import com.zhengqing.mall.common.model.vo.PmsSkuVO;
-import com.zhengqing.mall.common.model.vo.PmsSpuDetailVO;
+import com.zhengqing.mall.model.bo.PmsSkuStockBO;
+import com.zhengqing.mall.model.dto.PmsSkuDTO;
+import com.zhengqing.mall.model.vo.PmsSkuVO;
+import com.zhengqing.mall.model.vo.PmsSpuDetailVO;
 import com.zhengqing.mall.entity.PmsSpu;
 
 import java.util.List;

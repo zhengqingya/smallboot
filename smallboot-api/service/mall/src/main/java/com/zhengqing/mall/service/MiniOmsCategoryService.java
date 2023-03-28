@@ -2,12 +2,12 @@ package com.zhengqing.mall.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.mall.entity.PmsCategory;
-import com.zhengqing.mall.mini.model.dto.MiniPmsCategoryListDTO;
-import com.zhengqing.mall.mini.model.dto.MiniPmsCategoryPageDTO;
-import com.zhengqing.mall.mini.model.dto.MiniPmsCategoryReSpuListDTO;
-import com.zhengqing.mall.mini.model.vo.MiniPmsCategoryListVO;
-import com.zhengqing.mall.mini.model.vo.MiniPmsCategoryPageVO;
-import com.zhengqing.mall.mini.model.vo.MiniPmsCategoryReSpuListVO;
+import com.zhengqing.mall.model.dto.MiniPmsCategoryListDTO;
+import com.zhengqing.mall.model.dto.MiniPmsCategoryPageDTO;
+import com.zhengqing.mall.model.dto.MiniPmsCategoryReSpuListDTO;
+import com.zhengqing.mall.model.vo.MiniPmsCategoryListVO;
+import com.zhengqing.mall.model.vo.MiniPmsCategoryPageVO;
+import com.zhengqing.mall.model.vo.MiniPmsCategoryReSpuListVO;
 
 import java.util.List;
 

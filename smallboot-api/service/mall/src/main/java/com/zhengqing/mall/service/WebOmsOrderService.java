@@ -1,12 +1,12 @@
 package com.zhengqing.mall.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.zhengqing.mall.common.model.vo.MallTabConditionListVO;
 import com.zhengqing.mall.entity.OmsOrder;
-import com.zhengqing.mall.web.model.dto.WebOmsOrderPageDTO;
-import com.zhengqing.mall.web.model.dto.WebOmsOrderSendSpuDTO;
-import com.zhengqing.mall.web.model.vo.WebOmsOrderDetailVO;
-import com.zhengqing.mall.web.model.vo.WebOmsOrderPageVO;
+import com.zhengqing.mall.model.dto.WebOmsOrderPageDTO;
+import com.zhengqing.mall.model.dto.WebOmsOrderSendSpuDTO;
+import com.zhengqing.mall.model.vo.MallTabConditionListVO;
+import com.zhengqing.mall.model.vo.WebOmsOrderDetailVO;
+import com.zhengqing.mall.model.vo.WebOmsOrderPageVO;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;

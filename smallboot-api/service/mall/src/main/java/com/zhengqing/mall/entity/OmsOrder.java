@@ -5,10 +5,11 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.zhengqing.common.core.enums.UserSexEnum;
 import com.zhengqing.common.db.entity.IsDeletedBaseEntity;
-import com.zhengqing.mall.common.model.bo.OmsOrderReceiverAddressBO;
-import com.zhengqing.mall.common.model.enums.OmsOrderDeliverTypeEnum;
-import com.zhengqing.mall.common.model.enums.OmsOrderStatusEnum;
-import com.zhengqing.mall.common.model.enums.OmsOrderStockCheckTypeEnum;
+import com.zhengqing.mall.model.bo.OmsOrderReceiverAddressBO;
+import com.zhengqing.mall.model.enums.OmsOrderDeliverTypeEnum;
+import com.zhengqing.mall.model.enums.OmsOrderStatusEnum;
+import com.zhengqing.mall.model.enums.OmsOrderStockCheckTypeEnum;
+import com.zhengqing.mall.model.enums.OmsOrderSourceEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -82,7 +83,7 @@ public class OmsOrder extends IsDeletedBaseEntity<OmsOrder> {
     private Byte orderStatus;
 
     /**
-     * {@link com.zhengqing.mall.common.model.enums.OmsOrderSourceEnum}
+     * {@link OmsOrderSourceEnum}
      */
     @ApiModelProperty("订单来源")
     private Byte orderSource;

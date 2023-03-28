@@ -82,4 +82,13 @@ public interface ISysRoleService extends IService<SysRole> {
      */
     void deleteRoleAndRoleMenu(Integer roleId);
 
+    /**
+     * 查询超级管理员角色ID
+     *
+     * @return 超级管理员角色ID
+     * @author zhengqingya
+     * @date 2020/9/10 18:03
+     */
+    Integer getRoleIdForSuperAdmin();
+    
 }

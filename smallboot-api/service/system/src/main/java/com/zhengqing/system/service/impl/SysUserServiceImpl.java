@@ -185,7 +185,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         // 所有菜单
         List<SysMenuTreeVO> menuTreeList = this.sysMenuService.tree();
         // 所有按钮
-        List<SysRoleMenuBtnListVO> btnList = this.sysRolePermissionService.listRoleMenuBtn();
+        List<SysRoleMenuBtnListVO> btnList = this.sysRolePermissionService.listRoleReMenuBtn();
         // 用户关联的权限
         List<SysMenuTreeVO> permTreeList = this.getUserPremTreeList(menuTreeList, menuIdList, roleIdList, btnList);
         userPerm.setPermissionTreeList(permTreeList);

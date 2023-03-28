@@ -26,7 +26,7 @@ public interface SysRolePermissionMapper extends BaseMapper<SysRolePermission> {
      * @author zhengqingya
      * @date 2020/9/10 17:54
      */
-    List<SysRoleMenuBtnListVO> selectRoleMenuBtns();
+    List<SysRoleMenuBtnListVO> selectAllRoleReMenuBtns();
 
     /**
      * 通过角色ID和菜单ID查询该菜单所拥有的所有按钮权限

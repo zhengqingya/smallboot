@@ -1,8 +1,8 @@
 package com.zhengqing.mall.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.zhengqing.mall.common.model.bo.OmsOrderAfterSaleCloseBO;
-import com.zhengqing.mall.common.model.dto.OmsOrderAfterSaleDeleteDTO;
+import com.zhengqing.mall.model.bo.OmsOrderAfterSaleCloseBO;
+import com.zhengqing.mall.model.dto.OmsOrderAfterSaleDeleteDTO;
 import com.zhengqing.mall.entity.OmsOrderAfterSale;
 
 import java.util.List;

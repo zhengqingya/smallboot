@@ -3,8 +3,8 @@ package com.zhengqing.mall.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhengqing.mall.entity.PmsSpuRate;
-import com.zhengqing.mall.mini.model.dto.MiniPmsSpuRatePageDTO;
-import com.zhengqing.mall.mini.model.vo.MiniPmsSpuRatePageVO;
+import com.zhengqing.mall.model.dto.MiniPmsSpuRatePageDTO;
+import com.zhengqing.mall.model.vo.MiniPmsSpuRatePageVO;
 
 /**
  * <p>  商城-商品评价 服务类 </p>

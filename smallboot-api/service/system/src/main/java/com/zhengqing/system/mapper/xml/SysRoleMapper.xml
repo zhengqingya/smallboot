@@ -15,4 +15,10 @@
         ORDER BY create_time DESC
     </select>
 
+    <select id="selectRoleIdForSuperAdmin" resultType="java.lang.Integer">
+        SELECT role_id
+        FROM t_sys_role
+        WHERE code = 'super_admin' LIMIT 1
+    </select>
+
 </mapper>

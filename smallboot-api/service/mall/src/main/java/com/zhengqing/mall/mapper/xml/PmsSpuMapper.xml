@@ -64,7 +64,7 @@
         WHERE is_deleted = 0
     </sql>
 
-    <select id="selectTabCondition" resultType="com.zhengqing.mall.common.model.vo.MallTabConditionListVO">
+    <select id="selectTabCondition" resultType="com.zhengqing.mall.model.vo.MallTabConditionListVO">
         SELECT
         spu.is_put value,
         COUNT( DISTINCT spu.id ) num
@@ -72,14 +72,14 @@
         GROUP BY spu.is_put
     </select>
 
-    <select id="selectDataListByWeb" resultType="com.zhengqing.mall.web.model.vo.WebPmsSpuPageVO">
+    <select id="selectDataListByWeb" resultType="com.zhengqing.mall.model.vo.WebPmsSpuPageVO">
         <include refid="PAGE"/>
         <include refid="PAGE_CONDITION"/>
         GROUP BY spu.id
         ORDER BY spu.sort DESC, spu.id DESC
     </select>
 
-    <select id="selectDataTypeList" resultType="com.zhengqing.mall.common.model.vo.PmsSpuTypeVO">
+    <select id="selectDataTypeList" resultType="com.zhengqing.mall.model.vo.PmsSpuTypeVO">
         SELECT
         id,
         type,
@@ -96,7 +96,7 @@
         </foreach>
     </select>
 
-    <resultMap id="detailByWeb" type="com.zhengqing.mall.web.model.vo.WebPmsSpuDetailVO">
+    <resultMap id="detailByWeb" type="com.zhengqing.mall.model.vo.WebPmsSpuDetailVO">
         <result column="attr_list"
                 property="attrList"
                 typeHandler="com.zhengqing.mall.config.mybatis.handler.MallListAttrTypeHandler"></result>
@@ -159,7 +159,7 @@
 
     <!-- ============================================================================================================ -->
 
-    <select id="selectDataListByMini" resultType="com.zhengqing.mall.mini.model.vo.MiniPmsSpuPageVO">
+    <select id="selectDataListByMini" resultType="com.zhengqing.mall.model.vo.MiniPmsSpuPageVO">
         <include refid="PAGE"/>
         FROM pms_spu spu
         WHERE spu.is_deleted = 0 AND spu.is_show=1
@@ -169,7 +169,7 @@
         ORDER BY spu.sort DESC, spu.id DESC
     </select>
 
-    <resultMap id="selectSkuList" type="com.zhengqing.mall.common.model.vo.PmsSkuVO">
+    <resultMap id="selectSkuList" type="com.zhengqing.mall.model.vo.PmsSkuVO">
         <result column="spec_list"
                 property="specList"
                 typeHandler="com.zhengqing.mall.config.mybatis.handler.MallListSpecTypeHandler"></result>
@@ -201,7 +201,7 @@
         </foreach>
     </select>
 
-    <resultMap id="detailByMini" type="com.zhengqing.mall.mini.model.vo.MiniPmsSpuDetailVO">
+    <resultMap id="detailByMini" type="com.zhengqing.mall.model.vo.MiniPmsSpuDetailVO">
         <result column="attr_list"
                 property="attrList"
                 typeHandler="com.zhengqing.mall.config.mybatis.handler.MallListAttrTypeHandler"></result>

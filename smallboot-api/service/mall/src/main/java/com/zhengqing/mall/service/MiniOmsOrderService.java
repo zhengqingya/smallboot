@@ -1,13 +1,13 @@
 package com.zhengqing.mall.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.zhengqing.mall.common.model.vo.MallTabConditionListVO;
+import com.zhengqing.mall.model.vo.MallTabConditionListVO;
 import com.zhengqing.mall.entity.OmsOrder;
-import com.zhengqing.mall.mini.model.dto.*;
-import com.zhengqing.mall.mini.model.vo.MiniOmsOrderDetailVO;
-import com.zhengqing.mall.mini.model.vo.MiniOmsOrderPageVO;
-import com.zhengqing.mall.mini.model.vo.MiniOmsSpuBuyVO;
-import com.zhengqing.mall.mini.model.vo.MiniPmsOrderReAfterSaleStatusVO;
+import com.zhengqing.mall.model.dto.*;
+import com.zhengqing.mall.model.vo.MiniOmsOrderDetailVO;
+import com.zhengqing.mall.model.vo.MiniOmsOrderPageVO;
+import com.zhengqing.mall.model.vo.MiniOmsSpuBuyVO;
+import com.zhengqing.mall.model.vo.MiniPmsOrderReAfterSaleStatusVO;
 
 import java.util.List;
 

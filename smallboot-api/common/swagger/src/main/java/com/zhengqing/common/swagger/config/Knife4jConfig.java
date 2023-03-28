@@ -142,6 +142,42 @@ public class Knife4jConfig {
         return docket;
     }
 
+    @Bean
+    public Docket systemApi() {
+        Docket docket = new Docket(DocumentationType.SWAGGER_2)
+                .apiInfo(this.apiInfo())
+                .groupName("系统模块")
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.zhengqing.system"))
+                .paths(PathSelectors.any())
+                .build();
+        return docket;
+    }
+
+    @Bean
+    public Docket wxMpApi() {
+        Docket docket = new Docket(DocumentationType.SWAGGER_2)
+                .apiInfo(this.apiInfo())
+                .groupName("微信公众号模块")
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.zhengqing.wxmp"))
+                .paths(PathSelectors.any())
+                .build();
+        return docket;
+    }
+
+    @Bean
+    public Docket mallApi() {
+        Docket docket = new Docket(DocumentationType.SWAGGER_2)
+                .apiInfo(this.apiInfo())
+                .groupName("商城模块")
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.zhengqing.mall"))
+                .paths(PathSelectors.any())
+                .build();
+        return docket;
+    }
+
     /**
      * swagger-api接口描述信息
      */

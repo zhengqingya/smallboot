@@ -34,6 +34,9 @@ public class SystemRunner extends AppCommonRunner {
         // 数据字典
         this.dictService.initCache();
 
+        // 初始化超级管理员权限
+        this.sysPermissionBusinessService.initSuperAdminPerm();
+
         // 权限缓存
         this.sysPermissionBusinessService.refreshRedisPerm();
 

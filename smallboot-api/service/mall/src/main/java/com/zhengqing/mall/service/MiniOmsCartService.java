@@ -1,9 +1,9 @@
 package com.zhengqing.mall.service;
 
-import com.zhengqing.mall.mini.model.dto.MiniOmsCartDeleteDTO;
-import com.zhengqing.mall.mini.model.dto.MiniOmsCartSaveDTO;
-import com.zhengqing.mall.mini.model.dto.MiniOmsCartUpdateNumDTO;
-import com.zhengqing.mall.mini.model.vo.MiniOmsCartVO;
+import com.zhengqing.mall.model.dto.MiniOmsCartDeleteDTO;
+import com.zhengqing.mall.model.dto.MiniOmsCartSaveDTO;
+import com.zhengqing.mall.model.dto.MiniOmsCartUpdateNumDTO;
+import com.zhengqing.mall.model.vo.MiniOmsCartVO;
 
 import java.util.List;
 

@@ -3,8 +3,8 @@ package com.zhengqing.mall.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.mall.entity.PmsSpuRate;
-import com.zhengqing.mall.mini.model.dto.MiniPmsSpuRatePageDTO;
-import com.zhengqing.mall.mini.model.vo.MiniPmsSpuRatePageVO;
+import com.zhengqing.mall.model.dto.MiniPmsSpuRatePageDTO;
+import com.zhengqing.mall.model.vo.MiniPmsSpuRatePageVO;
 import org.apache.ibatis.annotations.Param;
 
 /**

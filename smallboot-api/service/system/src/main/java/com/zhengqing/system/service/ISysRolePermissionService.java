@@ -25,7 +25,7 @@ public interface ISysRolePermissionService extends IService<SysRolePermission> {
      * @author zhengqingya
      * @date 2020/9/10 17:54
      */
-    List<SysRoleMenuBtnListVO> listRoleMenuBtn();
+    List<SysRoleMenuBtnListVO> listRoleReMenuBtn();
 
 
     /**
@@ -61,13 +61,24 @@ public interface ISysRolePermissionService extends IService<SysRolePermission> {
     void deleteBtnsByRoleIdAndMenuId(Integer roleId, Integer menuId);
 
     /**
-     * 保存角色关联菜单按钮ids
+     * 保存角色关联菜单按钮权限ids
      *
      * @param params 提交参数
      * @return void
      * @author zhengqingya
      * @date 2020/9/10 18:34
      */
-    void saveRoleMenuBtnIds(SysRoleMenuBtnSaveDTO params);
+    void saveRoleReMenuBtnIds(SysRoleMenuBtnSaveDTO params);
+
+    /**
+     * 保存角色关联菜单按钮权限
+     *
+     * @param roleId           角色ID
+     * @param permissionIdList 菜单下按钮权限ids
+     * @return void
+     * @author zhengqingya
+     * @date 2020/9/10 18:34
+     */
+    void savePerm(Integer roleId, List<Integer> permissionIdList);
 
 }

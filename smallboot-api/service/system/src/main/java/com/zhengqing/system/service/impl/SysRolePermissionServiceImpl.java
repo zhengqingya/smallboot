@@ -7,12 +7,12 @@ import com.zhengqing.system.mapper.SysRolePermissionMapper;
 import com.zhengqing.system.model.dto.SysRoleMenuBtnSaveDTO;
 import com.zhengqing.system.model.vo.SysRoleMenuBtnListVO;
 import com.zhengqing.system.service.ISysRolePermissionService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -26,16 +26,14 @@ import java.util.List;
  */
 @Slf4j
 @Service
-@Transactional(rollbackFor = Exception.class)
-public class SysRolePermissionServiceImpl extends ServiceImpl<SysRolePermissionMapper, SysRolePermission>
-        implements ISysRolePermissionService {
+@RequiredArgsConstructor
+public class SysRolePermissionServiceImpl extends ServiceImpl<SysRolePermissionMapper, SysRolePermission> implements ISysRolePermissionService {
 
-    @Resource
-    private SysRolePermissionMapper sysRolePermissionMapper;
+    private final SysRolePermissionMapper sysRolePermissionMapper;
 
     @Override
-    public List<SysRoleMenuBtnListVO> listRoleMenuBtn() {
-        return this.sysRolePermissionMapper.selectRoleMenuBtns();
+    public List<SysRoleMenuBtnListVO> listRoleReMenuBtn() {
+        return this.sysRolePermissionMapper.selectAllRoleReMenuBtns();
     }
 
     @Override
@@ -44,35 +42,48 @@ public class SysRolePermissionServiceImpl extends ServiceImpl<SysRolePermissionM
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteBtnsByRoleId(Integer roleId) {
         this.sysRolePermissionMapper.deleteBtnsByRoleId(roleId);
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteBtnsByRoleIdAndMenuId(Integer roleId, Integer menuId) {
         this.sysRolePermissionMapper.deleteBtnsByRoleIdAndMenuId(roleId, menuId);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void saveRoleMenuBtnIds(SysRoleMenuBtnSaveDTO params) {
+    public void saveRoleReMenuBtnIds(SysRoleMenuBtnSaveDTO params) {
         Integer roleId = params.getRoleId();
         Integer menuId = params.getMenuId();
         List<Integer> permissionIdList = params.getPermissionIdList();
+
         // 1、先删除
         this.deleteBtnsByRoleIdAndMenuId(roleId, menuId);
+
         if (CollectionUtils.isEmpty(permissionIdList)) {
             return;
         }
+
         // 2、再保存
-        List<SysRolePermission> saveList = Lists.newArrayList();
-        permissionIdList.forEach(btnId -> {
-            SysRolePermission item = new SysRolePermission();
-            item.setRoleId(roleId);
-            item.setPermissionId(btnId);
-            saveList.add(item);
-        });
-        this.saveBatch(saveList);
+        this.savePerm(roleId, permissionIdList);
     }
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void savePerm(Integer roleId, List<Integer> permissionIdList) {
+        if (CollectionUtils.isEmpty(permissionIdList)) {
+            return;
+        }
+        List<SysRolePermission> saveList = Lists.newArrayList();
+        permissionIdList.forEach(btnId ->
+                saveList.add(SysRolePermission.builder()
+                        .roleId(roleId)
+                        .permissionId(btnId)
+                        .build())
+        );
+        this.saveBatch(saveList);
+    }
 }

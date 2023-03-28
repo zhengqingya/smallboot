@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhengqing.mall.mapper.OmsOrderItemMapper">
 
-    <select id="selectListStatusByIdList" resultType="com.zhengqing.mall.mini.model.bo.MiniOmsOrderItemStatusBO">
+    <select id="selectListStatusByIdList" resultType="com.zhengqing.mall.model.bo.MiniOmsOrderItemStatusBO">
         SELECT
         id,
         status
@@ -46,7 +46,7 @@
         WHERE order_no = #{orderNo}
     </update>
 
-    <select id="selectListForSkuLimit" resultType="com.zhengqing.mall.mini.model.bo.MiniOmsOrderItemBuyLimitBO">
+    <select id="selectListForSkuLimit" resultType="com.zhengqing.mall.model.bo.MiniOmsOrderItemBuyLimitBO">
         SELECT
         sku_id,
         COUNT(num) num
@@ -60,7 +60,7 @@
         GROUP BY sku_id
     </select>
 
-    <resultMap id="selectItemList" type="com.zhengqing.mall.common.model.vo.OmsOrderItemVO">
+    <resultMap id="selectItemList" type="com.zhengqing.mall.model.vo.OmsOrderItemVO">
         <result column="spec_list"
                 property="specList"
                 typeHandler="com.zhengqing.mall.config.mybatis.handler.MallListSpecTypeHandler"></result>

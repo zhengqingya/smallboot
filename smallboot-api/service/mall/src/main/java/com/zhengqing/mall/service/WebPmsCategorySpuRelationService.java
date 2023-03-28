@@ -2,9 +2,9 @@ package com.zhengqing.mall.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.mall.entity.PmsCategorySpuRelation;
-import com.zhengqing.mall.web.model.dto.*;
-import com.zhengqing.mall.web.model.vo.WebPmsCategorySpuRelationListVO;
-import com.zhengqing.mall.web.model.vo.WebPmsCategorySpuRelationPageVO;
+import com.zhengqing.mall.model.dto.*;
+import com.zhengqing.mall.model.vo.WebPmsCategorySpuRelationListVO;
+import com.zhengqing.mall.model.vo.WebPmsCategorySpuRelationPageVO;
 
 import java.util.List;
 

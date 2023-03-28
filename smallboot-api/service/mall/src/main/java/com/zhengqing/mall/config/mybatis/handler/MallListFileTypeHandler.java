@@ -1,7 +1,7 @@
 package com.zhengqing.mall.config.mybatis.handler;
 
 import com.zhengqing.common.db.config.mybatis.handler.DbJsonTypeHandler;
-import com.zhengqing.mall.common.model.bo.MallFileBO;
+import com.zhengqing.mall.model.bo.MallFileBO;
 
 /**
  * <p> 自定义类型处理器 </p>

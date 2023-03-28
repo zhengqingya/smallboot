@@ -2,9 +2,9 @@ package com.zhengqing.mall.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.zhengqing.mall.entity.PmsAttrKey;
-import com.zhengqing.mall.web.model.dto.WebPmsAttrListDTO;
-import com.zhengqing.mall.web.model.vo.WebPmsAttrKeyListVO;
-import com.zhengqing.mall.web.model.vo.WebPmsAttrVO;
+import com.zhengqing.mall.model.dto.WebPmsAttrListDTO;
+import com.zhengqing.mall.model.vo.WebPmsAttrKeyListVO;
+import com.zhengqing.mall.model.vo.WebPmsAttrVO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

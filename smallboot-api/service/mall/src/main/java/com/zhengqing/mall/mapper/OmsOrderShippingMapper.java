@@ -1,7 +1,7 @@
 package com.zhengqing.mall.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.zhengqing.mall.common.model.vo.OmsOrderShippingVO;
+import com.zhengqing.mall.model.vo.OmsOrderShippingVO;
 import com.zhengqing.mall.entity.OmsOrderShipping;
 import org.apache.ibatis.annotations.Param;
 

@@ -2,7 +2,7 @@ package com.zhengqing.mall.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
-import com.zhengqing.mall.common.model.bo.PmsSkuSpecBO;
+import com.zhengqing.mall.model.bo.PmsSkuSpecBO;
 import com.zhengqing.mall.config.mybatis.handler.MallListSpecTypeHandler;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

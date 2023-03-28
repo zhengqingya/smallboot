@@ -4,10 +4,11 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.zhengqing.common.db.entity.IsDeletedBaseEntity;
-import com.zhengqing.mall.common.model.bo.OmsOrderReceiverAddressBO;
-import com.zhengqing.mall.common.model.enums.OmsOrderAfterSaleSpuStatusEnum;
-import com.zhengqing.mall.common.model.enums.OmsOrderAfterSaleStatusEnum;
-import com.zhengqing.mall.common.model.enums.OmsOrderSaleTypeEnum;
+import com.zhengqing.mall.model.bo.OmsOrderReceiverAddressBO;
+import com.zhengqing.mall.model.enums.OmsOrderAfterSaleSpuStatusEnum;
+import com.zhengqing.mall.model.enums.OmsOrderAfterSaleStatusEnum;
+import com.zhengqing.mall.model.enums.OmsOrderSaleTypeEnum;
+import com.zhengqing.mall.model.enums.TpsLogisticsCodeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -101,7 +102,7 @@ public class OmsOrderAfterSale extends IsDeletedBaseEntity<OmsOrderAfterSale> {
     private String returnLogisticsCompany;
 
     /**
-     * {@link com.zhengqing.mall.common.model.enums.TpsLogisticsCodeEnum }
+     * {@link TpsLogisticsCodeEnum }
      */
     @ApiModelProperty("物流公司编码")
     private String returnLogisticsCode;

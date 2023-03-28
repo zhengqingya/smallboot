@@ -3,7 +3,6 @@ package com.zhengqing.system.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.google.common.collect.Lists;
 import com.zhengqing.common.base.util.MyBeanUtil;
 import com.zhengqing.system.entity.SysRole;
 import com.zhengqing.system.mapper.SysRoleMapper;
@@ -80,7 +79,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
                 .status(sysRole.getStatus())
                 .build();
         List<Integer> menuIdList = this.sysRoleMenuService.getMenuIdsByRoleId(roleId);
-        result.setMenuIdList(  menuIdList);
+        result.setMenuIdList(menuIdList);
         return result;
     }
 
@@ -124,6 +123,11 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         this.sysRolePermissionService.deleteBtnsByRoleId(roleId);
         // 3、删除角色
         this.removeById(roleId);
+    }
+
+    @Override
+    public Integer getRoleIdForSuperAdmin() {
+        return this.sysRoleMapper.selectRoleIdForSuperAdmin();
     }
 
 }

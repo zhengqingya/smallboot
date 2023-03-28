@@ -1,7 +1,7 @@
 package com.zhengqing.mall.service;
 
 import com.zhengqing.mall.entity.PmsSpuRate;
-import com.zhengqing.mall.mini.model.dto.MiniPmsSpuRateSaveDTO;
+import com.zhengqing.mall.model.dto.MiniPmsSpuRateSaveDTO;
 
 /**
  * <p>  商城-商品评价 服务类 </p>

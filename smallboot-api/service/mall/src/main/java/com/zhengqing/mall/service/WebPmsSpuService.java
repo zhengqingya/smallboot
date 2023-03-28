@@ -1,12 +1,12 @@
 package com.zhengqing.mall.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.zhengqing.mall.common.model.vo.MallTabConditionListVO;
-import com.zhengqing.mall.common.model.vo.PmsSpuTypeVO;
 import com.zhengqing.mall.entity.PmsSpu;
-import com.zhengqing.mall.web.model.dto.*;
-import com.zhengqing.mall.web.model.vo.WebPmsSpuDetailVO;
-import com.zhengqing.mall.web.model.vo.WebPmsSpuPageVO;
+import com.zhengqing.mall.model.dto.*;
+import com.zhengqing.mall.model.vo.MallTabConditionListVO;
+import com.zhengqing.mall.model.vo.PmsSpuTypeVO;
+import com.zhengqing.mall.model.vo.WebPmsSpuDetailVO;
+import com.zhengqing.mall.model.vo.WebPmsSpuPageVO;
 
 import java.util.List;
 import java.util.Map;
