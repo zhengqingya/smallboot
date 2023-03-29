@@ -3,19 +3,19 @@ package com.zhengqing.system.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.zhengqing.common.base.util.MyBeanUtil;
 import com.zhengqing.system.entity.SysRole;
 import com.zhengqing.system.mapper.SysRoleMapper;
 import com.zhengqing.system.model.dto.SysRoleListDTO;
 import com.zhengqing.system.model.dto.SysRoleSaveDTO;
-import com.zhengqing.system.model.vo.*;
+import com.zhengqing.system.model.vo.SysMenuTreeVO;
+import com.zhengqing.system.model.vo.SysRoleAllPermissionDetailVO;
+import com.zhengqing.system.model.vo.SysRoleListVO;
 import com.zhengqing.system.service.*;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -29,23 +29,18 @@ import java.util.List;
  */
 @Slf4j
 @Service
-@Transactional(rollbackFor = Exception.class)
+@RequiredArgsConstructor
 public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> implements ISysRoleService {
 
-    @Resource
-    private SysRoleMapper sysRoleMapper;
+    private final SysRoleMapper sysRoleMapper;
 
-    @Resource
-    private ISysMenuService sysMenuService;
+    private final ISysMenuService sysMenuService;
 
-    @Resource
-    private ISysRoleMenuService sysRoleMenuService;
+    private final ISysRoleMenuService sysRoleMenuService;
 
-    @Resource
-    private ISysRolePermissionService sysRolePermissionService;
+    private final ISysRolePermissionService sysRolePermissionService;
 
-    @Resource
-    private ISysPermissionService sysPermissionService;
+    private final ISysPermissionService sysPermissionService;
 
     @Override
     public IPage<SysRoleListVO> listPage(SysRoleListDTO params) {
@@ -58,6 +53,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Integer addOrUpdateData(SysRoleSaveDTO params) {
         SysRole sysRole = SysRole.builder()
                 .roleId(params.getRoleId())
@@ -70,52 +66,24 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     }
 
     @Override
-    public SysRolePermissionDetailVO detail(Integer roleId) {
+    public SysRoleAllPermissionDetailVO permissionDetail(Integer roleId) {
+        // 1、角色基本信息
         SysRole sysRole = this.sysRoleMapper.selectById(roleId);
-        SysRolePermissionDetailVO result = SysRolePermissionDetailVO.builder()
+
+        // 2、菜单权限树
+        List<SysMenuTreeVO> menuTree = this.sysMenuService.tree(roleId);
+
+        return SysRoleAllPermissionDetailVO.builder()
                 .roleId(sysRole.getRoleId())
                 .name(sysRole.getName())
                 .code(sysRole.getCode())
                 .status(sysRole.getStatus())
+                .menuTree(menuTree)
                 .build();
-        List<Integer> menuIdList = this.sysRoleMenuService.getMenuIdsByRoleId(roleId);
-        result.setMenuIdList(menuIdList);
-        return result;
     }
 
     @Override
-    public SysRoleAllPermissionDetailVO permissionDetail(Integer roleId) {
-        SysRoleAllPermissionDetailVO permissionDetail =
-                MyBeanUtil.copyProperties(this.detail(roleId), SysRoleAllPermissionDetailVO.class);
-        List<SysMenuTreeVO> menTree = this.sysMenuService.tree();
-        this.handleRecursionTree(menTree, roleId);
-        permissionDetail.setMenuAndBtnPermissionTree(menTree);
-        return permissionDetail;
-    }
-
-    /**
-     * 递归树，填充角色菜单对应的菜单+按钮权限信息
-     *
-     * @param menTree 树数据
-     * @return void
-     * @author zhengqingya
-     * @date 2020/9/11 17:26
-     */
-    public void handleRecursionTree(List<SysMenuTreeVO> menTree, Integer roleId) {
-        if (!CollectionUtils.isEmpty(menTree)) {
-            menTree.forEach(menu -> {
-                Integer menuId = menu.getMenuId();
-                List<SysMenuReBtnPermListVO> btnInfoList = this.sysPermissionService.getPermListByMenuId(menuId);
-                List<Integer> permissionIdList = this.sysRolePermissionService.getPermissionBtnsByRoleIdAndMenuId(roleId, menuId);
-                menu.setBtnInfoList(btnInfoList);
-                menu.setPermissionIdList(permissionIdList);
-                List<SysMenuTreeVO> menuChildren = menu.getChildren();
-                this.handleRecursionTree(menuChildren, roleId);
-            });
-        }
-    }
-
-    @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteRoleAndRoleMenu(Integer roleId) {
         // 1、删除该角色下关联的菜单
         this.sysRoleMenuService.deleteAllMenusByRoleId(roleId);

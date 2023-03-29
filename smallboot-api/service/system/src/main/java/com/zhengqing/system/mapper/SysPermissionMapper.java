@@ -3,7 +3,9 @@ package com.zhengqing.system.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.zhengqing.system.entity.SysPermission;
 import com.zhengqing.system.model.vo.SysMenuReBtnPermListVO;
+import com.zhengqing.system.model.vo.SysMenuRePermListVO;
 import com.zhengqing.system.model.vo.SysRoleRePermListVO;
+import com.zhengqing.system.model.vo.SysRoleRePermVO;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Param;
 
@@ -48,6 +50,25 @@ public interface SysPermissionMapper extends BaseMapper<SysPermission> {
      * @author zhengqingya
      * @date 2022/6/14 14:55
      */
-    List<SysRoleRePermListVO> listRoleRePerm();
+    List<SysRoleRePermListVO> selectListRoleRePerm();
+
+    /**
+     * 获取菜单对应的权限数据
+     *
+     * @return 菜单ID -> btn/url权限
+     * @author zhengqingya
+     * @date 2022/6/14 14:55
+     */
+    List<SysMenuRePermListVO> selectListMenuRePerm();
+
+    /**
+     * 全部url/btn权限 & 角色是否具有此权限
+     *
+     * @param roleId 角色ID
+     * @return 权限
+     * @author zhengqingya
+     * @date 2022/6/14 14:55
+     */
+    List<SysRoleRePermVO> selectListPermByRoleId(@Param("roleId") Integer roleId);
 
 }

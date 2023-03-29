@@ -7,7 +7,6 @@ import com.zhengqing.system.model.dto.SysRoleListDTO;
 import com.zhengqing.system.model.dto.SysRoleSaveDTO;
 import com.zhengqing.system.model.vo.SysRoleAllPermissionDetailVO;
 import com.zhengqing.system.model.vo.SysRoleListVO;
-import com.zhengqing.system.model.vo.SysRolePermissionDetailVO;
 
 import java.util.List;
 
@@ -53,16 +52,6 @@ public interface ISysRoleService extends IService<SysRole> {
     Integer addOrUpdateData(SysRoleSaveDTO params);
 
     /**
-     * 根据角色ID获取角色信息详情（包含角色可访问的菜单ids）
-     *
-     * @param roleId 角色id
-     * @return 角色信息+菜单ids
-     * @author zhengqingya
-     * @date 2020/9/10 14:50
-     */
-    SysRolePermissionDetailVO detail(Integer roleId);
-
-    /**
      * 根据角色ID获取角色信息详情（含角色基本信息+菜单信息+按钮信息）
      *
      * @param roleId 角色id
@@ -90,5 +79,5 @@ public interface ISysRoleService extends IService<SysRole> {
      * @date 2020/9/10 18:03
      */
     Integer getRoleIdForSuperAdmin();
-    
+
 }

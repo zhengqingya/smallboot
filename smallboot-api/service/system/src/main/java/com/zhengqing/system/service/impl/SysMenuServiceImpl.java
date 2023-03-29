@@ -10,13 +10,18 @@ import com.zhengqing.system.mapper.SysMenuMapper;
 import com.zhengqing.system.model.dto.SysMenuListDTO;
 import com.zhengqing.system.model.dto.SysMenuSaveDTO;
 import com.zhengqing.system.model.vo.SysMenuTreeVO;
+import com.zhengqing.system.model.vo.SysRoleRePermVO;
 import com.zhengqing.system.service.ISysMenuService;
+import com.zhengqing.system.service.ISysPermissionService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
-import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -29,11 +34,11 @@ import java.util.List;
  */
 @Slf4j
 @Service
-@Transactional(rollbackFor = Exception.class)
+@RequiredArgsConstructor
 public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> implements ISysMenuService {
 
-    @Resource
-    private SysMenuMapper sysMenuMapper;
+    private final SysMenuMapper sysMenuMapper;
+    private final ISysPermissionService sysPermissionService;
 
     @Override
     public IPage<SysMenu> listPage(SysMenuListDTO params) {
@@ -46,6 +51,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Integer addOrUpdateData(SysMenuSaveDTO params) {
         Integer menuId = params.getMenuId();
         SysMenu sysMenu = SysMenu.builder()
@@ -71,46 +77,40 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     }
 
     @Override
-    public List<SysMenuTreeVO> tree() {
+    public List<SysMenuTreeVO> tree(Integer roleId) {
         // 1、拿到所有菜单
-        List<SysMenuTreeVO> allMenuList = this.sysMenuMapper.selectMenuTree();
-        // 2、准备一个空的父菜单集合
-        List<SysMenuTreeVO> parentMenuList = Lists.newArrayList();
-        // 3、遍历子菜单 -> 进行对父菜单的设置
-        for (SysMenuTreeVO parentMenu : allMenuList) {
-            if (parentMenu.getParentId().equals(AppConstant.PARENT_ID)) {
-                parentMenuList.add(parentMenu);
-            }
-        }
-        // 4、遍历出父菜单对应的子菜单
-        for (SysMenuTreeVO parent : parentMenuList) {
-            List<SysMenuTreeVO> child = this.getChildMenu(parent.getMenuId(), allMenuList);
-            parent.setChildren(child);
-        }
-        return parentMenuList;
+        List<SysMenuTreeVO> allMenuList = this.sysMenuMapper.selectMenuTree(roleId);
+
+        // 2、全部url/btn权限
+        Map<Integer, List<SysRoleRePermVO>> mapPerm = this.sysPermissionService.mapPermByRoleId(roleId);
+
+        // 3、遍历出父菜单对应的子菜单 -- 递归
+        return this.recurveMenu(AppConstant.PARENT_ID, allMenuList, mapPerm);
     }
 
     /**
-     * 递归子菜单
+     * 递归菜单
      *
      * @param parentMenuId 父菜单id
      * @param allMenuList  所有菜单
+     * @param mapPerm      全部url/btn权限
      * @return 菜单树列表
      * @author zhengqingya
      * @date 2020/9/10 20:56
      */
-    private List<SysMenuTreeVO> getChildMenu(Integer parentMenuId, List<SysMenuTreeVO> allMenuList) {
-        // 5、存放子菜单的集合
-        List<SysMenuTreeVO> childMenuList = Lists.newArrayList();
-        for (SysMenuTreeVO menu : allMenuList) {
-            if (menu.getParentId().equals(parentMenuId)) {
-                childMenuList.add(menu);
-            }
-        }
-        // 6、递归
-        for (SysMenuTreeVO treeVO : childMenuList) {
-            treeVO.setChildren(this.getChildMenu(treeVO.getMenuId(), allMenuList));
-        }
+    private List<SysMenuTreeVO> recurveMenu(Integer parentMenuId, List<SysMenuTreeVO> allMenuList, Map<Integer, List<SysRoleRePermVO>> mapPerm) {
+        // 存放子菜单的集合
+        List<SysMenuTreeVO> childMenuList = allMenuList.stream().filter(e -> e.getParentId().equals(parentMenuId)).collect(Collectors.toList());
+
+        // 递归
+        childMenuList.forEach(item -> {
+            Integer menuId = item.getMenuId();
+            List<SysRoleRePermVO> permList = mapPerm.get(menuId);
+            // 权限
+            item.setPermList(CollectionUtils.isEmpty(permList) ? Lists.newArrayList() : permList);
+            // 子菜单
+            item.setChildren(this.recurveMenu(menuId, allMenuList, mapPerm));
+        });
         return childMenuList;
     }
 

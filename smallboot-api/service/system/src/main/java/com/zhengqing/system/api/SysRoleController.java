@@ -8,7 +8,6 @@ import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
 import com.zhengqing.system.model.dto.*;
 import com.zhengqing.system.model.vo.SysRoleAllPermissionDetailVO;
 import com.zhengqing.system.model.vo.SysRoleListVO;
-import com.zhengqing.system.model.vo.SysRolePermissionDetailVO;
 import com.zhengqing.system.service.ISysPermissionService;
 import com.zhengqing.system.service.ISysRoleMenuService;
 import com.zhengqing.system.service.ISysRolePermissionService;
@@ -70,16 +69,16 @@ public class SysRoleController extends BaseController {
     }
 
     @GetMapping("detail")
-    @ApiOperation("详情(角色基本信息+菜单ids)")
-    public SysRolePermissionDetailVO detail(@RequestParam Integer roleId) {
-        return this.roleService.detail(roleId);
-    }
-
-    @GetMapping("permissionDetail")
-    @ApiOperation("详情(带树+按钮+所拥有的权限)")
-    public SysRoleAllPermissionDetailVO permissionDetail(@RequestParam Integer roleId) {
+    @ApiOperation("详情(角色信息+菜单树+按钮+所拥有的权限)")
+    public SysRoleAllPermissionDetailVO detail(@RequestParam Integer roleId) {
         return this.roleService.permissionDetail(roleId);
     }
+
+//    @GetMapping("permissionDetail")
+//    @ApiOperation("详情(带树+按钮+所拥有的权限)")
+//    public SysRoleAllPermissionDetailVO permissionDetail(@RequestParam Integer roleId) {
+//        return this.roleService.permissionDetail(roleId);
+//    }
 
     @DeleteMapping("")
     @ApiOperation("删除")
@@ -107,7 +106,7 @@ public class SysRoleController extends BaseController {
     @PostMapping("saveRoleMenuBtnIds")
     @ApiOperation("保存角色关联菜单按钮ids")
     public void saveRoleMenuBtnIds(@Validated @RequestBody SysRoleMenuBtnSaveDTO params) {
-        this.sysRolePermissionService.saveRoleReMenuBtnIds(params);
+        this.sysRolePermissionService.saveRoleRePerm(params);
     }
 
     @NoRepeatSubmit

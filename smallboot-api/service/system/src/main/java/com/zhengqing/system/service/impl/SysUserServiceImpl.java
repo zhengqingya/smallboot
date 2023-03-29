@@ -183,7 +183,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         // 角色可访问的菜单ID
         List<Integer> menuIdList = this.sysRoleMenuService.getMenuIdsByRoleIds(roleIdList);
         // 所有菜单
-        List<SysMenuTreeVO> menuTreeList = this.sysMenuService.tree();
+        List<SysMenuTreeVO> menuTreeList = this.sysMenuService.tree(null);
         // 所有按钮
         List<SysRoleMenuBtnListVO> btnList = this.sysRolePermissionService.listRoleReMenuBtn();
         // 用户关联的权限

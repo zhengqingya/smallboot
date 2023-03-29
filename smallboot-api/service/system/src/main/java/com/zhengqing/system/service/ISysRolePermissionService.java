@@ -6,6 +6,7 @@ import com.zhengqing.system.model.dto.SysRoleMenuBtnSaveDTO;
 import com.zhengqing.system.model.vo.SysRoleMenuBtnListVO;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -39,6 +40,16 @@ public interface ISysRolePermissionService extends IService<SysRolePermission> {
      */
     List<Integer> getPermissionBtnsByRoleIdAndMenuId(Integer roleId, Integer menuId);
 
+
+    /**
+     * 获取所有角色对应的权限数据
+     *
+     * @return 角色ID -> 权限ids
+     * @author zhengqingya
+     * @date 2020/9/10 17:58
+     */
+    Map<Integer, List<Integer>> mapRoleRePerm();
+
     /**
      * 根据角色id删除关联所有按钮权限
      *
@@ -58,7 +69,7 @@ public interface ISysRolePermissionService extends IService<SysRolePermission> {
      * @author zhengqingya
      * @date 2020/9/10 17:57
      */
-    void deleteBtnsByRoleIdAndMenuId(Integer roleId, Integer menuId);
+    void deletePermByRoleIdAndMenuId(Integer roleId, Integer menuId);
 
     /**
      * 保存角色关联菜单按钮权限ids
@@ -68,7 +79,7 @@ public interface ISysRolePermissionService extends IService<SysRolePermission> {
      * @author zhengqingya
      * @date 2020/9/10 18:34
      */
-    void saveRoleReMenuBtnIds(SysRoleMenuBtnSaveDTO params);
+    void saveRoleRePerm(SysRoleMenuBtnSaveDTO params);
 
     /**
      * 保存角色关联菜单按钮权限

@@ -41,16 +41,18 @@ public class SysPermissionBusinessServiceImpl implements ISysPermissionBusinessS
     @Override
     public void initSuperAdminPerm() {
         // 1、先查询所有菜单和按钮数据
-        List<SysMenuTreeVO> menuTree = this.menuService.tree();
+        List<SysMenuTreeVO> menuTree = this.menuService.tree(null);
         Integer roleId = this.sysRoleService.getRoleIdForSuperAdmin();
         List<Integer> menuIdList = this.menuService.list().stream().map(SysMenu::getMenuId).collect(Collectors.toList());
 
         // 2、保存角色关联的菜单和按钮权限
-        this.sysRoleMenuService.saveRolePermission(SysRolePermissionSaveDTO.builder()
-                .roleId(roleId)
-                .menuIdList(menuIdList)
-                .menuAndBtnPermissionTree(menuTree)
-                .build());
+        this.sysRoleMenuService.saveRolePermission(
+                SysRolePermissionSaveDTO.builder()
+                        .roleId(roleId)
+                        .menuIdList(menuIdList)
+                        .menuTree(menuTree)
+                        .build()
+        );
         this.sysRolePermissionService.savePerm(roleId, this.sysPermissionService.listPermissionId());
         log.info("初始化超级管理员权限成功!");
     }

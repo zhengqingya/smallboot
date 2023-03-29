@@ -18,21 +18,27 @@
     </select>
 
     <select id="selectMenuTree" resultType="com.zhengqing.system.model.vo.SysMenuTreeVO">
-        SELECT sm.menu_id,
-               sm.title,
-               sm.name,
-               sm.icon,
-               sm.path,
-               sm.parent_id,
-               IF(sm.parent_id = 0, NULL,
-                  (SELECT m.title FROM t_sys_menu m WHERE m.menu_id = sm.parent_id)) parentName,
-               sm.sort,
-               sm.component,
-               sm.hidden,
-               sm.redirect,
-               sm.breadcrumb,
-               sm.is_show_children
+        SELECT
+        sm.menu_id,
+        sm.title,
+        sm.name,
+        sm.icon,
+        sm.path,
+        sm.parent_id,
+        IF(sm.parent_id = 0, NULL,
+        (SELECT m.title FROM t_sys_menu m WHERE m.menu_id = sm.parent_id)) parentName,
+        sm.sort,
+        sm.component,
+        sm.hidden,
+        sm.redirect,
+        sm.breadcrumb,
+        sm.is_show_children,
+        IF(srm.id IS NULL, 0, 1) isHasPerm
         FROM t_sys_menu sm
+        LEFT JOIN t_sys_role_menu srm ON srm.menu_id = sm.menu_id
+        <if test="roleId != null">
+            AND srm.role_id = #{roleId}
+        </if>
         WHERE sm.is_deleted = 0
         ORDER BY sm.sort ASC
     </select>

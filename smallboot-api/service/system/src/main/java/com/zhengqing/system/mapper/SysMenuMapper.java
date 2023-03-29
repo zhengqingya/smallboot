@@ -23,18 +23,18 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
     /**
      * 列表分页
      *
-     * @param page:
-     * @param filter: 过滤参数
+     * @param page   分页
+     * @param filter 过滤参数
      * @return 菜单信息
      * @author zhengqingya
      * @date 2020/9/10 20:29
      */
-    IPage<SysMenu> selectMenus(IPage page, @Param("filter") SysMenuListDTO filter);
+    IPage<SysMenu> selectMenus(IPage<SysMenu> page, @Param("filter") SysMenuListDTO filter);
 
     /**
      * 列表
      *
-     * @param filter: 过滤参数
+     * @param filter 过滤参数
      * @return 菜单信息
      * @author zhengqingya
      * @date 2020/9/10 20:29
@@ -44,10 +44,11 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
     /**
      * 获取所有菜单 - 仅菜单树使用
      *
+     * @param roleId 角色ID
      * @return 菜单信息
      * @author zhengqingya
      * @date 2020/9/10 20:30
      */
-    List<SysMenuTreeVO> selectMenuTree();
+    List<SysMenuTreeVO> selectMenuTree(@Param("roleId") Integer roleId);
 
 }

@@ -4,9 +4,12 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhengqing.system.entity.SysPermission;
 import com.zhengqing.system.model.dto.SysMenuReBtnPermSaveDTO;
 import com.zhengqing.system.model.vo.SysMenuReBtnPermListVO;
+import com.zhengqing.system.model.vo.SysMenuRePermListVO;
 import com.zhengqing.system.model.vo.SysRoleRePermListVO;
+import com.zhengqing.system.model.vo.SysRoleRePermVO;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -40,7 +43,7 @@ public interface ISysPermissionService extends IService<SysPermission> {
     List<SysMenuReBtnPermListVO> getPermListByMenuId(Integer menuId);
 
     /**
-     * 获取角色权限映射数据
+     * 获取所有角色对应的权限数据
      *
      * @return 权限
      * @author zhengqingya
@@ -48,6 +51,24 @@ public interface ISysPermissionService extends IService<SysPermission> {
      */
     List<SysRoleRePermListVO> listRoleRePerm();
 
+    /**
+     * 获取菜单对应的权限数据
+     *
+     * @return 菜单ID -> btn/url权限
+     * @author zhengqingya
+     * @date 2022/6/14 14:55
+     */
+    Map<Integer, List<SysMenuRePermListVO>> mapMenuRePerm();
+
+    /**
+     * 全部url/btn权限 & 角色是否具有此权限
+     *
+     * @param roleId 角色ID
+     * @return 菜单ID -> btn/url权限 & 角色是否具有此权限
+     * @author zhengqingya
+     * @date 2022/6/14 14:55
+     */
+    Map<Integer, List<SysRoleRePermVO>> mapPermByRoleId(Integer roleId);
 
     /**
      * 获取所有权限ids

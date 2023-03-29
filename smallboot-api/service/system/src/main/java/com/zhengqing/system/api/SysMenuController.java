@@ -56,8 +56,8 @@ public class SysMenuController extends BaseController {
 
     @GetMapping("menuTree")
     @ApiOperation("菜单树")
-    public List<SysMenuTreeVO> menuTree() {
-        return this.menuService.tree();
+    public List<SysMenuTreeVO> menuTree(@RequestParam(required = false) Integer roleId) {
+        return this.menuService.tree(roleId);
     }
 
     @NoRepeatSubmit

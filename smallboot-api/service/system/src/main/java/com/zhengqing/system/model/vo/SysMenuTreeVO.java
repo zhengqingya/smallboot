@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -26,57 +25,63 @@ import java.util.List;
 @ApiModel
 public class SysMenuTreeVO {
 
-    @ApiModelProperty(value = "菜单ID")
+    @ApiModelProperty("菜单ID")
     private Integer menuId;
 
-    @ApiModelProperty(value = "菜单名称")
+    @ApiModelProperty("菜单名称")
     private String title;
 
-    @ApiModelProperty(value = "菜单名称 - 英文")
+    @ApiModelProperty("菜单名称 - 英文")
     private String name;
 
-    @ApiModelProperty(value = "菜单图标")
+    @ApiModelProperty("菜单图标")
     private String icon;
 
-    @ApiModelProperty(value = "菜单链接")
+    @ApiModelProperty("菜单链接")
     private String path;
 
-    @ApiModelProperty(value = "上级菜单ID")
+    @ApiModelProperty("上级菜单ID")
     private Integer parentId;
 
-    @ApiModelProperty(value = "上级菜单名")
+    @ApiModelProperty("上级菜单名")
     private String parentName;
 
-    @ApiModelProperty(value = "显示顺序")
+    @ApiModelProperty("显示顺序")
     private Integer sort;
 
-    @ApiModelProperty(value = "组件名")
+    @ApiModelProperty("组件名")
     private String component;
 
-    @ApiModelProperty(value = "是否隐藏 true:隐藏 false:显示")
+    @ApiModelProperty("是否隐藏 true:隐藏 false:显示")
     private Boolean hidden;
 
-    @ApiModelProperty(value = "重定向url")
+    @ApiModelProperty("重定向url")
     private String redirect;
 
-    @ApiModelProperty(value = "面包屑是否显示")
+    @ApiModelProperty("面包屑是否显示")
     private Boolean breadcrumb;
 
-    @ApiModelProperty(value = "是否显示子菜单(true:显示 false:隐藏)")
+    @ApiModelProperty("是否显示子菜单(true:显示 false:隐藏)")
     private Boolean isShowChildren;
 
-    @ApiModelProperty(value = "下级菜单")
-    private List<SysMenuTreeVO> children = new LinkedList<>();
+    @ApiModelProperty("下级菜单")
+    private List<SysMenuTreeVO> children;
 
-    @ApiModelProperty(value = "按钮权限")
+    @ApiModelProperty("按钮权限")
     private SysUserBtnVO meta;
 
     // 下面属性只在角色管理页面-权限中使用
 
-    @ApiModelProperty(value = "菜单关联的所有按钮信息")
-    private List<SysMenuReBtnPermListVO> btnInfoList;
+//    @ApiModelProperty("菜单关联的所有按钮信息")
+//    private List<SysMenuRePermListVO> btnInfoList;
 
-    @ApiModelProperty(value = "角色关联菜单下的所拥有的按钮权限信息")
-    private List<Integer> permissionIdList;
+//    @ApiModelProperty("角色关联菜单下的所拥有的按钮权限信息")
+//    private List<Integer> permissionIdList;
+
+    @ApiModelProperty("是否具有菜单权限")
+    private Boolean isHasPerm;
+
+    @ApiModelProperty("权限")
+    private List<SysRoleRePermVO> permList;
 
 }

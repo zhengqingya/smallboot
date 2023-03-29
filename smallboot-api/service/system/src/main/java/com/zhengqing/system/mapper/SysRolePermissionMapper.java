@@ -2,6 +2,7 @@ package com.zhengqing.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.zhengqing.system.entity.SysRolePermission;
+import com.zhengqing.system.model.bo.SysRoleRePermBO;
 import com.zhengqing.system.model.vo.SysRoleMenuBtnListVO;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Param;
@@ -38,6 +39,15 @@ public interface SysRolePermissionMapper extends BaseMapper<SysRolePermission> {
      * @date 2020/9/10 17:58
      */
     List<Integer> selectBtnsByRoleIdAndMenuId(@Param("roleId") Integer roleId, @Param("menuId") Integer menuId);
+
+    /**
+     * 获取所有角色对应的权限数据
+     *
+     * @return 结果
+     * @author zhengqingya
+     * @date 2020/9/10 17:58
+     */
+    List<SysRoleRePermBO> selectMapRoleRePerm();
 
     /**
      * 根据角色id删除关联所有按钮权限

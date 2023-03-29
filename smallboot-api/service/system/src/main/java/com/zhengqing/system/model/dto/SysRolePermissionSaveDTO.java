@@ -36,6 +36,6 @@ public class SysRolePermissionSaveDTO {
     private List<Integer> menuIdList;
 
     @ApiModelProperty(value = "菜单树(含拥有的按钮权限，需循环里面的菜单保存其关联的按钮权限信息数据)")
-    private List<SysMenuTreeVO> menuAndBtnPermissionTree;
+    private List<SysMenuTreeVO> menuTree;
 
 }

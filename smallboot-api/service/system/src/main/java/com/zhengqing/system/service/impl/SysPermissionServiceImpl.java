@@ -5,14 +5,17 @@ import com.zhengqing.system.entity.SysPermission;
 import com.zhengqing.system.mapper.SysPermissionMapper;
 import com.zhengqing.system.model.dto.SysMenuReBtnPermSaveDTO;
 import com.zhengqing.system.model.vo.SysMenuReBtnPermListVO;
+import com.zhengqing.system.model.vo.SysMenuRePermListVO;
 import com.zhengqing.system.model.vo.SysRoleRePermListVO;
+import com.zhengqing.system.model.vo.SysRoleRePermVO;
 import com.zhengqing.system.service.ISysPermissionService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -26,10 +29,10 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, SysPermission> implements ISysPermissionService {
 
-    @Resource
-    private SysPermissionMapper sysPermissionMapper;
+    private final SysPermissionMapper sysPermissionMapper;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -51,12 +54,26 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
 
     @Override
     public List<SysRoleRePermListVO> listRoleRePerm() {
-        return this.sysPermissionMapper.listRoleRePerm();
+        return this.sysPermissionMapper.selectListRoleRePerm();
+    }
+
+    @Override
+    public Map<Integer, List<SysMenuRePermListVO>> mapMenuRePerm() {
+        // 菜单关联的权限
+        List<SysMenuRePermListVO> menuRePermList = this.sysPermissionMapper.selectListMenuRePerm();
+        // 根据菜单ID分组
+        return menuRePermList.stream().collect(Collectors.groupingBy(SysMenuRePermListVO::getMenuId));
+    }
+
+    @Override
+    public Map<Integer, List<SysRoleRePermVO>> mapPermByRoleId(Integer roleId) {
+        List<SysRoleRePermVO> list = this.sysPermissionMapper.selectListPermByRoleId(roleId);
+        return list.stream().collect(Collectors.groupingBy(SysRoleRePermVO::getMenuId));
     }
 
     @Override
     public List<Integer> listPermissionId() {
         return super.list().stream().map(SysPermission::getId).collect(Collectors.toList());
     }
-    
+
 }

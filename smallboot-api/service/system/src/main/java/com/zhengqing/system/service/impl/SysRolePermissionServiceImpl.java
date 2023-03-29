@@ -2,8 +2,10 @@ package com.zhengqing.system.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.zhengqing.system.entity.SysRolePermission;
 import com.zhengqing.system.mapper.SysRolePermissionMapper;
+import com.zhengqing.system.model.bo.SysRoleRePermBO;
 import com.zhengqing.system.model.dto.SysRoleMenuBtnSaveDTO;
 import com.zhengqing.system.model.vo.SysRoleMenuBtnListVO;
 import com.zhengqing.system.service.ISysRolePermissionService;
@@ -13,7 +15,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -42,6 +46,21 @@ public class SysRolePermissionServiceImpl extends ServiceImpl<SysRolePermissionM
     }
 
     @Override
+    public Map<Integer, List<Integer>> mapRoleRePerm() {
+        List<SysRoleRePermBO> list = this.sysRolePermissionMapper.selectMapRoleRePerm();
+
+        Map<Integer, List<Integer>> map = Maps.newHashMap();
+        if (CollectionUtils.isEmpty(list)) {
+            return map;
+        }
+        for (SysRoleRePermBO item : list) {
+            map.computeIfAbsent(item.getRoleId(), k -> new LinkedList<>()).add(item.getPermissionId());
+        }
+        return map;
+    }
+
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public void deleteBtnsByRoleId(Integer roleId) {
         this.sysRolePermissionMapper.deleteBtnsByRoleId(roleId);
@@ -49,19 +68,19 @@ public class SysRolePermissionServiceImpl extends ServiceImpl<SysRolePermissionM
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void deleteBtnsByRoleIdAndMenuId(Integer roleId, Integer menuId) {
+    public void deletePermByRoleIdAndMenuId(Integer roleId, Integer menuId) {
         this.sysRolePermissionMapper.deleteBtnsByRoleIdAndMenuId(roleId, menuId);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void saveRoleReMenuBtnIds(SysRoleMenuBtnSaveDTO params) {
+    public void saveRoleRePerm(SysRoleMenuBtnSaveDTO params) {
         Integer roleId = params.getRoleId();
         Integer menuId = params.getMenuId();
         List<Integer> permissionIdList = params.getPermissionIdList();
 
         // 1、先删除
-        this.deleteBtnsByRoleIdAndMenuId(roleId, menuId);
+        this.deletePermByRoleIdAndMenuId(roleId, menuId);
 
         if (CollectionUtils.isEmpty(permissionIdList)) {
             return;

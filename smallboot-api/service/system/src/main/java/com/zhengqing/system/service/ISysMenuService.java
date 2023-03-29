@@ -53,10 +53,11 @@ public interface ISysMenuService extends IService<SysMenu> {
     /**
      * 获取菜单树
      *
+     * @param roleId 角色ID
      * @return 菜单树信息
      * @author zhengqingya
      * @date 2021/1/13 20:44
      */
-    List<SysMenuTreeVO> tree();
+    List<SysMenuTreeVO> tree(Integer roleId);
 
 }

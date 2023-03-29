@@ -20,4 +20,11 @@
           AND sp.menu_id = #{menuId}
     </select>
 
+    <select id="selectMapRoleRePerm" resultType="com.zhengqing.system.model.bo.SysRoleRePermBO">
+        SELECT srp.role_id,
+               sp.id permissionId
+        FROM t_sys_role_permission srp
+                 JOIN t_sys_permission sp on srp.permission_id = sp.id
+    </select>
+
 </mapper>

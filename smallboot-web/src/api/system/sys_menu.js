@@ -3,11 +3,11 @@ import request from '@/utils/request'
 const BASE_API = '/web/api/system/menu'
 
 export default {
-  menuTree() {
+  menuTree(params) {
     return request({
       url: BASE_API + '/menuTree',
       method: 'get',
-      params: { systemSource: 0 },
+      params: params,
     })
   },
   add(data) {
