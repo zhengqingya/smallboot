@@ -29,17 +29,17 @@
             />
           </el-col>
           <el-col :span="12">
-            <el-card v-if="permBtnList.length > 0 && showPerm">
+            <el-card v-if="currentSelectedMenu && currentSelectedMenu.permList.length > 0 && showPerm">
               <template #header>
                 <div>
                   <span>编辑页面按钮权限</span>
-                  <el-button style="float: right; padding: 3px 0" link @click="handleSavePermissionBtns">保存</el-button>
+                  <el-button style="float: right; padding: 3px 0" link @click="savePerm">保存</el-button>
                 </div>
               </template>
-              <el-checkbox v-model="checkAll" :indeterminate="isIndeterminate" style="margin-bottom: 10px" @change="handleCheckAllBtnsChange"
+              <el-checkbox v-model="isCheckAllPerm" :indeterminate="isIndeterminate" style="margin-bottom: 10px" @change="changeCheckBoxPerm"
                 >全选</el-checkbox
               >
-              <el-checkbox-group v-model="currentSelectedPermList" @change="handleCheckedBtnsChange">
+              <el-checkbox-group v-model="currentSelectedPermIdList" @change="changeCheckedPerm">
                 <el-checkbox v-for="(item, index) in currentSelectedMenu.permList" :key="index" :label="item.id">{{ item.name }} </el-checkbox>
               </el-checkbox-group>
             </el-card>
@@ -61,17 +61,13 @@ export default {
   data() {
     return {
       roleId: this.$route.query.id,
-      roleForm: {},
-      menuList: [],
+      roleForm: {}, // 角色基本信息
+      menuList: [], // 菜单树
       currentSelectedMenu: null, // 当前选中的菜单
-
-      checkAll: false,
-      isIndeterminate: true,
-
-      permBtnList: [],
-      currentSelectedBtns: [],
-      showPerm: false,
-      currentSelectedPermList: [], // 当前选中的按钮/url权限
+      showPerm: false, // 是否显示权限
+      currentSelectedPermIdList: [], // 当前选中的按钮/url权限
+      isCheckAllPerm: false, //  是否选中所有权限
+      isIndeterminate: true, // 是否全选的勾勾
     }
   },
   computed: {
@@ -103,15 +99,33 @@ export default {
       })
       return checkedKeys
     },
+    // 点击菜单
     handleNodeClick(data) {
       this.currentSelectedMenu = data
-      console.log(this.currentSelectedMenu.permList)
       if (this.isHasEditPerm) {
         this.showPerm = true
-        this.permBtnList = this.currentSelectedMenu.permList
+
+        this.currentSelectedMenu.permList.forEach((item) => {
+          if (item.isHasPerm) {
+            this.currentSelectedPermIdList.push(item.id)
+          }
+        })
+        this.isCheckAllPerm = this.currentSelectedPermIdList.length === this.currentSelectedMenu.permList.length
+        this.isIndeterminate = !this.isCheckAllPerm
       } else {
         this.showPerm = false
       }
+    },
+    changeCheckBoxPerm(isAllCheck) {
+      this.currentSelectedPermIdList = isAllCheck ? this.currentSelectedMenu.permList.map((item) => item.id) : []
+      this.isIndeterminate = false
+    },
+    changeCheckedPerm(selectedData) {
+      console.log(selectedData)
+      const selectedCount = selectedData.length
+      this.isCheckAllPerm = selectedCount === this.currentSelectedMenu.permList.length
+      this.isIndeterminate = selectedCount > 0 && selectedCount < this.currentSelectedMenu.permList.length
+      // this.isIndeterminate = false
     },
     async saveData() {
       // 获取选中的菜单
@@ -121,33 +135,14 @@ export default {
       this.submitOk(res.msg)
       this.$router.push('/system/role')
     },
-
-    async getSelectedPermissionBtn(menuId) {
-      const roleId = this.$route.query.id
-      let res = await this.$api.sys_role.getPermissionBtnsByRoleIdAndMenuId({
-        roleId: roleId,
-        menuId: menuId,
-      })
-      this.currentSelectedBtns = res.data
-    },
-    async handleSavePermissionBtns() {
+    async savePerm() {
       const submitObj = {
         roleId: this.$route.query.id,
         menuId: this.currentSelectedMenu.menuId,
-        permissionIdList: this.currentSelectedBtns,
+        permissionIdList: this.currentSelectedPermIdList,
       }
       let res = await this.$api.sys_role.savePermissionBtnIds(submitObj)
       this.submitOk(res.msg)
-    },
-    handleCheckAllBtnsChange(val) {
-      const allBtnsId = this.permBtnList.map((item) => item.id)
-      this.currentSelectedBtns = val ? allBtnsId : []
-      this.isIndeterminate = false
-    },
-    handleCheckedBtnsChange(value) {
-      const checkedCount = value.length
-      this.checkAll = checkedCount === this.permBtnList.length
-      this.isIndeterminate = checkedCount > 0 && checkedCount < this.permBtnList.length
     },
   },
 }

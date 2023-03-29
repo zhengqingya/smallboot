@@ -55,16 +55,6 @@ export default {
   },
 
   /**
-   * 获取角色管理 页面中的权限按钮被选中的按钮
-   */
-  getPermissionBtnsByRoleIdAndMenuId(data) {
-    return request({
-      url: BASE_API + '/getPermissionBtnsByRoleIdAndMenuId',
-      method: 'get',
-      params: data,
-    })
-  },
-  /**
    * 保存角色管理页面中的权限按钮被选中的按钮
    */
   savePermissionBtnIds(data) {
