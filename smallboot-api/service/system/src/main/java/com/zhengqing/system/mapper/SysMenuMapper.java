@@ -3,8 +3,8 @@ package com.zhengqing.system.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.system.entity.SysMenu;
+import com.zhengqing.system.model.bo.SysMenuTree;
 import com.zhengqing.system.model.dto.SysMenuListDTO;
-import com.zhengqing.system.model.vo.SysMenuTreeVO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -49,6 +49,6 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
      * @author zhengqingya
      * @date 2020/9/10 20:30
      */
-    List<SysMenuTreeVO> selectMenuTree(@Param("roleId") Integer roleId);
+    List<SysMenuTree> selectMenuTree(@Param("roleId") Integer roleId);
 
 }

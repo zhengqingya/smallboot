@@ -1,5 +1,6 @@
 package com.zhengqing.system.model.dto;
 
+import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -12,29 +13,25 @@ import java.util.List;
 
 /**
  * <p>
- * 角色关联菜单ids提交参数
+ * 保存角色菜单权限信息传入参数
  * </p>
  *
  * @author zhengqingya
  * @description
- * @date 2020/9/10 18:48
+ * @date 2020/9/14 11:15
  */
 @Data
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel("角色关联菜单ids提交参数")
-public class SysRoleMenuBtnSaveDTO {
+@ApiModel("保存角色菜单权限信息传入参数")
+public class SysRoleReMenuSaveDTO {
 
-    @NotNull(message = "角色Id不能为空！")
-    @ApiModelProperty(value = "角色Id")
+    @NotNull(message = "角色id不能为空！", groups = UpdateGroup.class)
+    @ApiModelProperty(value = "角色ID")
     private Integer roleId;
 
-    @NotNull(message = "菜单id不能为空！")
-    @ApiModelProperty(value = "菜单ID")
-    private Integer menuId;
-
-    @ApiModelProperty(value = "菜单下按钮权限id")
-    private List<Integer> permissionIdList;
+    @ApiModelProperty(value = "角色可访问的菜单ids")
+    private List<Integer> menuIdList;
 
 }

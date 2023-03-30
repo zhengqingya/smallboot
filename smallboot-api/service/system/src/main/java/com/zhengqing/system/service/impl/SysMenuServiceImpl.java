@@ -7,9 +7,9 @@ import com.google.common.collect.Lists;
 import com.zhengqing.common.base.constant.AppConstant;
 import com.zhengqing.system.entity.SysMenu;
 import com.zhengqing.system.mapper.SysMenuMapper;
+import com.zhengqing.system.model.bo.SysMenuTree;
 import com.zhengqing.system.model.dto.SysMenuListDTO;
 import com.zhengqing.system.model.dto.SysMenuSaveDTO;
-import com.zhengqing.system.model.vo.SysMenuTreeVO;
 import com.zhengqing.system.model.vo.SysRoleRePermVO;
 import com.zhengqing.system.service.ISysMenuService;
 import com.zhengqing.system.service.ISysPermissionService;
@@ -77,9 +77,9 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     }
 
     @Override
-    public List<SysMenuTreeVO> tree(Integer roleId) {
+    public List<SysMenuTree> tree(Integer roleId) {
         // 1、拿到所有菜单
-        List<SysMenuTreeVO> allMenuList = this.sysMenuMapper.selectMenuTree(roleId);
+        List<SysMenuTree> allMenuList = this.sysMenuMapper.selectMenuTree(roleId);
 
         // 2、全部url/btn权限
         Map<Integer, List<SysRoleRePermVO>> mapPerm = this.sysPermissionService.mapPermByRoleId(roleId);
@@ -98,9 +98,9 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
      * @author zhengqingya
      * @date 2020/9/10 20:56
      */
-    private List<SysMenuTreeVO> recurveMenu(Integer parentMenuId, List<SysMenuTreeVO> allMenuList, Map<Integer, List<SysRoleRePermVO>> mapPerm) {
+    private List<SysMenuTree> recurveMenu(Integer parentMenuId, List<SysMenuTree> allMenuList, Map<Integer, List<SysRoleRePermVO>> mapPerm) {
         // 存放子菜单的集合
-        List<SysMenuTreeVO> childMenuList = allMenuList.stream().filter(e -> e.getParentId().equals(parentMenuId)).collect(Collectors.toList());
+        List<SysMenuTree> childMenuList = allMenuList.stream().filter(e -> e.getParentId().equals(parentMenuId)).collect(Collectors.toList());
 
         // 递归
         childMenuList.forEach(item -> {

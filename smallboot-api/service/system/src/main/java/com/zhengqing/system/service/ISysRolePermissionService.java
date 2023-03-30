@@ -2,7 +2,6 @@ package com.zhengqing.system.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhengqing.system.entity.SysRolePermission;
-import com.zhengqing.system.model.dto.SysRoleMenuBtnSaveDTO;
 import com.zhengqing.system.model.vo.SysRoleMenuBtnListVO;
 
 import java.util.List;
@@ -70,16 +69,6 @@ public interface ISysRolePermissionService extends IService<SysRolePermission> {
      * @date 2020/9/10 17:57
      */
     void deletePermByRoleIdAndMenuId(Integer roleId, Integer menuId);
-
-    /**
-     * 保存角色关联菜单按钮权限ids
-     *
-     * @param params 提交参数
-     * @return void
-     * @author zhengqingya
-     * @date 2020/9/10 18:34
-     */
-    void saveRoleRePerm(SysRoleMenuBtnSaveDTO params);
 
     /**
      * 保存角色关联菜单按钮权限

@@ -5,7 +5,8 @@ import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.common.core.custom.repeatsubmit.NoRepeatSubmit;
 import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
-import com.zhengqing.system.model.dto.*;
+import com.zhengqing.system.model.dto.SysRoleListDTO;
+import com.zhengqing.system.model.dto.SysRoleSaveDTO;
 import com.zhengqing.system.model.vo.SysRoleAllPermissionDetailVO;
 import com.zhengqing.system.model.vo.SysRoleListVO;
 import com.zhengqing.system.service.ISysPermissionService;
@@ -95,25 +96,5 @@ public class SysRoleController extends BaseController {
         return this.sysRolePermissionService.getPermissionBtnsByRoleIdAndMenuId(roleId, menuId);
     }
 
-    @NoRepeatSubmit
-    @PostMapping("saveRoleMenuIds")
-    @ApiOperation("保存角色关联菜单ids")
-    public void saveRoleMenuIds(@Validated @RequestBody SysRoleMenuSaveDTO params) {
-        this.sysRoleMenuService.saveRoleMenuIds(params);
-    }
-
-    @NoRepeatSubmit
-    @PostMapping("saveRoleMenuBtnIds")
-    @ApiOperation("保存角色关联菜单按钮ids")
-    public void saveRoleMenuBtnIds(@Validated @RequestBody SysRoleMenuBtnSaveDTO params) {
-        this.sysRolePermissionService.saveRoleRePerm(params);
-    }
-
-    @NoRepeatSubmit
-    @PostMapping("saveRolePermission")
-    @ApiOperation("保存角色权限（菜单权限+按钮权限）")
-    public void saveRolePermission(@Validated @RequestBody SysRolePermissionSaveDTO params) {
-        this.sysRoleMenuService.saveRolePermission(params);
-    }
-
+ 
 }

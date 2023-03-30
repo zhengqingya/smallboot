@@ -1,5 +1,6 @@
 package com.zhengqing.system.model.vo;
 
+import com.zhengqing.system.model.bo.SysMenuTree;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -38,6 +39,6 @@ public class SysPermissionVO {
     private List<Integer> menuIdList;
 
     @ApiModelProperty(value = "菜单树(含拥有的按钮权限)")
-    private List<SysMenuTreeVO> menuAndBtnPermissionTree;
+    private List<SysMenuTree> menuAndBtnPermissionTree;
 
 }

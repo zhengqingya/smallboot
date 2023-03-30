@@ -5,7 +5,7 @@ import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.common.db.mapper.MyBaseMapper;
 import com.zhengqing.system.model.vo.SysRoleRePermListVO;
 import com.zhengqing.system.service.ISysDictService;
-import com.zhengqing.system.service.ISysPermissionBusinessService;
+import com.zhengqing.system.service.ISysPermBusinessService;
 import com.zhengqing.system.service.ISysPermissionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -32,7 +32,7 @@ import java.util.List;
 public class SysAdminController extends BaseController {
 
     private final ISysPermissionService sysPermissionService;
-    private final ISysPermissionBusinessService sysPermissionBusinessService;
+    private final ISysPermBusinessService sysPermBusinessService;
     private final MyBaseMapper myBaseMapper;
     private final ISysDictService sysDictService;
 
@@ -45,7 +45,7 @@ public class SysAdminController extends BaseController {
     @ApiOperation("刷新Redis缓存中的角色菜单权限")
     @GetMapping("refreshRedisPerm")
     public void refreshRedisPerm() {
-        this.sysPermissionBusinessService.refreshRedisPerm();
+        this.sysPermBusinessService.refreshRedisPerm();
     }
 
     /**

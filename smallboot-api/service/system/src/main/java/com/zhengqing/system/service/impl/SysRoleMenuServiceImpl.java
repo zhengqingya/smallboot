@@ -4,14 +4,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
 import com.zhengqing.system.entity.SysRoleMenu;
 import com.zhengqing.system.mapper.SysRoleMenuMapper;
-import com.zhengqing.system.model.dto.SysRoleMenuBtnSaveDTO;
-import com.zhengqing.system.model.dto.SysRoleMenuSaveDTO;
-import com.zhengqing.system.model.dto.SysRolePermissionSaveDTO;
-import com.zhengqing.system.model.vo.SysMenuTreeVO;
-import com.zhengqing.system.model.vo.SysRoleRePermVO;
-import com.zhengqing.system.service.ISysPermissionService;
+import com.zhengqing.system.model.dto.SysRoleReMenuSaveDTO;
 import com.zhengqing.system.service.ISysRoleMenuService;
-import com.zhengqing.system.service.ISysRolePermissionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -37,10 +30,6 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
 
     private final SysRoleMenuMapper sysRoleMenuMapper;
 
-    private final ISysRolePermissionService sysRolePermissionService;
-
-    private final ISysPermissionService sysPermissionService;
-
     @Override
     public List<Integer> getMenuIdsByRoleId(Integer roleId) {
         return this.sysRoleMenuMapper.selectMenuIdsByRoleId(roleId);
@@ -53,7 +42,7 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void saveRoleMenuIds(SysRoleMenuSaveDTO params) {
+    public void saveRoleMenuIds(SysRoleReMenuSaveDTO params) {
         Integer roleId = params.getRoleId();
 
         // 1、先删除角色关联的菜单权限信息
@@ -61,70 +50,20 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
 
         // 2、再保存角色关联的菜单权限信息
         List<Integer> menuIdList = params.getMenuIdList();
-        if (!CollectionUtils.isEmpty(menuIdList)) {
-            List<SysRoleMenu> roleMenuList = Lists.newArrayList();
-            menuIdList.forEach(menuId ->
-                    roleMenuList.add(SysRoleMenu.builder()
-                            .roleId(roleId)
-                            .menuId(menuId)
-                            .build())
-            );
-            this.saveBatch(roleMenuList);
-        }
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void saveRolePermission(SysRolePermissionSaveDTO params) {
-        Integer roleId = params.getRoleId();
-
-        // 1、先保存角色关联的菜单权限
-        this.saveRoleMenuIds(
-                SysRoleMenuSaveDTO.builder()
-                        .roleId(roleId)
-                        .menuIdList(params.getMenuIdList())
-                        .build()
-        );
-
-
-        // 3、再保存角色关联的按钮权限
-        this.handleMenuRePerm(roleId, params.getMenuTree());
-    }
-
-    /**
-     * 递归处理菜单+按钮权限树信息数据 -> 保存按钮权限数据
-     *
-     * @param roleId         角色id
-     * @param menuRePermTree 权限树信息
-     * @return void
-     * @author zhengqingya
-     * @date 2020/9/14 11:24
-     */
-    public void handleMenuRePerm(Integer roleId, List<SysMenuTreeVO> menuRePermTree) {
-        if (CollectionUtils.isEmpty(menuRePermTree)) {
+        if (CollectionUtils.isEmpty(menuIdList)) {
             return;
         }
-        menuRePermTree.forEach(menu -> {
-            Integer menuId = menu.getMenuId();
-            // 保存按钮权限数据
-            List<Integer> permissionIdList = menu.getPermList().stream().map(SysRoleRePermVO::getId).collect(Collectors.toList());
-            if (!CollectionUtils.isEmpty(permissionIdList)) {
-                this.sysRolePermissionService.saveRoleRePerm(
-                        SysRoleMenuBtnSaveDTO.builder()
-                                .roleId(roleId)
-                                .menuId(menuId)
-                                .permissionIdList(permissionIdList)
-                                .build()
-                );
-            }
 
-            // 如果有子树则递归下去
-            List<SysMenuTreeVO> children = menu.getChildren();
-            if (!CollectionUtils.isEmpty(children)) {
-                this.handleMenuRePerm(roleId, children);
-            }
-        });
+        List<SysRoleMenu> roleMenuList = Lists.newArrayList();
+        menuIdList.forEach(menuId ->
+                roleMenuList.add(SysRoleMenu.builder()
+                        .roleId(roleId)
+                        .menuId(menuId)
+                        .build())
+        );
+        this.saveBatch(roleMenuList);
     }
+
 
     @Override
     @Transactional(rollbackFor = Exception.class)

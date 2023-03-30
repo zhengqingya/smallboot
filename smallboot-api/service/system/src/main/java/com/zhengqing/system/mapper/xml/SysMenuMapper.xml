@@ -17,7 +17,7 @@
         ORDER BY id DESC
     </select>
 
-    <select id="selectMenuTree" resultType="com.zhengqing.system.model.vo.SysMenuTreeVO">
+    <select id="selectMenuTree" resultType="com.zhengqing.system.model.bo.SysMenuTree">
         SELECT
         sm.menu_id,
         sm.title,

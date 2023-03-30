@@ -53,29 +53,4 @@ export default {
       data: { roleId: id, status: status },
     })
   },
-
-  /**
-   * 保存角色管理页面中的权限按钮被选中的按钮
-   */
-  savePermissionBtnIds(data) {
-    return request({
-      url: BASE_API + '/saveRoleMenuBtnIds',
-      method: 'post',
-      data,
-    })
-  },
-  savePermissionMenuIds(data) {
-    return request({
-      url: BASE_API + '/saveRoleMenuIds',
-      method: 'post',
-      data,
-    })
-  },
-  saveRolePermission(data) {
-    return request({
-      url: BASE_API + '/saveRolePermission',
-      method: 'post',
-      data,
-    })
-  },
 }

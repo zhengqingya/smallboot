@@ -54,7 +54,12 @@
         sp.menu_id,
         sp.url_perm,
         sp.btn_perm,
-        IF(srp.id IS NULL, 0, 1) isHasPerm
+        <if test="roleId != null">
+            IF(srp.id IS NULL, 0, 1) isHasPerm
+        </if>
+        <if test="roleId == null">
+            1 isHasPerm
+        </if>
         FROM t_sys_permission sp
         JOIN t_sys_menu sm ON sp.menu_id = sm.menu_id
         LEFT JOIN t_sys_role_permission srp ON srp.permission_id = sp.id

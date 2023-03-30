@@ -15,6 +15,7 @@ import com.zhengqing.system.entity.SysRole;
 import com.zhengqing.system.entity.SysUser;
 import com.zhengqing.system.enums.SysUserReRoleEnum;
 import com.zhengqing.system.mapper.SysUserMapper;
+import com.zhengqing.system.model.bo.SysMenuTree;
 import com.zhengqing.system.model.dto.*;
 import com.zhengqing.system.model.vo.*;
 import com.zhengqing.system.service.*;
@@ -183,11 +184,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         // 角色可访问的菜单ID
         List<Integer> menuIdList = this.sysRoleMenuService.getMenuIdsByRoleIds(roleIdList);
         // 所有菜单
-        List<SysMenuTreeVO> menuTreeList = this.sysMenuService.tree(null);
+        List<SysMenuTree> menuTreeList = this.sysMenuService.tree(null);
         // 所有按钮
         List<SysRoleMenuBtnListVO> btnList = this.sysRolePermissionService.listRoleReMenuBtn();
         // 用户关联的权限
-        List<SysMenuTreeVO> permTreeList = this.getUserPremTreeList(menuTreeList, menuIdList, roleIdList, btnList);
+        List<SysMenuTree> permTreeList = this.getUserPremTreeList(menuTreeList, menuIdList, roleIdList, btnList);
         userPerm.setPermissionTreeList(permTreeList);
         return userPerm;
     }
@@ -204,17 +205,17 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
      * @author zhengqingya
      * @date 2020/9/11 14:34
      */
-    private List<SysMenuTreeVO> getUserPremTreeList(List<SysMenuTreeVO> menuTreeList,
-                                                    List<Integer> menuIdList,
-                                                    List<Integer> roleIdList,
-                                                    List<SysRoleMenuBtnListVO> btnList) {
-        List<SysMenuTreeVO> resultList = Lists.newArrayList();
-        for (SysMenuTreeVO menu : menuTreeList) {
+    private List<SysMenuTree> getUserPremTreeList(List<SysMenuTree> menuTreeList,
+                                                  List<Integer> menuIdList,
+                                                  List<Integer> roleIdList,
+                                                  List<SysRoleMenuBtnListVO> btnList) {
+        List<SysMenuTree> resultList = Lists.newArrayList();
+        for (SysMenuTree menu : menuTreeList) {
             Integer menuId = menu.getMenuId();
             if (!menuIdList.contains(menuId)) {
                 break;
             }
-            List<SysMenuTreeVO> menuChildList = menu.getChildren();
+            List<SysMenuTree> menuChildList = menu.getChildren();
             if (!CollectionUtils.isEmpty(menuChildList)) {
                 menu.setChildren(this.getUserPremTreeList(menuChildList, menuIdList, roleIdList, btnList));
             }

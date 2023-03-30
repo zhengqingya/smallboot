@@ -2,6 +2,7 @@ package com.zhengqing.system.model.vo;
 
 import com.zhengqing.common.base.model.vo.BaseVO;
 import com.zhengqing.common.core.enums.UserSexEnum;
+import com.zhengqing.system.model.bo.SysMenuTree;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -64,6 +65,6 @@ public class SysUserPermVO extends BaseVO {
     // ================= ↓↓↓↓↓↓ 权限信息 ↓↓↓↓↓↓ =================
 
     @ApiModelProperty(value = "角色可访问菜单+按钮权限")
-    private List<SysMenuTreeVO> permissionTreeList;
+    private List<SysMenuTree> permissionTreeList;
 
 }

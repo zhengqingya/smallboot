@@ -1,6 +1,7 @@
-package com.zhengqing.system.model.vo;
+package com.zhengqing.system.model.bo;
 
-import io.swagger.annotations.ApiModel;
+import com.zhengqing.system.model.vo.SysRoleRePermVO;
+import com.zhengqing.system.model.vo.SysUserBtnVO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,7 +12,7 @@ import java.util.List;
 
 /**
  * <p>
- * 用户菜单权限树
+ * 菜单权限树
  * </p>
  *
  * @author zhengqingya
@@ -22,8 +23,9 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel
-public class SysMenuTreeVO {
+public class SysMenuTree {
+
+    // ==================== ↓↓↓↓↓↓ 菜单基础信息 ↓↓↓↓↓↓ ====================
 
     @ApiModelProperty("菜单ID")
     private Integer menuId;
@@ -65,23 +67,17 @@ public class SysMenuTreeVO {
     private Boolean isShowChildren;
 
     @ApiModelProperty("下级菜单")
-    private List<SysMenuTreeVO> children;
+    private List<SysMenuTree> children;
 
-    @ApiModelProperty("按钮权限")
-    private SysUserBtnVO meta;
-
-    // 下面属性只在角色管理页面-权限中使用
-
-//    @ApiModelProperty("菜单关联的所有按钮信息")
-//    private List<SysMenuRePermListVO> btnInfoList;
-
-//    @ApiModelProperty("角色关联菜单下的所拥有的按钮权限信息")
-//    private List<Integer> permissionIdList;
+    // ==================== ↓↓↓↓↓↓ 权限信息 ↓↓↓↓↓↓ ====================
 
     @ApiModelProperty("是否具有菜单权限")
     private Boolean isHasPerm;
 
-    @ApiModelProperty("权限")
+    @ApiModelProperty("按钮权限")
     private List<SysRoleRePermVO> permList;
+
+    @ApiModelProperty("按钮权限")
+    private SysUserBtnVO meta;
 
 }

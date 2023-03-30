@@ -3,9 +3,9 @@ package com.zhengqing.system.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhengqing.system.entity.SysMenu;
+import com.zhengqing.system.model.bo.SysMenuTree;
 import com.zhengqing.system.model.dto.SysMenuListDTO;
 import com.zhengqing.system.model.dto.SysMenuSaveDTO;
-import com.zhengqing.system.model.vo.SysMenuTreeVO;
 
 import java.util.List;
 
@@ -58,6 +58,6 @@ public interface ISysMenuService extends IService<SysMenu> {
      * @author zhengqingya
      * @date 2021/1/13 20:44
      */
-    List<SysMenuTreeVO> tree(Integer roleId);
+    List<SysMenuTree> tree(Integer roleId);
 
 }

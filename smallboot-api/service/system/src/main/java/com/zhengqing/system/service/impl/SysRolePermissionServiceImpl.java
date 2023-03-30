@@ -6,7 +6,6 @@ import com.google.common.collect.Maps;
 import com.zhengqing.system.entity.SysRolePermission;
 import com.zhengqing.system.mapper.SysRolePermissionMapper;
 import com.zhengqing.system.model.bo.SysRoleRePermBO;
-import com.zhengqing.system.model.dto.SysRoleMenuBtnSaveDTO;
 import com.zhengqing.system.model.vo.SysRoleMenuBtnListVO;
 import com.zhengqing.system.service.ISysRolePermissionService;
 import lombok.RequiredArgsConstructor;
@@ -70,24 +69,6 @@ public class SysRolePermissionServiceImpl extends ServiceImpl<SysRolePermissionM
     @Transactional(rollbackFor = Exception.class)
     public void deletePermByRoleIdAndMenuId(Integer roleId, Integer menuId) {
         this.sysRolePermissionMapper.deleteBtnsByRoleIdAndMenuId(roleId, menuId);
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void saveRoleRePerm(SysRoleMenuBtnSaveDTO params) {
-        Integer roleId = params.getRoleId();
-        Integer menuId = params.getMenuId();
-        List<Integer> permissionIdList = params.getPermissionIdList();
-
-        // 1、先删除
-        this.deletePermByRoleIdAndMenuId(roleId, menuId);
-
-        if (CollectionUtils.isEmpty(permissionIdList)) {
-            return;
-        }
-
-        // 2、再保存
-        this.savePerm(roleId, permissionIdList);
     }
 
     @Override
