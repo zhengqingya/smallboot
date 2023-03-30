@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhengqing.system.entity.SysRole;
 import com.zhengqing.system.model.dto.SysRoleListDTO;
 import com.zhengqing.system.model.dto.SysRoleSaveDTO;
-import com.zhengqing.system.model.vo.SysRoleAllPermissionDetailVO;
 import com.zhengqing.system.model.vo.SysRoleListVO;
 
 import java.util.List;
@@ -50,16 +49,6 @@ public interface ISysRoleService extends IService<SysRole> {
      * @date 2020/9/10 14:45
      */
     Integer addOrUpdateData(SysRoleSaveDTO params);
-
-    /**
-     * 根据角色ID获取角色信息详情（含角色基本信息+菜单信息+按钮信息）
-     *
-     * @param roleId 角色id
-     * @return 角色权限具体详情信息
-     * @author zhengqingya
-     * @date 2020/9/11 16:16
-     */
-    SysRoleAllPermissionDetailVO permissionDetail(Integer roleId);
 
     /**
      * 根据角色id删除角色与关联菜单权限

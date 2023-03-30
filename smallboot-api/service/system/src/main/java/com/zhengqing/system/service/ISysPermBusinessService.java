@@ -4,6 +4,7 @@ import com.zhengqing.system.model.bo.SysMenuTree;
 import com.zhengqing.system.model.dto.SysRoleRePermIdsSaveDTO;
 import com.zhengqing.system.model.dto.SysRoleRePermSaveDTO;
 import com.zhengqing.system.model.dto.SysUserPermDTO;
+import com.zhengqing.system.model.vo.SysRoleAllPermissionDetailVO;
 import com.zhengqing.system.model.vo.SysUserPermVO;
 
 import java.util.List;
@@ -37,6 +38,16 @@ public interface ISysPermBusinessService {
      * @date 2020/9/21 16:18
      */
     SysUserPermVO getUserPerm(SysUserPermDTO params);
+
+    /**
+     * 根据角色ID获取角色信息详情（含角色基本信息+菜单信息+按钮信息）
+     *
+     * @param roleId 角色id
+     * @return 角色权限具体详情信息
+     * @author zhengqingya
+     * @date 2020/9/11 16:16
+     */
+    SysRoleAllPermissionDetailVO permissionDetail(Integer roleId);
 
     /**
      * 刷新Redis缓存中的角色菜单权限

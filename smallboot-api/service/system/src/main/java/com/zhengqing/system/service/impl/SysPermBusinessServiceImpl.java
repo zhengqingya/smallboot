@@ -7,11 +7,13 @@ import com.zhengqing.common.base.constant.AppConstant;
 import com.zhengqing.common.base.constant.SecurityConstant;
 import com.zhengqing.common.redis.util.RedisUtil;
 import com.zhengqing.system.entity.SysMenu;
+import com.zhengqing.system.entity.SysRole;
 import com.zhengqing.system.model.bo.SysMenuTree;
 import com.zhengqing.system.model.dto.SysRoleReMenuSaveDTO;
 import com.zhengqing.system.model.dto.SysRoleRePermIdsSaveDTO;
 import com.zhengqing.system.model.dto.SysRoleRePermSaveDTO;
 import com.zhengqing.system.model.dto.SysUserPermDTO;
+import com.zhengqing.system.model.vo.SysRoleAllPermissionDetailVO;
 import com.zhengqing.system.model.vo.SysRoleRePermListVO;
 import com.zhengqing.system.model.vo.SysRoleRePermVO;
 import com.zhengqing.system.model.vo.SysUserPermVO;
@@ -75,6 +77,23 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
         // 2、权限树
         userPerm.setPermissionTreeList(this.tree(userPerm.getRoleIdList(), true));
         return userPerm;
+    }
+
+    @Override
+    public SysRoleAllPermissionDetailVO permissionDetail(Integer roleId) {
+        // 1、角色基本信息
+        SysRole sysRole = this.sysRoleService.getById(roleId);
+
+        // 2、菜单权限树
+        List<SysMenuTree> menuTree = this.tree(Lists.newArrayList(roleId), false);
+
+        return SysRoleAllPermissionDetailVO.builder()
+                .roleId(sysRole.getRoleId())
+                .name(sysRole.getName())
+                .code(sysRole.getCode())
+                .status(sysRole.getStatus())
+                .menuTree(menuTree)
+                .build();
     }
 
     @Override

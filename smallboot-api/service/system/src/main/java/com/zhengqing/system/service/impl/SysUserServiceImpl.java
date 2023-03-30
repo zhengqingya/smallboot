@@ -18,7 +18,6 @@ import com.zhengqing.system.model.dto.*;
 import com.zhengqing.system.model.vo.SysUserDetailVO;
 import com.zhengqing.system.model.vo.SysUserListVO;
 import com.zhengqing.system.model.vo.SysUserPermVO;
-import com.zhengqing.system.service.ISysPermBusinessService;
 import com.zhengqing.system.service.ISysUserRoleService;
 import com.zhengqing.system.service.ISysUserService;
 import com.zhengqing.system.util.PasswordUtil;
@@ -50,9 +49,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     private final SysUserMapper sysUserMapper;
 
     private final ISysUserRoleService sysUserRoleService;
-
-    private final ISysPermBusinessService sysPermBusinessService;
-
 
     @Override
     public IPage<SysUserListVO> listPage(SysUserListDTO params) {

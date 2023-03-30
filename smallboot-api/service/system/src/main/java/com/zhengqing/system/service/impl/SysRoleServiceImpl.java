@@ -3,15 +3,14 @@ package com.zhengqing.system.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.google.common.collect.Lists;
 import com.zhengqing.system.entity.SysRole;
 import com.zhengqing.system.mapper.SysRoleMapper;
-import com.zhengqing.system.model.bo.SysMenuTree;
 import com.zhengqing.system.model.dto.SysRoleListDTO;
 import com.zhengqing.system.model.dto.SysRoleSaveDTO;
-import com.zhengqing.system.model.vo.SysRoleAllPermissionDetailVO;
 import com.zhengqing.system.model.vo.SysRoleListVO;
-import com.zhengqing.system.service.*;
+import com.zhengqing.system.service.ISysRoleMenuService;
+import com.zhengqing.system.service.ISysRolePermissionService;
+import com.zhengqing.system.service.ISysRoleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -34,14 +33,8 @@ import java.util.List;
 public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> implements ISysRoleService {
 
     private final SysRoleMapper sysRoleMapper;
-
-    private final ISysPermBusinessService sysPermBusinessService;
-
     private final ISysRoleMenuService sysRoleMenuService;
-
     private final ISysRolePermissionService sysRolePermissionService;
-
-    private final ISysPermissionService sysPermissionService;
 
     @Override
     public IPage<SysRoleListVO> listPage(SysRoleListDTO params) {
@@ -64,23 +57,6 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
                 .build();
         sysRole.insertOrUpdate();
         return sysRole.getRoleId();
-    }
-
-    @Override
-    public SysRoleAllPermissionDetailVO permissionDetail(Integer roleId) {
-        // 1、角色基本信息
-        SysRole sysRole = this.sysRoleMapper.selectById(roleId);
-
-        // 2、菜单权限树
-        List<SysMenuTree> menuTree = this.sysPermBusinessService.tree(Lists.newArrayList(roleId), false);
-
-        return SysRoleAllPermissionDetailVO.builder()
-                .roleId(sysRole.getRoleId())
-                .name(sysRole.getName())
-                .code(sysRole.getCode())
-                .status(sysRole.getStatus())
-                .menuTree(menuTree)
-                .build();
     }
 
     @Override

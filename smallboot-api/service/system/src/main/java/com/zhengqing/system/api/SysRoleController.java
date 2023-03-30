@@ -9,8 +9,7 @@ import com.zhengqing.system.model.dto.SysRoleListDTO;
 import com.zhengqing.system.model.dto.SysRoleSaveDTO;
 import com.zhengqing.system.model.vo.SysRoleAllPermissionDetailVO;
 import com.zhengqing.system.model.vo.SysRoleListVO;
-import com.zhengqing.system.service.ISysPermissionService;
-import com.zhengqing.system.service.ISysRoleMenuService;
+import com.zhengqing.system.service.ISysPermBusinessService;
 import com.zhengqing.system.service.ISysRolePermissionService;
 import com.zhengqing.system.service.ISysRoleService;
 import io.swagger.annotations.Api;
@@ -39,8 +38,7 @@ import java.util.List;
 public class SysRoleController extends BaseController {
 
     private final ISysRoleService roleService;
-    private final ISysPermissionService sysPermissionService;
-    private final ISysRoleMenuService sysRoleMenuService;
+    private final ISysPermBusinessService sysPermBusinessService;
     private final ISysRolePermissionService sysRolePermissionService;
 
     @GetMapping("listPage")
@@ -72,7 +70,7 @@ public class SysRoleController extends BaseController {
     @GetMapping("detail")
     @ApiOperation("详情(角色信息+菜单树+按钮+所拥有的权限)")
     public SysRoleAllPermissionDetailVO detail(@RequestParam Integer roleId) {
-        return this.roleService.permissionDetail(roleId);
+        return this.sysPermBusinessService.permissionDetail(roleId);
     }
 
 //    @GetMapping("permissionDetail")
@@ -96,5 +94,5 @@ public class SysRoleController extends BaseController {
         return this.sysRolePermissionService.getPermissionBtnsByRoleIdAndMenuId(roleId, menuId);
     }
 
- 
+
 }
