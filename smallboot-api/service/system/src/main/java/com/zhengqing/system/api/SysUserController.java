@@ -2,14 +2,15 @@ package com.zhengqing.system.api;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.common.base.constant.ServiceConstant;
-import com.zhengqing.common.base.context.SysUserContext;
 import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.common.core.custom.repeatsubmit.NoRepeatSubmit;
 import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
-import com.zhengqing.system.model.dto.*;
+import com.zhengqing.system.model.dto.SysUserListDTO;
+import com.zhengqing.system.model.dto.SysUserRoleSaveDTO;
+import com.zhengqing.system.model.dto.SysUserSaveDTO;
+import com.zhengqing.system.model.dto.SysUserUpdatePasswordDTO;
 import com.zhengqing.system.model.vo.SysUserDetailVO;
 import com.zhengqing.system.model.vo.SysUserListVO;
-import com.zhengqing.system.model.vo.SysUserPermVO;
 import com.zhengqing.system.service.ISysUserRoleService;
 import com.zhengqing.system.service.ISysUserService;
 import io.swagger.annotations.Api;
@@ -83,18 +84,6 @@ public class SysUserController extends BaseController {
     @ApiOperation("重置用户密码")
     public void resetPassword(@RequestParam Integer userId, @RequestParam(required = false) String password) {
         this.sysUserService.resetPassword(userId, password);
-    }
-
-    @GetMapping("getUserPerm")
-    @ApiOperation("获取当前登录用户权限信息")
-    public SysUserPermVO getUserPerm(@RequestParam(required = false) Integer userId) {
-        SysUserPermVO userPerm = this.sysUserService.getUserPerm(
-                SysUserPermDTO.builder()
-                        .userId(userId == null ? SysUserContext.getUserId() : userId)
-                        .build()
-        );
-        userPerm.setPassword(null);
-        return userPerm;
     }
 
     @PostMapping("saveRoleIds")

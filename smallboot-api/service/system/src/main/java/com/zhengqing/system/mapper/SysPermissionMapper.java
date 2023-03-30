@@ -64,11 +64,12 @@ public interface SysPermissionMapper extends BaseMapper<SysPermission> {
     /**
      * 全部url/btn权限 & 角色是否具有此权限
      *
-     * @param roleId 角色ID
+     * @param roleIdList     角色ids
+     * @param isOnlyShowPerm 是否仅显示带权限的数据
      * @return 权限
      * @author zhengqingya
      * @date 2022/6/14 14:55
      */
-    List<SysRoleRePermVO> selectListPermByRoleId(@Param("roleId") Integer roleId);
+    List<SysRoleRePermVO> selectListPermByRole(@Param("roleIdList") List<Integer> roleIdList, @Param("isOnlyShowPerm") boolean isOnlyShowPerm);
 
 }

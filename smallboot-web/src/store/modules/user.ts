@@ -18,7 +18,7 @@ const useUserStore = defineStore({
     tokenValue: localStorage.get('tokenValue') || '',
     nickname: '',
     avatarUrl: '',
-    roleNames: [],
+    roleCodeList: [],
     permissionTreeList: [],
   }),
   actions: {
@@ -61,12 +61,12 @@ const useUserStore = defineStore({
             if (!data) {
               return reject('Verification failed, please Login again.')
             }
-            const { userId, openId, nickname, avatarUrl, roleNames, permissionTreeList } = data
+            const { userId, openId, nickname, avatarUrl, roleCodeList, permissionTreeList } = data
             this.userId = userId
             this.openId = openId
             this.nickname = nickname
             this.avatarUrl = avatarUrl
-            this.roleNames = roleNames
+            this.roleCodeList = roleCodeList
             this.permissionTreeList = permissionTreeList
             resolve(data)
           })

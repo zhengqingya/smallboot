@@ -43,10 +43,10 @@ export const hasPerm: Directive = {
  */
 function getBtnPermList(currentRouteUrl: string, permissionTreeList: any, btnPermList: Array<string>): Array<string> {
   if (permissionTreeList) {
-    permissionTreeList.forEach((e: { meta: any; component: string; children: any }) => {
+    permissionTreeList.forEach((e: { permList: any; component: string; children: any }) => {
       if (e.component === currentRouteUrl || e.component === currentRouteUrl + '/index') {
-        e.meta.btnPermList.forEach((btnPerm: string) => {
-          btnPermList.push(btnPerm)
+        e.permList.forEach((item: any) => {
+          btnPermList.push(item.btnPerm)
         })
       }
       const childList = e.children
@@ -70,7 +70,7 @@ export const hasRole: Directive = {
       // DOM绑定需要的角色编码
       const requiredRoles = value
       const { user } = useStore()
-      const hasRole = user.roleNames.some((perm) => {
+      const hasRole = user.roleCodeList.some((perm) => {
         return requiredRoles.includes(perm)
       })
       if (!hasRole) {

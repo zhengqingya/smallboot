@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 import com.zhengqing.common.base.model.dto.BasePageDTO;
 import com.zhengqing.common.base.util.MyDateUtil;
-import com.zhengqing.common.core.custom.parameter.ParamCheck;
+import com.zhengqing.common.core.custom.parameter.CheckParam;
 import com.zhengqing.mall.model.enums.OmsOrderAfterSaleStatusEnum;
 import com.zhengqing.mall.model.enums.OmsOrderAfterSaleTabEnum;
 import com.zhengqing.mall.model.enums.OmsOrderSaleTypeEnum;
@@ -34,7 +34,7 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ApiModel("web-商城-售后列表-查询参数")
-public class WebOmsOrderAfterSalePageDTO extends BasePageDTO implements ParamCheck {
+public class WebOmsOrderAfterSalePageDTO extends BasePageDTO implements CheckParam {
 
     /**
      * {@link OmsOrderAfterSaleTabEnum}

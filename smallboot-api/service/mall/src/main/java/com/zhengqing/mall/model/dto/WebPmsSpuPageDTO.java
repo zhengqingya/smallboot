@@ -3,7 +3,7 @@ package com.zhengqing.mall.model.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zhengqing.common.base.model.dto.BasePageDTO;
 import com.zhengqing.common.base.util.MyDateUtil;
-import com.zhengqing.common.core.custom.parameter.ParamCheck;
+import com.zhengqing.common.core.custom.parameter.CheckParam;
 import com.zhengqing.mall.model.enums.PmsSpuTabEnum;
 import com.zhengqing.mall.model.enums.PmsSpuTypeEnum;
 import io.swagger.annotations.ApiModel;
@@ -30,7 +30,7 @@ import java.util.Date;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ApiModel("web-商城-商品分页列表-查询参数")
-public class WebPmsSpuPageDTO extends BasePageDTO implements ParamCheck {
+public class WebPmsSpuPageDTO extends BasePageDTO implements CheckParam {
 
     /**
      * {@link PmsSpuTabEnum}

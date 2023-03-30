@@ -3,6 +3,6 @@ export interface UserInfo {
   openId: string
   nickname: string
   avatarUrl: string
-  roleNames: string[]
+  roleCodeList: string[]
   permissionTreeList: []
 }

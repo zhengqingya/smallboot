@@ -35,11 +35,18 @@
         sm.is_show_children,
         IF(srm.id IS NULL, 0, 1) isHasPerm
         FROM t_sys_menu sm
-        LEFT JOIN t_sys_role_menu srm ON srm.menu_id = sm.menu_id
-        <if test="roleId != null">
-            AND srm.role_id = #{roleId}
+        <if test="!isOnlyShowPerm">
+            LEFT
+        </if>
+        JOIN t_sys_role_menu srm ON srm.menu_id = sm.menu_id
+        <if test="roleIdList!=null and roleIdList.size>0">
+            AND srm.role_id IN
+            <foreach collection="roleIdList" separator="," open="(" close=")" item="roleId">
+                #{roleId}
+            </foreach>
         </if>
         WHERE sm.is_deleted = 0
+        GROUP BY sm.menu_id
         ORDER BY sm.sort ASC
     </select>
 

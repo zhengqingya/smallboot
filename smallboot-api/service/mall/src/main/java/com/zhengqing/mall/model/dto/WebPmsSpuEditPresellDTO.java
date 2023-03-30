@@ -2,7 +2,7 @@ package com.zhengqing.mall.model.dto;
 
 import cn.hutool.core.lang.Assert;
 import com.zhengqing.common.base.model.dto.BaseDTO;
-import com.zhengqing.common.core.custom.parameter.ParamCheck;
+import com.zhengqing.common.core.custom.parameter.CheckParam;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -29,7 +29,7 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ApiModel("web-商城-商品预售-保存参数")
-public class WebPmsSpuEditPresellDTO extends BaseDTO implements ParamCheck {
+public class WebPmsSpuEditPresellDTO extends BaseDTO implements CheckParam {
 
     @NotEmpty(message = "商品不能为空")
     @ApiModelProperty(value = "商品ids", required = true, example = "[1]")

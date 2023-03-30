@@ -10,7 +10,7 @@ import com.zhengqing.common.base.enums.AuthSourceEnum;
 import com.zhengqing.common.base.model.bo.JwtUserBO;
 import com.zhengqing.system.model.dto.SysUserPermDTO;
 import com.zhengqing.system.model.vo.SysUserPermVO;
-import com.zhengqing.system.service.ISysUserService;
+import com.zhengqing.system.service.ISysPermBusinessService;
 import com.zhengqing.system.util.PasswordUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,14 +30,14 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthServiceImpl implements IAuthService {
 
-    private final ISysUserService sysUserService;
+    private final ISysPermBusinessService sysPermBusinessService;
 
     @Override
     public AuthLoginVO login(AuthLoginDTO params) {
         String username = params.getUsername();
         String password = params.getPassword();
 
-        SysUserPermVO userPerm = this.sysUserService.getUserPerm(SysUserPermDTO.builder().username(username).build());
+        SysUserPermVO userPerm = this.sysPermBusinessService.getUserPerm(SysUserPermDTO.builder().username(username).build());
         boolean isValid = PasswordUtil.isValidPassword(password, userPerm.getPassword());
 
         // 校验原始密码是否正确

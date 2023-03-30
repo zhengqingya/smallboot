@@ -11,14 +11,16 @@ import com.zhengqing.common.base.exception.MyException;
 import com.zhengqing.common.core.enums.UserSexEnum;
 import com.zhengqing.common.core.util.DesUtil;
 import com.zhengqing.common.db.constant.MybatisConstant;
-import com.zhengqing.system.entity.SysRole;
 import com.zhengqing.system.entity.SysUser;
 import com.zhengqing.system.enums.SysUserReRoleEnum;
 import com.zhengqing.system.mapper.SysUserMapper;
-import com.zhengqing.system.model.bo.SysMenuTree;
 import com.zhengqing.system.model.dto.*;
-import com.zhengqing.system.model.vo.*;
-import com.zhengqing.system.service.*;
+import com.zhengqing.system.model.vo.SysUserDetailVO;
+import com.zhengqing.system.model.vo.SysUserListVO;
+import com.zhengqing.system.model.vo.SysUserPermVO;
+import com.zhengqing.system.service.ISysPermBusinessService;
+import com.zhengqing.system.service.ISysUserRoleService;
+import com.zhengqing.system.service.ISysUserService;
 import com.zhengqing.system.util.PasswordUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +29,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -46,15 +49,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     private final SysUserMapper sysUserMapper;
 
-    private final ISysRoleService sysRoleService;
-
     private final ISysUserRoleService sysUserRoleService;
 
-    private final ISysMenuService sysMenuService;
-
-    private final ISysRolePermissionService sysRolePermissionService;
-
-    private final ISysRoleMenuService sysRoleMenuService;
+    private final ISysPermBusinessService sysPermBusinessService;
 
 
     @Override
@@ -164,96 +161,13 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     public SysUserPermVO getUserPerm(SysUserPermDTO params) {
-        Assert.isFalse(params.getUserId() == null && StringUtils.isBlank(params.getUsername()),
-                "查询用户条件丢失！");
-        // 1、拿到基础用户信息
+        params.checkParam();
+        // 拿到用户基础信息+角色编码
         SysUserPermVO userPerm = this.sysUserMapper.selectUserPerm(params);
-        Assert.notNull(userPerm, "用户不存在！");
-        // 2、角色信息
-        List<Integer> roleIdList = this.sysUserRoleService.listRoleId(userPerm.getUserId());
-        Assert.notEmpty(roleIdList, "请联系管理员为其分配角色!");
-        List<SysRole> roleList = this.sysRoleService.listByIds(roleIdList);
-        Assert.notEmpty(roleList, "请联系管理员为其分配角色!");
-        StringJoiner roleNameSj = new StringJoiner(",", "[", "]");
-        roleList.forEach(item -> roleNameSj.add(item.getName()));
-        userPerm.setRoleNames(roleNameSj.toString());
-        List<String> roleCodeList = roleList.stream().map(e -> e.getCode()).collect(Collectors.toList());
-        userPerm.setRoleCodeList(roleCodeList);
-
-        // 3、权限
-        // 角色可访问的菜单ID
-        List<Integer> menuIdList = this.sysRoleMenuService.getMenuIdsByRoleIds(roleIdList);
-        // 所有菜单
-        List<SysMenuTree> menuTreeList = this.sysMenuService.tree(null);
-        // 所有按钮
-        List<SysRoleMenuBtnListVO> btnList = this.sysRolePermissionService.listRoleReMenuBtn();
-        // 用户关联的权限
-        List<SysMenuTree> permTreeList = this.getUserPremTreeList(menuTreeList, menuIdList, roleIdList, btnList);
-        userPerm.setPermissionTreeList(permTreeList);
+        Assert.notNull(userPerm, "用户不存在或无权限！");
         return userPerm;
     }
 
-
-    /**
-     * 获取用户菜单权限树
-     *
-     * @param menuTreeList 菜单树
-     * @param menuIdList   用户所拥有的菜单权限ids
-     * @param roleIdList   用户所拥有的角色ids
-     * @param btnList      用户所拥有的菜单按钮权限
-     * @return 过滤后的用户关联的权限菜单树
-     * @author zhengqingya
-     * @date 2020/9/11 14:34
-     */
-    private List<SysMenuTree> getUserPremTreeList(List<SysMenuTree> menuTreeList,
-                                                  List<Integer> menuIdList,
-                                                  List<Integer> roleIdList,
-                                                  List<SysRoleMenuBtnListVO> btnList) {
-        List<SysMenuTree> resultList = Lists.newArrayList();
-        for (SysMenuTree menu : menuTreeList) {
-            Integer menuId = menu.getMenuId();
-            if (!menuIdList.contains(menuId)) {
-                break;
-            }
-            List<SysMenuTree> menuChildList = menu.getChildren();
-            if (!CollectionUtils.isEmpty(menuChildList)) {
-                menu.setChildren(this.getUserPremTreeList(menuChildList, menuIdList, roleIdList, btnList));
-            }
-            List<String> btnPermList = this.getUserBtnPermList(menuId, roleIdList, btnList);
-            menu.setMeta(SysUserBtnVO.builder()
-                    .title(menu.getTitle())
-                    .icon(menu.getIcon())
-                    .btnPermList(btnPermList)
-                    .build());
-            resultList.add(menu);
-        }
-        return resultList;
-    }
-
-    /**
-     * 获取用户按钮权限标识
-     *
-     * @param menuId     菜单id
-     * @param roleIdList 用户所拥有的角色ids
-     * @param btnList    按钮权限
-     * @return 按钮权限标识
-     * @author zhengqingya
-     * @date 2020/9/11 14:36
-     */
-    private List<String> getUserBtnPermList(Integer menuId,
-                                            List<Integer> roleIdList,
-                                            List<SysRoleMenuBtnListVO> btnList) {
-        if (CollectionUtils.isEmpty(btnList)) {
-            return Lists.newArrayList();
-        }
-        Set<String> btnSet = new HashSet<>();
-        btnList.forEach(btn -> {
-            if (menuId.equals(btn.getMenuId()) && roleIdList.contains(btn.getRoleId())) {
-                btnSet.add(btn.getBtnPerm());
-            }
-        });
-        return new ArrayList<>(btnSet);
-    }
 
     @Override
     public SysUser getUserByUsername(String username) {

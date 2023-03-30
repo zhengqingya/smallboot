@@ -41,6 +41,18 @@ public interface ISysMenuService extends IService<SysMenu> {
     List<SysMenu> list(SysMenuListDTO params);
 
     /**
+     * 获取所有菜单 -- 菜单树使用
+     *
+     * @param roleIdList     角色ids
+     * @param isOnlyShowPerm 是否仅显示带权限的数据
+     * @return 菜单信息
+     * @author zhengqingya
+     * @date 2020/9/10 20:30
+     */
+    List<SysMenuTree> selectMenuTree(List<Integer> roleIdList, boolean isOnlyShowPerm);
+
+
+    /**
      * 新增或更新
      *
      * @param params 提交参数
@@ -49,15 +61,5 @@ public interface ISysMenuService extends IService<SysMenu> {
      * @date 2021/1/13 20:46
      */
     Integer addOrUpdateData(SysMenuSaveDTO params);
-
-    /**
-     * 获取菜单树
-     *
-     * @param roleId 角色ID
-     * @return 菜单树信息
-     * @author zhengqingya
-     * @date 2021/1/13 20:44
-     */
-    List<SysMenuTree> tree(Integer roleId);
 
 }

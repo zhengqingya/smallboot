@@ -25,16 +25,44 @@
           AND user_id = #{userId}
     </select>
 
-    <select id="selectUserPerm" resultType="com.zhengqing.system.model.vo.SysUserPermVO">
-        SELECT *,
-        sex sexEnum
-        FROM t_sys_user
-        WHERE is_deleted = 0
+    <resultMap id="selectUserPerm" type="com.zhengqing.system.model.vo.SysUserPermVO">
+        <result property="userId" column="user_id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="nickname" column="nickname"/>
+        <result property="sexEnum" column="sex"/>
+        <result property="phone" column="phone"/>
+        <result property="email" column="email"/>
+        <result property="avatarUrl" column="avatar_url"/>
+        <collection property="roleIdList" ofType="String" javaType="list">
+            <result column="roleId"/>
+        </collection>
+        <collection property="roleCodeList" ofType="String" javaType="list">
+            <result column="roleCode"/>
+        </collection>
+    </resultMap>
+
+    <select id="selectUserPerm" resultMap="selectUserPerm">
+        SELECT
+        su.user_id,
+        su.username,
+        su.password,
+        su.nickname,
+        su.sex,
+        su.phone,
+        su.email,
+        su.avatar_url,
+        sr.role_id roleId,
+        sr.code roleCode
+        FROM t_sys_user su
+        JOIN t_sys_user_role sur ON sur.user_id = su.user_id
+        JOIN t_sys_role sr ON sr.role_id = sur.role_id
+        WHERE su.is_deleted = 0
         <if test="filter.userId!=null">
-            AND user_id = #{filter.userId}
+            AND su.user_id = #{filter.userId}
         </if>
         <if test="filter.username!=null and filter.username!=''">
-            AND username = #{filter.username}
+            AND su.username = #{filter.username}
         </if>
     </select>
 

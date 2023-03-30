@@ -1,12 +1,13 @@
 package com.zhengqing.system.model.bo;
 
+import com.google.common.collect.Lists;
 import com.zhengqing.system.model.vo.SysRoleRePermVO;
-import com.zhengqing.system.model.vo.SysUserBtnVO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
@@ -77,7 +78,27 @@ public class SysMenuTree {
     @ApiModelProperty("按钮权限")
     private List<SysRoleRePermVO> permList;
 
-    @ApiModelProperty("按钮权限")
-    private SysUserBtnVO meta;
+    @ApiModelProperty("路由元信息")
+    private Meta meta;
+
+    @Data
+    @SuperBuilder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Meta {
+        @ApiModelProperty("标题")
+        private String title;
+
+        @ApiModelProperty("图标")
+        private String icon;
+
+        @ApiModelProperty("面包屑是否显示")
+        private Boolean breadcrumb;
+    }
+
+    public void handleData() {
+        this.permList = CollectionUtils.isEmpty(this.permList) ? Lists.newArrayList() : this.permList;
+        this.children = CollectionUtils.isEmpty(this.children) ? Lists.newArrayList() : this.children;
+    }
 
 }

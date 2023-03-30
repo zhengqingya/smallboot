@@ -42,13 +42,14 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
     List<SysMenu> selectMenus(@Param("filter") SysMenuListDTO filter);
 
     /**
-     * 获取所有菜单 - 仅菜单树使用
+     * 获取所有菜单 -- 菜单树使用
      *
-     * @param roleId 角色ID
+     * @param roleIdList     角色ids
+     * @param isOnlyShowPerm 是否仅显示带权限的数据
      * @return 菜单信息
      * @author zhengqingya
      * @date 2020/9/10 20:30
      */
-    List<SysMenuTree> selectMenuTree(@Param("roleId") Integer roleId);
+    List<SysMenuTree> selectMenuTree(@Param("roleIdList") List<Integer> roleIdList, @Param("isOnlyShowPerm") boolean isOnlyShowPerm);
 
 }

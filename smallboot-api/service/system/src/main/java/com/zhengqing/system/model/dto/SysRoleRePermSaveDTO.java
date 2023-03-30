@@ -3,7 +3,7 @@ package com.zhengqing.system.model.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 import com.zhengqing.common.base.exception.ParameterException;
-import com.zhengqing.common.core.custom.parameter.ParamCheck;
+import com.zhengqing.common.core.custom.parameter.CheckParam;
 import com.zhengqing.system.model.bo.SysMenuTree;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -31,7 +31,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel("保存角色权限信息参数")
-public class SysRoleRePermSaveDTO implements ParamCheck {
+public class SysRoleRePermSaveDTO implements CheckParam {
 
     @NotNull(message = "角色id不能为空！")
     @ApiModelProperty(value = "角色ID")

@@ -3,7 +3,7 @@ package com.zhengqing.mall.model.dto;
 import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zhengqing.common.base.model.dto.BaseDTO;
-import com.zhengqing.common.core.custom.parameter.ParamCheck;
+import com.zhengqing.common.core.custom.parameter.CheckParam;
 import com.zhengqing.mall.model.bo.MallFileBO;
 import com.zhengqing.mall.model.bo.PmsSkuSpecBO;
 import com.zhengqing.mall.model.enums.PmsSpuRateOperatorTypeEnum;
@@ -33,7 +33,7 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ApiModel("mini-商城-商品评价-保存-提交参数")
-public class MiniPmsSpuRateSaveDTO extends BaseDTO implements ParamCheck {
+public class MiniPmsSpuRateSaveDTO extends BaseDTO implements CheckParam {
 
     /**
      * {@link PmsSpuRateOperatorTypeEnum}

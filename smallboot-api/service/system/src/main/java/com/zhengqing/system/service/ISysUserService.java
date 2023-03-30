@@ -96,7 +96,7 @@ public interface ISysUserService extends IService<SysUser> {
     void resetPassword(Integer userId, String password);
 
     /**
-     * 获取用户的基本信息+角色+权限...
+     * 获取用户的基本信息+角色编码
      *
      * @param params 查询参数
      * @return 用户权限信息

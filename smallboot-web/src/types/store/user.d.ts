@@ -5,6 +5,6 @@ export interface UserState {
   tokenValue: string
   nickname: string
   avatarUrl: string
-  roleNames: string[]
+  roleCodeList: string[]
   permissionTreeList: []
 }

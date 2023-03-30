@@ -4,7 +4,7 @@ import com.zhengqing.common.base.constant.BaseConstant;
 import com.zhengqing.common.base.context.SysUserContext;
 import com.zhengqing.common.base.model.dto.BaseDTO;
 import com.zhengqing.common.base.model.dto.BasePageDTO;
-import com.zhengqing.common.core.custom.parameter.ParamCheck;
+import com.zhengqing.common.core.custom.parameter.CheckParam;
 import com.zhengqing.common.web.util.ServletUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
@@ -60,9 +60,9 @@ public class ControllerAspect {
             }
 
             // 参数校验处理
-            if (paramObj instanceof ParamCheck) {
-                ParamCheck paramCheck = (ParamCheck) paramObj;
-                paramCheck.checkParam();
+            if (paramObj instanceof CheckParam) {
+                CheckParam checkParam = (CheckParam) paramObj;
+                checkParam.checkParam();
             }
         }
     }

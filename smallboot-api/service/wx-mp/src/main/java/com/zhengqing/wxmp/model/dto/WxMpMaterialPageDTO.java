@@ -3,7 +3,7 @@ package com.zhengqing.wxmp.model.dto;
 import cn.hutool.core.lang.Assert;
 import com.zhengqing.common.base.exception.ParameterException;
 import com.zhengqing.common.base.model.dto.BasePageDTO;
-import com.zhengqing.common.core.custom.parameter.ParamCheck;
+import com.zhengqing.common.core.custom.parameter.CheckParam;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -28,7 +28,7 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ApiModel("微信公众号-素材管理-分页列表-请求参数")
-public class WxMpMaterialPageDTO extends BasePageDTO implements ParamCheck {
+public class WxMpMaterialPageDTO extends BasePageDTO implements CheckParam {
 
     @NotBlank(message = "AppID不能为空！")
     @ApiModelProperty("AppID")

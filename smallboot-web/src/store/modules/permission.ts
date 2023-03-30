@@ -8,7 +8,7 @@ const modules = import.meta.glob('../../views/**/**.vue')
 export const Layout = () => import('@/layout/index.vue')
 export const parentView = () => import('@/layout/parentView.vue')
 
-export const filterAsyncRoutes = (routes: RouteRecordRaw[], roleNames: string[]) => {
+export const filterAsyncRoutes = (routes: RouteRecordRaw[], roleCodeList: string[]) => {
   const res: RouteRecordRaw[] = []
   routes.forEach((route) => {
     const tmp = { ...route } as any
@@ -26,7 +26,7 @@ export const filterAsyncRoutes = (routes: RouteRecordRaw[], roleNames: string[])
     }
     res.push(tmp)
     if (tmp.children) {
-      tmp.children = filterAsyncRoutes(tmp.children, roleNames)
+      tmp.children = filterAsyncRoutes(tmp.children, roleCodeList)
     }
   })
   return res
@@ -46,9 +46,9 @@ const usePermissionStore = defineStore({
       this.addRoutes = routes
       this.routes = constantRoutes.concat(routes)
     },
-    generateRoutes(roleNames: string[]) {
+    generateRoutes(roleCodeList: string[]) {
       const { user } = useStore()
-      const accessedRoutes = filterAsyncRoutes(user.permissionTreeList, roleNames)
+      const accessedRoutes = filterAsyncRoutes(user.permissionTreeList, roleCodeList)
       return new Promise((resolve, reject) => {
         this.setRoutes(accessedRoutes)
         resolve(accessedRoutes)

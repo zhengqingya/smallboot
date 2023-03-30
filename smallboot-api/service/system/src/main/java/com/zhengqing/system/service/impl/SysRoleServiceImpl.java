@@ -3,6 +3,7 @@ package com.zhengqing.system.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.google.common.collect.Lists;
 import com.zhengqing.system.entity.SysRole;
 import com.zhengqing.system.mapper.SysRoleMapper;
 import com.zhengqing.system.model.bo.SysMenuTree;
@@ -34,7 +35,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 
     private final SysRoleMapper sysRoleMapper;
 
-    private final ISysMenuService sysMenuService;
+    private final ISysPermBusinessService sysPermBusinessService;
 
     private final ISysRoleMenuService sysRoleMenuService;
 
@@ -71,7 +72,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         SysRole sysRole = this.sysRoleMapper.selectById(roleId);
 
         // 2、菜单权限树
-        List<SysMenuTree> menuTree = this.sysMenuService.tree(roleId);
+        List<SysMenuTree> menuTree = this.sysPermBusinessService.tree(Lists.newArrayList(roleId), false);
 
         return SysRoleAllPermissionDetailVO.builder()
                 .roleId(sysRole.getRoleId())

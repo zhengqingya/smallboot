@@ -1,5 +1,6 @@
 package com.zhengqing.system.api;
 
+import com.google.common.collect.Lists;
 import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.common.core.custom.repeatsubmit.NoRepeatSubmit;
@@ -36,7 +37,7 @@ import java.util.List;
 @Api(tags = "系统管理 - 菜单表接口")
 public class SysMenuController extends BaseController {
 
-    private final ISysMenuService menuService;
+    private final ISysMenuService sysMenuService;
 
     private final ISysPermissionService sysPermissionService;
 
@@ -57,27 +58,27 @@ public class SysMenuController extends BaseController {
     @GetMapping("menuTree")
     @ApiOperation("菜单树")
     public List<SysMenuTree> menuTree(@RequestParam(required = false) Integer roleId) {
-        return this.menuService.tree(roleId);
+        return this.sysPermBusinessService.tree(Lists.newArrayList(roleId), false);
     }
 
     @NoRepeatSubmit
     @PostMapping("")
     @ApiOperation("新增")
     public Integer add(@Validated @RequestBody SysMenuSaveDTO params) {
-        return this.menuService.addOrUpdateData(params);
+        return this.sysMenuService.addOrUpdateData(params);
     }
 
     @NoRepeatSubmit
     @PutMapping("")
     @ApiOperation("更新")
     public Integer update(@Validated(UpdateGroup.class) @RequestBody SysMenuSaveDTO params) {
-        return this.menuService.addOrUpdateData(params);
+        return this.sysMenuService.addOrUpdateData(params);
     }
 
     @DeleteMapping("")
     @ApiOperation("删除")
     public void delete(@RequestParam Integer menuId) {
-        this.menuService.removeById(menuId);
+        this.sysMenuService.removeById(menuId);
     }
 
     // 下：菜单按钮权限(菜单页面中配置页面所属按钮使用)

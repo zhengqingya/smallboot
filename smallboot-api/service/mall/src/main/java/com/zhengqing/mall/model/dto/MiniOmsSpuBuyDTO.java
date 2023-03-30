@@ -2,7 +2,7 @@ package com.zhengqing.mall.model.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.zhengqing.common.core.custom.parameter.ParamCheck;
+import com.zhengqing.common.core.custom.parameter.CheckParam;
 import com.zhengqing.mall.model.bo.OmsOrderReceiverAddressBO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -29,7 +29,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel("mini-商城-商品购买-保存参数")
-public class MiniOmsSpuBuyDTO implements ParamCheck {
+public class MiniOmsSpuBuyDTO implements CheckParam {
 
 //    @NotNull(message = "操作用户id不能为空")
 //    @ApiModelProperty(value = "操作用户id", required = true, example = "666")

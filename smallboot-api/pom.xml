@@ -176,13 +176,6 @@
             <version>31.1-jre</version>
         </dependency>
 
-        <!-- BeanUtils的依赖 -->
-        <dependency>
-            <groupId>commons-beanutils</groupId>
-            <artifactId>commons-beanutils</artifactId>
-            <version>1.9.4</version>
-        </dependency>
-
         <!-- knife4j -->
         <!-- https://mvnrepository.com/artifact/com.github.xiaoymin/knife4j-spring-boot-starter -->
         <dependency>

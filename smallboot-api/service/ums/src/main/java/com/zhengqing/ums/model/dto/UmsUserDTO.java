@@ -3,7 +3,7 @@ package com.zhengqing.ums.model.dto;
 import cn.hutool.core.lang.Assert;
 import com.zhengqing.common.base.exception.ParameterException;
 import com.zhengqing.common.base.model.dto.BaseDTO;
-import com.zhengqing.common.core.custom.parameter.ParamCheck;
+import com.zhengqing.common.core.custom.parameter.CheckParam;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -28,7 +28,7 @@ import org.apache.commons.lang3.StringUtils;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ApiModel
-public class UmsUserDTO extends BaseDTO implements ParamCheck {
+public class UmsUserDTO extends BaseDTO implements CheckParam {
 
     @ApiModelProperty("用户id")
     private Long userId;

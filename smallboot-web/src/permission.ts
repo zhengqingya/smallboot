@@ -19,7 +19,7 @@ router.beforeEach(async (to, from, next) => {
       next({ path: '/' })
       NProgress.done()
     } else {
-      const hasGetUserInfo = user.roleNames.length > 0
+      const hasGetUserInfo = user.roleCodeList.length > 0
       if (hasGetUserInfo) {
         if (to.matched.length === 0) {
           from.name ? next({ name: from.name as any }) : next('/401')
@@ -29,8 +29,7 @@ router.beforeEach(async (to, from, next) => {
       } else {
         try {
           await user.getUserInfo()
-          const roleNames = user.roleNames
-          const accessRoutes: any = await permission.generateRoutes(roleNames)
+          const accessRoutes: any = await permission.generateRoutes(user.roleCodeList)
           accessRoutes.forEach((route: any) => {
             router.addRoute(route)  // 动态添加可访问路由表
           })

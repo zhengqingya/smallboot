@@ -4,7 +4,7 @@ package com.zhengqing.mall.model.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zhengqing.common.base.model.dto.BasePageDTO;
 import com.zhengqing.common.base.util.MyDateUtil;
-import com.zhengqing.common.core.custom.parameter.ParamCheck;
+import com.zhengqing.common.core.custom.parameter.CheckParam;
 import com.zhengqing.mall.model.enums.OmsOrderStatusEnum;
 import com.zhengqing.mall.model.enums.WebOmsOrderTabEnum;
 import io.swagger.annotations.ApiModel;
@@ -31,7 +31,7 @@ import java.util.Date;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ApiModel("web-商城-订单信息-分页列表-请求参数")
-public class WebOmsOrderPageDTO extends BasePageDTO implements ParamCheck {
+public class WebOmsOrderPageDTO extends BasePageDTO implements CheckParam {
 
     /**
      * {@link WebOmsOrderTabEnum}
