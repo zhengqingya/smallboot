@@ -53,4 +53,5 @@ Object.keys(directive).forEach((key) => {
   app.directive(key, (directive as { [key: string]: Directive })[key])
 })
 
+
 app.mount('#app')

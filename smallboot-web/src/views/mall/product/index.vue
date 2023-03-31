@@ -47,7 +47,7 @@
           <base-upload-multi v-model="form.detailImgList" />
         </el-form-item>
         <el-form-item label="商品属性:" prop="attrList">
-          <el-input v-model="form.attrList"></el-input>
+          <sku :disabled="false" />
         </el-form-item>
         <el-form-item label="是否上架:" prop="isPut">
           <el-radio-group v-model="form.isPut">
@@ -74,8 +74,11 @@
 </template>
 
 <script>
+import sku from './sku.vue'
+
 export default {
   name: 'PmsSpu',
+  components: { sku },
   data() {
     return {
       listQuery: {},
@@ -90,7 +93,9 @@ export default {
       rules: {},
     }
   },
-  created() {},
+  created() {
+    this.dialogVisible = true
+  },
   methods: {
     refreshTableData() {
       this.$refs.baseTable.refresh()
