@@ -1,5 +1,7 @@
 package com.zhengqing.common.base.constant;
 
+import com.zhengqing.common.base.util.MyDateUtil;
+
 /**
  * <p> 全局常用变量 - 工程使用 </p>
  *
@@ -28,6 +30,7 @@ public interface ProjectConstant {
      */
     String DEFAULT_FOLDER_TMP = PROJECT_ROOT_DIRECTORY + "/tmp";
     String DEFAULT_FOLDER_TMP_GENERATE = PROJECT_ROOT_DIRECTORY + "/tmp-generate";
+    String LOCAL_FILE_TMP = PROJECT_ROOT_DIRECTORY + "/tmp/" + MyDateUtil.nowStr(MyDateUtil.DATE_FORMAT) + "/";
 
     // ===============================================================================
     // ============================ ↓↓↓↓↓↓ other ↓↓↓↓↓↓ ==============================

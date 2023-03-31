@@ -26,7 +26,7 @@ public class MinIoProperties {
     /**
      * minio地址+端口号 -- 外网
      */
-    private String outUrl;
+//    private String outUrl;
 
     /**
      * minio用户名

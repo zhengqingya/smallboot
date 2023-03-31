@@ -1,6 +1,7 @@
 <template>
   <div>
     <el-image :src="url" style="width: 100px; height: 100px" />
+    <!-- <span>{{ url }}</span> -->
     <el-upload :action="uploadUrl" :show-file-list="false" :headers="dataToken" :before-upload="beforeUpload" :on-success="onSuccess">
       <el-button size="small">点击上传</el-button>
     </el-upload>
@@ -20,7 +21,7 @@ export default {
   },
   data() {
     return {
-      uploadUrl: import.meta.env.VITE_APP_BASE_API + '/system/web/api/file/uploadMultipartFile',
+      uploadUrl: import.meta.env.VITE_APP_BASE_FILE_API,
       dataToken: { [useStore().user.tokenName]: useStore().user.tokenValue },
       fileList: [],
     }
@@ -39,10 +40,9 @@ export default {
       return true
     },
     async onSuccess(res, file) {
-      const url = res.data
-      // this.url = url;
+      const data = res.data
       // this.submitOk("成功");
-      this.$emit('saveSucc', url)
+      this.$emit('saveSucc', data.url)
     },
   },
 }

@@ -102,8 +102,7 @@ public interface AppConstant extends BaseConstant {
     /**
      * 获取项目根目录
      */
-    String PROJECT_ROOT_DIRECTORY = System.getProperty("user.dir")
-            .replaceAll("\\\\", SEPARATOR_SPRIT);
+    String PROJECT_ROOT_DIRECTORY = System.getProperty("user.dir").replaceAll("\\\\", SEPARATOR_SPRIT);
 
     String IMG_DOMAIN = "";
 

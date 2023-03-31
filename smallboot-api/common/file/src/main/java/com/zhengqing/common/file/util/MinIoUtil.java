@@ -1,5 +1,7 @@
 package com.zhengqing.common.file.util;
 
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.IdUtil;
 import com.zhengqing.common.file.config.MinIoProperties;
 import io.minio.*;
 import io.minio.http.Method;
@@ -7,11 +9,11 @@ import io.minio.messages.Bucket;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
 import java.net.URLEncoder;
@@ -31,26 +33,26 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class MinIoUtil {
 
-    @Resource
-    private MinIoProperties minIoProperties;
+    private static MinIoProperties minIoProperties;
 
     private static MinioClient minioClient;
 
+    @Autowired
+    public MinIoUtil(MinIoProperties minIoProperties) {
+        MinIoUtil.minIoProperties = minIoProperties;
+    }
+
     /**
      * 初始化minio配置
-     *
-     * @param :
-     * @return void
-     * @date 2020/8/16 20:56
      */
     @PostConstruct
     public void init() {
         try {
             minioClient = MinioClient.builder()
-                    .endpoint(this.minIoProperties.getUrl())
-                    .credentials(this.minIoProperties.getAccessKey(), this.minIoProperties.getSecretKey())
+                    .endpoint(minIoProperties.getUrl())
+                    .credentials(minIoProperties.getAccessKey(), minIoProperties.getSecretKey())
                     .build();
-            createBucket(this.minIoProperties.getBucketName());
+            createBucket(minIoProperties.getBucketName());
         } catch (Exception e) {
             log.error("初始化minio配置异常：", e);
         }
@@ -101,6 +103,28 @@ public class MinIoUtil {
     /**
      * 文件上传
      *
+     * @param file 文件
+     * @return 文件url地址
+     * @date 2020/8/16 23:40
+     */
+    @SneakyThrows(Exception.class)
+    public static String upload(MultipartFile file) {
+        final InputStream inputStream = file.getInputStream();
+        final String bucketName = minIoProperties.getBucketName();
+        final String fileName = DateUtil.today() + "/" + IdUtil.fastUUID() + "@@" + file.getOriginalFilename();
+        minioClient.putObject(PutObjectArgs.builder()
+                .bucket(bucketName)
+                .object(fileName)
+                .stream(inputStream, file.getSize(), -1)
+                .contentType(file.getContentType())
+                .build());
+        inputStream.close();
+        return getFileUrl(bucketName, fileName);
+    }
+
+    /**
+     * 文件上传
+     *
      * @param bucketName 桶名
      * @param file       文件
      * @return 文件url地址
@@ -109,7 +133,7 @@ public class MinIoUtil {
     @SneakyThrows(Exception.class)
     public static String upload(String bucketName, MultipartFile file) {
         final InputStream inputStream = file.getInputStream();
-        final String fileName = file.getOriginalFilename();
+        final String fileName = DateUtil.today() + "/" + file.getOriginalFilename();
         minioClient.putObject(PutObjectArgs.builder()
                 .bucket(bucketName)
                 .object(fileName)
@@ -186,11 +210,12 @@ public class MinIoUtil {
      */
     @SneakyThrows(Exception.class)
     public static String getFileUrl(String bucketName, String fileName) {
-        return minioClient.getPresignedObjectUrl(GetPresignedObjectUrlArgs.builder()
+        String url = minioClient.getPresignedObjectUrl(GetPresignedObjectUrlArgs.builder()
                 .method(Method.GET)
                 .bucket(bucketName)
                 .object(fileName)
                 .build());
+        return url.substring(0, url.indexOf("?X-Amz-Algorithm="));
     }
 
     /**
