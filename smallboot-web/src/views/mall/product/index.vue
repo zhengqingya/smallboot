@@ -9,9 +9,13 @@
     </base-header>
 
     <base-table-p ref="baseTable" api="pms_spu.page" :params="listQuery">
-      <el-table-column label="主键ID" prop="id" align="center"></el-table-column>
+      <el-table-column label="ID" prop="id" align="center"></el-table-column>
       <el-table-column label="名称" prop="name" align="center"></el-table-column>
-      <el-table-column label="封面图" prop="coverImg" align="center"></el-table-column>
+      <el-table-column label="封面图" prop="coverImg" align="center">
+        <template v-slot="scope">
+          <el-image :src="scope.row.coverImg" style="width: 50px; height: 50px" />
+        </template>
+      </el-table-column>
       <el-table-column label="是否上架" prop="isPut" align="center">
         <template v-slot="scope">
           {{ scope.row.isPut ? '上架' : '下架' }}
@@ -37,20 +41,10 @@
           <el-input v-model="form.name"></el-input>
         </el-form-item>
         <el-form-item label="封面图:" prop="coverImg">
-          <!-- <el-upload
-            class="avatar-uploader"
-            action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
-            :show-file-list="false"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload"
-          >
-            <img v-if="form.coverImg" :src="form.coverImg" class="avatar" />
-            <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
-          </el-upload> -->
-          <base-upload :url="form.coverImg" @saveSucc="(url) => (form.coverImg = url)" />
+          <base-upload-single v-model="form.coverImg" />
         </el-form-item>
         <el-form-item label="商品详情图:" prop="detailImgList">
-          <el-input v-model="form.detailImgList"></el-input>
+          <base-upload-multi v-model="form.detailImgList" />
         </el-form-item>
         <el-form-item label="商品属性:" prop="attrList">
           <el-input v-model="form.attrList"></el-input>

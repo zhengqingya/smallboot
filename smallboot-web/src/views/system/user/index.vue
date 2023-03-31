@@ -59,7 +59,7 @@
           <el-input v-model="form.email" />
         </el-form-item>
         <el-form-item label="头像:" prop="avatarUrl">
-          <base-upload :url="form.avatarUrl" @saveSucc="handleAvatar" />
+          <base-upload :url="form.avatarUrl" @saveSucc="(url) => (form.avatarUrl = url)" />
         </el-form-item>
       </el-form>
       <template #footer>
@@ -159,9 +159,6 @@ export default {
         })
         this.dialogVisible = false
       }
-    },
-    handleAvatar(avatarUrl) {
-      this.form.avatarUrl = avatarUrl
     },
     submitForm() {
       this.$refs.dataForm.validate(async (valid) => {

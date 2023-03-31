@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-image :src="url" style="width: 100px; height: 100px" />
+    <el-image :src="imgUrl" style="width: 100px; height: 100px" />
     <!-- <span>{{ url }}</span> -->
     <el-upload
       v-bind="$attrs"
@@ -22,9 +22,19 @@ export default {
     event: 'change',
   },
   props: {
-    url: {
+    modelValue: {
       type: String,
       default: '',
+    },
+  },
+  computed: {
+    imgUrl: {
+      set: function (val) {
+        this.$emit('update:modelValue', val)
+      },
+      get: function () {
+        return this.modelValue
+      },
     },
   },
   data() {
@@ -48,6 +58,7 @@ export default {
     },
     async onSuccess(res, uploadFile, fileList) {
       const data = res.data
+      this.imgUrl = data.url
       // this.submitOk("成功");
       this.$emit('saveSucc', data.url)
     },
