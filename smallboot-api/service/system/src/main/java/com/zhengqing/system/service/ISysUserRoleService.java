@@ -58,6 +58,6 @@ public interface ISysUserRoleService extends IService<SysUserRole> {
      * @author zhengqingya
      * @date 2022/6/14 12:39
      */
-    void deleteUserReRoleIds(Integer userId);
+    void delByUserId(Integer userId);
 
 }

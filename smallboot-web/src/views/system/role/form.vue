@@ -172,7 +172,7 @@ export default {
         menuTree: this.menuTree,
       })
       this.submitOk(res.msg)
-      // this.$router.push('/system/role')
+      this.$router.push('/system/role')
     },
   },
 }

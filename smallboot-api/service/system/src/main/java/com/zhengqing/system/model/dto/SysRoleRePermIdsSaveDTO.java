@@ -30,9 +30,9 @@ public class SysRoleRePermIdsSaveDTO {
     @ApiModelProperty("角色Id")
     private Integer roleId;
 
-    @NotNull(message = "菜单id不能为空！")
-    @ApiModelProperty("菜单ID")
-    private Integer menuId;
+//    @NotNull(message = "菜单id不能为空！")
+//    @ApiModelProperty("菜单ID")
+//    private Integer menuId;
 
     @ApiModelProperty("菜单下按钮权限id")
     private List<Integer> permissionIdList;

@@ -40,15 +40,20 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
     public void addOrUpdateData(SysUserRoleSaveDTO params) {
         Integer userId = params.getUserId();
         List<Integer> roleIdList = params.getRoleIdList();
-        // ① 先删除关联角色
-        this.deleteUserReRoleIds(userId);
-        // ② 再新增角色
+        // 1、先删除关联角色
+        this.delByUserId(userId);
+
+        // 2、再新增角色
+        List<SysUserRole> saveList = Lists.newArrayList();
         roleIdList.forEach(roleId ->
-                SysUserRole.builder()
-                        .userId(userId)
-                        .roleId(roleId)
-                        .build()
-                        .insert());
+                saveList.add(
+                        SysUserRole.builder()
+                                .userId(userId)
+                                .roleId(roleId)
+                                .build()
+                )
+        );
+        super.saveBatch(saveList);
     }
 
     @Override
@@ -71,7 +76,7 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void deleteUserReRoleIds(Integer userId) {
+    public void delByUserId(Integer userId) {
         this.sysUserRoleMapper.delete(new LambdaUpdateWrapper<SysUserRole>().eq(SysUserRole::getUserId, userId));
     }
 

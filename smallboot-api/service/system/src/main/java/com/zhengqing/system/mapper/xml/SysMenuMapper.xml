@@ -33,13 +33,20 @@
         sm.redirect,
         sm.breadcrumb,
         sm.is_show_children,
-        IF(srm.id IS NULL, 0, 1) isHasPerm
+        <choose>
+            <when test="roleIdList!=null and roleIdList.size>0">
+                IF(srm.id IS NULL, 0, 1) isHasPerm
+            </when>
+            <otherwise>
+                1 isHasPerm
+            </otherwise>
+        </choose>
         FROM t_sys_menu sm
-        <if test="!isOnlyShowPerm">
-            LEFT
-        </if>
-        JOIN t_sys_role_menu srm ON srm.menu_id = sm.menu_id
         <if test="roleIdList!=null and roleIdList.size>0">
+            <if test="!isOnlyShowPerm">
+                LEFT
+            </if>
+            JOIN t_sys_role_menu srm ON srm.menu_id = sm.menu_id
             AND srm.role_id IN
             <foreach collection="roleIdList" separator="," open="(" close=")" item="roleId">
                 #{roleId}

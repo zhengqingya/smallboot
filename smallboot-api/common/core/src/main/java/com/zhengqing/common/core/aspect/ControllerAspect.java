@@ -5,6 +5,7 @@ import com.zhengqing.common.base.context.SysUserContext;
 import com.zhengqing.common.base.model.dto.BaseDTO;
 import com.zhengqing.common.base.model.dto.BasePageDTO;
 import com.zhengqing.common.core.custom.parameter.CheckParam;
+import com.zhengqing.common.core.custom.parameter.HandleParam;
 import com.zhengqing.common.web.util.ServletUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
@@ -63,6 +64,12 @@ public class ControllerAspect {
             if (paramObj instanceof CheckParam) {
                 CheckParam checkParam = (CheckParam) paramObj;
                 checkParam.checkParam();
+            }
+
+            // 处理参数数据
+            if (paramObj instanceof HandleParam) {
+                HandleParam handleParam = (HandleParam) paramObj;
+                handleParam.handleParam();
             }
         }
     }

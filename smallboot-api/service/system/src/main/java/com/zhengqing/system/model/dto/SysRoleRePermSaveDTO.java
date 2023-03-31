@@ -2,8 +2,7 @@ package com.zhengqing.system.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
-import com.zhengqing.common.base.exception.ParameterException;
-import com.zhengqing.common.core.custom.parameter.CheckParam;
+import com.zhengqing.common.core.custom.parameter.HandleParam;
 import com.zhengqing.system.model.bo.SysMenuTree;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -31,7 +30,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel("保存角色权限信息参数")
-public class SysRoleRePermSaveDTO implements CheckParam {
+public class SysRoleRePermSaveDTO implements HandleParam {
 
     @NotNull(message = "角色id不能为空！")
     @ApiModelProperty(value = "角色ID")
@@ -47,9 +46,15 @@ public class SysRoleRePermSaveDTO implements CheckParam {
     @ApiModelProperty(value = "有权限的菜单ids", hidden = true)
     private List<Integer> menuIdList;
 
+    @JsonIgnore
+    @ApiModelProperty(value = "btn/url 权限ids", hidden = true)
+    private List<Integer> permissionIdList;
+
+
     @Override
-    public void checkParam() throws ParameterException {
+    public void handleParam() {
         this.menuIdList = Lists.newArrayList();
+        this.permissionIdList = Lists.newArrayList();
         this.recurveMenu(this.menuTree);
     }
 
@@ -58,6 +63,12 @@ public class SysRoleRePermSaveDTO implements CheckParam {
             if (item.getIsHasPerm()) {
                 this.menuIdList.add(item.getMenuId());
             }
+            item.getPermList().forEach(perm -> {
+                if (perm.getIsHasPerm()) {
+                    this.permissionIdList.add(perm.getId());
+                }
+            });
+
             List<SysMenuTree> children = item.getChildren();
             if (!CollectionUtils.isEmpty(children)) {
                 this.recurveMenu(children);

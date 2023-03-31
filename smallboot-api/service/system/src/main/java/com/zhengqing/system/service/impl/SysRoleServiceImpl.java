@@ -65,7 +65,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         // 1、删除该角色下关联的菜单
         this.sysRoleMenuService.deleteAllMenusByRoleId(roleId);
         // 2、删除该角色下关联的按钮
-        this.sysRolePermissionService.deleteBtnsByRoleId(roleId);
+        this.sysRolePermissionService.delByRoleId(roleId);
         // 3、删除角色
         this.removeById(roleId);
     }

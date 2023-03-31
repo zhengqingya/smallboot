@@ -6,7 +6,6 @@ import com.google.common.collect.Maps;
 import com.zhengqing.common.base.constant.AppConstant;
 import com.zhengqing.common.base.constant.SecurityConstant;
 import com.zhengqing.common.redis.util.RedisUtil;
-import com.zhengqing.system.entity.SysMenu;
 import com.zhengqing.system.entity.SysRole;
 import com.zhengqing.system.model.bo.SysMenuTree;
 import com.zhengqing.system.model.dto.SysRoleReMenuSaveDTO;
@@ -54,18 +53,15 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
     public void initSuperAdminPerm() {
         // 1、先查询所有菜单和按钮数据
         Integer roleId = this.sysRoleService.getRoleIdForSuperAdmin();
-        List<SysMenuTree> menuTree = this.tree(Lists.newArrayList(roleId), false);
-        List<Integer> menuIdList = this.sysMenuService.list().stream().map(SysMenu::getMenuId).collect(Collectors.toList());
+        List<SysMenuTree> menuTree = this.tree(Lists.newArrayList(), false);
 
         // 2、保存角色关联的菜单和按钮权限
-        this.saveRoleRePerm(
-                SysRoleRePermSaveDTO.builder()
-                        .roleId(roleId)
-                        .menuIdList(menuIdList)
-                        .menuTree(menuTree)
-                        .build()
-        );
-        this.sysRolePermissionService.savePerm(roleId, this.sysPermissionService.listPermissionId());
+        SysRoleRePermSaveDTO roleRePerm = SysRoleRePermSaveDTO.builder()
+                .roleId(roleId)
+                .menuTree(menuTree)
+                .build();
+        roleRePerm.handleParam();
+        this.saveRoleRePerm(roleRePerm);
         log.info("初始化超级管理员权限成功!");
     }
 
@@ -117,24 +113,6 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void saveRoleRePermIds(SysRoleRePermIdsSaveDTO params) {
-        Integer roleId = params.getRoleId();
-        Integer menuId = params.getMenuId();
-        List<Integer> permissionIdList = params.getPermissionIdList();
-
-        // 1、先删除
-        this.sysRolePermissionService.deletePermByRoleIdAndMenuId(roleId, menuId);
-
-        if (CollectionUtils.isEmpty(permissionIdList)) {
-            return;
-        }
-
-        // 2、再保存
-        this.sysRolePermissionService.savePerm(roleId, permissionIdList);
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
     public void saveRoleRePerm(SysRoleRePermSaveDTO params) {
         Integer roleId = params.getRoleId();
 
@@ -147,45 +125,32 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
         );
 
 
-        // 3、再保存角色关联的按钮权限
-        this.handleRoleRePermIds(roleId, params.getMenuTree());
+        // 2、再保存角色关联的按钮权限
+        this.saveRoleRePermIds(
+                SysRoleRePermIdsSaveDTO.builder()
+                        .roleId(roleId)
+                        .permissionIdList(params.getPermissionIdList())
+                        .build()
+        );
     }
 
-    /**
-     * 保存角色关联的按钮权限数据
-     *
-     * @param roleId         角色id
-     * @param menuRePermTree 权限树信息
-     * @return void
-     * @author zhengqingya
-     * @date 2020/9/14 11:24
-     */
-    public void handleRoleRePermIds(Integer roleId, List<SysMenuTree> menuRePermTree) {
-        if (CollectionUtils.isEmpty(menuRePermTree)) {
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void saveRoleRePermIds(SysRoleRePermIdsSaveDTO params) {
+        Integer roleId = params.getRoleId();
+        List<Integer> permissionIdList = params.getPermissionIdList();
+
+        // 1、先删除
+        this.sysRolePermissionService.delByRoleId(roleId);
+
+        if (CollectionUtils.isEmpty(permissionIdList)) {
             return;
         }
-        menuRePermTree.forEach(menu -> {
-            Integer menuId = menu.getMenuId();
 
-            // 保存按钮权限数据
-            List<Integer> permissionIdList = menu.getPermList().stream().filter(SysRoleRePermVO::getIsHasPerm).map(SysRoleRePermVO::getId).collect(Collectors.toList());
-            if (!CollectionUtils.isEmpty(permissionIdList)) {
-                this.saveRoleRePermIds(
-                        SysRoleRePermIdsSaveDTO.builder()
-                                .roleId(roleId)
-                                .menuId(menuId)
-                                .permissionIdList(permissionIdList)
-                                .build()
-                );
-            }
-
-            // 如果有子树则递归下去
-            List<SysMenuTree> children = menu.getChildren();
-            if (!CollectionUtils.isEmpty(children)) {
-                this.handleRoleRePermIds(roleId, children);
-            }
-        });
+        // 2、再保存
+        this.sysRolePermissionService.savePerm(roleId, permissionIdList);
     }
+
 
     @Override
     public List<SysMenuTree> tree(List<Integer> roleIdList, boolean isOnlyShowPerm) {

@@ -2,6 +2,7 @@ package com.zhengqing.system.model.vo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zhengqing.common.base.model.vo.BaseVO;
+import com.zhengqing.common.core.custom.parameter.HandleParam;
 import com.zhengqing.common.core.enums.UserSexEnum;
 import com.zhengqing.system.model.bo.SysMenuTree;
 import io.swagger.annotations.ApiModel;
@@ -27,7 +28,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel
-public class SysUserPermVO extends BaseVO {
+public class SysUserPermVO extends BaseVO implements HandleParam {
 
     // ================= ↓↓↓↓↓↓ 基本信息 ↓↓↓↓↓↓ =================
 
@@ -70,4 +71,9 @@ public class SysUserPermVO extends BaseVO {
     @ApiModelProperty(value = "可访问的菜单+按钮权限")
     private List<SysMenuTree> permissionTreeList;
 
+    @Override
+    public void handleParam() {
+
+    }
+    
 }

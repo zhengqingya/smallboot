@@ -64,11 +64,11 @@
         </choose>
         FROM t_sys_permission sp
         JOIN t_sys_menu sm ON sp.menu_id = sm.menu_id
-        <if test="!isOnlyShowPerm">
-            LEFT
-        </if>
-        JOIN t_sys_role_permission srp ON srp.permission_id = sp.id
         <if test="roleIdList!=null and roleIdList.size>0">
+            <if test="!isOnlyShowPerm">
+                LEFT
+            </if>
+            JOIN t_sys_role_permission srp ON srp.permission_id = sp.id
             AND srp.role_id IN
             <foreach collection="roleIdList" separator="," open="(" close=")" item="roleId">
                 #{roleId}

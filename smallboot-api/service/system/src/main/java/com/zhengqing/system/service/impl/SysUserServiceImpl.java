@@ -127,7 +127,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             throw new MyException("您没有权限删除超级管理员！");
         }
         // 1、删除关联角色
-        this.sysUserRoleService.deleteUserReRoleIds(userId);
+        this.sysUserRoleService.delByUserId(userId);
         // 2、删除该用户
         this.removeById(userId);
     }

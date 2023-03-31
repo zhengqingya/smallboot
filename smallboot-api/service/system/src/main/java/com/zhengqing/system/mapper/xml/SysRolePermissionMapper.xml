@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhengqing.system.mapper.SysRolePermissionMapper">
 
-    <select id="selectAllRoleReMenuBtns" resultType="com.zhengqing.system.model.vo.SysRoleMenuBtnListVO">
+    <select id="selectDataListRoleReMenuBtn" resultType="com.zhengqing.system.model.vo.SysRoleMenuBtnListVO">
         SELECT sp.menu_id,
                sp.btn_id,
                sp.btn_perm,
@@ -12,7 +12,7 @@
                  JOIN t_sys_permission sp on sp.id = srp.permission_id
     </select>
 
-    <select id="selectBtnsByRoleIdAndMenuId" resultType="java.lang.Integer">
+    <select id="selectIdsByRoleIdAndMenuId" resultType="java.lang.Integer">
         SELECT sp.id
         FROM t_sys_role_permission srp
                  JOIN t_sys_permission sp ON sp.id = srp.permission_id
@@ -20,7 +20,7 @@
           AND sp.menu_id = #{menuId}
     </select>
 
-    <select id="selectMapRoleRePerm" resultType="com.zhengqing.system.model.bo.SysRoleRePermBO">
+    <select id="selectRoleRePerm" resultType="com.zhengqing.system.model.bo.SysRoleRePermBO">
         SELECT srp.role_id,
                sp.id permissionId
         FROM t_sys_role_permission srp

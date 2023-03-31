@@ -73,26 +73,10 @@ public class SysRoleController extends BaseController {
         return this.sysPermBusinessService.permissionDetail(roleId);
     }
 
-//    @GetMapping("permissionDetail")
-//    @ApiOperation("详情(带树+按钮+所拥有的权限)")
-//    public SysRoleAllPermissionDetailVO permissionDetail(@RequestParam Integer roleId) {
-//        return this.roleService.permissionDetail(roleId);
-//    }
-
     @DeleteMapping("")
     @ApiOperation("删除")
     public void delete(@RequestParam Integer roleId) {
         this.roleService.deleteRoleAndRoleMenu(roleId);
     }
-
-    // ======================== ↓↓↓↓↓↓ 角色关联菜单按钮权限 ↓↓↓↓↓↓ ==========================
-
-    @GetMapping("getPermissionBtnsByRoleIdAndMenuId")
-    @ApiOperation("通过角色id和菜单id查询该菜单所拥有的所有按钮")
-    public List<Integer> getPermissionBtnsByRoleIdAndMenuId(@RequestParam Integer roleId,
-                                                            @RequestParam Integer menuId) {
-        return this.sysRolePermissionService.getPermissionBtnsByRoleIdAndMenuId(roleId, menuId);
-    }
-
 
 }

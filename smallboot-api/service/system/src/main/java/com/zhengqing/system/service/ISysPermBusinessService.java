@@ -60,16 +60,6 @@ public interface ISysPermBusinessService {
 
 
     /**
-     * 保存角色关联菜单按钮权限ids
-     *
-     * @param params 提交参数
-     * @return void
-     * @author zhengqingya
-     * @date 2020/9/10 18:34
-     */
-    void saveRoleRePermIds(SysRoleRePermIdsSaveDTO params);
-
-    /**
      * 保存角色权限（菜单权限+按钮权限）
      *
      * @param params 提交参数
@@ -78,6 +68,16 @@ public interface ISysPermBusinessService {
      * @date 2020/9/10 15:01
      */
     void saveRoleRePerm(SysRoleRePermSaveDTO params);
+
+    /**
+     * 保存角色关联菜单按钮权限ids
+     *
+     * @param params 提交参数
+     * @return void
+     * @author zhengqingya
+     * @date 2020/9/10 18:34
+     */
+    void saveRoleRePermIds(SysRoleRePermIdsSaveDTO params);
 
     /**
      * 获取菜单树

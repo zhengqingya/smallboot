@@ -37,7 +37,7 @@ public interface ISysRolePermissionService extends IService<SysRolePermission> {
      * @author zhengqingya
      * @date 2020/9/10 17:58
      */
-    List<Integer> getPermissionBtnsByRoleIdAndMenuId(Integer roleId, Integer menuId);
+    List<Integer> getPermByRoleIdAndMenuId(Integer roleId, Integer menuId);
 
 
     /**
@@ -57,7 +57,7 @@ public interface ISysRolePermissionService extends IService<SysRolePermission> {
      * @author zhengqingya
      * @date 2020/9/10 17:50
      */
-    void deleteBtnsByRoleId(Integer roleId);
+    void delByRoleId(Integer roleId);
 
     /**
      * 根据角色ID和菜单ID删除按钮
@@ -68,7 +68,7 @@ public interface ISysRolePermissionService extends IService<SysRolePermission> {
      * @author zhengqingya
      * @date 2020/9/10 17:57
      */
-    void deletePermByRoleIdAndMenuId(Integer roleId, Integer menuId);
+    void delByRoleIdAndMenuId(Integer roleId, Integer menuId);
 
     /**
      * 保存角色关联菜单按钮权限

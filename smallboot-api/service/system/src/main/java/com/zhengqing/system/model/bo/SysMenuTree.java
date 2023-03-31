@@ -99,6 +99,12 @@ public class SysMenuTree {
     public void handleData() {
         this.permList = CollectionUtils.isEmpty(this.permList) ? Lists.newArrayList() : this.permList;
         this.children = CollectionUtils.isEmpty(this.children) ? Lists.newArrayList() : this.children;
+
+        this.meta = Meta.builder()
+                .title(this.title)
+                .icon(this.icon)
+                .breadcrumb(this.breadcrumb)
+                .build();
     }
 
 }

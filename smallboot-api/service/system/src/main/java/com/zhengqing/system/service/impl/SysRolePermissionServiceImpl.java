@@ -36,17 +36,17 @@ public class SysRolePermissionServiceImpl extends ServiceImpl<SysRolePermissionM
 
     @Override
     public List<SysRoleMenuBtnListVO> listRoleReMenuBtn() {
-        return this.sysRolePermissionMapper.selectAllRoleReMenuBtns();
+        return this.sysRolePermissionMapper.selectDataListRoleReMenuBtn();
     }
 
     @Override
-    public List<Integer> getPermissionBtnsByRoleIdAndMenuId(Integer roleId, Integer menuId) {
-        return this.sysRolePermissionMapper.selectBtnsByRoleIdAndMenuId(roleId, menuId);
+    public List<Integer> getPermByRoleIdAndMenuId(Integer roleId, Integer menuId) {
+        return this.sysRolePermissionMapper.selectIdsByRoleIdAndMenuId(roleId, menuId);
     }
 
     @Override
     public Map<Integer, List<Integer>> mapRoleRePerm() {
-        List<SysRoleRePermBO> list = this.sysRolePermissionMapper.selectMapRoleRePerm();
+        List<SysRoleRePermBO> list = this.sysRolePermissionMapper.selectRoleRePerm();
 
         Map<Integer, List<Integer>> map = Maps.newHashMap();
         if (CollectionUtils.isEmpty(list)) {
@@ -61,14 +61,14 @@ public class SysRolePermissionServiceImpl extends ServiceImpl<SysRolePermissionM
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void deleteBtnsByRoleId(Integer roleId) {
-        this.sysRolePermissionMapper.deleteBtnsByRoleId(roleId);
+    public void delByRoleId(Integer roleId) {
+        this.sysRolePermissionMapper.delByRoleId(roleId);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void deletePermByRoleIdAndMenuId(Integer roleId, Integer menuId) {
-        this.sysRolePermissionMapper.deleteBtnsByRoleIdAndMenuId(roleId, menuId);
+    public void delByRoleIdAndMenuId(Integer roleId, Integer menuId) {
+        this.sysRolePermissionMapper.delByRoleIdAndMenuId(roleId, menuId);
     }
 
     @Override
