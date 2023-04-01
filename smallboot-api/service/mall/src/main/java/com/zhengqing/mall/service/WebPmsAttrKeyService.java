@@ -1,7 +1,7 @@
 package com.zhengqing.mall.service;
 
 import com.zhengqing.mall.entity.PmsAttrKey;
-import com.zhengqing.mall.model.dto.WebPmsAttrListDTO;
+import com.zhengqing.mall.model.dto.WebPmsAttrKeyListDTO;
 import com.zhengqing.mall.model.dto.WebPmsAttrSaveDTO;
 import com.zhengqing.mall.model.vo.WebPmsAttrKeyListVO;
 import com.zhengqing.mall.model.vo.WebPmsAttrVO;
@@ -25,7 +25,7 @@ public interface WebPmsAttrKeyService extends PmsAttrKeyService<PmsAttrKey> {
      * @author zhengqingya
      * @date 2021/8/22 2:41 下午
      */
-    List<WebPmsAttrKeyListVO> list(WebPmsAttrListDTO params);
+    List<WebPmsAttrKeyListVO> list(WebPmsAttrKeyListDTO params);
 
     /**
      * 根据ids查询列表数据

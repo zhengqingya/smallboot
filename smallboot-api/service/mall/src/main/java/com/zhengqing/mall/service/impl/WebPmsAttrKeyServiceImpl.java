@@ -7,7 +7,7 @@ import com.zhengqing.common.core.util.IdGeneratorUtil;
 import com.zhengqing.common.db.constant.MybatisConstant;
 import com.zhengqing.mall.entity.PmsAttrKey;
 import com.zhengqing.mall.mapper.PmsAttrKeyMapper;
-import com.zhengqing.mall.model.dto.WebPmsAttrListDTO;
+import com.zhengqing.mall.model.dto.WebPmsAttrKeyListDTO;
 import com.zhengqing.mall.model.dto.WebPmsAttrSaveDTO;
 import com.zhengqing.mall.model.vo.WebPmsAttrKeyListVO;
 import com.zhengqing.mall.model.vo.WebPmsAttrVO;
@@ -43,7 +43,7 @@ public class WebPmsAttrKeyServiceImpl extends PmsAttrKeyServiceImpl<PmsAttrKeyMa
 
 
     @Override
-    public List<WebPmsAttrKeyListVO> list(WebPmsAttrListDTO params) {
+    public List<WebPmsAttrKeyListVO> list(WebPmsAttrKeyListDTO params) {
         return this.pmsAttrKeyMapper.selectDataList(params);
     }
 

@@ -1,17 +1,10 @@
 <template>
   <div>
-    <el-image :src="imgUrl" style="width: 100px; height: 100px" />
-    <!-- <span>{{ url }}</span> -->
-    <el-upload
-      v-bind="$attrs"
-      :action="uploadUrl"
-      :headers="dataToken"
-      :show-file-list="false"
-      :before-upload="beforeUpload"
-      :on-success="onSuccess"
-      :on-remove="onRemove"
-    >
-      <el-button size="small">点击上传</el-button>
+    <!-- <span>{{ imgUrl }}</span> -->
+    <el-upload v-bind="$attrs" :action="uploadUrl" :headers="dataToken" :show-file-list="false"
+      :before-upload="beforeUpload" :on-success="onSuccess" :on-remove="onRemove">
+      <el-image v-if="imgUrl" :src="imgUrl" style="width: 100px; height: 100px" />
+      <el-button v-else size="small">点击上传</el-button>
     </el-upload>
   </div>
 </template>
@@ -62,7 +55,7 @@ export default {
       // this.submitOk("成功");
       this.$emit('saveSucc', data.url)
     },
-    onRemove() {},
+    onRemove() { },
   },
 }
 </script>

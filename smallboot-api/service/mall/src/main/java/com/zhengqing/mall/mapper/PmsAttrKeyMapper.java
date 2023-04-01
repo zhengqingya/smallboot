@@ -2,7 +2,7 @@ package com.zhengqing.mall.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.zhengqing.mall.entity.PmsAttrKey;
-import com.zhengqing.mall.model.dto.WebPmsAttrListDTO;
+import com.zhengqing.mall.model.dto.WebPmsAttrKeyListDTO;
 import com.zhengqing.mall.model.vo.WebPmsAttrKeyListVO;
 import com.zhengqing.mall.model.vo.WebPmsAttrVO;
 import org.apache.ibatis.annotations.Param;
@@ -26,7 +26,7 @@ public interface PmsAttrKeyMapper extends BaseMapper<PmsAttrKey> {
      * @author zhengqingya
      * @date 2021/8/22 2:41 下午
      */
-    List<WebPmsAttrKeyListVO> selectDataList(@Param("filter") WebPmsAttrListDTO filter);
+    List<WebPmsAttrKeyListVO> selectDataList(@Param("filter") WebPmsAttrKeyListDTO filter);
 
     /**
      * 根据ids查询列表数据

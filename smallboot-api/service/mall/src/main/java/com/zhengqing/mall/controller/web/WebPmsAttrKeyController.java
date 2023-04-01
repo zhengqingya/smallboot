@@ -2,7 +2,7 @@ package com.zhengqing.mall.controller.web;
 
 import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
-import com.zhengqing.mall.model.dto.WebPmsAttrListDTO;
+import com.zhengqing.mall.model.dto.WebPmsAttrKeyListDTO;
 import com.zhengqing.mall.model.dto.WebPmsAttrSaveDTO;
 import com.zhengqing.mall.model.vo.WebPmsAttrKeyListVO;
 import com.zhengqing.mall.model.vo.WebPmsAttrVO;
@@ -26,14 +26,14 @@ import java.util.List;
 @RestController
 @RequestMapping(ServiceConstant.SERVICE_API_PREFIX_WEB_MALL + "/attr/key")
 @Api(tags = {"web-属性key"})
-public class WebPmsAttrController {
+public class WebPmsAttrKeyController {
 
     @Resource
     private WebPmsAttrKeyService webPmsAttrKeyService;
 
     @GetMapping("list")
     @ApiOperation("列表")
-    public List<WebPmsAttrKeyListVO> list(@Validated @ModelAttribute WebPmsAttrListDTO params) {
+    public List<WebPmsAttrKeyListVO> list(@Validated @ModelAttribute WebPmsAttrKeyListDTO params) {
         return this.webPmsAttrKeyService.list(params);
     }
 

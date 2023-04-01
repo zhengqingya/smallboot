@@ -1,7 +1,8 @@
 <template>
   <base-wraper>
     <base-header>
-      <el-input v-model="listQuery.name" placeholder="请输入名称" style="width: 200px" clearable @clear="refreshTableData"></el-input>
+      <el-input v-model="listQuery.name" placeholder="请输入名称" style="width: 200px" clearable
+        @clear="refreshTableData"></el-input>
       <el-button type="primary" @click="refreshTableData">查询</el-button>
       <template #right>
         <el-button type="primary" @click="handleAdd">添加</el-button>
@@ -46,8 +47,8 @@
         <el-form-item label="商品详情图:" prop="detailImgList">
           <base-upload-multi v-model="form.detailImgList" />
         </el-form-item>
-        <el-form-item label="商品属性:" prop="attrList">
-          <sku :disabled="false" />
+        <el-form-item label="商品sku:">
+          <sku-form :attrList="form.attrList" :skuList="form.skuList" />
         </el-form-item>
         <el-form-item label="是否上架:" prop="isPut">
           <el-radio-group v-model="form.isPut">
@@ -74,11 +75,11 @@
 </template>
 
 <script>
-import sku from './sku.vue'
+import SkuForm from './sku-form.vue'
 
 export default {
   name: 'PmsSpu',
-  components: { sku },
+  components: { SkuForm },
   data() {
     return {
       listQuery: {},
@@ -94,7 +95,8 @@ export default {
     }
   },
   created() {
-    this.dialogVisible = true
+    // TODO 临时测试
+    this.handleUpdate({ id: '1534420706752856064' })
   },
   methods: {
     refreshTableData() {

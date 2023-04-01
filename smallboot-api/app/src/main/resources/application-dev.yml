@@ -3,7 +3,7 @@
 smallboot:
   ip: 127.0.0.1
   minio:
-    url: http://172.16.16.244:9001
+    url: http://192.168.101.88:9001
     accessKey: admin
     secretKey: password
     bucketName: test
@@ -33,3 +33,6 @@ smallboot:
   # mq
   rabbitmq:
     addresses: ${smallboot.ip}:5672
+    username: admin
+    password: admin
+    virtual-host: my_vhost

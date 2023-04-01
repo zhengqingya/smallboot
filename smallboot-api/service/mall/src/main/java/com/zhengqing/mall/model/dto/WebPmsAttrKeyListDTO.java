@@ -24,7 +24,7 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ApiModel("web-商城-属性key-列表-请求参数")
-public class WebPmsAttrListDTO extends BaseDTO {
+public class WebPmsAttrKeyListDTO extends BaseDTO {
 
     @ApiModelProperty("属性key名称")
     private String attrKeyName;

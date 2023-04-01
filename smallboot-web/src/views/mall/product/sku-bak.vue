@@ -1,16 +1,9 @@
 <template>
   <div class="sku-container">
     <div>
-      <el-autocomplete
-        v-model="newAttr"
-        style="width: 350px; margin-bottom: 20px"
-        :fetch-suggestions="getAttrList"
-        value-key="attrKeyName"
-        clearable
-        placeholder="添加新属性 如：颜色"
-        @keyup.enter.native="addAttr"
-        @select="(item) => (selectNewAttr = item)"
-      >
+      <el-autocomplete v-model="newAttr" style="width: 200px; margin-bottom: 10px" :fetch-suggestions="getAttrList"
+        value-key="attrKeyName" clearable placeholder="添加新属性 如：颜色" @keyup.enter.native="addAttr"
+        @select="(item) => (selectNewAttr = item)">
         <template #suffix v-if="attrKeyList.length === 0">
           <el-button link @click="addAttr" v-show="!item">添加</el-button>
         </template>
@@ -18,7 +11,7 @@
       <el-alert title="属性变动会影响sku数据！" type="warning" :closable="false" show-icon />
     </div>
     <div v-if="!disabled" class="sku-check">
-      <div v-if="theme == 1" class="theme-1">
+      <div class="theme-1">
         <el-card v-for="(item, index) in attr" :key="index" class="item" shadow="never">
           <div slot="header" class="ub ubv-c ub-sb">
             <div class="uf1">{{ item.name }}</div>
@@ -29,71 +22,28 @@
             </el-popconfirm>
           </div>
 
-          <el-checkbox v-for="item2 in item.item" :key="item2.name" v-model="item2.checked" :label="item2.name" size="small" />
-          <el-autocomplete
-            v-if="item.canAddAttribute"
-            v-model="item.addAttribute"
-            :fetch-suggestions="querySearchAttrValAsync"
-            value-key="name"
-            clearable
-            class="add-attr"
-            size="small"
-            placeholder="新增一个规格"
-            @focus="addAttrId = index"
-            @keyup.enter.native="onAddAttribute(index)"
-            @select="(item) => (selectNewAttrVal = item)"
-          >
+          <el-checkbox v-for="item2 in item.item" :key="item2.name" v-model="item2.checked" :label="item2.name"
+            size="small" />
+          <el-autocomplete v-if="item.canAddAttribute" v-model="item.addAttribute"
+            :fetch-suggestions="querySearchAttrValAsync" value-key="name" clearable class="add-attr" size="small"
+            placeholder="新增一个规格" @focus="addAttrId = index" @keyup.enter.native="onAddAttribute(index)"
+            @select="(item) => (selectNewAttrVal = item)">
             <el-button slot="append" type="primary" icon="el-icon-plus" @click="onAddAttribute(index)">添加</el-button>
           </el-autocomplete>
         </el-card>
       </div>
-      <el-table v-else :data="attr" :show-header="false" class="theme-2">
-        <el-table-column prop="name" width="120" :resizable="false" />
-        <el-table-column>
-          <template v-slot="scope">
-            <el-checkbox v-for="(item2, index2) in scope.row.item" :key="index2" v-model="item2.checked" :label="item2.name" size="small" />
-          </template>
-        </el-table-column>
-        <el-table-column width="250">
-          <template v-slot="scope">
-            <el-input
-              v-model="scope.row.addAttribute"
-              size="small"
-              placeholder="新增一个规格"
-              class="add-attr"
-              @keyup.enter.native="onAddAttribute(scope.$index)"
-            >
-              <el-button slot="append" size="small" icon="el-icon-plus" @click="onAddAttribute(scope.$index)">添加</el-button>
-            </el-input>
-          </template>
-        </el-table-column>
-      </el-table>
     </div>
     <div class="sku-list">
       <el-form ref="form" :model="form" status-icon inline-message>
-        <el-table :data="form.skuData" row-key="sku" stripe border highlight-current-row max-height="600" :span-method="arraySpanMethod">
+        <el-table :data="form.skuData" row-key="sku" stripe border highlight-current-row max-height="600"
+          :span-method="arraySpanMethod">
           <!-- 考虑到异步加载的情况，如果 attribute 数据先加载完成，则表头会立马展示，效果不理想，故使用emitAttribute 数据，该数据为计算属性，通过 attr 生成，结构与 attribute 一致 -->
           <el-table-column v-if="attribute.length > 0" type="index" width="50" align="center" :resizable="false" />
 
-          <el-table-column
-            v-for="(eAttr, index) in emitAttribute"
-            :key="`attribute-${index}`"
-            :label="eAttr.name"
-            :prop="eAttr.attr_id"
-            :width="staticWidth"
-            align="center"
-            :resizable="false"
-            sortable
-          />
-          <el-table-column
-            v-for="(item, index) in structure"
-            :key="`structure-${index}`"
-            :label="item.label"
-            :prop="item.name"
-            align="center"
-            :resizable="false"
-            :min-width="staticWidth + 'px'"
-          >
+          <el-table-column v-for="(eAttr, index) in emitAttribute" :key="`attribute-${index}`" :label="eAttr.name"
+            :prop="eAttr.attr_id" :width="staticWidth" align="center" :resizable="false" sortable />
+          <el-table-column v-for="(item, index) in structure" :key="`structure-${index}`" :label="item.label"
+            :prop="item.name" align="center" :resizable="false" :min-width="staticWidth + 'px'">
             <!-- 自定义表头 -->
             <template #header>
               <span :class="{ required_title: item.required }">
@@ -106,13 +56,10 @@
             <!-- 自定义单元格内容 -->
             <template #default="scope">
               <!-- 增加是 key 是为了保证异步验证不会出现 skuData 数据变化后无法验证的 bug -->
-              <el-form-item
-                v-if="item.type == 'input'"
-                :key="`structure-input-${index}-${scope.row.sku}`"
-                :prop="'skuData.' + scope.$index + '.' + item.name"
-                :rules="rules[item.name]"
-              >
-                <el-input v-model="scope.row[item.name]" :type="item.input_type || ''" clearable :placeholder="`请输入${item.label}`" size="small" />
+              <el-form-item v-if="item.type == 'input'" :key="`structure-input-${index}-${scope.row.sku}`"
+                :prop="'skuData.' + scope.$index + '.' + item.name" :rules="rules[item.name]">
+                <el-input v-model="scope.row[item.name]" :type="item.input_type || ''" clearable
+                  :placeholder="`请输入${item.label}`" size="small" />
               </el-form-item>
               <!-- <el-form-item
                 v-else-if="item.type == 'slot'"
@@ -125,26 +72,15 @@
             </template>
           </el-table-column>
           <!-- 批量设置，当 sku 数超过 2 个时出现 -->
-          <template v-if="isBatch && form.skuData.length > 2" slot="append">
+          <template v-if="isBatch && form.skuData.length > 2" v-slot:append>
             <el-table :data="[{}]" :show-header="false">
-              <el-table-column :width="attribute.length * staticWidth + 50" align="center" :resizable="false">批量设置（Enter确定）</el-table-column>
-              <el-table-column
-                v-for="(item, index) in structure"
-                :key="`batch-structure-${index}`"
-                align="center"
-                :resizable="false"
-                min-width="120px"
-              >
-                <el-input
-                  v-if="item.type == 'input' && item.batch != false"
-                  v-model="batch[item.name]"
-                  clearable
-                  :type="item.input_type || ''"
-                  :placeholder="`填写一个${item.label}`"
-                  size="small"
-                  @keyup.enter.native="onBatchSet(item.name)"
-                  @change="onBatchSet(item.name)"
-                />
+              <el-table-column :width="attribute.length * staticWidth + 50" align="center"
+                :resizable="false">批量设置（Enter确定）</el-table-column>
+              <el-table-column v-for="(item, index) in structure" :key="`batch-structure-${index}`" align="center"
+                :resizable="false" min-width="120px">
+                <el-input v-if="item.type == 'input' && item.batch != false" v-model="batch[item.name]" clearable
+                  :type="item.input_type || ''" :placeholder="`填写一个${item.label}`" size="small"
+                  @keyup.enter.native="onBatchSet(item.name)" @change="onBatchSet(item.name)" />
               </el-table-column>
             </el-table>
           </template>
@@ -160,7 +96,7 @@ export default {
   props: {
     sourceAttribute: {
       type: Object,
-      default: () => {},
+      default: () => { },
     },
     attribute: {
       type: Array,
@@ -341,34 +277,6 @@ export default {
     !this.async && this.init()
   },
   methods: {
-    async getAttrList(name, cb) {
-      let res = await this.$api.pms_attr.list({ attrKeyName: name })
-      this.attrKeyList = res.data
-      cb(res.data)
-    },
-    addAttr() {
-      this.newAttr = this.newAttr.replace(/\s/g, '')
-      this.loading = true
-      this.$api.pms_attr.add({ attrKeyName: this.newAttr })
-    },
-
-    // ----------------- 下面暂未联调
-
-    arraySpanMethod({ column: { property: attr_id }, rowIndex }) {
-      if (this.rowSpan[attr_id]) {
-        const rowSpan = rowIndex % this.rowSpan[attr_id] === 0 ? this.rowSpan[attr_id] : 0
-        return [rowSpan, 1]
-      }
-      return [1, 1]
-    },
-
-    querySearchAttrValAsync(name, cb) {
-      // ATTR_VAL.getList({ name, attr_id: this.addAttrId })
-      //   .then(({ data }) => {
-      //     cb(data.filter(({ _id }) => !this.attr[this.addAttrId].item[_id]))
-      //   })
-      //   .catch((err) => console.log('err', err))
-    },
     init() {
       this.isInit = true
       this.attr = this.sourceAttribute
@@ -388,6 +296,38 @@ export default {
         this.isInit = false
       }, 50)
     },
+    // 属性
+    async getAttrList(name, cb) {
+      let res = await this.$api.pms_attr.list({ attrKeyName: name })
+      this.attrKeyList = res.data
+      cb(res.data)
+    },
+    addAttr() {
+      this.newAttr = this.newAttr.replace(/\s/g, '')
+      this.loading = true
+      this.$api.pms_attr.add({ attrKeyName: this.newAttr })
+    },
+
+
+
+    // ----------------- 下面暂未联调
+
+    arraySpanMethod({ column: { property: attr_id }, rowIndex }) {
+      if (this.rowSpan[attr_id]) {
+        const rowSpan = rowIndex % this.rowSpan[attr_id] === 0 ? this.rowSpan[attr_id] : 0
+        return [rowSpan, 1]
+      }
+      return [1, 1]
+    },
+
+    querySearchAttrValAsync(name, cb) {
+      // ATTR_VAL.getList({ name, attr_id: this.addAttrId })
+      //   .then(({ data }) => {
+      //     cb(data.filter(({ _id }) => !this.attr[this.addAttrId].item[_id]))
+      //   })
+      //   .catch((err) => console.log('err', err))
+    },
+
     editorName() {
       this.editorNameIndex = -1
     },
@@ -485,7 +425,7 @@ export default {
         })
         this.batch[type] = ''
         // 批量设置完成后，触发一次当前列的验证
-        this.validateFieldByColumns([type], () => {})
+        this.validateFieldByColumns([type], () => { })
       }
     },
     // 自定义输入框验证，通过调用 structure 里的 validate 方法实现，重点是 callback 要带过去
@@ -533,78 +473,99 @@ export default {
 .sku-container {
   width: 100%;
   height: 200px;
+
   ::v-deep .el-card {
     margin: 10px 0;
+
     .el-card__header {
       line-height: initial;
       padding: 10px 20px;
     }
+
     .el-card__body {
       padding: 10px 20px 20px;
     }
   }
+
   .sku-check {
     .theme-1 {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
       margin-bottom: 10px;
+
       .item {
         width: 32%;
+
         &:last-child:nth-child(3n - 1) {
           margin-right: calc(100% - 32% * 2 - 4% / 2) !important;
         }
+
         .add-attr {
           width: 100%;
           margin-top: 10px;
         }
       }
     }
+
     .theme-2 {
       border: 1px solid #ebeef5;
       border-bottom: 0;
       margin-bottom: 20px;
     }
   }
+
   .sku-name {
     text-align: right;
   }
+
   .batch-set {
     width: 100%;
     margin-top: 5px;
   }
+
   .sku-list {
     line-height: initial;
+
     ::v-deep .el-input__inner {
       text-align: center;
     }
+
     ::v-deep .el-table__append-wrapper {
       overflow: initial;
+
       .el-table {
         overflow: initial;
+
         .el-table__body-wrapper {
           overflow: initial;
         }
       }
     }
+
     ::v-deep .el-form-item {
       margin-bottom: 0;
+
       .el-form-item__content {
         line-height: initial;
+
         .el-form-item__error {
           margin-left: 0;
         }
       }
     }
+
     .required_title::before {
       content: '*';
       color: #f56c6c;
     }
   }
 }
+
 .el-icon-delete {
   cursor: pointer;
   transition: color 0.3s;
+
   &:hover {
     color: red;
   }
