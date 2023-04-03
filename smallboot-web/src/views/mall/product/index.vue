@@ -1,8 +1,7 @@
 <template>
   <base-wraper>
     <base-header>
-      <el-input v-model="listQuery.name" placeholder="请输入名称" style="width: 200px" clearable
-        @clear="refreshTableData"></el-input>
+      <el-input v-model="listQuery.name" placeholder="请输入名称" style="width: 200px" clearable @clear="refreshTableData"></el-input>
       <el-button type="primary" @click="refreshTableData">查询</el-button>
       <template #right>
         <el-button type="primary" @click="handleAdd">添加</el-button>
@@ -48,7 +47,7 @@
           <base-upload-multi v-model="form.detailImgList" />
         </el-form-item>
         <el-form-item label="商品sku:">
-          <sku-form :attrList="form.attrList" :skuList="form.skuList" />
+          <sku-form :attrList="form.attrList" v-model="form.skuList" />
         </el-form-item>
         <el-form-item label="是否上架:" prop="isPut">
           <el-radio-group v-model="form.isPut">

@@ -65,8 +65,8 @@ public class WebPmsSkuSaveDTO extends BaseDTO {
     @ApiModelProperty(value = "排序", required = true, example = "1")
     private Integer sort;
 
-    @NotBlank(message = "规格编码不能为空！")
-    @ApiModelProperty(value = "规格编码", required = true, example = "ABC")
+    //    @NotBlank(message = "规格编码不能为空！")
+    @ApiModelProperty(value = "规格编码", example = "ABC")
     private String code;
 
 }
