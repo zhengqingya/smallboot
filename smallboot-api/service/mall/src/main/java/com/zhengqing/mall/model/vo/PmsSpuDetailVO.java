@@ -2,7 +2,6 @@ package com.zhengqing.mall.model.vo;
 
 import com.zhengqing.mall.model.bo.MallDictBO;
 import com.zhengqing.mall.model.bo.MallFileBO;
-import com.zhengqing.mall.model.bo.WebPmsAttrBO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -28,8 +27,8 @@ import java.util.List;
 @ApiModel("商城-商品-详情-展示视图")
 public class PmsSpuDetailVO extends PmsSpuBaseVO {
 
-    @ApiModelProperty("商品属性")
-    private List<WebPmsAttrBO> attrList;
+//    @ApiModelProperty("商品属性")
+//    private List<WebPmsAttrBO> attrList;
 
     @ApiModelProperty(value = "轮播图")
     private List<MallFileBO> slideImgList;

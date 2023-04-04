@@ -6,7 +6,6 @@ import com.zhengqing.common.core.custom.parameter.CheckParam;
 import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
 import com.zhengqing.mall.model.bo.MallDictBO;
 import com.zhengqing.mall.model.bo.MallFileBO;
-import com.zhengqing.mall.model.bo.WebPmsAttrBO;
 import com.zhengqing.mall.model.enums.PmsSpuTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -72,10 +71,10 @@ public class WebPmsSpuSaveDTO extends BaseDTO implements CheckParam {
 
     // ============================ ↓↓↓↓↓↓ 规格相关处理 start ↓↓↓↓↓↓ ============================
 
-    @Valid
-    @NotEmpty(message = "商品属性丢失！")
-    @ApiModelProperty("商品属性")
-    private List<WebPmsAttrBO> attrList;
+//    @Valid
+//    @NotEmpty(message = "商品属性丢失！")
+//    @ApiModelProperty("商品属性")
+//    private List<WebPmsAttrBO> attrList;
 
     @Valid
     @NotEmpty(message = "规格数据丢失！")

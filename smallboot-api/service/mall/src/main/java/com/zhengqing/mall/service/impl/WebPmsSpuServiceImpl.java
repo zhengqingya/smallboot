@@ -150,7 +150,7 @@ public class WebPmsSpuServiceImpl extends PmsSpuServiceImpl<PmsSpuMapper, PmsSpu
                 .couponNum(params.getCouponNum())
                 .detailImgList(params.getDetailImgList())
                 .freight(params.getFreight())
-                .attrList(params.getAttrList())
+//                .attrList(params.getAttrList())
                 .isPut(params.getIsPut())
                 .isShow(params.getIsShow())
                 .linePrice(params.getLinePrice())

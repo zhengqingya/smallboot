@@ -11,7 +11,7 @@
  Target Server Version : 50726 (5.7.26-log)
  File Encoding         : 65001
 
- Date: 31/03/2023 09:56:01
+ Date: 04/04/2023 11:03:48
 */
 
 SET NAMES utf8mb4;
@@ -306,6 +306,9 @@ CREATE TABLE `pms_attr_key`  (
 -- ----------------------------
 INSERT INTO `pms_attr_key` VALUES (1532281238671458304, 1, '颜色', 1, '2022-06-02 16:41:30', '2022-06-02 16:41:30', 0, 0, 0);
 INSERT INTO `pms_attr_key` VALUES (1532283711813451776, 1, '尺寸', 1, '2022-06-02 16:51:20', '2022-06-02 16:51:20', 0, 0, 0);
+INSERT INTO `pms_attr_key` VALUES (1641741122885779456, 1, 'cce', 1, '2023-03-31 17:56:00', '2023-03-31 17:56:00', 1, 1, 0);
+INSERT INTO `pms_attr_key` VALUES (1641745201594761216, 1, 'xx', 1, '2023-03-31 18:12:13', '2023-03-31 18:12:13', 1, 1, 0);
+INSERT INTO `pms_attr_key` VALUES (1641745352103165952, 1, 'xx1', 1, '2023-03-31 18:12:49', '2023-03-31 18:12:49', 1, 1, 0);
 
 -- ----------------------------
 -- Table structure for pms_attr_value
@@ -425,8 +428,9 @@ CREATE TABLE `pms_sku`  (
   `limit_count` int(11) UNSIGNED NULL DEFAULT NULL COMMENT '每人限购',
   `total_stock` int(11) UNSIGNED NOT NULL COMMENT '总库存',
   `use_stock` int(11) UNSIGNED NOT NULL COMMENT '已用库存',
+  `virtual_use_stock` int(11) UNSIGNED NOT NULL DEFAULT 0 COMMENT '虚拟-已用库存(虚拟销量)',
   `usable_stock` int(11) UNSIGNED NOT NULL COMMENT '可用库存',
-  `cover_img` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '封面图',
+  `cover_img` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '封面图',
   `is_show` tinyint(1) NOT NULL DEFAULT 1 COMMENT '是否显示(0->否 1->是)',
   `sort` int(11) UNSIGNED NOT NULL DEFAULT 1 COMMENT '排序',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -438,7 +442,51 @@ CREATE TABLE `pms_sku`  (
 -- ----------------------------
 -- Records of pms_sku
 -- ----------------------------
-INSERT INTO `pms_sku` VALUES (1534420706920628224, 1, 1534420706752856064, 'ABC', '[{\"attrKeyId\":\"1\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1\",\"attrValueName\":\"蓝色\"}]', NULL, 10, 10, 1, 4, 0, 4, 'http://www.zhengqingya.com:9002/default/b1f263076e2147388251db3682df5f46.jpg', 1, 0, '2022-06-08 14:22:59', '2022-06-08 15:41:29', 0);
+INSERT INTO `pms_sku` VALUES (1534420706920628224, 1, 1534420706752856064, 'ABC', '[{\"attrKeyId\":\"1\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1\",\"attrValueName\":\"蓝色\"}]', NULL, 10, 10, 1, 4, 0, 0, 4, 'http://www.zhengqingya.com:9002/default/b1f263076e2147388251db3682df5f46.jpg', 1, 0, '2022-06-08 14:22:59', '2023-03-31 13:42:36', 1);
+INSERT INTO `pms_sku` VALUES (1641677349495898112, 1, 1534420706752856064, 'ABC', '[{\"attrKeyId\":\"1\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1\",\"attrValueName\":\"蓝色\"}]', NULL, 10, 10, 1, 4, 0, 0, 4, 'http://www.zhengqingya.com:9002/default/b1f263076e2147388251db3682df5f46.jpg', 1, 0, '2023-03-31 13:42:36', '2023-03-31 14:49:25', 1);
+INSERT INTO `pms_sku` VALUES (1641694166641672192, 1, 1534420706752856064, 'ABC', '[{\"attrKeyId\":\"1\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1\",\"attrValueName\":\"蓝色\"}]', NULL, 10, 10, 1, 4, 0, 0, 4, 'http://www.zhengqingya.com:9002/default/b1f263076e2147388251db3682df5f46.jpg', 1, 0, '2023-03-31 14:49:25', '2023-03-31 15:00:03', 1);
+INSERT INTO `pms_sku` VALUES (1641696842716676096, 1, 1534420706752856064, 'ABC', '[{\"attrKeyId\":\"1\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1\",\"attrValueName\":\"蓝色\"}]', NULL, 10, 10, 1, 4, 0, 0, 4, 'http://www.zhengqingya.com:9002/default/b1f263076e2147388251db3682df5f46.jpg', 1, 0, '2023-03-31 15:00:03', '2023-03-31 15:01:09', 1);
+INSERT INTO `pms_sku` VALUES (1641697119519768576, 1, 1534420706752856064, 'ABC', '[{\"attrKeyId\":\"1\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1\",\"attrValueName\":\"蓝色\"}]', NULL, 10, 10, 1, 4, 0, 0, 4, 'http://www.zhengqingya.com:9002/default/b1f263076e2147388251db3682df5f46.jpg', 1, 0, '2023-03-31 15:01:09', '2023-03-31 15:09:08', 1);
+INSERT INTO `pms_sku` VALUES (1641699126930440192, 1, 1534420706752856064, 'ABC', '[{\"attrKeyId\":\"1\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1\",\"attrValueName\":\"蓝色\"}]', NULL, 10, 10, 1, 4, 0, 0, 4, 'http://www.zhengqingya.com:9002/default/b1f263076e2147388251db3682df5f46.jpg', 1, 0, '2023-03-31 15:09:08', '2023-03-31 15:13:38', 1);
+INSERT INTO `pms_sku` VALUES (1641700262022348800, 1, 1534420706752856064, 'ABC', '[{\"attrKeyId\":\"1\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1\",\"attrValueName\":\"蓝色\"}]', NULL, 10, 10, 1, 4, 0, 0, 4, 'http://www.zhengqingya.com:9002/default/b1f263076e2147388251db3682df5f46.jpg', 1, 0, '2023-03-31 15:13:38', '2023-03-31 15:13:47', 1);
+INSERT INTO `pms_sku` VALUES (1641700298487627776, 1, 1534420706752856064, 'ABC', '[{\"attrKeyId\":\"1\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1\",\"attrValueName\":\"蓝色\"}]', NULL, 10, 10, 1, 4, 0, 0, 4, 'http://www.zhengqingya.com:9002/default/b1f263076e2147388251db3682df5f46.jpg', 1, 0, '2023-03-31 15:13:47', '2023-03-31 15:13:52', 1);
+INSERT INTO `pms_sku` VALUES (1641700317651402752, 1, 1534420706752856064, 'ABC', '[{\"attrKeyId\":\"1\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1\",\"attrValueName\":\"蓝色\"}]', NULL, 10, 10, 1, 4, 0, 0, 4, 'http://www.zhengqingya.com:9002/default/b1f263076e2147388251db3682df5f46.jpg', 1, 0, '2023-03-31 15:13:52', '2023-03-31 15:13:56', 1);
+INSERT INTO `pms_sku` VALUES (1641700337691787264, 1, 1534420706752856064, 'ABC', '[{\"attrKeyId\":\"1\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1\",\"attrValueName\":\"蓝色\"}]', NULL, 10, 10, 1, 4, 0, 0, 4, 'http://www.zhengqingya.com:9002/default/b1f263076e2147388251db3682df5f46.jpg', 1, 0, '2023-03-31 15:13:57', '2023-03-31 15:14:07', 1);
+INSERT INTO `pms_sku` VALUES (1641700382709252096, 1, 1534420706752856064, 'ABC', '[{\"attrKeyId\":\"1\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1\",\"attrValueName\":\"蓝色\"}]', NULL, 10, 10, 1, 4, 0, 0, 4, 'http://www.zhengqingya.com:9002/default/b1f263076e2147388251db3682df5f46.jpg', 1, 0, '2023-03-31 15:14:07', '2023-03-31 15:14:15', 1);
+INSERT INTO `pms_sku` VALUES (1641700415575818240, 1, 1534420706752856064, 'ABC', '[{\"attrKeyId\":\"1\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1\",\"attrValueName\":\"蓝色\"}]', NULL, 10, 10, 1, 4, 0, 0, 4, 'http://www.zhengqingya.com:9002/default/b1f263076e2147388251db3682df5f46.jpg', 1, 0, '2023-03-31 15:14:15', '2023-03-31 15:14:25', 1);
+INSERT INTO `pms_sku` VALUES (1641700456210235392, 1, 1534420706752856064, 'ABC', '[{\"attrKeyId\":\"1\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1\",\"attrValueName\":\"蓝色\"}]', NULL, 10, 10, 1, 4, 0, 0, 4, 'http://www.zhengqingya.com:9002/default/b1f263076e2147388251db3682df5f46.jpg', 1, 0, '2023-03-31 15:14:25', '2023-03-31 15:14:53', 1);
+INSERT INTO `pms_sku` VALUES (1641700573776576512, 1, 1534420706752856064, 'ABC', '[{\"attrKeyId\":\"1\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1\",\"attrValueName\":\"蓝色\"}]', NULL, 10, 10, 1, 4, 0, 0, 4, 'http://www.zhengqingya.com:9002/default/b1f263076e2147388251db3682df5f46.jpg', 1, 0, '2023-03-31 15:14:53', '2023-03-31 15:15:00', 1);
+INSERT INTO `pms_sku` VALUES (1641700605774921728, 1, 1534420706752856064, 'ABC', '[{\"attrKeyId\":\"1\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1\",\"attrValueName\":\"蓝色\"}]', NULL, 10, 10, 1, 4, 0, 0, 4, 'http://www.zhengqingya.com:9002/default/b1f263076e2147388251db3682df5f46.jpg', 1, 0, '2023-03-31 15:15:00', '2023-03-31 15:26:18', 1);
+INSERT INTO `pms_sku` VALUES (1641703445893349376, 1, 1534420706752856064, 'ABC', '[{\"attrKeyId\":\"1\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1\",\"attrValueName\":\"蓝色\"}]', NULL, 10, 10, 1, 4, 0, 0, 4, 'http://www.zhengqingya.com:9002/default/b1f263076e2147388251db3682df5f46.jpg', 1, 0, '2023-03-31 15:26:18', '2023-03-31 15:26:26', 1);
+INSERT INTO `pms_sku` VALUES (1641703480810930176, 1, 1534420706752856064, 'ABC', '[{\"attrKeyId\":\"1\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1\",\"attrValueName\":\"蓝色\"}]', NULL, 10, 10, 1, 4, 0, 0, 4, 'http://www.zhengqingya.com:9002/default/b1f263076e2147388251db3682df5f46.jpg', 1, 0, '2023-03-31 15:26:26', '2023-03-31 15:31:55', 1);
+INSERT INTO `pms_sku` VALUES (1641704863186419712, 1, 1534420706752856064, 'ABC', '[{\"attrKeyId\":\"1\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1\",\"attrValueName\":\"蓝色\"}]', NULL, 10, 10, 1, 4, 0, 0, 4, 'http://www.zhengqingya.com:9002/default/b1f263076e2147388251db3682df5f46.jpg', 1, 0, '2023-03-31 15:31:55', '2023-03-31 15:36:24', 1);
+INSERT INTO `pms_sku` VALUES (1641705989281546240, 1, 1534420706752856064, 'ABC', '[{\"attrKeyId\":\"1\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1\",\"attrValueName\":\"蓝色\"}]', NULL, 10, 10, 1, 4, 0, 0, 4, 'http://www.zhengqingya.com:9002/default/b1f263076e2147388251db3682df5f46.jpg', 1, 0, '2023-03-31 15:36:24', '2023-03-31 15:37:10', 1);
+INSERT INTO `pms_sku` VALUES (1641706182018203648, 1, 1534420706752856064, 'ABC', '[{\"attrKeyId\":\"1\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1\",\"attrValueName\":\"蓝色\"}]', NULL, 10, 10, 1, 4, 0, 0, 4, 'http://www.zhengqingya.com:9002/default/b1f263076e2147388251db3682df5f46.jpg', 1, 0, '2023-03-31 15:37:10', '2023-03-31 15:43:37', 1);
+INSERT INTO `pms_sku` VALUES (1641707807185174528, 1, 1534420706752856064, 'ABC', '[{\"attrKeyId\":\"1\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1\",\"attrValueName\":\"蓝色\"}]', NULL, 10, 10, 1, 4, 0, 0, 4, 'http://www.zhengqingya.com:9002/default/b1f263076e2147388251db3682df5f46.jpg', 1, 0, '2023-03-31 15:43:37', '2023-03-31 15:43:42', 1);
+INSERT INTO `pms_sku` VALUES (1641707828018282496, 1, 1534420706752856064, 'ABC', '[{\"attrKeyId\":\"1\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1\",\"attrValueName\":\"蓝色\"}]', NULL, 10, 10, 1, 4, 0, 0, 4, 'http://www.zhengqingya.com:9002/default/b1f263076e2147388251db3682df5f46.jpg', 1, 0, '2023-03-31 15:43:42', '2023-03-31 15:45:24', 1);
+INSERT INTO `pms_sku` VALUES (1641708254549639168, 1, 1534420706752856064, 'ABC', '[{\"attrKeyId\":\"1\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1\",\"attrValueName\":\"蓝色\"}]', NULL, 10, 10, 1, 4, 0, 0, 4, 'http://www.zhengqingya.com:9002/default/b1f263076e2147388251db3682df5f46.jpg', 1, 0, '2023-03-31 15:45:24', '2023-03-31 15:46:03', 1);
+INSERT INTO `pms_sku` VALUES (1641708419486449664, 1, 1534420706752856064, 'ABC', '[{\"attrKeyId\":\"1\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1\",\"attrValueName\":\"蓝色\"}]', NULL, 10, 10, 1, 4, 0, 0, 4, 'http://www.zhengqingya.com:9002/default/b1f263076e2147388251db3682df5f46.jpg', 1, 0, '2023-03-31 15:46:03', '2023-03-31 15:46:16', 1);
+INSERT INTO `pms_sku` VALUES (1641708470883450880, 1, 1534420706752856064, 'ABC', '[{\"attrKeyId\":\"1\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1\",\"attrValueName\":\"蓝色\"}]', NULL, 10, 10, 1, 4, 0, 0, 4, 'http://www.zhengqingya.com:9002/default/b1f263076e2147388251db3682df5f46.jpg', 1, 0, '2023-03-31 15:46:16', '2023-04-03 10:08:24', 1);
+INSERT INTO `pms_sku` VALUES (1642710611311853568, 1, 1534420706752856064, 'ABC', '[{\"attrKeyId\":\"1\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1\",\"attrValueName\":\"蓝色\"}]', NULL, 10, 10, 1, 4, 0, 0, 4, 'http://172.16.16.244:9001/test/2023-04-03/641a958d-db3a-4644-89d6-94bdbefca321%40%40%E7%BE%8E%E5%9B%BE28.jpg', 1, 0, '2023-04-03 10:08:25', '2023-04-03 10:40:07', 1);
+INSERT INTO `pms_sku` VALUES (1642718591956680704, 1, 1534420706752856064, 'ABC', '[{\"attrKeyId\":\"1\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1\",\"attrValueName\":\"蓝色\"}]', NULL, 10, 10, 1, 4, 0, 0, 4, 'http://172.16.16.244:9001/test/2023-04-03/641a958d-db3a-4644-89d6-94bdbefca321%40%40%E7%BE%8E%E5%9B%BE28.jpg', 1, 0, '2023-04-03 10:40:07', '2023-04-03 17:42:05', 1);
+INSERT INTO `pms_sku` VALUES (1642824781940260864, 1, 1534420706752856064, NULL, '[{\"attrKeyId\":\"1532283711813451776\",\"attrKeyName\":\"尺寸\",\"attrValueId\":\"1532284264874377216\",\"attrValueName\":\"X\"},{\"attrKeyId\":\"1532281238671458304\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1532284024536563712\",\"attrValueName\":\"蓝色\"}]', NULL, 1, 0, 0, 1, 0, 0, 1, 'http://172.16.16.244:9001/test/2023-04-03/55e1239b-09bd-492b-ab7f-036c4919552b%40%40%E7%BE%8E%E5%9B%BE13.png', 1, 1, '2023-04-03 17:42:05', '2023-04-04 09:21:07', 1);
+INSERT INTO `pms_sku` VALUES (1643061098758406144, 1, 1534420706752856064, NULL, '[{\"attrKeyId\":\"1532283711813451776\",\"attrKeyName\":\"尺寸\",\"attrValueId\":\"1532284264874377216\",\"attrValueName\":\"X\"}]', NULL, 1, 0, 0, 1, 0, 0, 1, 'http://172.16.16.244:9001/test/2023-04-04/9b687e08-5481-4368-aab3-119d6cfa94e4%40%40%E7%BE%8E%E5%9B%BE13.png', 1, 1, '2023-04-04 09:21:07', '2023-04-04 09:56:26', 1);
+INSERT INTO `pms_sku` VALUES (1643069985242873856, 1, 1534420706752856064, '', '[{\"attrKeyId\":\"1532283711813451776\",\"attrKeyName\":\"尺寸\",\"attrValueId\":\"1532284264874377216\",\"attrValueName\":\"X\"}]', NULL, 2, 0, 0, 1, 0, 0, 1, 'http://172.16.16.244:9001/test/2023-04-04/9b687e08-5481-4368-aab3-119d6cfa94e4%40%40%E7%BE%8E%E5%9B%BE13.png', 1, 1, '2023-04-04 09:56:26', '2023-04-04 09:56:40', 1);
+INSERT INTO `pms_sku` VALUES (1643070044554526720, 1, 1534420706752856064, NULL, '[{\"attrKeyId\":\"1532283711813451776\",\"attrKeyName\":\"尺寸\",\"attrValueId\":\"1532284264874377216\",\"attrValueName\":\"X\"},{\"attrKeyId\":\"1532281238671458304\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1532284024536563712\",\"attrValueName\":\"蓝色\"}]', NULL, 1, 0, 0, 2, 0, 0, 2, 'http://172.16.16.244:9001/test/2023-04-04/2bad8725-5922-4bad-b743-fa60683295ff%40%40%E7%BE%8E%E5%9B%BE13.png', 1, 1, '2023-04-04 09:56:40', '2023-04-04 10:35:35', 1);
+INSERT INTO `pms_sku` VALUES (1643070044554526721, 1, 1534420706752856064, NULL, '[{\"attrKeyId\":\"1532283711813451776\",\"attrKeyName\":\"尺寸\",\"attrValueId\":\"1532284264874377216\",\"attrValueName\":\"X\"},{\"attrKeyId\":\"1532281238671458304\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1532284050088263680\",\"attrValueName\":\"红色\"}]', NULL, 3, 0, 0, 4, 0, 0, 4, 'http://172.16.16.244:9001/test/2023-04-04/ceccacbe-b54e-4f29-8d84-a878ac67c187%40%40%E7%BE%8E%E5%9B%BE14.jpg', 1, 1, '2023-04-04 09:56:40', '2023-04-04 10:35:35', 1);
+INSERT INTO `pms_sku` VALUES (1643079836618588160, 1, 1534420706752856064, '', '[{\"attrKeyId\":\"1532283711813451776\",\"attrKeyName\":\"尺寸\",\"attrValueId\":\"1532284264874377216\",\"attrValueName\":\"X\"},{\"attrKeyId\":\"1532281238671458304\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1532284024536563712\",\"attrValueName\":\"蓝色\"}]', NULL, 1, 0, 0, 22, 0, 0, 22, 'http://172.16.16.244:9001/test/2023-04-04/2bad8725-5922-4bad-b743-fa60683295ff%40%40%E7%BE%8E%E5%9B%BE13.png', 1, 1, '2023-04-04 10:35:35', '2023-04-04 10:36:02', 1);
+INSERT INTO `pms_sku` VALUES (1643079836618588161, 1, 1534420706752856064, '', '[{\"attrKeyId\":\"1532283711813451776\",\"attrKeyName\":\"尺寸\",\"attrValueId\":\"1532284264874377216\",\"attrValueName\":\"X\"},{\"attrKeyId\":\"1532281238671458304\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1532284050088263680\",\"attrValueName\":\"红色\"}]', NULL, 3, 0, 0, 4, 0, 0, 4, 'http://172.16.16.244:9001/test/2023-04-04/ceccacbe-b54e-4f29-8d84-a878ac67c187%40%40%E7%BE%8E%E5%9B%BE14.jpg', 1, 1, '2023-04-04 10:35:35', '2023-04-04 10:36:02', 1);
+INSERT INTO `pms_sku` VALUES (1643079949734772736, 1, 1534420706752856064, '', '[{\"attrKeyId\":\"1532283711813451776\",\"attrKeyName\":\"尺寸\",\"attrValueId\":\"1532284264874377216\",\"attrValueName\":\"X\"},{\"attrKeyId\":\"1532281238671458304\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1532284024536563712\",\"attrValueName\":\"蓝色\"}]', NULL, 1, 0, 0, 22, 0, 0, 22, 'http://172.16.16.244:9001/test/2023-04-04/2bad8725-5922-4bad-b743-fa60683295ff%40%40%E7%BE%8E%E5%9B%BE13.png', 1, 1, '2023-04-04 10:36:02', '2023-04-04 10:37:48', 1);
+INSERT INTO `pms_sku` VALUES (1643079949734772737, 1, 1534420706752856064, NULL, '[{\"attrKeyId\":\"1532283711813451776\",\"attrKeyName\":\"尺寸\",\"attrValueId\":\"1532284264874377216\",\"attrValueName\":\"X\"},{\"attrKeyId\":\"1532281238671458304\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1532284050088263680\",\"attrValueName\":\"红色\"}]', NULL, 12, 0, 0, 121, 0, 0, 121, 'http://172.16.16.244:9001/test/2023-04-04/61524101-9f74-4c46-a43d-b44f6a0cd657%40%40%E7%BE%8E%E5%9B%BE14.jpg', 1, 1, '2023-04-04 10:36:02', '2023-04-04 10:37:48', 1);
+INSERT INTO `pms_sku` VALUES (1643080397950681088, 1, 1534420706752856064, NULL, '[{\"attrKeyId\":\"1532283711813451776\",\"attrKeyName\":\"尺寸\",\"attrValueId\":\"1532284264874377216\",\"attrValueName\":\"X\"},{\"attrKeyId\":\"1532281238671458304\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1532284024536563712\",\"attrValueName\":\"蓝色\"}]', NULL, 1, 0, 0, 1, 0, 0, 1, 'http://172.16.16.244:9001/test/2023-04-04/7e3d02fd-eee2-44a5-a374-22b998564412%40%40%E7%BE%8E%E5%9B%BE13.png', 1, 1, '2023-04-04 10:37:49', '2023-04-04 10:50:02', 1);
+INSERT INTO `pms_sku` VALUES (1643083474233589760, 1, 1534420706752856064, '', '[{\"attrKeyId\":\"1532283711813451776\",\"attrKeyName\":\"尺寸\",\"attrValueId\":\"1532284264874377216\",\"attrValueName\":\"X\"},{\"attrKeyId\":\"1532281238671458304\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1532284024536563712\",\"attrValueName\":\"蓝色\"}]', NULL, 1, 0, 0, 1, 0, 0, 1, 'http://172.16.16.244:9001/test/2023-04-04/7e3d02fd-eee2-44a5-a374-22b998564412%40%40%E7%BE%8E%E5%9B%BE13.png', 1, 1, '2023-04-04 10:50:02', '2023-04-04 10:52:46', 1);
+INSERT INTO `pms_sku` VALUES (1643083474233589761, 1, 1534420706752856064, NULL, '[{\"attrKeyId\":\"1532283711813451776\",\"attrKeyName\":\"尺寸\",\"attrValueId\":\"1532284264874377216\",\"attrValueName\":\"X\"},{\"attrKeyId\":\"1532281238671458304\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1532284050088263680\",\"attrValueName\":\"红色\"}]', NULL, 2, 0, 0, 2, 0, 0, 2, 'http://172.16.16.244:9001/test/2023-04-04/879b3c5f-95ec-420f-bb56-ac786edc8b68%40%40%E7%BE%8E%E5%9B%BE13.png', 1, 1, '2023-04-04 10:50:02', '2023-04-04 10:52:46', 1);
+INSERT INTO `pms_sku` VALUES (1643084163357736960, 1, 1534420706752856064, '', '[{\"attrKeyId\":\"1532283711813451776\",\"attrKeyName\":\"尺寸\",\"attrValueId\":\"1532284264874377216\",\"attrValueName\":\"X\"},{\"attrKeyId\":\"1532281238671458304\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1532284024536563712\",\"attrValueName\":\"蓝色\"}]', NULL, 1, 0, 0, 1, 0, 0, 1, 'http://172.16.16.244:9001/test/2023-04-04/7e3d02fd-eee2-44a5-a374-22b998564412%40%40%E7%BE%8E%E5%9B%BE13.png', 1, 1, '2023-04-04 10:52:46', '2023-04-04 10:59:46', 1);
+INSERT INTO `pms_sku` VALUES (1643084163357736961, 1, 1534420706752856064, '', '[{\"attrKeyId\":\"1532283711813451776\",\"attrKeyName\":\"尺寸\",\"attrValueId\":\"1532284264874377216\",\"attrValueName\":\"X\"},{\"attrKeyId\":\"1532281238671458304\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1532284050088263680\",\"attrValueName\":\"红色\"}]', NULL, 2, 0, 0, 2, 0, 0, 2, 'http://172.16.16.244:9001/test/2023-04-04/879b3c5f-95ec-420f-bb56-ac786edc8b68%40%40%E7%BE%8E%E5%9B%BE13.png', 1, 1, '2023-04-04 10:52:46', '2023-04-04 10:59:46', 1);
+INSERT INTO `pms_sku` VALUES (1643085924512432128, 1, 1534420706752856064, '', '[{\"attrKeyId\":\"1532283711813451776\",\"attrKeyName\":\"尺寸\",\"attrValueId\":\"1532284264874377216\",\"attrValueName\":\"X\"},{\"attrKeyId\":\"1532281238671458304\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1532284024536563712\",\"attrValueName\":\"蓝色\"}]', NULL, 1, 0, 0, 2, 0, 0, 2, 'http://172.16.16.244:9001/test/2023-04-04/7e3d02fd-eee2-44a5-a374-22b998564412%40%40%E7%BE%8E%E5%9B%BE13.png', 1, 1, '2023-04-04 10:59:46', '2023-04-04 11:00:12', 1);
+INSERT INTO `pms_sku` VALUES (1643085924512432129, 1, 1534420706752856064, '', '[{\"attrKeyId\":\"1532283711813451776\",\"attrKeyName\":\"尺寸\",\"attrValueId\":\"1532284264874377216\",\"attrValueName\":\"X\"},{\"attrKeyId\":\"1532281238671458304\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1532284050088263680\",\"attrValueName\":\"红色\"}]', NULL, 3, 0, 0, 4, 0, 0, 4, 'http://172.16.16.244:9001/test/2023-04-04/879b3c5f-95ec-420f-bb56-ac786edc8b68%40%40%E7%BE%8E%E5%9B%BE13.png', 1, 1, '2023-04-04 10:59:46', '2023-04-04 11:00:12', 1);
+INSERT INTO `pms_sku` VALUES (1643086032784195584, 1, 1534420706752856064, '', '[{\"attrKeyId\":\"1532283711813451776\",\"attrKeyName\":\"尺寸\",\"attrValueId\":\"1532284264874377216\",\"attrValueName\":\"X\"},{\"attrKeyId\":\"1532281238671458304\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1532284024536563712\",\"attrValueName\":\"蓝色\"}]', NULL, 1, 0, 0, 2, 0, 0, 2, 'http://172.16.16.244:9001/test/2023-04-04/7e3d02fd-eee2-44a5-a374-22b998564412%40%40%E7%BE%8E%E5%9B%BE13.png', 1, 1, '2023-04-04 11:00:12', '2023-04-04 11:00:12', 0);
+INSERT INTO `pms_sku` VALUES (1643086032784195585, 1, 1534420706752856064, '', '[{\"attrKeyId\":\"1532283711813451776\",\"attrKeyName\":\"尺寸\",\"attrValueId\":\"1532284264874377216\",\"attrValueName\":\"X\"},{\"attrKeyId\":\"1532281238671458304\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1532284050088263680\",\"attrValueName\":\"红色\"}]', NULL, 3, 0, 0, 4, 0, 0, 4, 'http://172.16.16.244:9001/test/2023-04-04/879b3c5f-95ec-420f-bb56-ac786edc8b68%40%40%E7%BE%8E%E5%9B%BE13.png', 1, 1, '2023-04-04 11:00:12', '2023-04-04 11:00:12', 0);
 
 -- ----------------------------
 -- Table structure for pms_spu
@@ -453,12 +501,12 @@ CREATE TABLE `pms_spu`  (
   `coupon_id` bigint(20) NULL DEFAULT NULL COMMENT '优惠券ID',
   `coupon_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '优惠券名字',
   `coupon_num` int(11) NULL DEFAULT NULL COMMENT '优惠券数量',
-  `cover_img` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '封面图',
+  `cover_img` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '封面图',
   `slide_img_list` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '轮播图',
   `detail_img_list` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '商品详情图',
   `line_price` int(11) UNSIGNED NULL DEFAULT NULL COMMENT '商品划线价格(单位:分)',
   `freight` int(11) UNSIGNED NOT NULL COMMENT '运费(单位:分 0:包邮)',
-  `attr_list` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '商品属性-配置规格时使用',
+  `attr_list` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '商品属性-配置规格时使用',
   `is_presell` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否预售(0->否；1->是)',
   `presell_start_time` datetime NULL DEFAULT NULL COMMENT '预售开始时间',
   `presell_end_time` datetime NULL DEFAULT NULL COMMENT '预售结束时间',
@@ -479,7 +527,7 @@ CREATE TABLE `pms_spu`  (
 -- ----------------------------
 -- Records of pms_spu
 -- ----------------------------
-INSERT INTO `pms_spu` VALUES (1534420706752856064, 1, '熊猫限定帆布袋', 1, 101, 1, '买一送一', 100, 'http://www.zhengqingya.com:9002/default/b1f263076e2147388251db3682df5f46.jpg', '[{\"url\":\"https://www.zhengqingya.com/label.png\",\"name\":\"熊猫限定帆布袋\"}]', '[{\"url\":\"https://www.zhengqingya.com/label.png\",\"name\":\"熊猫限定帆布袋\"}]', 100, 0, '[{\"attrKeyId\":\"1\",\"attrKeyName\":\"颜色\",\"attrValueList\":[{\"attrValueId\":\"1\",\"attrValueName\":\"蓝色\"}]}]', 1, '2021-08-25 09:00:00', '2021-08-26 23:59:59', 15, 1, 1, '[{\"code\":\"btn\",\"remark\":\"this is the add.\",\"sort\":1,\"name\":\"添加\",\"value\":\"add\"}]', '[{\"code\":\"btn\",\"remark\":\"this is the add.\",\"sort\":1,\"name\":\"添加\",\"value\":\"add\"}]', NULL, '2022-06-08 14:22:59', '2022-06-08 15:41:20', 0, 0, 0);
+INSERT INTO `pms_spu` VALUES (1534420706752856064, 1, '熊猫限定帆布袋', 1, 101, 1, '买一送一', 100, 'http://172.16.16.244:9001/test/2023-03-31/8f37a6e3-21a6-4522-89d4-0ba941eb12f4%40%40%E7%BE%8E%E5%9B%BE13.png', '[{\"name\":\"熊猫限定帆布袋\",\"url\":\"https://www.zhengqingya.com/label.png\"}]', '[{\"name\":\"美图14.jpg\",\"url\":\"http://172.16.16.244:9001/test/2023-03-31/b3521f30-8cda-4e31-bbbf-872290f9320e%40%40%E7%BE%8E%E5%9B%BE14.jpg\"},{\"name\":\"美图4.jpg\",\"url\":\"http://172.16.16.244:9001/test/2023-03-31/58fdfffd-a739-44ee-a3d0-1245b58b75b6%40%40%E7%BE%8E%E5%9B%BE4.jpg\"},{\"name\":\"美图29.jpg\",\"url\":\"http://172.16.16.244:9001/test/2023-03-31/4c44b70b-19cc-4053-b8c6-44921c97eb8e%40%40%E7%BE%8E%E5%9B%BE29.jpg\"}]', 100, 0, NULL, 0, '2021-08-25 09:00:00', '2021-08-26 23:59:59', 15, 1, 1, '[{\"code\":\"btn\",\"name\":\"添加\",\"value\":\"add\",\"sort\":1,\"remark\":\"this is the add.\"}]', '[{\"code\":\"btn\",\"name\":\"添加\",\"value\":\"add\",\"sort\":1,\"remark\":\"this is the add.\"}]', NULL, '2022-06-08 14:22:59', '2023-04-04 11:03:28', 0, 1, 0);
 
 -- ----------------------------
 -- Table structure for pms_spu_rate
@@ -631,7 +679,7 @@ CREATE TABLE `t_sys_menu`  (
   `update_time` datetime NOT NULL COMMENT '修改时间',
   `is_deleted` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否删除(1->是，0->否)',
   PRIMARY KEY (`menu_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-菜单表' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-菜单表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_sys_menu
@@ -655,6 +703,7 @@ INSERT INTO `t_sys_menu` VALUES (17, '素材管理', 'material', '', 'material',
 INSERT INTO `t_sys_menu` VALUES (18, '消息自动回复', 'msg-auto-reply', '', 'msg-auto-reply', 12, 6, 'wxmp/msg-auto-reply/index', 0, '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-22 15:01:51', 0);
 INSERT INTO `t_sys_menu` VALUES (19, '商城管理', 'mall', 'Setting', '/mall', 0, 4, 'Layout', 0, NULL, 1, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-30 03:17:44', 0);
 INSERT INTO `t_sys_menu` VALUES (20, '分类', 'category', NULL, 'category', 19, 1, 'mall/category/index', 0, NULL, 1, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-30 03:17:44', 0);
+INSERT INTO `t_sys_menu` VALUES (21, '商品', 'product', NULL, 'product', 19, 2, 'mall/product/index', 0, NULL, 1, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-30 03:17:44', 0);
 
 -- ----------------------------
 -- Table structure for t_sys_permission
@@ -740,32 +789,33 @@ CREATE TABLE `t_sys_role_menu`  (
   `update_by` int(11) NOT NULL COMMENT '修改人',
   `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1381 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-角色菜单关联表' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 1820 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-角色菜单关联表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_sys_role_menu
 -- ----------------------------
 INSERT INTO `t_sys_role_menu` VALUES (1324, 10, 1, 1, '2023-03-31 09:48:32', 1, '2023-03-31 09:48:32');
 INSERT INTO `t_sys_role_menu` VALUES (1325, 10, 2, 1, '2023-03-31 09:48:32', 1, '2023-03-31 09:48:32');
-INSERT INTO `t_sys_role_menu` VALUES (1362, 9, 1, 0, '2023-03-31 09:55:30', 0, '2023-03-31 09:55:30');
-INSERT INTO `t_sys_role_menu` VALUES (1363, 9, 2, 0, '2023-03-31 09:55:30', 0, '2023-03-31 09:55:30');
-INSERT INTO `t_sys_role_menu` VALUES (1364, 9, 3, 0, '2023-03-31 09:55:30', 0, '2023-03-31 09:55:30');
-INSERT INTO `t_sys_role_menu` VALUES (1365, 9, 4, 0, '2023-03-31 09:55:30', 0, '2023-03-31 09:55:30');
-INSERT INTO `t_sys_role_menu` VALUES (1366, 9, 5, 0, '2023-03-31 09:55:30', 0, '2023-03-31 09:55:30');
-INSERT INTO `t_sys_role_menu` VALUES (1367, 9, 6, 0, '2023-03-31 09:55:30', 0, '2023-03-31 09:55:30');
-INSERT INTO `t_sys_role_menu` VALUES (1368, 9, 7, 0, '2023-03-31 09:55:30', 0, '2023-03-31 09:55:30');
-INSERT INTO `t_sys_role_menu` VALUES (1369, 9, 9, 0, '2023-03-31 09:55:30', 0, '2023-03-31 09:55:30');
-INSERT INTO `t_sys_role_menu` VALUES (1370, 9, 10, 0, '2023-03-31 09:55:30', 0, '2023-03-31 09:55:30');
-INSERT INTO `t_sys_role_menu` VALUES (1371, 9, 11, 0, '2023-03-31 09:55:30', 0, '2023-03-31 09:55:30');
-INSERT INTO `t_sys_role_menu` VALUES (1372, 9, 12, 0, '2023-03-31 09:55:30', 0, '2023-03-31 09:55:30');
-INSERT INTO `t_sys_role_menu` VALUES (1373, 9, 13, 0, '2023-03-31 09:55:30', 0, '2023-03-31 09:55:30');
-INSERT INTO `t_sys_role_menu` VALUES (1374, 9, 14, 0, '2023-03-31 09:55:30', 0, '2023-03-31 09:55:30');
-INSERT INTO `t_sys_role_menu` VALUES (1375, 9, 15, 0, '2023-03-31 09:55:30', 0, '2023-03-31 09:55:30');
-INSERT INTO `t_sys_role_menu` VALUES (1376, 9, 16, 0, '2023-03-31 09:55:30', 0, '2023-03-31 09:55:30');
-INSERT INTO `t_sys_role_menu` VALUES (1377, 9, 17, 0, '2023-03-31 09:55:30', 0, '2023-03-31 09:55:30');
-INSERT INTO `t_sys_role_menu` VALUES (1378, 9, 18, 0, '2023-03-31 09:55:30', 0, '2023-03-31 09:55:30');
-INSERT INTO `t_sys_role_menu` VALUES (1379, 9, 19, 0, '2023-03-31 09:55:30', 0, '2023-03-31 09:55:30');
-INSERT INTO `t_sys_role_menu` VALUES (1380, 9, 20, 0, '2023-03-31 09:55:30', 0, '2023-03-31 09:55:30');
+INSERT INTO `t_sys_role_menu` VALUES (1800, 9, 1, 0, '2023-04-04 10:59:23', 0, '2023-04-04 10:59:23');
+INSERT INTO `t_sys_role_menu` VALUES (1801, 9, 2, 0, '2023-04-04 10:59:23', 0, '2023-04-04 10:59:23');
+INSERT INTO `t_sys_role_menu` VALUES (1802, 9, 3, 0, '2023-04-04 10:59:23', 0, '2023-04-04 10:59:23');
+INSERT INTO `t_sys_role_menu` VALUES (1803, 9, 4, 0, '2023-04-04 10:59:23', 0, '2023-04-04 10:59:23');
+INSERT INTO `t_sys_role_menu` VALUES (1804, 9, 5, 0, '2023-04-04 10:59:23', 0, '2023-04-04 10:59:23');
+INSERT INTO `t_sys_role_menu` VALUES (1805, 9, 6, 0, '2023-04-04 10:59:23', 0, '2023-04-04 10:59:23');
+INSERT INTO `t_sys_role_menu` VALUES (1806, 9, 7, 0, '2023-04-04 10:59:23', 0, '2023-04-04 10:59:23');
+INSERT INTO `t_sys_role_menu` VALUES (1807, 9, 9, 0, '2023-04-04 10:59:23', 0, '2023-04-04 10:59:23');
+INSERT INTO `t_sys_role_menu` VALUES (1808, 9, 10, 0, '2023-04-04 10:59:23', 0, '2023-04-04 10:59:23');
+INSERT INTO `t_sys_role_menu` VALUES (1809, 9, 11, 0, '2023-04-04 10:59:23', 0, '2023-04-04 10:59:23');
+INSERT INTO `t_sys_role_menu` VALUES (1810, 9, 12, 0, '2023-04-04 10:59:23', 0, '2023-04-04 10:59:23');
+INSERT INTO `t_sys_role_menu` VALUES (1811, 9, 13, 0, '2023-04-04 10:59:23', 0, '2023-04-04 10:59:23');
+INSERT INTO `t_sys_role_menu` VALUES (1812, 9, 14, 0, '2023-04-04 10:59:23', 0, '2023-04-04 10:59:23');
+INSERT INTO `t_sys_role_menu` VALUES (1813, 9, 15, 0, '2023-04-04 10:59:23', 0, '2023-04-04 10:59:23');
+INSERT INTO `t_sys_role_menu` VALUES (1814, 9, 16, 0, '2023-04-04 10:59:23', 0, '2023-04-04 10:59:23');
+INSERT INTO `t_sys_role_menu` VALUES (1815, 9, 17, 0, '2023-04-04 10:59:23', 0, '2023-04-04 10:59:23');
+INSERT INTO `t_sys_role_menu` VALUES (1816, 9, 18, 0, '2023-04-04 10:59:23', 0, '2023-04-04 10:59:23');
+INSERT INTO `t_sys_role_menu` VALUES (1817, 9, 19, 0, '2023-04-04 10:59:23', 0, '2023-04-04 10:59:23');
+INSERT INTO `t_sys_role_menu` VALUES (1818, 9, 20, 0, '2023-04-04 10:59:23', 0, '2023-04-04 10:59:23');
+INSERT INTO `t_sys_role_menu` VALUES (1819, 9, 21, 0, '2023-04-04 10:59:23', 0, '2023-04-04 10:59:23');
 
 -- ----------------------------
 -- Table structure for t_sys_role_permission
@@ -780,15 +830,15 @@ CREATE TABLE `t_sys_role_permission`  (
   `update_by` int(11) NOT NULL COMMENT '修改人',
   `update_time` datetime NOT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1173 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-角色关联权限表' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 1261 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-角色关联权限表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_sys_role_permission
 -- ----------------------------
-INSERT INTO `t_sys_role_permission` VALUES (1169, 9, 1, 0, '2023-03-31 09:55:30', 0, '2023-03-31 09:55:30');
-INSERT INTO `t_sys_role_permission` VALUES (1170, 9, 2, 0, '2023-03-31 09:55:30', 0, '2023-03-31 09:55:30');
-INSERT INTO `t_sys_role_permission` VALUES (1171, 9, 3, 0, '2023-03-31 09:55:30', 0, '2023-03-31 09:55:30');
-INSERT INTO `t_sys_role_permission` VALUES (1172, 9, 4, 0, '2023-03-31 09:55:30', 0, '2023-03-31 09:55:30');
+INSERT INTO `t_sys_role_permission` VALUES (1257, 9, 1, 0, '2023-04-04 10:59:23', 0, '2023-04-04 10:59:23');
+INSERT INTO `t_sys_role_permission` VALUES (1258, 9, 2, 0, '2023-04-04 10:59:23', 0, '2023-04-04 10:59:23');
+INSERT INTO `t_sys_role_permission` VALUES (1259, 9, 3, 0, '2023-04-04 10:59:23', 0, '2023-04-04 10:59:23');
+INSERT INTO `t_sys_role_permission` VALUES (1260, 9, 4, 0, '2023-04-04 10:59:23', 0, '2023-04-04 10:59:23');
 
 -- ----------------------------
 -- Table structure for t_sys_user

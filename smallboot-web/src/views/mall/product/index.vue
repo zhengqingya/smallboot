@@ -35,7 +35,7 @@
       </el-table-column>
     </base-table-p>
 
-    <base-dialog v-model="dialogVisible" :title="titleMap[dialogStatus]" width="80%">
+    <base-dialog v-if="dialogVisible" v-model="dialogVisible" :title="titleMap[dialogStatus]" width="80%">
       <el-form ref="dataForm" v-if="dialogStatus !== 'detail'" :model="form" :rules="rules" label-width="100px">
         <el-form-item label="名称:" prop="name">
           <el-input v-model="form.name"></el-input>
@@ -47,7 +47,7 @@
           <base-upload-multi v-model="form.detailImgList" />
         </el-form-item>
         <el-form-item label="商品sku:">
-          <sku-form :attrList="form.attrList" v-model="form.skuList" />
+          <sku-form ref="skuForm" v-model="form.skuList" />
         </el-form-item>
         <el-form-item label="是否上架:" prop="isPut">
           <el-radio-group v-model="form.isPut">
@@ -74,11 +74,11 @@
 </template>
 
 <script>
-import SkuForm from './sku-form.vue'
+import skuForm from './sku-form.vue'
 
 export default {
   name: 'PmsSpu',
-  components: { SkuForm },
+  components: { skuForm },
   data() {
     return {
       listQuery: {},
@@ -93,10 +93,7 @@ export default {
       rules: {},
     }
   },
-  created() {
-    // TODO 临时测试
-    this.handleUpdate({ id: '1534420706752856064' })
-  },
+  created() {},
   methods: {
     refreshTableData() {
       this.$refs.baseTable.refresh()
@@ -112,6 +109,10 @@ export default {
       this.form = Object.assign({}, res.data)
       this.dialogStatus = 'update'
       this.dialogVisible = true
+
+      // 初始化sku组件数据 -- 无效
+      // this.$refs.skuForm.init()
+      // skuForm.methods.init()
     },
     async handleDelete(row) {
       let res = await this.$api.pms_spu.delete({ id: row.id })

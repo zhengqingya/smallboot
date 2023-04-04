@@ -97,9 +97,9 @@
     </select>
 
     <resultMap id="detailByWeb" type="com.zhengqing.mall.model.vo.WebPmsSpuDetailVO">
-        <result column="attr_list"
-                property="attrList"
-                typeHandler="com.zhengqing.mall.config.mybatis.handler.MallListAttrTypeHandler"></result>
+        <!--        <result column="attr_list"-->
+        <!--                property="attrList"-->
+        <!--                typeHandler="com.zhengqing.mall.config.mybatis.handler.MallListAttrTypeHandler"></result>-->
         <result column="slide_img_list"
                 property="slideImgList"
                 typeHandler="com.zhengqing.mall.config.mybatis.handler.MallListFileTypeHandler"></result>
@@ -202,9 +202,9 @@
     </select>
 
     <resultMap id="detailByMini" type="com.zhengqing.mall.model.vo.MiniPmsSpuDetailVO">
-        <result column="attr_list"
-                property="attrList"
-                typeHandler="com.zhengqing.mall.config.mybatis.handler.MallListAttrTypeHandler"></result>
+        <!--        <result column="attr_list"-->
+        <!--                property="attrList"-->
+        <!--                typeHandler="com.zhengqing.mall.config.mybatis.handler.MallListAttrTypeHandler"></result>-->
         <result column="slide_img_list"
                 property="slideImgList"
                 typeHandler="com.zhengqing.mall.config.mybatis.handler.MallListFileTypeHandler"></result>

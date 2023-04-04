@@ -49,7 +49,12 @@ public class WebPmsAttrKeyServiceImpl extends PmsAttrKeyServiceImpl<PmsAttrKeyMa
 
     @Override
     public List<WebPmsAttrVO> listByIdList(List<String> idList) {
+        if (CollectionUtils.isEmpty(idList)) {
+            return Lists.newLinkedList();
+        }
         List<WebPmsAttrVO> resultList = Lists.newLinkedList();
+        // 去重
+        idList = idList.stream().distinct().collect(Collectors.toList());
         List<WebPmsAttrVO> list = this.pmsAttrKeyMapper.selectDataListByIdList(idList);
         // 通过指定属性id分组
         Map<String, List<WebPmsAttrVO>> groupByStatus = list.stream().collect(Collectors.groupingBy(WebPmsAttrVO::getAttrKeyId));

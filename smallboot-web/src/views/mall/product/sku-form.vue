@@ -35,7 +35,7 @@
       </div>
 
       <div class="sku-box">
-        <el-table :data="skuList" border style="width: 100%" height="240px">
+        <el-table :data="skuList" border style="width: 100%" height="350px">
           <!-- 额外添加的编号项（可删除） -->
           <el-table-column type="index" :label="'编号'" :width="55"></el-table-column>
 
@@ -66,10 +66,10 @@
 export default {
   name: 'SkuForm',
   props: {
-    attrList: {
-      type: Array,
-      default: () => [],
-    },
+    // attrList: {
+    //   type: Array,
+    //   default: () => [],
+    // },
     // sku值
     modelValue: {
       type: Array,
@@ -79,6 +79,7 @@ export default {
   computed: {
     skuList: {
       set: function (val) {
+        // console.log(111, val)
         this.$emit('update:modelValue', val)
       },
       get: function () {
@@ -86,12 +87,19 @@ export default {
       },
     },
   },
+  // watch: {
+  //   skuList(val) {
+  //     console.log(222, val)
+  //     // this.skuList = val
+  //     this.$emit('update:modelValue', val)
+  //   },
+  // },
   data() {
     return {
       attrDbList: [], // 属性数据
       attrKeyList: [], // 属性key
       newAttrKey: '', // 选择的属性key
-      // attrList: []
+      attrList: [], // 属性列表
       // 表头，以键(prop)值(label)存储表头
       columnList: [
         // { isSpec: true, prop: '商品规格', label: '规格1' },
@@ -101,18 +109,30 @@ export default {
       ],
     }
   },
-  mounted() {
+  created() {
     this.init()
   },
   methods: {
     async init() {
-      let keyIdList = this.attrList.map((item) => item.attrKeyId)
+      if (this.skuList.length === 0) {
+        return
+      }
+      // 拿到选中的属性key，value 对应的ids
+      let keyIdList = []
+      // 拿到选中的属性value
+      let valueIdList = []
+      this.skuList.forEach((item) => {
+        item.specList.forEach((specItem) => {
+          keyIdList.push(specItem.attrKeyId)
+          valueIdList.push(specItem.attrValueId)
+        })
+      })
+      // 去重
+      keyIdList = Array.from(new Set(keyIdList))
+      valueIdList = Array.from(new Set(valueIdList))
+
       let res = await this.$api.pms_attr.listByKeyIdList({ idList: keyIdList.join() })
       this.attrDbList = res.data
-      let valueIdList = []
-      this.attrList.forEach((item) => {
-        item.attrValueList.forEach((valueItem) => valueIdList.push(valueItem.attrValueId))
-      })
 
       this.attrDbList.forEach((item) => {
         let selectedAttrValueIdList = []
@@ -125,7 +145,7 @@ export default {
         item.selectedAttrValueIdList = selectedAttrValueIdList
       })
 
-      this.handleTableColumn()
+      this.handleTableColumn(false)
     },
 
     // 属性
@@ -166,7 +186,18 @@ export default {
       } else {
         // 第一次初始化数据表头
         if (this.skuList.length > 0) {
-          specList = this.skuList[0].specList
+          this.skuList.forEach((item) => {
+            item.specList.forEach((specItem) => {
+              specList.push(specItem)
+            })
+          })
+          // 去重
+          const unique = (arrs) => {
+            const res = new Map()
+            return arrs.filter((arr) => !res.has(arr.attrValueName) && res.set(arr.attrValueName, 1))
+          }
+          specList = unique(specList)
+          // console.log('去重后:', specList)
         }
       }
 
@@ -199,7 +230,6 @@ export default {
     },
     // sku 笛卡尔积  -- 支持数组和对象
     handleSkuCartesian(attrList) {
-      // console.log(1, attrList)
       const attrValueList = Object.values(attrList).map((attr) => attr)
       const cartesianSku = (...arrays) => arrays.reduce((acc, curr) => acc.flatMap((a) => curr.map((c) => [...a, c])), [[]])
       const skuCombinationList = cartesianSku(...attrValueList)
@@ -210,10 +240,9 @@ export default {
 
         let isExistOldSku = false
         this.skuList.forEach((dbSkuItem) => {
-          if (dbSkuItem.specList == specList) {
+          if (JSON.stringify(dbSkuItem.specList) == JSON.stringify(specList)) {
             isExistOldSku = true
             newSkuItem = { ...dbSkuItem }
-            console.log(1111111, this.skuList)
             return
           }
         })
@@ -229,20 +258,28 @@ export default {
         } else {
           // 加入新sku数据
         }
-        console.log(1, newSkuItem)
         newSkuList.push(newSkuItem)
       })
-      console.log(2, newSkuList)
-      this.skuList = newSkuList
-      console.log(3, this.skuList)
+      this.skuList = JSON.parse(JSON.stringify(newSkuList))
+      // console.log(3, this.skuList)
     },
+    // 选中属性时触发
     selectAttrKey(keyObj) {
-      // let attrValueList = this.getAttrValueList(keyObj.id)
-      // console.log(attrValueList)
-      // this.attrList.push({
-      //   attrKeyName: keyObj.attrKeyName,
-      //   attrValueList: attrValueList
-      // })
+      let attrKeyName = keyObj.attrKeyName
+      let attrKeyNameList = this.attrList.map((attr) => attr.attrKeyName)
+      console.log(22, this.attrList)
+      console.log(attrKeyNameList)
+      if (attrKeyNameList.includes(attrKeyName)) {
+        console.log(1111)
+        return
+      }
+      let attrValueList = this.getAttrValueList(keyObj.id)
+      console.log(attrValueList)
+
+      this.attrList.push({
+        attrKeyName: attrKeyName,
+        attrValueList: attrValueList,
+      })
       // console.log(this.attrList)
     },
     async getAttrValueList(id) {
