@@ -103,8 +103,7 @@ public class WebPmsSpuSaveDTO extends BaseDTO implements CheckParam {
     @ApiModelProperty(value = "优惠券数量", example = "100")
     private Integer couponNum;
 
-    @NotNull(message = "是否预售不能为空！")
-    @ApiModelProperty(value = "是否预售", required = true, example = "true")
+    @ApiModelProperty(value = "是否预售", example = "true")
     private Boolean isPresell;
 
     @ApiModelProperty(value = "预售开始时间", example = "2021-08-25 09:00:00")
@@ -143,6 +142,9 @@ public class WebPmsSpuSaveDTO extends BaseDTO implements CheckParam {
 
 
         // 校验预售
+        if (this.isPresell == null) {
+            this.isPresell = false;
+        }
         if (this.isPresell) {
             Assert.isFalse(this.presellStartTime == null || this.presellEndTime == null, "预售时间不能为空！");
         } else {

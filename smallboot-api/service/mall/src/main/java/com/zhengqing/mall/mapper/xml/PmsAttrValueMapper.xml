@@ -4,7 +4,7 @@
 
     <select id="selectDataList" resultType="com.zhengqing.mall.model.vo.WebPmsAttrValueListVO">
         SELECT
-        id,
+        id attrValueId,
         attr_key_id,
         attr_value_name,
         sort

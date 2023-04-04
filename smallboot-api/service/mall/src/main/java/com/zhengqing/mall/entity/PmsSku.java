@@ -2,8 +2,8 @@ package com.zhengqing.mall.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
-import com.zhengqing.mall.model.bo.PmsSkuSpecBO;
 import com.zhengqing.mall.config.mybatis.handler.MallListSpecTypeHandler;
+import com.zhengqing.mall.model.bo.PmsSkuSpecBO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -86,8 +86,8 @@ public class PmsSku extends Model<PmsSku> {
     private Date updateTime;
 
     //    @TableLogic
-    @ApiModelProperty(value = "是否删除：true->删除，false->未删除")
-    @TableField(value = "is_deleted", fill = FieldFill.INSERT)
-    private Boolean isDeleted;
+//    @ApiModelProperty(value = "是否删除：true->删除，false->未删除")
+//    @TableField(value = "is_deleted", fill = FieldFill.INSERT)
+//    private Boolean isDeleted;
 
 }

@@ -23,7 +23,13 @@
           <template #header>
             <div>
               <span>{{ item.attrKeyName }}</span>
-              <!-- <el-button link style="float: right;">删除</el-button> -->
+
+              <div style="float: right">
+                <el-input v-model="item.newAttrValue" style="width: 150px" placeholder="添加新属性值 如：蓝色">
+                  <template #append> <el-button link @click="addAttrValue(item)">添加</el-button></template>
+                </el-input>
+                <base-delete-btn style="margin-right: -20px" @ok="delAttr(item.attrKeyId)"></base-delete-btn>
+              </div>
             </div>
           </template>
           <el-checkbox-group v-model="item.selectedAttrValueIdList" @change="changeCheckedAttrValue(item)">
@@ -66,10 +72,6 @@
 export default {
   name: 'SkuForm',
   props: {
-    // attrList: {
-    //   type: Array,
-    //   default: () => [],
-    // },
     // sku值
     modelValue: {
       type: Array,
@@ -99,6 +101,7 @@ export default {
       attrDbList: [], // 属性数据
       attrKeyList: [], // 属性key
       newAttrKey: '', // 选择的属性key
+      // newAttrValue: '', // 新增属性value
       attrList: [], // 属性列表
       // 表头，以键(prop)值(label)存储表头
       columnList: [
@@ -122,6 +125,9 @@ export default {
       // 拿到选中的属性value
       let valueIdList = []
       this.skuList.forEach((item) => {
+        // 金额一类 分转元
+        item.sellPrice = item.sellPrice / 100
+
         item.specList.forEach((specItem) => {
           keyIdList.push(specItem.attrKeyId)
           valueIdList.push(specItem.attrValueId)
@@ -157,6 +163,50 @@ export default {
     addAttrKey() {
       this.newAttrKey = this.newAttr.replace(/\s/g, '')
       this.$api.pms_attr.addKey({ attrKeyName: this.newAttrKey })
+    },
+    delAttr(id) {
+      this.$api.pms_attr.deleteKey({ id: id })
+      // 移除列表中的数据
+      this.attrDbList.splice(
+        this.attrDbList.findIndex((item) => item.attrKeyId === id),
+        1,
+      )
+    },
+    addAttrValue(attrKeyObj) {
+      let attrKeyId = attrKeyObj.attrKeyId
+      let newAttrValue = attrKeyObj.newAttrValue.replace(/\s/g, '')
+      this.$api.pms_attr.addValue({ attrKeyId: attrKeyId, attrValueName: newAttrValue })
+
+      // 刷新
+      this.attrDbList.forEach(async (item) => {
+        if (item.attrKeyId == attrKeyId) {
+          let attrValueList = await this.getAttrValueList(attrKeyId)
+          item.attrValueList = attrValueList
+          item.newAttrValue = ''
+          return
+        }
+      })
+    },
+    // 选中属性时触发
+    async selectAttrKey(keyObj) {
+      let attrKeyName = keyObj.attrKeyName
+      let attrKeyNameList = this.attrDbList.map((attr) => attr.attrKeyName)
+      if (attrKeyNameList.includes(attrKeyName)) {
+        this.newAttrKey = ''
+        return
+      }
+      let attrValueList = await this.getAttrValueList(keyObj.id)
+      console.log(11, attrValueList)
+      this.attrDbList.push({
+        attrKeyId: keyObj.id,
+        attrKeyName: attrKeyName,
+        attrValueList: attrValueList,
+      })
+      this.newAttrKey = ''
+    },
+    async getAttrValueList(id) {
+      let res = await this.$api.pms_attr.listValue({ attrKeyId: id })
+      return res.data
     },
     // 监听选中属性
     changeCheckedAttrValue(item) {
@@ -262,29 +312,6 @@ export default {
       })
       this.skuList = JSON.parse(JSON.stringify(newSkuList))
       // console.log(3, this.skuList)
-    },
-    // 选中属性时触发
-    selectAttrKey(keyObj) {
-      let attrKeyName = keyObj.attrKeyName
-      let attrKeyNameList = this.attrList.map((attr) => attr.attrKeyName)
-      console.log(22, this.attrList)
-      console.log(attrKeyNameList)
-      if (attrKeyNameList.includes(attrKeyName)) {
-        console.log(1111)
-        return
-      }
-      let attrValueList = this.getAttrValueList(keyObj.id)
-      console.log(attrValueList)
-
-      this.attrList.push({
-        attrKeyName: attrKeyName,
-        attrValueList: attrValueList,
-      })
-      // console.log(this.attrList)
-    },
-    async getAttrValueList(id) {
-      let res = await this.$api.pms_attr.listValue({ attrKeyId: id })
-      return res.data
     },
   },
 }

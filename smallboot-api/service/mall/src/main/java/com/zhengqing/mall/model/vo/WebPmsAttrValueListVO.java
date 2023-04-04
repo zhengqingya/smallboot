@@ -25,7 +25,7 @@ import lombok.experimental.SuperBuilder;
 public class WebPmsAttrValueListVO extends BaseVO {
 
     @ApiModelProperty("主键ID")
-    private String id;
+    private String attrValueId;
 
     @ApiModelProperty("属性key")
     private String attrKeyId;

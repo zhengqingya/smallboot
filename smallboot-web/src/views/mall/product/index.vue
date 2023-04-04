@@ -64,6 +64,9 @@
         <el-form-item label="排序:" prop="sort">
           <el-input v-model="form.sort"></el-input>
         </el-form-item>
+        <el-form-item label="运费:" prop="freight">
+          <el-input v-model="form.freight"></el-input>
+        </el-form-item>
       </el-form>
       <template #footer v-if="dialogStatus !== 'detail'">
         <el-button @click="dialogVisible = false">取 消</el-button>
@@ -102,6 +105,11 @@ export default {
       this.form = Object.assign({}, {})
       this.dialogStatus = 'add'
       this.dialogVisible = true
+      this.form.isPut = true
+      this.form.isShow = true
+      this.form.sort = 0
+      this.form.freight = 0
+      this.form.type = 101
     },
     async handleUpdate(row) {
       // this.form = Object.assign({}, row)
@@ -110,18 +118,26 @@ export default {
       this.dialogStatus = 'update'
       this.dialogVisible = true
 
+      // 金额一类 分转元
+      this.form.freight = this.form.freight / 100
+
       // 初始化sku组件数据 -- 无效
       // this.$refs.skuForm.init()
       // skuForm.methods.init()
     },
     async handleDelete(row) {
-      let res = await this.$api.pms_spu.delete({ id: row.id })
+      let res = await this.$api.pms_spu.deleteBatch({ idList: [row.id].join() })
       this.refreshTableData()
       this.submitOk(res.message)
     },
     submitForm() {
       this.$refs.dataForm.validate(async (valid) => {
         if (valid) {
+          // 金额 元转分
+          this.form.freight = this.form.freight * 100
+          this.form.skuList.forEach((item) => {
+            item.sellPrice = item.sellPrice * 100
+          })
           let res = await this.$api.pms_spu[this.form.id ? 'update' : 'add'](this.form)
           this.submitOk(res.message)
           this.refreshTableData()
