@@ -1,3 +1,5 @@
-export default {
-	API_BASE_URL: "http://127.0.0.1:888",
+const dev = {
+	baseUrl: "http://127.0.0.1:888",
 }
+
+export default dev

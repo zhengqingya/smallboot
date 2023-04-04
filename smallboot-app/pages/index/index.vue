@@ -1,6 +1,7 @@
 <template>
 	<view>
-		<text>{{productList}}</text>
+		<input class="" placeholder="请输入商品" />
+		<!-- <text>{{productList}}</text> -->
 	</view>
 </template>
 

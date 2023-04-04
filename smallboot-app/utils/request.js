@@ -17,7 +17,7 @@ const request = ({
 			}
 		}
 		uni.request({
-			url: config.API_BASE_URL + url,
+			url: config.baseUrl + url,
 			data: method === 'get' ? params : data,
 			method: method,
 			header: headers,
