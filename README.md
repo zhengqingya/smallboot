@@ -29,6 +29,7 @@
 
 - 前端项目说明&运行见 [`smallboot-web/README.md`](smallboot-web/README.md)
 - 后端项目说明&运行见 [`smallboot-api/README.md`](smallboot-api/README.md)
+- app项目说明&运行见 [`smallboot-app/README.md`](smallboot-app/README.md)
 
 ### 三、页面截图
 
