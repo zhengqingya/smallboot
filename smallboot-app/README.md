@@ -21,6 +21,4 @@
 
 这里我选择
 
-- [vant-weapp github](https://github.com/youzan/vant-weapp)
-- [vant-weapp 文档](https://youzan.github.io/vant-weapp/)
 - [uview-plus](https://uiadmin.net/uview-plus/)
