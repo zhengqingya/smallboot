@@ -23,6 +23,7 @@ import store from '@/store'
 import 'vant/lib/index.css';
 import vant from 'vant';
 
+
 export function createApp() {
 	const app = createSSRApp(App)
 

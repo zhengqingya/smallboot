@@ -1,5 +1,5 @@
 {
-  "dependencies": {
-    "vant": "^4.1.2"
-  }
+	"dependencies": {
+		"vant": "^4.1.2"
+	}
 }
