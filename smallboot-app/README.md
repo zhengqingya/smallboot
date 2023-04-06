@@ -6,6 +6,10 @@
 2. 导入项目 `smallboot-app`
 3. `运行` -> `运行到内置浏览器`
 
+### 图标
+
+- [iconfont](https://www.iconfont.cn)
+
 ### UI组件
 
 - [uView](https://www.uviewui.com)
@@ -17,3 +21,4 @@
 
 - [vant-weapp github](https://github.com/youzan/vant-weapp)
 - [vant-weapp 文档](https://youzan.github.io/vant-weapp/)
+- [uview-plus](https://uiadmin.net/uview-plus/)

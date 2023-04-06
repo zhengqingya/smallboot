@@ -43,6 +43,9 @@
         <el-form-item label="封面图:" prop="coverImg">
           <base-upload-single v-model="form.coverImg" />
         </el-form-item>
+        <el-form-item label="封面图:" prop="slideImgList">
+          <base-upload-multi v-model="form.slideImgList" />
+        </el-form-item>
         <el-form-item label="商品详情图:" prop="detailImgList">
           <base-upload-multi v-model="form.detailImgList" />
         </el-form-item>
