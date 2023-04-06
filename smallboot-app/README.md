@@ -16,8 +16,10 @@
 - [First UI](https://doc.firstui.cn)
 - [uview-plus](https://uiadmin.net/uview-plus/)
 - [Vant](https://github.com/youzan/vant)
+- [ThorUI](https://github.com/dingyong0214/ThorUI-uniapp)
+- [TDesign](https://github.com/Tencent/tdesign)
 
-这里我选择 
+这里我选择
 
 - [vant-weapp github](https://github.com/youzan/vant-weapp)
 - [vant-weapp 文档](https://youzan.github.io/vant-weapp/)

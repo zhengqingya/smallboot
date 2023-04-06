@@ -45,3 +45,20 @@ export function createApp() {
 
 ![img.png](images/vant-use.png)
 
+### 运行到微信开发者工具中报错
+
+```shell
+17:39:16.618 "isVNode" is not exported by "node_modules/@dcloudio/uni-mp-vue/dist/vue.runtime.esm.js", imported by "../../../../../../code/workspace-me/smallboot/smallboot-app/node_modules/vant/node_modules/@vant/use/dist/index.esm.mjs".
+17:39:16.618 at node_modules/vant/node_modules/@vant/use/dist/index.esm.mjs:79:2
+17:39:16.620   77: // src/useRelation/useChildren.ts
+17:39:16.620   78: import {
+17:39:16.623   79:   isVNode,
+17:39:16.623         ^
+17:39:16.625   80:   provide,
+17:39:16.626   81:   reactive,
+```
+
+![img.png](images/vant-use-problem.png)
+
+无法解决，因此换用其它UI组件库...
+

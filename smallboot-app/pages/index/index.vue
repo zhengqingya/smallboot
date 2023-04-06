@@ -1,11 +1,12 @@
 <template>
 	<div>
+		111
 		<!-- 搜索栏 -->
-		<van-search v-model="state.keyword" show-action shape="round" placeholder="请输入搜索关键词">
+		<!-- <van-search v-model="state.keyword" show-action shape="round" placeholder="请输入搜索关键词">
 			<template #action>
 				<div @click="onLoad">搜索</div>
 			</template>
-		</van-search>
+		</van-search> -->
 
 		<!-- 轮播图 -->
 		<!-- <van-swipe class="my-swipe" :autoplay="3000" lazy-render>
@@ -19,13 +20,13 @@
 
 
 		<!-- 商品列表 -->
-		<van-pull-refresh v-model="state.refreshing" @refresh="onRefresh">
+		<!-- <van-pull-refresh v-model="state.refreshing" @refresh="onRefresh">
 			<van-list v-model:loading="state.loading" :finished="state.finished" finished-text="没有更多了" @load="onLoad">
 				<navigator v-for="item in state.list" :key="item" :url="'/pages/index/detail?id='+item.id">
 					<van-card :price="item.sellPrice/100" :title="item.name" :thumb="item.coverImg" />
 				</navigator>
 			</van-list>
-		</van-pull-refresh>
+		</van-pull-refresh> -->
 	</div>
 </template>
 

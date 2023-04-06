@@ -19,9 +19,7 @@ import {
 import api from '@/api/index.js'
 import store from '@/store'
 
-// 引入vant
-import 'vant/lib/index.css';
-import vant from 'vant';
+
 
 
 export function createApp() {
@@ -32,8 +30,7 @@ export function createApp() {
 	// store
 	app.use(store)
 
-	// vant
-	app.use(vant)
+
 
 	return {
 		app

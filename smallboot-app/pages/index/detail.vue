@@ -17,7 +17,7 @@
 		</view>
 
 		<view class="content">
-			<text>xxx</text>
+			<text>x</text>
 		</view>
 	</view>
 </template>
