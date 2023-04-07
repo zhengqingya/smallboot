@@ -1,40 +1,28 @@
 <template>
+	<!-- 搜索栏 -->
+	<view class="search">
+		<u-search placeholder="请输入搜索关键词" v-model="state.keyword" :show-action="true" actionText="搜索"
+			@custom="onLoad"></u-search>
+	</view>
 
-	<u-cell-group>
-		<u-cell icon="setting-fill" title="个人设置"></u-cell>
-		<u-cell icon="integral-fill" title="会员等级" value="新版本"></u-cell>
-	</u-cell-group>
-
-	<div>
-
-
-		<!-- 搜索栏 -->
-		<!-- <van-search v-model="state.keyword" show-action shape="round" placeholder="请输入搜索关键词">
-			<template #action>
-				<div @click="onLoad">搜索</div>
-			</template>
-		</van-search> -->
-
-		<!-- 轮播图 -->
-		<!-- <van-swipe class="my-swipe" :autoplay="3000" lazy-render>
-			<van-swipe-item v-for="image in [
-			'https://fastly.jsdelivr.net/npm/@vant/assets/apple-1.jpeg',
-			'https://fastly.jsdelivr.net/npm/@vant/assets/apple-2.jpeg',
-		]" :key="image">
-				<img class="img" :src="image" />
-			</van-swipe-item>
-		</van-swipe> -->
-
-
-		<!-- 商品列表 -->
-		<!-- <van-pull-refresh v-model="state.refreshing" @refresh="onRefresh">
-			<van-list v-model:loading="state.loading" :finished="state.finished" finished-text="没有更多了" @load="onLoad">
+	<!-- 商品列表 -->
+	<view class="product-list">
+		<u-list @scrolltolower="onLoad">
+			<u-list-item v-for="(item, index) in state.list" :key="index">
 				<navigator v-for="item in state.list" :key="item" :url="'/pages/index/detail?id='+item.id">
-					<van-card :price="item.sellPrice/100" :title="item.name" :thumb="item.coverImg" />
+					<view class="item">
+						<image style="width: 100px; height: 100px; background-color: #eeeeee;" mode="aspectFill"
+							:src="item.coverImg" />
+						<view class="right">
+							<view class="name">{{item.name}}</view>
+							<view class="price">¥ {{item.sellPrice/100}}元</view>
+						</view>
+					</view>
 				</navigator>
-			</van-list>
-		</van-pull-refresh> -->
-	</div>
+			</u-list-item>
+		</u-list>
+	</view>
+
 </template>
 
 <script setup>
@@ -42,14 +30,13 @@
 		ref,
 		toRefs,
 		reactive,
-		getCurrentInstance
+		getCurrentInstance,
+		onMounted
 	} from 'vue';
 	// 组件实例
 	const {
 		proxy
 	} = getCurrentInstance();
-
-
 
 	const state = reactive({
 		keyword: '',
@@ -60,41 +47,64 @@
 		refreshing: false,
 	})
 
+	onMounted(() => {
+		onLoad()
+	})
+
 	const onLoad = () => {
-		if (state.refreshing) {
-			state.list = [];
-			state.page = 1
-			state.refreshing = false;
-		} else {
-			state.page++
+		if (state.finished) {
+			return
 		}
-
-		getList(state.keyword);
-
-		state.loading = false;
+		state.page++
+		getList();
 	};
 
-	async function getList(name) {
+	async function getList() {
 		let result = await proxy.$api.spu.page({
-			name: name
+			name: state.keyword,
+			page: state.page
 		})
 		state.list = result.records;
 		if (result.current == result.pages) {
 			state.finished = true;
 		}
 	};
-
-	const onRefresh = () => {
-		// 清空列表数据
-		state.finished = false;
-
-		// 重新加载数据
-		// 将 loading 设置为 true，表示处于加载状态
-		state.loading = true;
-		onLoad();
-	};
 </script>
 <style lang="scss" scoped>
+	.search {
+		margin-top: 15rpx;
+	}
+
+	.product-list {
+		margin-top: 15rpx;
+
+		.item {
+			display: flex;
+			// border-radius: red;
+			text-shadow: 0 0 1px black;
+			// background-color: #ff462e;
+			padding: 10px;
+			border: 10rpx solid ghostwhite;
+			border-radius: 30rpx;
+
+			.right {
+				display: flex;
+				flex-direction: column;
+				justify-content: space-around;
+				align-items: center;
+
+				.name {
+					margin-top: 20rpx;
+					font-weight: bold;
+				}
+
+				.price {
+					color: #ff462e;
+				}
+			}
+		}
+	}
+
 	.img {
 		height: 320rpx;
 		width: 100%;

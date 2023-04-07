@@ -2,12 +2,9 @@
 
 	<view class="app-container">
 		<!-- 轮播图 -->
-		<van-swipe class="my-swipe" :autoplay="3000" lazy-render>
-			<van-swipe-item v-for="item in state.detailData.slideImgList" :key="item"
-				style="padding: 20rpx 0 10rpx 0rpx">
-				<img style="height: 550rpx;width: 100%;border-radius: 20rpx;" :src="item.url" />
-			</van-swipe-item>
-		</van-swipe>
+		<u-swiper :list="state.detailData.slideImgList" keyName="url" indicator indicatorMode="line"
+			circular></u-swiper>
+
 		<view class="subject">
 			<view>
 				<view class="name">{{state.detailData.name}}</view>
