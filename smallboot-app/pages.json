@@ -13,6 +13,11 @@
 				"navigationBarTitleText": "详情"
 			}
 		}, {
+			"path": "pages/index/pay",
+			"style": {
+				"navigationBarTitleText": "支付"
+			}
+		}, {
 			"path": "pages/mine/mine",
 			"style": {
 				"navigationBarTitleText": "个人中心",

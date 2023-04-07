@@ -19,6 +19,7 @@
 	@import '@/common.css';
 
 
+	page,
 	#app {
 		background-color: #fff;
 		height: 100%;

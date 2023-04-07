@@ -80,7 +80,6 @@
 
 		.item {
 			display: flex;
-			// border-radius: red;
 			text-shadow: 0 0 1px black;
 			// background-color: #ff462e;
 			padding: 10px;

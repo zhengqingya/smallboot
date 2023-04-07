@@ -44,6 +44,6 @@ sa-token:
     # 微信公众号
     - /wx/portal/**
     # 商城
-    - /mini/api/mall/spu/*
+    - /mini/api/mall/*/*
     # 其它
     - /api/test/sql
