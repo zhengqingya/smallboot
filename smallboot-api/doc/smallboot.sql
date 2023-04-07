@@ -11,7 +11,7 @@
  Target Server Version : 50726 (5.7.26-log)
  File Encoding         : 65001
 
- Date: 04/04/2023 14:22:09
+ Date: 07/04/2023 17:52:55
 */
 
 SET NAMES utf8mb4;
@@ -439,8 +439,8 @@ CREATE TABLE `pms_sku`  (
 -- ----------------------------
 -- Records of pms_sku
 -- ----------------------------
-INSERT INTO `pms_sku` VALUES (1643132809205907456, 1, 1534420706752856064, '', '[{\"attrKeyId\":\"1532283711813451776\",\"attrKeyName\":\"尺寸\",\"attrValueId\":\"1532284264874377216\",\"attrValueName\":\"X\"},{\"attrKeyId\":\"1532281238671458304\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1532284024536563712\",\"attrValueName\":\"蓝色\"}]', NULL, 1, 0, 0, 3, 0, 0, 3, 'http://172.16.16.244:9001/test/2023-04-04/7e3d02fd-eee2-44a5-a374-22b998564412%40%40%E7%BE%8E%E5%9B%BE13.png', 1, 1, '2023-04-04 14:06:04', '2023-04-04 14:06:04', 0);
-INSERT INTO `pms_sku` VALUES (1643132809210101760, 1, 1534420706752856064, '', '[{\"attrKeyId\":\"1532283711813451776\",\"attrKeyName\":\"尺寸\",\"attrValueId\":\"1532284264874377216\",\"attrValueName\":\"X\"},{\"attrKeyId\":\"1532281238671458304\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1532284050088263680\",\"attrValueName\":\"红色\"}]', NULL, 3, 0, 0, 4, 0, 0, 4, 'http://172.16.16.244:9001/test/2023-04-04/879b3c5f-95ec-420f-bb56-ac786edc8b68%40%40%E7%BE%8E%E5%9B%BE13.png', 1, 1, '2023-04-04 14:06:04', '2023-04-04 14:06:04', 0);
+INSERT INTO `pms_sku` VALUES (1643869680483565568, 1, 1534420706752856064, '', '[{\"attrKeyId\":\"1532283711813451776\",\"attrKeyName\":\"尺寸\",\"attrValueId\":\"1532284264874377216\",\"attrValueName\":\"X\"},{\"attrKeyId\":\"1532281238671458304\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1532284024536563712\",\"attrValueName\":\"蓝色\"}]', NULL, 150, 0, 0, 3, 0, 0, 3, 'http://172.16.16.244:9001/test/2023-04-04/7e3d02fd-eee2-44a5-a374-22b998564412%40%40%E7%BE%8E%E5%9B%BE13.png', 1, 1, '2023-04-06 14:54:08', '2023-04-06 14:54:08', 0);
+INSERT INTO `pms_sku` VALUES (1643869680483565569, 1, 1534420706752856064, '', '[{\"attrKeyId\":\"1532283711813451776\",\"attrKeyName\":\"尺寸\",\"attrValueId\":\"1532284264874377216\",\"attrValueName\":\"X\"},{\"attrKeyId\":\"1532281238671458304\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1532284050088263680\",\"attrValueName\":\"红色\"}]', NULL, 260, 0, 0, 4, 0, 0, 4, 'http://172.16.16.244:9001/test/2023-04-04/879b3c5f-95ec-420f-bb56-ac786edc8b68%40%40%E7%BE%8E%E5%9B%BE13.png', 1, 1, '2023-04-06 14:54:08', '2023-04-06 14:54:08', 0);
 
 -- ----------------------------
 -- Table structure for pms_spu
@@ -481,7 +481,7 @@ CREATE TABLE `pms_spu`  (
 -- ----------------------------
 -- Records of pms_spu
 -- ----------------------------
-INSERT INTO `pms_spu` VALUES (1534420706752856064, 1, '熊猫限定帆布袋', 1, 101, 1, '买一送一', 100, 'http://172.16.16.244:9001/test/2023-03-31/8f37a6e3-21a6-4522-89d4-0ba941eb12f4%40%40%E7%BE%8E%E5%9B%BE13.png', '[{\"name\":\"熊猫限定帆布袋\",\"url\":\"https://www.zhengqingya.com/label.png\"}]', '[{\"name\":\"美图14.jpg\",\"url\":\"http://172.16.16.244:9001/test/2023-03-31/b3521f30-8cda-4e31-bbbf-872290f9320e%40%40%E7%BE%8E%E5%9B%BE14.jpg\"},{\"name\":\"美图4.jpg\",\"url\":\"http://172.16.16.244:9001/test/2023-03-31/58fdfffd-a739-44ee-a3d0-1245b58b75b6%40%40%E7%BE%8E%E5%9B%BE4.jpg\"},{\"name\":\"美图29.jpg\",\"url\":\"http://172.16.16.244:9001/test/2023-03-31/4c44b70b-19cc-4053-b8c6-44921c97eb8e%40%40%E7%BE%8E%E5%9B%BE29.jpg\"}]', 100, 0, NULL, 0, '2021-08-25 09:00:00', '2021-08-26 23:59:59', 15, 1, 1, '[{\"code\":\"btn\",\"name\":\"添加\",\"value\":\"add\",\"sort\":1,\"remark\":\"this is the add.\"}]', '[{\"code\":\"btn\",\"name\":\"添加\",\"value\":\"add\",\"sort\":1,\"remark\":\"this is the add.\"}]', NULL, '2022-06-08 14:22:59', '2023-04-04 14:06:04', 0, 1, 0);
+INSERT INTO `pms_spu` VALUES (1534420706752856064, 1, '熊猫限定帆布袋', 1, 101, 1, '买一送一', 100, 'http://172.16.16.244:9001/test/2023-03-31/8f37a6e3-21a6-4522-89d4-0ba941eb12f4%40%40%E7%BE%8E%E5%9B%BE13.png', '[{\"name\":\"美图28.jpg\",\"url\":\"http://172.16.16.244:9001/test/2023-04-06/b147b642-2c4b-464e-8905-fc4fb86f013b%40%40%E7%BE%8E%E5%9B%BE28.jpg\"},{\"name\":\"美图15.jpg\",\"url\":\"http://172.16.16.244:9001/test/2023-04-06/4af5b8e0-cafb-402c-9635-61ac736931a7%40%40%E7%BE%8E%E5%9B%BE15.jpg\"},{\"name\":\"美图35.jpg\",\"url\":\"http://172.16.16.244:9001/test/2023-04-06/f5ef7838-37c4-4406-b346-7afbe9ece16f%40%40%E7%BE%8E%E5%9B%BE35.jpg\"}]', '[{\"name\":\"美图14.jpg\",\"url\":\"http://172.16.16.244:9001/test/2023-03-31/b3521f30-8cda-4e31-bbbf-872290f9320e%40%40%E7%BE%8E%E5%9B%BE14.jpg\"},{\"name\":\"美图4.jpg\",\"url\":\"http://172.16.16.244:9001/test/2023-03-31/58fdfffd-a739-44ee-a3d0-1245b58b75b6%40%40%E7%BE%8E%E5%9B%BE4.jpg\"},{\"name\":\"美图29.jpg\",\"url\":\"http://172.16.16.244:9001/test/2023-03-31/4c44b70b-19cc-4053-b8c6-44921c97eb8e%40%40%E7%BE%8E%E5%9B%BE29.jpg\"}]', NULL, 0, NULL, 0, '2021-08-25 09:00:00', '2021-08-26 23:59:59', 15, 1, 1, '[{\"code\":\"btn\",\"name\":\"添加\",\"value\":\"add\",\"sort\":1,\"remark\":\"this is the add.\"}]', '[{\"code\":\"btn\",\"name\":\"添加\",\"value\":\"add\",\"sort\":1,\"remark\":\"this is the add.\"}]', NULL, '2022-06-08 14:22:59', '2023-04-06 14:54:08', 0, 1, 0);
 
 -- ----------------------------
 -- Table structure for pms_spu_rate
@@ -743,33 +743,33 @@ CREATE TABLE `t_sys_role_menu`  (
   `update_by` int(11) NOT NULL COMMENT '修改人',
   `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1900 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-角色菜单关联表' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 2080 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-角色菜单关联表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_sys_role_menu
 -- ----------------------------
 INSERT INTO `t_sys_role_menu` VALUES (1324, 10, 1, 1, '2023-03-31 09:48:32', 1, '2023-03-31 09:48:32');
 INSERT INTO `t_sys_role_menu` VALUES (1325, 10, 2, 1, '2023-03-31 09:48:32', 1, '2023-03-31 09:48:32');
-INSERT INTO `t_sys_role_menu` VALUES (1880, 9, 1, 0, '2023-04-04 13:59:30', 0, '2023-04-04 13:59:30');
-INSERT INTO `t_sys_role_menu` VALUES (1881, 9, 2, 0, '2023-04-04 13:59:30', 0, '2023-04-04 13:59:30');
-INSERT INTO `t_sys_role_menu` VALUES (1882, 9, 3, 0, '2023-04-04 13:59:30', 0, '2023-04-04 13:59:30');
-INSERT INTO `t_sys_role_menu` VALUES (1883, 9, 4, 0, '2023-04-04 13:59:30', 0, '2023-04-04 13:59:30');
-INSERT INTO `t_sys_role_menu` VALUES (1884, 9, 5, 0, '2023-04-04 13:59:30', 0, '2023-04-04 13:59:30');
-INSERT INTO `t_sys_role_menu` VALUES (1885, 9, 6, 0, '2023-04-04 13:59:30', 0, '2023-04-04 13:59:30');
-INSERT INTO `t_sys_role_menu` VALUES (1886, 9, 7, 0, '2023-04-04 13:59:30', 0, '2023-04-04 13:59:30');
-INSERT INTO `t_sys_role_menu` VALUES (1887, 9, 9, 0, '2023-04-04 13:59:30', 0, '2023-04-04 13:59:30');
-INSERT INTO `t_sys_role_menu` VALUES (1888, 9, 10, 0, '2023-04-04 13:59:30', 0, '2023-04-04 13:59:30');
-INSERT INTO `t_sys_role_menu` VALUES (1889, 9, 11, 0, '2023-04-04 13:59:30', 0, '2023-04-04 13:59:30');
-INSERT INTO `t_sys_role_menu` VALUES (1890, 9, 12, 0, '2023-04-04 13:59:30', 0, '2023-04-04 13:59:30');
-INSERT INTO `t_sys_role_menu` VALUES (1891, 9, 13, 0, '2023-04-04 13:59:30', 0, '2023-04-04 13:59:30');
-INSERT INTO `t_sys_role_menu` VALUES (1892, 9, 14, 0, '2023-04-04 13:59:30', 0, '2023-04-04 13:59:30');
-INSERT INTO `t_sys_role_menu` VALUES (1893, 9, 15, 0, '2023-04-04 13:59:30', 0, '2023-04-04 13:59:30');
-INSERT INTO `t_sys_role_menu` VALUES (1894, 9, 16, 0, '2023-04-04 13:59:30', 0, '2023-04-04 13:59:30');
-INSERT INTO `t_sys_role_menu` VALUES (1895, 9, 17, 0, '2023-04-04 13:59:30', 0, '2023-04-04 13:59:30');
-INSERT INTO `t_sys_role_menu` VALUES (1896, 9, 18, 0, '2023-04-04 13:59:30', 0, '2023-04-04 13:59:30');
-INSERT INTO `t_sys_role_menu` VALUES (1897, 9, 19, 0, '2023-04-04 13:59:30', 0, '2023-04-04 13:59:30');
-INSERT INTO `t_sys_role_menu` VALUES (1898, 9, 20, 0, '2023-04-04 13:59:30', 0, '2023-04-04 13:59:30');
-INSERT INTO `t_sys_role_menu` VALUES (1899, 9, 21, 0, '2023-04-04 13:59:30', 0, '2023-04-04 13:59:30');
+INSERT INTO `t_sys_role_menu` VALUES (2060, 9, 1, 0, '2023-04-07 17:51:03', 0, '2023-04-07 17:51:03');
+INSERT INTO `t_sys_role_menu` VALUES (2061, 9, 2, 0, '2023-04-07 17:51:03', 0, '2023-04-07 17:51:03');
+INSERT INTO `t_sys_role_menu` VALUES (2062, 9, 3, 0, '2023-04-07 17:51:03', 0, '2023-04-07 17:51:03');
+INSERT INTO `t_sys_role_menu` VALUES (2063, 9, 4, 0, '2023-04-07 17:51:03', 0, '2023-04-07 17:51:03');
+INSERT INTO `t_sys_role_menu` VALUES (2064, 9, 5, 0, '2023-04-07 17:51:03', 0, '2023-04-07 17:51:03');
+INSERT INTO `t_sys_role_menu` VALUES (2065, 9, 6, 0, '2023-04-07 17:51:03', 0, '2023-04-07 17:51:03');
+INSERT INTO `t_sys_role_menu` VALUES (2066, 9, 7, 0, '2023-04-07 17:51:03', 0, '2023-04-07 17:51:03');
+INSERT INTO `t_sys_role_menu` VALUES (2067, 9, 9, 0, '2023-04-07 17:51:03', 0, '2023-04-07 17:51:03');
+INSERT INTO `t_sys_role_menu` VALUES (2068, 9, 10, 0, '2023-04-07 17:51:03', 0, '2023-04-07 17:51:03');
+INSERT INTO `t_sys_role_menu` VALUES (2069, 9, 11, 0, '2023-04-07 17:51:03', 0, '2023-04-07 17:51:03');
+INSERT INTO `t_sys_role_menu` VALUES (2070, 9, 12, 0, '2023-04-07 17:51:03', 0, '2023-04-07 17:51:03');
+INSERT INTO `t_sys_role_menu` VALUES (2071, 9, 13, 0, '2023-04-07 17:51:03', 0, '2023-04-07 17:51:03');
+INSERT INTO `t_sys_role_menu` VALUES (2072, 9, 14, 0, '2023-04-07 17:51:03', 0, '2023-04-07 17:51:03');
+INSERT INTO `t_sys_role_menu` VALUES (2073, 9, 15, 0, '2023-04-07 17:51:03', 0, '2023-04-07 17:51:03');
+INSERT INTO `t_sys_role_menu` VALUES (2074, 9, 16, 0, '2023-04-07 17:51:03', 0, '2023-04-07 17:51:03');
+INSERT INTO `t_sys_role_menu` VALUES (2075, 9, 17, 0, '2023-04-07 17:51:03', 0, '2023-04-07 17:51:03');
+INSERT INTO `t_sys_role_menu` VALUES (2076, 9, 18, 0, '2023-04-07 17:51:03', 0, '2023-04-07 17:51:03');
+INSERT INTO `t_sys_role_menu` VALUES (2077, 9, 19, 0, '2023-04-07 17:51:03', 0, '2023-04-07 17:51:03');
+INSERT INTO `t_sys_role_menu` VALUES (2078, 9, 20, 0, '2023-04-07 17:51:03', 0, '2023-04-07 17:51:03');
+INSERT INTO `t_sys_role_menu` VALUES (2079, 9, 21, 0, '2023-04-07 17:51:03', 0, '2023-04-07 17:51:03');
 
 -- ----------------------------
 -- Table structure for t_sys_role_permission
@@ -784,15 +784,15 @@ CREATE TABLE `t_sys_role_permission`  (
   `update_by` int(11) NOT NULL COMMENT '修改人',
   `update_time` datetime NOT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1277 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-角色关联权限表' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 1313 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-角色关联权限表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_sys_role_permission
 -- ----------------------------
-INSERT INTO `t_sys_role_permission` VALUES (1273, 9, 1, 0, '2023-04-04 13:59:31', 0, '2023-04-04 13:59:31');
-INSERT INTO `t_sys_role_permission` VALUES (1274, 9, 2, 0, '2023-04-04 13:59:31', 0, '2023-04-04 13:59:31');
-INSERT INTO `t_sys_role_permission` VALUES (1275, 9, 3, 0, '2023-04-04 13:59:31', 0, '2023-04-04 13:59:31');
-INSERT INTO `t_sys_role_permission` VALUES (1276, 9, 4, 0, '2023-04-04 13:59:31', 0, '2023-04-04 13:59:31');
+INSERT INTO `t_sys_role_permission` VALUES (1309, 9, 1, 0, '2023-04-07 17:51:03', 0, '2023-04-07 17:51:03');
+INSERT INTO `t_sys_role_permission` VALUES (1310, 9, 2, 0, '2023-04-07 17:51:03', 0, '2023-04-07 17:51:03');
+INSERT INTO `t_sys_role_permission` VALUES (1311, 9, 3, 0, '2023-04-07 17:51:03', 0, '2023-04-07 17:51:03');
+INSERT INTO `t_sys_role_permission` VALUES (1312, 9, 4, 0, '2023-04-07 17:51:03', 0, '2023-04-07 17:51:03');
 
 -- ----------------------------
 -- Table structure for t_sys_user
