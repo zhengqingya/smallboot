@@ -19,7 +19,7 @@ import {
 import api from '@/api/index.js'
 import store from '@/store'
 
-
+import uviewPlus from 'uview-plus'
 
 
 export function createApp() {
@@ -30,6 +30,8 @@ export function createApp() {
 	// store
 	app.use(store)
 
+	// uview-plus
+	app.use(uviewPlus)
 
 
 	return {

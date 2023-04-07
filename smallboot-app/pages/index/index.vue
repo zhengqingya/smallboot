@@ -1,6 +1,13 @@
 <template>
+
+	<u-cell-group>
+		<u-cell icon="setting-fill" title="个人设置"></u-cell>
+		<u-cell icon="integral-fill" title="会员等级" value="新版本"></u-cell>
+	</u-cell-group>
+
 	<div>
-		111
+
+
 		<!-- 搜索栏 -->
 		<!-- <van-search v-model="state.keyword" show-action shape="round" placeholder="请输入搜索关键词">
 			<template #action>
