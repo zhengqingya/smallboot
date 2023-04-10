@@ -2,6 +2,7 @@ package com.zhengqing.ums.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 
 
 /**
@@ -12,6 +13,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @date 2022/12/7 16:40
  */
 @Data
+@Configuration
 @ConfigurationProperties(prefix = "wx.miniapp")
 public class WxMaProperty {
     /**

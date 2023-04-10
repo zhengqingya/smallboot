@@ -1,12 +1,13 @@
 package com.zhengqing.pay.service.impl;
 
+import cn.hutool.core.net.NetUtil;
 import com.github.binarywang.wxpay.bean.request.WxPayRefundRequest;
 import com.github.binarywang.wxpay.bean.request.WxPayUnifiedOrderRequest;
 import com.github.binarywang.wxpay.bean.result.WxPayOrderQueryResult;
 import com.github.binarywang.wxpay.bean.result.WxPayRefundResult;
 import com.github.binarywang.wxpay.bean.result.WxPayUnifiedOrderResult;
-import com.github.binarywang.wxpay.service.WxPayService;
 import com.zhengqing.common.base.exception.MyException;
+import com.zhengqing.pay.factory.WxPayFactory;
 import com.zhengqing.pay.model.dto.PayOrderCreateDTO;
 import com.zhengqing.pay.model.dto.PayOrderQueryDTO;
 import com.zhengqing.pay.model.dto.PayOrderRefundDTO;
@@ -30,19 +31,20 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class PayServiceImpl implements IPayService {
 
-    private final WxPayService wxPayService;
+    //    private final WxPayService wxPayService;
+    private final WxPayFactory wxPayFactory;
 
 
     @Override
     @SneakyThrows(Exception.class)
     public WxPayOrderQueryResult queryOrder(PayOrderQueryDTO params) {
-        return this.wxPayService.queryOrder(null, params.getOrderNo());
+        return this.wxPayFactory.wxPayService().queryOrder(null, params.getOrderNo());
     }
 
     @Override
     @SneakyThrows(Exception.class)
     public Boolean refund(PayOrderRefundDTO params) {
-        WxPayRefundResult wxPayRefundResult = this.wxPayService.refund(
+        WxPayRefundResult wxPayRefundResult = this.wxPayFactory.wxPayService().refund(
                 WxPayRefundRequest.newBuilder()
                         .outTradeNo(params.getOrderNo())
                         .outRefundNo(params.getRefundOrderNo())
@@ -63,16 +65,18 @@ public class PayServiceImpl implements IPayService {
     @Override
     @SneakyThrows(Exception.class)
     public WxPayUnifiedOrderResult unifiedOrder(PayOrderCreateDTO params) {
-        WxPayUnifiedOrderResult wxPayUnifiedOrderResult = this.wxPayService.unifiedOrder(
+        WxPayUnifiedOrderResult wxPayUnifiedOrderResult = this.wxPayFactory.wxPayService().unifiedOrder(
                 WxPayUnifiedOrderRequest.newBuilder()
                         .outTradeNo(params.getOrderNo())
                         .openid(params.getOpenId())
                         .totalFee(params.getTotalPrice())
                         .body(params.getOrderDesc())
+                        .tradeType("JSAPI")
+                        .spbillCreateIp(NetUtil.getLocalhostStr())
                         .notifyUrl("/wx/callback/notify/order/" + params.getTenantId())
                         .build()
         );
         return wxPayUnifiedOrderResult;
     }
-    
+
 }

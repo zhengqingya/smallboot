@@ -60,7 +60,10 @@
 	});
 
 	async function createOrder() {
-		proxy.submitLoading("下单中...")
+		// proxy.submitLoading("下单中...")
+		await proxy.$api.order.pay({
+			orderNo: '1645239699071172608'
+		})
 		return
 		let result = await proxy.$api.order.create({
 			skuList: [{

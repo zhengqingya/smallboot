@@ -1,12 +1,12 @@
 package com.zhengqing.ums.service.impl;
 
-import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhengqing.common.core.enums.UserSexEnum;
 import com.zhengqing.common.core.util.IdGeneratorUtil;
 import com.zhengqing.ums.entity.UmsUser;
+import com.zhengqing.ums.factory.WxMaFactory;
 import com.zhengqing.ums.mapper.UmsUserMapper;
 import com.zhengqing.ums.model.dto.UmsUserDTO;
 import com.zhengqing.ums.model.dto.UmsUserWxLoginDTO;
@@ -35,7 +35,7 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
 
     private UmsUserMapper umsUserMapper;
 
-    private WxMaService wxMaService;
+    private WxMaFactory wxMaFactory;
 
     @Override
     public UmsUser detail(Long id) {
@@ -61,7 +61,7 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
     @SneakyThrows(Exception.class)
     public UmsUserVO wxLogin(UmsUserWxLoginDTO params) {
         String code = params.getCode();
-        WxMaJscode2SessionResult wxMaJscode2SessionResult = this.wxMaService.jsCode2SessionInfo(code);
+        WxMaJscode2SessionResult wxMaJscode2SessionResult = this.wxMaFactory.wxMaService().jsCode2SessionInfo(code);
         String openid = wxMaJscode2SessionResult.getOpenid();
         // 注册用户
         UmsUserWxLoginDTO.WxUserInfo userInfo = params.getUserInfo();
