@@ -33,6 +33,9 @@ public class PayOrderRefundDTO extends BaseDTO {
     @ApiModelProperty("内部系统订单号")
     private String orderNo;
 
+    @ApiModelProperty("内部系统退款订单号")
+    private String refundOrderNo;
+
     @ApiModelProperty("总金额")
     private Integer totalPrice;
 

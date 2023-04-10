@@ -23,4 +23,11 @@ export default {
 			data: data
 		})
 	},
+	pay(data) {
+		return request({
+			url: BASE_API + '/pay',
+			method: 'post',
+			data: data
+		})
+	},
 }

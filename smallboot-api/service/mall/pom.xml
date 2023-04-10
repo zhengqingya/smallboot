@@ -30,10 +30,10 @@
             <groupId>com.zhengqing</groupId>
             <artifactId>mq</artifactId>
         </dependency>
-        <!--        <dependency>-->
-        <!--            <groupId>com.zhengqing</groupId>-->
-        <!--            <artifactId>pay</artifactId>-->
-        <!--        </dependency>-->
+        <dependency>
+            <groupId>com.zhengqing</groupId>
+            <artifactId>pay</artifactId>
+        </dependency>
         <!--        <dependency>-->
         <!--            <groupId>com.zhengqing</groupId>-->
         <!--            <artifactId>file</artifactId>-->

@@ -1,6 +1,5 @@
 package com.zhengqing.pay.config;
 
-import com.github.binarywang.wxpay.config.WxPayConfig;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.service.impl.WxPayServiceImpl;
 import lombok.AllArgsConstructor;
@@ -11,23 +10,31 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * <p> 微信支付配置 </p>
+ *
+ * @author zhengqingya
+ * @description
+ * @date 2019/8/19 9:07
+ */
 @Configuration
 @ConditionalOnClass(WxPayService.class)
-@EnableConfigurationProperties(WxPayProperties.class)
+@EnableConfigurationProperties(WxPayProperty.class)
 @AllArgsConstructor
-public class WxPayConfiguration {
-    private WxPayProperties properties;
+public class WxPayConfig {
+    
+    private WxPayProperty wxPayProperty;
 
     @Bean
     @ConditionalOnMissingBean
     public WxPayService wxService() {
-        WxPayConfig payConfig = new WxPayConfig();
-        payConfig.setAppId(StringUtils.trimToNull(this.properties.getAppId()));
-        payConfig.setMchId(StringUtils.trimToNull(this.properties.getMchId()));
-        payConfig.setMchKey(StringUtils.trimToNull(this.properties.getMchKey()));
-        payConfig.setSubAppId(StringUtils.trimToNull(this.properties.getSubAppId()));
-        payConfig.setSubMchId(StringUtils.trimToNull(this.properties.getSubMchId()));
-        payConfig.setKeyPath(StringUtils.trimToNull(this.properties.getKeyPath()));
+        com.github.binarywang.wxpay.config.WxPayConfig payConfig = new com.github.binarywang.wxpay.config.WxPayConfig();
+        payConfig.setAppId(StringUtils.trimToNull(this.wxPayProperty.getAppId()));
+        payConfig.setMchId(StringUtils.trimToNull(this.wxPayProperty.getMchId()));
+        payConfig.setMchKey(StringUtils.trimToNull(this.wxPayProperty.getMchKey()));
+        payConfig.setSubAppId(StringUtils.trimToNull(this.wxPayProperty.getSubAppId()));
+        payConfig.setSubMchId(StringUtils.trimToNull(this.wxPayProperty.getSubMchId()));
+        payConfig.setKeyPath(StringUtils.trimToNull(this.wxPayProperty.getKeyPath()));
 
         // 可以指定是否使用沙箱环境
         payConfig.setUseSandboxEnv(false);

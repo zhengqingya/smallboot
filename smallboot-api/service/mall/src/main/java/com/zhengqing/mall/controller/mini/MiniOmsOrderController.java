@@ -2,6 +2,7 @@ package com.zhengqing.mall.controller.mini;
 
 import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.github.binarywang.wxpay.bean.result.WxPayUnifiedOrderResult;
 import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.base.exception.MyException;
 import com.zhengqing.mall.model.dto.*;
@@ -64,11 +65,11 @@ public class MiniOmsOrderController {
         return true;
     }
 
-//    @PutMapping("pay")
-//    @ApiOperation("待支付-支付订单")
-//    public WxPayUnifiedOrderResult pay(@Validated @RequestBody MiniOmsOrderPayDTO params) {
-//        return this.miniOmsOrderService.payOrder(params);
-//    }
+    @PostMapping("pay")
+    @ApiOperation("待支付-支付订单")
+    public WxPayUnifiedOrderResult pay(@Validated @RequestBody MiniOmsOrderPayDTO params) {
+        return this.miniOmsOrderService.payOrder(params);
+    }
 
     @DeleteMapping("deleteBatch")
     @ApiOperation("批量删除")

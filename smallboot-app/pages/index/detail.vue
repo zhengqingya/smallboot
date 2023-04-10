@@ -160,6 +160,7 @@
 				price: price,
 				num: buy_num,
 				coverImg: coverImg,
+				freight: spu.freight
 			}
 		})
 

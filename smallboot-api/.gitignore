@@ -16,3 +16,4 @@ target/
 logs
 docker/*.jar
 tmp
+#common/pay/src/main/resources/application-pay.yml

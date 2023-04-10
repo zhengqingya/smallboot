@@ -27,4 +27,7 @@ public class MiniOmsOrderPayDTO {
     @ApiModelProperty(value = "订单编号", required = true, example = "1624623037698")
     private String orderNo;
 
+//    @ApiModelProperty(value = "支付类型(1->微信 2->支付宝 3->钱包支付)", required = true, example = "1")
+//    private Byte payType;
+
 }

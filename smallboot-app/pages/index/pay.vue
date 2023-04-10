@@ -15,7 +15,7 @@
 		<view class="form">
 			<u--form labelPosition="left" :model="state.form">
 				<u-form-item label="备注">
-					<u--input v-model="remark" border="none" placeholder="请输入"></u--input>
+					<u--input v-model="state.form.remark" border="none" placeholder="请输入"></u--input>
 				</u-form-item>
 			</u--form>
 		</view>
@@ -60,8 +60,20 @@
 	});
 
 	async function createOrder() {
-		let result = await proxy.$api.order.create(state.form)
-		console.log(1, result)
+		proxy.submitLoading("下单中...")
+		return
+		let result = await proxy.$api.order.create({
+			skuList: [{
+				spuId: state.form.spuId,
+				skuId: state.form.skuId,
+				num: state.form.num,
+				price: state.form.price,
+			}],
+			freight: state.form.freight,
+			totalPrice: state.form.price * state.form.num,
+			payPrice: state.form.price * state.form.num,
+			orderRemark: state.form.remark
+		})
 	}
 </script>
 <style lang="scss" scoped>

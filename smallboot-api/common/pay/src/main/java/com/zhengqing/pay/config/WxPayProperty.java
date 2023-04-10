@@ -2,10 +2,19 @@ package com.zhengqing.pay.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 
+/**
+ * <p> 微信支付配置 </p>
+ *
+ * @author zhengqingya
+ * @description
+ * @date 2019/8/19 9:07
+ */
 @Data
+@Configuration
 @ConfigurationProperties(prefix = "wx.pay")
-public class WxPayProperties {
+public class WxPayProperty {
     /**
      * 设置微信公众号或者小程序等的appid
      */

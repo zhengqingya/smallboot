@@ -4,6 +4,7 @@ import cn.hutool.core.lang.Assert;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.binarywang.wxpay.bean.result.WxPayUnifiedOrderResult;
 import com.google.common.collect.Lists;
 import com.zhengqing.common.base.context.TenantIdContext;
 import com.zhengqing.common.base.context.UmsUserContext;
@@ -18,14 +19,18 @@ import com.zhengqing.mall.entity.OmsOrderAfterSaleItem;
 import com.zhengqing.mall.entity.OmsOrderItem;
 import com.zhengqing.mall.mapper.OmsOrderMapper;
 import com.zhengqing.mall.model.bo.OmsOrderAfterSaleCloseBO;
+import com.zhengqing.mall.model.bo.PmsSkuStockBO;
 import com.zhengqing.mall.model.bo.PmsSpuBuyNumInfoBO;
 import com.zhengqing.mall.model.dto.*;
 import com.zhengqing.mall.model.enums.*;
 import com.zhengqing.mall.model.vo.*;
 import com.zhengqing.mall.service.*;
+import com.zhengqing.pay.model.dto.PayOrderCreateDTO;
+import com.zhengqing.pay.service.IPayService;
 import com.zhengqing.system.enums.SysDictTypeEnum;
 import com.zhengqing.ums.model.vo.UmsUserVO;
 import com.zhengqing.ums.service.IUmsUserService;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -33,7 +38,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
-import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -49,38 +53,19 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class MiniOmsOrderServiceImpl extends OmsOrderServiceImpl<OmsOrderMapper, OmsOrder> implements MiniOmsOrderService {
 
-    @Resource
-    private OmsOrderMapper omsOrderMapper;
-
-    @Resource
-    private MallCommonService mallCommonService;
-
-    @Resource
-    private MiniPmsSpuService miniPmsSpuService;
-
-    @Resource
-    private MiniOmsOrderItemService miniOmsOrderItemService;
-
-//    @Resource
-//    private IPayClient payClient;
-
-    @Resource
-    private RabbitTemplate rabbitTemplate;
-
-    @Resource
-    private MiniOmsOrderAfterSaleService miniOmsOrderAfterSaleService;
-
-    @Resource
-    private MiniOmsOrderAfterSaleItemService miniOmsOrderAfterSaleItemService;
-
-    @Resource
-    private MiniOmsOrderShippingService miniOmsOrderShippingService;
-
-
-    @Resource
-    private IUmsUserService umsUserService;
+    private final OmsOrderMapper omsOrderMapper;
+    private final MallCommonService mallCommonService;
+    private final MiniPmsSpuService miniPmsSpuService;
+    private final MiniOmsOrderItemService miniOmsOrderItemService;
+    private final IPayService payService;
+    private final RabbitTemplate rabbitTemplate;
+    private final MiniOmsOrderAfterSaleService miniOmsOrderAfterSaleService;
+    private final MiniOmsOrderAfterSaleItemService miniOmsOrderAfterSaleItemService;
+    private final MiniOmsOrderShippingService miniOmsOrderShippingService;
+    private final IUmsUserService umsUserService;
 
     @Override
     @SneakyThrows(Exception.class)
@@ -377,41 +362,42 @@ public class MiniOmsOrderServiceImpl extends OmsOrderServiceImpl<OmsOrderMapper,
                 .build());
     }
 
-//    @Override
-//    @SneakyThrows({Exception.class})
-//    @Transactional(rollbackFor = Exception.class)
-//    public WxPayUnifiedOrderResult payOrder(MiniOmsOrderPayDTO params) {
-//        log.info("[商城] 订单-支付-提交参数：[{}] ", params);
-//        String orderNo = params.getOrderNo();
-//        OmsOrder order = this.getOrder(orderNo);
-//        OmsOrderStatusEnum orderStatusEnum = OmsOrderStatusEnum.getEnum(order.getOrderStatus());
-//        Assert.isTrue(OmsOrderStatusEnum.UN_PAY == orderStatusEnum,
-//                "无法支付，该订单状态为：" + orderStatusEnum.getDesc());
-//        // 1、支付是否校验库存
-//        if (OmsOrderStockCheckTypeEnum.PAY.getType().equals(order.getStockCheckType())) {
-//            // 1.1、查询该订单关联商品
-//            List<OmsOrderItemVO> orderReSpuList = this.miniOmsOrderItemService.listByOrderNo(
-//                    orderNo);
-//            List<PmsSkuStockBO> skuStockList = Lists.newLinkedList();
-//            orderReSpuList.forEach(item -> skuStockList.add(PmsSkuStockBO.builder()
-//                    .skuId(item.getSkuId())
-//                    .num(-item.getNum())
-//                    .build()));
-//            // 1.2、库存扣减
-//            Assert.isTrue(this.miniPmsSpuService.updateSkuStock(skuStockList), "商品库存不足!");
-//        }
-//        // 2、创建微信支付订单
-//        WxPayUnifiedOrderResult wxPayUnifiedOrderResult = this.payClient.unifiedOrder(
-//                PayOrderCreateDTO.builder()
-//                        .tenantId(TenantIdContext.getTenantId())
-//                        .orderNo(orderNo)
-//                        .totalPrice(order.getPayPrice())
-//                        .orderDesc("商品")
-//                        .openId(order.getWxOpenid())
-//                        .build()
-//        );
-//        return wxPayUnifiedOrderResult;
-//    }
+    @Override
+    @SneakyThrows({Exception.class})
+    @Transactional(rollbackFor = Exception.class)
+    public WxPayUnifiedOrderResult payOrder(MiniOmsOrderPayDTO params) {
+        log.info("[商城] 订单-支付-提交参数：[{}] ", params);
+        String orderNo = params.getOrderNo();
+        OmsOrder order = this.getOrder(orderNo);
+        OmsOrderStatusEnum orderStatusEnum = OmsOrderStatusEnum.getEnum(order.getOrderStatus());
+        Assert.isTrue(OmsOrderStatusEnum.UN_PAY == orderStatusEnum,
+                "无法支付，该订单状态为：" + orderStatusEnum.getDesc());
+        // 1、支付是否校验库存
+        if (OmsOrderStockCheckTypeEnum.PAY.getType().equals(order.getStockCheckType())) {
+            // 1.1、查询该订单关联商品
+            List<OmsOrderItemVO> orderReSpuList = this.miniOmsOrderItemService.listByOrderNo(
+                    orderNo);
+            List<PmsSkuStockBO> skuStockList = Lists.newLinkedList();
+            orderReSpuList.forEach(item -> skuStockList.add(PmsSkuStockBO.builder()
+                    .skuId(item.getSkuId())
+                    .num(-item.getNum())
+                    .build()));
+            // 1.2、库存扣减
+            Assert.isTrue(this.miniPmsSpuService.updateSkuStock(skuStockList), "商品库存不足!");
+        }
+        
+        // 2、创建微信支付订单
+        WxPayUnifiedOrderResult wxPayUnifiedOrderResult = this.payService.unifiedOrder(
+                PayOrderCreateDTO.builder()
+                        .tenantId(TenantIdContext.getTenantId())
+                        .orderNo(orderNo)
+                        .totalPrice(order.getPayPrice())
+                        .orderDesc("商品")
+                        .openId(order.getWxOpenid())
+                        .build()
+        );
+        return wxPayUnifiedOrderResult;
+    }
 
     @Override
     @Transactional(rollbackFor = Exception.class)

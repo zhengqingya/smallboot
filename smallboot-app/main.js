@@ -19,6 +19,8 @@ import {
 import api from '@/api/index.js'
 import store from '@/store'
 
+import mixin from '@/utils/mixin'
+
 import uviewPlus from 'uview-plus'
 
 
@@ -30,8 +32,12 @@ export function createApp() {
 	// store
 	app.use(store)
 
+	// 抽取公用的实例 - 操作成功与失败消息提醒内容等
+	app.mixin(mixin)
+
 	// uview-plus
 	app.use(uviewPlus)
+
 
 
 	return {

@@ -1,13 +1,10 @@
 package com.zhengqing.mall.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.zhengqing.mall.model.vo.MallTabConditionListVO;
+import com.github.binarywang.wxpay.bean.result.WxPayUnifiedOrderResult;
 import com.zhengqing.mall.entity.OmsOrder;
 import com.zhengqing.mall.model.dto.*;
-import com.zhengqing.mall.model.vo.MiniOmsOrderDetailVO;
-import com.zhengqing.mall.model.vo.MiniOmsOrderPageVO;
-import com.zhengqing.mall.model.vo.MiniOmsSpuBuyVO;
-import com.zhengqing.mall.model.vo.MiniPmsOrderReAfterSaleStatusVO;
+import com.zhengqing.mall.model.vo.*;
 
 import java.util.List;
 
@@ -88,7 +85,7 @@ public interface MiniOmsOrderService extends OmsOrderService<OmsOrder> {
      * @author zhengqingya
      * @date 2021/10/19 9:46
      */
-//    WxPayUnifiedOrderResult payOrder(MiniOmsOrderPayDTO params);
+    WxPayUnifiedOrderResult payOrder(MiniOmsOrderPayDTO params);
 
     /**
      * 修改收货人地址

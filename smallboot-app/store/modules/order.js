@@ -9,7 +9,9 @@ const store = {
 			"specName": "X,蓝色",
 			"price": 150,
 			"num": 1,
-			"coverImg": "http://172.16.16.244:9001/test/2023-04-04/7e3d02fd-eee2-44a5-a374-22b998564412%40%40%E7%BE%8E%E5%9B%BE13.png"
+			"coverImg": "http://172.16.16.244:9001/test/2023-04-04/7e3d02fd-eee2-44a5-a374-22b998564412%40%40%E7%BE%8E%E5%9B%BE13.png",
+			"freight": 0
+
 		}
 	},
 	getters: {
