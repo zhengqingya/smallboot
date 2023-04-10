@@ -1,10 +1,16 @@
 package com.zhengqing.ums.service.impl;
 
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
+import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.lang.Assert;
+import cn.hutool.json.JSONUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.zhengqing.common.base.enums.AuthSourceEnum;
+import com.zhengqing.common.base.model.bo.JwtUserBO;
 import com.zhengqing.common.core.enums.UserSexEnum;
 import com.zhengqing.common.core.util.IdGeneratorUtil;
+import com.zhengqing.common.db.constant.MybatisConstant;
 import com.zhengqing.ums.entity.UmsUser;
 import com.zhengqing.ums.factory.WxMaFactory;
 import com.zhengqing.ums.mapper.UmsUserMapper;
@@ -15,6 +21,7 @@ import com.zhengqing.ums.service.IUmsUserService;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.compress.utils.Lists;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -63,20 +70,44 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
         String code = params.getCode();
         WxMaJscode2SessionResult wxMaJscode2SessionResult = this.wxMaFactory.wxMaService().jsCode2SessionInfo(code);
         String openid = wxMaJscode2SessionResult.getOpenid();
-        // 注册用户
-        UmsUserWxLoginDTO.WxUserInfo userInfo = params.getUserInfo();
-        Long id = IdGeneratorUtil.nextId();
-        UmsUser umsUser = UmsUser.builder()
-                .id(id)
-                .openid(openid)
-                .nickname(userInfo.getNickName())
-                .phone(null)
-                .sex(UserSexEnum.未知.getType())
-                .birthday(null)
-                .avatarUrl(userInfo.getAvatarUrl())
-                .build();
-        umsUser.insert();
-        return this.getUser(id);
+
+        // 先查询数据库中有没有openid
+        UmsUser umsUser = this.umsUserMapper.selectOne(
+                new LambdaQueryWrapper<UmsUser>()
+                        .eq(UmsUser::getOpenid, openid)
+                        .last(MybatisConstant.LIMIT_ONE)
+        );
+        if (umsUser == null) {
+            // 注册用户
+            UmsUserWxLoginDTO.WxUserInfo userInfo = params.getUserInfo();
+            Long id = IdGeneratorUtil.nextId();
+            umsUser = UmsUser.builder()
+                    .id(id)
+                    .openid(openid)
+                    .nickname(userInfo.getNickName())
+                    .phone(null)
+                    .sex(UserSexEnum.未知.getType())
+                    .birthday(null)
+                    .avatarUrl(userInfo.getAvatarUrl())
+                    .build();
+            umsUser.insert();
+        }
+
+        UmsUserVO result = this.getUser(umsUser.getId());
+
+        // 登录认证
+        StpUtil.login(JSONUtil.toJsonStr(
+                JwtUserBO.builder()
+                        .authSourceEnum(AuthSourceEnum.C)
+                        .userId(String.valueOf(umsUser.getId()))
+                        .openid(openid)
+                        .username(umsUser.getNickname())
+                        .roleCodeList(Lists.newArrayList())
+                        .build()
+        ));
+        result.setTokenName(StpUtil.getTokenName());
+        result.setTokenValue(StpUtil.getTokenValue());
+        return result;
     }
 
     @Override

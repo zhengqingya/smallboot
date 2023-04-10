@@ -1,10 +1,10 @@
 package com.zhengqing.pay.service;
 
 import com.github.binarywang.wxpay.bean.result.WxPayOrderQueryResult;
-import com.github.binarywang.wxpay.bean.result.WxPayUnifiedOrderResult;
 import com.zhengqing.pay.model.dto.PayOrderCreateDTO;
 import com.zhengqing.pay.model.dto.PayOrderQueryDTO;
 import com.zhengqing.pay.model.dto.PayOrderRefundDTO;
+import com.zhengqing.pay.model.vo.PayOrderCreateVO;
 
 /**
  * <p>
@@ -46,6 +46,6 @@ public interface IPayService {
      * @author zhengqingya
      * @date 2021/1/1 21:45
      */
-    WxPayUnifiedOrderResult unifiedOrder(PayOrderCreateDTO params);
+    PayOrderCreateVO unifiedOrder(PayOrderCreateDTO params);
 
 }

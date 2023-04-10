@@ -60,11 +60,6 @@
 	});
 
 	async function createOrder() {
-		// proxy.submitLoading("下单中...")
-		await proxy.$api.order.pay({
-			orderNo: '1645239699071172608'
-		})
-		return
 		let result = await proxy.$api.order.create({
 			skuList: [{
 				spuId: state.form.spuId,
@@ -77,6 +72,26 @@
 			payPrice: state.form.price * state.form.num,
 			orderRemark: state.form.remark
 		})
+
+		let payParams = await proxy.$api.order.pay({
+			orderNo: result.orderNo
+		})
+
+		// 使用参考 https://uniapp.dcloud.net.cn/api/plugins/payment.html
+		uni.requestPayment({
+			provider: 'wxpay',
+			timeStamp: payParams.timeStamp,
+			nonceStr: payParams.nonceStr,
+			package: payParams.wxPackage,
+			signType: payParams.signType,
+			paySign: payParams.paySign,
+			success: function(res) {
+				console.log('success: ' + JSON.stringify(res));
+			},
+			fail: function(err) {
+				console.log('fail: ' + JSON.stringify(err));
+			}
+		});
 	}
 </script>
 <style lang="scss" scoped>

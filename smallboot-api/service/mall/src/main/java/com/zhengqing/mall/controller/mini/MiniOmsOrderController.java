@@ -2,12 +2,12 @@ package com.zhengqing.mall.controller.mini;
 
 import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.github.binarywang.wxpay.bean.result.WxPayUnifiedOrderResult;
 import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.base.exception.MyException;
 import com.zhengqing.mall.model.dto.*;
 import com.zhengqing.mall.model.vo.*;
 import com.zhengqing.mall.service.MiniOmsOrderService;
+import com.zhengqing.pay.model.vo.PayOrderCreateVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.annotation.Validated;
@@ -67,7 +67,7 @@ public class MiniOmsOrderController {
 
     @PostMapping("pay")
     @ApiOperation("待支付-支付订单")
-    public WxPayUnifiedOrderResult pay(@Validated @RequestBody MiniOmsOrderPayDTO params) {
+    public PayOrderCreateVO pay(@Validated @RequestBody MiniOmsOrderPayDTO params) {
         return this.miniOmsOrderService.payOrder(params);
     }
 

@@ -29,6 +29,11 @@ public class UmsUserContext {
         return value == null ? Long.valueOf(BaseConstant.DEFAULT_CONTEXT_KEY_USER_ID) : (Long) value;
     }
 
+    public static String getOpenid() {
+        Object value = get(BaseConstant.CONTEXT_KEY_UMS_OPENID);
+        return (String) value;
+    }
+
     public static String getUsername() {
         Object value = get(BaseConstant.CONTEXT_KEY_USERNAME);
         return value == null ? BaseConstant.DEFAULT_CONTEXT_KEY_USERNAME : (String) value;
@@ -36,6 +41,10 @@ public class UmsUserContext {
 
     public static void setUserId(Long userId) {
         set(BaseConstant.CONTEXT_KEY_UMS_USER_ID, userId);
+    }
+
+    public static void setOpenid(String userId) {
+        set(BaseConstant.CONTEXT_KEY_UMS_OPENID, userId);
     }
 
     public static void setUsername(String username) {

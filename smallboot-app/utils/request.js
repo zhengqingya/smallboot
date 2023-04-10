@@ -9,12 +9,16 @@ const request = ({
 }) => {
 	return new Promise((resolve, reject) => {
 		if (!headers) {
-			const token = uni.getStorageSync('token')
+			const tokenName = uni.getStorageSync('tokenName')
+			const tokenValue = uni.getStorageSync(tokenName)
 			headers = {
 				'Content-Type': 'application/json;charset=utf-8',
-				'Authorization': token,
 				'TENANT_ID': 1
 			}
+			if (tokenValue) {
+				headers[tokenName] = tokenValue
+			}
+			// console.log(1, headers)
 		}
 		uni.request({
 			url: config.baseUrl + url,

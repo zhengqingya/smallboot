@@ -5,6 +5,7 @@ const store = {
 	// 存放数据
 	state: {
 		id: null,
+		openid: null,
 		nickname: 'zhengqingya',
 		avatarUrl: ''
 	},
@@ -18,6 +19,7 @@ const store = {
 		setUserInfo(state, userInfo) {
 			// 只能一个一个设置值...
 			state.id = userInfo.id
+			state.openid = userInfo.openid
 			state.nickname = userInfo.nickname
 			state.avatarUrl = userInfo.avatarUrl
 		}
@@ -29,24 +31,52 @@ const store = {
 			commit,
 			state
 		}, params) {
-			let data = await api.user.login(params)
-			const {
-				access_token,
-				token_type
-			} = data
-			const token = token_type + ":" + access_token
-			uni.setStorageSync('token', token)
+			uni.getUserProfile({
+				desc: '登录',
+				success: async (data) => {
+					// 拿到的微信用户信息
+					console.log(data)
+					uni.login({
+						provider: 'weixin',
+						success: async (res) => {
+							// console.log(res)
+							// 请求后台获取openid注册登录成功后返回基本用户信息
+							let result = await api.user.login({
+								code: res.code,
+								iv: data.iv,
+								encryptedData: data.encryptedData,
+								userInfo: {
+									nickName: data.userInfo.nickName,
+									avatarUrl: data.userInfo.avatarUrl
+								}
+							})
+							const {
+								tokenName,
+								tokenValue
+							} = result
+							uni.setStorageSync('tokenName', tokenName)
+							uni.setStorageSync(tokenName, tokenValue)
+
+							// console.log(1, result)
+							commit('setUserInfo', result)
+						}
+					})
+				},
+				fail: (err) => {
+					console.log(err);
+				}
+			})
 		},
 		// 获取用户信息
-		async getUserInfo({
-			commit,
-			state
-		}, userId) {
-			let userInfo = await api.user.getUserInfo({
-				userId: userId
-			})
-			commit('setUserInfo', userInfo)
-		},
+		// async getUserInfo({
+		// 	commit,
+		// 	state
+		// }, userId) {
+		// 	let userInfo = await api.user.getUserInfo({
+		// 		userId: userId
+		// 	})
+		// 	commit('setUserInfo', userInfo)
+		// },
 		// 退出登录
 		logout({
 			commit,

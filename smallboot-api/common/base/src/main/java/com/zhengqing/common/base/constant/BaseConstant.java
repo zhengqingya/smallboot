@@ -26,6 +26,7 @@ public interface BaseConstant {
      */
     String CONTEXT_KEY_SYS_USER_ID = "smallboot_sys_user_id";
     String CONTEXT_KEY_UMS_USER_ID = "smallboot_ums_user_id";
+    String CONTEXT_KEY_UMS_OPENID = "smallboot_ums_openid";
     String CONTEXT_KEY_USERNAME = "smallboot_username";
     String DEFAULT_CONTEXT_KEY_USER_ID = "0";
     String DEFAULT_CONTEXT_KEY_USERNAME = "未知";
@@ -56,7 +57,8 @@ public interface BaseConstant {
             "*:/rpc/client/**/*",
             "POST:/oauth/token",
             "POST:/auth/oauth/token",
-            "*:/wx/portal/*"
+            "*:/wx/portal/*",
+            "*:/wx/callback/*"
     );
 
 }

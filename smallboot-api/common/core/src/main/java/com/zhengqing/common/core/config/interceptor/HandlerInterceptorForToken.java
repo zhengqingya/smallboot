@@ -57,6 +57,7 @@ public class HandlerInterceptorForToken implements HandlerInterceptor {
                 break;
             case C:
                 UmsUserContext.setUserId(Long.valueOf(jwtUserBO.getUserId()));
+                UmsUserContext.setOpenid(jwtUserBO.getOpenid());
                 UmsUserContext.setUsername(jwtUserBO.getUsername());
                 break;
             default:

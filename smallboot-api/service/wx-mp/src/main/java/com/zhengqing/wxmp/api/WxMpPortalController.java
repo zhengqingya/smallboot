@@ -1,5 +1,6 @@
 package com.zhengqing.wxmp.api;
 
+import com.zhengqing.common.base.constant.BaseConstant;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
  *
  * @author zhengqingya
  * @description 参考 https://github.com/binarywang/wx-java-mp-demo
+ * 记得返回值放行处理 {@link BaseConstant#RETURN_VALUE_HANDLER_EXCLUDE_API_LIST}
  * @date 2023/3/16 16:51
  */
 @Slf4j

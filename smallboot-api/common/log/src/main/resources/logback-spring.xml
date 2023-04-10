@@ -122,6 +122,7 @@
     <logger name="com.zhengqing.common.db.mapper" level="INFO"/>
     <logger name="com.zhengqing.wxmp.mapper" level="INFO"/>
     <logger name="com.zhengqing.mall.mapper" level="INFO"/>
+    <logger name="com.zhengqing.ums.mapper" level="INFO"/>
 
     <!-- other -->
     <logger name="com.alibaba" level="WARN"/>

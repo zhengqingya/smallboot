@@ -4,7 +4,6 @@ import cn.hutool.core.lang.Assert;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.github.binarywang.wxpay.bean.result.WxPayUnifiedOrderResult;
 import com.google.common.collect.Lists;
 import com.zhengqing.common.base.context.TenantIdContext;
 import com.zhengqing.common.base.context.UmsUserContext;
@@ -26,6 +25,7 @@ import com.zhengqing.mall.model.enums.*;
 import com.zhengqing.mall.model.vo.*;
 import com.zhengqing.mall.service.*;
 import com.zhengqing.pay.model.dto.PayOrderCreateDTO;
+import com.zhengqing.pay.model.vo.PayOrderCreateVO;
 import com.zhengqing.pay.service.IPayService;
 import com.zhengqing.system.enums.SysDictTypeEnum;
 import com.zhengqing.ums.model.vo.UmsUserVO;
@@ -142,7 +142,7 @@ public class MiniOmsOrderServiceImpl extends OmsOrderServiceImpl<OmsOrderMapper,
         this.mallCommonService.checkSkuLimit(skuBuyInfoList, mysqlSkuMap, mysqlSkuHistoryLimitMap);
 
         // ==================================== ↓↓↓↓↓↓ 2、正常下单逻辑 ↓↓↓↓↓↓ ====================================
-        // 获取用户信息 -- FIXME 之后有用户的时候修复
+        // 获取用户信息
         UmsUserVO userInfo = this.umsUserService.getUser(userId);
         String wxOpenid = userInfo.getOpenid();
 
@@ -365,7 +365,7 @@ public class MiniOmsOrderServiceImpl extends OmsOrderServiceImpl<OmsOrderMapper,
     @Override
     @SneakyThrows({Exception.class})
     @Transactional(rollbackFor = Exception.class)
-    public WxPayUnifiedOrderResult payOrder(MiniOmsOrderPayDTO params) {
+    public PayOrderCreateVO payOrder(MiniOmsOrderPayDTO params) {
         log.info("[商城] 订单-支付-提交参数：[{}] ", params);
         String orderNo = params.getOrderNo();
         OmsOrder order = this.getOrder(orderNo);
@@ -385,9 +385,9 @@ public class MiniOmsOrderServiceImpl extends OmsOrderServiceImpl<OmsOrderMapper,
             // 1.2、库存扣减
             Assert.isTrue(this.miniPmsSpuService.updateSkuStock(skuStockList), "商品库存不足!");
         }
-        
+
         // 2、创建微信支付订单
-        WxPayUnifiedOrderResult wxPayUnifiedOrderResult = this.payService.unifiedOrder(
+        PayOrderCreateVO payOrderCreateVO = this.payService.unifiedOrder(
                 PayOrderCreateDTO.builder()
                         .tenantId(TenantIdContext.getTenantId())
                         .orderNo(orderNo)
@@ -396,7 +396,7 @@ public class MiniOmsOrderServiceImpl extends OmsOrderServiceImpl<OmsOrderMapper,
                         .openId(order.getWxOpenid())
                         .build()
         );
-        return wxPayUnifiedOrderResult;
+        return payOrderCreateVO;
     }
 
     @Override

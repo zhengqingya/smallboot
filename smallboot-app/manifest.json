@@ -18,7 +18,8 @@
 		},
 		/* 模块配置 */
 		"modules": {
-			"OAuth": {}
+			"OAuth": {},
+			"Payment": {}
 		},
 		/* 应用发布信息 */
 		"distribute": {
@@ -49,6 +50,13 @@
 			"sdkConfigs": {
 				"oauth": {
 					"weixin": {
+						"appid": "wxbf651179d7249db6",
+						"UniversalLinks": ""
+					}
+				},
+				"payment": {
+					"weixin": {
+						"__platform__": ["ios", "android"],
 						"appid": "wxbf651179d7249db6",
 						"UniversalLinks": ""
 					}

@@ -1,8 +1,7 @@
 package com.zhengqing.ums.model.vo;
 
-import com.zhengqing.common.base.model.vo.BaseVO;
+import com.zhengqing.common.auth.model.vo.AuthLoginVO;
 import com.zhengqing.common.core.enums.UserSexEnum;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,8 +23,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@ApiModel
-public class UmsUserVO extends BaseVO {
+public class UmsUserVO extends AuthLoginVO {
 
     @ApiModelProperty(value = "主键ID")
     private Long id;

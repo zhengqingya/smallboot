@@ -45,6 +45,8 @@ sa-token:
     - /wx/portal/**
     # 小程序用户
     - /mini/api/ums/user/*
+    # 微信支付回调
+    - /wx/callback/**
     # 商城
     - /mini/api/mall/*/*
     # 其它
