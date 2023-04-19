@@ -1,5 +1,6 @@
 package com.zhengqing.common.redis.util;
 
+import lombok.SneakyThrows;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +57,25 @@ public class RedissonUtil {
         // 加锁leaseTime以后自动解锁
         // 无需调用unlock方法手动解锁
         lock.lock(leaseTime, unit);
+        return lock;
+    }
+
+    /**
+     * 可重入锁
+     *
+     * @param key       key
+     * @param waitTime  最多等待时间。
+     * @param leaseTime 持有锁的时间
+     * @param unit      时间单位
+     * @return 锁
+     * @author zhengqingya
+     * @date 2022/1/14 9:25 下午
+     */
+    @SneakyThrows(Exception.class)
+    public static RLock tryLock(String key, long waitTime, long leaseTime, TimeUnit unit) {
+        RLock lock = redissonClient.getLock(key);
+        // 如果超时没有释放锁，则智能地自动释放锁
+        lock.tryLock(waitTime, leaseTime, unit);
         return lock;
     }
 

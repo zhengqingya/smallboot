@@ -50,4 +50,4 @@ sa-token:
     # 商城
     - /mini/api/mall/*/*
     # 其它
-    - /api/test/sql
+    - /api/test/*
