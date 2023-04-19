@@ -13,6 +13,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.HandlerMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
@@ -63,7 +64,8 @@ public class AppTestController extends BaseController {
     @GetMapping("pathVariable/{id}/{name}")
     @ApiOperation("@PathVariable路径获取")
     public Object pathVariable(@PathVariable Integer id, @PathVariable String name, HttpServletRequest request) {
-        return request.getAttribute("org.springframework.web.servlet.HandlerMapping.bestMatchingPattern");
+//        return request.getAttribute("org.springframework.web.servlet.HandlerMapping.bestMatchingPattern");
+        return request.getAttribute(HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE);
     }
 
 }
