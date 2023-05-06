@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/test")
 @Api(tags = "测试api")
-public class TestController {
+public class TestAuthController {
 
     @GetMapping("time")
     @ApiOperation("time")

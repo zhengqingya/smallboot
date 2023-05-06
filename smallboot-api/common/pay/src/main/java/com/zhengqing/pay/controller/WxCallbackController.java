@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 /**
- * <p> 商城-通用 接口 </p>
+ * <p> wx-回调 接口 </p>
  *
  * @author zhengqingya
  * @description 记得返回值放行处理 {@link BaseConstant#RETURN_VALUE_HANDLER_EXCLUDE_API_LIST}

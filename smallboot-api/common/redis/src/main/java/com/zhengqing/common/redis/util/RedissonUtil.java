@@ -34,6 +34,7 @@ public class RedissonUtil {
 
     /**
      * 可重入锁
+     * 看门狗机制：不设置leaseTime值时触发
      *
      * @param key key
      * @return 锁

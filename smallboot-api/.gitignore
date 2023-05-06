@@ -16,5 +16,3 @@ target/
 logs
 docker/*.jar
 tmp
-common/pay/src/main/resources/application-pay.yml
-service/ums/src/main/resources/application-ums.yml
