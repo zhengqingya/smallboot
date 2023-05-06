@@ -4,6 +4,7 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.lang.Assert;
 import com.zhengqing.app.mapper.DemoMapper;
 import com.zhengqing.common.core.api.BaseController;
+import com.zhengqing.common.core.custom.limit.ApiLimit;
 import com.zhengqing.common.redis.util.RedisUtil;
 import com.zhengqing.common.redis.util.RedissonUtil;
 import io.swagger.annotations.Api;
@@ -41,8 +42,10 @@ public class TestSeckillController extends BaseController {
 
     @SneakyThrows
     @GetMapping("01") // http://127.0.0.1:888/api/test/seckill/01
+    @ApiLimit(key = "'test'", rate = 5000, rateInterval = 1, msg = "操作频繁!（1秒内最多只能并发请求5000）")
     @Transactional(rollbackFor = Exception.class)
     public void db() {
+//        TimeUnit.SECONDS.sleep(1);
         this.seckill();
     }
 

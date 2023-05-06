@@ -62,12 +62,17 @@ public class ApiLimitAspect {
         long rateInterval = apiLimit.rateInterval();
         RateIntervalUnit rateIntervalUnit = apiLimit.rateIntervalUnit();
         String msg = apiLimit.msg();
+        Assert.isTrue(
+                RateIntervalUnit.MILLISECONDS == rateIntervalUnit
+                        || RateIntervalUnit.SECONDS == rateIntervalUnit, "限流器速率间隔时间单位最多只能为秒！"
+        );
 
         // 1、声明一个限流器
         RRateLimiter rRateLimiter = this.redissonClient.getRateLimiter(key);
         // 2、设置速率，[rateInterval]秒中产生[rate]个令牌
         rRateLimiter.trySetRate(rateType, rate, rateInterval, rateIntervalUnit);
-        rRateLimiter.expire(1, TimeUnit.HOURS);
+        // 这个时间设置太长的话，测试时需要手动去redis中删除已存在的key，很不方便策略改动...
+        rRateLimiter.expire(1, TimeUnit.MINUTES);
         // 3、试图获取一个令牌，获取到返回true
         if (rRateLimiter.tryAcquire()) {
             return pjp.proceed();
