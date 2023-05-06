@@ -44,10 +44,10 @@ sa-token:
     # 微信公众号
     - /wx/portal/**
     # 小程序用户
-    - /mini/api/ums/user/*
+    - /mini/api/ums/user/**
     # 微信支付回调
     - /wx/callback/**
     # 商城
     - /mini/api/mall/*/*
     # 其它
-    - /api/test/*
+    - /api/test/**

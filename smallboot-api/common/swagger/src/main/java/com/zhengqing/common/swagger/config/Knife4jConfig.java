@@ -178,6 +178,18 @@ public class Knife4jConfig {
         return docket;
     }
 
+    @Bean
+    public Docket testApi() {
+        Docket docket = new Docket(DocumentationType.SWAGGER_2)
+                .apiInfo(this.apiInfo())
+                // -Dsa-token.open-url-list
+                .groupName("测试API（无需权限，统一放行）")
+                .select()
+                .paths(PathSelectors.ant("/api/test/**"))
+                .build();
+        return docket;
+    }
+
     /**
      * swagger-api接口描述信息
      */
