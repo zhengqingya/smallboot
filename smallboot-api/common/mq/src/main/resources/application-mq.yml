@@ -42,14 +42,21 @@ spring:
           dead-letter-exchange: test.exchange
           dead-letter-routing-key: test.close.routing.key
           arguments:
-            # 5秒 （单位：毫秒）
+            # 5秒 （单位：毫秒）  --  tips:mq最大延时4294967295毫秒(即49.7103天)
             x-message-ttl: 5000
         exchange:
           name: test.exchange
-
       # 订单取消队列
       - routing-key: test.close.routing.key
         queue:
           name: test.close.queue
         exchange:
           name: test.exchange
+
+      # 测试延时队列
+      - routing-key: demo.test_delay.routing.key
+        queue:
+          name: demo.test_delay.queue
+        exchange:
+          type: delay # 延时交换机
+          name: demo.delay.exchange
