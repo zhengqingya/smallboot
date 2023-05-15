@@ -36,8 +36,7 @@ spring:
     # 动态创建和绑定队列、交换机的配置 示例
     moduleList:
       # 订单延时队列，到了过期的时间会被转发到订单取消队列
-      - routing-key: test.create.routing.key
-        queue:
+      - queue:
           name: test.delay.queue
           dead-letter-exchange: test.exchange
           dead-letter-routing-key: test.close.routing.key
@@ -46,17 +45,18 @@ spring:
             x-message-ttl: 5000
         exchange:
           name: test.exchange
+        routing-key: test.create.routing.key
       # 订单取消队列
-      - routing-key: test.close.routing.key
-        queue:
+      - queue:
           name: test.close.queue
         exchange:
           name: test.exchange
+        routing-key: test.close.routing.key
 
       # 测试延时队列
-      - routing-key: demo.test_delay.routing.key
-        queue:
+      - queue:
           name: demo.test_delay.queue
         exchange:
           type: delay # 延时交换机
           name: demo.delay.exchange
+        routing-key: demo.test_delay.routing.key
