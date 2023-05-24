@@ -58,7 +58,8 @@ public class WebPmsCategorySpuRelationServiceImpl extends PmsCategorySpuRelation
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public String addData(WebPmsCategorySpuRelationSaveDTO params) {
+    public String addOrUpdateData(WebPmsCategorySpuRelationSaveDTO params) {
+        String id = params.getId();
         String categoryId = params.getCategoryId();
         String spuId = params.getSpuId();
         Integer sort = params.getSort();
@@ -75,9 +76,11 @@ public class WebPmsCategorySpuRelationServiceImpl extends PmsCategorySpuRelation
                 new LambdaQueryWrapper<PmsCategorySpuRelation>()
                         .eq(PmsCategorySpuRelation::getSpuId, spuId)
                         .last(MybatisConstant.LIMIT_ONE));
-        Assert.isTrue(pmsCategorySpuRelationOld == null, "已存在绑定关系，请重新选择！");
+        Assert.isTrue(pmsCategorySpuRelationOld == null || pmsCategorySpuRelationOld.getId().equals(id), "已存在绑定关系，请重新选择！");
         // 4、新增分类和商品关联数据
-        String id = IdGeneratorUtil.nextStrId();
+        if (id == null) {
+            id = IdGeneratorUtil.nextStrId();
+        }
         PmsCategorySpuRelation.builder()
                 .id(id)
                 .categoryId(categoryId)
@@ -85,7 +88,7 @@ public class WebPmsCategorySpuRelationServiceImpl extends PmsCategorySpuRelation
                 .sort(sort)
                 .isShow(isShow)
                 .isPut(isPut)
-                .build().insert();
+                .build().insertOrUpdate();
         return id;
     }
 

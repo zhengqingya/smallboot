@@ -1,6 +1,7 @@
 package com.zhengqing.mall.model.dto;
 
 import com.zhengqing.common.base.model.dto.BaseDTO;
+import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -26,6 +27,10 @@ import javax.validation.constraints.NotNull;
 @EqualsAndHashCode(callSuper = true)
 @ApiModel("商城-分类关联商品-保存-提交参数")
 public class WebPmsCategorySpuRelationSaveDTO extends BaseDTO {
+
+    @ApiModelProperty("主键ID")
+    @NotBlank(groups = {UpdateGroup.class}, message = "主键ID不能为空!")
+    private String id;
 
     @NotBlank(message = "分类id不能为空!")
     @ApiModelProperty(value = "分类id", example = "1", required = true)

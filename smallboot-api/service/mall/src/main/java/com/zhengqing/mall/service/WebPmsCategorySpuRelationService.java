@@ -38,14 +38,14 @@ public interface WebPmsCategorySpuRelationService extends PmsCategorySpuRelation
     List<WebPmsCategorySpuRelationListVO> list(WebPmsCategorySpuRelationListDTO params);
 
     /**
-     * 新增
+     * 新增或更新
      *
      * @param params 保存参数
      * @return 主键id
      * @author zhengqingya
      * @date 2022/02/10 16:04
      */
-    String addData(WebPmsCategorySpuRelationSaveDTO params);
+    String addOrUpdateData(WebPmsCategorySpuRelationSaveDTO params);
 
     /**
      * 批量删除数据

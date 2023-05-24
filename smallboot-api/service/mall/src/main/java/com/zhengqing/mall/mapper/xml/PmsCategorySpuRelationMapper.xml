@@ -11,7 +11,8 @@
         jcpr.is_put,
         jcpr.category_id,
         jcpr.spu_id,
-        jp.name spuName
+        jp.name spuName,
+        jp.cover_img spuCoverImg
         FROM pms_category_spu_relation jcpr
         JOIN pms_spu jp ON jcpr.spu_id = jp.id
         WHERE jcpr.is_deleted = 0

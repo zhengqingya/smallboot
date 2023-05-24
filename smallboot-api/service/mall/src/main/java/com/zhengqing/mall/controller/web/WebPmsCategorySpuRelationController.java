@@ -2,6 +2,7 @@ package com.zhengqing.mall.controller.web;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.common.base.constant.ServiceConstant;
+import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
 import com.zhengqing.common.core.custom.validator.common.ValidList;
 import com.zhengqing.mall.model.dto.*;
 import com.zhengqing.mall.model.vo.WebPmsCategorySpuRelationPageVO;
@@ -39,7 +40,14 @@ public class WebPmsCategorySpuRelationController {
     @PostMapping("")
     @ApiOperation("新增")
     public String add(@Validated @RequestBody WebPmsCategorySpuRelationSaveDTO params) {
-        return this.webPmsCategorySpuRelationService.addData(params);
+        params.setId(null);
+        return this.webPmsCategorySpuRelationService.addOrUpdateData(params);
+    }
+
+    @PutMapping("")
+    @ApiOperation("更新")
+    public String update(@Validated(UpdateGroup.class) @RequestBody WebPmsCategorySpuRelationSaveDTO params) {
+        return this.webPmsCategorySpuRelationService.addOrUpdateData(params);
     }
 
     @DeleteMapping("deleteBatch")

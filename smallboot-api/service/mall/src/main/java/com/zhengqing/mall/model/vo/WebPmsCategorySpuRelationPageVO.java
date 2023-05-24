@@ -36,6 +36,9 @@ public class WebPmsCategorySpuRelationPageVO extends BaseVO {
     @ApiModelProperty("商品名称")
     private String spuName;
 
+    @ApiModelProperty("商品封面图")
+    private String spuCoverImg;
+
     @ApiModelProperty("排序")
     private Integer sort;
 
