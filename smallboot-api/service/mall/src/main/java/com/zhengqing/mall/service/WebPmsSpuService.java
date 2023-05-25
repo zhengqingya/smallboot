@@ -3,10 +3,7 @@ package com.zhengqing.mall.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.mall.entity.PmsSpu;
 import com.zhengqing.mall.model.dto.*;
-import com.zhengqing.mall.model.vo.MallTabConditionListVO;
-import com.zhengqing.mall.model.vo.PmsSpuTypeVO;
-import com.zhengqing.mall.model.vo.WebPmsSpuDetailVO;
-import com.zhengqing.mall.model.vo.WebPmsSpuPageVO;
+import com.zhengqing.mall.model.vo.*;
 
 import java.util.List;
 import java.util.Map;
@@ -33,12 +30,22 @@ public interface WebPmsSpuService extends PmsSpuService<PmsSpu> {
     /**
      * 列表分页
      *
-     * @param params: 查询参数
+     * @param params 查询参数
      * @return 查询结果
      * @author zhengqingya
      * @date 2021/08/17 15:33
      */
     IPage<WebPmsSpuPageVO> page(WebPmsSpuPageDTO params);
+
+    /**
+     * 列表
+     *
+     * @param params 查询参数
+     * @return 查询结果
+     * @author zhengqingya
+     * @date 2021/08/17 15:33
+     */
+    List<WebPmsSpuListVO> list(WebPmsSpuListDTO params);
 
     /**
      * 查询商品类型

@@ -47,7 +47,7 @@ public interface PmsSpuMapper extends BaseMapper<PmsSpu> {
      * @author zhengqingya
      * @date 2021/08/17 15:33
      */
-    List<WebPmsSpuPageVO> selectDataListByWeb(@Param("filter") WebPmsSpuPageDTO filter);
+    List<WebPmsSpuListVO> selectListByWeb(@Param("filter") WebPmsSpuListDTO filter);
 
     /**
      * 查询商品类型

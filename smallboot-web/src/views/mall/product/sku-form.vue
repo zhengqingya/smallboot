@@ -28,7 +28,7 @@
                 <el-input v-model="item.newAttrValue" style="width: 150px" placeholder="添加新属性值 如：蓝色">
                   <template #append> <el-button link @click="addAttrValue(item)">添加</el-button></template>
                 </el-input>
-                <base-delete-btn style="margin-right: -20px" @ok="delAttr(item.attrKeyId)"></base-delete-btn>
+                <el-button style="margin-right: -20px" link @click="delAttr(item.attrKeyId)">移除</el-button>
               </div>
             </div>
           </template>
@@ -165,12 +165,14 @@ export default {
       this.$api.pms_attr.addKey({ attrKeyName: this.newAttrKey })
     },
     delAttr(id) {
-      this.$api.pms_attr.deleteKey({ id: id })
+      // this.$api.pms_attr.deleteKey({ id: id })
       // 移除列表中的数据
       this.attrDbList.splice(
         this.attrDbList.findIndex((item) => item.attrKeyId === id),
         1,
       )
+
+      this.handleTableColumn(true)
     },
     addAttrValue(attrKeyObj) {
       let attrKeyId = attrKeyObj.attrKeyId
@@ -196,7 +198,7 @@ export default {
         return
       }
       let attrValueList = await this.getAttrValueList(keyObj.id)
-      console.log(11, attrValueList)
+      // console.log(11, attrValueList)
       this.attrDbList.push({
         attrKeyId: keyObj.id,
         attrKeyName: attrKeyName,
@@ -215,6 +217,11 @@ export default {
     // 动态表格项数据
     handleTableColumn(isSelectedAttr) {
       let specList = []
+
+      if (this.attrDbList.length === 0 || (this.attrDbList.length === 1 && this.attrDbList[0].selectedAttrValueIdList.length === 0)) {
+        this.skuList = []
+        return
+      }
 
       if (isSelectedAttr) {
         // 说明是选择属性时触发的，这里就需要重新计算表头数据

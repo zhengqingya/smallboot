@@ -16,10 +16,7 @@ import com.zhengqing.mall.mapper.PmsSpuMapper;
 import com.zhengqing.mall.model.bo.PmsSkuBO;
 import com.zhengqing.mall.model.bo.PmsSpuReCouponBO;
 import com.zhengqing.mall.model.dto.*;
-import com.zhengqing.mall.model.vo.MallTabConditionListVO;
-import com.zhengqing.mall.model.vo.PmsSpuTypeVO;
-import com.zhengqing.mall.model.vo.WebPmsSpuDetailVO;
-import com.zhengqing.mall.model.vo.WebPmsSpuPageVO;
+import com.zhengqing.mall.model.vo.*;
 import com.zhengqing.mall.service.MallCommonService;
 import com.zhengqing.mall.service.WebPmsCategorySpuRelationService;
 import com.zhengqing.mall.service.WebPmsSkuService;
@@ -91,6 +88,11 @@ public class WebPmsSpuServiceImpl extends PmsSpuServiceImpl<PmsSpuMapper, PmsSpu
             item.handleData(skuItemList);
         }
         return result;
+    }
+
+    @Override
+    public List<WebPmsSpuListVO> list(WebPmsSpuListDTO params) {
+        return this.pmsSpuMapper.selectListByWeb(params);
     }
 
     @Override

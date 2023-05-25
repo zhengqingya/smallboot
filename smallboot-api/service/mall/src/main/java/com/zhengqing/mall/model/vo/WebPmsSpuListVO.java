@@ -10,33 +10,27 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 /**
- * <p>商城-属性value-响应参数</p>
+ * <p>商城-商品列表-展示视图</p>
  *
  * @author zhengqingya
  * @description
- * @date 2021/08/22 15:06
+ * @date 2021/08/17 15:33
  */
 @Data
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@ApiModel("web-商城-属性value-响应参数")
-public class WebPmsAttrValueListVO extends BaseVO {
+@ApiModel("web-商城-商品列表-展示视图")
+public class WebPmsSpuListVO extends BaseVO {
 
-    @ApiModelProperty("主键ID")
+    @ApiModelProperty("ID")
     private String id;
 
-    @ApiModelProperty("主键ID")
-    private String attrValueId;
+    @ApiModelProperty("名称")
+    private String name;
 
-    @ApiModelProperty("属性key")
-    private String attrKeyId;
-
-    @ApiModelProperty("属性值")
-    private String attrValueName;
-
-    @ApiModelProperty("排序")
-    private Integer sort;
+    @ApiModelProperty("封面图")
+    private String coverImg;
 
 }

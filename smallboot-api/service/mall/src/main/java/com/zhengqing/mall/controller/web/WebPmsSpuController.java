@@ -7,6 +7,7 @@ import com.zhengqing.common.core.custom.validator.common.ValidList;
 import com.zhengqing.mall.model.dto.*;
 import com.zhengqing.mall.model.vo.MallTabConditionListVO;
 import com.zhengqing.mall.model.vo.WebPmsSpuDetailVO;
+import com.zhengqing.mall.model.vo.WebPmsSpuListVO;
 import com.zhengqing.mall.model.vo.WebPmsSpuPageVO;
 import com.zhengqing.mall.service.WebPmsSpuService;
 import io.swagger.annotations.Api;
@@ -44,6 +45,12 @@ public class WebPmsSpuController {
     @ApiOperation("列表分页")
     public IPage<WebPmsSpuPageVO> page(@Validated @ModelAttribute WebPmsSpuPageDTO params) {
         return this.webPmsSpuService.page(params);
+    }
+
+    @GetMapping("list")
+    @ApiOperation("列表")
+    public List<WebPmsSpuListVO> list(@Validated @ModelAttribute WebPmsSpuListDTO params) {
+        return this.webPmsSpuService.list(params);
     }
 
     @GetMapping("")

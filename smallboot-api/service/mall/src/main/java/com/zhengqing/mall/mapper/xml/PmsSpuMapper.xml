@@ -79,6 +79,23 @@
         ORDER BY spu.sort DESC, spu.id DESC
     </select>
 
+    <select id="selectListByWeb" resultType="com.zhengqing.mall.model.vo.WebPmsSpuListVO">
+        SELECT
+        spu.id,
+        spu.name
+        FROM pms_spu spu
+        LEFT JOIN pms_category_spu_relation jcpr ON spu.id = jcpr.spu_id
+        WHERE spu.is_deleted = 0
+        <if test="filter.name!=null and filter.name!=''">
+            AND spu.name LIKE CONCAT( #{filter.name} , '%' )
+        </if>
+        AND jcpr.category_id is null
+        <!--        <if test="filter.notEqCategoryId!=null and filter.notEqCategoryId!=''">-->
+        <!--            AND ( jcpr.category_id is null or jcpr.category_id != #{filter.notEqCategoryId} )-->
+        <!--        </if>-->
+        GROUP BY spu.id
+    </select>
+
     <select id="selectDataTypeList" resultType="com.zhengqing.mall.model.vo.PmsSpuTypeVO">
         SELECT
         id,
