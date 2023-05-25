@@ -1,19 +1,12 @@
 import request from '@/utils/request'
 
-const BASE_API = '/mini/api/mall/spu'
+const BASE_API = '/mini/api/mall/cart'
 
 export default {
-	page(params) {
+	list() {
 		return request({
-			url: BASE_API + '/page',
-			method: 'get',
-			params: params
-		})
-	},
-	detail(id) {
-		return request({
-			url: BASE_API + '/' + id,
-			method: 'get',
+			url: BASE_API + '/list',
+			method: 'get'
 		})
 	},
 	add(data) {
@@ -23,20 +16,18 @@ export default {
 			data,
 		})
 	},
-	update(data) {
+	updateNum(data) {
 		return request({
-			url: BASE_API,
+			url: BASE_API + "/updateNum",
 			method: 'put',
 			data,
 		})
 	},
-	delete(id) {
+	delete(data) {
 		return request({
 			url: BASE_API,
 			method: 'delete',
-			params: {
-				id: id,
-			},
+			data,
 		})
 	},
 }

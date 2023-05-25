@@ -18,6 +18,31 @@
 				"navigationBarTitleText": "支付"
 			}
 		}, {
+			"path": "pages/product/product",
+			"style": {
+				"navigationBarTitleText": "点餐",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/product/pay",
+			"style": {
+				"navigationBarTitleText": "创建订单",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/order/order",
+			"style": {
+				"navigationBarTitleText": "订单",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/order/detail",
+			"style": {
+				"navigationBarTitleText": "订单详情",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
 			"path": "pages/mine/mine",
 			"style": {
 				"navigationBarTitleText": "个人中心",
@@ -46,15 +71,28 @@
 		"backgroundColor": "#fff",
 		"borderStyle": "black",
 		"list": [{
-			"pagePath": "pages/index/index",
-			"text": "首页",
-			"iconPath": "static/images/tabBar/index.png",
-			"selectedIconPath": "static/images/tabBar/index_selected.png"
-		}, {
-			"pagePath": "pages/mine/mine",
-			"text": "我的",
-			"iconPath": "static/images/tabBar/mine.png",
-			"selectedIconPath": "static/images/tabBar/mine_selected.png"
-		}]
+				"pagePath": "pages/index/index",
+				"text": "首页",
+				"iconPath": "static/images/tabBar/index.png",
+				"selectedIconPath": "static/images/tabBar/index_selected.png"
+			},
+			{
+				"pagePath": "pages/product/product",
+				"text": "点餐",
+				"iconPath": "static/images/tabBar/product.png",
+				"selectedIconPath": "static/images/tabBar/product_selected.png"
+			}, {
+				"pagePath": "pages/order/order",
+				"text": "订单",
+				"iconPath": "static/images/tabBar/order.png",
+				"selectedIconPath": "static/images/tabBar/order_selected.png"
+			},
+			{
+				"pagePath": "pages/mine/mine",
+				"text": "我的",
+				"iconPath": "static/images/tabBar/mine.png",
+				"selectedIconPath": "static/images/tabBar/mine_selected.png"
+			}
+		]
 	}
 }

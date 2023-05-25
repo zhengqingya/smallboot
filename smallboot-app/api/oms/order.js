@@ -3,6 +3,13 @@ import request from '@/utils/request'
 const BASE_API = '/mini/api/mall/order'
 
 export default {
+	tab(params) {
+		return request({
+			url: BASE_API + '/getTabCondition',
+			method: 'get',
+			params: params,
+		})
+	},
 	page(params) {
 		return request({
 			url: BASE_API + '/page',
@@ -21,6 +28,13 @@ export default {
 			url: BASE_API + '/create',
 			method: 'post',
 			data: data
+		})
+	},
+	cancel(data) {
+		return request({
+			url: BASE_API + "/cancel",
+			method: 'put',
+			data,
 		})
 	},
 	pay(data) {
