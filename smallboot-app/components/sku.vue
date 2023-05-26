@@ -5,12 +5,25 @@
 		<view class="app-container">
 			<view class="top">
 				<image :src="spu.coverImg" class="image"></image>
+				<view class="spu-info">
+					<view class="name">{{ spu.name }}</view>
+					<view class="prince">
+						<view v-if="chooseSkuData">
+							￥{{ chooseSkuData.sellPrice/100 }}
+						</view>
+						<view v-else>
+							<view v-if="spu.minPrice=spu.maxPrice">￥{{ spu.minPrice/100 }}</view>
+							<view v-else>
+								￥{{ spu.minPrice/100 }} - {{ spu.maxPrice/100 }} 元
+							</view>
+						</view>
+					</view>
+					<view class="stock">
+						库存：{{ chooseSkuData ? chooseSkuData.usableStock : spu.usableStock }}</view>
+				</view>
 			</view>
 			<scroll-view class="detail" scroll-y>
 				<view class="wrapper">
-					<view class="basic">
-						<view class="name">{{ spu.name }}</view>
-					</view>
 					<view class="attrList">
 						<view class="attr" v-for="(item, index) in spu.attrList" :key="index">
 							<view class="title">
@@ -63,19 +76,59 @@
 				default: () => {},
 			},
 		},
+		watch: {
+			isShow(val) {
+				// console.log(222, val)
+				if (val) {
+					this.init()
+				}
+			},
+		},
 		data() {
 			return {
-
+				chooseSkuData: null, // 选择的sku
 			}
 		},
 		methods: {
 			async init() {
-
+				function getGroupArrayObj(list, attr) {
+					const map = new Map()
+					list.forEach((item, index, arr) => {
+						if (!map.has(item[attr])) {
+							map.set(
+								item[attr],
+								arr.filter((a) => a[attr] == item[attr]),
+							)
+						}
+					})
+					const unique = (arrs) => {
+						const res = new Map()
+						return arrs.filter((arr) => !res.has(arr.attrValueName) && res.set(arr.attrValueName, 1))
+					}
+					return Array.from(map).map((item) => {
+						let attrValueList = unique(item[1])
+						return {
+							attrKeyId: attrValueList[0].attrKeyId,
+							attrKeyName: item[0],
+							attrValueList: attrValueList
+						}
+					})
+				}
+				// 计算sku中包含的属性值
+				let specList = []
+				this.spu.skuList.forEach(skuItem => {
+					skuItem.specList.forEach(specItem => {
+						specList.push(specItem)
+					})
+				})
+				this.spu.attrList = getGroupArrayObj(specList, 'attrKeyName')
+				console.log(1, specList)
+				console.log(2, this.spu.attrList)
 			},
-
 			calSkuSpecDesc() {
 				let attrDescList = []
 				if (this.spu.attrList) {
+					// console.log(1, this.spu.attrList)
 					this.spu.attrList.forEach(attr => {
 						attr.attrValueList.forEach(value => {
 							if (value.isChoose) {
@@ -86,12 +139,14 @@
 				}
 				return attrDescList.join(',')
 			},
-			// 加入购物车
-			addCart() {
+			// 选sku
+			chooseSku(index, key) {
+				this.spu.attrList[index].attrValueList.forEach(value => this.$set(value, 'isChoose', 0))
+				this.spu.attrList[index].attrValueList[key].isChoose = 1
+				this.calSkuSpecDesc()
+
 				// 确认sku-id
 				let specList = []
-				let skuId = null;
-				let skuPrice = null;
 				this.spu.attrList.forEach(attr => {
 					attr.attrValueList.forEach(value => {
 						if (value.isChoose) {
@@ -100,7 +155,8 @@
 								"attrKeyId": attr.attrKeyId,
 								"attrKeyName": attr.attrKeyName,
 								"attrValueId": value.attrValueId,
-								"attrValueName": value.attrValueName
+								"attrValueName": value.attrValueName,
+								"isChoose": 1
 							})
 						}
 					})
@@ -108,11 +164,14 @@
 				this.spu.skuList.forEach(sku => {
 					let skuReSpecList = sku.specList
 					if (JSON.stringify(skuReSpecList) == JSON.stringify(specList)) {
-						skuId = sku.id
-						skuPrice = sku.sellPrice
+						this.chooseSkuData = sku
+						console.log(sku.id)
 					}
 				})
-				if (skuId == null) {
+			},
+			// 加入购物车
+			addCart() {
+				if (this.chooseSkuData.id == null) {
 					uni.showToast({
 						icon: 'none',
 						duration: 1000,
@@ -123,16 +182,16 @@
 				// 请求后端开始加入购物车数据
 				this.$api.cart.add({
 					spuId: this.spu.id,
-					skuId: skuId,
+					skuId: this.chooseSkuData.id,
 					num: this.spu.num
 				});
 				this.cartList.push({
 					spuId: this.spu.id,
-					skuId: skuId,
+					skuId: this.chooseSkuData.id,
 					name: this.spu.name,
 					num: this.spu.num,
 					specDesc: this.calSkuSpecDesc(),
-					price: skuPrice
+					price: this.chooseSkuData.sellPrice
 				})
 				this.isShowSku = false
 			},
@@ -165,14 +224,38 @@
 			height: 220rpx;
 			padding: 30rpx 0;
 			display: flex;
-			justify-content: center;
-			align-items: center;
+			// justify-content: center;
+			// align-items: center;
 			position: relative;
 
 			.image {
-				width: 200rpx;
-				height: 200rpx;
+				width: 150rpx;
+				height: 150rpx;
+				margin-left: 30rpx;
 			}
+
+			.spu-info {
+				margin-left: 30rpx;
+
+				.name {
+					// padding: 10rpx 30rpx;
+					font-size: 32rpx;
+					font-weight: 700;
+				}
+
+				.prince {
+					// font-size: 20rpx;
+					margin-top: 10rpx;
+					font-weight: 700;
+					color: #ff1929;
+				}
+
+				.stock {
+					margin-top: 10rpx;
+					font-size: 20rpx;
+				}
+			}
+
 		}
 
 		.detail {
@@ -184,12 +267,6 @@
 				height: 100%;
 				overflow: hidden;
 
-				.basic {
-					padding: 10rpx 30rpx;
-					font-size: $font-size-base;
-					color: #5A5B5C;
-					margin-bottom: 10rpx;
-				}
 
 				.attrList {
 					width: 100%;

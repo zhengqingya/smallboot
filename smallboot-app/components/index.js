@@ -12,5 +12,5 @@ for (const key in modulesFiles) {
 		modules[moduleName] = value
 	}
 }
-console.log(666, modules);
+// console.log(666, modules);
 export default modules

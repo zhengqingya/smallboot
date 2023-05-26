@@ -200,76 +200,8 @@
 				this.spu.attrList[index].attrValueList[key].isChoose = 1
 				this.calSkuSpecDesc()
 			},
-			calSkuSpecDesc() {
-				let attrDescList = []
-				if (this.spu.attrList) {
-					this.spu.attrList.forEach(attr => {
-						attr.attrValueList.forEach(value => {
-							if (value.isChoose) {
-								attrDescList.push(value.attrValueName)
-							}
-						})
-					})
-				}
-				return attrDescList.join(',')
-			},
-			// 加入购物车
-			addCart() {
-				// 确认sku-id
-				let specList = []
-				let skuId = null;
-				let skuPrice = null;
-				this.spu.attrList.forEach(attr => {
-					attr.attrValueList.forEach(value => {
-						if (value.isChoose) {
-							// 这里是选择的sku
-							specList.push({
-								"attrKeyId": attr.attrKeyId,
-								"attrKeyName": attr.attrKeyName,
-								"attrValueId": value.attrValueId,
-								"attrValueName": value.attrValueName
-							})
-						}
-					})
-				})
-				this.spu.skuList.forEach(sku => {
-					let skuReSpecList = sku.specList
-					if (JSON.stringify(skuReSpecList) == JSON.stringify(specList)) {
-						skuId = sku.id
-						skuPrice = sku.sellPrice
-					}
-				})
-				if (skuId == null) {
-					uni.showToast({
-						icon: 'none',
-						duration: 1000,
-						title: '请选择sku！'
-					});
-					return
-				}
-				// 请求后端开始加入购物车数据
-				this.$api.cart.add({
-					spuId: this.spu.id,
-					skuId: skuId,
-					num: this.spu.num
-				});
-				this.cartList.push({
-					spuId: this.spu.id,
-					skuId: skuId,
-					name: this.spu.name,
-					num: this.spu.num,
-					specDesc: this.calSkuSpecDesc(),
-					price: skuPrice
-				})
-				this.isShowSku = false
-			},
-			updateSkuNum(num) {
-				if (this.spu.num + num === 0) {
-					return
-				}
-				this.spu.num += num
-				this.num = this.spu.num
-			},
+
+
 			// 打开购物车列表框
 			async openCartPopup() {
 				this.cartPopupVisible = !this.cartPopupVisible
