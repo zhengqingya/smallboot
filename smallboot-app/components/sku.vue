@@ -87,6 +87,7 @@
 		data() {
 			return {
 				chooseSkuData: null, // 选择的sku
+				skuMap: null // "X,蓝色" => sku
 			}
 		},
 		methods: {
@@ -122,8 +123,21 @@
 					})
 				})
 				this.spu.attrList = getGroupArrayObj(specList, 'attrKeyName')
-				console.log(1, specList)
-				console.log(2, this.spu.attrList)
+
+				this.initSkuMap()
+			},
+			// 规格信息对应sku  "X,蓝色" => sku
+			initSkuMap() {
+				const map = new Map()
+				this.spu.skuList.forEach(skuItem => {
+					let attrValueNameList = []
+					skuItem.specList.forEach(specItem => {
+						attrValueNameList.push(specItem.attrValueName)
+					})
+					map.set(attrValueNameList.join(","), skuItem)
+				})
+				this.skuMap = map
+				// console.log(1, map)
 			},
 			calSkuSpecDesc() {
 				let attrDescList = []
@@ -143,35 +157,14 @@
 			chooseSku(index, key) {
 				this.spu.attrList[index].attrValueList.forEach(value => this.$set(value, 'isChoose', 0))
 				this.spu.attrList[index].attrValueList[key].isChoose = 1
-				this.calSkuSpecDesc()
-
-				// 确认sku-id
-				let specList = []
-				this.spu.attrList.forEach(attr => {
-					attr.attrValueList.forEach(value => {
-						if (value.isChoose) {
-							// 这里是选择的sku
-							specList.push({
-								"attrKeyId": attr.attrKeyId,
-								"attrKeyName": attr.attrKeyName,
-								"attrValueId": value.attrValueId,
-								"attrValueName": value.attrValueName,
-								"isChoose": 1
-							})
-						}
-					})
-				})
-				this.spu.skuList.forEach(sku => {
-					let skuReSpecList = sku.specList
-					if (JSON.stringify(skuReSpecList) == JSON.stringify(specList)) {
-						this.chooseSkuData = sku
-						console.log(sku.id)
-					}
-				})
+				let attrDesc = this.calSkuSpecDesc()
+				// 确认所需 sku-id
+				this.chooseSkuData = this.skuMap.get(attrDesc)
+				// console.log(111, this.chooseSkuData)
 			},
 			// 加入购物车
 			addCart() {
-				if (this.chooseSkuData.id == null) {
+				if (this.chooseSkuData == null) {
 					uni.showToast({
 						icon: 'none',
 						duration: 1000,
@@ -185,15 +178,15 @@
 					skuId: this.chooseSkuData.id,
 					num: this.spu.num
 				});
-				this.cartList.push({
-					spuId: this.spu.id,
-					skuId: this.chooseSkuData.id,
-					name: this.spu.name,
-					num: this.spu.num,
-					specDesc: this.calSkuSpecDesc(),
-					price: this.chooseSkuData.sellPrice
-				})
-				this.isShowSku = false
+				// this.cartList.push({
+				// 	spuId: this.spu.id,
+				// 	skuId: this.chooseSkuData.id,
+				// 	name: this.spu.name,
+				// 	num: this.spu.num,
+				// 	specDesc: this.calSkuSpecDesc(),
+				// 	price: this.chooseSkuData.sellPrice
+				// })
+				this.handleClose()
 			},
 			updateSkuNum(num) {
 				if (this.spu.num + num === 0) {

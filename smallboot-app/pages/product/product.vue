@@ -63,63 +63,22 @@
 			</scroll-view>
 		</view>
 
-
 		<!--  商品详情  -->
-		<sku :isShow="isShowSku" :spu="spu" @close="isShowSku=false" />
+		<sku :isShow="isShowSku" :spu="spu" @close="handleCloseSkuChoose" />
 
 		<!-- 购物车 -->
-		<view class="cart" v-show="cartList.length > 0">
-			<view @tap="openCartPopup">
-				<uni-badge :text="cartList.reduce((total, item) => total += item.num, 0)" absolute="rightTop"
-					type="warning">
-					<uni-icons class="icon" type="cart" size="22" />
-				</uni-badge>
-			</view>
-			<view class="price">￥{{cartList.reduce((total, item) => total += (item.num*item.price), 0)/100}}</view>
-			<navigator :url="'/pages/product/pay'">
-				<view class="pay">付款</view>
-			</navigator>
-		</view>
+		<cart ref="cart" @initCartList="initCartList" />
 
-
-		<view>
-			<!-- 购物车详情 -->
-			<uni-popup ref="cartPopupVisible" type="bottom">
-				<view class="cart-popup">
-					<view>
-						<view class="top">
-							<text @tap="clearCart">清空</text>
-						</view>
-						<scroll-view class="cart-list" scroll-y>
-							<view class="wrapper">
-								<view class="item" v-for="(item, index) in cartList" :key="index">
-									<image :src="item.coverImg" class="image" />
-									<view class="left">
-										<view class="name">{{item.name}}</view>
-										<view class="spec-desc">{{item.specDesc}}</view>
-									</view>
-									<view class="center">
-										<text>￥{{item.price/100}}</text>
-									</view>
-									<view class="right">
-										<button type="default" plain size="mini" class="btn" hover-class="none"
-											@tap="updateCartItemNum(item,-1)">-</button>
-										<view class="num">{{item.num}}</view>
-										<button type="primary" class="btn" size="min" hover-class="none"
-											@tap="updateCartItemNum(item,+1)">+</button>
-									</view>
-								</view>
-							</view>
-						</scroll-view>
-					</view>
-				</view>
-			</uni-popup>
-		</view>
 	</view>
 </template>
 
 <script>
+	import cart from './cart.vue'
+
 	export default {
+		components: {
+			cart
+		},
 		data() {
 			return {
 				orderType: 'takein', // 堂食：takein  外卖：takeout
@@ -129,7 +88,6 @@
 				categoryScrollTop: 0, // 竖向滚动条位置
 				isShowSku: false, // 商品选规格时的详情框是否显示
 				cartList: [], // 购物车数据
-				cartPopupVisible: false, // 购物车弹出层
 			}
 		},
 		onLoad() {
@@ -141,7 +99,18 @@
 				if (this.reSpuList) {
 					this.currentCategoryId = this.reSpuList[0].id
 				}
-				this.getCartList()
+				this.showCart()
+			},
+			// 购物车
+			async showCart() {
+				let that = this
+				// 延时1秒，防止数据库未及时更新数据
+				setTimeout(function() {
+					that.$refs.cart.init()
+				}, 1000);
+			},
+			initCartList(cartList) {
+				this.cartList = cartList
 			},
 			// 点击左侧分类时，动态滑动右侧数据到关联分类位置
 			hanleCategoryTap(id) {
@@ -194,58 +163,10 @@
 				this.spu.num = 1
 				this.isShowSku = true
 			},
-			// 选sku
-			chooseSku(index, key) {
-				this.spu.attrList[index].attrValueList.forEach(value => this.$set(value, 'isChoose', 0))
-				this.spu.attrList[index].attrValueList[key].isChoose = 1
-				this.calSkuSpecDesc()
-			},
-
-
-			// 打开购物车列表框
-			async openCartPopup() {
-				this.cartPopupVisible = !this.cartPopupVisible
-				if (this.cartPopupVisible) {
-					await this.getCartList()
-					this.$refs.cartPopupVisible.open()
-				} else {
-					this.$refs.cartPopupVisible.close()
-				}
-			},
-			// 购物车数据
-			async getCartList() {
-				this.cartList = await this.$api.cart.list();
-			},
-			// 清空购物车
-			clearCart() {
-				let skuIdList = []
-				if (this.cartList.length > 0) {
-					this.cartList.forEach(item => {
-						skuIdList.push(item.skuId)
-					})
-					this.$api.cart.delete({
-						skuIdList: skuIdList
-					});
-				}
-				this.cartList = []
-				this.$refs.cartPopupVisible.close()
-			},
-			// 更新购物车商品数据
-			updateCartItemNum(item, num) {
-				if (item.num + num < 0) {
-					return
-				}
-				item.num += num
-				this.$api.cart.add({
-					spuId: item.spuId,
-					skuId: item.skuId,
-					num: num
-				});
-				if (this.cartList.filter(e => e.num > 0).length === 0) {
-					// 如果所有sku都被处理完了，则关闭弹出框
-					this.$refs.cartPopupVisible.close()
-					this.cartList = []
-				}
+			// 关闭sku选择时触发
+			handleCloseSkuChoose() {
+				this.isShowSku = false
+				this.showCart()
 			},
 		}
 	}
@@ -429,138 +350,5 @@
 		}
 
 
-		.cart {
-			position: absolute;
-			z-index: 9999; // 层叠顺序
-			display: flex;
-			justify-content: space-around;
-			align-items: center;
-			height: 90rpx;
-			left: 30rpx;
-			right: 30rpx;
-			bottom: 10rpx;
-			box-shadow: 0 0 20rpx rgba(0, 0, 0, 0.2);
-			background-color: #FFFFFF;
-			border-radius: 45rpx;
-
-			.icon {
-				margin-left: 50rpx;
-			}
-
-			.price {
-				flex: 1;
-				margin-left: 20rpx;
-			}
-
-			.pay {
-				height: 90rpx;
-				width: 150rpx;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				color: white;
-				border-radius: 0 50rpx 50rpx 0;
-				background-color: $color-primary;
-			}
-		}
-
-		.cart-popup {
-			.top {
-				background-color: $bg-color-primary;
-				color: $color-primary;
-				padding: 10rpx 30rpx;
-				font-size: 24rpx;
-				text-align: right;
-			}
-
-			.cart-list {
-				background-color: #FFFFFF;
-				width: 100%;
-				min-height: 1vh;
-				max-height: 60vh;
-
-				.wrapper {
-					height: 100%;
-					display: flex;
-					flex-direction: column;
-					padding: 0 30rpx;
-					margin-bottom: 200rpx;
-
-					.item {
-						display: flex;
-						justify-content: space-between;
-						align-items: center;
-						padding: 15rpx 0;
-						position: relative;
-
-						&::after {
-							content: ' ';
-							position: absolute;
-							bottom: 0;
-							left: 0;
-							width: 100%;
-							background-color: $border-color;
-							height: 2rpx;
-							transform: scaleY(.6);
-						}
-
-						.image {
-							width: 60rpx;
-							height: 60rpx;
-							margin-right: 10rpx;
-						}
-
-						.left {
-							flex: 1;
-							display: flex;
-							flex-direction: column;
-							overflow: hidden;
-							margin-right: 30rpx;
-
-							.name {
-								font-size: $font-size-sm;
-								color: $text-color-base;
-							}
-
-							.spec-desc {
-								color: $text-color-assist;
-								font-size: $font-size-sm;
-								overflow: hidden;
-								text-overflow: ellipsis; // 多行文本下，用省略号… 隐藏超出范围的文本
-								white-space: nowrap; // 不换行
-							}
-						}
-
-						.center {
-							margin-right: 120rpx;
-							font-size: $font-size-base;
-						}
-
-						.right {
-							display: flex;
-							align-items: center;
-							justify-content: space-between;
-
-							.btn {
-								width: 46rpx;
-								height: 46rpx;
-								border-radius: 100%;
-								padding: 0;
-								text-align: center;
-								line-height: 46rpx;
-							}
-
-							.num {
-								font-size: $font-size-base;
-								width: 46rpx;
-								height: 46rpx;
-								text-align: center;
-								line-height: 46rpx;
-							}
-						}
-					}
-				}
-			}
-		}
 	}
 </style>

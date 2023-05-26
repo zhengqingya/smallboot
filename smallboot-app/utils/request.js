@@ -13,7 +13,8 @@ const request = ({
 			const tokenValue = uni.getStorageSync(tokenName)
 			headers = {
 				'Content-Type': 'application/json;charset=utf-8',
-				'TENANT_ID': 1
+				'TENANT_ID': 1,
+				'Authorization-smallboot': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJsb2dpblR5cGUiOiJsb2dpbiIsImxvZ2luSWQiOiJ7XCJhdXRoU291cmNlRW51bVwiOlwiQlwiLFwidXNlcklkXCI6XCIxXCIsXCJ1c2VybmFtZVwiOlwiYWRtaW5cIixcInJvbGVDb2RlTGlzdFwiOltcInN1cGVyX2FkbWluXCJdfSIsInJuU3RyIjoiY1dnVVV3R2pmbTZUY2locVhjdWI5M2JDa244TG93N2EifQ.CnxadctOk_ErgT1uTPZs82_OciXfyk7qfv0SMoI7ddA' // TODO 仅测试使用
 			}
 			if (tokenValue) {
 				headers[tokenName] = tokenValue
