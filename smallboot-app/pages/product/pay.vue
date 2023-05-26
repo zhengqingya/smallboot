@@ -1,22 +1,22 @@
 <template>
 	<view class="app-container">
 		<view class="base-box">
-			<uni-list>
-				<uni-list-item title="店铺" rightText="天府三街测试店" />
-				<uni-list-item title="配送方式" rightText="堂食" />
-				<uni-list-item title="联系电话">
-					<template v-slot:footer>
+			<u-cell-group>
+				<u-cell title="店铺" value="天府三街测试店"></u-cell>
+				<u-cell title="配送方式" value="堂食"></u-cell>
+				<!-- <u-cell title="联系电话">
+					<template #value>
 						<input class="right-input" placeholder="请填写联系电话" value="151866666666" />
 					</template>
-				</uni-list-item>
-				<uni-list-item title="取餐时间" rightText="立即"></uni-list-item>
-			</uni-list>
+				</u-cell> -->
+				<u-cell title="取餐时间" value="立即"></u-cell>
+			</u-cell-group>
 		</view>
 		<view class="product-box">
-			<uni-list>
-				<uni-list-item title="商品明细" />
-				<uni-list-item>
-					<template v-slot:footer>
+			<h5>&nbsp;商品明细</h5>
+			<u-cell-group>
+				<u-cell>
+					<template #value>
 						<view class="cart-list">
 							<view class="item" v-for="(item, index) in cartList" :key="index">
 								<image :src="item.coverImg" class="image" />
@@ -33,27 +33,31 @@
 							</view>
 						</view>
 					</template>
-				</uni-list-item>
-			</uni-list>
+				</u-cell>
+			</u-cell-group>
 		</view>
 		<view class="remark-box">
-			<uni-list-item title="备注">
-				<template v-slot:footer>
-					<input class="right-input" placeholder="无..." v-model="orderRemark" />
-				</template>
-			</uni-list-item>
+			<u-cell-group>
+				<u-cell title="备注">
+					<template #value>
+						<input class="right-input" placeholder="无..." v-model="orderRemark" />
+					</template>
+				</u-cell>
+			</u-cell-group>
 		</view>
 		<view class="pay-box">
-			<uni-list-item>
-				<template v-slot:header>
+			<u-cell>
+				<template #value>
 					<view>
 						合计￥{{ cartList.reduce((total, item) => total += item.num * item.price, 0)/100 }}
 					</view>
 				</template>
-				<template v-slot:footer>
+			</u-cell>
+			<u-cell>
+				<template #value>
 					<button type="warn" class="right-input" @tap="createOrder()">创建订单</button>
 				</template>
-			</uni-list-item>
+			</u-cell>
 		</view>
 	</view>
 </template>
@@ -102,6 +106,7 @@
 <style lang="scss" scoped>
 	.app-container {
 		background-color: $bg-color;
+		overflow-y: scroll; // 超出滚动
 
 		.base-box,
 		.product-box,
@@ -110,7 +115,7 @@
 			padding: 10rpx 10rpx;
 
 			.right-input {
-				width: 180rpx;
+				width: 200rpx;
 				font-size: $font-size-sm;
 			}
 		}
@@ -174,9 +179,9 @@
 		}
 
 		.pay-box {
-			position: absolute;
-			width: 100%;
-			bottom: 10rpx;
+			// position: absolute;
+			// width: 100%;
+			// bottom: 10rpx;
 		}
 
 	}

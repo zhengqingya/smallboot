@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 
 /**
  * <p>
@@ -25,15 +25,15 @@ import javax.validation.constraints.NotNull;
 @ApiModel
 public class UmsUserWxLoginDTO extends BaseDTO {
 
-    @NotNull
+    @NotBlank
     @ApiModelProperty("消息密文")
     private String encryptedData;
 
-    @NotNull
+    @NotBlank
     @ApiModelProperty("加密算法的初始向量")
     private String iv;
 
-    @NotNull
+    @NotBlank
     @ApiModelProperty("动态令牌")
     private String code;
 
@@ -47,6 +47,9 @@ public class UmsUserWxLoginDTO extends BaseDTO {
 
     @ApiModelProperty("用户信息")
     private WxUserInfo userInfo;
+
+    @ApiModelProperty("是否本地测试登录(仅测试使用)")
+    private Boolean isLocalLogin;
 
     @Data
     @Builder

@@ -92,6 +92,27 @@ const store = {
 				key: 'token'
 			})
 			commit('setUserInfo', {})
+		},
+		// 仅测试使用
+		async localLogin({
+			commit,
+			state
+		}, params) {
+			let result = await api.user.login({
+				code: '1',
+				iv: '1',
+				encryptedData: '1',
+				isLocalLogin: true
+			})
+			const {
+				tokenName,
+				tokenValue
+			} = result
+			uni.setStorageSync('tokenName', tokenName)
+			uni.setStorageSync(tokenName, tokenValue)
+
+			// console.log(1, result)
+			commit('setUserInfo', result)
 		}
 	}
 }

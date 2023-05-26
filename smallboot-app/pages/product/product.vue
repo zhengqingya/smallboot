@@ -63,12 +63,13 @@
 			</scroll-view>
 		</view>
 
-		<!--  商品详情  -->
-		<sku :isShow="isShowSku" :spu="spu" @close="handleCloseSkuChoose" />
+		<view>
+			<!--  商品详情  -->
+			<sku :isShow="isShowSku" :spu="spu" @close="handleCloseSkuChoose" />
 
-		<!-- 购物车 -->
-		<cart ref="cart" @initCartList="initCartList" />
-
+			<!-- 购物车 -->
+			<cart ref="cart" @initCartList="initCartList" />
+		</view>
 	</view>
 </template>
 
@@ -224,7 +225,7 @@
 		.content {
 			flex: 1;
 			display: flex;
-			height: 100%;
+			// height: 100%;
 			$chooce-font-color: #5a5b5c;
 			// background-color: #aaffff;
 
@@ -232,7 +233,6 @@
 				width: 180rpx;
 				height: 100%;
 				background-color: #aaffff;
-				height: 100%;
 				background-color: #f5f5f5;
 				color: #c1c1c1;
 

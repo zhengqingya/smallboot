@@ -108,11 +108,6 @@
 
 <style lang="scss" scoped>
 	.app-container {
-
-		// display: flex;
-		// flex-direction: column;
-		// overflow: hidden;
-		// height: 100%;
 		.cart {
 			position: absolute;
 			z-index: 9999; // 层叠顺序

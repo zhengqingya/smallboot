@@ -67,6 +67,10 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
     @Transactional(rollbackFor = Exception.class)
     @SneakyThrows(Exception.class)
     public UmsUserVO wxLogin(UmsUserWxLoginDTO params) {
+        if (params.getIsLocalLogin()) {
+            return this.getLocalLogin();
+        }
+
         String code = params.getCode();
         WxMaJscode2SessionResult wxMaJscode2SessionResult = this.wxMaFactory.wxMaService().jsCode2SessionInfo(code);
         String openid = wxMaJscode2SessionResult.getOpenid();
@@ -102,6 +106,23 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
                         .userId(String.valueOf(umsUser.getId()))
                         .openid(openid)
                         .username(umsUser.getNickname())
+                        .roleCodeList(Lists.newArrayList())
+                        .build()
+        ));
+        result.setTokenName(StpUtil.getTokenName());
+        result.setTokenValue(StpUtil.getTokenValue());
+        return result;
+    }
+
+    private UmsUserVO getLocalLogin() {
+        UmsUserVO result = this.getUser(1L);
+        // 登录认证
+        StpUtil.login(JSONUtil.toJsonStr(
+                JwtUserBO.builder()
+                        .authSourceEnum(AuthSourceEnum.C)
+                        .userId(String.valueOf(result.getId()))
+                        .openid(result.getOpenid())
+                        .username(result.getNickname())
                         .roleCodeList(Lists.newArrayList())
                         .build()
         ));
