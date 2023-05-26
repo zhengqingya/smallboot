@@ -48,6 +48,9 @@ sa-token:
     # 微信支付回调
     - /wx/callback/**
     # 商城
-    - /mini/api/mall/*/*
+    - /mini/api/mall/category/*
+    - /mini/api/mall/spu/*
+    - /mini/api/mall/user/wxLogin
+    - /mini/api/mall/user/logout
     # 其它
     - /api/test/**

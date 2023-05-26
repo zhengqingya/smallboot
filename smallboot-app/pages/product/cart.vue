@@ -128,7 +128,7 @@
 
 			.num {
 				margin-left: 90rpx;
-				top: 3px
+				top: 3rpx
 			}
 
 			.price {

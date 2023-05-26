@@ -4,6 +4,7 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.json.JSONUtil;
 import com.google.common.collect.Lists;
+import com.zhengqing.common.auth.config.SaTokenProperty;
 import com.zhengqing.common.base.constant.AppConstant;
 import com.zhengqing.common.base.constant.SecurityConstant;
 import com.zhengqing.common.base.context.JwtUserContext;
@@ -34,6 +35,12 @@ import java.util.Map;
  */
 public class HandlerInterceptorForToken implements HandlerInterceptor {
 
+    private SaTokenProperty saTokenProperty;
+
+    public HandlerInterceptorForToken(SaTokenProperty saTokenProperty) {
+        this.saTokenProperty = saTokenProperty;
+    }
+
     /**
      * 在业务处理器处理请求之前被调用。预处理，可以进行编码、安全控制、权限校验等处理
      * {@link com.zhengqing.gateway.filter.AuthFilter#filter }
@@ -44,6 +51,17 @@ public class HandlerInterceptorForToken implements HandlerInterceptor {
         if (StringUtils.isBlank(token)) {
             return true;
         }
+
+        // 放行的接口跳过
+        String restfulPath = request.getServletPath();
+        List<String> openUrlList = this.saTokenProperty.getOpenUrlList();
+        PathMatcher pathMatcher = new AntPathMatcher();
+        for (String api : openUrlList) {
+            if (pathMatcher.match(api, restfulPath)) {
+                return true;
+            }
+        }
+
         JwtUserBO jwtUserBO = JSONUtil.toBean(StpUtil.getLoginId().toString(), JwtUserBO.class);
 
         // 校验权限
