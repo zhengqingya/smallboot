@@ -74,7 +74,7 @@
 </template>
 
 <script>
-	import cart from './cart.vue'
+	import cart from '@/components/cart.vue'
 	import sku from '@/components/sku.vue'
 
 	export default {
@@ -106,10 +106,10 @@
 			// 购物车
 			async showCart() {
 				let that = this
-				// 延时1秒，防止数据库未及时更新数据
+				// 延时500毫秒，防止数据库未及时更新数据
 				setTimeout(function() {
 					that.$refs.cart.init()
-				}, 1000);
+				}, 500);
 			},
 			initCartList(cartList) {
 				this.cartList = cartList

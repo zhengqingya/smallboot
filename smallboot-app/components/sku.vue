@@ -1,8 +1,7 @@
 <template>
-	<!--  商品详情  -->
-	<u-popup class="choose-sku" v-model="isShow" @close="handleClose" :border-radius="10" mode="bottom"
-		:closeable="true">
-		<view class="app-container">
+	<view class="app-container">
+		<!--  商品详情  -->
+		<u-popup v-model="isShow" @close="handleClose" :border-radius="10" mode="bottom" :closeable="true">
 			<view class="top">
 				<image :src="spu.coverImg" class="image"></image>
 				<view class="spu-info">
@@ -58,8 +57,8 @@
 			<view class="add-cart" @tap="addCart">
 				加入购物车
 			</view>
-		</view>
-	</u-popup>
+		</u-popup>
+	</view>
 </template>
 
 <script>
