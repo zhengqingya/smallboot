@@ -20,12 +20,13 @@ import api from '@/api/index.js'
 import store from '@/store'
 
 
-import myComponent from '@/components/index'
+import globalComponent from '@/components/index'
 
 
 import mixin from '@/utils/mixin'
 
-import uviewPlus from 'uview-plus'
+// 引入 uView UI
+import uView from './uni_modules/vk-uview-ui';
 
 
 export function createApp() {
@@ -37,16 +38,15 @@ export function createApp() {
 	app.use(store)
 
 	// 全局组件注册
-	Object.keys(myComponent).forEach((key) => {
-		app.component(key, myComponent[key])
+	Object.keys(globalComponent).forEach((key) => {
+		app.component(key, globalComponent[key])
 	})
 
 	// 抽取公用的实例 - 操作成功与失败消息提醒内容等
 	app.mixin(mixin)
 
-	// uview-plus
-	app.use(uviewPlus)
-
+	// 使用 uView UI
+	app.use(uView)
 
 
 	return {

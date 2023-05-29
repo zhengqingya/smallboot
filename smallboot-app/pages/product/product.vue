@@ -65,7 +65,7 @@
 
 		<view>
 			<!--  商品详情  -->
-			<sku :isShow="isShowSku" :spu="spu" @close="handleCloseSkuChoose" />
+			<sku ref="sku" @close="handleCloseSkuChoose" />
 
 			<!-- 购物车 -->
 			<cart ref="cart" @initCartList="initCartList" />
@@ -75,10 +75,12 @@
 
 <script>
 	import cart from './cart.vue'
+	import sku from '@/components/sku.vue'
 
 	export default {
 		components: {
-			cart
+			cart,
+			sku
 		},
 		data() {
 			return {
@@ -86,8 +88,7 @@
 				reSpuList: [], // 分类关联的商品列表数据
 				currentCategoryId: 0, // 当前分类id
 				spu: {}, // 当前选择的商品
-				categoryScrollTop: 0, // 竖向滚动条位置
-				isShowSku: false, // 商品选规格时的详情框是否显示
+				categoryScrollTop: 0, // 竖向滚动条位置 
 				cartList: [], // 购物车数据
 			}
 		},
@@ -162,11 +163,10 @@
 			async showSpuDetailModal(item, spu) {
 				this.spu = await this.$api.spu.detail(spu.id);
 				this.spu.num = 1
-				this.isShowSku = true
+				this.$refs.sku.show(this.spu)
 			},
 			// 关闭sku选择时触发
 			handleCloseSkuChoose() {
-				this.isShowSku = false
 				this.showCart()
 			},
 		}

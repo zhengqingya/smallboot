@@ -59,12 +59,6 @@
 			"background": "#efeff4"
 		}
 	},
-	"easycom": {
-		// 注意一定要放在custom里，否则无效，https://ask.dcloud.net.cn/question/131175
-		"custom": {
-			"^u-(.*)": "uview-plus/components/u-$1/u-$1.vue"
-		}
-	},
 	"tabBar": {
 		"color": "#919293",
 		"selectedColor": "#97AF13",

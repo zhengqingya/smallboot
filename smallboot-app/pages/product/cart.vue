@@ -14,8 +14,8 @@
 		</view>
 
 		<!-- 购物车详情 -->
-		<u-popup :show="isShowDetail" @close="isShowDetail=false" :round="10" mode="bottom" @open="open"
-			:closeable="false">
+		<u-popup @close="isShowDetail=false" v-model="isShowDetail" length="60%" :border-radius="10" mode="bottom"
+			:closeable="true">
 			<view class="cart-popup">
 				<view>
 					<view class="top">

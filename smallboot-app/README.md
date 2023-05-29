@@ -4,8 +4,7 @@
 
 1. 下载工具 [HBuilderX](https://www.dcloud.io/)
 2. 导入项目 `smallboot-app`
-3. `cnpm i`
-4. `运行` -> `运行到内置浏览器`
+3. `运行` -> `运行到内置浏览器`
 
 ### 图标
 
@@ -16,10 +15,11 @@
 - [uView](https://www.uviewui.com)
 - [First UI](https://doc.firstui.cn)
 - [uview-plus](https://uiadmin.net/uview-plus/)
+- [vk-uview-ui](https://ext.dcloud.net.cn/plugin?name=vk-uview-ui)
 - [Vant](https://github.com/youzan/vant)
 - [ThorUI](https://github.com/dingyong0214/ThorUI-uniapp)
 - [TDesign](https://github.com/Tencent/tdesign)
 
 这里我选择
 
-- [uview-plus](https://uiadmin.net/uview-plus/)
+- [vk-uview-ui](https://ext.dcloud.net.cn/plugin?name=vk-uview-ui)

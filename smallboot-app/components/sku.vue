@@ -1,7 +1,7 @@
 <template>
 	<!--  商品详情  -->
-	<u-popup class="choose-sku" :show="isShow" @close="handleClose" :round="10" mode="bottom" @open="open"
-		:closeable="false">
+	<u-popup class="choose-sku" v-model="isShow" @close="handleClose" :border-radius="10" mode="bottom"
+		:closeable="true">
 		<view class="app-container">
 			<view class="top">
 				<image :src="spu.coverImg" class="image"></image>
@@ -22,9 +22,9 @@
 						库存：{{ chooseSkuData ? chooseSkuData.usableStock : spu.usableStock }}</view>
 				</view>
 			</view>
-			<scroll-view class="detail" scroll-y>
+			<scroll-view class="detail" scroll-y="true">
 				<view class="wrapper">
-					<view class="attrList">
+					<view class="attrList" v-if="spu.attrList">
 						<view class="attr" v-for="(item, index) in spu.attrList" :key="index">
 							<view class="title">
 								<text class="name">{{ item.attrKeyName }}</text>
@@ -65,33 +65,25 @@
 <script>
 	export default {
 		name: "sku",
-		props: {
-			// 商品选规格时的详情框是否显示 
-			isShow: {
-				type: Boolean,
-				default: false
-			},
-			spu: {
-				type: Object,
-				default: () => {},
-			},
-		},
-		watch: {
-			isShow(val) {
-				// console.log(222, val)
-				if (val) {
-					this.init()
-				}
-			},
-		},
+		// props: {
+		// 	spu: {
+		// 		type: Object,
+		// 		default: () => {},
+		// 	},
+		// },
 		data() {
 			return {
+				isShow: false, // 商品选规格时的详情框是否显示
 				chooseSkuData: null, // 选择的sku
-				skuMap: null // "X,蓝色" => sku
+				skuMap: null, // "X,蓝色" => sku
+				spu: null
 			}
 		},
 		methods: {
-			async init() {
+			async show(spu) {
+				this.isShow = true
+				this.spu = spu
+
 				function getGroupArrayObj(list, attr) {
 					const map = new Map()
 					list.forEach((item, index, arr) => {
@@ -117,13 +109,14 @@
 				}
 				// 计算sku中包含的属性值
 				let specList = []
+				console.log(111, this.spu)
 				this.spu.skuList.forEach(skuItem => {
 					skuItem.specList.forEach(specItem => {
 						specList.push(specItem)
 					})
 				})
 				this.spu.attrList = getGroupArrayObj(specList, 'attrKeyName')
-
+				console.log(111, this.spu.attrList)
 				this.initSkuMap()
 			},
 			// 规格信息对应sku  "X,蓝色" => sku
@@ -197,6 +190,7 @@
 			},
 			handleClose() {
 				this.$emit('close', false)
+				this.isShow = false
 			}
 		}
 	}
@@ -204,7 +198,7 @@
 
 <style lang="scss" scoped>
 	.app-container {
-		height: 500px;
+		// height: 500px;
 		overflow-y: scroll; // 超出滚动
 
 		width: 100%;
@@ -256,9 +250,9 @@
 			max-height: calc(90vh - 320rpx - 80rpx - 120rpx);
 
 			.wrapper {
-				width: 100%;
-				height: 100%;
-				overflow: hidden;
+				// width: 100%;
+				// height: 100%;
+				// overflow: hidden;
 
 
 				.attrList {
