@@ -27,7 +27,7 @@
 						<view class="attr" v-for="(item, index) in spu.attrList" :key="index">
 							<view class="title">
 								<text class="name">{{ item.attrKeyName }}</text>
-								<view class="desc" v-if="item.attrKeyName">({{ item.attrKeyName }})</view>
+								<!-- <view class="desc" v-if="item.attrKeyName">({{ item.attrKeyName }})</view> -->
 							</view>
 							<view class="values">
 								<view class="value" :class="{'default': value.isChoose}"
@@ -148,6 +148,11 @@
 			},
 			// 选sku
 			chooseSku(index, key) {
+				if (this.spu.attrList[index].attrValueList[key].isChoose === 1) {
+					this.spu.attrList[index].attrValueList[key].isChoose = 0
+					this.chooseSkuData = null
+					return
+				}
 				this.spu.attrList[index].attrValueList.forEach(value => this.$set(value, 'isChoose', 0))
 				this.spu.attrList[index].attrValueList[key].isChoose = 1
 				let attrDesc = this.calSkuSpecDesc()

@@ -1,18 +1,34 @@
 <template>
 	<view class="app-container">
 		<view class="base-box">
-			<u-cell-group>
-				<u-cell title="店铺" value="天府三街测试店"></u-cell>
-				<u-cell title="配送方式" value="堂食"></u-cell>
-				<!-- <u-cell title="联系电话">
-					<template #value>
-						<input class="right-input" placeholder="请填写联系电话" value="151866666666" />
-					</template>
-				</u-cell> -->
-				<u-cell title="取餐时间" value="立即"></u-cell>
-			</u-cell-group>
+			<view class="list">
+				<text class="title">配送方式</text>
+				<view class="right-title">堂食</view>
+			</view>
+			<view class="list">
+				<text class="title">取餐时间</text>
+				<view class="right-title">立即</view>
+			</view>
+			<view class="list2">
+				<text class="title">商品明细</text>
+				<view class="cart-list">
+					<view class="item" v-for="(item, index) in cartList" :key="index">
+						<image :src="item.coverImg" class="image" />
+						<view class="left">
+							<view class="name">{{item.name}}</view>
+							<view class="spec-desc">{{item.specDesc}}</view>
+						</view>
+						<view class="center">
+							<text>￥{{item.price/100}}</text>
+						</view>
+						<view class="right">
+							<view class="num">x{{item.num}}</view>
+						</view>
+					</view>
+				</view>
+			</view>
 		</view>
-		<view class="product-box">
+		<!-- <view class="product-box">
 			<h5>&nbsp;商品明细</h5>
 			<u-cell-group>
 				<u-cell>
@@ -58,7 +74,7 @@
 					<button type="warn" class="right-input" @tap="createOrder()">创建订单</button>
 				</template>
 			</u-cell>
-		</view>
+		</view> -->
 	</view>
 </template>
 
@@ -104,8 +120,30 @@
 </script>
 
 <style lang="scss" scoped>
+	.list {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		border-bottom: 1rpx dashed #eee;
+		height: 80rpx;
+
+		.title {
+			color: #333;
+			font-size: 30rpx;
+			font-weight: bold;
+			display: flex;
+			align-items: center;
+		}
+
+		.right-title {
+			color: #999;
+			font-size: 30rpx;
+		}
+	}
+
 	.app-container {
-		background-color: $bg-color;
+		height: 1000rpx;
+		// background-color: $bg-color;
 		overflow-y: scroll; // 超出滚动
 
 		.base-box,
