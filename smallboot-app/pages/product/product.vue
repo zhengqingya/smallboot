@@ -1,6 +1,6 @@
 <template>
 	<view class="app-container">
-		<view class="header">
+		<!-- 	<view class="header">
 			<view class="left">
 				<view>
 					<text>天府三街测试店</text>
@@ -19,7 +19,7 @@
 					<text>外卖</text>
 				</view>
 			</view>
-		</view>
+		</view> -->
 
 		<view class="content">
 			<scroll-view class="category" scroll-with-animation scroll-y="true">
@@ -48,6 +48,7 @@
 								</view>
 								<view class="right">
 									<text class="name">{{ spuItem.name }}</text>
+									<text class="stock">库存：{{ spuItem.usableStockSum }}</text>
 									<view class="price-action">
 										<text class="price">￥{{ spuItem.skuList[0].sellPrice/100 }}</text>
 										<view class="action">
@@ -266,7 +267,7 @@
 					justify-content: flex-start;
 					padding: 10rpx 10rpx;
 					font-size: 30rpx;
-					height: 60rpx;
+					height: 80rpx;
 
 					&.choose {
 						background-color: #ffffff;
@@ -319,6 +320,12 @@
 								.name {
 									font-size: 28rpx;
 									margin-bottom: 10rpx;
+								}
+
+								.stock {
+									font-size: 20rpx;
+									color: gray;
+									// margin-bottom: -40rpx;
 								}
 
 								.price-action {

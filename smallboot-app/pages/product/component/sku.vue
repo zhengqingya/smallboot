@@ -82,6 +82,7 @@
 			async show(spu) {
 				this.spu = spu
 				this.isShow = true
+				this.chooseSkuData = null
 
 				function getGroupArrayObj(list, attr) {
 					const map = new Map()
