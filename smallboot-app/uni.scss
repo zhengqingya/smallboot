@@ -17,7 +17,7 @@
 
 /* 颜色变量 */
 
-$color-primary: #adb838;
+$color-primary: #409EFF;
 
 
 /* 行为相关颜色 */
@@ -93,3 +93,49 @@ $uni-font-size-subtitle:26px;
 $uni-color-paragraph: #3F536E; // 文章段落颜色
 $uni-font-size-paragraph:15px;
 
+
+// -------------------------------------------------------
+
+button {
+	margin: 0;
+
+	&[type='primary'] {
+		background-color: $color-primary;
+		color: #ffffff;
+		font-size: $font-size-base;
+		
+		&[disabled] {
+			background-color: #D1D78C;
+		}
+		
+		&[plain] {
+			color: $color-primary;
+			border: 1rpx solid $color-primary;
+			
+			&.button-hover {
+				color: rgba($color: $color-primary, $alpha: 0.5);
+				border: 1rpx solid rgba($color: $color-primary, $alpha: 0.5);
+			}
+		}
+		
+		&.button-hover {
+			background-color: #d5da91;
+		}
+		
+		&::after {
+			border: 0;
+		}
+	}
+
+	&[type='default'] {
+		&[plain] {
+			color: $text-color-assist;
+			border: 1rpx solid $text-color-assist;
+			
+			&.button-hover {
+				color: rgba($color: $text-color-assist, $alpha: 0.5);
+				border: 1rpx solid rgba($color: $text-color-assist, $alpha: 0.5);
+			}
+		}
+	}
+}

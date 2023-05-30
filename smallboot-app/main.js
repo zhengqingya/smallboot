@@ -20,7 +20,8 @@ import api from '@/api/index.js'
 import store from '@/store'
 
 
-import globalComponent from '@/components/index'
+// 全局组件引入，会导致微信小程序样式不生效... 
+// import globalComponent from '@/components/index.js'
 
 
 import mixin from '@/utils/mixin'
@@ -38,9 +39,9 @@ export function createApp() {
 	app.use(store)
 
 	// 全局组件注册
-	Object.keys(globalComponent).forEach((key) => {
-		app.component(key, globalComponent[key])
-	})
+	// Object.keys(globalComponent).forEach((key) => {
+	// 	app.component(key, globalComponent[key])
+	// })
 
 	// 抽取公用的实例 - 操作成功与失败消息提醒内容等
 	app.mixin(mixin)

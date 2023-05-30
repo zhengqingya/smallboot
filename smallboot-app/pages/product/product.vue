@@ -25,7 +25,11 @@
 			<scroll-view class="category" scroll-with-animation scroll-y="true">
 				<view class="item" v-for="(item, index) in reSpuList" :key="index" @tap="hanleCategoryTap(item.id)"
 					:class="{'choose': item.id === currentCategoryId}">
-					<text>{{ item.name }}</text>
+					<view class="name">
+						<view>{{ item.name }}</view>
+						<u-badge :absolute="true" :offset="[-8,-30]" :count="getCategoryCartNum(item.id)"
+							:overflow-count="99" />
+					</view>
 				</view>
 			</scroll-view>
 
@@ -50,9 +54,8 @@
 											<button class="choose-attr" @tap="showSpuDetailModal(item, spuItem)">
 												选规格
 											</button>
-											<view class="num" v-if="getSkuNum(spuItem) > 0">
-												{{ getSkuNum(spuItem) }}
-											</view>
+											<u-badge bgColor="white" color="#409EFF" :absolute="true"
+												:offset="[-10,-10]" :count="getSkuNum(spuItem) " :overflow-count="99" />
 										</view>
 									</view>
 								</view>
@@ -61,21 +64,25 @@
 					</view>
 				</view>
 			</scroll-view>
+
 		</view>
 
-		<view>
-			<!--  商品详情  -->
-			<sku ref="sku" @close="handleCloseSkuChoose" />
 
-			<!-- 购物车 -->
+		<!-- 购物车 -->
+		<view>
 			<cart ref="cart" @initCartList="initCartList" />
 		</view>
+		<!--  商品详情  -->
+		<view>
+			<sku ref="sku" @close="handleCloseSkuChoose" />
+		</view>
+
 	</view>
 </template>
 
 <script>
-	import cart from '@/components/cart.vue'
-	import sku from '@/components/sku.vue'
+	import cart from './component/cart.vue'
+	import sku from './component/sku.vue'
 
 	export default {
 		components: {
@@ -159,6 +166,21 @@
 			getSkuNum(spuItem) {
 				return this.cartList.filter(e => e.spuId === spuItem.id).reduce((total, item) => total += item.num, 0)
 			},
+			// 指定分类下所有商品在购物车中的数量
+			getCategoryCartNum(categoryId) {
+				let sum = 0;
+				this.reSpuList.forEach(e => {
+					if (e.id === categoryId) {
+						let spuIdList = e.spuList.map(item => item.id)
+						sum = this.cartList.filter(e => spuIdList.includes(e.spuId)).reduce((total, item) =>
+							total +=
+							item
+							.num, 0);
+						return
+					}
+				})
+				return sum;
+			},
 			// 选规格-商品详情
 			async showSpuDetailModal(item, spu) {
 				this.spu = await this.$api.spu.detail(spu.id);
@@ -185,7 +207,7 @@
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
-			height: 60rpx;
+			height: 70rpx;
 			padding: 5px 5px;
 
 			.left {
@@ -244,11 +266,15 @@
 					justify-content: flex-start;
 					padding: 10rpx 10rpx;
 					font-size: 30rpx;
-
+					height: 60rpx;
 
 					&.choose {
 						background-color: #ffffff;
 						color: $chooce-font-color;
+					}
+
+					.name {
+						position: relative;
 					}
 				}
 			}
@@ -348,7 +374,6 @@
 				}
 			}
 		}
-
 
 	}
 </style>

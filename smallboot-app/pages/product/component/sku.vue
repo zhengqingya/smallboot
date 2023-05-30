@@ -1,5 +1,5 @@
 <template>
-	<view class="app-container">
+	<view class="app-container" v-if="isShow">
 		<!--  商品详情  -->
 		<u-popup v-model="isShow" @close="handleClose" :border-radius="10" mode="bottom" :closeable="true">
 			<view class="top">
@@ -80,8 +80,8 @@
 		},
 		methods: {
 			async show(spu) {
-				this.isShow = true
 				this.spu = spu
+				this.isShow = true
 
 				function getGroupArrayObj(list, attr) {
 					const map = new Map()
@@ -108,14 +108,14 @@
 				}
 				// 计算sku中包含的属性值
 				let specList = []
-				console.log(111, this.spu)
+				// console.log(111, this.spu)
 				this.spu.skuList.forEach(skuItem => {
 					skuItem.specList.forEach(specItem => {
 						specList.push(specItem)
 					})
 				})
 				this.spu.attrList = getGroupArrayObj(specList, 'attrKeyName')
-				console.log(111, this.spu.attrList)
+				// console.log(111, this.spu.attrList)
 				this.initSkuMap()
 			},
 			// 规格信息对应sku  "X,蓝色" => sku

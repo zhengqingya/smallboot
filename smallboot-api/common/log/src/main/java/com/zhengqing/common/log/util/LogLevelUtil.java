@@ -3,6 +3,8 @@ package com.zhengqing.common.log.util;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.LoggerContext;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.logging.LogLevel;
+import org.springframework.boot.logging.LoggingSystem;
 
 /**
  * <p> 日志级别工具类 </p>
@@ -14,7 +16,7 @@ import org.slf4j.LoggerFactory;
 public class LogLevelUtil {
 
     /**
-     * 修改日志级别
+     * 修改日志级别 -- 法一
      *
      * @param packageName 包名
      * @param logLevel    日志级别
@@ -29,6 +31,20 @@ public class LogLevelUtil {
         loggerContext.getLogger("ROOT").setLevel(Level.DEBUG);
         // 获取指定包下的Logger并设置日志级别
         loggerContext.getLogger(packageName).setLevel(logLevel);
+    }
+
+    /**
+     * 修改日志级别 -- 法二
+     *
+     * @param packageName 包名
+     * @param logLevel    日志级别
+     * @return void
+     * @author zhengqingya
+     * @date 2021/2/1 12:12
+     */
+    public static void update(String packageName, LogLevel logLevel) {
+        LoggingSystem system = LoggingSystem.get(LoggingSystem.class.getClassLoader());
+        system.setLogLevel(packageName, logLevel);
     }
 
 }
