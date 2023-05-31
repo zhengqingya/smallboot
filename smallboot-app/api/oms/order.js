@@ -44,4 +44,12 @@ export default {
 			data: data
 		})
 	},
+	// TODO 仅测试环境使用！！！
+	payTest(data) {
+		return request({
+			url: BASE_API + '/payTest',
+			method: 'post',
+			data: data
+		})
+	},
 }

@@ -71,6 +71,13 @@ public class MiniOmsOrderController {
         return this.miniOmsOrderService.payOrder(params);
     }
 
+    @PostMapping("payTest")
+    @ApiOperation("待支付-支付订单(仅测试环境使用，订单直接变成已支付状态流程)")
+    public Boolean payTest(@Validated @RequestBody MiniOmsOrderPayDTO params) {
+        this.miniOmsOrderService.payOrderTest(params);
+        return true;
+    }
+
     @DeleteMapping("deleteBatch")
     @ApiOperation("批量删除")
     public Boolean deleteBatch(@Validated @ModelAttribute OmsOrderDeleteDTO params) {

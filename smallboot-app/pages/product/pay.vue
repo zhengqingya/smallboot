@@ -16,7 +16,6 @@
 			</view>
 		</view>
 
-
 		<view class="base-box">
 			<view class="item-list">
 				<text class="title">取餐时间</text>
@@ -33,7 +32,7 @@
 				</view>
 			</view>
 			<view class="tips">
-				<view class="tips_name">备注</view>
+				<view class="title">备注</view>
 				<view class="value">
 					<textarea class="textarea" placeholder="请输入备注信息..." maxlength="100"
 						v-model="orderRemark"></textarea>
@@ -42,7 +41,7 @@
 		</view>
 
 		<view>
-			<u-button class="create-order" type="error" @click="createOrder()">创建订单</u-button>
+			<button class="create-order" type="warn" @click="createOrder()">创建订单</button>
 		</view>
 	</view>
 </template>
@@ -148,50 +147,46 @@
 			}
 		}
 
-		.item-list {
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			border-bottom: 1rpx dashed #eee;
-			height: 80rpx;
-			// padding: 10rpx 10rpx;
-
-			.title {
-				color: #333;
-				font-size: 30rpx;
-				font-weight: bold;
+		.base-box {
+			.item-list {
 				display: flex;
 				align-items: center;
-			}
-
-			.value {
-				color: #999;
-				font-size: 30rpx;
-			}
-		}
-
-		.tips {
-			.tips_name {
-				color: #333;
-				font-size: 30rpx;
-				font-weight: bold;
-				display: flex;
-				align-items: center;
+				justify-content: space-between;
+				border-bottom: 1rpx dashed #eee;
 				height: 80rpx;
+				// padding: 10rpx 10rpx;
+
+				.title {
+					color: #333;
+					font-size: 30rpx;
+					font-weight: bold;
+					display: flex;
+					align-items: center;
+				}
+
+				.value {
+					color: #999;
+					font-size: 30rpx;
+				}
 			}
 
-			.value {
-				// background-color: rebeccapurple;
-				width: 100%;
-				border: 1rpx solid #eee;
-				border-radius: 10rpx;
-				margin-right: 20rpx;
-				padding: 10rpx;
-				height: 200rpx;
-				// color: #999;
+			.tips {
+				.title {
+					color: #333;
+					font-size: 30rpx;
+					font-weight: bold;
+					display: flex;
+					align-items: center;
+					height: 80rpx;
+				}
 
 				.textarea {
+					height: 200rpx;
+					width: 100%;
+					border: 1rpx solid #eee;
+					border-radius: 10rpx;
 					font-size: 30rpx;
+					// background-color: rebeccapurple;
 				}
 			}
 		}

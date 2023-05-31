@@ -14,9 +14,8 @@
 
 <style lang="scss">
 	@import "./uni_modules/vk-uview-ui/index.scss";
-
 	/*每个页面公共css */
-	@import '@/common.css';
+	@import '@/common.scss';
 
 
 	page,

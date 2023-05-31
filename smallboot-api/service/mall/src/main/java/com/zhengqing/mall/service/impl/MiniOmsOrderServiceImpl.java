@@ -2,6 +2,7 @@ package com.zhengqing.mall.service.impl;
 
 import cn.hutool.core.lang.Assert;
 import cn.hutool.json.JSONUtil;
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.Lists;
@@ -24,6 +25,7 @@ import com.zhengqing.mall.model.dto.*;
 import com.zhengqing.mall.model.enums.*;
 import com.zhengqing.mall.model.vo.*;
 import com.zhengqing.mall.service.*;
+import com.zhengqing.pay.model.bo.PayOrderNotifyBO;
 import com.zhengqing.pay.model.dto.PayOrderCreateDTO;
 import com.zhengqing.pay.model.vo.PayOrderCreateVO;
 import com.zhengqing.pay.service.IPayService;
@@ -222,73 +224,73 @@ public class MiniOmsOrderServiceImpl extends OmsOrderServiceImpl<OmsOrderMapper,
                 .build();
     }
 
-//    @Override
-//    @Transactional(rollbackFor = Exception.class)
-//    public void paySuccessCallback(PayOrderNotifyBO payOrderNotifyBO) {
-//        log.info("[商城] 支付成功回调消息: [{}]", JSON.toJSONString(payOrderNotifyBO));
-//        if (!payOrderNotifyBO.getResultStatus()) {
-//            log.warn("[商城] 支付回调异常不处理 -- 回调参数: [{}]", JSON.toJSONString(payOrderNotifyBO));
-//            return;
-//        }
-//        // 系统内部订单编号
-//        String orderNo = payOrderNotifyBO.getOrderNo();
-//        // 微信支付订单号
-//        String payNo = payOrderNotifyBO.getTransactionId();
-//        // 查询订单详情
-//        OmsOrder order = this.getOrder(orderNo);
-//        // 是否为普通商品
-//        Byte orderStatus = order.getOrderStatus();
-//        if (!OmsOrderStatusEnum.UN_PAY.getStatus().equals(orderStatus)
-//                && !OmsOrderStatusEnum.CANC.getStatus().equals(orderStatus)
-//        ) {
-//            log.warn("[商城] 支付成功回调消息: [{}] 不处理业务 该订单状态已变更为[{}]", payOrderNotifyBO, orderStatus);
-//            return;
-//        }
-//
-//        boolean isVirtual = false;
-//        List<OmsOrderItemVO> orderItemList = Lists.newLinkedList();
-//        // 订单关联商品详情 => 如果商品都为虚拟商品-则需要将此订单变更为待收货状态
-//        orderItemList = this.miniOmsOrderItemService.listByOrderNo(orderNo);
-//        for (OmsOrderItemVO orderItem : orderItemList) {
-//            isVirtual = PmsSpuTypeEnum.isVirtual(orderItem.getType());
-//            if (!isVirtual) {
-//                break;
-//            }
-//        }
-//        if (isVirtual) {
-//            order.setAutoReceiptTime(this.mallCommonService.getAutoReceiptTime());
-//        }
-//        // 订单状态更新
-//        order.setOrderStatus(isVirtual ? OmsOrderStatusEnum.BILL.getStatus()
-//                : OmsOrderStatusEnum.UN_BILL.getStatus());
-//
-//        // 1、订单更新
-//        order.setPayNo(payNo);
-//        order.setPayTime(new Date());
-////        order.setUnPayEndTime(null);
-//        order.updateById();
-//
-//        // 2、更新商品状态
-//        this.miniOmsOrderItemService.updateBatchStatusByOrderNo(orderNo,
-//                isVirtual ? OmsOrderItemStatusEnum.BILL : OmsOrderItemStatusEnum.UN_BILL);
-//
-//        // 3、mq延时-自动确认收货
-//        if (isVirtual) {
-//            // 查询自动收货时间
-//            long autoReceiptMillisecond = this.mallCommonService.getAutoReceiptMillisecond();
-//            this.rabbitTemplate.convertAndSend(MallRabbitMqConstant.MALL_EVENT_DELAY_EXCHANGE,
-//                    MallRabbitMqConstant.OMS_ORDER_AUTO_CONFIRM_RECEIPT_ROUTING_KEY,
-//                    MiniOmsOrderConfirmReceiptDTO.builder()
-//                            .orderNo(orderNo)
-//                            .tenantId(TenantIdContext.getTenantId())
-//                            .shippingId(null)
-//                            .build(), message -> {
-//                        // 配置消息延时时间
-//                        message.getMessageProperties().setHeader("x-delay", autoReceiptMillisecond);
-//                        return message;
-//                    });
-//        }
-//    }
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void paySuccessCallback(PayOrderNotifyBO payOrderNotifyBO) {
+        log.info("[商城] 支付成功回调消息: [{}]", JSON.toJSONString(payOrderNotifyBO));
+        if (!payOrderNotifyBO.getResultStatus()) {
+            log.warn("[商城] 支付回调异常不处理 -- 回调参数: [{}]", JSON.toJSONString(payOrderNotifyBO));
+            return;
+        }
+        // 系统内部订单编号
+        String orderNo = payOrderNotifyBO.getOrderNo();
+        // 微信支付订单号
+        String payNo = payOrderNotifyBO.getTransactionId();
+        // 查询订单详情
+        OmsOrder order = this.getOrder(orderNo);
+        // 是否为普通商品
+        Byte orderStatus = order.getOrderStatus();
+        if (!OmsOrderStatusEnum.UN_PAY.getStatus().equals(orderStatus)
+                && !OmsOrderStatusEnum.CANC.getStatus().equals(orderStatus)
+        ) {
+            log.warn("[商城] 支付成功回调消息: [{}] 不处理业务 该订单状态已变更为[{}]", payOrderNotifyBO, orderStatus);
+            return;
+        }
+
+        boolean isVirtual = false;
+        List<OmsOrderItemVO> orderItemList = Lists.newLinkedList();
+        // 订单关联商品详情 => 如果商品都为虚拟商品-则需要将此订单变更为待收货状态
+        orderItemList = this.miniOmsOrderItemService.listByOrderNo(orderNo);
+        for (OmsOrderItemVO orderItem : orderItemList) {
+            isVirtual = PmsSpuTypeEnum.isVirtual(orderItem.getType());
+            if (!isVirtual) {
+                break;
+            }
+        }
+        if (isVirtual) {
+            order.setAutoReceiptTime(this.mallCommonService.getAutoReceiptTime());
+        }
+        // 订单状态更新
+        order.setOrderStatus(isVirtual ? OmsOrderStatusEnum.BILL.getStatus()
+                : OmsOrderStatusEnum.UN_BILL.getStatus());
+
+        // 1、订单更新
+        order.setPayNo(payNo);
+        order.setPayTime(new Date());
+//        order.setUnPayEndTime(null);
+        order.updateById();
+
+        // 2、更新商品状态
+        this.miniOmsOrderItemService.updateBatchStatusByOrderNo(orderNo,
+                isVirtual ? OmsOrderItemStatusEnum.BILL : OmsOrderItemStatusEnum.UN_BILL);
+
+        // 3、mq延时-自动确认收货
+        if (isVirtual) {
+            // 查询自动收货时间
+            long autoReceiptMillisecond = this.mallCommonService.getAutoReceiptMillisecond();
+            this.rabbitTemplate.convertAndSend(MallRabbitMqConstant.MALL_EVENT_DELAY_EXCHANGE,
+                    MallRabbitMqConstant.OMS_ORDER_AUTO_CONFIRM_RECEIPT_ROUTING_KEY,
+                    MiniOmsOrderConfirmReceiptDTO.builder()
+                            .orderNo(orderNo)
+                            .tenantId(TenantIdContext.getTenantId())
+                            .shippingId(null)
+                            .build(), message -> {
+                        // 配置消息延时时间
+                        message.getMessageProperties().setHeader("x-delay", autoReceiptMillisecond);
+                        return message;
+                    });
+        }
+    }
 
     @Override
     public List<MallTabConditionListVO> getTabCondition(MiniOmsOrderPageDTO params) {
@@ -397,6 +399,41 @@ public class MiniOmsOrderServiceImpl extends OmsOrderServiceImpl<OmsOrderMapper,
                         .build()
         );
         return payOrderCreateVO;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void payOrderTest(MiniOmsOrderPayDTO params) {
+        log.info("[商城] 订单-支付（仅测试使用）-提交参数：[{}] ", params);
+        String orderNo = params.getOrderNo();
+        OmsOrder order = this.getOrder(orderNo);
+        OmsOrderStatusEnum orderStatusEnum = OmsOrderStatusEnum.getEnum(order.getOrderStatus());
+        Assert.isTrue(OmsOrderStatusEnum.UN_PAY == orderStatusEnum,
+                "无法支付，该订单状态为：" + orderStatusEnum.getDesc());
+        // 1、支付是否校验库存
+        if (OmsOrderStockCheckTypeEnum.PAY.getType().equals(order.getStockCheckType())) {
+            // 1.1、查询该订单关联商品
+            List<OmsOrderItemVO> orderReSpuList = this.miniOmsOrderItemService.listByOrderNo(
+                    orderNo);
+            List<PmsSkuStockBO> skuStockList = Lists.newLinkedList();
+            orderReSpuList.forEach(item -> skuStockList.add(PmsSkuStockBO.builder()
+                    .skuId(item.getSkuId())
+                    .num(-item.getNum())
+                    .build()));
+            // 1.2、库存扣减
+            Assert.isTrue(this.miniPmsSpuService.updateSkuStock(skuStockList), "商品库存不足!");
+        }
+
+        // 2、状态变更
+        this.paySuccessCallback(
+                PayOrderNotifyBO.builder()
+                        .tenantId(TenantIdContext.getTenantId())
+                        .transactionId(IdGeneratorUtil.nextStrId())
+                        .orderNo(orderNo)
+                        .outRefundNo(null)
+                        .resultStatus(true)
+                        .build()
+        );
     }
 
     @Override

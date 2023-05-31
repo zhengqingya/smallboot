@@ -9,7 +9,7 @@
 				</view>
 				<view class="price">￥{{cartList.reduce((total, item) => total += (item.num*item.price), 0)/100}}</view>
 			</view>
-			<navigator :url="'/pages/product/pay'">
+			<navigator :url="'/pages/order/detail?isCreateOrder=true'">
 				<view class="pay">付款</view>
 			</navigator>
 		</view>

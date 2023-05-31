@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.mall.entity.OmsOrder;
 import com.zhengqing.mall.model.dto.*;
 import com.zhengqing.mall.model.vo.*;
+import com.zhengqing.pay.model.bo.PayOrderNotifyBO;
 import com.zhengqing.pay.model.vo.PayOrderCreateVO;
 
 import java.util.List;
@@ -35,7 +36,7 @@ public interface MiniOmsOrderService extends OmsOrderService<OmsOrder> {
      * @author zhengqingya
      * @date 2021/6/25 14:02
      */
-//    void paySuccessCallback(PayOrderNotifyBO payOrderNotifyBO);
+    void paySuccessCallback(PayOrderNotifyBO payOrderNotifyBO);
 
     /**
      * 获取tab条件
@@ -86,6 +87,17 @@ public interface MiniOmsOrderService extends OmsOrderService<OmsOrder> {
      * @date 2021/10/19 9:46
      */
     PayOrderCreateVO payOrder(MiniOmsOrderPayDTO params);
+
+
+    /**
+     * 待支付订单-支付 (仅测试环境使用，订单直接变成已支付状态流程)
+     *
+     * @param params 提交参数
+     * @return void
+     * @author zhengqingya
+     * @date 2021/10/19 9:46
+     */
+    void payOrderTest(MiniOmsOrderPayDTO params);
 
     /**
      * 修改收货人地址

@@ -12,14 +12,6 @@
 
 ### UI组件
 
-- [uView](https://www.uviewui.com)
-- [First UI](https://doc.firstui.cn)
-- [uview-plus](https://uiadmin.net/uview-plus/)
-- [vk-uview-ui](https://ext.dcloud.net.cn/plugin?name=vk-uview-ui)
-- [Vant](https://github.com/youzan/vant)
-- [ThorUI](https://github.com/dingyong0214/ThorUI-uniapp)
-- [TDesign](https://github.com/Tencent/tdesign)
+- [vk-uview-ui 插件市场](https://ext.dcloud.net.cn/plugin?name=vk-uview-ui)
+- [vk-uview-ui 文档](https://vkuviewdoc.fsq.pub/)
 
-这里我选择
-
-- [vk-uview-ui](https://ext.dcloud.net.cn/plugin?name=vk-uview-ui)
