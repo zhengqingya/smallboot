@@ -1,80 +1,49 @@
 <template>
 	<view class="app-container">
-		<view class="base-box">
-			<view class="list">
-				<text class="title">配送方式</text>
-				<view class="right-title">堂食</view>
-			</view>
-			<view class="list">
-				<text class="title">取餐时间</text>
-				<view class="right-title">立即</view>
-			</view>
-			<view class="list2">
-				<text class="title">商品明细</text>
-				<view class="cart-list">
-					<view class="item" v-for="(item, index) in cartList" :key="index">
-						<image :src="item.coverImg" class="image" />
-						<view class="left">
-							<view class="name">{{item.name}}</view>
-							<view class="spec-desc">{{item.specDesc}}</view>
-						</view>
-						<view class="center">
-							<text>￥{{item.price/100}}</text>
-						</view>
-						<view class="right">
-							<view class="num">x{{item.num}}</view>
-						</view>
-					</view>
+		<view class="spu-list" v-for="(item, index) in cartList" :key="index">
+			<view class="spu-item">
+				<image :src="item.coverImg" class="image" />
+				<view class="left">
+					<view class="name">{{item.name}}</view>
+					<view class="spec-desc">{{item.specDesc}}</view>
+				</view>
+				<view class="center">
+					<text>￥{{item.price/100}}</text>
+				</view>
+				<view class="right">
+					<view class="num">x{{item.num}}</view>
 				</view>
 			</view>
 		</view>
-		<!-- <view class="product-box">
-			<h5>&nbsp;商品明细</h5>
-			<u-cell-group>
-				<u-cell>
-					<template #value>
-						<view class="cart-list">
-							<view class="item" v-for="(item, index) in cartList" :key="index">
-								<image :src="item.coverImg" class="image" />
-								<view class="left">
-									<view class="name">{{item.name}}</view>
-									<view class="spec-desc">{{item.specDesc}}</view>
-								</view>
-								<view class="center">
-									<text>￥{{item.price/100}}</text>
-								</view>
-								<view class="right">
-									<view class="num">x{{item.num}}</view>
-								</view>
-							</view>
-						</view>
-					</template>
-				</u-cell>
-			</u-cell-group>
+
+
+		<view class="base-box">
+			<view class="item-list">
+				<text class="title">取餐时间</text>
+				<view class="value">立即</view>
+			</view>
+			<view class="item-list">
+				<text class="title">配送方式</text>
+				<view class="value">堂食</view>
+			</view>
+			<view class="item-list">
+				<text class="title">合计</text>
+				<view class="value" style="color:red">
+					￥{{ cartList.reduce((total, item) => total += item.num * item.price, 0)/100 }}
+				</view>
+			</view>
+			<view class="tips">
+				<view class="tips_name">备注</view>
+				<view class="value">
+					<textarea class="textarea" placeholder="请输入备注信息..." maxlength="100"
+						v-model="orderRemark"></textarea>
+				</view>
+			</view>
 		</view>
-		<view class="remark-box">
-			<u-cell-group>
-				<u-cell title="备注">
-					<template #value>
-						<input class="right-input" placeholder="无..." v-model="orderRemark" />
-					</template>
-				</u-cell>
-			</u-cell-group>
+
+		<view>
+			<u-button class="create-order" type="error" @click="createOrder()">创建订单</u-button>
 		</view>
-		<view class="pay-box">
-			<u-cell>
-				<template #value>
-					<view>
-						合计￥{{ cartList.reduce((total, item) => total += item.num * item.price, 0)/100 }}
-					</view>
-				</template>
-			</u-cell>
-			<u-cell>
-				<template #value>
-					<button type="warn" class="right-input" @tap="createOrder()">创建订单</button>
-				</template>
-			</u-cell>
-		</view> -->
 	</view>
 </template>
 
@@ -101,7 +70,7 @@
 				let {
 					orderNo
 				} = await this.$api.order.create({
-					wxOpenid: "666",
+					// wxOpenid: "666",
 					skuList: skuList,
 					freight: Math.max.apply(Math, this.cartList.map(function(item) {
 						return item.freight << 0
@@ -120,106 +89,120 @@
 </script>
 
 <style lang="scss" scoped>
-	.list {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		border-bottom: 1rpx dashed #eee;
-		height: 80rpx;
-
-		.title {
-			color: #333;
-			font-size: 30rpx;
-			font-weight: bold;
-			display: flex;
-			align-items: center;
-		}
-
-		.right-title {
-			color: #999;
-			font-size: 30rpx;
-		}
-	}
-
 	.app-container {
-		height: 1000rpx;
+		// height: 1000rpx;
 		// background-color: $bg-color;
 		overflow-y: scroll; // 超出滚动
+		padding: 10rpx 20rpx;
 
-		.base-box,
-		.product-box,
-		.pay-box,
-		.remark-box {
-			padding: 10rpx 10rpx;
+		.spu-list {
+			.spu-item {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 5rpx 0;
+				position: relative;
+				// border-bottom: 1rpx dashed #eee;
 
-			.right-input {
-				width: 200rpx;
-				font-size: $font-size-sm;
-			}
-		}
+				.image {
+					width: 60rpx;
+					height: 60rpx;
+					margin-right: 10rpx;
+				}
 
-		.product-box {
-
-			.cart-list {
-				width: 100%;
-
-				.item {
+				.left {
+					flex: 1;
 					display: flex;
-					justify-content: space-between;
+					flex-direction: column;
+
+					.name {
+						font-size: $font-size-sm;
+						color: $text-color-base;
+					}
+
+					.spec-desc {
+						color: $text-color-assist;
+						font-size: $font-size-sm;
+					}
+				}
+
+				.center {
+					margin-right: 120rpx;
+					font-size: $font-size-base;
+				}
+
+				.right {
+					display: flex;
 					align-items: center;
-					padding: 5rpx 0;
-					position: relative;
-					// border: 1rpx solid gainsboro;
+					justify-content: space-between;
 
-					.image {
-						width: 60rpx;
-						height: 60rpx;
-						margin-right: 10rpx;
-					}
-
-					.left {
-						flex: 1;
-						display: flex;
-						flex-direction: column;
-
-						.name {
-							font-size: $font-size-sm;
-							color: $text-color-base;
-						}
-
-						.spec-desc {
-							color: $text-color-assist;
-							font-size: $font-size-sm;
-						}
-					}
-
-					.center {
-						margin-right: 120rpx;
-						font-size: $font-size-base;
-					}
-
-					.right {
-						display: flex;
-						align-items: center;
-						justify-content: space-between;
-
-						.num {
-							font-size: $font-size-sm;
-							width: 46rpx;
-							height: 46rpx;
-							text-align: center;
-							line-height: 46rpx;
-						}
+					.num {
+						font-size: $font-size-sm;
+						width: 46rpx;
+						height: 46rpx;
+						text-align: center;
+						line-height: 46rpx;
 					}
 				}
 
 			}
 		}
 
-		.pay-box {
+		.item-list {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			border-bottom: 1rpx dashed #eee;
+			height: 80rpx;
+			// padding: 10rpx 10rpx;
+
+			.title {
+				color: #333;
+				font-size: 30rpx;
+				font-weight: bold;
+				display: flex;
+				align-items: center;
+			}
+
+			.value {
+				color: #999;
+				font-size: 30rpx;
+			}
+		}
+
+		.tips {
+			.tips_name {
+				color: #333;
+				font-size: 30rpx;
+				font-weight: bold;
+				display: flex;
+				align-items: center;
+				height: 80rpx;
+			}
+
+			.value {
+				// background-color: rebeccapurple;
+				width: 100%;
+				border: 1rpx solid #eee;
+				border-radius: 10rpx;
+				margin-right: 20rpx;
+				padding: 10rpx;
+				height: 200rpx;
+				// color: #999;
+
+				.textarea {
+					font-size: 30rpx;
+				}
+			}
+		}
+
+		.create-order {
 			// position: absolute;
-			// width: 100%;
+			top: 20rpx;
+			width: 300rpx;
+			margin: auto;
 			// bottom: 10rpx;
+			font-size: $font-size-base;
 		}
 
 	}

@@ -1,6 +1,8 @@
 package com.zhengqing.ums.model.dto;
 
+import com.zhengqing.common.base.exception.ParameterException;
 import com.zhengqing.common.base.model.dto.BaseDTO;
+import com.zhengqing.common.core.custom.parameter.CheckParam;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -23,7 +25,7 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ApiModel
-public class UmsUserWxLoginDTO extends BaseDTO {
+public class UmsUserWxLoginDTO extends BaseDTO implements CheckParam {
 
     @NotBlank
     @ApiModelProperty("消息密文")
@@ -50,6 +52,13 @@ public class UmsUserWxLoginDTO extends BaseDTO {
 
     @ApiModelProperty("是否本地测试登录(仅测试使用)")
     private Boolean isLocalLogin;
+
+    @Override
+    public void checkParam() throws ParameterException {
+        if (this.isLocalLogin == null) {
+            this.isLocalLogin = false;
+        }
+    }
 
     @Data
     @Builder
