@@ -33,6 +33,7 @@ import com.zhengqing.mall.model.enums.OmsOrderStatusEnum;
 import com.zhengqing.mall.model.enums.TpsLogisticsCodeEnum;
 import com.zhengqing.mall.model.vo.*;
 import com.zhengqing.mall.service.*;
+import com.zhengqing.system.enums.SysDictTypeEnum;
 import com.zhengqing.system.service.ISysDictService;
 import com.zhengqing.system.service.ISysPropertyService;
 import lombok.SneakyThrows;
@@ -150,7 +151,7 @@ public class WebOmsOrderServiceImpl extends OmsOrderServiceImpl<OmsOrderMapper, 
         params.setOrderStatus(null);
         // 查询tab条件数量
         List<MallTabConditionListVO> tabDataList = this.omsOrderMapper.selectTabConditionByWeb(params);
-        return this.mallCommonService.getTabDataList(tabDataList, null);
+        return this.mallCommonService.getTabDataList(tabDataList, SysDictTypeEnum.MALL_ORDER_TAB_CONDITION_WEB);
     }
 
     @Override
