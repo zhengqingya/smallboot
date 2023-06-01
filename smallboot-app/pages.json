@@ -33,7 +33,7 @@
 			"path": "pages/order/order",
 			"style": {
 				"navigationBarTitleText": "订单",
-				"enablePullDownRefresh": false
+				"enablePullDownRefresh": false // 是否开启下拉刷新
 			}
 		}, {
 			"path": "pages/order/detail",

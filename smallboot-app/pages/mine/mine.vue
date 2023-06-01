@@ -23,7 +23,9 @@
 				// nickname: this.$store.state.user.nickname
 			}
 		},
-		onLoad() {
+		onLoad() {},
+		// 页面显示就触发
+		onShow() {
 			this.init()
 		},
 		methods: {

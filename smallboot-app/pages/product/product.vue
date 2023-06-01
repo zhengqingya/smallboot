@@ -101,6 +101,10 @@
 			}
 		},
 		onLoad() {
+
+		},
+		// 页面显示就触发
+		onShow() {
 			this.init()
 		},
 		methods: {
@@ -113,10 +117,9 @@
 			},
 			// 购物车
 			async showCart() {
-				let that = this
 				// 延时500毫秒，防止数据库未及时更新数据
-				setTimeout(function() {
-					that.$refs.cart.init()
+				setTimeout(() => {
+					this.$refs.cart.init()
 				}, 500);
 			},
 			initCartList(cartList) {

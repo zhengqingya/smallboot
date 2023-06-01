@@ -35,8 +35,8 @@
 </script>
 <style scoped lang="scss">
 	.tabs {
-		height: 80upx;
-		line-height: 80upx;
+		height: 80rpx;
+		line-height: 80rpx;
 		display: flex;
 		justify-content: flex-start;
 		align-items: center;
@@ -46,7 +46,7 @@
 	.tabs_list {
 		flex: 1;
 		text-align: center;
-		font-size: 28upx;
+		font-size: 28rpx;
 		position: relative;
 		color: #333;
 	}
@@ -54,12 +54,12 @@
 	.active {
 		font-weight: bold;
 		color: #DD4F42;
-		width: 50upx;
-		height: 5upx;
-		border-radius: 20upx;
+		width: 50rpx;
+		height: 5rpx;
+		border-radius: 20rpx;
 		background-color: #DD4F42;
 		position: absolute;
-		bottom: 10upx;
+		bottom: 10rpx;
 		left: 50%;
 		transform: translateX(-50%);
 		transition: all 0.3s;
