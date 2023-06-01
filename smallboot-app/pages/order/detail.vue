@@ -5,9 +5,8 @@
 				<view class="status">{{orderObj.orderStatusName}}</view>
 				<view v-if="orderObj.orderStatus===1" class="un-pay">
 					<view>剩余支付时间：</view>
-					<u-count-down style="color:red"
-						:timestamp="new Date(orderObj.unPayEndTime).getTime()-new Date().getTime()" format="mm:ss"
-						@finish="cancelOrder()" />
+					<u-count-down :timestamp="new Date(orderObj.unPayEndTime).getTime()-new Date().getTime()"
+						format="mm:ss" @finish="cancelOrder()" />
 				</view>
 			</view>
 
@@ -97,11 +96,21 @@
 		},
 		onLoad(params) {
 			this.orderNo = params.orderNo
+
 			if (params.isCreateOrder) {
+				// 创建订单数据
 				this.isCreateOrder = true
 				this.getCartList()
-			} else {
+				return
+			}
+			if (this.orderNo) {
+				// 订单详情
 				this.orderDetail()
+			} else {
+				// 跳回订单列表页面
+				uni.switchTab({
+					url: '/pages/order/order'
+				})
 			}
 		},
 		methods: {
@@ -165,10 +174,12 @@
 				// })
 			},
 			async payOrder() {
+				// TODO 临时测试
 				// alert('条件有限，无法测试！')
 				await this.$api.order.payTest({
 					orderNo: this.orderNo
 				})
+
 				this.orderDetail()
 			}
 		}
@@ -188,7 +199,7 @@
 				font-weight: bold;
 				text-align: center;
 				margin-top: 10rpx;
-				color: purple;
+				color: $color-primary;
 			}
 
 			.un-pay {

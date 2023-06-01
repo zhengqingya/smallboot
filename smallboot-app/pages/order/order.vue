@@ -1,18 +1,22 @@
 <template>
 	<view class="app-container">
-		<uni-segmented-control class="tab" :current="currentTab" :values="['今日订单',  '历史订单']" @clickItem="clickTab"
-			styleType="text" activeColor="#ffaa00"></uni-segmented-control>
-		<u-gap height="3" bg-color="#ffffff" />
+		<view class="tab">
+			<tabs activeColor="#000" :tabList="tabList" :active="currentTab" @clickTab="clickTab" />
+		</view>
+
 		<scroll-view class="content" scroll-with-animation scroll-y="true">
-			<view v-if="orderList.length==0">
-				<u-empty mode="order" marginTop="100rpx" />
+			<view v-if="orderList.length===0">
+				<u-empty mode="order" margin-top="100" class="empty" />
 			</view>
 			<view v-else class="order" v-for="(orderItem, index) in orderList" :key="index">
-				<u-count-down v-if="orderItem.orderStatus===1" :time="getUnPayTime(orderItem.unPayEndTime)"
-					format="mm:ss" />
+
+				<u-count-down v-if="orderItem.orderStatus === 1" class="un-pay-time"
+					:timestamp="new Date(orderItem.unPayEndTime).getTime() - new Date().getTime()" format="mm:ss"
+					@finish="cancelOrder()" />
+
 				<view class="title">
 					<view class="left">
-						<view>天府三街测试店</view>
+						<!-- <view>天府三街测试店</view> -->
 						<view class="take-type">堂食</view>
 					</view>
 					<navigator :url="'/pages/order/detail?orderNo='+orderItem.orderNo">
@@ -34,7 +38,9 @@
 				</view>
 				<view class="spu-bottom">
 					<view class="time">下单时间：{{orderItem.createTime}}</view>
-					<view class="sum-price">实付：￥{{orderItem.payPrice/100}}</view>
+					<view class="sum-price">实付：
+						<text style="color:red">￥{{orderItem.payPrice/100}}</text>
+					</view>
 				</view>
 			</view>
 		</scroll-view>
@@ -42,30 +48,55 @@
 </template>
 
 <script>
+	import tabs from './component/tabs.vue'
+
 	export default {
+		components: {
+			tabs
+		},
 		data() {
 			return {
+				// tabList: [{
+				// 		name: '待支付',
+				// 		orderStatus: 1
+				// 	}, {
+				// 		name: '已取消',
+				// 		orderStatus: 2
+				// 	}, {
+				// 		name: '待发货',
+				// 		orderStatus: 3
+				// 	}, {
+				// 		name: '待收货',
+				// 		orderStatus: 4
+				// 	},
+				// 	{
+				// 		name: '已完成',
+				// 		orderStatus: 5
+				// 	}, {
+				// 		name: '已退款',
+				// 		orderStatus: 6
+				// 	}
+				// ],
+				tabList: [{
+					name: '今日订单',
+					dataType: 1
+				}, {
+					name: '历史订单',
+					dataType: 2
+				}],
 				currentTab: 0,
-				orderList: []
+				orderList: [],
+
 			};
 		},
 		onLoad() {
+			// 默认查询今日订单
 			this.orderPage(1)
 		},
 		methods: {
-			clickTab(e) {
-				switch (e.currentIndex) {
-					case 0:
-						// 今日订单
-						this.orderPage(1)
-						break;
-					case 1:
-						// 历史订单
-						this.orderPage(2)
-						break;
-					default:
-						break;
-				}
+			clickTab(item, index) {
+				this.currentTab = index
+				this.orderPage(item.dataType)
 			},
 			async orderPage(dataType) {
 				let result = await this.$api.order.page({
@@ -86,6 +117,11 @@
 		background-color: $bg-color;
 
 		.tab {}
+
+		.empty {
+			// background-color: #000;
+			// height: calc(100%)
+		}
 
 		.content {
 			// padding: 10rpx 10rpx;
@@ -127,6 +163,7 @@
 					.right {
 						font-size: $font-size-lg;
 						font-weight: bold;
+						color: $color-primary;
 					}
 				}
 
