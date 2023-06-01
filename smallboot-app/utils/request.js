@@ -1,4 +1,5 @@
 import config from '@/config.js'
+import store from '@/store'
 
 const request = ({
 	url, // 请求url
@@ -8,6 +9,13 @@ const request = ({
 	headers // 请求头
 }) => {
 	return new Promise((resolve, reject) => {
+		// let isTest = config.baseUrl.includes('127.0.0.1')
+		let isLogin = store.state.user.isLogin
+		if (!isLogin) {
+			// 去看看storage中有没有数据
+			store.dispatch("user/init");
+		}
+
 		if (!headers) {
 			const tokenName = uni.getStorageSync('tokenName')
 			const tokenValue = uni.getStorageSync(tokenName)
@@ -35,6 +43,18 @@ const request = ({
 				} = res.data
 				if (code == 200) {
 					return resolve(res.data.data)
+				} else if (code == -1) {
+					// token过期 =》 先清除本地缓存，再授权登录
+					store.dispatch("user/reset");
+					uni.switchTab({
+						url: '/pages/mine/mine'
+					});
+					uni.showToast({
+						icon: 'none',
+						duration: 3000,
+						title: '请先授权登录！'
+					});
+					return
 				}
 				uni.showToast({
 					icon: 'none',

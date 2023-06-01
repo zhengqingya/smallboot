@@ -4,6 +4,7 @@ const store = {
 	namespaced: true,
 	// 存放数据
 	state: {
+		isLogin: false,
 		id: null,
 		openid: null,
 		nickname: 'zhengqingya',
@@ -17,15 +18,34 @@ const store = {
 	// 同步变更数据
 	mutations: {
 		setUserInfo(state, userInfo) {
+			if (!userInfo) {
+				state.isLogin = false
+				state.id = null
+				state.openid = null
+				state.nickname = null
+				state.avatarUrl = null
+				return
+			}
 			// 只能一个一个设置值...
+			state.isLogin = true
 			state.id = userInfo.id
 			state.openid = userInfo.openid
 			state.nickname = userInfo.nickname
 			state.avatarUrl = userInfo.avatarUrl
+
+			uni.setStorageSync('userInfo', userInfo)
 		}
 	},
 	// 和后台交互获取数据
 	actions: {
+		async init({
+			commit,
+			state
+		}) {
+			let userInfo = uni.getStorageSync('userInfo')
+			// console.log(11222, userInfo)
+			commit('setUserInfo', userInfo)
+		},
 		// 登录
 		async login({
 			commit,
@@ -35,7 +55,7 @@ const store = {
 				desc: '登录',
 				success: async (data) => {
 					// 拿到的微信用户信息
-					console.log(data)
+					// console.log(data)
 					uni.login({
 						provider: 'weixin',
 						success: async (res) => {
@@ -82,16 +102,15 @@ const store = {
 			commit,
 			state
 		}) {
-			api.user.logout({
-				id: state.id
-			})
-			uni.removeStorage({
-				key: 'userInfo'
-			})
-			uni.removeStorage({
-				key: 'token'
-			})
-			commit('setUserInfo', {})
+			api.user.logout()
+		},
+		// 重置本地数据
+		reset({
+			commit,
+			state
+		}) {
+			uni.clearStorage();
+			commit('setUserInfo', null)
 		},
 		// 仅测试使用
 		async localLogin({

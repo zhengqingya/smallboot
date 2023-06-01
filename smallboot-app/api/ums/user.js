@@ -19,8 +19,8 @@ export default {
 	},
 	logout(params) {
 		return request({
-			url: BASE_API + '/logout',
-			method: 'get',
+			url: '/auth/logout',
+			method: 'delete',
 			params: params
 		})
 	},

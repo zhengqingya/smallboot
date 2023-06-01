@@ -4,7 +4,7 @@
 		<scroll-view class="order" scroll-y="true" :refresher-enabled="true" :refresher-triggered="isReFresh"
 			@refresherrefresh="onPullRefresh" lower-threshold="30" @scrolltolower="onPushRefresh">
 			<view v-if="orderList.length===0">
-				<u-empty mode="order" margin-top="100" />
+				<!-- <u-empty mode="order" margin-top="100" /> -->
 			</view>
 			<view v-else class="order-list" v-for="(orderItem, index) in orderList" :key="index">
 				<u-count-down v-if="orderItem.orderStatus === 1" class="un-pay-time"
