@@ -1,4 +1,4 @@
-package com.zhengqing.ums.api;
+package com.zhengqing.ums.api.mini;
 
 import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.core.api.BaseController;
@@ -25,7 +25,7 @@ import javax.annotation.Resource;
 @Slf4j
 @RestController
 @RequestMapping(ServiceConstant.SERVICE_API_PREFIX_MINI_UMS + "/user")
-@Api(tags = "用户")
+@Api(tags = "mini-用户")
 public class MiniUmsUserController extends BaseController {
 
     @Resource

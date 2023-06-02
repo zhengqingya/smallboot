@@ -23,4 +23,27 @@
         LIMIT 1
     </select>
 
+    <select id="selectWebPage" resultType="com.zhengqing.ums.model.vo.WebUmsUserPageVO">
+        SELECT
+        id,
+        openid,
+        nickname,
+        phone,
+        sex,
+        avatar_url,
+        create_time
+        FROM ums_user
+        <where>
+            <if test="filter.id!=null">
+                AND id = #{filter.id}
+            </if>
+            <if test="filter.openid!=null and filter.openid!=''">
+                AND openid = #{filter.openid}
+            </if>
+            <if test="filter.phone!=null and filter.phone!=''">
+                AND phone = #{filter.phone}
+            </if>
+        </where>
+    </select>
+
 </mapper>

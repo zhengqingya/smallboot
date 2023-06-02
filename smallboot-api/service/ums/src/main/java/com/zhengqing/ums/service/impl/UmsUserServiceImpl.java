@@ -5,6 +5,8 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhengqing.common.base.enums.AuthSourceEnum;
 import com.zhengqing.common.base.model.bo.JwtUserBO;
@@ -16,7 +18,9 @@ import com.zhengqing.ums.factory.WxMaFactory;
 import com.zhengqing.ums.mapper.UmsUserMapper;
 import com.zhengqing.ums.model.dto.UmsUserDTO;
 import com.zhengqing.ums.model.dto.UmsUserWxLoginDTO;
+import com.zhengqing.ums.model.dto.WebUmsUserPageDTO;
 import com.zhengqing.ums.model.vo.UmsUserVO;
+import com.zhengqing.ums.model.vo.WebUmsUserPageVO;
 import com.zhengqing.ums.service.IUmsUserService;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
@@ -139,5 +143,9 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
         return null;
     }
 
-
+    @Override
+    public IPage<WebUmsUserPageVO> page(WebUmsUserPageDTO params) {
+        return this.umsUserMapper.selectWebPage(new Page<>(), params);
+    }
+    
 }
