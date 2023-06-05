@@ -2,6 +2,7 @@
 # ================================== ↓↓↓↓↓↓ smallboot配置 ↓↓↓↓↓↓ ==================================
 smallboot:
   ip: 127.0.0.1
+  wx-mp-domain: http://sndhx2.natappfree.cc # 微信公众号域名 -- 用于认证授权等
   minio:
     url: http://127.0.0.1:9001
     accessKey: admin

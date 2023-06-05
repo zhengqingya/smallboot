@@ -1,5 +1,6 @@
 package com.zhengqing.wxmp.model.vo;
 
+import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.base.model.vo.BaseVO;
 import com.zhengqing.wxmp.enums.WxMpAccountTypeEnum;
 import io.swagger.annotations.ApiModel;
@@ -63,7 +64,7 @@ public class WxMpAccountPageVO extends BaseVO {
 
     public void handleData() {
         this.typeName = WxMpAccountTypeEnum.getEnum(this.type).getDesc();
-        this.url = "/wx/portal/" + this.appId;
+        this.url = ServiceConstant.SERVICE_API_PREFIX_WX_MP + "/" + this.appId;
     }
 
 }

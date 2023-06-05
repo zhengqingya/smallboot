@@ -57,8 +57,8 @@ public interface BaseConstant {
             "*:/rpc/client/**/*",
             "POST:/oauth/token",
             "POST:/auth/oauth/token",
-            "*:/wx/portal/*",
-            "*:/wx/callback/*"
+            "*:" + ServiceConstant.SERVICE_API_PREFIX_WX_MP + "/*",
+            "*:/wx/pay/callback/*"
     );
 
 }

@@ -30,5 +30,10 @@ public interface ServiceConstant {
     String SERVICE_API_PREFIX_MINI_UMS = SERVICE_API_PREFIX_MINI + "/ums";
     String SERVICE_API_PREFIX_WEB_UMS = SERVICE_API_PREFIX_WEB + "/ums";
 
+    /**
+     * 微信公众号-接入
+     */
+    String SERVICE_API_PREFIX_WX_MP = "/wx/mp/portal";
+
 
 }

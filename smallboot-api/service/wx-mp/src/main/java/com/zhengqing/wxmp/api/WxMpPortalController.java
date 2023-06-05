@@ -1,6 +1,7 @@
 package com.zhengqing.wxmp.api;
 
 import com.zhengqing.common.base.constant.BaseConstant;
+import com.zhengqing.common.base.constant.ServiceConstant;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @AllArgsConstructor
 @RestController
-@RequestMapping("/wx/portal/{appid}")
+@RequestMapping(ServiceConstant.SERVICE_API_PREFIX_WX_MP + "/{appid}")
 @Api(tags = {"微信公众号-接入"})
 public class WxMpPortalController {
     private final WxMpService wxService;
