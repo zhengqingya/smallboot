@@ -24,8 +24,8 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/wx/callback")
-@Api(tags = {"wx-回调"})
+@RequestMapping("/wx/pay/callback")
+@Api(tags = {"微信支付-回调"})
 public class WxCallbackController {
 
     private final WxPayFactory wxPayFactory;

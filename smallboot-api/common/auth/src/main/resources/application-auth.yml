@@ -43,10 +43,11 @@ sa-token:
     - /auth/**
     # 微信公众号
     - /wx/portal/**
+    - /web/api/wx/mp/oauth/callback/**
     # 小程序用户
     - /mini/api/ums/user/**
     # 微信支付回调
-    - /wx/callback/**
+    - /wx/pay/callback/**
     # 商城
     - /mini/api/mall/category/*
     - /mini/api/mall/spu/*

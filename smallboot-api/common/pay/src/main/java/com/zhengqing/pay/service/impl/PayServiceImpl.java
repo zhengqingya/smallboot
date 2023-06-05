@@ -60,7 +60,7 @@ public class PayServiceImpl implements IPayService {
                         .totalFee(params.getTotalPrice())
                         .refundFee(params.getRefundPrice())
                         .refundDesc(params.getRefundDesc())
-                        .notifyUrl(this.notifyHost + "/wx/callback/notify/refund/" + params.getTenantId())
+                        .notifyUrl(this.notifyHost + "/wx/pay/callback/notify/refund/" + params.getTenantId())
                         .build()
         );
 
@@ -85,7 +85,7 @@ public class PayServiceImpl implements IPayService {
                         .body(params.getOrderDesc())
                         .tradeType("JSAPI")
                         .spbillCreateIp(NetUtil.getLocalhostStr())
-                        .notifyUrl(this.notifyHost + "/wx/callback/notify/order/" + params.getTenantId())
+                        .notifyUrl(this.notifyHost + "/wx/pay/callback/notify/order/" + params.getTenantId())
                         .build()
         );
 
