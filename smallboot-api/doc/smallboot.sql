@@ -11,7 +11,7 @@
  Target Server Version : 50726 (5.7.26-log)
  File Encoding         : 65001
 
- Date: 02/06/2023 09:37:59
+ Date: 05/06/2023 11:34:47
 */
 
 SET NAMES utf8mb4;
@@ -828,36 +828,36 @@ CREATE TABLE `t_sys_role_menu`  (
   `update_by` int(11) NOT NULL COMMENT '修改人',
   `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3711 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-角色菜单关联表' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 3941 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-角色菜单关联表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_sys_role_menu
 -- ----------------------------
 INSERT INTO `t_sys_role_menu` VALUES (1324, 10, 1, 1, '2023-03-31 09:48:32', 1, '2023-03-31 09:48:32');
 INSERT INTO `t_sys_role_menu` VALUES (1325, 10, 2, 1, '2023-03-31 09:48:32', 1, '2023-03-31 09:48:32');
-INSERT INTO `t_sys_role_menu` VALUES (3688, 9, 1, 0, '2023-06-02 09:35:54', 0, '2023-06-02 09:35:54');
-INSERT INTO `t_sys_role_menu` VALUES (3689, 9, 2, 0, '2023-06-02 09:35:54', 0, '2023-06-02 09:35:54');
-INSERT INTO `t_sys_role_menu` VALUES (3690, 9, 3, 0, '2023-06-02 09:35:54', 0, '2023-06-02 09:35:54');
-INSERT INTO `t_sys_role_menu` VALUES (3691, 9, 4, 0, '2023-06-02 09:35:54', 0, '2023-06-02 09:35:54');
-INSERT INTO `t_sys_role_menu` VALUES (3692, 9, 5, 0, '2023-06-02 09:35:54', 0, '2023-06-02 09:35:54');
-INSERT INTO `t_sys_role_menu` VALUES (3693, 9, 6, 0, '2023-06-02 09:35:54', 0, '2023-06-02 09:35:54');
-INSERT INTO `t_sys_role_menu` VALUES (3694, 9, 7, 0, '2023-06-02 09:35:54', 0, '2023-06-02 09:35:54');
-INSERT INTO `t_sys_role_menu` VALUES (3695, 9, 9, 0, '2023-06-02 09:35:54', 0, '2023-06-02 09:35:54');
-INSERT INTO `t_sys_role_menu` VALUES (3696, 9, 10, 0, '2023-06-02 09:35:54', 0, '2023-06-02 09:35:54');
-INSERT INTO `t_sys_role_menu` VALUES (3697, 9, 11, 0, '2023-06-02 09:35:54', 0, '2023-06-02 09:35:54');
-INSERT INTO `t_sys_role_menu` VALUES (3698, 9, 12, 0, '2023-06-02 09:35:54', 0, '2023-06-02 09:35:54');
-INSERT INTO `t_sys_role_menu` VALUES (3699, 9, 13, 0, '2023-06-02 09:35:54', 0, '2023-06-02 09:35:54');
-INSERT INTO `t_sys_role_menu` VALUES (3700, 9, 14, 0, '2023-06-02 09:35:54', 0, '2023-06-02 09:35:54');
-INSERT INTO `t_sys_role_menu` VALUES (3701, 9, 15, 0, '2023-06-02 09:35:54', 0, '2023-06-02 09:35:54');
-INSERT INTO `t_sys_role_menu` VALUES (3702, 9, 16, 0, '2023-06-02 09:35:54', 0, '2023-06-02 09:35:54');
-INSERT INTO `t_sys_role_menu` VALUES (3703, 9, 17, 0, '2023-06-02 09:35:54', 0, '2023-06-02 09:35:54');
-INSERT INTO `t_sys_role_menu` VALUES (3704, 9, 18, 0, '2023-06-02 09:35:54', 0, '2023-06-02 09:35:54');
-INSERT INTO `t_sys_role_menu` VALUES (3705, 9, 19, 0, '2023-06-02 09:35:54', 0, '2023-06-02 09:35:54');
-INSERT INTO `t_sys_role_menu` VALUES (3706, 9, 20, 0, '2023-06-02 09:35:54', 0, '2023-06-02 09:35:54');
-INSERT INTO `t_sys_role_menu` VALUES (3707, 9, 22, 0, '2023-06-02 09:35:54', 0, '2023-06-02 09:35:54');
-INSERT INTO `t_sys_role_menu` VALUES (3708, 9, 21, 0, '2023-06-02 09:35:54', 0, '2023-06-02 09:35:54');
-INSERT INTO `t_sys_role_menu` VALUES (3709, 9, 23, 0, '2023-06-02 09:35:54', 0, '2023-06-02 09:35:54');
-INSERT INTO `t_sys_role_menu` VALUES (3710, 9, 24, 0, '2023-06-02 09:35:54', 0, '2023-06-02 09:35:54');
+INSERT INTO `t_sys_role_menu` VALUES (3918, 9, 1, 0, '2023-06-05 11:17:06', 0, '2023-06-05 11:17:06');
+INSERT INTO `t_sys_role_menu` VALUES (3919, 9, 2, 0, '2023-06-05 11:17:06', 0, '2023-06-05 11:17:06');
+INSERT INTO `t_sys_role_menu` VALUES (3920, 9, 3, 0, '2023-06-05 11:17:06', 0, '2023-06-05 11:17:06');
+INSERT INTO `t_sys_role_menu` VALUES (3921, 9, 4, 0, '2023-06-05 11:17:06', 0, '2023-06-05 11:17:06');
+INSERT INTO `t_sys_role_menu` VALUES (3922, 9, 5, 0, '2023-06-05 11:17:06', 0, '2023-06-05 11:17:06');
+INSERT INTO `t_sys_role_menu` VALUES (3923, 9, 6, 0, '2023-06-05 11:17:06', 0, '2023-06-05 11:17:06');
+INSERT INTO `t_sys_role_menu` VALUES (3924, 9, 7, 0, '2023-06-05 11:17:06', 0, '2023-06-05 11:17:06');
+INSERT INTO `t_sys_role_menu` VALUES (3925, 9, 9, 0, '2023-06-05 11:17:06', 0, '2023-06-05 11:17:06');
+INSERT INTO `t_sys_role_menu` VALUES (3926, 9, 10, 0, '2023-06-05 11:17:06', 0, '2023-06-05 11:17:06');
+INSERT INTO `t_sys_role_menu` VALUES (3927, 9, 11, 0, '2023-06-05 11:17:06', 0, '2023-06-05 11:17:06');
+INSERT INTO `t_sys_role_menu` VALUES (3928, 9, 12, 0, '2023-06-05 11:17:06', 0, '2023-06-05 11:17:06');
+INSERT INTO `t_sys_role_menu` VALUES (3929, 9, 13, 0, '2023-06-05 11:17:06', 0, '2023-06-05 11:17:06');
+INSERT INTO `t_sys_role_menu` VALUES (3930, 9, 14, 0, '2023-06-05 11:17:06', 0, '2023-06-05 11:17:06');
+INSERT INTO `t_sys_role_menu` VALUES (3931, 9, 15, 0, '2023-06-05 11:17:06', 0, '2023-06-05 11:17:06');
+INSERT INTO `t_sys_role_menu` VALUES (3932, 9, 16, 0, '2023-06-05 11:17:06', 0, '2023-06-05 11:17:06');
+INSERT INTO `t_sys_role_menu` VALUES (3933, 9, 17, 0, '2023-06-05 11:17:06', 0, '2023-06-05 11:17:06');
+INSERT INTO `t_sys_role_menu` VALUES (3934, 9, 18, 0, '2023-06-05 11:17:06', 0, '2023-06-05 11:17:06');
+INSERT INTO `t_sys_role_menu` VALUES (3935, 9, 19, 0, '2023-06-05 11:17:06', 0, '2023-06-05 11:17:06');
+INSERT INTO `t_sys_role_menu` VALUES (3936, 9, 20, 0, '2023-06-05 11:17:06', 0, '2023-06-05 11:17:06');
+INSERT INTO `t_sys_role_menu` VALUES (3937, 9, 22, 0, '2023-06-05 11:17:06', 0, '2023-06-05 11:17:06');
+INSERT INTO `t_sys_role_menu` VALUES (3938, 9, 21, 0, '2023-06-05 11:17:06', 0, '2023-06-05 11:17:06');
+INSERT INTO `t_sys_role_menu` VALUES (3939, 9, 23, 0, '2023-06-05 11:17:06', 0, '2023-06-05 11:17:06');
+INSERT INTO `t_sys_role_menu` VALUES (3940, 9, 24, 0, '2023-06-05 11:17:06', 0, '2023-06-05 11:17:06');
 
 -- ----------------------------
 -- Table structure for t_sys_role_permission
@@ -872,15 +872,15 @@ CREATE TABLE `t_sys_role_permission`  (
   `update_by` int(11) NOT NULL COMMENT '修改人',
   `update_time` datetime NOT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1629 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-角色关联权限表' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 1669 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-角色关联权限表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_sys_role_permission
 -- ----------------------------
-INSERT INTO `t_sys_role_permission` VALUES (1625, 9, 1, 0, '2023-06-02 09:35:54', 0, '2023-06-02 09:35:54');
-INSERT INTO `t_sys_role_permission` VALUES (1626, 9, 2, 0, '2023-06-02 09:35:54', 0, '2023-06-02 09:35:54');
-INSERT INTO `t_sys_role_permission` VALUES (1627, 9, 3, 0, '2023-06-02 09:35:54', 0, '2023-06-02 09:35:54');
-INSERT INTO `t_sys_role_permission` VALUES (1628, 9, 4, 0, '2023-06-02 09:35:54', 0, '2023-06-02 09:35:54');
+INSERT INTO `t_sys_role_permission` VALUES (1665, 9, 1, 0, '2023-06-05 11:17:06', 0, '2023-06-05 11:17:06');
+INSERT INTO `t_sys_role_permission` VALUES (1666, 9, 2, 0, '2023-06-05 11:17:06', 0, '2023-06-05 11:17:06');
+INSERT INTO `t_sys_role_permission` VALUES (1667, 9, 3, 0, '2023-06-05 11:17:06', 0, '2023-06-05 11:17:06');
+INSERT INTO `t_sys_role_permission` VALUES (1668, 9, 4, 0, '2023-06-05 11:17:06', 0, '2023-06-05 11:17:06');
 
 -- ----------------------------
 -- Table structure for t_sys_user
@@ -975,7 +975,7 @@ CREATE TABLE `t_wx_mp_account`  (
 -- ----------------------------
 -- Records of t_wx_mp_account
 -- ----------------------------
-INSERT INTO `t_wx_mp_account` VALUES (1, '郑清的测试账号', 1, 'gh_42e1dbad014e', 'wxe01d9bde2cc81b89', 'f292d6cb69755a7105863d97910a9579', '/wx/portal/wxe01d9bde2cc81b89', 'test', '4J9GOBZ4VTElUFm0EvRDV6aJu5spvYXGkn1RJela56U', 'http://mmbiz.qpic.cn/mmbiz_jpg/8ytq3xBRtdjkBkb2JfibmdJCkT4t2ZSxo8PBwzZ6cgic64mMVicxibpqAyQY0kuiaHhMc3Yjh5J2ATy8kkQgfzbIFJA/0', '2023-03-16 15:39:45', '2023-03-27 17:53:27', 1, 1);
+INSERT INTO `t_wx_mp_account` VALUES (1, '郑清的测试账号', 1, 'gh_42e1dbad014e', 'wxe01d9bde2cc81b89', 'f292d6cb69755a7105863d97910a9579', '/wx/mp/portal/wxe01d9bde2cc81b89', 'test', '4J9GOBZ4VTElUFm0EvRDV6aJu5spvYXGkn1RJela56U', 'http://mmbiz.qpic.cn/mmbiz_jpg/8ytq3xBRtdjkBkb2JfibmdJCkT4t2ZSxo8PBwzZ6cgic64mMVicxibpqAyQY0kuiaHhMc3Yjh5J2ATy8kkQgfzbIFJA/0', '2023-03-16 15:39:45', '2023-06-05 10:44:01', 1, 1);
 
 -- ----------------------------
 -- Table structure for t_wx_mp_msg_auto_reply

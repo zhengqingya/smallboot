@@ -42,14 +42,14 @@ public class WxMpOauthController {
     @SneakyThrows(Exception.class)
     @GetMapping("/callback/{appId}")
     @ApiOperation("回调-授权登录同意")
-    public String callback(@PathVariable String appId, @RequestParam String code) {
+    public WxOAuth2UserInfo callback(@PathVariable String appId, @RequestParam String code) {
         WxOAuth2Service oAuth2Service = this.wxMpService.switchoverTo(appId).getOAuth2Service();
         WxOAuth2AccessToken wxOAuth2AccessToken = oAuth2Service.getAccessToken(code);
 //        String accessToken = wxOAuth2AccessToken.getAccessToken();
 //        String openId = wxOAuth2AccessToken.getOpenId();
         WxOAuth2UserInfo userInfo = oAuth2Service.getUserInfo(wxOAuth2AccessToken, "zh_CN");
         log.info("[微信公众号] 授权回调 用户信息：[{}]", JSONUtil.toJsonStr(userInfo));
-        return "OK";
+        return userInfo;
     }
 
 }
