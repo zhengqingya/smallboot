@@ -1,5 +1,7 @@
 ### 本地运行
 
+> tips: 个人node版本 v16.18.0
+
 ```shell
 # 安装依赖
 cnpm install

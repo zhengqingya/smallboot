@@ -14,6 +14,7 @@
   "dependencies": {
     "@chenfengyuan/vue-qrcode": "^2.0.0",
     "@element-plus/icons-vue": "^2.0.6",
+    "@vueuse/core": "^10.1.2",
     "axios": "^0.27.2",
     "element-plus": "^2.2.9",
     "nprogress": "^0.2.0",
