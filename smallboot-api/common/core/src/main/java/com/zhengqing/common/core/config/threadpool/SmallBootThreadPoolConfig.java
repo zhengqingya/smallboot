@@ -18,13 +18,15 @@ import java.util.concurrent.ThreadPoolExecutor;
 @Configuration
 public class SmallBootThreadPoolConfig {
 
+    private static int corePoolSize = Runtime.getRuntime().availableProcessors();
+
     @Bean(ThreadPoolConstant.SMALL_BOOT_THREAD_POOL)
     public Executor threadPoolExecutor() {
         ThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPoolTaskExecutor();
         // 核心线程池大小
-        threadPoolTaskExecutor.setCorePoolSize(5);
+        threadPoolTaskExecutor.setCorePoolSize(corePoolSize);
         // 最大线程数
-        threadPoolTaskExecutor.setMaxPoolSize(10);
+        threadPoolTaskExecutor.setMaxPoolSize(corePoolSize + 1);
         // 队列容量
         threadPoolTaskExecutor.setQueueCapacity(200);
         // 活跃时间 60s
