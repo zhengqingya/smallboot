@@ -2,6 +2,7 @@ package com.zhengqing.common.auth.api;
 
 
 import cn.dev33.satoken.SaManager;
+import cn.dev33.satoken.annotation.SaIgnore;
 import cn.dev33.satoken.config.SaTokenConfig;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = "测试api")
 public class TestAuthController {
 
+    @SaIgnore
     @GetMapping("time")
     @ApiOperation("time")
     public String time() {
