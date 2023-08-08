@@ -1,6 +1,7 @@
 package com.zhengqing.mall.model.vo;
 
 
+import cn.hutool.core.collection.CollUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.base.Joiner;
 import com.zhengqing.common.base.model.vo.BaseVO;
@@ -84,8 +85,10 @@ public class MiniOmsCartVO extends BaseVO {
     private Integer freight;
 
     public void handleData() {
-        List<String> specAttrList = this.specList.stream().map(e -> e.getAttrValueName()).collect(Collectors.toList());
-        this.specDesc = Joiner.on(",").join(specAttrList);
+        if (CollUtil.isNotEmpty(this.specList)) {
+            List<String> specAttrList = this.specList.stream().map(PmsSkuSpecBO::getAttrValueName).collect(Collectors.toList());
+            this.specDesc = Joiner.on(",").join(specAttrList);
+        }
     }
 
 }

@@ -9,6 +9,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.util.Date;
+
 /**
  * <p>
  * 用户信息
@@ -48,5 +50,8 @@ public class UmsUserVO extends AuthLoginVO {
 
     @ApiModelProperty("头像")
     private String avatarUrl;
+
+    @ApiModelProperty("创建时间")
+    private Date createTime;
 
 }
