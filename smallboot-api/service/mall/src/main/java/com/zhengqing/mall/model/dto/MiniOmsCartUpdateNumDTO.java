@@ -39,8 +39,8 @@ public class MiniOmsCartUpdateNumDTO extends BaseDTO {
     @ApiModelProperty(value = "商品规格ID", example = "888", required = true)
     private String skuId;
 
-    @NotNull(message = "商品数量不能为空！")
-    @ApiModelProperty(value = "本次操作的商品数量", required = true, example = "1")
+    @NotNull(message = "操作商品数量不能为空！")
+    @ApiModelProperty(value = "本次操作的商品数量（+1，-1）", required = true, example = "1")
     private Integer num;
 
 }

@@ -2,6 +2,7 @@ package com.zhengqing.mall.controller.mini;
 
 import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.base.context.UmsUserContext;
+import com.zhengqing.mall.model.dto.MiniOmsCartBatchUpdateNumDTO;
 import com.zhengqing.mall.model.dto.MiniOmsCartDeleteDTO;
 import com.zhengqing.mall.model.dto.MiniOmsCartSaveDTO;
 import com.zhengqing.mall.model.dto.MiniOmsCartUpdateNumDTO;
@@ -50,6 +51,12 @@ public class MiniOmsCartController {
     @ApiOperation("更新数量")
     public void updateNum(@Validated @RequestBody MiniOmsCartUpdateNumDTO params) {
         this.miniOmsCartService.updateNum(params);
+    }
+
+    @PutMapping("batchUpdateNum")
+    @ApiOperation("批量更新数量")
+    public void batchUpdateNum(@Validated @RequestBody MiniOmsCartBatchUpdateNumDTO params) {
+        this.miniOmsCartService.batchUpdateNum(params);
     }
 
     @DeleteMapping("")

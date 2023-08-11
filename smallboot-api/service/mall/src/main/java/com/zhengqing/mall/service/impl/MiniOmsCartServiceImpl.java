@@ -1,21 +1,20 @@
 package com.zhengqing.mall.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Assert;
+import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.zhengqing.common.base.context.TenantIdContext;
 import com.zhengqing.common.base.context.UmsUserContext;
 import com.zhengqing.common.redis.util.RedisUtil;
 import com.zhengqing.common.redis.util.RedissonUtil;
-import com.zhengqing.mall.model.bo.PmsSpuBuyNumInfoBO;
-import com.zhengqing.mall.model.dto.PmsSkuDTO;
-import com.zhengqing.mall.model.vo.PmsSkuVO;
 import com.zhengqing.mall.constant.MallRedisConstant;
 import com.zhengqing.mall.model.bo.MiniOmsCartBO;
-import com.zhengqing.mall.model.dto.MiniOmsCartDeleteDTO;
-import com.zhengqing.mall.model.dto.MiniOmsCartSaveDTO;
-import com.zhengqing.mall.model.dto.MiniOmsCartUpdateNumDTO;
+import com.zhengqing.mall.model.bo.PmsSpuBuyNumInfoBO;
+import com.zhengqing.mall.model.dto.*;
 import com.zhengqing.mall.model.vo.MiniOmsCartVO;
+import com.zhengqing.mall.model.vo.PmsSkuVO;
 import com.zhengqing.mall.service.MallCommonService;
 import com.zhengqing.mall.service.MiniOmsCartService;
 import com.zhengqing.mall.service.MiniOmsOrderItemService;
@@ -118,8 +117,12 @@ public class MiniOmsCartServiceImpl implements MiniOmsCartService {
         String spuId = params.getSpuId();
         String skuId = params.getSkuId();
         Integer num = params.getNum();
-        // sku校验
-        this.checkSkuData(skuId, num, userId);
+
+        if (num > 0) {
+            // sku校验
+            this.checkSkuData(skuId, num, userId);
+        }
+
         // 保存数据
         this.saveCartData(userId, spuId, skuId, num);
     }
@@ -153,7 +156,18 @@ public class MiniOmsCartServiceImpl implements MiniOmsCartService {
     }
 
 
-    public void saveCartData(Long userId, String spuId, String skuId, Integer num) {
+    /**
+     * 更新购物车缓存数据
+     *
+     * @param userId 用户id
+     * @param spuId  商品id
+     * @param skuId  商品sku-id
+     * @param num    商品购买数
+     * @return void
+     * @author zhengqingya
+     * @date 2021/12/22 11:04
+     */
+    private void saveCartData(Long userId, String spuId, String skuId, Integer num) {
         String cartKey = this.getCartKey(userId);
         // 加锁
         RLock redisLock = RedissonUtil.lock(String.format("%s%s:%s", MallRedisConstant.MINI_CART_LOCK, TenantIdContext.getTenantId(), userId), 5, TimeUnit.SECONDS);
@@ -187,11 +201,41 @@ public class MiniOmsCartServiceImpl implements MiniOmsCartService {
 
     @Override
     public void updateNum(MiniOmsCartUpdateNumDTO params) {
-        log.info("[商城] 购物车-更新数量：[{}]", params);
+        log.info("[商城] 购物车-更新数量：[{}]", JSONUtil.toJsonStr(params));
         // 保存数据
         this.saveCartData(UmsUserContext.getUserId(), params.getSpuId(), params.getSkuId(), params.getNum());
     }
 
+    @Override
+    public void batchUpdateNum(MiniOmsCartBatchUpdateNumDTO params) {
+        log.info("[商城] 购物车-批量更新数量：[{}]", JSONUtil.toJsonStr(params));
+        Long userId = UmsUserContext.getUserId();
+        String cartKey = this.getCartKey(userId);
+        // 加锁
+        RLock redisLock = RedissonUtil.getLock(String.format("%s%s:%s", MallRedisConstant.MINI_CART_LOCK, TenantIdContext.getTenantId(), userId));
+        redisLock.lock();
+        try {
+            List<MiniOmsCartBatchUpdateNumDTO.UpdateNum> list = params.getList();
+            // 1、删除
+            RedisUtil.delete(cartKey);
+
+            if (CollUtil.isNotEmpty(list)) {
+                // 2、保存
+                Map<String, String> map = list.stream().collect(Collectors.toMap(MiniOmsCartBatchUpdateNumDTO.UpdateNum::getSkuId,
+                        e -> JSON.toJSONString(MiniOmsCartBO.builder()
+                                .userId(userId)
+                                .spuId(e.getSpuId())
+                                .skuId(e.getSkuId())
+                                .num(e.getNum())
+                                .time(new Date())
+                                .build()), (oldData, newData) -> newData));
+                RedisUtil.hPutAll(cartKey, map);
+            }
+        } finally {
+            // 释放锁
+            redisLock.unlock();
+        }
+    }
 
     @Override
     public void deleteData(MiniOmsCartDeleteDTO params) {

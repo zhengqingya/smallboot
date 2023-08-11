@@ -1,5 +1,6 @@
 package com.zhengqing.mall.service;
 
+import com.zhengqing.mall.model.dto.MiniOmsCartBatchUpdateNumDTO;
 import com.zhengqing.mall.model.dto.MiniOmsCartDeleteDTO;
 import com.zhengqing.mall.model.dto.MiniOmsCartSaveDTO;
 import com.zhengqing.mall.model.dto.MiniOmsCartUpdateNumDTO;
@@ -45,6 +46,16 @@ public interface MiniOmsCartService {
      * @date 2021/10/12 9:58
      */
     void updateNum(MiniOmsCartUpdateNumDTO params);
+
+    /**
+     * 批量更新数量
+     *
+     * @param params 提交参数
+     * @return void
+     * @author zhengqingya
+     * @date 2021/10/12 9:58
+     */
+    void batchUpdateNum(MiniOmsCartBatchUpdateNumDTO params);
 
     /**
      * 删除数据
