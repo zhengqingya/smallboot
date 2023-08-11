@@ -202,8 +202,15 @@ public class MiniOmsCartServiceImpl implements MiniOmsCartService {
     @Override
     public void updateNum(MiniOmsCartUpdateNumDTO params) {
         log.info("[商城] 购物车-更新数量：[{}]", JSONUtil.toJsonStr(params));
+        Integer num = params.getNum();
+        String skuId = params.getSkuId();
+        Long userId = UmsUserContext.getUserId();
+        if (num > 0) {
+            // sku校验
+            this.checkSkuData(skuId, num, userId);
+        }
         // 保存数据
-        this.saveCartData(UmsUserContext.getUserId(), params.getSpuId(), params.getSkuId(), params.getNum());
+        this.saveCartData(userId, params.getSpuId(), skuId, num);
     }
 
     @Override
