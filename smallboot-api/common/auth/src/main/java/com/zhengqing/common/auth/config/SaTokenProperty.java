@@ -29,4 +29,9 @@ public class SaTokenProperty {
      */
     private List<String> openUrlList;
 
+    /**
+     * 开放url注解包
+     */
+    private String openUrlAnnotationClassPath;
+
 }
