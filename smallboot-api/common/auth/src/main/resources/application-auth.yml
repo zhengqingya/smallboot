@@ -44,8 +44,6 @@ sa-token:
     # 微信公众号
     - /wx/mp/portal/**
     - /wx/mp/oauth/callback/**
-    # 小程序用户
-    - /mini/api/ums/user/**
     # 微信支付回调
     - /wx/pay/callback/**
     # 商城

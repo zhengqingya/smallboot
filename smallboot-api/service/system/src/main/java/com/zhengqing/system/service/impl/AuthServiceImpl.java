@@ -1,11 +1,10 @@
 package com.zhengqing.common.auth.service.impl;
 
-import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.lang.Assert;
-import cn.hutool.json.JSONUtil;
 import com.zhengqing.common.auth.model.dto.AuthLoginDTO;
 import com.zhengqing.common.auth.model.vo.AuthLoginVO;
 import com.zhengqing.common.auth.service.IAuthService;
+import com.zhengqing.common.auth.util.AuthUtil;
 import com.zhengqing.common.base.enums.AuthSourceEnum;
 import com.zhengqing.common.base.model.bo.JwtUserBO;
 import com.zhengqing.system.model.dto.SysUserPermDTO;
@@ -44,18 +43,14 @@ public class AuthServiceImpl implements IAuthService {
         Assert.isTrue(isValid, "密码错误！");
 
         // 登录
-        StpUtil.login(JSONUtil.toJsonStr(
+        return AuthUtil.login(
                 JwtUserBO.builder()
                         .authSourceEnum(AuthSourceEnum.B)
                         .userId(String.valueOf(userPerm.getUserId()))
                         .username(userPerm.getUsername())
                         .roleCodeList(userPerm.getRoleCodeList())
                         .build()
-        ));
-        return AuthLoginVO.builder()
-                .tokenName(StpUtil.getTokenName())
-                .tokenValue(StpUtil.getTokenValue())
-                .build();
+        );
     }
 
 }

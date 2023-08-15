@@ -9,9 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 /**
- * <p>
- * 登录参数
- * </p>
+ * <p> 登录参数 </p>
  *
  * @author zhengqingya
  * @description

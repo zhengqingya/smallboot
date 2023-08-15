@@ -10,8 +10,8 @@
             <if test="filter.userId!=null">
                 AND id = #{filter.userId}
             </if>
-            <if test="filter.username!=null and filter.username!=''">
-                AND username = #{filter.username}
+            <if test="filter.nickname!=null and filter.nickname!=''">
+                AND nickname = #{filter.nickname}
             </if>
             <if test="filter.openid!=null and filter.openid!=''">
                 AND openid = #{filter.openid}
@@ -22,6 +22,22 @@
         </where>
         LIMIT 1
     </select>
+
+    <update id="updateUserInfo">
+        update ums_user
+        SET nickname = #{filter.nickname},
+        avatar_url = #{filter.avatarUrl},
+        <if test="filter.phone!=null and filter.phone!=''">
+            phone = #{filter.phone},
+        </if>
+        <if test="filter.birthday!=null and filter.birthday!=''">
+            birthday = #{filter.birthday},
+        </if>
+        <if test="filter.sex!=null">
+            sex = #{filter.sex}
+        </if>
+        WHERE id = #{filter.id}
+    </update>
 
     <select id="selectWebPage" resultType="com.zhengqing.ums.model.vo.WebUmsUserPageVO">
         SELECT

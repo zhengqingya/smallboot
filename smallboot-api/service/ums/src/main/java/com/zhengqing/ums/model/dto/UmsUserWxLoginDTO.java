@@ -5,7 +5,10 @@ import com.zhengqing.common.base.model.dto.BaseDTO;
 import com.zhengqing.common.core.custom.parameter.CheckParam;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotBlank;
@@ -27,13 +30,13 @@ import javax.validation.constraints.NotBlank;
 @ApiModel
 public class UmsUserWxLoginDTO extends BaseDTO implements CheckParam {
 
-    @NotBlank
-    @ApiModelProperty("消息密文")
-    private String encryptedData;
+//    @NotBlank
+//    @ApiModelProperty("消息密文")
+//    private String encryptedData;
 
-    @NotBlank
-    @ApiModelProperty("加密算法的初始向量")
-    private String iv;
+//    @NotBlank
+//    @ApiModelProperty("加密算法的初始向量")
+//    private String iv;
 
     @NotBlank
     @ApiModelProperty("动态令牌")
@@ -48,7 +51,7 @@ public class UmsUserWxLoginDTO extends BaseDTO implements CheckParam {
 //    private String signature;
 
     @ApiModelProperty("用户信息")
-    private WxUserInfo userInfo;
+    private UmsUserInfoDTO userInfo;
 
     @ApiModelProperty("是否本地测试登录(仅测试使用)")
     private Boolean isLocalLogin;
@@ -58,18 +61,6 @@ public class UmsUserWxLoginDTO extends BaseDTO implements CheckParam {
         if (this.isLocalLogin == null) {
             this.isLocalLogin = false;
         }
-    }
-
-    @Data
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class WxUserInfo {
-        @ApiModelProperty("昵称")
-        private String nickName;
-
-        @ApiModelProperty("头像")
-        private String avatarUrl;
     }
 
 }

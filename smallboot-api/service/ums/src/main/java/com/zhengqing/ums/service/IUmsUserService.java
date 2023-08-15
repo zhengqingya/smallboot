@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhengqing.ums.entity.UmsUser;
 import com.zhengqing.ums.model.dto.UmsUserDTO;
+import com.zhengqing.ums.model.dto.UmsUserInfoDTO;
 import com.zhengqing.ums.model.dto.UmsUserWxLoginDTO;
 import com.zhengqing.ums.model.dto.WebUmsUserPageDTO;
 import com.zhengqing.ums.model.vo.UmsUserVO;
@@ -61,7 +62,25 @@ public interface IUmsUserService extends IService<UmsUser> {
      */
     UmsUserVO wxLogin(UmsUserWxLoginDTO params);
 
+    /**
+     * 绑定手机号
+     *
+     * @param code code
+     * @return 用户信息
+     * @author zhengqingya
+     * @date 2022/12/7 11:05
+     */
     UmsUserVO getPhone(String code);
+
+    /**
+     * 更新用户信息
+     *
+     * @param params 提交参数
+     * @return void
+     * @author zhengqingya
+     * @date 2022/6/10 16:00
+     */
+    void updateUserInfo(UmsUserInfoDTO params);
 
     /**
      * 分页列表

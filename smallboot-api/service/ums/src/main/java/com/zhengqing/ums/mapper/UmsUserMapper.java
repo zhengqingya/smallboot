@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zhengqing.ums.entity.UmsUser;
 import com.zhengqing.ums.model.dto.UmsUserDTO;
+import com.zhengqing.ums.model.dto.UmsUserInfoDTO;
 import com.zhengqing.ums.model.dto.WebUmsUserPageDTO;
 import com.zhengqing.ums.model.vo.UmsUserVO;
 import com.zhengqing.ums.model.vo.WebUmsUserPageVO;
@@ -42,6 +43,16 @@ public interface UmsUserMapper extends BaseMapper<UmsUser> {
      * @date 2022/6/10 16:00
      */
     UmsUserVO selectUserInfo(@Param("filter") UmsUserDTO filter);
+
+    /**
+     * 更新用户信息
+     *
+     * @param filter 提交参数
+     * @return void
+     * @author zhengqingya
+     * @date 2022/6/10 16:00
+     */
+    void updateUserInfo(@Param("filter") UmsUserInfoDTO filter);
 
     /**
      * 分页列表

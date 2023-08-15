@@ -8,6 +8,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.zhengqing.common.auth.model.vo.AuthLoginVO;
+import com.zhengqing.common.auth.util.AuthUtil;
 import com.zhengqing.common.base.enums.AuthSourceEnum;
 import com.zhengqing.common.base.model.bo.JwtUserBO;
 import com.zhengqing.common.core.enums.UserSexEnum;
@@ -17,6 +19,7 @@ import com.zhengqing.ums.entity.UmsUser;
 import com.zhengqing.ums.factory.WxMaFactory;
 import com.zhengqing.ums.mapper.UmsUserMapper;
 import com.zhengqing.ums.model.dto.UmsUserDTO;
+import com.zhengqing.ums.model.dto.UmsUserInfoDTO;
 import com.zhengqing.ums.model.dto.UmsUserWxLoginDTO;
 import com.zhengqing.ums.model.dto.WebUmsUserPageDTO;
 import com.zhengqing.ums.model.vo.UmsUserVO;
@@ -87,12 +90,12 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
         );
         if (umsUser == null) {
             // 注册用户
-            UmsUserWxLoginDTO.WxUserInfo userInfo = params.getUserInfo();
+            UmsUserInfoDTO userInfo = params.getUserInfo();
             Long id = IdGeneratorUtil.nextId();
             umsUser = UmsUser.builder()
                     .id(id)
                     .openid(openid)
-                    .nickname(userInfo.getNickName())
+                    .nickname(userInfo.getNickname())
                     .phone(null)
                     .sex(UserSexEnum.未知.getType())
                     .birthday(null)
@@ -104,7 +107,7 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
         UmsUserVO result = this.getUser(umsUser.getId());
 
         // 登录认证
-        StpUtil.login(JSONUtil.toJsonStr(
+        AuthLoginVO authLoginVO = AuthUtil.login(
                 JwtUserBO.builder()
                         .authSourceEnum(AuthSourceEnum.C)
                         .userId(String.valueOf(umsUser.getId()))
@@ -112,9 +115,9 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
                         .username(umsUser.getNickname())
                         .roleCodeList(Lists.newArrayList())
                         .build()
-        ));
-        result.setTokenName(StpUtil.getTokenName());
-        result.setTokenValue(StpUtil.getTokenValue());
+        );
+        result.setTokenName(authLoginVO.getTokenName());
+        result.setTokenValue(authLoginVO.getTokenValue());
         return result;
     }
 
@@ -144,8 +147,14 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateUserInfo(UmsUserInfoDTO params) {
+        this.umsUserMapper.updateUserInfo(params);
+    }
+
+    @Override
     public IPage<WebUmsUserPageVO> page(WebUmsUserPageDTO params) {
         return this.umsUserMapper.selectWebPage(new Page<>(), params);
     }
-    
+
 }

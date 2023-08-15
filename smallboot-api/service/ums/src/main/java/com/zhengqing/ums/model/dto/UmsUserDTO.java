@@ -33,8 +33,8 @@ public class UmsUserDTO extends BaseDTO implements CheckParam {
     @ApiModelProperty("用户id")
     private Long userId;
 
-    @ApiModelProperty("用户名")
-    private String username;
+    @ApiModelProperty("昵称")
+    private String nickname;
 
     @ApiModelProperty("微信openid")
     private String openid;
@@ -46,7 +46,7 @@ public class UmsUserDTO extends BaseDTO implements CheckParam {
     public void checkParam() throws ParameterException {
         Assert.isFalse(
                 this.userId == null
-                        && StringUtils.isBlank(this.username)
+                        && StringUtils.isBlank(this.nickname)
                         && StringUtils.isBlank(this.openid)
                         && StringUtils.isBlank(this.phone)
                 , "用户查询条件丢失！"

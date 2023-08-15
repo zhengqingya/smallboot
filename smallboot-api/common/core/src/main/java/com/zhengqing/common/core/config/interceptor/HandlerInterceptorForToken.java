@@ -2,9 +2,11 @@ package com.zhengqing.common.core.config.interceptor;
 
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.google.common.collect.Lists;
 import com.zhengqing.common.auth.config.SaTokenProperty;
+import com.zhengqing.common.auth.custom.open.ApiOpen;
 import com.zhengqing.common.base.constant.AppConstant;
 import com.zhengqing.common.base.constant.SecurityConstant;
 import com.zhengqing.common.base.context.JwtUserContext;
@@ -15,10 +17,11 @@ import com.zhengqing.common.base.exception.MyException;
 import com.zhengqing.common.base.model.bo.JwtUserBO;
 import com.zhengqing.common.core.config.WebAppConfig;
 import com.zhengqing.common.redis.util.RedisUtil;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -47,21 +50,12 @@ public class HandlerInterceptorForToken implements HandlerInterceptor {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String token = request.getHeader(AppConstant.REQUEST_HEADER_TOKEN);
-        if (StringUtils.isBlank(token)) {
+        // 判断是否放行接口
+        if (this.isOpenApi(request)) {
             return true;
         }
 
-        // 放行的接口跳过
-        String restfulPath = request.getServletPath();
-        List<String> openUrlList = this.saTokenProperty.getOpenUrlList();
-        PathMatcher pathMatcher = new AntPathMatcher();
-        for (String api : openUrlList) {
-            if (pathMatcher.match(api, restfulPath)) {
-                return true;
-            }
-        }
-
+        // 获取登录用户信息
         JwtUserBO jwtUserBO = JSONUtil.toBean(StpUtil.getLoginId().toString(), JwtUserBO.class);
 
         // 校验权限
@@ -85,6 +79,36 @@ public class HandlerInterceptorForToken implements HandlerInterceptor {
     }
 
     /**
+     * 判断是否放行接口
+     *
+     * @param request 请求
+     * @return void
+     * @author zhengqingya
+     * @date 2023/2/13 15:52
+     */
+    private boolean isOpenApi(HttpServletRequest request) {
+        String restfulPath = request.getServletPath();
+
+        // 判断此方法上是否有放行注解
+        HandlerMethod handlerMethod = (HandlerMethod) request.getAttribute(HandlerMapping.BEST_MATCHING_HANDLER_ATTRIBUTE);
+        boolean isApiOpen = handlerMethod.getMethod().isAnnotationPresent(ApiOpen.class);
+        if (isApiOpen) {
+            return true;
+        }
+
+        // yml配置中是否存在放行接口
+        List<String> openUrlList = this.saTokenProperty.getOpenUrlList();
+        PathMatcher pathMatcher = new AntPathMatcher();
+        for (String api : openUrlList) {
+            if (pathMatcher.match(api, restfulPath)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * 校验权限
      *
      * @param request   请求
@@ -94,6 +118,11 @@ public class HandlerInterceptorForToken implements HandlerInterceptor {
      * @date 2023/2/13 15:52
      */
     private void checkPermission(HttpServletRequest request, JwtUserBO jwtUserBO) {
+        String token = request.getHeader(AppConstant.REQUEST_HEADER_TOKEN);
+        if (StrUtil.isBlank(token)) {
+            throw new MyException(ApiResultCodeEnum.UN_LOGIN.getCode(), "无操作权限");
+        }
+
         String method = request.getMethod();
         String path = request.getRequestURI();
         // "GET:/web/api/user/*"
