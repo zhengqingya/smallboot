@@ -79,7 +79,7 @@ services:
       - "./nginx/conf/conf.d/default.conf:/etc/nginx/conf.d/default.conf"
       #      - "./nginx/html:/usr/share/nginx/html"
       - "../../tmp:/usr/share/nginx/html" # 本地临时图片路径
-      - "../nginx/log:/var/log/nginx"
+      - "./nginx/log:/var/log/nginx"
     environment:
       TZ: Asia/Shanghai
       LANG: en_US.UTF-8
