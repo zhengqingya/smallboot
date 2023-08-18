@@ -50,6 +50,11 @@ public class HandlerInterceptorForToken implements HandlerInterceptor {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+//        String token = request.getHeader(AppConstant.REQUEST_HEADER_TOKEN);
+//        if (StringUtils.isBlank(token)) {
+//            return true;
+//        }
+
         // 判断是否放行接口
         if (this.isOpenApi(request)) {
             return true;
@@ -89,13 +94,6 @@ public class HandlerInterceptorForToken implements HandlerInterceptor {
     private boolean isOpenApi(HttpServletRequest request) {
         String restfulPath = request.getServletPath();
 
-        // 判断此方法上是否有放行注解
-        HandlerMethod handlerMethod = (HandlerMethod) request.getAttribute(HandlerMapping.BEST_MATCHING_HANDLER_ATTRIBUTE);
-        boolean isApiOpen = handlerMethod.getMethod().isAnnotationPresent(ApiOpen.class);
-        if (isApiOpen) {
-            return true;
-        }
-
         // yml配置中是否存在放行接口
         List<String> openUrlList = this.saTokenProperty.getOpenUrlList();
         PathMatcher pathMatcher = new AntPathMatcher();
@@ -103,6 +101,13 @@ public class HandlerInterceptorForToken implements HandlerInterceptor {
             if (pathMatcher.match(api, restfulPath)) {
                 return true;
             }
+        }
+
+        // 判断此方法上是否有放行注解
+        HandlerMethod handlerMethod = (HandlerMethod) request.getAttribute(HandlerMapping.BEST_MATCHING_HANDLER_ATTRIBUTE);
+        boolean isApiOpen = handlerMethod.getMethod().isAnnotationPresent(ApiOpen.class);
+        if (isApiOpen) {
+            return true;
         }
 
         return false;
