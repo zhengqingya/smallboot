@@ -11,7 +11,7 @@ docker run -d -p 9000:9000 --restart=always --name portainer -v /var/run/docker.
 chmod -R 777 ./redis
 
 # 组件部署
-docker-compose -f ./docker-compose.yml -p smallboot up -d mysql redis minio
+docker-compose -f ./docker-compose.yml -p smallboot up -d mysql redis minio nginx_file
 
 # 服务部署 -- 根据自己的条件去启动
 docker-compose -p smallboot up -d api

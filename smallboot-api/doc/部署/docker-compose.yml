@@ -70,6 +70,22 @@ services:
       smallboot:
         ipv4_address: 172.28.0.12
 
+  nginx_file:
+    image: registry.cn-hangzhou.aliyuncs.com/zhengqing/nginx:1.21.1
+    container_name: nginx_file
+    restart: unless-stopped
+    volumes:
+      - "./nginx/conf/nginx.conf:/etc/nginx/nginx.conf"
+      - "./nginx/conf/conf.d/default.conf:/etc/nginx/conf.d/default.conf"
+      #      - "./nginx/html:/usr/share/nginx/html"
+      - "../../tmp:/usr/share/nginx/html" # 本地临时图片路径
+      - "../nginx/log:/var/log/nginx"
+    environment:
+      TZ: Asia/Shanghai
+      LANG: en_US.UTF-8
+    ports:
+      - "886:80"
+
   # ----------------------------------------------------------------------------------------------------------------------------
   api:
     image: registry.cn-hangzhou.aliyuncs.com/zhengqingya/smallboot-api:prod

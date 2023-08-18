@@ -10,6 +10,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,15 +28,20 @@ import org.springframework.web.multipart.MultipartFile;
 @Api(tags = {"系统管理 - 文件上传"})
 public class SysFileController {
 
+    @Value("${smallboot.nginx-file-url}")
+    private String nginxFileUrl;
 
     @PostMapping("localUpload")
     @ApiOperation("上传文件-本地")
     @SneakyThrows(Exception.class)
     public SysFileVO localUpload(@RequestPart @RequestParam MultipartFile file) {
         String originalFilename = file.getOriginalFilename();
+        // 写入文件到本地
+        String absolutePath = FileUtil.writeBytes(file.getBytes(), ProjectConstant.LOCAL_FILE_TMP + IdGeneratorUtil.nextId() + "-" + originalFilename).getAbsolutePath();
+        String url = absolutePath.substring(absolutePath.indexOf("tmp") + 3);
         return SysFileVO.builder()
                 .name(originalFilename)
-                .url(FileUtil.writeBytes(file.getBytes(), ProjectConstant.LOCAL_FILE_TMP + IdGeneratorUtil.nextId() + originalFilename).getAbsolutePath())
+                .url(this.nginxFileUrl + url.replaceAll("\\\\", ProjectConstant.SYSTEM_SEPARATOR))
                 .type(file.getContentType())
                 .build();
     }
