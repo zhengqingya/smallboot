@@ -1,6 +1,7 @@
 package com.zhengqing.mall.model.vo;
 
 import com.zhengqing.common.base.model.vo.BaseVO;
+import com.zhengqing.common.core.custom.fileprefix.FilePrefix;
 import com.zhengqing.mall.model.bo.PmsSkuBO;
 import com.zhengqing.mall.model.enums.PmsSpuPresellStatusEnum;
 import com.zhengqing.mall.model.enums.PmsSpuTypeEnum;
@@ -36,6 +37,7 @@ public class PmsSpuBaseVO extends BaseVO {
     @ApiModelProperty("名称")
     private String name;
 
+    @FilePrefix
     @ApiModelProperty("封面图")
     private String coverImg;
 

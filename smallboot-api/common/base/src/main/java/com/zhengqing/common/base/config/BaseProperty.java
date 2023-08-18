@@ -1,25 +1,22 @@
-package com.zhengqing.ums.config;
+package com.zhengqing.common.base.config;
 
-import com.zhengqing.common.base.config.CommonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * <p>
- * 配置信息
- * </p>
+ * <p> 基础配置参数 </p>
  *
- * @author zhengqingya
+ * @author zhengqing
  * @description
- * @date 2019/8/19 9:07
+ * @date 2020/8/15 16:01
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Configuration
 @ConfigurationProperties(prefix = "smallboot")
-public class UmsProperty extends CommonProperty {
+public class BaseProperty extends CommonProperty {
 
 
 }

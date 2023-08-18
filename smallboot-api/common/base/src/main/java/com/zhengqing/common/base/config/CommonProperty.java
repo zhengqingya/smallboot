@@ -1,4 +1,4 @@
-package com.zhengqing.common.core.config;
+package com.zhengqing.common.base.config;
 
 import lombok.Data;
 
@@ -18,6 +18,16 @@ public class CommonProperty {
      * ip
      */
     private String ip;
+
+    /**
+     * 文件存储类型
+     * {@link com.zhengqing.common.file.enums.FileStorageTypeEnum}
+     */
+    private String fileStorageType;
+    /**
+     * 本地文件存储位置
+     */
+    private String localFileDir;
 
     /**
      * MySQL参数

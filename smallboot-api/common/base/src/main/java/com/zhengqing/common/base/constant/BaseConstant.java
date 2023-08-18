@@ -22,6 +22,12 @@ public interface BaseConstant {
     Integer PARENT_ID = 0;
 
     /**
+     * 获取项目根目录
+     */
+    String PROJECT_ROOT_DIRECTORY = System.getProperty("user.dir").replaceAll("\\\\", "/");
+
+
+    /**
      * 用户ID、用户名、消息上下文Key 【注：key名称一定不要和前端请求参数中的属性名一样，否则会拿不到真正的值！！！】
      */
     String CONTEXT_KEY_SYS_USER_ID = "smallboot_sys_user_id";

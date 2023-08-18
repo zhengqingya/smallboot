@@ -20,6 +20,12 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.zhengqing</groupId>
+            <artifactId>base</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
         <!-- minio文件服务器 -->
         <!-- https://mvnrepository.com/artifact/io.minio/minio -->
         <dependency>

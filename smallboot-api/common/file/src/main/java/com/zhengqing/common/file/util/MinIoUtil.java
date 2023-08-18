@@ -36,10 +36,12 @@ public class MinIoUtil {
     private static MinIoProperties minIoProperties;
 
     private static MinioClient minioClient;
+    private static FileStorageUtil fileStorageUtil;
 
     @Autowired
-    public MinIoUtil(MinIoProperties minIoProperties) {
+    public MinIoUtil(MinIoProperties minIoProperties, FileStorageUtil fileStorageUtil) {
         MinIoUtil.minIoProperties = minIoProperties;
+        MinIoUtil.fileStorageUtil = fileStorageUtil;
     }
 
     /**
@@ -47,6 +49,9 @@ public class MinIoUtil {
      */
     @PostConstruct
     public void init() {
+        if (!fileStorageUtil.isMinio()) {
+            return;
+        }
         try {
             minioClient = MinioClient.builder()
                     .endpoint(minIoProperties.getUrl())

@@ -1,5 +1,6 @@
 package com.zhengqing.system.model.vo;
 
+import com.zhengqing.common.core.custom.fileprefix.FilePrefix;
 import com.zhengqing.common.core.enums.UserSexEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -45,6 +46,7 @@ public class SysUserListVO {
     @ApiModelProperty(value = "邮箱")
     private String email;
 
+    @FilePrefix
     @ApiModelProperty(value = "头像")
     private String avatarUrl;
 

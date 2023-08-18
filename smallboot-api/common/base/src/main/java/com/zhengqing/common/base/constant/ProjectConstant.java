@@ -1,7 +1,5 @@
 package com.zhengqing.common.base.constant;
 
-import com.zhengqing.common.base.util.MyDateUtil;
-
 /**
  * <p> 全局常用变量 - 工程使用 </p>
  *
@@ -9,28 +7,37 @@ import com.zhengqing.common.base.util.MyDateUtil;
  * @description
  * @date 2021/7/20 18:16
  */
-public interface ProjectConstant {
+public interface ProjectConstant extends BaseConstant {
 
     // ===============================================================================
     // ============================ ↓↓↓↓↓↓ 文件系列 ↓↓↓↓↓↓ ============================
     // ===============================================================================
 
     /**
-     * 系统分隔符
+     * linux系统分隔符
      */
-    String SYSTEM_SEPARATOR = "/";
+    String SEPARATOR_SPRIT = "/";
+    /**
+     * win系统分隔符
+     */
+    String SEPARATOR_BACKSLASH = "\\\\";
 
     /**
-     * 获取项目根目录
+     * 分隔符 - 逗号
      */
-    String PROJECT_ROOT_DIRECTORY = System.getProperty("user.dir").replaceAll("\\\\", SYSTEM_SEPARATOR);
+    String SEPARATOR_COMMA = ",";
+    /**
+     * 分隔符 - 点
+     */
+    String SEPARATOR_SPOT = ".";
+
 
     /**
      * 临时文件相关
      */
     String DEFAULT_FOLDER_TMP = PROJECT_ROOT_DIRECTORY + "/tmp";
     String DEFAULT_FOLDER_TMP_GENERATE = PROJECT_ROOT_DIRECTORY + "/tmp-generate";
-    String LOCAL_FILE_TMP = PROJECT_ROOT_DIRECTORY + "/tmp/" + MyDateUtil.nowStr(MyDateUtil.DATE_FORMAT) + "/";
+  
 
     // ===============================================================================
     // ============================ ↓↓↓↓↓↓ other ↓↓↓↓↓↓ ==============================

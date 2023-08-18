@@ -1,5 +1,6 @@
 package com.zhengqing.system.model.vo;
 
+import com.zhengqing.common.core.custom.fileprefix.FilePrefix;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,6 +23,7 @@ public class SysFileVO {
     @ApiModelProperty("文件名")
     private String name;
 
+    @FilePrefix
     @ApiModelProperty("文件url")
     private String url;
 

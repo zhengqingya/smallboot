@@ -82,27 +82,6 @@ public interface AppConstant extends BaseConstant {
     // ============================ ↓↓↓↓↓↓ 文件系列 ↓↓↓↓↓↓ ============================
     // ===============================================================================
 
-    /**
-     * liunx系统分隔符
-     */
-    String SEPARATOR_SPRIT = "/";
-    /**
-     * win系统分隔符
-     */
-    String SEPARATOR_BACKSLASH = "\\\\";
-    /**
-     * 分隔符 - 逗号
-     */
-    String SEPARATOR_COMMA = ",";
-    /**
-     * 分隔符 - 点
-     */
-    String SEPARATOR_SPOT = ".";
-
-    /**
-     * 获取项目根目录
-     */
-    String PROJECT_ROOT_DIRECTORY = System.getProperty("user.dir").replaceAll("\\\\", SEPARATOR_SPRIT);
 
     String IMG_DOMAIN = "";
 
@@ -119,18 +98,15 @@ public interface AppConstant extends BaseConstant {
     String FILE_PATH_CSDN_BLOG_EXPORT_SRC = PROJECT_ROOT_DIRECTORY + "/tmp/export/blog";
     String FILE_PATH_CSDN_BLOG_EXPORT_ZIP = PROJECT_ROOT_DIRECTORY + "/tmp/export/blog.zip";
     String FILE_PATH_CSDN_BLOG_EXPORT_EXCEL = PROJECT_ROOT_DIRECTORY + "/tmp/export/blog/excel.xls";
-    String FILE_PATH_CSDN_BLOG_EXPORT_HTML =
-            PROJECT_ROOT_DIRECTORY + "/tmp/export/blog/html/" + System.currentTimeMillis() + "/";
+    String FILE_PATH_CSDN_BLOG_EXPORT_HTML = PROJECT_ROOT_DIRECTORY + "/tmp/export/blog/html/" + System.currentTimeMillis() + "/";
     /**
      * 代码生成临时存储路径
      */
     String FILE_PATH_CODE_GENERATOR_DATA_PATH = PROJECT_ROOT_DIRECTORY + "/tmp/upload";
     String FILE_PATH_CODE_GENERATOR_SRC_CODE = PROJECT_ROOT_DIRECTORY + "/tmp/upload/generate_code";
-    String FILE_PATH_CODE_GENERATOR_TEMPLATE_CODE =
-            PROJECT_ROOT_DIRECTORY + "/tmp/upload/template_code";
+    String FILE_PATH_CODE_GENERATOR_TEMPLATE_CODE = PROJECT_ROOT_DIRECTORY + "/tmp/upload/template_code";
 
-    String FILE_PATH_CODE_GENERATOR_FILE_NAME_DATA =
-            PROJECT_ROOT_DIRECTORY + "/tmp/upload/handle_generate_file_name_data";
+    String FILE_PATH_CODE_GENERATOR_FILE_NAME_DATA = PROJECT_ROOT_DIRECTORY + "/tmp/upload/handle_generate_file_name_data";
     String FILE_PATH_CODE_GENERATOR_ZIP = PROJECT_ROOT_DIRECTORY + "/tmp/upload/code.zip";
 
     /**
