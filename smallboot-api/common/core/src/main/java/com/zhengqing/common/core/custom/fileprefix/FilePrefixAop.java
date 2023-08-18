@@ -25,22 +25,30 @@ public class FilePrefixAop {
     @Value("${smallboot.base-file-url}")
     private String baseFileUrl;
 
-    @Around("execution(* com.zhengqing.*.api.*Controller.*(..))")
+    @Around("execution(* com.zhengqing.*.api.*Controller.*(..)) || execution(* com.zhengqing..*.api..*.*Controller.*(..))")
     public Object around(ProceedingJoinPoint pjp) throws Throwable {
         Object result = pjp.proceed();
-        Field[] fields = result.getClass().getDeclaredFields();
-        for (Field field : fields) {
-            if (field.isAnnotationPresent(FilePrefix.class)) {
-                field.setAccessible(true);
-                Object value = field.get(result);
-                if (value instanceof String) {
-                    String urlValue = (String) value;
-                    if (HttpUtil.isHttp(urlValue) || HttpUtil.isHttps(urlValue)) {
-                        continue;
+        if (result == null) {
+            return null;
+        }
+        try {
+            Field[] fields = result.getClass().getDeclaredFields();
+            for (Field field : fields) {
+                if (field.isAnnotationPresent(FilePrefix.class)) {
+                    field.setAccessible(true);
+                    Object value = field.get(result);
+                    if (value instanceof String) {
+                        String urlValue = (String) value;
+                        if (HttpUtil.isHttp(urlValue) || HttpUtil.isHttps(urlValue)) {
+                            continue;
+                        }
+                        field.set(result, this.baseFileUrl + urlValue);
                     }
-                    field.set(result, this.baseFileUrl + urlValue);
                 }
             }
+        } catch (Exception e) {
+            log.error("[FilePrefixAop] 处理异常：", e);
+            return result;
         }
         return result;
     }
