@@ -3,7 +3,7 @@
 smallboot:
   ip: 127.0.0.1
   wx-mp-domain: http://sndhx2.natappfree.cc # 微信公众号域名 -- 用于认证授权等
-  base-file-url: http://127.0.0.1:886       # 文件访问基础地址
+  base-file-url: http://n9u44u.natappfree.cc       # 文件访问基础地址
   file-storage-type: local # local(本地nginx作为文件访问)、minio
   local-file-dir: tmp/     # 本地文件存储位置 -- 基于项目根目录
   minio:

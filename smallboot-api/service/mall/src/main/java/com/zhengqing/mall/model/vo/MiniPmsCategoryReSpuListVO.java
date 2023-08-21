@@ -2,6 +2,7 @@ package com.zhengqing.mall.model.vo;
 
 import com.google.common.collect.Lists;
 import com.zhengqing.common.base.model.vo.BaseVO;
+import com.zhengqing.common.core.custom.fileprefix.FilePrefixValid;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -21,6 +22,7 @@ import java.util.List;
  * @date 2022/02/10 14:01
  */
 @Data
+@FilePrefixValid
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -34,6 +36,7 @@ public class MiniPmsCategoryReSpuListVO extends BaseVO {
     @ApiModelProperty("分类名称")
     private String name;
 
+    @FilePrefixValid
     @ApiModelProperty("商品数据")
     private List<PmsCategoryReSpuListVO> spuList;
 

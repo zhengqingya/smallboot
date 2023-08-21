@@ -1,4 +1,4 @@
-package com.zhengqing.mall.controller.mini;
+package com.zhengqing.mall.api.mini;
 
 import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.metadata.IPage;

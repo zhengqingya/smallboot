@@ -3,6 +3,8 @@ package com.zhengqing.mall.model.vo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 import com.zhengqing.common.base.model.vo.BaseVO;
+import com.zhengqing.common.core.custom.fileprefix.FilePrefix;
+import com.zhengqing.common.core.custom.fileprefix.FilePrefixValid;
 import com.zhengqing.mall.model.bo.MiniPmsCategoryReSkuBO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -24,6 +26,7 @@ import java.util.List;
  */
 @Data
 @SuperBuilder
+@FilePrefixValid
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
@@ -44,6 +47,7 @@ public class PmsCategoryReSpuListVO extends BaseVO {
     @ApiModelProperty("商品名称")
     private String name;
 
+    @FilePrefix
     @ApiModelProperty("商品封面图")
     private String coverImg;
 

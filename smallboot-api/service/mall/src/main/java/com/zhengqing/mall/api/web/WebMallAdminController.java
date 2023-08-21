@@ -1,4 +1,4 @@
-package com.zhengqing.mall.controller.web;
+package com.zhengqing.mall.api.web;
 
 import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.mall.service.MallCommonService;

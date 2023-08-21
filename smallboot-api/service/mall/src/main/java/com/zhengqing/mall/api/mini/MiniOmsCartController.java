@@ -1,4 +1,4 @@
-package com.zhengqing.mall.controller.mini;
+package com.zhengqing.mall.api.mini;
 
 import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.base.context.UmsUserContext;
