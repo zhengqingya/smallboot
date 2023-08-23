@@ -6,7 +6,6 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.google.common.collect.Lists;
 import com.zhengqing.common.auth.config.SaTokenProperty;
-import com.zhengqing.common.auth.custom.open.ApiOpen;
 import com.zhengqing.common.base.constant.AppConstant;
 import com.zhengqing.common.base.constant.SecurityConstant;
 import com.zhengqing.common.base.context.JwtUserContext;
@@ -19,9 +18,7 @@ import com.zhengqing.common.core.config.WebAppConfig;
 import com.zhengqing.common.redis.util.RedisUtil;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
-import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -94,7 +91,7 @@ public class HandlerInterceptorForToken implements HandlerInterceptor {
     private boolean isOpenApi(HttpServletRequest request) {
         String restfulPath = request.getServletPath();
 
-        // yml配置中是否存在放行接口
+        // yml配置中是否存在放行接口 -- 这里面已经包含了放行注解的接口数据
         List<String> openUrlList = this.saTokenProperty.getOpenUrlList();
         PathMatcher pathMatcher = new AntPathMatcher();
         for (String api : openUrlList) {
@@ -104,11 +101,11 @@ public class HandlerInterceptorForToken implements HandlerInterceptor {
         }
 
         // 判断此方法上是否有放行注解
-        HandlerMethod handlerMethod = (HandlerMethod) request.getAttribute(HandlerMapping.BEST_MATCHING_HANDLER_ATTRIBUTE);
-        boolean isApiOpen = handlerMethod.getMethod().isAnnotationPresent(ApiOpen.class);
-        if (isApiOpen) {
-            return true;
-        }
+//        HandlerMethod handlerMethod = (HandlerMethod) request.getAttribute(HandlerMapping.BEST_MATCHING_HANDLER_ATTRIBUTE);
+//        boolean isApiOpen = handlerMethod.getMethod().isAnnotationPresent(ApiOpen.class);
+//        if (isApiOpen) {
+//            return true;
+//        }
 
         return false;
     }

@@ -2,6 +2,7 @@ package com.zhengqing.system.api;
 
 
 import cn.dev33.satoken.stp.StpUtil;
+import com.zhengqing.common.auth.custom.open.ApiOpen;
 import com.zhengqing.common.auth.model.dto.AuthLoginDTO;
 import com.zhengqing.common.auth.model.vo.AuthLoginVO;
 import com.zhengqing.common.auth.service.IAuthService;
@@ -28,12 +29,14 @@ public class AuthController {
 
     private final IAuthService authService;
 
+    @ApiOpen
     @PostMapping("login")
     @ApiOperation("登录")
     public AuthLoginVO login(@Validated @RequestBody AuthLoginDTO params) {
         return this.authService.login(params);
     }
 
+    @ApiOpen
     @DeleteMapping("logout")
     @ApiOperation("注销登录")
     public void logout() {
