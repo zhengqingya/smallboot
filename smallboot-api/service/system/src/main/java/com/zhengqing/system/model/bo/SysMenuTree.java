@@ -94,6 +94,9 @@ public class SysMenuTree {
 
         @ApiModelProperty("面包屑是否显示")
         private Boolean breadcrumb;
+
+        @ApiModelProperty("显示顺序")
+        private Integer sort;
     }
 
     public void handleData() {
@@ -104,6 +107,7 @@ public class SysMenuTree {
                 .title(this.title)
                 .icon(this.icon)
                 .breadcrumb(this.breadcrumb)
+                .sort(this.sort)
                 .build();
     }
 
