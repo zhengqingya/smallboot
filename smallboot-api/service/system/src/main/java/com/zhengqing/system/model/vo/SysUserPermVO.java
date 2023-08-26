@@ -46,8 +46,13 @@ public class SysUserPermVO extends BaseVO implements HandleParam {
     @ApiModelProperty(value = "昵称")
     private String nickname;
 
-    @ApiModelProperty(value = "性别")
+    @JsonIgnore
+    @ApiModelProperty(value = "性别", hidden = true)
     private UserSexEnum sexEnum;
+    @ApiModelProperty(value = "性别")
+    private Byte sex;
+    @ApiModelProperty(value = "性别")
+    private String sexName;
 
     @ApiModelProperty(value = "手机号码")
     private String phone;
@@ -77,7 +82,8 @@ public class SysUserPermVO extends BaseVO implements HandleParam {
 
     @Override
     public void handleParam() {
-
+        this.sex = this.sexEnum.getType();
+        this.sexName = this.sexEnum.getDesc();
     }
 
 }

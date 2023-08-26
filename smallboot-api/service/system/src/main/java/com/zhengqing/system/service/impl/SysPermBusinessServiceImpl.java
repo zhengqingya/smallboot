@@ -69,6 +69,7 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
     public SysUserPermVO getUserPerm(SysUserPermDTO params) {
         // 1、拿到用户基础信息
         SysUserPermVO userPerm = this.sysUserService.getUserPerm(params);
+        userPerm.handleParam();
 
         // 2、权限树
         userPerm.setPermissionTreeList(this.tree(userPerm.getRoleIdList(), true));
