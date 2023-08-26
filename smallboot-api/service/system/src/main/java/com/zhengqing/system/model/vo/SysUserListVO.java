@@ -1,6 +1,7 @@
 package com.zhengqing.system.model.vo;
 
 import com.zhengqing.common.core.custom.fileprefix.FilePrefix;
+import com.zhengqing.common.core.custom.fileprefix.FilePrefixValid;
 import com.zhengqing.common.core.enums.UserSexEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -20,6 +21,7 @@ import java.util.List;
  */
 @Data
 @ApiModel
+@FilePrefixValid
 public class SysUserListVO {
 
     @ApiModelProperty(value = "主键ID")

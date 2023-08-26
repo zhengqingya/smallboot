@@ -18,7 +18,9 @@ import java.util.List;
  * <p> aop切面-填充文件地址 </p>
  *
  * @author zhengqingya
- * @description
+ * @description 说明
+ * 1. {@link FilePrefixValid} 用于类上标注是否生效
+ * 2. {@link FilePrefix} 用于填充字段url值
  * @date 2021/10/8 9:31
  */
 @Slf4j

@@ -1,6 +1,7 @@
 package com.zhengqing.system.model.vo;
 
 import com.zhengqing.common.core.custom.fileprefix.FilePrefix;
+import com.zhengqing.common.core.custom.fileprefix.FilePrefixValid;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,6 +17,7 @@ import lombok.experimental.SuperBuilder;
  */
 @Data
 @SuperBuilder
+@FilePrefixValid
 @NoArgsConstructor
 @AllArgsConstructor
 public class SysFileVO {

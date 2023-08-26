@@ -21,7 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(ServiceConstant.SERVICE_API_PREFIX_WEB_SYSTEM + "/file")
-@Api(tags = {"系统管理 - 文件上传"})
+@Api(tags = {"web-系统管理 - 文件上传"})
 public class SysFileController {
 
     private final FileStorageUtil fileStorageUtil;
