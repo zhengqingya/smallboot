@@ -34,6 +34,7 @@
         <result property="phone" column="phone"/>
         <result property="email" column="email"/>
         <result property="avatarUrl" column="avatar_url"/>
+        <result property="createTime" column="create_time"/>
         <collection property="roleIdList" ofType="String" javaType="list">
             <result column="roleId"/>
         </collection>
@@ -52,6 +53,7 @@
         su.phone,
         su.email,
         su.avatar_url,
+        su.create_time,
         sr.role_id roleId,
         sr.code roleCode
         FROM t_sys_user su

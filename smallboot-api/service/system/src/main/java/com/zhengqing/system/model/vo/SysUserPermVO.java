@@ -12,6 +12,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -57,6 +58,9 @@ public class SysUserPermVO extends BaseVO implements HandleParam {
     @ApiModelProperty(value = "头像")
     private String avatarUrl;
 
+    @ApiModelProperty(value = "创建时间")
+    private Date createTime;
+
     // ================= ↓↓↓↓↓↓ 角色信息 ↓↓↓↓↓↓ =================
 
     @JsonIgnore
@@ -75,5 +79,5 @@ public class SysUserPermVO extends BaseVO implements HandleParam {
     public void handleParam() {
 
     }
-    
+
 }
