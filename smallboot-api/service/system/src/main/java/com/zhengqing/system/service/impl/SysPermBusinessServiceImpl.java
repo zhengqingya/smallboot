@@ -72,8 +72,8 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
 
         // 2、权限树
         userPerm.setPermissionTreeList(this.tree(userPerm.getRoleIdList(), true));
-        
-        userPerm.handleParam();
+
+        userPerm.handleData();
         return userPerm;
     }
 

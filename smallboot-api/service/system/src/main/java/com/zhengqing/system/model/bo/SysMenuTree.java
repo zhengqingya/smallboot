@@ -55,17 +55,14 @@ public class SysMenuTree {
     @ApiModelProperty("组件名")
     private String component;
 
-    @ApiModelProperty("是否隐藏 true:隐藏 false:显示")
-    private Boolean hidden;
+    @ApiModelProperty("是否显示(1:显示 0:隐藏)")
+    private Boolean isShow;
 
     @ApiModelProperty("重定向url")
     private String redirect;
 
     @ApiModelProperty("面包屑是否显示")
     private Boolean breadcrumb;
-
-    @ApiModelProperty("是否显示子菜单(true:显示 false:隐藏)")
-    private Boolean isShowChildren;
 
     @ApiModelProperty("下级菜单")
     private List<SysMenuTree> children;
@@ -97,6 +94,9 @@ public class SysMenuTree {
 
         @ApiModelProperty("显示顺序")
         private Integer sort;
+
+        @ApiModelProperty("是否显示(1:显示 0:隐藏)")
+        private Boolean isShow;
     }
 
     public void handleData() {
@@ -108,6 +108,7 @@ public class SysMenuTree {
                 .icon(this.icon)
                 .breadcrumb(this.breadcrumb)
                 .sort(this.sort)
+                .isShow(this.isShow)
                 .build();
     }
 

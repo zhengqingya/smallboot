@@ -29,10 +29,9 @@
         (SELECT m.title FROM t_sys_menu m WHERE m.menu_id = sm.parent_id)) parentName,
         sm.sort,
         sm.component,
-        sm.hidden,
+        sm.is_show,
         sm.redirect,
         sm.breadcrumb,
-        sm.is_show_children,
         <choose>
             <when test="roleIdList!=null and roleIdList.size>0">
                 IF(srm.id IS NULL, 0, 1) isHasPerm

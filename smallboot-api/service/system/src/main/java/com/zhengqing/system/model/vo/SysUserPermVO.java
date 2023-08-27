@@ -82,6 +82,10 @@ public class SysUserPermVO extends BaseVO implements HandleParam {
 
     @Override
     public void handleParam() {
+
+    }
+
+    public void handleData() {
         this.sex = this.sexEnum.getType();
         this.sexName = this.sexEnum.getDesc();
     }
