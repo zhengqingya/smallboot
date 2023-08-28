@@ -11,7 +11,7 @@
  Target Server Version : 50726 (5.7.26-log)
  File Encoding         : 65001
 
- Date: 28/08/2023 17:55:15
+ Date: 28/08/2023 20:04:35
 */
 
 SET NAMES utf8mb4;
@@ -637,26 +637,307 @@ CREATE TABLE `t_sys_dict`  (
   `update_time` datetime NOT NULL COMMENT '修改时间',
   `is_deleted` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否删除(1->是，0->否)',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 189 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '基础模块-数据字典' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 486 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '基础模块-数据字典' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_sys_dict
 -- ----------------------------
-INSERT INTO `t_sys_dict` VALUES (165, 3, 'element_icon', 'AddLocation', 'AddLocation', 1, 1, '', 1, '2020-08-30 03:05:05', 1, '2022-07-22 09:57:53', 0);
-INSERT INTO `t_sys_dict` VALUES (166, 3, 'element_icon', 'Aim', 'Aim', 1, 2, '', 1, '2020-08-30 03:05:24', 1, '2022-07-22 09:58:01', 0);
-INSERT INTO `t_sys_dict` VALUES (167, 3, 'element_icon', 'AlarmClock', 'AlarmClock', 1, 3, '', 1, '2020-08-30 03:05:31', 1, '2022-07-22 09:58:07', 0);
-INSERT INTO `t_sys_dict` VALUES (168, 3, 'element_icon', 'Apple', 'Apple', 1, 4, '', 1, '2020-08-30 03:12:30', 1, '2022-07-22 09:58:15', 0);
-INSERT INTO `t_sys_dict` VALUES (169, 3, 'element_icon', 'ArrowDown', 'ArrowDown', 1, 5, '', 1, '2020-08-30 03:14:05', 1, '2022-07-22 09:58:38', 0);
-INSERT INTO `t_sys_dict` VALUES (170, 3, 'element_icon', 'ArrowDownBold', 'ArrowDownBold', 1, 6, '', 1, '2020-08-30 03:14:28', 1, '2022-07-22 09:58:45', 0);
-INSERT INTO `t_sys_dict` VALUES (171, 3, 'element_icon', 'ArrowLeft', 'ArrowLeft', 1, 7, '', 1, '2020-08-30 03:14:56', 1, '2022-07-22 09:58:51', 0);
-INSERT INTO `t_sys_dict` VALUES (172, 3, 'element_icon', 'ArrowRight', 'ArrowRight', 1, 8, '', 1, '2020-08-30 03:15:49', 1, '2022-07-22 09:59:05', 0);
-INSERT INTO `t_sys_dict` VALUES (173, 3, 'element_icon', 'ArrowRightBold', 'ArrowRightBold', 1, 9, '', 1, '2020-08-30 03:16:51', 1, '2022-07-22 09:59:13', 0);
-INSERT INTO `t_sys_dict` VALUES (174, 3, 'element_icon', 'ArrowUp', 'ArrowUp', 1, 10, '', 1, '2020-08-30 03:18:32', 1, '2022-07-22 09:59:19', 0);
 INSERT INTO `t_sys_dict` VALUES (181, 6, 'oauth_type', 'gitee', '1', 1, 1, '', 1, '2020-12-06 13:16:39', 0, '2023-02-13 11:17:41', 0);
 INSERT INTO `t_sys_dict` VALUES (182, 6, 'oauth_type', 'github', '2', 1, 2, NULL, 1, '2020-12-06 13:16:54', 0, '2021-08-28 00:03:02', 0);
 INSERT INTO `t_sys_dict` VALUES (183, 6, 'oauth_type', 'qq', '3', 1, 3, NULL, 1, '2020-12-06 13:17:03', 0, '2021-08-28 00:03:02', 0);
-INSERT INTO `t_sys_dict` VALUES (184, 3, 'element_icon', 'Monitor', 'Monitor', 1, 11, NULL, 0, '2023-02-01 16:42:06', 0, '2023-02-01 16:42:06', 0);
-INSERT INTO `t_sys_dict` VALUES (185, 3, 'element_icon', 'Menu', 'Menu', 1, 12, NULL, 0, '2023-02-01 16:42:33', 0, '2023-02-01 16:42:33', 0);
+INSERT INTO `t_sys_dict` VALUES (193, 3, 'element_icon', 'Plus', 'Plus', 1, 20, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (194, 3, 'element_icon', 'Minus', 'Minus', 1, 21, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (195, 3, 'element_icon', 'CirclePlus', 'CirclePlus', 1, 22, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (196, 3, 'element_icon', 'Search', 'Search', 1, 23, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (197, 3, 'element_icon', 'Female', 'Female', 1, 24, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (198, 3, 'element_icon', 'Male', 'Male', 1, 25, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (199, 3, 'element_icon', 'Aim', 'Aim', 1, 26, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (200, 3, 'element_icon', 'House', 'House', 1, 27, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (201, 3, 'element_icon', 'FullScreen', 'FullScreen', 1, 28, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (202, 3, 'element_icon', 'Loading', 'Loading', 1, 29, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (203, 3, 'element_icon', 'Link', 'Link', 1, 30, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (204, 3, 'element_icon', 'Service', 'Service', 1, 31, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (205, 3, 'element_icon', 'Pointer', 'Pointer', 1, 32, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (206, 3, 'element_icon', 'Star', 'Star', 1, 33, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (207, 3, 'element_icon', 'Notification', 'Notification', 1, 34, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (208, 3, 'element_icon', 'Connection', 'Connection', 1, 35, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (209, 3, 'element_icon', 'ChatDotRound', 'ChatDotRound', 1, 36, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (210, 3, 'element_icon', 'Setting', 'Setting', 1, 37, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (211, 3, 'element_icon', 'Clock', 'Clock', 1, 38, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (212, 3, 'element_icon', 'Position', 'Position', 1, 39, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (213, 3, 'element_icon', 'Discount', 'Discount', 1, 40, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (214, 3, 'element_icon', 'Odometer', 'Odometer', 1, 41, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (215, 3, 'element_icon', 'ChatSquare', 'ChatSquare', 1, 42, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (216, 3, 'element_icon', 'ChatRound', 'ChatRound', 1, 43, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (217, 3, 'element_icon', 'ChatLineRound', 'ChatLineRound', 1, 44, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (218, 3, 'element_icon', 'ChatLineSquare', 'ChatLineSquare', 1, 45, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (219, 3, 'element_icon', 'ChatDotSquare', 'ChatDotSquare', 1, 46, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (220, 3, 'element_icon', 'View', 'View', 1, 47, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (221, 3, 'element_icon', 'Hide', 'Hide', 1, 48, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (222, 3, 'element_icon', 'Unlock', 'Unlock', 1, 49, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (223, 3, 'element_icon', 'Lock', 'Lock', 1, 50, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (224, 3, 'element_icon', 'RefreshRight', 'RefreshRight', 1, 51, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (225, 3, 'element_icon', 'RefreshLeft', 'RefreshLeft', 1, 52, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (226, 3, 'element_icon', 'Refresh', 'Refresh', 1, 53, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (227, 3, 'element_icon', 'Bell', 'Bell', 1, 54, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (228, 3, 'element_icon', 'MuteNotification', 'MuteNotification', 1, 55, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (229, 3, 'element_icon', 'User', 'User', 1, 56, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (230, 3, 'element_icon', 'Check', 'Check', 1, 57, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (231, 3, 'element_icon', 'CircleCheck', 'CircleCheck', 1, 58, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (232, 3, 'element_icon', 'Warning', 'Warning', 1, 59, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (233, 3, 'element_icon', 'CircleClose', 'CircleClose', 1, 60, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (234, 3, 'element_icon', 'Close', 'Close', 1, 61, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (235, 3, 'element_icon', 'PieChart', 'PieChart', 1, 62, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (236, 3, 'element_icon', 'More', 'More', 1, 63, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (237, 3, 'element_icon', 'Compass', 'Compass', 1, 64, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (238, 3, 'element_icon', 'Filter', 'Filter', 1, 65, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (239, 3, 'element_icon', 'Switch', 'Switch', 1, 66, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (240, 3, 'element_icon', 'Select', 'Select', 1, 67, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (241, 3, 'element_icon', 'SemiSelect', 'SemiSelect', 1, 68, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (242, 3, 'element_icon', 'CloseBold', 'CloseBold', 1, 69, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (243, 3, 'element_icon', 'EditPen', 'EditPen', 1, 70, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (244, 3, 'element_icon', 'Edit', 'Edit', 1, 71, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (245, 3, 'element_icon', 'Message', 'Message', 1, 72, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (246, 3, 'element_icon', 'MessageBox', 'MessageBox', 1, 73, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (247, 3, 'element_icon', 'TurnOff', 'TurnOff', 1, 74, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (248, 3, 'element_icon', 'Finished', 'Finished', 1, 75, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (249, 3, 'element_icon', 'Delete', 'Delete', 1, 76, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (250, 3, 'element_icon', 'Crop', 'Crop', 1, 77, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (251, 3, 'element_icon', 'SwitchButton', 'SwitchButton', 1, 78, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (252, 3, 'element_icon', 'Operation', 'Operation', 1, 79, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (253, 3, 'element_icon', 'Open', 'Open', 1, 80, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (254, 3, 'element_icon', 'Remove', 'Remove', 1, 81, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (255, 3, 'element_icon', 'ZoomOut', 'ZoomOut', 1, 82, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (256, 3, 'element_icon', 'ZoomIn', 'ZoomIn', 1, 83, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (257, 3, 'element_icon', 'InfoFilled', 'InfoFilled', 1, 84, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (258, 3, 'element_icon', 'CircleCheckFilled', 'CircleCheckFilled', 1, 85, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (259, 3, 'element_icon', 'SuccessFilled', 'SuccessFilled', 1, 86, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (260, 3, 'element_icon', 'WarningFilled', 'WarningFilled', 1, 87, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (261, 3, 'element_icon', 'CircleCloseFilled', 'CircleCloseFilled', 1, 88, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (262, 3, 'element_icon', 'QuestionFilled', 'QuestionFilled', 1, 89, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (263, 3, 'element_icon', 'WarnTriangleFilled', 'WarnTriangleFilled', 1, 90, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (264, 3, 'element_icon', 'UserFilled', 'UserFilled', 1, 91, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (265, 3, 'element_icon', 'MoreFilled', 'MoreFilled', 1, 92, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (266, 3, 'element_icon', 'Tools', 'Tools', 1, 93, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (267, 3, 'element_icon', 'HomeFilled', 'HomeFilled', 1, 94, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (268, 3, 'element_icon', 'Menu', 'Menu', 1, 95, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (269, 3, 'element_icon', 'UploadFilled', 'UploadFilled', 1, 96, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (270, 3, 'element_icon', 'Avatar', 'Avatar', 1, 97, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (271, 3, 'element_icon', 'HelpFilled', 'HelpFilled', 1, 98, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (272, 3, 'element_icon', 'Share', 'Share', 1, 99, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (273, 3, 'element_icon', 'StarFilled', 'StarFilled', 1, 100, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (274, 3, 'element_icon', 'Comment', 'Comment', 1, 101, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (275, 3, 'element_icon', 'Histogram', 'Histogram', 1, 102, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (276, 3, 'element_icon', 'Grid', 'Grid', 1, 103, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (277, 3, 'element_icon', 'Promotion', 'Promotion', 1, 104, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (278, 3, 'element_icon', 'DeleteFilled', 'DeleteFilled', 1, 105, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (279, 3, 'element_icon', 'RemoveFilled', 'RemoveFilled', 1, 106, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (280, 3, 'element_icon', 'CirclePlusFilled', 'CirclePlusFilled', 1, 107, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (281, 3, 'element_icon', 'ArrowLeft', 'ArrowLeft', 1, 108, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (282, 3, 'element_icon', 'ArrowUp', 'ArrowUp', 1, 109, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (283, 3, 'element_icon', 'ArrowRight', 'ArrowRight', 1, 110, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (284, 3, 'element_icon', 'ArrowDown', 'ArrowDown', 1, 111, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (285, 3, 'element_icon', 'ArrowLeftBold', 'ArrowLeftBold', 1, 112, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (286, 3, 'element_icon', 'ArrowUpBold', 'ArrowUpBold', 1, 113, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (287, 3, 'element_icon', 'ArrowRightBold', 'ArrowRightBold', 1, 114, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (288, 3, 'element_icon', 'ArrowDownBold', 'ArrowDownBold', 1, 115, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (289, 3, 'element_icon', 'DArrowRight', 'DArrowRight', 1, 116, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (290, 3, 'element_icon', 'DArrowLeft', 'DArrowLeft', 1, 117, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (291, 3, 'element_icon', 'Download', 'Download', 1, 118, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (292, 3, 'element_icon', 'Upload', 'Upload', 1, 119, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (293, 3, 'element_icon', 'Top', 'Top', 1, 120, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (294, 3, 'element_icon', 'Bottom', 'Bottom', 1, 121, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (295, 3, 'element_icon', 'Back', 'Back', 1, 122, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (296, 3, 'element_icon', 'Right', 'Right', 1, 123, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (297, 3, 'element_icon', 'TopRight', 'TopRight', 1, 124, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (298, 3, 'element_icon', 'TopLeft', 'TopLeft', 1, 125, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (299, 3, 'element_icon', 'BottomRight', 'BottomRight', 1, 126, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (300, 3, 'element_icon', 'BottomLeft', 'BottomLeft', 1, 127, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (301, 3, 'element_icon', 'Sort', 'Sort', 1, 128, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (302, 3, 'element_icon', 'SortUp', 'SortUp', 1, 129, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (303, 3, 'element_icon', 'SortDown', 'SortDown', 1, 130, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (304, 3, 'element_icon', 'Rank', 'Rank', 1, 131, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (305, 3, 'element_icon', 'CaretLeft', 'CaretLeft', 1, 132, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (306, 3, 'element_icon', 'CaretTop', 'CaretTop', 1, 133, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (307, 3, 'element_icon', 'CaretRight', 'CaretRight', 1, 134, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (308, 3, 'element_icon', 'CaretBottom', 'CaretBottom', 1, 135, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (309, 3, 'element_icon', 'DCaret', 'DCaret', 1, 136, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (310, 3, 'element_icon', 'Expand', 'Expand', 1, 137, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (311, 3, 'element_icon', 'Fold', 'Fold', 1, 138, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (312, 3, 'element_icon', 'DocumentAdd', 'DocumentAdd', 1, 139, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (313, 3, 'element_icon', 'Document', 'Document', 1, 140, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (314, 3, 'element_icon', 'Notebook', 'Notebook', 1, 141, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (315, 3, 'element_icon', 'Tickets', 'Tickets', 1, 142, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (316, 3, 'element_icon', 'Memo', 'Memo', 1, 143, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (317, 3, 'element_icon', 'Collection', 'Collection', 1, 144, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (318, 3, 'element_icon', 'Postcard', 'Postcard', 1, 145, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (319, 3, 'element_icon', 'ScaleToOriginal', 'ScaleToOriginal', 1, 146, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (320, 3, 'element_icon', 'SetUp', 'SetUp', 1, 147, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (321, 3, 'element_icon', 'DocumentDelete', 'DocumentDelete', 1, 148, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (322, 3, 'element_icon', 'DocumentChecked', 'DocumentChecked', 1, 149, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (323, 3, 'element_icon', 'DataBoard', 'DataBoard', 1, 150, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (324, 3, 'element_icon', 'DataAnalysis', 'DataAnalysis', 1, 151, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (325, 3, 'element_icon', 'CopyDocument', 'CopyDocument', 1, 152, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (326, 3, 'element_icon', 'FolderChecked', 'FolderChecked', 1, 153, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (327, 3, 'element_icon', 'Files', 'Files', 1, 154, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (328, 3, 'element_icon', 'Folder', 'Folder', 1, 155, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (329, 3, 'element_icon', 'FolderDelete', 'FolderDelete', 1, 156, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (330, 3, 'element_icon', 'FolderRemove', 'FolderRemove', 1, 157, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (331, 3, 'element_icon', 'FolderOpened', 'FolderOpened', 1, 158, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (332, 3, 'element_icon', 'DocumentCopy', 'DocumentCopy', 1, 159, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (333, 3, 'element_icon', 'DocumentRemove', 'DocumentRemove', 1, 160, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (334, 3, 'element_icon', 'FolderAdd', 'FolderAdd', 1, 161, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (335, 3, 'element_icon', 'FirstAidKit', 'FirstAidKit', 1, 162, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (336, 3, 'element_icon', 'Reading', 'Reading', 1, 163, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (337, 3, 'element_icon', 'DataLine', 'DataLine', 1, 164, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (338, 3, 'element_icon', 'Management', 'Management', 1, 165, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (339, 3, 'element_icon', 'Checked', 'Checked', 1, 166, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (340, 3, 'element_icon', 'Ticket', 'Ticket', 1, 167, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (341, 3, 'element_icon', 'Failed', 'Failed', 1, 168, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (342, 3, 'element_icon', 'TrendCharts', 'TrendCharts', 1, 169, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (343, 3, 'element_icon', 'List', 'List', 1, 170, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (344, 3, 'element_icon', 'Microphone', 'Microphone', 1, 171, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (345, 3, 'element_icon', 'Mute', 'Mute', 1, 172, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (346, 3, 'element_icon', 'Mic', 'Mic', 1, 173, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (347, 3, 'element_icon', 'VideoPause', 'VideoPause', 1, 174, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (348, 3, 'element_icon', 'VideoCamera', 'VideoCamera', 1, 175, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (349, 3, 'element_icon', 'VideoPlay', 'VideoPlay', 1, 176, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (350, 3, 'element_icon', 'Headset', 'Headset', 1, 177, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (351, 3, 'element_icon', 'Monitor', 'Monitor', 1, 178, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (352, 3, 'element_icon', 'Film', 'Film', 1, 179, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (353, 3, 'element_icon', 'Camera', 'Camera', 1, 180, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (354, 3, 'element_icon', 'Picture', 'Picture', 1, 181, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (355, 3, 'element_icon', 'PictureRounded', 'PictureRounded', 1, 182, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (356, 3, 'element_icon', 'Iphone', 'Iphone', 1, 183, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (357, 3, 'element_icon', 'Cellphone', 'Cellphone', 1, 184, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (358, 3, 'element_icon', 'VideoCameraFilled', 'VideoCameraFilled', 1, 185, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (359, 3, 'element_icon', 'PictureFilled', 'PictureFilled', 1, 186, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (360, 3, 'element_icon', 'Platform', 'Platform', 1, 187, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (361, 3, 'element_icon', 'CameraFilled', 'CameraFilled', 1, 188, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (362, 3, 'element_icon', 'BellFilled', 'BellFilled', 1, 189, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (363, 3, 'element_icon', 'Location', 'Location', 1, 190, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (364, 3, 'element_icon', 'LocationInformation', 'LocationInformation', 1, 191, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (365, 3, 'element_icon', 'DeleteLocation', 'DeleteLocation', 1, 192, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (366, 3, 'element_icon', 'Coordinate', 'Coordinate', 1, 193, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (367, 3, 'element_icon', 'Bicycle', 'Bicycle', 1, 194, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (368, 3, 'element_icon', 'OfficeBuilding', 'OfficeBuilding', 1, 195, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (369, 3, 'element_icon', 'School', 'School', 1, 196, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (370, 3, 'element_icon', 'Guide', 'Guide', 1, 197, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (371, 3, 'element_icon', 'AddLocation', 'AddLocation', 1, 198, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (372, 3, 'element_icon', 'MapLocation', 'MapLocation', 1, 199, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (373, 3, 'element_icon', 'Place', 'Place', 1, 200, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (374, 3, 'element_icon', 'LocationFilled', 'LocationFilled', 1, 201, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (375, 3, 'element_icon', 'Van', 'Van', 1, 202, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (376, 3, 'element_icon', 'Watermelon', 'Watermelon', 1, 203, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (377, 3, 'element_icon', 'Pear', 'Pear', 1, 204, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (378, 3, 'element_icon', 'NoSmoking', 'NoSmoking', 1, 205, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (379, 3, 'element_icon', 'Smoking', 'Smoking', 1, 206, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (380, 3, 'element_icon', 'Mug', 'Mug', 1, 207, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (381, 3, 'element_icon', 'GobletSquareFull', 'GobletSquareFull', 1, 208, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (382, 3, 'element_icon', 'GobletFull', 'GobletFull', 1, 209, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (383, 3, 'element_icon', 'KnifeFork', 'KnifeFork', 1, 210, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (384, 3, 'element_icon', 'Sugar', 'Sugar', 1, 211, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (385, 3, 'element_icon', 'Bowl', 'Bowl', 1, 212, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (386, 3, 'element_icon', 'MilkTea', 'MilkTea', 1, 213, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (387, 3, 'element_icon', 'Lollipop', 'Lollipop', 1, 214, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (388, 3, 'element_icon', 'Coffee', 'Coffee', 1, 215, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (389, 3, 'element_icon', 'Chicken', 'Chicken', 1, 216, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (390, 3, 'element_icon', 'Dish', 'Dish', 1, 217, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (391, 3, 'element_icon', 'IceTea', 'IceTea', 1, 218, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (392, 3, 'element_icon', 'ColdDrink', 'ColdDrink', 1, 219, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (393, 3, 'element_icon', 'CoffeeCup', 'CoffeeCup', 1, 220, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (394, 3, 'element_icon', 'DishDot', 'DishDot', 1, 221, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (395, 3, 'element_icon', 'IceDrink', 'IceDrink', 1, 222, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (396, 3, 'element_icon', 'IceCream', 'IceCream', 1, 223, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (397, 3, 'element_icon', 'Dessert', 'Dessert', 1, 224, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (398, 3, 'element_icon', 'IceCreamSquare', 'IceCreamSquare', 1, 225, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (399, 3, 'element_icon', 'ForkSpoon', 'ForkSpoon', 1, 226, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (400, 3, 'element_icon', 'IceCreamRound', 'IceCreamRound', 1, 227, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (401, 3, 'element_icon', 'Food', 'Food', 1, 228, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (402, 3, 'element_icon', 'HotWater', 'HotWater', 1, 229, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (403, 3, 'element_icon', 'Grape', 'Grape', 1, 230, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (404, 3, 'element_icon', 'Fries', 'Fries', 1, 231, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (405, 3, 'element_icon', 'Apple', 'Apple', 1, 232, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (406, 3, 'element_icon', 'Burger', 'Burger', 1, 233, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (407, 3, 'element_icon', 'Goblet', 'Goblet', 1, 234, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (408, 3, 'element_icon', 'GobletSquare', 'GobletSquare', 1, 235, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (409, 3, 'element_icon', 'Orange', 'Orange', 1, 236, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (410, 3, 'element_icon', 'Cherry', 'Cherry', 1, 237, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (411, 3, 'element_icon', 'Printer', 'Printer', 1, 238, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (412, 3, 'element_icon', 'Calendar', 'Calendar', 1, 239, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (413, 3, 'element_icon', 'CreditCard', 'CreditCard', 1, 240, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (414, 3, 'element_icon', 'Box', 'Box', 1, 241, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (415, 3, 'element_icon', 'Money', 'Money', 1, 242, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (416, 3, 'element_icon', 'Refrigerator', 'Refrigerator', 1, 243, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (417, 3, 'element_icon', 'Cpu', 'Cpu', 1, 244, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (418, 3, 'element_icon', 'Football', 'Football', 1, 245, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (419, 3, 'element_icon', 'Brush', 'Brush', 1, 246, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (420, 3, 'element_icon', 'Suitcase', 'Suitcase', 1, 247, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (421, 3, 'element_icon', 'SuitcaseLine', 'SuitcaseLine', 1, 248, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (422, 3, 'element_icon', 'Umbrella', 'Umbrella', 1, 249, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (423, 3, 'element_icon', 'AlarmClock', 'AlarmClock', 1, 250, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (424, 3, 'element_icon', 'Medal', 'Medal', 1, 251, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (425, 3, 'element_icon', 'GoldMedal', 'GoldMedal', 1, 252, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (426, 3, 'element_icon', 'Present', 'Present', 1, 253, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (427, 3, 'element_icon', 'Mouse', 'Mouse', 1, 254, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (428, 3, 'element_icon', 'Watch', 'Watch', 1, 255, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (429, 3, 'element_icon', 'QuartzWatch', 'QuartzWatch', 1, 256, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (430, 3, 'element_icon', 'Magnet', 'Magnet', 1, 257, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (431, 3, 'element_icon', 'Help', 'Help', 1, 258, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (432, 3, 'element_icon', 'Soccer', 'Soccer', 1, 259, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (433, 3, 'element_icon', 'ToiletPaper', 'ToiletPaper', 1, 260, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (434, 3, 'element_icon', 'ReadingLamp', 'ReadingLamp', 1, 261, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (435, 3, 'element_icon', 'Paperclip', 'Paperclip', 1, 262, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (436, 3, 'element_icon', 'MagicStick', 'MagicStick', 1, 263, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (437, 3, 'element_icon', 'Basketball', 'Basketball', 1, 264, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (438, 3, 'element_icon', 'Baseball', 'Baseball', 1, 265, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (439, 3, 'element_icon', 'Coin', 'Coin', 1, 266, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (440, 3, 'element_icon', 'Goods', 'Goods', 1, 267, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (441, 3, 'element_icon', 'Sell', 'Sell', 1, 268, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (442, 3, 'element_icon', 'SoldOut', 'SoldOut', 1, 269, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (443, 3, 'element_icon', 'Key', 'Key', 1, 270, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (444, 3, 'element_icon', 'ShoppingCart', 'ShoppingCart', 1, 271, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (445, 3, 'element_icon', 'ShoppingCartFull', 'ShoppingCartFull', 1, 272, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (446, 3, 'element_icon', 'ShoppingTrolley', 'ShoppingTrolley', 1, 273, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (447, 3, 'element_icon', 'Phone', 'Phone', 1, 274, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (448, 3, 'element_icon', 'Scissor', 'Scissor', 1, 275, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (449, 3, 'element_icon', 'Handbag', 'Handbag', 1, 276, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (450, 3, 'element_icon', 'ShoppingBag', 'ShoppingBag', 1, 277, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (451, 3, 'element_icon', 'Trophy', 'Trophy', 1, 278, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (452, 3, 'element_icon', 'TrophyBase', 'TrophyBase', 1, 279, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (453, 3, 'element_icon', 'Stopwatch', 'Stopwatch', 1, 280, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (454, 3, 'element_icon', 'Timer', 'Timer', 1, 281, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (455, 3, 'element_icon', 'CollectionTag', 'CollectionTag', 1, 282, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (456, 3, 'element_icon', 'TakeawayBox', 'TakeawayBox', 1, 283, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (457, 3, 'element_icon', 'PriceTag', 'PriceTag', 1, 284, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (458, 3, 'element_icon', 'Wallet', 'Wallet', 1, 285, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (459, 3, 'element_icon', 'Opportunity', 'Opportunity', 1, 286, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (460, 3, 'element_icon', 'PhoneFilled', 'PhoneFilled', 1, 287, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (461, 3, 'element_icon', 'WalletFilled', 'WalletFilled', 1, 288, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (462, 3, 'element_icon', 'GoodsFilled', 'GoodsFilled', 1, 289, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (463, 3, 'element_icon', 'Flag', 'Flag', 1, 290, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (464, 3, 'element_icon', 'BrushFilled', 'BrushFilled', 1, 291, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (465, 3, 'element_icon', 'Briefcase', 'Briefcase', 1, 292, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (466, 3, 'element_icon', 'Stamp', 'Stamp', 1, 293, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (467, 3, 'element_icon', 'Sunrise', 'Sunrise', 1, 294, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (468, 3, 'element_icon', 'Sunny', 'Sunny', 1, 295, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (469, 3, 'element_icon', 'Ship', 'Ship', 1, 296, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (470, 3, 'element_icon', 'MostlyCloudy', 'MostlyCloudy', 1, 297, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (471, 3, 'element_icon', 'PartlyCloudy', 'PartlyCloudy', 1, 298, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (472, 3, 'element_icon', 'Sunset', 'Sunset', 1, 299, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (473, 3, 'element_icon', 'Drizzling', 'Drizzling', 1, 300, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (474, 3, 'element_icon', 'Pouring', 'Pouring', 1, 301, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (475, 3, 'element_icon', 'Cloudy', 'Cloudy', 1, 302, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (476, 3, 'element_icon', 'Moon', 'Moon', 1, 303, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (477, 3, 'element_icon', 'MoonNight', 'MoonNight', 1, 304, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (478, 3, 'element_icon', 'Lightning', 'Lightning', 1, 305, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (479, 3, 'element_icon', 'ChromeFilled', 'ChromeFilled', 1, 306, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (480, 3, 'element_icon', 'Eleme', 'Eleme', 1, 307, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (481, 3, 'element_icon', 'ElemeFilled', 'ElemeFilled', 1, 308, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (482, 3, 'element_icon', 'ElementPlus', 'ElementPlus', 1, 309, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (483, 3, 'element_icon', 'Shop', 'Shop', 1, 310, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (484, 3, 'element_icon', 'SwitchFilled', 'SwitchFilled', 1, 311, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
+INSERT INTO `t_sys_dict` VALUES (485, 3, 'element_icon', 'WindPower', 'WindPower', 1, 312, NULL, 0, '2023-08-28 19:49:22', 0, '2023-08-28 19:49:22', 0);
 
 -- ----------------------------
 -- Table structure for t_sys_dict_type
@@ -711,26 +992,26 @@ CREATE TABLE `t_sys_menu`  (
 -- ----------------------------
 INSERT INTO `t_sys_menu` VALUES (1, 0, '首页', 'House', '/', 1, 'dashboard/index', '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2023-08-28 11:42:43', 0);
 INSERT INTO `t_sys_menu` VALUES (3, 0, '系统管理', 'Setting', '/system', 2, 'Layout', NULL, 1, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-30 03:17:44', 0);
-INSERT INTO `t_sys_menu` VALUES (4, 3, '个人中心', '', 'personal-center', 1, 'system/personal-center/index', '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2023-08-28 11:50:40', 0);
-INSERT INTO `t_sys_menu` VALUES (5, 3, '用户管理', NULL, 'user', 2, 'system/user/index', '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-22 15:01:51', 0);
-INSERT INTO `t_sys_menu` VALUES (6, 3, '角色管理', NULL, 'role', 3, 'system/role/list', NULL, 1, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-22 15:01:51', 0);
+INSERT INTO `t_sys_menu` VALUES (4, 3, '个人中心', 'Avatar', 'personal-center', 1, 'system/personal-center/index', '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2023-08-28 19:53:32', 0);
+INSERT INTO `t_sys_menu` VALUES (5, 3, '用户管理', 'User', 'user', 2, 'system/user/index', '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2023-08-28 19:52:01', 0);
+INSERT INTO `t_sys_menu` VALUES (6, 3, '角色管理', 'StarFilled', 'role', 3, 'system/role/list', '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2023-08-28 19:53:51', 0);
 INSERT INTO `t_sys_menu` VALUES (7, 3, '角色权限', NULL, 'roleForm', 4, 'system/role/form', NULL, 0, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-22 15:01:51', 0);
-INSERT INTO `t_sys_menu` VALUES (9, 3, '菜单管理', '', 'menu', 5, 'system/menu/index', '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2023-02-14 17:13:13', 0);
-INSERT INTO `t_sys_menu` VALUES (10, 3, '数据字典', NULL, 'dict', 6, 'system/dict/index', NULL, 1, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-22 15:01:51', 0);
-INSERT INTO `t_sys_menu` VALUES (11, 3, '系统属性', '', 'property', 7, 'system/property/index', '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2023-02-14 15:37:51', 0);
-INSERT INTO `t_sys_menu` VALUES (12, 0, '微信公众号管理', 'Setting', '/wx/mp', 3, 'Layout', NULL, 1, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-30 03:17:44', 0);
-INSERT INTO `t_sys_menu` VALUES (13, 12, '公众号列表', '', 'account', 1, 'wxmp/account/index', '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-22 15:01:51', 0);
-INSERT INTO `t_sys_menu` VALUES (14, 12, '自定义菜单', '', 'custom-menu', 2, 'wxmp/custom-menu/index', '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-22 15:01:51', 0);
-INSERT INTO `t_sys_menu` VALUES (15, 12, '模板消息', '', 'template-msg', 3, 'wxmp/template-msg/index', '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-22 15:01:51', 0);
-INSERT INTO `t_sys_menu` VALUES (16, 12, '用户', '', 'user', 4, 'wxmp/user/index', '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-22 15:01:51', 0);
-INSERT INTO `t_sys_menu` VALUES (17, 12, '素材管理', '', 'material', 5, 'wxmp/material/index', '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-22 15:01:51', 0);
-INSERT INTO `t_sys_menu` VALUES (18, 12, '消息自动回复', '', 'msg-auto-reply', 6, 'wxmp/msg-auto-reply/index', '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-22 15:01:51', 0);
-INSERT INTO `t_sys_menu` VALUES (19, 0, '商城管理', 'Setting', '/mall', 4, 'Layout', NULL, 1, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-30 03:17:44', 0);
-INSERT INTO `t_sys_menu` VALUES (20, 19, '分类', NULL, 'category', 1, 'mall/category/index', NULL, 1, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-30 03:17:44', 0);
-INSERT INTO `t_sys_menu` VALUES (21, 19, '商品', '', 'product', 3, 'mall/product/index', '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2023-05-25 11:14:24', 0);
-INSERT INTO `t_sys_menu` VALUES (22, 19, '规格', '', 'attr', 2, 'mall/attr/index', '', 1, 1, 1, '2023-05-25 11:14:14', 1, '2023-05-25 11:14:14', 0);
-INSERT INTO `t_sys_menu` VALUES (23, 19, '订单', '', 'order', 4, 'mall/order/index', '', 1, 1, 1, '2023-05-25 11:14:14', 1, '2023-05-25 11:14:14', 0);
-INSERT INTO `t_sys_menu` VALUES (24, 19, '用户', '', 'user', 5, 'mall/user/index', '', 1, 1, 1, '2023-05-25 11:14:14', 1, '2023-05-25 11:14:14', 0);
+INSERT INTO `t_sys_menu` VALUES (9, 3, '菜单管理', 'Menu', 'menu', 5, 'system/menu/index', '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2023-08-28 18:57:19', 0);
+INSERT INTO `t_sys_menu` VALUES (10, 3, '数据字典', 'Grid', 'dict', 6, 'system/dict/index', '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2023-08-28 19:54:10', 0);
+INSERT INTO `t_sys_menu` VALUES (11, 3, '系统属性', 'List', 'property', 7, 'system/property/index', '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2023-08-28 19:54:31', 0);
+INSERT INTO `t_sys_menu` VALUES (12, 0, '微信公众号管理', 'GoldMedal', '/wx/mp', 3, 'Layout', '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2023-08-28 18:56:41', 0);
+INSERT INTO `t_sys_menu` VALUES (13, 12, '公众号列表', 'List', 'account', 1, 'wxmp/account/index', '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2023-08-28 19:54:43', 0);
+INSERT INTO `t_sys_menu` VALUES (14, 12, '自定义菜单', 'Menu', 'custom-menu', 2, 'wxmp/custom-menu/index', '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2023-08-28 19:55:07', 0);
+INSERT INTO `t_sys_menu` VALUES (15, 12, '模板消息', 'Message', 'template-msg', 3, 'wxmp/template-msg/index', '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2023-08-28 19:55:17', 0);
+INSERT INTO `t_sys_menu` VALUES (16, 12, '用户', 'User', 'user', 4, 'wxmp/user/index', '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2023-08-28 19:55:25', 0);
+INSERT INTO `t_sys_menu` VALUES (17, 12, '素材管理', 'Management', 'material', 5, 'wxmp/material/index', '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2023-08-28 19:56:12', 0);
+INSERT INTO `t_sys_menu` VALUES (18, 12, '消息自动回复', 'MessageBox', 'msg-auto-reply', 6, 'wxmp/msg-auto-reply/index', '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2023-08-28 19:55:57', 0);
+INSERT INTO `t_sys_menu` VALUES (19, 0, '商城管理', 'ColdDrink', '/mall', 4, 'Layout', '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2023-08-28 20:01:14', 0);
+INSERT INTO `t_sys_menu` VALUES (20, 19, '分类', 'Guide', 'category', 1, 'mall/category/index', '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2023-08-28 19:56:48', 0);
+INSERT INTO `t_sys_menu` VALUES (21, 19, '商品', 'Lollipop', 'product', 3, 'mall/product/index', '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2023-08-28 20:01:32', 0);
+INSERT INTO `t_sys_menu` VALUES (22, 19, '规格', 'KnifeFork', 'attr', 2, 'mall/attr/index', '', 1, 1, 1, '2023-05-25 11:14:14', 1, '2023-08-28 19:57:54', 0);
+INSERT INTO `t_sys_menu` VALUES (23, 19, '订单', 'List', 'order', 4, 'mall/order/index', '', 1, 1, 1, '2023-05-25 11:14:14', 1, '2023-08-28 19:57:38', 0);
+INSERT INTO `t_sys_menu` VALUES (24, 19, '用户', 'User', 'user', 5, 'mall/user/index', '', 1, 1, 1, '2023-05-25 11:14:14', 1, '2023-08-28 19:57:25', 0);
 INSERT INTO `t_sys_menu` VALUES (25, 4, '11', 'AddLocation', '22', 1, 'system/user/index', NULL, 1, 1, 1, '2023-08-28 11:51:07', 1, '2023-08-28 16:35:27', 1);
 INSERT INTO `t_sys_menu` VALUES (26, 4, 'sss', '', '222', 2, '232', '', 1, 1, 1, '2023-08-28 15:54:15', 1, '2023-08-28 16:35:41', 1);
 
@@ -818,7 +1099,7 @@ CREATE TABLE `t_sys_role_menu`  (
   `update_by` int(11) NOT NULL COMMENT '修改人',
   `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6837 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-角色菜单关联表' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 6991 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-角色菜单关联表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_sys_role_menu
@@ -844,28 +1125,28 @@ INSERT INTO `t_sys_role_menu` VALUES (6739, 10, 22, 1, '2023-08-28 16:15:36', 1,
 INSERT INTO `t_sys_role_menu` VALUES (6740, 10, 21, 1, '2023-08-28 16:15:36', 1, '2023-08-28 16:15:36');
 INSERT INTO `t_sys_role_menu` VALUES (6741, 10, 23, 1, '2023-08-28 16:15:36', 1, '2023-08-28 16:15:36');
 INSERT INTO `t_sys_role_menu` VALUES (6742, 10, 24, 1, '2023-08-28 16:15:36', 1, '2023-08-28 16:15:36');
-INSERT INTO `t_sys_role_menu` VALUES (6815, 9, 1, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
-INSERT INTO `t_sys_role_menu` VALUES (6816, 9, 3, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
-INSERT INTO `t_sys_role_menu` VALUES (6817, 9, 4, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
-INSERT INTO `t_sys_role_menu` VALUES (6818, 9, 5, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
-INSERT INTO `t_sys_role_menu` VALUES (6819, 9, 6, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
-INSERT INTO `t_sys_role_menu` VALUES (6820, 9, 7, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
-INSERT INTO `t_sys_role_menu` VALUES (6821, 9, 9, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
-INSERT INTO `t_sys_role_menu` VALUES (6822, 9, 10, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
-INSERT INTO `t_sys_role_menu` VALUES (6823, 9, 11, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
-INSERT INTO `t_sys_role_menu` VALUES (6824, 9, 12, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
-INSERT INTO `t_sys_role_menu` VALUES (6825, 9, 13, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
-INSERT INTO `t_sys_role_menu` VALUES (6826, 9, 14, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
-INSERT INTO `t_sys_role_menu` VALUES (6827, 9, 15, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
-INSERT INTO `t_sys_role_menu` VALUES (6828, 9, 16, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
-INSERT INTO `t_sys_role_menu` VALUES (6829, 9, 17, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
-INSERT INTO `t_sys_role_menu` VALUES (6830, 9, 18, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
-INSERT INTO `t_sys_role_menu` VALUES (6831, 9, 19, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
-INSERT INTO `t_sys_role_menu` VALUES (6832, 9, 20, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
-INSERT INTO `t_sys_role_menu` VALUES (6833, 9, 22, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
-INSERT INTO `t_sys_role_menu` VALUES (6834, 9, 21, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
-INSERT INTO `t_sys_role_menu` VALUES (6835, 9, 23, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
-INSERT INTO `t_sys_role_menu` VALUES (6836, 9, 24, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
+INSERT INTO `t_sys_role_menu` VALUES (6969, 9, 1, 0, '2023-08-28 20:04:10', 0, '2023-08-28 20:04:10');
+INSERT INTO `t_sys_role_menu` VALUES (6970, 9, 3, 0, '2023-08-28 20:04:10', 0, '2023-08-28 20:04:10');
+INSERT INTO `t_sys_role_menu` VALUES (6971, 9, 4, 0, '2023-08-28 20:04:10', 0, '2023-08-28 20:04:10');
+INSERT INTO `t_sys_role_menu` VALUES (6972, 9, 5, 0, '2023-08-28 20:04:10', 0, '2023-08-28 20:04:10');
+INSERT INTO `t_sys_role_menu` VALUES (6973, 9, 6, 0, '2023-08-28 20:04:10', 0, '2023-08-28 20:04:10');
+INSERT INTO `t_sys_role_menu` VALUES (6974, 9, 7, 0, '2023-08-28 20:04:10', 0, '2023-08-28 20:04:10');
+INSERT INTO `t_sys_role_menu` VALUES (6975, 9, 9, 0, '2023-08-28 20:04:10', 0, '2023-08-28 20:04:10');
+INSERT INTO `t_sys_role_menu` VALUES (6976, 9, 10, 0, '2023-08-28 20:04:10', 0, '2023-08-28 20:04:10');
+INSERT INTO `t_sys_role_menu` VALUES (6977, 9, 11, 0, '2023-08-28 20:04:10', 0, '2023-08-28 20:04:10');
+INSERT INTO `t_sys_role_menu` VALUES (6978, 9, 12, 0, '2023-08-28 20:04:10', 0, '2023-08-28 20:04:10');
+INSERT INTO `t_sys_role_menu` VALUES (6979, 9, 13, 0, '2023-08-28 20:04:10', 0, '2023-08-28 20:04:10');
+INSERT INTO `t_sys_role_menu` VALUES (6980, 9, 14, 0, '2023-08-28 20:04:10', 0, '2023-08-28 20:04:10');
+INSERT INTO `t_sys_role_menu` VALUES (6981, 9, 15, 0, '2023-08-28 20:04:10', 0, '2023-08-28 20:04:10');
+INSERT INTO `t_sys_role_menu` VALUES (6982, 9, 16, 0, '2023-08-28 20:04:10', 0, '2023-08-28 20:04:10');
+INSERT INTO `t_sys_role_menu` VALUES (6983, 9, 17, 0, '2023-08-28 20:04:10', 0, '2023-08-28 20:04:10');
+INSERT INTO `t_sys_role_menu` VALUES (6984, 9, 18, 0, '2023-08-28 20:04:10', 0, '2023-08-28 20:04:10');
+INSERT INTO `t_sys_role_menu` VALUES (6985, 9, 19, 0, '2023-08-28 20:04:10', 0, '2023-08-28 20:04:10');
+INSERT INTO `t_sys_role_menu` VALUES (6986, 9, 20, 0, '2023-08-28 20:04:10', 0, '2023-08-28 20:04:10');
+INSERT INTO `t_sys_role_menu` VALUES (6987, 9, 22, 0, '2023-08-28 20:04:10', 0, '2023-08-28 20:04:10');
+INSERT INTO `t_sys_role_menu` VALUES (6988, 9, 21, 0, '2023-08-28 20:04:10', 0, '2023-08-28 20:04:10');
+INSERT INTO `t_sys_role_menu` VALUES (6989, 9, 23, 0, '2023-08-28 20:04:10', 0, '2023-08-28 20:04:10');
+INSERT INTO `t_sys_role_menu` VALUES (6990, 9, 24, 0, '2023-08-28 20:04:10', 0, '2023-08-28 20:04:10');
 
 -- ----------------------------
 -- Table structure for t_sys_role_permission
@@ -880,15 +1161,15 @@ CREATE TABLE `t_sys_role_permission`  (
   `update_by` int(11) NOT NULL COMMENT '修改人',
   `update_time` datetime NOT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2160 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-角色关联权限表' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 2188 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-角色关联权限表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_sys_role_permission
 -- ----------------------------
-INSERT INTO `t_sys_role_permission` VALUES (2156, 9, 1, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
-INSERT INTO `t_sys_role_permission` VALUES (2157, 9, 2, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
-INSERT INTO `t_sys_role_permission` VALUES (2158, 9, 3, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
-INSERT INTO `t_sys_role_permission` VALUES (2159, 9, 4, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
+INSERT INTO `t_sys_role_permission` VALUES (2184, 9, 1, 0, '2023-08-28 20:04:10', 0, '2023-08-28 20:04:10');
+INSERT INTO `t_sys_role_permission` VALUES (2185, 9, 2, 0, '2023-08-28 20:04:10', 0, '2023-08-28 20:04:10');
+INSERT INTO `t_sys_role_permission` VALUES (2186, 9, 3, 0, '2023-08-28 20:04:10', 0, '2023-08-28 20:04:10');
+INSERT INTO `t_sys_role_permission` VALUES (2187, 9, 4, 0, '2023-08-28 20:04:10', 0, '2023-08-28 20:04:10');
 
 -- ----------------------------
 -- Table structure for t_sys_user
@@ -983,7 +1264,7 @@ CREATE TABLE `t_wx_mp_account`  (
 -- ----------------------------
 -- Records of t_wx_mp_account
 -- ----------------------------
-INSERT INTO `t_wx_mp_account` VALUES (1, '郑清的测试账号', 1, 'gh_42e1dbad014e', 'wxe01d9bde2cc81b89', 'f292d6cb69755a7105863d97910a9579', '/wx/mp/portal/wxe01d9bde2cc81b89', 'test', '4J9GOBZ4VTElUFm0EvRDV6aJu5spvYXGkn1RJela56U', 'http://mmbiz.qpic.cn/mmbiz_jpg/8ytq3xBRtdjkBkb2JfibmdJCkT4t2ZSxo8PBwzZ6cgic64mMVicxibpqAyQY0kuiaHhMc3Yjh5J2ATy8kkQgfzbIFJA/0', '2023-03-16 15:39:45', '2023-06-05 10:44:01', 1, 1);
+INSERT INTO `t_wx_mp_account` VALUES (1, '郑清的测试账号', 1, 'gh_42e1dbad014e', 'wxe01d9bde2cc81b89', 'f292d6cb69755a7105863d97910a9579', '/wx/mp/portal/wxe01d9bde2cc81b89', 'test', '4J9GOBZ4VTElUFm0EvRDV6aJu5spvYXGkn1RJela56U', 'http://mmbiz.qpic.cn/mmbiz_jpg/8ytq3xBRtdjkBkb2JfibmdJCkT4t2ZSxo8PBwzZ6cgic64mMVicxibpqAyQY0kuiaHhMc3Yjh5J2ATy8kkQgfzbIFJA/0', '2023-03-16 15:39:45', '2023-08-28 18:01:49', 1, 1);
 
 -- ----------------------------
 -- Table structure for t_wx_mp_msg_auto_reply
@@ -995,7 +1276,7 @@ CREATE TABLE `t_wx_mp_msg_auto_reply`  (
   `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '名称',
   `type` tinyint(1) NOT NULL COMMENT '类型（1：关注时回复；2：关键词回复）',
   `match_value` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '关键词',
-  `is_exact_match` tinyint(1) NOT NULL COMMENT '是否精确匹配（0：否；1：是）',
+  `is_exact_match` tinyint(1) NULL DEFAULT 1 COMMENT '是否精确匹配（0：否；1：是）',
   `reply_type` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '回复消息类型（text：文本；image：图片；voice：语音；video：视频；music：音乐；news：图文）',
   `reply_content` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '回复消息内容',
   `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -1003,14 +1284,14 @@ CREATE TABLE `t_wx_mp_msg_auto_reply`  (
   `create_by` int(11) NULL DEFAULT NULL COMMENT '创建人id',
   `update_by` int(11) NULL DEFAULT NULL COMMENT '更新人id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信公众号-消息自动回复' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信公众号-消息自动回复' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_wx_mp_msg_auto_reply
 -- ----------------------------
 INSERT INTO `t_wx_mp_msg_auto_reply` VALUES (1, 'wxe01d9bde2cc81b89', '关注', 1, '', 1, 'text', '谢谢关注！', '2023-03-20 17:54:30', '2023-03-20 19:34:08', 1, 1);
 INSERT INTO `t_wx_mp_msg_auto_reply` VALUES (2, 'wxe01d9bde2cc81b89', '文本消息', 2, 'hello', 1, 'text', '自动回复：你好', '2023-03-20 19:30:47', '2023-03-20 19:30:47', 1, 1);
-INSERT INTO `t_wx_mp_msg_auto_reply` VALUES (3, 'wxe01d9bde2cc81b89', '图片消息', 2, '图片', 1, 'image', 'hm_a1Quvy6P39bspNEXRaIGBhVqBzDfHKxRCKhAZEtK7pyYDG2Hjc4B2L7Yg-p57', '2023-03-21 15:12:44', '2023-03-27 15:55:24', 1, 1);
+INSERT INTO `t_wx_mp_msg_auto_reply` VALUES (3, 'wxe01d9bde2cc81b89', '图片消息', 2, '图片', 1, 'image', 'hm_a1Quvy6P39bspNEXRaIGBhVqBzDfHKxRCKhAZEtK7pyYDG2Hjc4B2L7Yg-p57', '2023-03-21 15:12:44', '2023-08-28 18:44:42', 1, 1);
 
 -- ----------------------------
 -- Table structure for t_wx_mp_template_msg
@@ -1034,8 +1315,8 @@ CREATE TABLE `t_wx_mp_template_msg`  (
 -- ----------------------------
 -- Records of t_wx_mp_template_msg
 -- ----------------------------
-INSERT INTO `t_wx_mp_template_msg` VALUES (15, 'wxe01d9bde2cc81b89', 'alASmcPvowZ2ZgaK2BWMWHMvsnXyz_tP_vQH5EEY8Kc', '早上好，单身狗☀', '{{txt1.DATA}}\n\n单身狗所在地区：{{city.DATA}}\n日期：{{date.DATA}} {{week.DATA}}\n\n{{txt2.DATA}}\n\n天气：{{wea.DATA}}\n最高气温：{{tem1.DATA}}\n最低气温：{{tem2.DATA}}\n风向：{{win.DATA}}\n风力：{{win_speed.DATA}}\n风速：{{win_meter.DATA}}\n湿度：{{humidity.DATA}}\n能见度：{{visibility.DATA}}\n气压：{{pressure.DATA}}\n空气质量：{{air.DATA}}\npm2.5含量：{{air_pm25.DATA}}\n空气等级：{{air_level.DATA}}\n温馨小提示：{{air_tips.DATA}}\n\n{{end1.DATA}}\n{{end2.DATA}}\n\n{{author.DATA}}', '[{\"name\": \"txt1\", \"color\": \"#20B2AA\", \"value\": \"今天心情不好，我问小狗怎么办，小狗说：汪汪汪☀☀☀☀☀☀☀☀☀☀☀☀☀\"}, {\"name\": \"city\", \"color\": \"#F093FB\", \"value\": \"四川成都\"}, {\"name\": \"date\", \"color\": \"#F093FB\", \"value\": \"2023-03-22\"}, {\"name\": \"week\", \"color\": \"#F093FB\", \"value\": \"星期三\"}, {\"name\": \"txt2\", \"color\": \"#1E90FF\", \"value\": \"单身狗出门也要看下今天的天气状况哦╰(*°▽°*)╯\"}, {\"name\": \"wea\", \"color\": \"#000\", \"value\": \"晴\"}, {\"name\": \"tem1\", \"color\": \"#000\", \"value\": \"25°\"}, {\"name\": \"tem2\", \"color\": \"#000\", \"value\": \"20°\"}, {\"name\": \"win\", \"color\": \"#000\", \"value\": \"南风\"}, {\"name\": \"win_speed\", \"color\": \"#000\", \"value\": \"2级\"}, {\"name\": \"win_meter\", \"color\": \"#000\", \"value\": \"6km/h\"}, {\"name\": \"humidity\", \"color\": \"#000\", \"value\": \"44%\"}, {\"name\": \"visibility\", \"color\": \"#000\", \"value\": \"10km\"}, {\"name\": \"pressure\", \"color\": \"#000\", \"value\": \"1000\"}, {\"name\": \"air\", \"color\": \"#000\", \"value\": \"60\"}, {\"name\": \"air_pm25\", \"color\": \"#000\", \"value\": \"31\"}, {\"name\": \"air_level\", \"color\": \"#000\", \"value\": \"良\"}, {\"name\": \"air_tips\", \"color\": \"#000\", \"value\": \"空气好，可以外出活动!\"}, {\"name\": \"end1\", \"color\": \"#FF4500\", \"value\": \"How are you still single? \"}, {\"name\": \"end2\", \"color\": \"#FF4500\", \"value\": \"你怎么还单着？\"}, {\"name\": \"author\", \"color\": \"#DDA0DD\", \"value\": \"zhengqingya\"}]', '2023-03-21 18:52:15', '2023-03-22 10:39:39', 1, 1, 0);
-INSERT INTO `t_wx_mp_template_msg` VALUES (16, 'wxe01d9bde2cc81b89', 'xEUCJF0EhbiHCIttO17lyXXmCxJHX6TeI9Sq7m6WV_I', 'test', '{{txt1.DATA}}\n\n所在地区：{{city.DATA}}', '[{\"name\": \"txt1\", \"color\": \"#E60E0E\", \"value\": \"测试\"}, {\"name\": \"city\", \"color\": \"#15F4D6\", \"value\": \"四川成都\"}]', '2023-03-21 18:52:15', '2023-03-22 10:39:31', 1, 1, 0);
+INSERT INTO `t_wx_mp_template_msg` VALUES (15, 'wxe01d9bde2cc81b89', 'alASmcPvowZ2ZgaK2BWMWHMvsnXyz_tP_vQH5EEY8Kc', '早上好，单身狗☀', '{{txt1.DATA}}\n\n单身狗所在地区：{{city.DATA}}\n日期：{{date.DATA}} {{week.DATA}}\n\n{{txt2.DATA}}\n\n天气：{{wea.DATA}}\n最高气温：{{tem1.DATA}}\n最低气温：{{tem2.DATA}}\n风向：{{win.DATA}}\n风力：{{win_speed.DATA}}\n风速：{{win_meter.DATA}}\n湿度：{{humidity.DATA}}\n能见度：{{visibility.DATA}}\n气压：{{pressure.DATA}}\n空气质量：{{air.DATA}}\npm2.5含量：{{air_pm25.DATA}}\n空气等级：{{air_level.DATA}}\n温馨小提示：{{air_tips.DATA}}\n\n{{end1.DATA}}\n{{end2.DATA}}\n\n{{author.DATA}}', '[{\"name\": \"txt1\", \"color\": \"#20B2AA\", \"value\": \"今天心情不好，我问小狗怎么办，小狗说：汪汪汪☀☀☀☀☀☀☀☀☀☀☀☀☀\"}, {\"name\": \"city\", \"color\": \"#F093FB\", \"value\": \"四川成都\"}, {\"name\": \"date\", \"color\": \"#F093FB\", \"value\": \"2023-03-22\"}, {\"name\": \"week\", \"color\": \"#F093FB\", \"value\": \"星期三\"}, {\"name\": \"txt2\", \"color\": \"#1E90FF\", \"value\": \"单身狗出门也要看下今天的天气状况哦╰(*°▽°*)╯\"}, {\"name\": \"wea\", \"color\": \"#000\", \"value\": \"晴\"}, {\"name\": \"tem1\", \"color\": \"#000\", \"value\": \"25°\"}, {\"name\": \"tem2\", \"color\": \"#000\", \"value\": \"20°\"}, {\"name\": \"win\", \"color\": \"#000\", \"value\": \"南风\"}, {\"name\": \"win_speed\", \"color\": \"#000\", \"value\": \"2级\"}, {\"name\": \"win_meter\", \"color\": \"#000\", \"value\": \"6km/h\"}, {\"name\": \"humidity\", \"color\": \"#000\", \"value\": \"44%\"}, {\"name\": \"visibility\", \"color\": \"#000\", \"value\": \"10km\"}, {\"name\": \"pressure\", \"color\": \"#000\", \"value\": \"1000\"}, {\"name\": \"air\", \"color\": \"#000\", \"value\": \"60\"}, {\"name\": \"air_pm25\", \"color\": \"#000\", \"value\": \"31\"}, {\"name\": \"air_level\", \"color\": \"#000\", \"value\": \"良\"}, {\"name\": \"air_tips\", \"color\": \"#000\", \"value\": \"空气好，可以外出活动!\"}, {\"name\": \"end1\", \"color\": \"#FF4500\", \"value\": \"How are you still single? \"}, {\"name\": \"end2\", \"color\": \"#FF4500\", \"value\": \"你怎么还单着？\"}, {\"name\": \"author\", \"color\": \"#DDA0DD\", \"value\": \"zhengqingya\"}]', '2023-03-21 18:52:15', '2023-08-28 18:25:02', 1, 1, 0);
+INSERT INTO `t_wx_mp_template_msg` VALUES (16, 'wxe01d9bde2cc81b89', 'xEUCJF0EhbiHCIttO17lyXXmCxJHX6TeI9Sq7m6WV_I', 'test', '{{txt1.DATA}}\n\n所在地区：{{city.DATA}}', '[{\"name\": \"txt1\", \"color\": \"#E60E0E\", \"value\": \"测试\"}, {\"name\": \"city\", \"color\": \"#15F4D6\", \"value\": \"四川成都\"}]', '2023-03-21 18:52:15', '2023-08-28 18:24:56', 1, 1, 0);
 
 -- ----------------------------
 -- Table structure for t_wx_mp_user
@@ -1054,12 +1335,14 @@ CREATE TABLE `t_wx_mp_user`  (
   `create_by` int(11) NULL DEFAULT NULL COMMENT '创建人id',
   `update_by` int(11) NULL DEFAULT NULL COMMENT '更新人id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信公众号-用户' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信公众号-用户' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_wx_mp_user
 -- ----------------------------
-INSERT INTO `t_wx_mp_user` VALUES (7, 'wxe01d9bde2cc81b89', 'ojplN5tMax4tNacU3tKeWCnL7qEU', '', '', 'ADD_SCENE_QR_CODE', '2023-03-15 14:44:06', '2023-03-20 16:35:26', '2023-03-20 16:35:26', 1, 1);
+INSERT INTO `t_wx_mp_user` VALUES (8, 'wxe01d9bde2cc81b89', 'ojplN5nVM2H4c2yXFGKVrOVPrclM', '', '', 'ADD_SCENE_QR_CODE', '2023-08-16 09:44:41', '2023-08-28 18:27:16', '2023-08-28 18:27:16', 1, 1);
+INSERT INTO `t_wx_mp_user` VALUES (9, 'wxe01d9bde2cc81b89', 'ojplN5krzEif5V-Lv1iklr4_Re-s', '', '', 'ADD_SCENE_QR_CODE', '2023-06-15 16:18:21', '2023-08-28 18:27:16', '2023-08-28 18:27:16', 1, 1);
+INSERT INTO `t_wx_mp_user` VALUES (10, 'wxe01d9bde2cc81b89', 'ojplN5tMax4tNacU3tKeWCnL7qEU', '', '', 'ADD_SCENE_QR_CODE', '2023-03-20 19:34:19', '2023-08-28 18:27:16', '2023-08-28 18:27:16', 1, 1);
 
 -- ----------------------------
 -- Table structure for ums_user

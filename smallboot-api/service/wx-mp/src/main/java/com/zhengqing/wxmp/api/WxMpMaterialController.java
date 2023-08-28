@@ -17,6 +17,7 @@ import me.chanjar.weixin.mp.bean.material.WxMpMaterial;
 import me.chanjar.weixin.mp.bean.material.WxMpMaterialFileBatchGetResult;
 import me.chanjar.weixin.mp.bean.material.WxMpMaterialNewsBatchGetResult;
 import me.chanjar.weixin.mp.bean.material.WxMpMaterialUploadResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -39,7 +40,7 @@ public class WxMpMaterialController {
     @GetMapping("/page")
     @ApiOperation("分页列表")
     @SneakyThrows(Exception.class)
-    public Object page(@ModelAttribute WxMpMaterialPageDTO params) {
+    public Object page(@Validated @ModelAttribute WxMpMaterialPageDTO params) {
         String mediaType = params.getMediaType();
         Integer pageNum = params.getPageNum();
         Integer pageSize = params.getPageSize();

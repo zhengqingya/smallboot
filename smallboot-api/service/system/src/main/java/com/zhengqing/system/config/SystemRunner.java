@@ -31,6 +31,9 @@ public class SystemRunner extends AppCommonRunner {
 
 //        log.info("服务初始化之后，执行方法 start...");
 
+        // 拉取 el-icon 图标数据
+//        this.dictService.initElIconData();
+
         // 数据字典
         this.dictService.initCache();
 

@@ -22,6 +22,7 @@ import com.zhengqing.system.model.dto.SysDictSaveDTO;
 import com.zhengqing.system.model.dto.SysDictTypeSaveDTO;
 import com.zhengqing.system.model.vo.SysDictTypeListVO;
 import com.zhengqing.system.model.vo.SysDictVO;
+import com.zhengqing.system.processor.ElementIconPageProcessor;
 import com.zhengqing.system.service.ISysDictService;
 import com.zhengqing.system.service.ISysDictTypeService;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +32,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.validation.annotation.Validated;
+import us.codecraft.webmagic.Spider;
 
 import javax.annotation.Resource;
 import java.util.Collections;
@@ -302,6 +304,17 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
             dictDataMap.forEach((code, dictDataList) -> RedisUtil.set(SystemConstant.CACHE_SYS_DICT_PREFIX + code, JSON.toJSONString(dictDataList)));
         }
         log.info("初始化数据字典缓存成功!");
+    }
+
+    @Override
+    public void initElIconData() {
+        Spider.create(new ElementIconPageProcessor(this))
+                // 从指定的url地址开始抓
+                .addUrl("https://element-plus.org/zh-CN/component/icon.html#icon-collection")
+                // 开启5个线程抓取
+                .thread(5)
+                // 启动爬虫
+                .run();
     }
 
 }

@@ -143,4 +143,13 @@ public interface ISysDictService extends IService<SysDict> {
      */
     void initCache();
 
+    /**
+     * 初始化 el-icon 图标数据
+     *
+     * @return void
+     * @author zhengqingya
+     * @date 2020/9/12 17:37
+     */
+    void initElIconData();
+
 }
