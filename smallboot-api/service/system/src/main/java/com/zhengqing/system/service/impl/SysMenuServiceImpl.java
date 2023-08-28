@@ -54,16 +54,15 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         Integer menuId = params.getMenuId();
         SysMenu sysMenu = SysMenu.builder()
                 .menuId(menuId)
+                .parentId(params.getParentId())
                 .title(params.getTitle())
-                .name(params.getName())
                 .icon(params.getIcon())
                 .path(params.getPath())
-                .parentId(params.getParentId())
                 .sort(params.getSort())
                 .component(params.getComponent())
-                .isShow(params.getIsShow())
                 .redirect(params.getRedirect())
-                .breadcrumb(params.getBreadcrumb())
+                .isShow(params.getIsShow())
+                .isShowBreadcrumb(params.getIsShowBreadcrumb())
                 .build();
         if (menuId == null) {
             sysMenu.insert();
@@ -72,6 +71,5 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         }
         return sysMenu.getMenuId();
     }
-
 
 }

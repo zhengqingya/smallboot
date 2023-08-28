@@ -31,11 +31,11 @@ public class SysMenuTree {
     @ApiModelProperty("菜单ID")
     private Integer menuId;
 
+    @ApiModelProperty("上级菜单ID")
+    private Integer parentId;
+
     @ApiModelProperty("菜单名称")
     private String title;
-
-    @ApiModelProperty("菜单名称 - 英文")
-    private String name;
 
     @ApiModelProperty("菜单图标")
     private String icon;
@@ -43,29 +43,29 @@ public class SysMenuTree {
     @ApiModelProperty("菜单链接")
     private String path;
 
-    @ApiModelProperty("上级菜单ID")
-    private Integer parentId;
-
     @ApiModelProperty("上级菜单名")
     private String parentName;
 
     @ApiModelProperty("显示顺序")
     private Integer sort;
 
-    @ApiModelProperty("组件名")
+    @ApiModelProperty("组件")
     private String component;
-
-    @ApiModelProperty("是否显示(1:显示 0:隐藏)")
-    private Boolean isShow;
 
     @ApiModelProperty("重定向url")
     private String redirect;
 
-    @ApiModelProperty("面包屑是否显示")
-    private Boolean breadcrumb;
+    @ApiModelProperty("是否显示(1:显示 0:隐藏)")
+    private Boolean isShow;
+
+    @ApiModelProperty("是否显示面包屑(1:显示 0:隐藏)")
+    private Boolean isShowBreadcrumb;
 
     @ApiModelProperty("下级菜单")
     private List<SysMenuTree> children;
+
+    @ApiModelProperty("路由元信息(前端用于菜单显示)")
+    private Meta meta;
 
     // ==================== ↓↓↓↓↓↓ 权限信息 ↓↓↓↓↓↓ ====================
 
@@ -75,28 +75,25 @@ public class SysMenuTree {
     @ApiModelProperty("按钮权限")
     private List<SysRoleRePermVO> permList;
 
-    @ApiModelProperty("路由元信息")
-    private Meta meta;
-
     @Data
     @SuperBuilder
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Meta {
+        @ApiModelProperty("是否显示(1:显示 0:隐藏)")
+        private Boolean isShow;
+
+        @ApiModelProperty("显示顺序")
+        private Integer sort;
+
         @ApiModelProperty("标题")
         private String title;
 
         @ApiModelProperty("图标")
         private String icon;
 
-        @ApiModelProperty("面包屑是否显示")
-        private Boolean breadcrumb;
-
-        @ApiModelProperty("显示顺序")
-        private Integer sort;
-
-        @ApiModelProperty("是否显示(1:显示 0:隐藏)")
-        private Boolean isShow;
+        @ApiModelProperty("是否显示面包屑(1:显示 0:隐藏)")
+        private Boolean isShowBreadcrumb;
     }
 
     public void handleData() {
@@ -104,11 +101,11 @@ public class SysMenuTree {
         this.children = CollectionUtils.isEmpty(this.children) ? Lists.newArrayList() : this.children;
 
         this.meta = Meta.builder()
+                .isShow(this.isShow)
+                .sort(this.sort)
                 .title(this.title)
                 .icon(this.icon)
-                .breadcrumb(this.breadcrumb)
-                .sort(this.sort)
-                .isShow(this.isShow)
+                .isShowBreadcrumb(this.isShowBreadcrumb)
                 .build();
     }
 

@@ -11,7 +11,7 @@
  Target Server Version : 50726 (5.7.26-log)
  File Encoding         : 65001
 
- Date: 27/08/2023 19:21:40
+ Date: 28/08/2023 17:55:15
 */
 
 SET NAMES utf8mb4;
@@ -637,7 +637,7 @@ CREATE TABLE `t_sys_dict`  (
   `update_time` datetime NOT NULL COMMENT '修改时间',
   `is_deleted` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否删除(1->是，0->否)',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 186 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '基础模块-数据字典' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 189 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '基础模块-数据字典' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_sys_dict
@@ -675,7 +675,7 @@ CREATE TABLE `t_sys_dict_type`  (
   `update_time` datetime NOT NULL COMMENT '修改时间',
   `is_deleted` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否删除(1->是，0->否)',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '基础模块-数据字典类型' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '基础模块-数据字典类型' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_sys_dict_type
@@ -689,49 +689,50 @@ INSERT INTO `t_sys_dict_type` VALUES (6, 'oauth_type', '第三方帐号授权类
 DROP TABLE IF EXISTS `t_sys_menu`;
 CREATE TABLE `t_sys_menu`  (
   `menu_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '菜单ID',
-  `title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '菜单名称',
-  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '菜单名称 - 英文',
-  `icon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '菜单图标',
-  `path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '菜单访问路径',
   `parent_id` int(11) NULL DEFAULT 0 COMMENT '父类菜单ID',
+  `title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '菜单名称',
+  `icon` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '菜单图标',
+  `path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '菜单访问路径',
   `sort` int(11) NULL DEFAULT NULL COMMENT '菜单排序',
-  `component` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '组件名',
-  `is_show` tinyint(1) NULL DEFAULT 1 COMMENT '是否显示(1:显示 0:隐藏)',
+  `component` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '组件',
   `redirect` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '重定向路径',
-  `breadcrumb` tinyint(1) NULL DEFAULT 1 COMMENT '面包屑是否显示(1:显示 0:隐藏)',
+  `is_show` tinyint(1) NULL DEFAULT 1 COMMENT '是否显示(1:显示 0:隐藏)',
+  `is_show_breadcrumb` tinyint(1) NULL DEFAULT 1 COMMENT '是否显示面包屑(1:显示 0:隐藏)',
   `create_by` int(11) NOT NULL COMMENT '创建人',
   `create_time` datetime NOT NULL COMMENT '创建时间',
   `update_by` int(11) NOT NULL COMMENT '修改人',
   `update_time` datetime NOT NULL COMMENT '修改时间',
   `is_deleted` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否删除(1->是，0->否)',
   PRIMARY KEY (`menu_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-菜单表' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 27 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-菜单表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_sys_menu
 -- ----------------------------
-INSERT INTO `t_sys_menu` VALUES (1, '首页', 'dashboard', 'House', '/', 0, 1, 'dashboard/index', 1, NULL, 1, 1, '2020-08-22 15:01:51', 1, '2023-02-14 17:07:35', 0);
-INSERT INTO `t_sys_menu` VALUES (3, '系统管理', 'system', 'Setting', '/system', 0, 2, 'Layout', 1, NULL, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-30 03:17:44', 0);
-INSERT INTO `t_sys_menu` VALUES (4, '个人中心', 'personal-center', NULL, 'personal-center', 3, 1, 'system/personal-center/index', 1, NULL, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-22 15:01:51', 0);
-INSERT INTO `t_sys_menu` VALUES (5, '用户管理', 'sys-user', NULL, 'user', 3, 2, 'system/user/index', 1, '', 1, 1, '2020-08-22 15:01:51', 1, '2020-08-22 15:01:51', 0);
-INSERT INTO `t_sys_menu` VALUES (6, '角色管理', 'role', NULL, 'role', 3, 3, 'system/role/list', 1, NULL, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-22 15:01:51', 0);
-INSERT INTO `t_sys_menu` VALUES (7, '角色权限', 'roleForm', NULL, 'roleForm', 3, 4, 'system/role/form', 0, NULL, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-22 15:01:51', 0);
-INSERT INTO `t_sys_menu` VALUES (9, '菜单管理', 'menu', '', 'menu', 3, 5, 'system/menu/index', 1, '', 1, 1, '2020-08-22 15:01:51', 1, '2023-02-14 17:13:13', 0);
-INSERT INTO `t_sys_menu` VALUES (10, '数据字典', 'dict', NULL, 'dict', 3, 6, 'system/dict/index', 1, NULL, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-22 15:01:51', 0);
-INSERT INTO `t_sys_menu` VALUES (11, '系统属性', 'property', '', 'property', 3, 7, 'system/property/index', 1, '', 1, 1, '2020-08-22 15:01:51', 1, '2023-02-14 15:37:51', 0);
-INSERT INTO `t_sys_menu` VALUES (12, '微信公众号管理', 'wxmp', 'Setting', '/wx/mp', 0, 3, 'Layout', 1, NULL, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-30 03:17:44', 0);
-INSERT INTO `t_sys_menu` VALUES (13, '公众号列表', 'account', '', 'account', 12, 1, 'wxmp/account/index', 1, '', 1, 1, '2020-08-22 15:01:51', 1, '2020-08-22 15:01:51', 0);
-INSERT INTO `t_sys_menu` VALUES (14, '自定义菜单', 'custom-menu', '', 'custom-menu', 12, 2, 'wxmp/custom-menu/index', 1, '', 1, 1, '2020-08-22 15:01:51', 1, '2020-08-22 15:01:51', 0);
-INSERT INTO `t_sys_menu` VALUES (15, '模板消息', 'template-msg', '', 'template-msg', 12, 3, 'wxmp/template-msg/index', 1, '', 1, 1, '2020-08-22 15:01:51', 1, '2020-08-22 15:01:51', 0);
-INSERT INTO `t_sys_menu` VALUES (16, '用户', 'wxmp-user', '', 'user', 12, 4, 'wxmp/user/index', 1, '', 1, 1, '2020-08-22 15:01:51', 1, '2020-08-22 15:01:51', 0);
-INSERT INTO `t_sys_menu` VALUES (17, '素材管理', 'material', '', 'material', 12, 5, 'wxmp/material/index', 1, '', 1, 1, '2020-08-22 15:01:51', 1, '2020-08-22 15:01:51', 0);
-INSERT INTO `t_sys_menu` VALUES (18, '消息自动回复', 'msg-auto-reply', '', 'msg-auto-reply', 12, 6, 'wxmp/msg-auto-reply/index', 1, '', 1, 1, '2020-08-22 15:01:51', 1, '2020-08-22 15:01:51', 0);
-INSERT INTO `t_sys_menu` VALUES (19, '商城管理', 'mall', 'Setting', '/mall', 0, 4, 'Layout', 1, NULL, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-30 03:17:44', 0);
-INSERT INTO `t_sys_menu` VALUES (20, '分类', 'category', NULL, 'category', 19, 1, 'mall/category/index', 1, NULL, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-30 03:17:44', 0);
-INSERT INTO `t_sys_menu` VALUES (21, '商品', 'product', '', 'product', 19, 3, 'mall/product/index', 1, '', 1, 1, '2020-08-22 15:01:51', 1, '2023-05-25 11:14:24', 0);
-INSERT INTO `t_sys_menu` VALUES (22, '规格', 'attr', '', 'attr', 19, 2, 'mall/attr/index', 1, '', 1, 1, '2023-05-25 11:14:14', 1, '2023-05-25 11:14:14', 0);
-INSERT INTO `t_sys_menu` VALUES (23, '订单', 'order', '', 'order', 19, 4, 'mall/order/index', 1, '', 1, 1, '2023-05-25 11:14:14', 1, '2023-05-25 11:14:14', 0);
-INSERT INTO `t_sys_menu` VALUES (24, '用户', 'ums-user', '', 'user', 19, 5, 'mall/user/index', 1, '', 1, 1, '2023-05-25 11:14:14', 1, '2023-05-25 11:14:14', 0);
+INSERT INTO `t_sys_menu` VALUES (1, 0, '首页', 'House', '/', 1, 'dashboard/index', '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2023-08-28 11:42:43', 0);
+INSERT INTO `t_sys_menu` VALUES (3, 0, '系统管理', 'Setting', '/system', 2, 'Layout', NULL, 1, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-30 03:17:44', 0);
+INSERT INTO `t_sys_menu` VALUES (4, 3, '个人中心', '', 'personal-center', 1, 'system/personal-center/index', '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2023-08-28 11:50:40', 0);
+INSERT INTO `t_sys_menu` VALUES (5, 3, '用户管理', NULL, 'user', 2, 'system/user/index', '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-22 15:01:51', 0);
+INSERT INTO `t_sys_menu` VALUES (6, 3, '角色管理', NULL, 'role', 3, 'system/role/list', NULL, 1, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-22 15:01:51', 0);
+INSERT INTO `t_sys_menu` VALUES (7, 3, '角色权限', NULL, 'roleForm', 4, 'system/role/form', NULL, 0, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-22 15:01:51', 0);
+INSERT INTO `t_sys_menu` VALUES (9, 3, '菜单管理', '', 'menu', 5, 'system/menu/index', '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2023-02-14 17:13:13', 0);
+INSERT INTO `t_sys_menu` VALUES (10, 3, '数据字典', NULL, 'dict', 6, 'system/dict/index', NULL, 1, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-22 15:01:51', 0);
+INSERT INTO `t_sys_menu` VALUES (11, 3, '系统属性', '', 'property', 7, 'system/property/index', '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2023-02-14 15:37:51', 0);
+INSERT INTO `t_sys_menu` VALUES (12, 0, '微信公众号管理', 'Setting', '/wx/mp', 3, 'Layout', NULL, 1, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-30 03:17:44', 0);
+INSERT INTO `t_sys_menu` VALUES (13, 12, '公众号列表', '', 'account', 1, 'wxmp/account/index', '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-22 15:01:51', 0);
+INSERT INTO `t_sys_menu` VALUES (14, 12, '自定义菜单', '', 'custom-menu', 2, 'wxmp/custom-menu/index', '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-22 15:01:51', 0);
+INSERT INTO `t_sys_menu` VALUES (15, 12, '模板消息', '', 'template-msg', 3, 'wxmp/template-msg/index', '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-22 15:01:51', 0);
+INSERT INTO `t_sys_menu` VALUES (16, 12, '用户', '', 'user', 4, 'wxmp/user/index', '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-22 15:01:51', 0);
+INSERT INTO `t_sys_menu` VALUES (17, 12, '素材管理', '', 'material', 5, 'wxmp/material/index', '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-22 15:01:51', 0);
+INSERT INTO `t_sys_menu` VALUES (18, 12, '消息自动回复', '', 'msg-auto-reply', 6, 'wxmp/msg-auto-reply/index', '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-22 15:01:51', 0);
+INSERT INTO `t_sys_menu` VALUES (19, 0, '商城管理', 'Setting', '/mall', 4, 'Layout', NULL, 1, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-30 03:17:44', 0);
+INSERT INTO `t_sys_menu` VALUES (20, 19, '分类', NULL, 'category', 1, 'mall/category/index', NULL, 1, 1, 1, '2020-08-22 15:01:51', 1, '2020-08-30 03:17:44', 0);
+INSERT INTO `t_sys_menu` VALUES (21, 19, '商品', '', 'product', 3, 'mall/product/index', '', 1, 1, 1, '2020-08-22 15:01:51', 1, '2023-05-25 11:14:24', 0);
+INSERT INTO `t_sys_menu` VALUES (22, 19, '规格', '', 'attr', 2, 'mall/attr/index', '', 1, 1, 1, '2023-05-25 11:14:14', 1, '2023-05-25 11:14:14', 0);
+INSERT INTO `t_sys_menu` VALUES (23, 19, '订单', '', 'order', 4, 'mall/order/index', '', 1, 1, 1, '2023-05-25 11:14:14', 1, '2023-05-25 11:14:14', 0);
+INSERT INTO `t_sys_menu` VALUES (24, 19, '用户', '', 'user', 5, 'mall/user/index', '', 1, 1, 1, '2023-05-25 11:14:14', 1, '2023-05-25 11:14:14', 0);
+INSERT INTO `t_sys_menu` VALUES (25, 4, '11', 'AddLocation', '22', 1, 'system/user/index', NULL, 1, 1, 1, '2023-08-28 11:51:07', 1, '2023-08-28 16:35:27', 1);
+INSERT INTO `t_sys_menu` VALUES (26, 4, 'sss', '', '222', 2, '232', '', 1, 1, 1, '2023-08-28 15:54:15', 1, '2023-08-28 16:35:41', 1);
 
 -- ----------------------------
 -- Table structure for t_sys_permission
@@ -774,13 +775,13 @@ CREATE TABLE `t_sys_property`  (
   `update_time` datetime NOT NULL COMMENT '修改时间',
   `is_deleted` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否删除(1->是，0->否)',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-系统属性' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-系统属性' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_sys_property
 -- ----------------------------
 INSERT INTO `t_sys_property` VALUES (10, 'hello', 'world', 'hello world !', 0, '2021-09-07 10:45:45', 0, '2021-09-07 10:45:45', 0);
-INSERT INTO `t_sys_property` VALUES (12, 'test', '测试', 'this is test data.', 1, '2023-02-15 11:19:46', 1, '2023-02-15 14:18:15', 0);
+INSERT INTO `t_sys_property` VALUES (12, 'test', '测试', 'this is test data.', 1, '2023-02-15 11:19:46', 1, '2023-08-28 17:54:00', 0);
 
 -- ----------------------------
 -- Table structure for t_sys_role
@@ -817,34 +818,54 @@ CREATE TABLE `t_sys_role_menu`  (
   `update_by` int(11) NOT NULL COMMENT '修改人',
   `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6241 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-角色菜单关联表' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 6837 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-角色菜单关联表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_sys_role_menu
 -- ----------------------------
-INSERT INTO `t_sys_role_menu` VALUES (6214, 9, 1, 0, '2023-08-27 19:11:52', 0, '2023-08-27 19:11:52');
-INSERT INTO `t_sys_role_menu` VALUES (6215, 9, 3, 0, '2023-08-27 19:11:52', 0, '2023-08-27 19:11:52');
-INSERT INTO `t_sys_role_menu` VALUES (6216, 9, 4, 0, '2023-08-27 19:11:52', 0, '2023-08-27 19:11:52');
-INSERT INTO `t_sys_role_menu` VALUES (6217, 9, 5, 0, '2023-08-27 19:11:52', 0, '2023-08-27 19:11:52');
-INSERT INTO `t_sys_role_menu` VALUES (6218, 9, 6, 0, '2023-08-27 19:11:52', 0, '2023-08-27 19:11:52');
-INSERT INTO `t_sys_role_menu` VALUES (6219, 9, 7, 0, '2023-08-27 19:11:52', 0, '2023-08-27 19:11:52');
-INSERT INTO `t_sys_role_menu` VALUES (6220, 9, 9, 0, '2023-08-27 19:11:52', 0, '2023-08-27 19:11:52');
-INSERT INTO `t_sys_role_menu` VALUES (6221, 9, 10, 0, '2023-08-27 19:11:52', 0, '2023-08-27 19:11:52');
-INSERT INTO `t_sys_role_menu` VALUES (6222, 9, 11, 0, '2023-08-27 19:11:52', 0, '2023-08-27 19:11:52');
-INSERT INTO `t_sys_role_menu` VALUES (6223, 9, 12, 0, '2023-08-27 19:11:52', 0, '2023-08-27 19:11:52');
-INSERT INTO `t_sys_role_menu` VALUES (6224, 9, 13, 0, '2023-08-27 19:11:52', 0, '2023-08-27 19:11:52');
-INSERT INTO `t_sys_role_menu` VALUES (6225, 9, 14, 0, '2023-08-27 19:11:52', 0, '2023-08-27 19:11:52');
-INSERT INTO `t_sys_role_menu` VALUES (6226, 9, 15, 0, '2023-08-27 19:11:52', 0, '2023-08-27 19:11:52');
-INSERT INTO `t_sys_role_menu` VALUES (6227, 9, 16, 0, '2023-08-27 19:11:52', 0, '2023-08-27 19:11:52');
-INSERT INTO `t_sys_role_menu` VALUES (6228, 9, 17, 0, '2023-08-27 19:11:52', 0, '2023-08-27 19:11:52');
-INSERT INTO `t_sys_role_menu` VALUES (6229, 9, 18, 0, '2023-08-27 19:11:52', 0, '2023-08-27 19:11:52');
-INSERT INTO `t_sys_role_menu` VALUES (6230, 9, 19, 0, '2023-08-27 19:11:52', 0, '2023-08-27 19:11:52');
-INSERT INTO `t_sys_role_menu` VALUES (6231, 9, 20, 0, '2023-08-27 19:11:52', 0, '2023-08-27 19:11:52');
-INSERT INTO `t_sys_role_menu` VALUES (6232, 9, 22, 0, '2023-08-27 19:11:52', 0, '2023-08-27 19:11:52');
-INSERT INTO `t_sys_role_menu` VALUES (6233, 9, 21, 0, '2023-08-27 19:11:52', 0, '2023-08-27 19:11:52');
-INSERT INTO `t_sys_role_menu` VALUES (6234, 9, 23, 0, '2023-08-27 19:11:52', 0, '2023-08-27 19:11:52');
-INSERT INTO `t_sys_role_menu` VALUES (6235, 9, 24, 0, '2023-08-27 19:11:52', 0, '2023-08-27 19:11:52');
-INSERT INTO `t_sys_role_menu` VALUES (6240, 10, 1, 1, '2023-08-27 19:20:22', 1, '2023-08-27 19:20:22');
+INSERT INTO `t_sys_role_menu` VALUES (6722, 10, 1, 1, '2023-08-28 16:15:36', 1, '2023-08-28 16:15:36');
+INSERT INTO `t_sys_role_menu` VALUES (6723, 10, 3, 1, '2023-08-28 16:15:36', 1, '2023-08-28 16:15:36');
+INSERT INTO `t_sys_role_menu` VALUES (6724, 10, 4, 1, '2023-08-28 16:15:36', 1, '2023-08-28 16:15:36');
+INSERT INTO `t_sys_role_menu` VALUES (6725, 10, 6, 1, '2023-08-28 16:15:36', 1, '2023-08-28 16:15:36');
+INSERT INTO `t_sys_role_menu` VALUES (6726, 10, 7, 1, '2023-08-28 16:15:36', 1, '2023-08-28 16:15:36');
+INSERT INTO `t_sys_role_menu` VALUES (6727, 10, 9, 1, '2023-08-28 16:15:36', 1, '2023-08-28 16:15:36');
+INSERT INTO `t_sys_role_menu` VALUES (6728, 10, 10, 1, '2023-08-28 16:15:36', 1, '2023-08-28 16:15:36');
+INSERT INTO `t_sys_role_menu` VALUES (6729, 10, 11, 1, '2023-08-28 16:15:36', 1, '2023-08-28 16:15:36');
+INSERT INTO `t_sys_role_menu` VALUES (6730, 10, 12, 1, '2023-08-28 16:15:36', 1, '2023-08-28 16:15:36');
+INSERT INTO `t_sys_role_menu` VALUES (6731, 10, 13, 1, '2023-08-28 16:15:36', 1, '2023-08-28 16:15:36');
+INSERT INTO `t_sys_role_menu` VALUES (6732, 10, 14, 1, '2023-08-28 16:15:36', 1, '2023-08-28 16:15:36');
+INSERT INTO `t_sys_role_menu` VALUES (6733, 10, 15, 1, '2023-08-28 16:15:36', 1, '2023-08-28 16:15:36');
+INSERT INTO `t_sys_role_menu` VALUES (6734, 10, 16, 1, '2023-08-28 16:15:36', 1, '2023-08-28 16:15:36');
+INSERT INTO `t_sys_role_menu` VALUES (6735, 10, 17, 1, '2023-08-28 16:15:36', 1, '2023-08-28 16:15:36');
+INSERT INTO `t_sys_role_menu` VALUES (6736, 10, 18, 1, '2023-08-28 16:15:36', 1, '2023-08-28 16:15:36');
+INSERT INTO `t_sys_role_menu` VALUES (6737, 10, 19, 1, '2023-08-28 16:15:36', 1, '2023-08-28 16:15:36');
+INSERT INTO `t_sys_role_menu` VALUES (6738, 10, 20, 1, '2023-08-28 16:15:36', 1, '2023-08-28 16:15:36');
+INSERT INTO `t_sys_role_menu` VALUES (6739, 10, 22, 1, '2023-08-28 16:15:36', 1, '2023-08-28 16:15:36');
+INSERT INTO `t_sys_role_menu` VALUES (6740, 10, 21, 1, '2023-08-28 16:15:36', 1, '2023-08-28 16:15:36');
+INSERT INTO `t_sys_role_menu` VALUES (6741, 10, 23, 1, '2023-08-28 16:15:36', 1, '2023-08-28 16:15:36');
+INSERT INTO `t_sys_role_menu` VALUES (6742, 10, 24, 1, '2023-08-28 16:15:36', 1, '2023-08-28 16:15:36');
+INSERT INTO `t_sys_role_menu` VALUES (6815, 9, 1, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
+INSERT INTO `t_sys_role_menu` VALUES (6816, 9, 3, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
+INSERT INTO `t_sys_role_menu` VALUES (6817, 9, 4, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
+INSERT INTO `t_sys_role_menu` VALUES (6818, 9, 5, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
+INSERT INTO `t_sys_role_menu` VALUES (6819, 9, 6, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
+INSERT INTO `t_sys_role_menu` VALUES (6820, 9, 7, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
+INSERT INTO `t_sys_role_menu` VALUES (6821, 9, 9, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
+INSERT INTO `t_sys_role_menu` VALUES (6822, 9, 10, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
+INSERT INTO `t_sys_role_menu` VALUES (6823, 9, 11, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
+INSERT INTO `t_sys_role_menu` VALUES (6824, 9, 12, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
+INSERT INTO `t_sys_role_menu` VALUES (6825, 9, 13, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
+INSERT INTO `t_sys_role_menu` VALUES (6826, 9, 14, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
+INSERT INTO `t_sys_role_menu` VALUES (6827, 9, 15, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
+INSERT INTO `t_sys_role_menu` VALUES (6828, 9, 16, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
+INSERT INTO `t_sys_role_menu` VALUES (6829, 9, 17, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
+INSERT INTO `t_sys_role_menu` VALUES (6830, 9, 18, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
+INSERT INTO `t_sys_role_menu` VALUES (6831, 9, 19, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
+INSERT INTO `t_sys_role_menu` VALUES (6832, 9, 20, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
+INSERT INTO `t_sys_role_menu` VALUES (6833, 9, 22, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
+INSERT INTO `t_sys_role_menu` VALUES (6834, 9, 21, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
+INSERT INTO `t_sys_role_menu` VALUES (6835, 9, 23, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
+INSERT INTO `t_sys_role_menu` VALUES (6836, 9, 24, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
 
 -- ----------------------------
 -- Table structure for t_sys_role_permission
@@ -859,15 +880,15 @@ CREATE TABLE `t_sys_role_permission`  (
   `update_by` int(11) NOT NULL COMMENT '修改人',
   `update_time` datetime NOT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2092 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-角色关联权限表' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 2160 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-角色关联权限表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_sys_role_permission
 -- ----------------------------
-INSERT INTO `t_sys_role_permission` VALUES (2088, 9, 1, 0, '2023-08-27 19:11:52', 0, '2023-08-27 19:11:52');
-INSERT INTO `t_sys_role_permission` VALUES (2089, 9, 2, 0, '2023-08-27 19:11:52', 0, '2023-08-27 19:11:52');
-INSERT INTO `t_sys_role_permission` VALUES (2090, 9, 3, 0, '2023-08-27 19:11:52', 0, '2023-08-27 19:11:52');
-INSERT INTO `t_sys_role_permission` VALUES (2091, 9, 4, 0, '2023-08-27 19:11:52', 0, '2023-08-27 19:11:52');
+INSERT INTO `t_sys_role_permission` VALUES (2156, 9, 1, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
+INSERT INTO `t_sys_role_permission` VALUES (2157, 9, 2, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
+INSERT INTO `t_sys_role_permission` VALUES (2158, 9, 3, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
+INSERT INTO `t_sys_role_permission` VALUES (2159, 9, 4, 1, '2023-08-28 16:38:11', 1, '2023-08-28 16:38:11');
 
 -- ----------------------------
 -- Table structure for t_sys_user

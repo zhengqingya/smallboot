@@ -101,9 +101,11 @@ public class SysDictTypeServiceImpl extends ServiceImpl<SysDictTypeMapper, SysDi
             this.sysDictTypeMapper.insert(sysDictType);
         } else {
             // 校验该数据是否存在
-            this.detail(id);
+            SysDictType detail = this.detail(id);
+            sysDictType.setCode(detail.getCode());
             this.sysDictTypeMapper.updateById(sysDictType);
         }
+        
         // 更新缓存
         this.sysDictService.updateCache(Collections.singletonList(sysDictType.getCode()));
         return sysDictType.getId();
