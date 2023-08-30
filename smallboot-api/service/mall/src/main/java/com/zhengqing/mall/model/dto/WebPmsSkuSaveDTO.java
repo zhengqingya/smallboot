@@ -12,6 +12,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
 
@@ -37,6 +38,7 @@ public class WebPmsSkuSaveDTO extends BaseDTO {
     @ApiModelProperty(value = "商品规格ID", example = "1")
     private String skuId;
 
+    @Valid
     @NotEmpty(message = "商品规格不能为空！")
     @ApiModelProperty(value = "商品规格", required = true)
     private List<PmsSkuSpecBO> specList;
@@ -60,6 +62,10 @@ public class WebPmsSkuSaveDTO extends BaseDTO {
     @NotBlank(message = "sku封面不能为空！")
     @ApiModelProperty(value = "封面图", required = true, example = "https://www.zhengqingya.com/test.png")
     private String coverImg;
+
+    @NotNull(message = "是否显示不能为空！")
+    @ApiModelProperty("是否显示(false->否 true->是)")
+    private Boolean isShow;
 
     @NotNull(message = "排序不能为空！")
     @ApiModelProperty(value = "排序", required = true, example = "1")

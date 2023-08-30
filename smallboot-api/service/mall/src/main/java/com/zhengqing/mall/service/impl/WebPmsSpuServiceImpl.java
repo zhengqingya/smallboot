@@ -1,6 +1,7 @@
 package com.zhengqing.mall.service.impl;
 
 import cn.hutool.core.lang.Assert;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -21,6 +22,7 @@ import com.zhengqing.mall.service.MallCommonService;
 import com.zhengqing.mall.service.WebPmsCategorySpuRelationService;
 import com.zhengqing.mall.service.WebPmsSkuService;
 import com.zhengqing.mall.service.WebPmsSpuService;
+import com.zhengqing.mall.util.MallSkuUtil;
 import com.zhengqing.system.enums.SysDictTypeEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -191,34 +193,46 @@ public class WebPmsSpuServiceImpl extends PmsSpuServiceImpl<PmsSpuMapper, PmsSpu
     public void saveBatchSkuForBusiness(List<WebPmsSkuSaveDTO> skuList) {
         // 最终需要保存的sku
         List<PmsSku> saveSkuList = Lists.newLinkedList();
+        // 最终需要删除的sku
+        List<String> mysqlRemoveSkuIdList = Lists.newArrayList();
         // 根据spu分组处理sku
         Map<String, List<WebPmsSkuSaveDTO>> groupBySpu = skuList.stream().collect(Collectors.groupingBy(WebPmsSkuSaveDTO::getSpuId));
         groupBySpu.forEach((spuId, spuIdForSkuItemList) -> {
+            /**
+             * 通过sku属性值（蓝色,L）判断是 新增/更新 操作
+             */
+
+            // 1、准备数据
             // 旧sku数据
             List<PmsSku> mysqlSkuListOld = this.webPmsSkuService.list(new LambdaQueryWrapper<PmsSku>().eq(PmsSku::getSpuId, spuId));
             // sku-id -> sku信息
-            Map<String, PmsSku> mysqlSkuMap = mysqlSkuListOld.stream()
-                    .collect(
-                            Collectors.toMap(e -> e.getId(), e -> e, (k1, k2) -> k1)
-                    );
-            // 旧sku-id
-            List<String> mysqlSkuIdListOld = mysqlSkuListOld.stream().map(PmsSku::getId).collect(Collectors.toList());
-            // 最新sku-id
-            List<String> skuIdListNew = spuIdForSkuItemList.stream().map(WebPmsSkuSaveDTO::getSkuId).collect(Collectors.toList());
+            Map<String, PmsSku> mysqlSkuMap = mysqlSkuListOld.stream().collect(Collectors.toMap(e -> e.getId(), e -> e, (oldData, newData) -> newData));
+            // sku属性值（蓝色,L） -> sku-id
+            Map<String, String> mysqlSkuStrToIdMap = mysqlSkuListOld.stream().collect(Collectors.toMap(e -> MallSkuUtil.getSkuStr(spuId, e.getSpecList()), PmsSku::getId, (oldData, newData) -> newData));
+            // 旧sku属性值 eg:[蓝色,L]
+            List<String> mysqlSkuStrListOld = mysqlSkuListOld.stream().map(e -> MallSkuUtil.getSkuStr(spuId, e.getSpecList())).collect(Collectors.toList());
 
-            // 需删除的sku数据
-            List<String> mysqlRemoveSkuIdList = mysqlSkuIdListOld.stream().filter(skuIdOld -> !skuIdListNew.contains(skuIdOld)).collect(Collectors.toList());
-            if (!CollectionUtils.isEmpty(mysqlRemoveSkuIdList)) {
-                log.info("[商城] 需要删除的规格ids：[{}]", mysqlRemoveSkuIdList);
-                this.webPmsSkuService.removeByIds(mysqlRemoveSkuIdList);
+            // 最新sku属性值 eg:[蓝色,L]
+            List<String> skuStrListNew = spuIdForSkuItemList.stream().map(e -> MallSkuUtil.getSkuStr(spuId, e.getSpecList())).collect(Collectors.toList());
+
+            // 2、需删除的sku数据
+            List<String> mysqlRemoveSkuList = mysqlSkuStrListOld.stream().filter(skuOld -> !skuStrListNew.contains(skuOld)).collect(Collectors.toList());
+            if (!CollectionUtils.isEmpty(mysqlRemoveSkuList)) {
+                mysqlRemoveSkuList.forEach(mysqlRemoveSku -> {
+                    String mysqlRemoveSkuId = mysqlSkuStrToIdMap.get(mysqlRemoveSku);
+                    mysqlRemoveSkuIdList.add(mysqlRemoveSkuId);
+                });
             }
 
+            // 3、需要保存的数据
             spuIdForSkuItemList.forEach(item -> {
-                String skuId = item.getSkuId();
+                String skuStr = MallSkuUtil.getSkuStr(spuId, item.getSpecList());
+                String skuId = mysqlSkuStrToIdMap.get(skuStr);
                 Integer totalStock = item.getTotalStock();
                 Integer useStock = 0;
                 Integer usableStock = 0;
-                if (skuId == null) {
+
+                if (StrUtil.isBlank(skuId)) {
                     // 新增sku
                     skuId = IdGeneratorUtil.nextStrId();
                     usableStock = totalStock;
@@ -230,6 +244,7 @@ public class WebPmsSpuServiceImpl extends PmsSpuServiceImpl<PmsSpuMapper, PmsSpu
                     Assert.isTrue(useStock <= totalStock, "使用库存已超过总库存！");
                     usableStock = totalStock - useStock;
                 }
+
                 // 封装保存数据
                 saveSkuList.add(PmsSku.builder()
                         .id(skuId)
@@ -240,7 +255,7 @@ public class WebPmsSpuServiceImpl extends PmsSpuServiceImpl<PmsSpuMapper, PmsSpu
                         .sellPrice(item.getSellPrice())
                         .limitCount(item.getLimitCount())
                         .coverImg(item.getCoverImg())
-                        .isShow(true)
+                        .isShow(item.getIsShow())
                         .totalStock(totalStock)
                         .usableStock(usableStock)
                         .useStock(useStock)
@@ -248,9 +263,12 @@ public class WebPmsSpuServiceImpl extends PmsSpuServiceImpl<PmsSpuMapper, PmsSpu
                         .build());
             });
         });
-        // 保存数据
+
+        // db操作
+        this.webPmsSkuService.removeByIds(mysqlRemoveSkuIdList);
         this.webPmsSkuService.batchInsertOrUpdate(saveSkuList);
     }
+
 
     /**
      * mq处理预售通知延时任务（tips:预售前5分钟通知）
