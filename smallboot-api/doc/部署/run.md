@@ -9,9 +9,14 @@ docker run -d -p 9000:9000 --restart=always --name portainer -v /var/run/docker.
 
 # 当前目录下所有文件赋予权限(读、写、执行)
 chmod -R 777 ./redis
+chmod -R 777 ./rabbitmq
 
 # 组件部署
-docker-compose -f ./docker-compose.yml -p smallboot up -d mysql redis minio nginx_file
+docker-compose -f ./docker-compose.yml -p smallboot up -d mysql redis rabbitmq nginx_file
+
+# 启用rabbitmq延时插件
+docker exec rabbitmq /bin/bash -c 'rabbitmq-plugins enable rabbitmq_delayed_message_exchange'
+
 
 # 服务部署 -- 根据自己的条件去启动
 docker-compose -p smallboot up -d api
