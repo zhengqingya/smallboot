@@ -1,11 +1,14 @@
 package com.zhengqing.system.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.zhengqing.system.entity.SysRolePermission;
 import com.zhengqing.system.mapper.SysRolePermissionMapper;
 import com.zhengqing.system.model.bo.SysRoleRePermBO;
+import com.zhengqing.system.model.dto.SysRoleRePermIdsSaveDTO;
 import com.zhengqing.system.model.vo.SysRoleMenuBtnListVO;
 import com.zhengqing.system.service.ISysRolePermissionService;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +20,7 @@ import org.springframework.util.CollectionUtils;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -73,17 +77,43 @@ public class SysRolePermissionServiceImpl extends ServiceImpl<SysRolePermissionM
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void savePerm(Integer roleId, List<Integer> permissionIdList) {
-        if (CollectionUtils.isEmpty(permissionIdList)) {
+    public void savePerm(SysRoleRePermIdsSaveDTO params) {
+        Integer roleId = params.getRoleId();
+        List<Integer> permissionIdList = params.getPermissionIdList();
+
+        if (CollUtil.isEmpty(permissionIdList)) {
+            // 直接根据角色id删除关联所有按钮权限
+            this.delByRoleId(roleId);
             return;
         }
+
+        // 1、查询角色关联的旧权限信息
+        List<SysRolePermission> rePermListOld = this.sysRolePermissionMapper.selectList(new LambdaQueryWrapper<SysRolePermission>().eq(SysRolePermission::getRoleId, roleId));
+        // 权限id -> 主键id
+        Map<Integer, Integer> permReIdMapOld = rePermListOld.stream().collect(Collectors.toMap(SysRolePermission::getPermissionId, SysRolePermission::getId, (oldData, newData) -> newData));
+        // 旧权限id
+        List<Integer> rePermIdListOld = rePermListOld.stream().map(SysRolePermission::getPermissionId).collect(Collectors.toList());
+
+        // 2、筛选出需删除的旧数据
+        List<Integer> removePermIdList = rePermIdListOld.stream().filter(oldPermId -> !permissionIdList.contains(oldPermId)).collect(Collectors.toList());
+        if (CollUtil.isNotEmpty(removePermIdList)) {
+            // 删除角色关联的权限信息
+            this.sysRolePermissionMapper.delete(
+                    new LambdaQueryWrapper<SysRolePermission>()
+                            .eq(SysRolePermission::getRoleId, roleId)
+                            .in(SysRolePermission::getPermissionId, removePermIdList)
+            );
+        }
+
+        // 3、再保存角色关联的权限信息
         List<SysRolePermission> saveList = Lists.newArrayList();
         permissionIdList.forEach(btnId ->
                 saveList.add(SysRolePermission.builder()
+                        .id(permReIdMapOld.get(btnId))
                         .roleId(roleId)
                         .permissionId(btnId)
                         .build())
         );
-        this.saveBatch(saveList);
+        this.saveOrUpdateBatch(saveList);
     }
 }

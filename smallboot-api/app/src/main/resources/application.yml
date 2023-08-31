@@ -13,6 +13,7 @@ spring:
       - db
       - excel
       - file
+      - flink-cdc
       - log
       - mq
       - pay

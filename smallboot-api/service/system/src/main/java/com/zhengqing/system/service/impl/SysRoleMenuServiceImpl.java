@@ -1,5 +1,7 @@
 package com.zhengqing.system.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
 import com.zhengqing.system.entity.SysRoleMenu;
@@ -10,9 +12,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -44,24 +47,42 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
     @Transactional(rollbackFor = Exception.class)
     public void saveRoleMenuIds(SysRoleReMenuSaveDTO params) {
         Integer roleId = params.getRoleId();
-
-        // 1、先删除角色关联的菜单权限信息
-        this.sysRoleMenuMapper.deleteAllMenusByRoleId(roleId);
-
-        // 2、再保存角色关联的菜单权限信息
         List<Integer> menuIdList = params.getMenuIdList();
-        if (CollectionUtils.isEmpty(menuIdList)) {
+
+        if (CollUtil.isEmpty(menuIdList)) {
+            // 直接删除角色关联的所有菜单权限
+            this.sysRoleMenuMapper.deleteAllMenusByRoleId(roleId);
             return;
         }
 
+        // 1、查询角色关联的旧菜单权限信息
+        List<SysRoleMenu> roleReMenuListOld = this.sysRoleMenuMapper.selectList(new LambdaQueryWrapper<SysRoleMenu>().eq(SysRoleMenu::getRoleId, roleId));
+        // 菜单id -> 主键id
+        Map<Integer, Integer> menuReIdMapOld = roleReMenuListOld.stream().collect(Collectors.toMap(SysRoleMenu::getMenuId, SysRoleMenu::getId, (oldData, newData) -> newData));
+        // 旧菜单id
+        List<Integer> roleReMenuIdListOld = roleReMenuListOld.stream().map(SysRoleMenu::getMenuId).collect(Collectors.toList());
+
+        // 2、筛选出需删除的旧数据
+        List<Integer> removeMenuIdList = roleReMenuIdListOld.stream().filter(oldMenuId -> !menuIdList.contains(oldMenuId)).collect(Collectors.toList());
+        if (CollUtil.isNotEmpty(removeMenuIdList)) {
+            // 删除角色关联的菜单权限信息
+            this.sysRoleMenuMapper.delete(
+                    new LambdaQueryWrapper<SysRoleMenu>()
+                            .eq(SysRoleMenu::getRoleId, roleId)
+                            .in(SysRoleMenu::getMenuId, removeMenuIdList)
+            );
+        }
+
+        // 3、再保存角色关联的菜单权限信息
         List<SysRoleMenu> roleMenuList = Lists.newArrayList();
         menuIdList.forEach(menuId ->
                 roleMenuList.add(SysRoleMenu.builder()
+                        .id(menuReIdMapOld.get(menuId))
                         .roleId(roleId)
                         .menuId(menuId)
                         .build())
         );
-        this.saveBatch(roleMenuList);
+        this.saveOrUpdateBatch(roleMenuList);
     }
 
 

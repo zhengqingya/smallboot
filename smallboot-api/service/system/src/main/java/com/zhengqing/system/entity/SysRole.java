@@ -44,4 +44,6 @@ public class SysRole extends BaseEntity<SysRole> {
     @ApiModelProperty(value = "状态(1:开启 0:禁用)")
     private Integer status;
 
+    @ApiModelProperty(value = "是否固定(false->否 true->是)")
+    private Boolean isFixed;
 }

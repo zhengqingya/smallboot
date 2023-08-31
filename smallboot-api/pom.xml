@@ -72,6 +72,11 @@
             </dependency>
             <dependency>
                 <groupId>com.zhengqing</groupId>
+                <artifactId>flink-cdc</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zhengqing</groupId>
                 <artifactId>log</artifactId>
                 <version>${revision}</version>
             </dependency>

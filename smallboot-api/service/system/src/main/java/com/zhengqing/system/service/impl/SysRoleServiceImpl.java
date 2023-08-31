@@ -1,5 +1,6 @@
 package com.zhengqing.system.service.impl;
 
+import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -62,6 +63,8 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void deleteRoleAndRoleMenu(Integer roleId) {
+        SysRole sysRole = this.sysRoleMapper.selectById(roleId);
+        Assert.isFalse(sysRole.getIsFixed(), "您没有权限删除固定角色！");
         // 1、删除该角色下关联的菜单
         this.sysRoleMenuService.deleteAllMenusByRoleId(roleId);
         // 2、删除该角色下关联的按钮

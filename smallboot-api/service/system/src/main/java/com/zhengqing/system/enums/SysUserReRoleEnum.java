@@ -9,15 +9,15 @@ import lombok.Getter;
  * </p>
  *
  * @author zhengqingya
- * @description
+ * @description tips: 只列出系统默认自带的固定角色
  * @date 2020/11/28 23:35
  */
 @Getter
 @AllArgsConstructor
 public enum SysUserReRoleEnum {
 
-    凡人(1, "凡人"),
-    超级管理员(9, "超级管理员");
+    超级管理员(1, "超级管理员"),
+    凡人(2, "凡人");
 
     private final Integer roleId;
     private final String desc;

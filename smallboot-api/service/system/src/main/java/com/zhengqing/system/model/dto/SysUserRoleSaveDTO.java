@@ -2,7 +2,10 @@ package com.zhengqing.system.model.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -17,6 +20,9 @@ import java.util.List;
  * @date 2020/9/10 14:19
  */
 @Data
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 @ApiModel("保存用户角色参数")
 public class SysUserRoleSaveDTO {
 

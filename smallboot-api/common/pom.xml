@@ -22,6 +22,7 @@
         <module>db</module>
         <module>excel</module>
         <module>file</module>
+        <module>flink-cdc</module>
         <module>log</module>
         <module>mq</module>
         <module>pay</module>

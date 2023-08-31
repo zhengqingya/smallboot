@@ -1,5 +1,7 @@
 package com.zhengqing.system.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
@@ -18,6 +20,7 @@ import org.springframework.util.CollectionUtils;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -40,20 +43,43 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
     public void addOrUpdateData(SysUserRoleSaveDTO params) {
         Integer userId = params.getUserId();
         List<Integer> roleIdList = params.getRoleIdList();
-        // 1、先删除关联角色
-        this.delByUserId(userId);
 
-        // 2、再新增角色
+        if (CollUtil.isEmpty(roleIdList)) {
+            // 直接删除用户关联的所有角色
+            this.delByUserId(userId);
+            return;
+        }
+
+        // 1、查询用户关联的旧角色信息
+        List<SysUserRole> reRoleListOld = this.sysUserRoleMapper.selectList(new LambdaQueryWrapper<SysUserRole>().eq(SysUserRole::getUserId, userId));
+        // 角色id -> 主键id
+        Map<Integer, Integer> roleReIdMapOld = reRoleListOld.stream().collect(Collectors.toMap(SysUserRole::getRoleId, SysUserRole::getId, (oldData, newData) -> newData));
+        // 旧角色id
+        List<Integer> reRoleIdListOld = reRoleListOld.stream().map(SysUserRole::getRoleId).collect(Collectors.toList());
+
+        // 2、筛选出需删除的旧数据
+        List<Integer> removeRoleIdList = reRoleIdListOld.stream().filter(oldRoleId -> !roleIdList.contains(oldRoleId)).collect(Collectors.toList());
+        if (CollUtil.isNotEmpty(removeRoleIdList)) {
+            // 删除角色关联的菜单权限信息
+            this.sysUserRoleMapper.delete(
+                    new LambdaQueryWrapper<SysUserRole>()
+                            .eq(SysUserRole::getUserId, userId)
+                            .in(SysUserRole::getRoleId, removeRoleIdList)
+            );
+        }
+
+        // 3、再新增角色
         List<SysUserRole> saveList = Lists.newArrayList();
         roleIdList.forEach(roleId ->
                 saveList.add(
                         SysUserRole.builder()
+                                .id(roleReIdMapOld.get(roleId))
                                 .userId(userId)
                                 .roleId(roleId)
                                 .build()
                 )
         );
-        super.saveBatch(saveList);
+        super.saveOrUpdateBatch(saveList);
     }
 
     @Override

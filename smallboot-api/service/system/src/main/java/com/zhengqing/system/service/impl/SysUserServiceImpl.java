@@ -110,10 +110,12 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             user.insert();
 
             // 绑定角色信息
-            SysUserRoleSaveDTO userRoleSaveDTO = new SysUserRoleSaveDTO();
-            userRoleSaveDTO.setUserId(user.getUserId());
-            userRoleSaveDTO.setRoleIdList(Lists.newArrayList(SysUserReRoleEnum.凡人.getRoleId()));
-            this.sysUserRoleService.addOrUpdateData(userRoleSaveDTO);
+            this.sysUserRoleService.addOrUpdateData(
+                    SysUserRoleSaveDTO.builder()
+                            .userId(user.getUserId())
+                            .roleIdList(Lists.newArrayList(SysUserReRoleEnum.凡人.getRoleId()))
+                            .build()
+            );
         } else {
             user.updateById();
         }

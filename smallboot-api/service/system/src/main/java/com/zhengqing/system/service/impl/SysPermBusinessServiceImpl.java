@@ -1,5 +1,6 @@
 package com.zhengqing.system.service.impl;
 
+import cn.hutool.core.lang.Assert;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -8,10 +9,7 @@ import com.zhengqing.common.base.constant.SecurityConstant;
 import com.zhengqing.common.redis.util.RedisUtil;
 import com.zhengqing.system.entity.SysRole;
 import com.zhengqing.system.model.bo.SysMenuTree;
-import com.zhengqing.system.model.dto.SysRoleReMenuSaveDTO;
-import com.zhengqing.system.model.dto.SysRoleRePermIdsSaveDTO;
-import com.zhengqing.system.model.dto.SysRoleRePermSaveDTO;
-import com.zhengqing.system.model.dto.SysUserPermDTO;
+import com.zhengqing.system.model.dto.*;
 import com.zhengqing.system.model.vo.SysRoleAllPermissionDetailVO;
 import com.zhengqing.system.model.vo.SysRoleRePermListVO;
 import com.zhengqing.system.model.vo.SysRoleRePermVO;
@@ -46,16 +44,26 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
     private final ISysMenuService sysMenuService;
     private final ISysRoleService sysRoleService;
     private final ISysRoleMenuService sysRoleMenuService;
+    private final ISysUserRoleService sysUserRoleService;
     private final ISysRolePermissionService sysRolePermissionService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void initSuperAdminPerm() {
-        // 1、先查询所有菜单和按钮数据
+        // 1、先查询超级管理员角色id再绑定
         Integer roleId = this.sysRoleService.getRoleIdForSuperAdmin();
+        Assert.notNull(roleId, "超级管理员角色丢失！");
+        this.sysUserRoleService.addOrUpdateData(
+                SysUserRoleSaveDTO.builder()
+                        .userId(AppConstant.SYSTEM_SUPER_ADMIN_USER_ID)
+                        .roleIdList(Lists.newArrayList(roleId))
+                        .build()
+        );
+
+        // 2、先查询所有菜单和按钮数据
         List<SysMenuTree> menuTree = this.tree(Lists.newArrayList(), false);
 
-        // 2、保存角色关联的菜单和按钮权限
+        // 3、保存角色关联的菜单和按钮权限
         SysRoleRePermSaveDTO roleRePerm = SysRoleRePermSaveDTO.builder()
                 .roleId(roleId)
                 .menuTree(menuTree)
@@ -81,6 +89,7 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
     public SysRoleAllPermissionDetailVO permissionDetail(Integer roleId) {
         // 1、角色基本信息
         SysRole sysRole = this.sysRoleService.getById(roleId);
+        Assert.notNull(sysRole, "角色不存在！");
 
         // 2、菜单权限树
         List<SysMenuTree> menuTree = this.tree(Lists.newArrayList(roleId), false);
@@ -139,18 +148,7 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void saveRoleRePermIds(SysRoleRePermIdsSaveDTO params) {
-        Integer roleId = params.getRoleId();
-        List<Integer> permissionIdList = params.getPermissionIdList();
-
-        // 1、先删除
-        this.sysRolePermissionService.delByRoleId(roleId);
-
-        if (CollectionUtils.isEmpty(permissionIdList)) {
-            return;
-        }
-
-        // 2、再保存
-        this.sysRolePermissionService.savePerm(roleId, permissionIdList);
+        this.sysRolePermissionService.savePerm(params);
     }
 
 

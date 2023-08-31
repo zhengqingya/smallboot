@@ -77,7 +77,7 @@ public class WebPmsSpuSaveDTO extends BaseDTO implements CheckParam {
 //    private List<WebPmsAttrBO> attrList;
 
     @Valid
-    @NotEmpty(message = "规格数据丢失！")
+    @NotEmpty(message = "sku规格不能为空！")
     @ApiModelProperty("规格明细列表")
     private List<WebPmsSkuSaveDTO> skuList;
 
