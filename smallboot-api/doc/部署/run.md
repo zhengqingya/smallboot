@@ -15,7 +15,11 @@ chmod -R 777 ./rabbitmq
 docker-compose -f ./docker-compose.yml -p smallboot up -d mysql redis rabbitmq nginx_file
 
 # 启用rabbitmq延时插件
+# Linux
 docker exec rabbitmq /bin/bash -c 'rabbitmq-plugins enable rabbitmq_delayed_message_exchange'
+# Windows
+docker exec -it rabbitmq /bin/bash
+rabbitmq-plugins enable rabbitmq_delayed_message_exchange
 
 
 # 服务部署 -- 根据自己的条件去启动
