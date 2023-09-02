@@ -2,7 +2,8 @@
   <div class="app" @click.right="handleRightClick($event, '本区域中可右击')">
     <slot />
 
-    <div class="right-menu" :style="{ left: rmLeft + 'px', top: rmTop + 'px' }">
+    <div v-show="isShowRightMenu" class="right-menu" :style="{ left: rmLeft + 'px', top: rmTop + 'px' }">
+      <!-- 作用域插槽可回调值给父组件使用 <template #right-show="{ isShow }"></template> -->
       <slot name="right-show" :is-show="isShowRightMenu" />
     </div>
   </div>

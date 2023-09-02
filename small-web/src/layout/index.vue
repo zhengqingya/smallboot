@@ -3,7 +3,7 @@
   <div v-if="!$route.meta.isParentView" class="flex h100 w100">
     <!-- 侧边栏菜单 -->
     <sidebar class="w-200" />
-    <div class="flex-1 h100 w100">
+    <div class="flex-1">
       <!-- 顶部导航栏 -->
       <navbar class="h-50" />
       <!-- Tabs标签页 -->
