@@ -1,7 +1,7 @@
 <template>
-  <div v-if="tabsList.length > 0" class="app">
+  <div class="app">
     <el-scrollbar>
-      <base-right-click class="flex w-1">
+      <base-right-click v-if="tabsList.length > 0" class="flex">
         <div v-for="item in tabsList" :key="item" class="item m-3" :class="{ active: $route.meta.fullPath === item.meta.fullPath }" style="display: inline-block; white-space: nowrap">
           <div class="flex-between-center h-20" @click.right="handleRightClick(item, $event)">
             <router-link :to="item.meta.fullPath" @click="activeTabs(item)">

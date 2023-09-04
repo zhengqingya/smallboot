@@ -2,16 +2,20 @@
   <!-- <h1>{{ route.meta }}</h1> -->
   <div v-show="isLogin && !$route.meta.isParentView" class="flex h100 w100">
     <!-- 侧边栏菜单 -->
-    <sidebar class="w-200" />
+    <sidebar v-if="isShowMenu" id="sidebar" class="w-200" />
     <div class="flex-1">
       <div id="top">
         <!-- 顶部导航栏 -->
         <navbar class="h-50" />
         <!-- Tabs标签页 -->
-        <tabs-view />
+        <div :style="{ width: appMainWidth + 'px' }">
+          <tabs-view />
+        </div>
       </div>
       <!-- 主页面 -->
-      <app-main :style="{ height: appMainHeight + 'px' }" class="app-main m-t-5" />
+      <div :style="{ height: appMainHeight + 'px', width: appMainWidth + 'px' }">
+        <app-main class="app-main m-t-5" />
+      </div>
     </div>
   </div>
   <div v-if="!isLogin || (isLogin && $route.meta.isParentView)" class="h100">
@@ -26,23 +30,33 @@ import appMain from './components/app-main.vue';
 import tabsView from './components/tabs-view.vue';
 const { proxy } = getCurrentInstance();
 let { isLogin } = toRefs(proxy.$store.user.useUserStore());
+let { isShowMenu } = toRefs(proxy.$store.settings.useSettingsStore());
+let appMainWidth = ref(0);
 let appMainHeight = ref(0);
 
 onMounted(() => {
-  calAppMainHeight();
+  calWidthAndHeight();
 
   // 窗口宽高变化时触发 -- tips：window.onresize只能在项目内触发1次
   window.onresize = function windowResize() {
-    calAppMainHeight(window.innerHeight);
+    calWidthAndHeight();
   };
 });
 
-function calAppMainHeight(h) {
-  let windowHeight = h || window.innerHeight;
+watch(
+  isShowMenu,
+  (newValue) => {
+    calWidthAndHeight();
+  },
+  { immediate: true },
+);
+
+function calWidthAndHeight() {
+  appMainWidth.value = window.innerWidth - (isShowMenu.value ? 200 : 0);
+
   let top = document.getElementById('top');
-  if (top) {
-    appMainHeight.value = windowHeight - top.offsetHeight;
-  }
+  let topH = top ? top.offsetHeight : 0;
+  appMainHeight.value = window.innerHeight - topH - 5;
 }
 </script>
 <style lang="scss" scoped>
