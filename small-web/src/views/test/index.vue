@@ -10,6 +10,7 @@
 
     <el-button v-has-role="'super_admin'" type="primary">添加</el-button>
     <el-button v-has-role="['super_admin', 'test']" type="primary">编辑</el-button>
+    <p v-for="index in 100" :key="index">{{ index }}</p>
   </div>
 </template>
 
