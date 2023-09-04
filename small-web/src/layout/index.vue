@@ -14,7 +14,7 @@
       </div>
       <!-- 主页面 -->
       <div :style="{ height: appMainHeight + 'px', width: appMainWidth + 'px' }">
-        <app-main class="app-main m-t-5" />
+        <app-main class="app-main p-10" />
       </div>
     </div>
   </div>
@@ -56,7 +56,7 @@ function calWidthAndHeight() {
 
   let top = document.getElementById('top');
   let topH = top ? top.offsetHeight : 0;
-  appMainHeight.value = window.innerHeight - topH - 5;
+  appMainHeight.value = window.innerHeight - topH - 20; // 20 指 p-10
 }
 </script>
 <style lang="scss" scoped>
