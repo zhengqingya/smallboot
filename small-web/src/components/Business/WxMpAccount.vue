@@ -13,6 +13,7 @@
 <script setup>
 import { localStorage } from '@/utils/storage';
 const { proxy } = getCurrentInstance();
+let { isLogin } = toRefs(proxy.$store.user.useUserStore());
 let appId = $ref(localStorage.get('appId'));
 let list = $ref([]);
 
@@ -26,7 +27,7 @@ const isShow = computed(() => {
 });
 
 async function init() {
-  if (proxy.$route.path.indexOf('/login') === 0) {
+  if (!isLogin.value) {
     return;
   }
   let res = await proxy.$api.wx_mp_account.list();

@@ -35,27 +35,30 @@ let appMainWidth = ref(0);
 let appMainHeight = ref(0);
 
 onMounted(() => {
-  calWidthAndHeight();
-
   // 窗口宽高变化时触发 -- tips：window.onresize只能在项目内触发1次
   window.onresize = function windowResize() {
     calWidthAndHeight();
   };
 });
 
+// 注册一个回调函数，在组件因为响应式状态变更而更新其 DOM 树之后调用。
+onUpdated(() => {
+  calWidthAndHeight();
+});
+
 watch(
-  isShowMenu,
+  [isLogin, isShowMenu],
   (newValue) => {
     calWidthAndHeight();
   },
-  { immediate: true },
+  { immediate: false, deep: true },
 );
 
 function calWidthAndHeight() {
-  appMainWidth.value = window.innerWidth - (isShowMenu.value ? 200 : 0);
+  let sidebarW = document.getElementById('sidebar').offsetWidth;
+  appMainWidth.value = window.innerWidth - sidebarW;
 
-  let top = document.getElementById('top');
-  let topH = top ? top.offsetHeight : 0;
+  let topH = document.getElementById('top').offsetHeight;
   appMainHeight.value = window.innerHeight - topH - 20; // 20 指 p-10
 }
 </script>

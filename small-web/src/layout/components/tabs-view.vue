@@ -1,13 +1,13 @@
 <template>
   <div class="app">
     <el-scrollbar>
-      <base-right-click v-if="tabsList.length > 0" class="flex">
+      <base-right-click class="flex">
         <div v-for="item in tabsList" :key="item" class="item m-3" :class="{ active: $route.meta.fullPath === item.meta.fullPath }" style="display: inline-block; white-space: nowrap">
           <div class="flex-between-center h-20" @click.right="handleRightClick(item, $event)">
             <router-link :to="item.meta.fullPath" @click="activeTabs(item)">
               <span class="m-r-3">{{ item.meta.title }}</span>
             </router-link>
-            <el-icon :size="10" @click="handleClose(item)"> <Close /> </el-icon>
+            <el-icon v-if="item.meta.fullPath !== '/'" :size="10" @click="handleClose(item)"> <Close /> </el-icon>
           </div>
         </div>
 
@@ -27,9 +27,21 @@
 </template>
 <script setup>
 const { proxy } = getCurrentInstance();
-let { tabsList } = toRefs(proxy.$store.settings.useSettingsStore());
-let { activeTabs } = proxy.$store.settings.useSettingsStore();
+let useSettingsStore = proxy.$store.settings.useSettingsStore();
+let { tabsList } = toRefs(useSettingsStore);
+let { activeTabs } = useSettingsStore;
 let chooseItem = $ref(null);
+
+// 保留首页
+watch(
+  tabsList,
+  (newValue) => {
+    if (newValue.length === 0) {
+      tabsList.value.push({ meta: { title: '首页', fullPath: '/' } });
+    }
+  },
+  { immediate: true, deep: true },
+);
 
 function handleClose(item) {
   tabsList.value.splice(tabsList.value.indexOf(item), 1);
@@ -54,7 +66,7 @@ function handleCloseAll() {
   .item {
     border: 1px solid #ebeef5;
     &.active {
-      background: $color-primary;
+      background: #00aaff;
     }
   }
 
