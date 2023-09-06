@@ -1,6 +1,6 @@
 {
-  "name": "",
-  "appid": "",
+  "name": "small-app",
+  "appid": "__UNI__3CF7D20",
   "description": "",
   "versionName": "1.0.0",
   "versionCode": "100",
@@ -52,7 +52,8 @@
   "mp-weixin": {
     "appid": "wxbf651179d7249db6",
     "setting": {
-      "urlCheck": false
+      "urlCheck": false,
+      "minified": true
     },
     "usingComponents": true,
     /* 组件按需注入 */
