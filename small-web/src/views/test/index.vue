@@ -33,19 +33,25 @@ async function handleClick() {
     box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.2);
   }
   .test {
-    width: 0;
-    height: 0;
+    width: 200px;
+    height: 100px;
+    background-color: pink;
+    /* transition: 变化的属性 花费时间 运动曲线 何时开始; */
+    /* 如果想要写多个属性，利用逗号进行分割 */
+    // transition:
+    //   width 0.5s,
+    //   height 0.5s;
+    // transform: scale(2, 2);
+    /* 如果想要多个属性都变化，属性写all就可以了 */
+    // transition: all 0.5s;
 
-    // 方式一：
-    // border-top: 100px solid transparent;
-    // border-right: 50px solid rgb(43, 241, 17);
-    // border-bottom: 0 solid rgb(6, 30, 247);
-    // border-left: 0 solid rgb(203, 236, 11);
+    transform: translate(100px, 100px);
 
-    // 方式二：
-    border-color: transparent rgb(43, 241, 17) transparent transparent;
-    border-style: solid;
-    border-width: 100px 50px 0 0;
+    // &:hover {
+    //   width: 400px;
+    //   height: 200px;
+    //   background-color: red;
+    // }
   }
 }
 </style>
