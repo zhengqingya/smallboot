@@ -1,6 +1,6 @@
 <template>
   <scroll-view
-    class="bg-color-lightgrey"
+    class="h100"
     scroll-y
     enable-back-to-top
     @scrolltolower="onPushRefresh"
