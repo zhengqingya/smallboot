@@ -54,7 +54,9 @@
     "setting": {
       "urlCheck": false
     },
-    "usingComponents": true
+    "usingComponents": true,
+    /* 组件按需注入 */
+    "lazyCodeLoading": "requiredComponents"
   },
   "mp-alipay": {
     "usingComponents": true
