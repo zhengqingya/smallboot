@@ -73,7 +73,7 @@ const { proxy } = getCurrentInstance();
 // 跳转到订单详情页面
 function goDetail(orderNo) {
   uni.navigateTo({
-    url: '/pages/order/detail?orderNo=' + orderNo,
+    url: '/subPackages/order/detail?orderNo=' + orderNo,
   });
 }
 </script>

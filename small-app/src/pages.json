@@ -22,24 +22,9 @@
       }
     },
     {
-      "path": "pages/order/detail",
-      "style": {
-        "navigationBarTitleText": "订单详情",
-        "enablePullDownRefresh": false,
-        "navigationStyle": "custom" // 自定义头部
-      }
-    },
-    {
       "path": "pages/mine/index",
       "style": {
         "navigationBarTitleText": "个人中心",
-        "enablePullDownRefresh": false
-      }
-    },
-    {
-      "path": "pages/mine/user",
-      "style": {
-        "navigationBarTitleText": "个人信息",
         "enablePullDownRefresh": false
       }
     }
@@ -57,6 +42,31 @@
           }
         }
       ]
+    },
+    {
+      "root": "subPackages/order",
+      "pages": [
+        {
+          "path": "detail",
+          "style": {
+            "navigationBarTitleText": "订单详情",
+            "enablePullDownRefresh": false,
+            "navigationStyle": "custom" // 自定义头部
+          }
+        }
+      ]
+    },
+    {
+      "root": "subPackages/mine",
+      "pages": [
+        {
+          "path": "user",
+          "style": {
+            "navigationBarTitleText": "个人信息",
+            "enablePullDownRefresh": false
+          }
+        }
+      ]
     }
   ],
   // 分包预载配置 https://uniapp.dcloud.net.cn/collocation/pages.html#preloadrule
@@ -64,7 +74,7 @@
     // 在进入小程序某个页面时，由框架自动预下载可能需要的分包，提升进入后续分包页面时的启动速度
     "pages/index/index": {
       "network": "all", // 在指定网络下预下载，可选值为：all（不限网络）、wifi（仅wifi下预下载）
-      "packages": ["subPackages/test"] // 进入页面后预下载分包的 root 或 name。__APP__ 表示主包。
+      "packages": ["subPackages/test", "subPackages/order", "subPackages/mine"] // 进入页面后预下载分包的 root 或 name。__APP__ 表示主包。
     }
   },
   "easycom": {

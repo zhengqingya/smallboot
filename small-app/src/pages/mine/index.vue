@@ -12,22 +12,22 @@
             {{ userObj.createTime }}
           </view>
         </view>
-        <navigator :url="'/pages/mine/user'" hover-class="none">
+        <navigator :url="'/subPackages/mine/user'" hover-class="none">
           <view class="m-l-10 p-10">
             <u-icon name="arrow-right" color="#969799" size="28"></u-icon>
           </view>
         </navigator>
       </view>
 
-      <u-cell-group>
+      <!-- <u-cell-group>
         <u-cell icon="star" title="收藏" isLink @click="tips"></u-cell>
         <u-cell icon="coupon" title="优惠券" isLink @click="tips"></u-cell>
         <u-cell icon="car" title="地址管理" isLink @click="tips"></u-cell>
       </u-cell-group>
 
       <u-cell-group>
-        <!-- <u-cell icon="setting" title="设置" isLink></u-cell> -->
-      </u-cell-group>
+        <u-cell icon="setting" title="设置" isLink></u-cell>
+      </u-cell-group> -->
 
       <view class="m-t-20">
         <up-button type="error" @tap="logout">退出登录</up-button>
