@@ -1,14 +1,16 @@
 <template>
   <view class="h100">
     <u-navbar
+      height="44px"
       @leftClick="back"
       bgColor="#00aaff"
       border
       placeholder
       :title="isCreateOrder ? '创建订单' : '订单详情'"
       titleStyle="font-weight: bold" />
-    <view class="h100 w100 p-x-20" v-if="orderObj">
-      <scroll-view class="h100" scroll-y>
+
+    <scroll-view class="app" v-if="orderObj" scroll-y>
+      <view class="p-x-20">
         <view v-if="!isCreateOrder" class="h-200 flex-c-center-center">
           <view class="font-size-lg font-bold text-color-primary">
             {{ orderObj.orderStatusName }}
@@ -67,7 +69,7 @@
             <text class="title">支付金额</text>
             <view class="value" style="color: red">￥{{ orderObj.payPrice / 100 }}</view>
           </view>
-          <view class="tips">
+          <view class="tips m-b-20">
             <view class="title">备注</view>
             <view class="value">
               <textarea
@@ -81,20 +83,16 @@
         </view>
 
         <view class="action">
-          <up-button
-            v-if="isCreateOrder"
-            class="w-200 m-t-20 h-80"
-            type="error"
-            @click="createOrder()">
+          <up-button v-if="isCreateOrder" class="w-200 h-80" type="error" @click="createOrder()">
             创建订单
           </up-button>
-          <view class="flex-center-start m-t-20" v-if="orderObj.orderStatus === 1">
+          <view class="flex-center-start" v-if="orderObj.orderStatus === 1">
             <up-button @tap="cancelOrder(true)">取消订单</up-button>
             <up-button class="m-l-10" type="primary" @tap="payOrder()">支付（仅测试）</up-button>
           </view>
         </view>
-      </scroll-view>
-    </view>
+      </view>
+    </scroll-view>
   </view>
 </template>
 
@@ -223,6 +221,9 @@ async function payOrder() {
 </script>
 
 <style lang="scss" scoped>
+.app {
+  height: calc(100vh - 44px);
+}
 ::v-deep .u-count-down {
   .u-count-down__text {
     color: red;
