@@ -16,7 +16,7 @@ Object.keys(filters).forEach((key) => Vue.filter(key, filters[key]));
 
 通过 `app.config.globalProperties` 来注册一个全局都能访问到的属性
 
-[`filters.js`](../../src/utils/filters.js)
+[`filters.js`](../../utils/filters.js)
 
 ```
 export const filters = {
@@ -29,7 +29,7 @@ export const filters = {
 };
 ```
 
-[mian.js](../../src/main.js)
+[mian.js](../../main.js)
 
 ```
 import { createSSRApp } from 'vue';

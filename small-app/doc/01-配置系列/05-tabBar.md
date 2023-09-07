@@ -2,7 +2,7 @@
 
 ### 原生tabBar
 
-[pages.json](../../src/pages.json)
+[pages.json](../../pages.json)
 
 ```
 {
@@ -93,7 +93,7 @@ https://uniapp.dcloud.net.cn/component/custom-tab-bar.html#
 
 #### 方式二：普通自定义tabBar
 
-##### 1、[App.vue](../../src/App.vue) 中隐藏原生tabBar
+##### 1、[App.vue](../../App.vue) 中隐藏原生tabBar
 
 ```
 <script setup>
@@ -105,7 +105,7 @@ https://uniapp.dcloud.net.cn/component/custom-tab-bar.html#
 </script>
 ```
 
-##### 2、[pages.json](../../src/pages.json) 开启自定义底部菜单
+##### 2、[pages.json](../../pages.json) 开启自定义底部菜单
 
 ```
 "tabBar": {
