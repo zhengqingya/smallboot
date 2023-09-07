@@ -1,1 +1,5 @@
+node_modules
 uni_modules
+src/uni_modules
+unpackage
+dist

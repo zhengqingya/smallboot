@@ -1,4 +1,16 @@
 <template>
+  <!-- <view class="flex-between-center p-y-10 app" style="border-top: 1rpx solid #e5ecf4">
+    <view
+      @click="changeTab(index)"
+      class="flex-c-center-center flex-1"
+      v-for="(item, index) in tabbarList"
+      :key="index">
+      <u-icon size="35" :color="active === index ? activeColor : inactiveColor" :name="item.icon" />
+      <view :style="{ color: active === index ? activeColor : inactiveColor }">
+        {{ item.text }}
+      </view>
+    </view>
+  </view> -->
   <u-tabbar
     :value="active"
     @change="changeTab"
@@ -18,11 +30,14 @@ const { proxy } = getCurrentInstance();
 const props = defineProps({
   active: { type: Number, required: true, default: 0 },
 });
+let activeColor = '#00aaff';
+let inactiveColor = '#7A7E83';
 let tabbarList = [
   {
     pagePath: '/pages/index/index',
     text: '首页',
     icon: 'home',
+    selectedIconPath: '',
   },
   {
     pagePath: '/pages/product/index',

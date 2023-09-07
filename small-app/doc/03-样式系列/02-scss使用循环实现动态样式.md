@@ -1,6 +1,6 @@
 # scss使用循环实现动态样式
 
-见 [variable.scss](../../variable.scss)
+见 [variable.scss](../../src/variable.scss)
 
 ```scss
 // 循环实现动态样式

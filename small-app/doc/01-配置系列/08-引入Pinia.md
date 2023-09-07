@@ -27,7 +27,7 @@ cnpm i pinia-plugin-persistedstate
 
 ### 三、配置
 
-- [main.js](../../main.js)
+- [main.js](../../src/main.js)
 - [store](../../src/store/index.js)
 
 #### `main.js`

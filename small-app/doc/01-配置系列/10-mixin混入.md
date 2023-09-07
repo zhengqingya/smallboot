@@ -5,7 +5,7 @@
 
 > 等于抽取公共属性、方法...
 
-### 一、[`mixin.js`](../../utils/mixin.js)
+### 一、[`mixin.js`](../../src/utils/mixin.js)
 
 ```
 // 抽取公用的实例 - 操作成功与失败消息提醒内容等
@@ -71,7 +71,7 @@ async function submit() {
 
 #### 全局混入
 
-[mian.js](../../main.js)
+[mian.js](../../src/main.js)
 
 ```
 import { createSSRApp } from 'vue';
