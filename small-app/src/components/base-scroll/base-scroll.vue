@@ -9,7 +9,7 @@
       :refresher-triggered="isReFresh"
       @refresherrefresh="onPullRefresh">
       <view v-if="isPage" class="h100">
-        <view v-if="dataList.length > 0">
+        <view v-if="dataList.length > 0" class="h100">
           <slot :list="dataList" />
           <u-loadmore
             v-if="dataList.length > loadmoreNum"

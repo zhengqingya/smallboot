@@ -2,7 +2,7 @@
   <view class="box" v-if="cartList && cartList.length > 0">
     <view class="cart flex-around-center w100 h-90 bg-color-white">
       <view @click="isShowDetail = !isShowDetail" class="flex flex-1">
-        <view class="position-relative m-l-60">
+        <view class="position-relative" style="margin-left: 60rpx">
           <u-icon size="28" name="shopping-cart" />
           <up-badge
             :value="cartList.reduce((total, item) => (total += item.num), 0)"

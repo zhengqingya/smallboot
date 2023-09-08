@@ -1,5 +1,5 @@
 <template>
-  <base-wraper :active="2">
+  <base-wraper activeTabName="order">
     <base-scroll
       class="h100 overflow-y-scroll bg-color-lightgrey"
       :isPage="true"

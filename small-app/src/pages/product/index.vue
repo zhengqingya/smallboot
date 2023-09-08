@@ -1,5 +1,5 @@
 <template>
-  <base-wraper :active="1" class="app">
+  <base-wraper activeTabName="product" class="app">
     <view v-if="reSpuList.length > 0" class="h100 flex overflow-y-scroll">
       <scroll-view
         class="category bg-color-lightgrey text-color-grey p-r-10"

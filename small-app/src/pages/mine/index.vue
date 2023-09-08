@@ -1,5 +1,5 @@
 <template>
-  <base-wraper :active="3">
+  <base-wraper activeTabName="mine">
     <view v-if="isLogin" class="h100">
       <view class="flex-center-center bg-color-white p-30">
         <view>
