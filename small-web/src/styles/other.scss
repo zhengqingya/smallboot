@@ -48,34 +48,34 @@
 
 // 边框颜色 ********************************************
 // 类名  .border-b
-$orientation: (
-  t: top,
-  b: bottom,
-  l: left,
-  r: right,
-);
-@each $orientationKey, $orientationVal in $orientation {
-  .border-#{$orientationKey} {
-    border-#{$orientationVal}: 1px solid #e4e4ee;
-  }
-}
+// $orientation: (
+//   t: top,
+//   b: bottom,
+//   l: left,
+//   r: right,
+// );
+// @each $orientationKey, $orientationVal in $orientation {
+//   .border-#{$orientationKey} {
+//     border-#{$orientationVal}: 1px solid #e4e4ee;
+//   }
+// }
 
 // *******************************************************
 // 外边框圆角
 @for $i from 1 through 10 {
   // 如果能够被 2 整除，将应用以下样式
   @if ($i % 2 == 0) {
-    // border-radius-6
-    .border-radius-#{$i} {
+    // b-rd-6
+    .b-rd-#{$i} {
       border-radius: #{$i}px;
     }
   }
 }
 
-.w100 {
+.w-full {
   width: 100%;
 }
-.h100 {
+.h-full {
   height: 100%;
 }
 

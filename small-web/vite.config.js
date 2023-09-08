@@ -1,11 +1,12 @@
 import { defineConfig, loadEnv } from 'vite';
 import vue from '@vitejs/plugin-vue';
-
 import * as path from 'path';
-
 import AutoImport from 'unplugin-auto-import/vite';
-
 import ReactivityTransform from '@vue-macros/reactivity-transform/vite';
+// 引入UnoCSS
+import UnoCSS from 'unocss/vite';
+import { presetUno, presetAttributify, presetIcons } from 'unocss';
+import presetRemToPx from '@unocss/preset-rem-to-px';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
@@ -19,6 +20,11 @@ export default defineConfig(({ mode }) => {
       // 解决 `import { ref , reactive ..... } from 'vue'` 大量引入的问题
       AutoImport({
         imports: ['vue', 'vue-router'],
+      }),
+      UnoCSS({
+        presets: [presetUno(), presetAttributify(), presetIcons(), presetRemToPx({ baseFontSize: 4 })],
+        // 自定义规则 https://unocss.dev/config/rules
+        // rules: [['m-1', { margin: '1px' }]],
       }),
     ],
     // 反向代理解决跨域问题

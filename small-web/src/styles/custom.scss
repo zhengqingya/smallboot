@@ -1,0 +1,9 @@
+// 图片大小
+@each $key, $val in sm 50, base 100, lg 160 {
+  // img-base
+  .img-#{$key} {
+    width: #{$val}px !important;
+    height: #{$val}px !important;
+    border-radius: $val * 0.1px;
+  }
+}
