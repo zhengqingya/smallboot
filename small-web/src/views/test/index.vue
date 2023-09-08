@@ -5,9 +5,9 @@
     </div>
 
     <div class="flex-1">
-      <div class="bg-color-success font-size-100">123456789123456789</div>
+      <div class="bg-color-success font-size-lg">123456789123456789</div>
       <span class="hello font-size-lg w-200 h-100 line-height-100 text-center bg-color-red display-block">hello</span>
-      <p v-for="index in 10" :key="index" class="font-size-30">{{ index }}</p>
+      <p v-for="index in 10" :key="index" class="font-size-lg">{{ index }}</p>
       <div class="test m-l-300"></div>
     </div>
   </div>

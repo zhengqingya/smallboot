@@ -11,27 +11,27 @@ $spacing-directions: (
   l: left,
   r: right,
 );
-$spacing-base-size: 1px; // 基数
+$spacing-base-size: 1rpx; // 基数
 // 循环出 margin 与 padding 的各类值
 @each $typeKey, $type in $spacing-types {
   @for $i from 1 through 30 {
     // 如果能够被 2 整除，将应用以下样式
     @if ($i % 2 == 0) {
-      // m-10{margin:10px} || p-30{padding:30px}
+      // m-10{margin:10rpx} || p-30{padding:30rpx}
       .#{$typeKey}-#{$i} {
         #{$type}: $i * $spacing-base-size !important;
       }
-      // m-x-10{marfin-left:10px;marfin-right:10px} || p-x-30{padding-left:30px;padding-right:30px;}
+      // m-x-10{marfin-left:10rpx;marfin-right:10rpx} || p-x-30{padding-left:30rpx;padding-right:30rpx;}
       .#{$typeKey}-x-#{$i} {
         #{$type}-left: $i * $spacing-base-size;
         #{$type}-right: $i * $spacing-base-size;
       }
-      // m-y-10{marfin-top:10px;marfin-bottom:10px} || p-y-30{padding-top:30px;padding-bottom:30px;}
+      // m-y-10{marfin-top:10rpx;marfin-bottom:10rpx} || p-y-30{padding-top:30rpx;padding-bottom:30rpx;}
       .#{$typeKey}-y-#{$i} {
         #{$type}-top: $i * $spacing-base-size;
         #{$type}-bottom: $i * $spacing-base-size;
       }
-      // m-t-10{margin-top: 10px} || m-l-10{margin-left:10px} || p-r-10{padding-right:10px} || p-b-10{paddding-bottom:10px}
+      // m-t-10{margin-top: 10rpx} || m-l-10{margin-left:10rpx} || p-r-10{padding-right:10rpx} || p-b-10{paddding-bottom:10rpx}
       @each $directionsKey, $directions in $spacing-directions {
         .#{$typeKey}-#{$directionsKey}-#{$i} {
           #{$type}-#{$directions}: $i * $spacing-base-size !important;
