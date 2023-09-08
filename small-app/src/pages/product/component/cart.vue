@@ -48,7 +48,7 @@
           </view>
           <view class="flex-between-center">
             <u-icon name="minus" size="12" @tap="changeSkuNum(item, -1)" />
-            <view class="w-60 content-center font-size-base m-x-10">
+            <view class="w-60 flex-center-center font-size-base m-x-10">
               {{ item.num }}
             </view>
             <u-icon name="plus" size="12" @tap="changeSkuNum(item, +1)" />

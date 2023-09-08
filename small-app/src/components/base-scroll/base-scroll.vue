@@ -16,7 +16,7 @@
             :line="true"
             :status="loadmoreStatus"></u-loadmore>
         </view>
-        <view v-else class="content-center h-full">
+        <view v-else class="flex-center-center h-full">
           <slot name="empty" />
         </view>
       </view>

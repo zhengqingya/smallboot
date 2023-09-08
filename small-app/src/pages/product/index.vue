@@ -68,7 +68,7 @@
       </scroll-view>
     </view>
 
-    <view v-else class="h-full content-center bg-color-white">
+    <view v-else class="h-full flex-center-center bg-color-white">
       <u-empty mode="data" text="商品为空" />
     </view>
 

@@ -1,5 +1,7 @@
 # UnoCSS
 
+> tips: 对微信小程序支持不友好，放弃了...
+
 - https://github.com/unocss/unocss
 - https://unocss.dev
 - [了解UnoCss - 重新构想原子化 CSS](https://antfu.me/posts/reimagine-atomic-css-zh)

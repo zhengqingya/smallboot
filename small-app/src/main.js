@@ -14,8 +14,6 @@ import mixin from '@/utils/mixin.js';
 import { filters } from '@/utils/filters.js';
 // uviewPlus
 import uviewPlus from '@/uni_modules/uview-plus';
-// UnoCSS
-import 'virtual:uno.css';
 
 export function createApp() {
   const app = createSSRApp(App);
