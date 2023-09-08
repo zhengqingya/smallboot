@@ -41,6 +41,13 @@ eg:
     // }
   }
 }
+
+@each $key, $val in ('sm': 12px, 'base': 16px, 'lg': 20px) {
+  // font-size-base
+  .font-size-#{$key} {
+    font-size: $val !important;
+  }
+}
 ```
 
 #### [flex.scss](../src/styles/flex.scss)
@@ -231,13 +238,6 @@ $spacing-base-size: 1px; // 基数
 // 字体 ********************************************
 .font-bold {
   font-weight: bold;
-}
-
-@each $key, $val in ('sm': 12px, 'base': 16px, 'lg': 20px) {
-  // font-size-base
-  .font-size-#{$key} {
-    font-size: $val !important;
-  }
 }
 
 // 边框颜色 ********************************************

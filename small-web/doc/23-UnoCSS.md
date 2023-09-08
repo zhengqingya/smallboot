@@ -51,10 +51,18 @@ export default defineConfig({
   plugins: [
     vue(),
     UnoCSS({
-        presets: [presetUno(), presetAttributify(), presetIcons(), presetRemToPx({ baseFontSize: 4 })],
+        presets: [
+          presetUno(),
+          presetAttributify(),
+          presetIcons(),
+          presetRemToPx({
+            // 1单位 = 4px -- 如果CSS中没有设置HTML的font-size，那么浏览器默认的字号是16px。 16px / 4px => 1rem = 4px
+            baseFontSize: 4,
+          }),
+        ],
         // 自定义规则 https://unocss.dev/config/rules
         // rules: [['m-1', { margin: '1px' }]],
-    }),
+      }),
   ],
 })
 ```
@@ -69,7 +77,15 @@ import 'virtual:uno.css';
 使用
 
 ```
-<div class="text-100px p-100" bg="blue" font="mono light">hello</div>
+<div
+  class="text-center m-a w-200 h-200 text-100px lh-200px color-red"
+  bg="blue-400 hover:blue-500 dark:blue-500 dark:hover:blue-600"
+  text="lg white"
+  font="mono light"
+  p="y-2 x-4"
+  border="2 rounded blue-200">
+  hello world
+</div>
 ```
 
 ### 三、vscode插件 -- UnoCSS -- 代码预览提示

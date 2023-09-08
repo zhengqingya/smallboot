@@ -1,10 +1,9 @@
 // 图片大小
-@each $key, $val in sm 50, base 100, lg 160 {
-  // img-base
+@each $key, $val in sm 100, base 160, lg 260 {
   .img-#{$key} {
-    width: #{$val}px !important;
-    height: #{$val}px !important;
-    border-radius: $val * 0.1px;
+    width: #{$val}rpx !important;
+    height: #{$val}rpx !important;
+    border-radius: $val * 0.1rpx;
   }
 }
 
@@ -20,12 +19,5 @@
     //   white-space: normal; /* 显示全部 */
     //   overflow: visible; /* 取消超出隐藏 */
     // }
-  }
-}
-
-@each $key, $val in ('sm': 12px, 'base': 16px, 'lg': 20px) {
-  // font-size-base
-  .font-size-#{$key} {
-    font-size: $val !important;
   }
 }

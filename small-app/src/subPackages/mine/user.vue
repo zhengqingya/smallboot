@@ -1,5 +1,5 @@
 <template>
-    <view class="h100 m-30 bg-color-white">
+    <view class="h-full m-30 bg-color-white">
         <view class="content-center h-400">
             <button open-type="chooseAvatar" @chooseavatar="chooseavatar">
                 <image :src="userObj.avatarUrl" class="img-base" />

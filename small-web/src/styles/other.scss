@@ -24,13 +24,6 @@
   font-weight: bold;
 }
 
-@each $key, $val in ('sm': 12px, 'base': 16px, 'lg': 20px) {
-  // font-size-base
-  .font-size-#{$key} {
-    font-size: $val !important;
-  }
-}
-
 // 边框颜色 ********************************************
 // 类名  .border-b
 // $orientation: (
