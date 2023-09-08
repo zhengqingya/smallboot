@@ -1,5 +1,5 @@
 <template>
-  <view class="">
+  <view class="h-full">
     <scroll-view
       class="h-full"
       scroll-y
