@@ -1,11 +1,6 @@
 <template>
   <div>
-    <div
-      class="b-rd-3 display-inline text-color-primary w-full h-full text-100px p-100 h-full b-rd-6 text-center overflow-y-auto font-bold font-size-sm border-b-red"
-      bg="blue"
-      font="mono light">
-      hello
-    </div>
+    <div class="text-color-primary w-full h-full text-100px p-100 h-full b-rd-6 text-center overflow-y-auto font-bold font-size-sm border-b-red" bg="blue" font="mono light">hello</div>
   </div>
 </template>
 

@@ -14,18 +14,41 @@ cnpm install sass --save-dev
 
 eg:
 
+#### [custom.scss](../src/styles/custom.scss)
+
+```
+// 图片大小
+@each $key, $val in sm 50, base 100, lg 160 {
+  // img-base
+  .img-#{$key} {
+    width: #{$val}px !important;
+    height: #{$val}px !important;
+    border-radius: $val * 0.1px;
+  }
+}
+
+// 文字超出？行溢出隐藏...  text-overflow-1
+@for $i from 1 through 2 {
+  .text-overflow-#{$i} {
+    display: -webkit-box; /* 使用旧版WebKit内核布局盒模型 */
+    -webkit-line-clamp: #{$i}; /* 限制文本显示的行数为2行 */
+    -webkit-box-orient: vertical; /* 设置盒模型布局方向为垂直 */
+    overflow: hidden; /* 超出部分隐藏 */
+    text-overflow: ellipsis; /* 使用省略号表示被截断的部分 */
+    // &:hover {
+    //   white-space: normal; /* 显示全部 */
+    //   overflow: visible; /* 取消超出隐藏 */
+    // }
+  }
+}
+```
+
 #### [flex.scss](../src/styles/flex.scss)
 
 ```scss
 // flex布局 ********************************************
 .flex {
   display: flex;
-}
-// 内容居中 = flex-center-center
-.content-center {
-  display: flex;
-  justify-content: center; /* 水平居中 */
-  align-items: center; /* 垂直居中 */
 }
 .flex-column {
   display: flex;
@@ -192,21 +215,6 @@ $spacing-base-size: 1px; // 基数
 }
 
 // ********************************************
-// 文字超出？行溢出隐藏...  text-overflow-1
-@for $i from 1 through 2 {
-  .text-overflow-#{$i} {
-    display: -webkit-box; /* 使用旧版WebKit内核布局盒模型 */
-    -webkit-line-clamp: #{$i}; /* 限制文本显示的行数为2行 */
-    -webkit-box-orient: vertical; /* 设置盒模型布局方向为垂直 */
-    overflow: hidden; /* 超出部分隐藏 */
-    text-overflow: ellipsis; /* 使用省略号表示被截断的部分 */
-    // &:hover {
-    //   white-space: normal; /* 显示全部 */
-    //   overflow: visible; /* 取消超出隐藏 */
-    // }
-  }
-}
-
 .overflow-x-scroll {
   overflow-x: scroll; // 水平方向超出滚动
 }
@@ -234,17 +242,17 @@ $spacing-base-size: 1px; // 基数
 
 // 边框颜色 ********************************************
 // 类名  .border-b
-$orientation: (
-  t: top,
-  b: bottom,
-  l: left,
-  r: right,
-);
-@each $orientationKey, $orientationVal in $orientation {
-  .border-#{$orientationKey} {
-    border-#{$orientationVal}: 1px solid #e4e4ee;
-  }
-}
+// $orientation: (
+//   t: top,
+//   b: bottom,
+//   l: left,
+//   r: right,
+// );
+// @each $orientationKey, $orientationVal in $orientation {
+//   .border-#{$orientationKey} {
+//     border-#{$orientationVal}: 1px solid #e4e4ee;
+//   }
+// }
 
 // *******************************************************
 // 外边框圆角
@@ -267,23 +275,14 @@ $orientation: (
 
 // 宽高
 @for $i from 0 through 500 {
-  @each $key, $val in w width, h height, max-height max-height, line-height line-height {
+  @each $key, $val in w width, h height, lh line-height {
     // 如果能够被 10 整除，将应用以下样式
     @if ($i % 10 == 0) {
-      // w-20 || max-height-500 || line-height-100
+      // w-20 || lh-100
       .#{$key}-#{$i} {
         #{$val}: 1px * $i;
       }
     }
-  }
-}
-
-// 图片大小
-@each $key, $val in sm 50, base 100, lg 160 {
-  .img-#{$key} {
-    width: #{$val}px !important;
-    height: #{$val}px !important;
-    border-radius: $val * 0.1px;
   }
 }
 
