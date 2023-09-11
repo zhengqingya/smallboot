@@ -31,7 +31,7 @@
                 #{spuId}
             </foreach>
         </if>
-        ORDER BY sort DESC
+        ORDER BY sort ASC
     </select>
 
     <update id="updateSkuStock">

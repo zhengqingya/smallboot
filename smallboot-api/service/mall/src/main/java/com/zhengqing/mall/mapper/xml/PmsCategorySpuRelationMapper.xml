@@ -19,7 +19,7 @@
         <if test="filter.categoryId!=null">
             AND jcpr.category_id = #{filter.categoryId}
         </if>
-        ORDER BY jcpr.sort DESC, jcpr.create_time DESC
+        ORDER BY jcpr.sort ASC, jcpr.create_time DESC
     </select>
 
     <select id="selectDataList" resultType="com.zhengqing.mall.model.vo.WebPmsCategorySpuRelationListVO">
@@ -32,7 +32,7 @@
         <if test="filter.categoryId!=null">
             AND jcpr.category_id = #{filter.categoryId}
         </if>
-        ORDER BY jcpr.sort DESC
+        ORDER BY jcpr.sort ASC
     </select>
 
     <update id="updateBatchShow">
@@ -97,7 +97,7 @@
                 #{categoryId}
             </foreach>
         </if>
-        ORDER BY jcpr.sort DESC, jcpr.create_time DESC
+        ORDER BY jcpr.sort ASC, jcpr.create_time DESC
     </select>
 
     <select id="selectReData" resultType="java.lang.Integer">

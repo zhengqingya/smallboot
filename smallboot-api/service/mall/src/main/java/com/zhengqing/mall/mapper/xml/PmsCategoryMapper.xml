@@ -14,7 +14,7 @@
         <if test="filter.name!=null and filter.name!=''">
             AND name LIKE CONCAT( #{filter.name} , '%' )
         </if>
-        ORDER BY sort DESC, create_time DESC
+        ORDER BY sort ASC, create_time DESC
     </select>
 
     <select id="selectDataList" resultType="com.zhengqing.mall.model.vo.WebPmsCategoryListVO">
@@ -29,7 +29,7 @@
         <if test="filter.name!=null and filter.name!=''">
             AND name LIKE CONCAT( #{filter.name} , '%' )
         </if>
-        ORDER BY sort DESC, create_time DESC
+        ORDER BY sort ASC, create_time DESC
     </select>
 
     <update id="updateBatchShow">
@@ -51,7 +51,7 @@
         <if test="filter.name!=null and filter.name!=''">
             AND name LIKE CONCAT( #{filter.name} , '%' )
         </if>
-        ORDER BY sort DESC
+        ORDER BY sort ASC
     </select>
 
     <select id="selectReSpuDataListForMini" resultType="com.zhengqing.mall.model.vo.MiniPmsCategoryReSpuListVO">
@@ -66,7 +66,7 @@
             AND c.name LIKE CONCAT( #{filter.name} , '%' )
         </if>
         GROUP BY c.id
-        ORDER BY c.sort DESC, c.create_time DESC
+        ORDER BY c.sort ASC, c.create_time DESC
     </select>
 
     <select id="selectListForMini" resultType="com.zhengqing.mall.model.vo.MiniPmsCategoryListVO">
@@ -79,7 +79,7 @@
         <if test="filter.name!=null and filter.name!=''">
             AND name LIKE CONCAT( #{filter.name} , '%' )
         </if>
-        ORDER BY sort DESC
+        ORDER BY sort ASC
     </select>
 
 </mapper>

@@ -86,7 +86,7 @@ function submitForm() {
 
       let res = await proxy.$api.pms_spu[apiForm.id ? 'update' : 'add'](apiForm);
       proxy.submitOk(res.message);
-      // proxy.$router.push('/mall/product');
+      proxy.$router.push('/mall/product');
     }
   });
 }

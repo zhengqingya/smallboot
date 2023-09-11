@@ -30,18 +30,18 @@
         :scroll-top="categoryScrollTop"
         @scroll="handleSpuScroll">
         <view id="ads"></view>
-        <view class="p-b-10">
+        <view>
           <view
             class="spu-box"
             :id="`cate-${item.id}`"
             v-for="(item, index) in reSpuList"
             :key="index">
-            <view class="text-color-black font-size-base font-bold">
-              <text>{{ item.name }}</text>
+            <view style="height: 30rpx" class="font-size-base font-bold flex-start-center">
+              {{ item.name }}
             </view>
             <view>
               <view
-                class="flex-center-center m-t-10"
+                class="flex-center-center p-10"
                 style="height: 160rpx"
                 v-for="(spuItem, index) in item.spuList"
                 :key="index"
@@ -109,53 +109,53 @@ async function init() {
 async function showCart() {
   // 延时500毫秒，防止数据库未及时更新数据
   setTimeout(() => {
-    proxy.$refs.cartRef.init();
+    if (proxy.$refs.cartRef) {
+      proxy.$refs.cartRef.init();
+    }
   }, 500);
 }
 // 点击左侧分类时，动态滑动右侧数据到关联分类位置
 function hanleCategoryTap(id) {
   calcSize();
   currentCategoryId.value = id;
-  proxy.$nextTick(() => (categoryScrollTop = reSpuList.value.find((item) => item.id == id).top));
+  categoryScrollTop.value = reSpuList.value.find((item) => item.id == id).top + 1;
 }
 // 右侧商品滚动时触发
 function handleSpuScroll({ detail }) {
   calcSize();
   const { scrollTop } = detail;
-  let tabs = reSpuList.filter((item) => item.top <= scrollTop).reverse();
-  if (tabs.length > 0) {
-    currentCategoryId.value = tabs[0].id;
-  }
+  let endE = reSpuList.value[reSpuList.value.length - 1];
+  let endTop = endE.top;
+  reSpuList.value.filter((item) => {
+    if (item.top <= scrollTop) {
+      // console.log('111', endTop, item.top, item.bottom, scrollTop);
+      currentCategoryId.value = item.id;
+      // if (item.bottom === endTop) {
+      //   currentCategoryId.value = endE.id;
+      // }
+      return;
+    }
+  });
 }
 function calcSize() {
   // 高度
   let h = 0;
-
-  let view = uni.createSelectorQuery().select('#ads');
-  view
-    .fields(
-      {
-        size: true,
-      },
-      (data) => {
-        h += Math.floor(data.height);
-      }
-    )
+  // 获取节点信息 https://uniapp.dcloud.net.cn/api/ui/nodes-info.html#createselectorquery
+  uni
+    .createSelectorQuery()
+    .select('#ads')
+    .fields({ size: true }, (data) => {
+      h += Math.floor(data.height);
+    })
     .exec();
-
   reSpuList.value.forEach((item) => {
     let view = uni.createSelectorQuery().select(`#cate-${item.id}`);
     view
-      .fields(
-        {
-          size: true,
-        },
-        (data) => {
-          item.top = h;
-          h += data.height;
-          item.bottom = h;
-        }
-      )
+      .fields({ size: true }, (data) => {
+        item.top = h;
+        h += data.height;
+        item.bottom = h;
+      })
       .exec();
   });
 }

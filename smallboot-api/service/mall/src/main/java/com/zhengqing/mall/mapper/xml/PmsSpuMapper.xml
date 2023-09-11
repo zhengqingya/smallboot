@@ -76,7 +76,7 @@
         <include refid="PAGE"/>
         <include refid="PAGE_CONDITION"/>
         GROUP BY spu.id
-        ORDER BY spu.sort DESC, spu.id DESC
+        ORDER BY spu.sort ASC, spu.id DESC
     </select>
 
     <select id="selectListByWeb" resultType="com.zhengqing.mall.model.vo.WebPmsSpuListVO">
@@ -183,7 +183,7 @@
         <if test="filter.name!=null and filter.name!=''">
             AND spu.name LIKE CONCAT( #{filter.name} , '%' )
         </if>
-        ORDER BY spu.sort DESC, spu.id DESC
+        ORDER BY spu.sort ASC, spu.id DESC
     </select>
 
     <resultMap id="selectSkuList" type="com.zhengqing.mall.model.vo.PmsSkuVO">

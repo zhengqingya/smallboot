@@ -15,4 +15,4 @@ target/
 # 业务相关
 logs
 docker/*.jar
-tmp
+#tmp
