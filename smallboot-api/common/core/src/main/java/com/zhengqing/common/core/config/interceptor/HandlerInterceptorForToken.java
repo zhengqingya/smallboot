@@ -57,11 +57,8 @@ public class HandlerInterceptorForToken implements HandlerInterceptor {
             return true;
         }
 
-        // 获取登录用户信息
-        JwtUserBO jwtUserBO = JSONUtil.toBean(StpUtil.getLoginId().toString(), JwtUserBO.class);
-
         // 校验权限
-        this.checkPermission(request, jwtUserBO);
+        JwtUserBO jwtUserBO = this.checkPermission(request);
 
         JwtUserContext.set(jwtUserBO);
         switch (jwtUserBO.getAuthSourceEnum()) {
@@ -113,17 +110,19 @@ public class HandlerInterceptorForToken implements HandlerInterceptor {
     /**
      * 校验权限
      *
-     * @param request   请求
-     * @param jwtUserBO 用户信息
-     * @return void
+     * @param request 请求
+     * @return 登录用户信息
      * @author zhengqingya
      * @date 2023/2/13 15:52
      */
-    private void checkPermission(HttpServletRequest request, JwtUserBO jwtUserBO) {
+    private JwtUserBO checkPermission(HttpServletRequest request) {
         String token = request.getHeader(AppConstant.REQUEST_HEADER_TOKEN);
         if (StrUtil.isBlank(token)) {
             throw new MyException(ApiResultCodeEnum.UN_LOGIN.getCode(), "无操作权限");
         }
+
+        // 获取登录用户信息
+        JwtUserBO jwtUserBO = JSONUtil.toBean(StpUtil.getLoginId().toString(), JwtUserBO.class);
 
         String method = request.getMethod();
         String path = request.getRequestURI();
@@ -152,14 +151,16 @@ public class HandlerInterceptorForToken implements HandlerInterceptor {
         }
 
         if (!isCheck) {
-            return;
+            return jwtUserBO;
         }
 
+
         if (CollectionUtil.isNotEmpty(authorizedRoleList)) {
+
             List<String> roleCodeList = jwtUserBO.getRoleCodeList();
             for (String roleCodeItem : roleCodeList) {
                 if (authorizedRoleList.contains(roleCodeItem)) {
-                    return;
+                    return jwtUserBO;
                 }
             }
         }
