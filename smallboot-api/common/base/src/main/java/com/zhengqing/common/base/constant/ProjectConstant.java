@@ -31,13 +31,12 @@ public interface ProjectConstant extends BaseConstant {
      */
     String SEPARATOR_SPOT = ".";
 
-
     /**
      * 临时文件相关
      */
     String DEFAULT_FOLDER_TMP = PROJECT_ROOT_DIRECTORY + "/tmp";
     String DEFAULT_FOLDER_TMP_GENERATE = PROJECT_ROOT_DIRECTORY + "/tmp-generate";
-  
+
 
     // ===============================================================================
     // ============================ ↓↓↓↓↓↓ other ↓↓↓↓↓↓ ==============================
