@@ -90,6 +90,7 @@ const orderType = ref('takein'); // 堂食：takein  外卖：takeout
 let reSpuList = ref([]); // 分类关联的商品列表数据
 let currentCategoryId = ref(0); // 当前分类id
 let spu = ref({}); // 当前选择的商品
+let cateScrollTopList = ref([]); // 左侧分类关联右边商品滑动的顶部位置
 let categoryScrollTop = ref(0); // 竖向滚动条位置
 let cartList = ref([]); // 购物车数据
 
@@ -103,6 +104,10 @@ async function init() {
     currentCategoryId.value = reSpuList.value[0].id;
   }
   showCart();
+
+  setTimeout(() => {
+    calcSize();
+  }, 500);
 }
 
 // 购物车
@@ -116,26 +121,28 @@ async function showCart() {
 }
 // 点击左侧分类时，动态滑动右侧数据到关联分类位置
 function hanleCategoryTap(id) {
-  calcSize();
   currentCategoryId.value = id;
-  categoryScrollTop.value = reSpuList.value.find((item) => item.id == id).top + 1;
+  categoryScrollTop.value = reSpuList.value.find((item) => item.id == id).top;
 }
 // 右侧商品滚动时触发
 function handleSpuScroll({ detail }) {
-  calcSize();
   const { scrollTop } = detail;
-  let endE = reSpuList.value[reSpuList.value.length - 1];
+
+  if (cateScrollTopList.value.includes(categoryScrollTop.value)) {
+    // 这里标识是从左侧分类点击触发的滚动
+    categoryScrollTop.value = scrollTop;
+    return;
+  }
+
+  let len = reSpuList.value.length;
+  let endE = reSpuList.value[len - 1];
   let endTop = endE.top;
-  reSpuList.value.filter((item) => {
+  for (let i = 0; i < len; i++) {
+    let item = reSpuList.value[i];
     if (item.top <= scrollTop) {
-      // console.log('111', endTop, item.top, item.bottom, scrollTop);
       currentCategoryId.value = item.id;
-      // if (item.bottom === endTop) {
-      //   currentCategoryId.value = endE.id;
-      // }
-      return;
     }
-  });
+  }
 }
 function calcSize() {
   // 高度
@@ -153,6 +160,7 @@ function calcSize() {
     view
       .fields({ size: true }, (data) => {
         item.top = h;
+        cateScrollTopList.value.push(h);
         h += data.height;
         item.bottom = h;
       })
