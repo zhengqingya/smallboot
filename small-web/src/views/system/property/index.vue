@@ -1,5 +1,5 @@
 <template>
-  <base-wraper>
+  <base-wrapper>
     <base-header>
       <el-input v-model="listQuery.key" clearable placeholder="key" style="width: 200px" @clear="refreshTableData" />
       <el-button type="primary" @click="refreshTableData">查询</el-button>
@@ -37,7 +37,7 @@
         <el-button type="primary" @click="saveForm">确 定</el-button>
       </template>
     </base-dialog>
-  </base-wraper>
+  </base-wrapper>
 </template>
 <script setup>
 const { proxy } = getCurrentInstance();
@@ -67,7 +67,7 @@ function saveForm() {
 function update(row) {
   state.form = Object.assign({}, row);
   state.dialogVisible = true;
-  state.dialogStatus = 'edit';
+  state.dialogStatus = 'update';
 }
 function add() {
   state.dialogVisible = true;

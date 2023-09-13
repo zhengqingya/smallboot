@@ -1,5 +1,5 @@
 <template>
-  <base-wraper>
+  <base-wrapper>
     <base-header>
         <#if queryColumnInfoList??>
             <#list queryColumnInfoList as item>
@@ -14,7 +14,7 @@
       </template>
     </base-header>
 
-    <base-table-p ref="baseTable" api="${vueApiName}.page" :params="listQuery">
+    <base-table-p ref="baseTableRef" api="${vueApiName}.page" :params="listQuery">
         <#list columnInfoList as item>
             <#if item.columnTypeJava == "Date">
               <el-table-column label="${item.columnComment}" align="center">
@@ -36,89 +36,68 @@
       </el-table-column>
     </base-table-p>
 
-    <base-dialog v-model="dialogVisible" :title="titleMap[dialogStatus]" width="30%">
-      <el-form ref="dataForm" v-if="dialogStatus !== 'detail'" :model="form" :rules="rules" label-width="100px">
+    <base-dialog v-model="dialogVisible" :title="dialogTitleObj[dialogStatus]" width="30%">
+      <el-form ref="dataFormRef" v-if="dialogStatus !== 'detail'" :model="form" :rules="rules" label-width="100px">
           <#list columnInfoList as item>
             <el-form-item label="${item.columnComment}:" prop="${item.columnNameJavaLower}">
               <el-input v-model="form.${item.columnNameJavaLower}"></el-input>
             </el-form-item>
           </#list>
       </el-form>
-      <base-table-cell label-width="100px" v-else>
+      <base-cell label-width="100px" v-else>
             <#list columnInfoList as item>
                   <base-cell-item label="${item.columnComment}">{{ form.${item.columnNameJavaLower} }}</base-cell-item>
             </#list>
-      </base-table-cell>
+      </base-cell>
       <template #footer v-if="dialogStatus !== 'detail'">
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="submitForm">确 定</el-button>
       </template>
     </base-dialog>
-  </base-wraper>
+  </base-wrapper>
 </template>
 
-<script>
-  export default {
-    name: '${entity}',
-    data() {
-      return {
-        listQuery: {
-          <#list queryColumnInfoList as item>
-          ${item.columnNameJavaLower}: undefined, // ${item.columnComment}
-          </#list>
-        },
-        form: {
-          <#list columnInfoList as item>
-          ${item.columnNameJavaLower}: undefined, // ${item.columnComment}
-          </#list>
-        },
-        dialogVisible: false,
-        dialogStatus: "",
-        titleMap: {
-          add: "添加",
-          update: "编辑",
-          detail: "详情"
-        },
-        rules: {  }
-      }
-    },
-    created() {
-    },
-    methods: {
-      refreshTableData() {
-        this.$refs.baseTable.refresh();
-      },
-      handleDetail(row) {
-        this.form = Object.assign({}, row)
-        this.dialogStatus = 'detail'
-        this.dialogVisible = true
-      },
-      handleAdd() {
-        this.form = Object.assign({}, {});
-        this.dialogStatus = "add";
-        this.dialogVisible = true;
-      },
-      handleUpdate(row) {
-        this.form = Object.assign({}, row);
-        this.dialogStatus = "update";
-        this.dialogVisible = true;
-      },
-      async handleDelete(row) {
-        let res = await this.$api.${vueApiName}.delete({id: row.id});
-        this.refreshTableData();
-        this.submitOk(res.message);
-      },
-      submitForm() {
-        this.$refs.dataForm.validate(async valid => {
-          if (valid) {
-            let res = await this.$api.${vueApiName}[this.form.id ? "update" : "add"](this.form);
-            this.submitOk(res.message);
-            this.refreshTableData();
-            this.dialogVisible = false;
-          }
-        });
-      }
+<script setup>
+const { proxy } = getCurrentInstance();
+let listQuery = $ref({});
+let form = $ref({});
+let dialogVisible = $ref(false);
+let dialogStatus = $ref('');
+let rules = $ref({});
+
+function refreshTableData() {
+  proxy.$refs.baseTableRef.refresh();
+}
+function handleDetail(row) {
+  form = Object.assign({}, row);
+  dialogStatus = 'detail';
+  dialogVisible = true;
+}
+function handleAdd() {
+  form = {  };
+  dialogStatus = 'add';
+  dialogVisible = true;
+}
+function handleUpdate(row) {
+  form = Object.assign({}, row);
+  dialogStatus = 'update';
+  dialogVisible = true;
+}
+async function handleDelete(row) {
+  let res = await proxy.$api.${vueApiName}.delete({id: row.id});
+  refreshTableData();
+  proxy.submitOk(res.message);
+}
+function submitForm() {
+  proxy.$refs.dataFormRef.validate(async (valid) => {
+    if (valid) {
+      let res = await proxy.$api.${vueApiName}[form.id ? "update" : "add"](form);
+      proxy.submitOk(res.message);
+      refreshTableData();
+      dialogVisible = false;
     }
-  }
+  });
+}
 </script>
-<style scoped></style>
+
+<style lang="scss" scoped></style>

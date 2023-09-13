@@ -22,7 +22,7 @@
         </#if>
         </#list>
     </where>
-    ORDER BY ${tableNameAbbr}.update_time DESC
+    ORDER BY ${tableNameAbbr}.create_time DESC
   </select>
 
     <select id="detail" resultType="${package.vo}.${entity}DetailVO">
@@ -45,7 +45,6 @@
             </#if>
             </#list>
         </where>
-        ORDER BY ${tableNameAbbr}.update_time DESC
     </select>
 
 </mapper>

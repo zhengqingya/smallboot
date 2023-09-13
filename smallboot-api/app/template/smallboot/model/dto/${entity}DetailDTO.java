@@ -1,6 +1,6 @@
 package ${package.dto};
 
-import com.zhengqing.modules.common.model.dto.BaseDTO;
+import com.zhengqing.common.base.model.dto.BaseDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;

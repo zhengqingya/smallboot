@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhengqing.mall.mapper.SmsShopMapper">
+
+    <select id="selectDataPage" resultType="com.zhengqing.mall.model.vo.SmsShopPageVO">
+        SELECT
+        shop_id,
+        tenant_id,
+        shop_name,
+        province_code,
+        city_code,
+        area_code,
+        province_name,
+        city_name,
+        area_name,
+        address,
+        type,
+        contact_name,
+        contact_phone,
+        longitude,
+        latitude,
+        deliver_fee_json,
+        deliver_distance,
+        deliver_scope_json,
+        is_show,
+        snack_status,
+        takeout_status,
+        open_status,
+        open_time_json,
+        start_time,
+        end_time
+        FROM sms_shop
+        <where>
+            is_deleted=0
+            <if test="filter.shopId!=null">
+                AND shop_id = #{filter.shopId}
+            </if>
+            <if test="filter.shopName!=null and filter.shopName!=''">
+                AND shop_name LIKE CONCAT( '%', #{filter.shopName} , '%' )
+            </if>
+        </where>
+        ORDER BY create_time DESC
+    </select>
+
+    <select id="detail" resultType="com.zhengqing.mall.model.vo.SmsShopDetailVO">
+        SELECT
+        shop_id,
+        tenant_id,
+        shop_name,
+        province_code,
+        city_code,
+        area_code,
+        province_name,
+        city_name,
+        area_name,
+        address,
+        type,
+        contact_name,
+        contact_phone,
+        longitude,
+        latitude,
+        deliver_fee_json,
+        deliver_distance,
+        deliver_scope_json,
+        is_show,
+        snack_status,
+        takeout_status,
+        open_status,
+        open_time_json,
+        start_time,
+        end_time
+        FROM sms_shop
+        <where>
+            is_deleted=0
+            <if test="filter.shopId!=null">
+                AND shop_id = #{filter.shopId}
+            </if>
+            <if test="filter.shopName!=null and filter.shopName!=''">
+                AND shop_name LIKE CONCAT( '%', #{filter.shopName} , '%' )
+            </if>
+        </where>
+    </select>
+
+</mapper>

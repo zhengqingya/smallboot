@@ -1,7 +1,7 @@
 <template>
-  <base-wraper>
+  <base-wrapper>
     <base-no-data style="height: 200px" />
-  </base-wraper>
+  </base-wrapper>
 </template>
 
 <style lang="scss" scoped></style>
