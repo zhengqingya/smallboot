@@ -39,8 +39,8 @@
     <base-dialog v-model="dialogVisible" :title="dialogTitleObj[dialogStatus]" width="30%">
       <el-form ref="dataFormRef" v-if="dialogStatus !== 'detail'" :model="form" :rules="rules" label-width="100px">
           <#list columnInfoList as item>
-            <el-form-item label="${item.columnComment}:" prop="${item.columnNameJavaLower}">
-              <el-input v-model="form.${item.columnNameJavaLower}"></el-input>
+            <el-form-item label="${item.columnComment}:" >
+              <el-input v-model="form.${item.columnNameJavaLower}" />
             </el-form-item>
           </#list>
       </el-form>

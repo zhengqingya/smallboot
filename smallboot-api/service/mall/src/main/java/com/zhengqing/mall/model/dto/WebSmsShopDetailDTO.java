@@ -12,7 +12,7 @@ import lombok.experimental.SuperBuilder;
 import java.util.Date;
 
 /**
- * <p> 商城-店铺信息-分页列表-请求参数 </p>
+ * <p> 商城-店铺信息-详情-请求参数 </p>
  *
  * @author zhengqingya
  * @description
@@ -23,8 +23,8 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@ApiModel("商城-店铺信息-分页列表-请求参数")
-public class SmsShopPageDTO extends BaseDTO {
+@ApiModel("商城-店铺信息-详情-请求参数")
+public class WebSmsShopDetailDTO extends BaseDTO {
 
     @ApiModelProperty("门店ID")
     private Integer shopId;
@@ -35,13 +35,13 @@ public class SmsShopPageDTO extends BaseDTO {
     @ApiModelProperty("门店名称")
     private String shopName;
 
-    @ApiModelProperty("省编码")
+    @ApiModelProperty("省代码")
     private Integer provinceCode;
 
-    @ApiModelProperty("市编码")
+    @ApiModelProperty("市代码")
     private Integer cityCode;
 
-    @ApiModelProperty("区编码")
+    @ApiModelProperty("区代码")
     private Integer areaCode;
 
     @ApiModelProperty("省名称")

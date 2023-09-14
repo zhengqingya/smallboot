@@ -3,11 +3,11 @@ package com.zhengqing.mall.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhengqing.mall.entity.SmsShop;
-import com.zhengqing.mall.model.dto.SmsShopDetailDTO;
-import com.zhengqing.mall.model.dto.SmsShopPageDTO;
-import com.zhengqing.mall.model.dto.SmsShopSaveDTO;
-import com.zhengqing.mall.model.vo.SmsShopDetailVO;
-import com.zhengqing.mall.model.vo.SmsShopPageVO;
+import com.zhengqing.mall.model.dto.WebSmsShopDetailDTO;
+import com.zhengqing.mall.model.dto.WebSmsShopPageDTO;
+import com.zhengqing.mall.model.dto.WebSmsShopSaveDTO;
+import com.zhengqing.mall.model.vo.WebSmsShopDetailVO;
+import com.zhengqing.mall.model.vo.WebSmsShopPageVO;
 
 /**
  * <p>  商城-店铺信息 服务类 </p>
@@ -26,7 +26,7 @@ public interface ISmsShopService extends IService<SmsShop> {
      * @author zhengqingya
      * @date 2023/09/13 09:51
      */
-    IPage<SmsShopPageVO> page(SmsShopPageDTO params);
+    IPage<WebSmsShopPageVO> page(WebSmsShopPageDTO params);
 
     /**
      * 详情
@@ -36,7 +36,7 @@ public interface ISmsShopService extends IService<SmsShop> {
      * @author zhengqingya
      * @date 2023/09/13 09:51
      */
-    SmsShopDetailVO detail(SmsShopDetailDTO params);
+    WebSmsShopDetailVO detail(WebSmsShopDetailDTO params);
 
     /**
      * 新增或更新
@@ -46,7 +46,7 @@ public interface ISmsShopService extends IService<SmsShop> {
      * @author zhengqingya
      * @date 2023/09/13 09:51
      */
-    void addOrUpdateData(SmsShopSaveDTO params);
+    void addOrUpdateData(WebSmsShopSaveDTO params);
 
     /**
      * 删除数据

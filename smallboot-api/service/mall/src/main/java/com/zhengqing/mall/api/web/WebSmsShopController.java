@@ -5,11 +5,11 @@ import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.common.core.custom.repeatsubmit.NoRepeatSubmit;
 import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
-import com.zhengqing.mall.model.dto.SmsShopDetailDTO;
-import com.zhengqing.mall.model.dto.SmsShopPageDTO;
-import com.zhengqing.mall.model.dto.SmsShopSaveDTO;
-import com.zhengqing.mall.model.vo.SmsShopDetailVO;
-import com.zhengqing.mall.model.vo.SmsShopPageVO;
+import com.zhengqing.mall.model.dto.WebSmsShopDetailDTO;
+import com.zhengqing.mall.model.dto.WebSmsShopPageDTO;
+import com.zhengqing.mall.model.dto.WebSmsShopSaveDTO;
+import com.zhengqing.mall.model.vo.WebSmsShopDetailVO;
+import com.zhengqing.mall.model.vo.WebSmsShopPageVO;
 import com.zhengqing.mall.service.ISmsShopService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -35,20 +35,20 @@ public class WebSmsShopController extends BaseController {
 
     @GetMapping("page")
     @ApiOperation("分页列表")
-    public IPage<SmsShopPageVO> page(@Validated @ModelAttribute SmsShopPageDTO params) {
+    public IPage<WebSmsShopPageVO> page(@Validated @ModelAttribute WebSmsShopPageDTO params) {
         return this.smsShopService.page(params);
     }
 
     @GetMapping("detail")
     @ApiOperation("详情")
-    public SmsShopDetailVO detail(@Validated @ModelAttribute SmsShopDetailDTO params) {
+    public WebSmsShopDetailVO detail(@Validated @ModelAttribute WebSmsShopDetailDTO params) {
         return this.smsShopService.detail(params);
     }
 
     @NoRepeatSubmit
     @PostMapping("add")
     @ApiOperation("新增")
-    public void add(@Validated @RequestBody SmsShopSaveDTO params) {
+    public void add(@Validated @RequestBody WebSmsShopSaveDTO params) {
         params.setShopId(null);
         this.smsShopService.addOrUpdateData(params);
     }
@@ -56,7 +56,7 @@ public class WebSmsShopController extends BaseController {
     @NoRepeatSubmit
     @PutMapping("update")
     @ApiOperation("更新")
-    public void update(@Validated(UpdateGroup.class) @RequestBody SmsShopSaveDTO params) {
+    public void update(@Validated(UpdateGroup.class) @RequestBody WebSmsShopSaveDTO params) {
         this.smsShopService.addOrUpdateData(params);
     }
 

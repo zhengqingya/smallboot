@@ -1,7 +1,11 @@
 package com.zhengqing.mall.model.dto;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.zhengqing.common.base.model.dto.BaseDTO;
 import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
+import com.zhengqing.mall.config.mybatis.handler.ShopListOpenTimeTypeHandler;
+import com.zhengqing.mall.model.bo.SmsShopOpenTimeBO;
+import com.zhengqing.mall.model.enums.SmsShopTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -11,6 +15,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * <p> 商城-店铺信息-保存-提交参数 </p>
@@ -25,47 +30,19 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ApiModel("商城-店铺信息-保存-提交参数")
-public class SmsShopSaveDTO extends BaseDTO {
+public class WebSmsShopSaveDTO extends BaseDTO {
+
+    // ↓↓↓↓↓↓ 基本信息 =======================
 
     @ApiModelProperty("门店ID")
     @NotNull(groups = {UpdateGroup.class}, message = "门店ID不能为空!")
     private Integer shopId;
 
-    @ApiModelProperty("租户ID")
-    private Integer tenantId;
-
     @ApiModelProperty("门店名称")
     private String shopName;
 
-    @ApiModelProperty("省编码")
-    private Integer provinceCode;
-
-    @ApiModelProperty("市编码")
-    private Integer cityCode;
-
-    @ApiModelProperty("区编码")
-    private Integer areaCode;
-
-    @ApiModelProperty("省名称")
-    private String provinceName;
-
-    @ApiModelProperty("市名称")
-    private String cityName;
-
-    @ApiModelProperty("区名称")
-    private String areaName;
-
     @ApiModelProperty("门店详细地址")
     private String address;
-
-    @ApiModelProperty("店铺类型（1:餐饮 2:电商 3:教育）")
-    private Byte type;
-
-    @ApiModelProperty("联系人")
-    private String contactName;
-
-    @ApiModelProperty("联系手机号")
-    private String contactPhone;
 
     @ApiModelProperty("门店坐标-经度")
     private String longitude;
@@ -73,35 +50,45 @@ public class SmsShopSaveDTO extends BaseDTO {
     @ApiModelProperty("门店坐标-纬度")
     private String latitude;
 
+    /**
+     * {@link SmsShopTypeEnum}
+     */
+    @ApiModelProperty("店铺类型（1:餐饮 2:电商 3:教育）")
+    private Integer type;
+
+    @ApiModelProperty("联系人")
+    private String contactName;
+
+    @ApiModelProperty("联系手机号")
+    private String contactPhone;
+
+    @ApiModelProperty("是否显示（1：是 0：否）")
+    private Boolean isShow;
+
+    // ↓↓↓↓↓↓ 营业信息 =======================
+
+    @ApiModelProperty("堂食状态（1：开启 0：关闭）")
+    private Boolean snackStatus;
+
+    @ApiModelProperty("外卖状态（1：开启 0：关闭）")
+    private Boolean takeoutStatus;
+
+    @ApiModelProperty("门店营业状态（1：营业中 0：未营业）")
+    private Boolean openStatus;
+
+    @ApiModelProperty("营业时间")
+    @TableField(typeHandler = ShopListOpenTimeTypeHandler.class)
+    private List<SmsShopOpenTimeBO> openTimeList;
+
+    // ↓↓↓↓↓↓ 外卖信息 =======================
+
     @ApiModelProperty("外卖配送费（满?分,配送费?分）")
-    private String deliverFeeJson;
+    private String deliverFeeList;
 
     @ApiModelProperty("外卖配送距离（单位：米）")
     private Integer deliverDistance;
 
     @ApiModelProperty("外卖配送范围")
-    private String deliverScopeJson;
-
-    @ApiModelProperty("是否显示（1：是 0：否）")
-    private Byte isShow;
-
-    @ApiModelProperty("堂食状态（1：开启 0：关闭）")
-    private Byte snackStatus;
-
-    @ApiModelProperty("外卖状态（1：开启 0：关闭）")
-    private Byte takeoutStatus;
-
-    @ApiModelProperty("门店营业状态（1：营业中 0：未营业）")
-    private Byte openStatus;
-
-    @ApiModelProperty("营业时间")
-    private String openTimeJson;
-
-    @ApiModelProperty("一天中开始营业时间点")
-    private String startTime;
-
-    @ApiModelProperty("一天中结束营业时间点")
-    private String endTime;
-
+    private String deliverScopeList;
 
 }

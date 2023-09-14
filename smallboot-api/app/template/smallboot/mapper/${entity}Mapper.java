@@ -5,6 +5,7 @@ import ${package.vo}.${entity}DetailVO;
 import ${package.vo}.${entity}PageVO;
 import ${package.dto}.${entity}PageDTO;
 import ${package.dto}.${entity}DetailDTO;
+import ${package.entity}.${entity};
 
 import org.apache.ibatis.annotations.Param;
 

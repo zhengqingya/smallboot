@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhengqing.system.mapper.SysProvinceCityAreaMapper">
+
+    <select id="selectDataList" resultType="com.zhengqing.system.model.vo.SysProvinceCityAreaTreeVO">
+        SELECT *
+        FROM t_sys_province_city_area
+        <where>
+            <if test="filter.isShop!=null">
+                AND is_shop = #{filter.isShop}
+            </if>
+        </where>
+        ORDER BY code ASC
+    </select>
+
+</mapper>

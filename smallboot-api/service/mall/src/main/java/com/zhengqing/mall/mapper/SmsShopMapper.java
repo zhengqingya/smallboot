@@ -3,10 +3,10 @@ package com.zhengqing.mall.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.mall.entity.SmsShop;
-import com.zhengqing.mall.model.dto.SmsShopDetailDTO;
-import com.zhengqing.mall.model.dto.SmsShopPageDTO;
-import com.zhengqing.mall.model.vo.SmsShopDetailVO;
-import com.zhengqing.mall.model.vo.SmsShopPageVO;
+import com.zhengqing.mall.model.dto.WebSmsShopDetailDTO;
+import com.zhengqing.mall.model.dto.WebSmsShopPageDTO;
+import com.zhengqing.mall.model.vo.WebSmsShopDetailVO;
+import com.zhengqing.mall.model.vo.WebSmsShopPageVO;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -27,7 +27,7 @@ public interface SmsShopMapper extends BaseMapper<SmsShop> {
      * @author zhengqingya
      * @date 2023/09/13 09:51
      */
-    IPage<SmsShopPageVO> selectDataPage(IPage page, @Param("filter") SmsShopPageDTO filter);
+    IPage<WebSmsShopPageVO> selectDataPage(IPage page, @Param("filter") WebSmsShopPageDTO filter);
 
     /**
      * 详情
@@ -37,6 +37,6 @@ public interface SmsShopMapper extends BaseMapper<SmsShop> {
      * @author zhengqingya
      * @date 2023/09/13 09:51
      */
-     SmsShopDetailVO detail(@Param("filter") SmsShopDetailDTO filter);
+     WebSmsShopDetailVO detail(@Param("filter") WebSmsShopDetailDTO filter);
 
 }

@@ -22,7 +22,7 @@ public enum DbColumnJavaTypeEnum {
 
     字符串类型_varchar("varchar", "String"),
     字符串类型_text("text", "String"),
-    数字类型_tinyint("tinyint", "Byte"),
+    数字类型_tinyint("tinyint", "Integer"),
     数字类型_int("int", "Integer"),
     数字类型_long("bigint", "Long"),
     布尔类型_bit("bit", "Boolean"),

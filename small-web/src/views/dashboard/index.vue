@@ -1,6 +1,6 @@
 <template>
   <base-wrapper>
-    <base-no-data style="height: 200px" />
+    <base-no-data />
   </base-wrapper>
 </template>
 

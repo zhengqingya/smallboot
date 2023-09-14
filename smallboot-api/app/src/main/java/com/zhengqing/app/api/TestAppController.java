@@ -4,10 +4,12 @@ import cn.hutool.json.JSONUtil;
 import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.common.core.custom.limit.ApiLimit;
 import com.zhengqing.system.mapper.SysUserMapper;
+import com.zhengqing.system.model.dto.SysUserPermDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.HandlerMapping;
 
@@ -43,6 +45,12 @@ public class TestAppController extends BaseController {
     @ApiLimit(key = "'test' + ':' + #params['id']")
     public void testMapSpringEl(@RequestBody Map<String, String> params) {
         log.info("testMapSpringEl: " + JSONUtil.toJsonStr(params));
+    }
+
+    @PostMapping("testObjSpringEl（获取obj值）")
+    @ApiLimit(key = "'test' + ':' + #params['userId']")
+    public void testMapSpringEl(@Validated @RequestBody SysUserPermDTO params) {
+        log.info("testObjSpringEl: " + JSONUtil.toJsonStr(params));
     }
 
     @GetMapping("pathVariable/{id}/{name}")

@@ -5,7 +5,9 @@
       <el-input v-model="listQuery.shopName" placeholder="请输入门店名称" style="width: 200px" clearable @clear="refreshTableData"></el-input>
       <el-button type="primary" @click="refreshTableData">查询</el-button>
       <template #right>
-        <el-button type="primary" @click="handleAdd">添加</el-button>
+        <router-link to="/mall/shop-edit?isAdd=true">
+          <el-button type="primary" @click="handleAdd">添加</el-button>
+        </router-link>
       </template>
     </base-header>
 
@@ -37,7 +39,9 @@
 
       <el-table-column align="center" label="操作">
         <template #default="scope">
-          <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
+          <router-link :to="`/mall/shop-edit?shopId=` + scope.row.shopId">
+            <el-button link>编辑</el-button>
+          </router-link>
           <el-button link @click="handleDetail(scope.row)">详情</el-button>
           <base-delete-btn @ok="handleDelete(scope.row)"></base-delete-btn>
         </template>

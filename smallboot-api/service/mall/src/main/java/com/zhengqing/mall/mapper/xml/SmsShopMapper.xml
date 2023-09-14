@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhengqing.mall.mapper.SmsShopMapper">
 
-    <select id="selectDataPage" resultType="com.zhengqing.mall.model.vo.SmsShopPageVO">
+    <select id="selectDataPage" resultType="com.zhengqing.mall.model.vo.WebSmsShopPageVO">
         SELECT
         shop_id,
         tenant_id,
@@ -21,12 +21,12 @@
         latitude,
         deliver_fee_json,
         deliver_distance,
-        deliver_scope_json,
+        deliver_scope_list,
         is_show,
         snack_status,
         takeout_status,
         open_status,
-        open_time_json,
+        open_time_list,
         start_time,
         end_time
         FROM sms_shop
@@ -42,7 +42,7 @@
         ORDER BY create_time DESC
     </select>
 
-    <select id="detail" resultType="com.zhengqing.mall.model.vo.SmsShopDetailVO">
+    <select id="detail" resultType="com.zhengqing.mall.model.vo.WebSmsShopDetailVO">
         SELECT
         shop_id,
         tenant_id,
@@ -61,12 +61,12 @@
         latitude,
         deliver_fee_json,
         deliver_distance,
-        deliver_scope_json,
+        deliver_scope_list,
         is_show,
         snack_status,
         takeout_status,
         open_status,
-        open_time_json,
+        open_time_list,
         start_time,
         end_time
         FROM sms_shop

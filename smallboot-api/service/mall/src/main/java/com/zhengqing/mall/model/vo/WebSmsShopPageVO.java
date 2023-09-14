@@ -1,6 +1,6 @@
-package com.zhengqing.mall.model.dto;
+package com.zhengqing.mall.model.vo;
 
-import com.zhengqing.common.base.model.dto.BaseDTO;
+import com.zhengqing.common.base.model.vo.BaseVO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -9,10 +9,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import java.util.Date;
-
 /**
- * <p> 商城-店铺信息-详情-请求参数 </p>
+ * <p>商城-店铺信息-分页列表-响应参数</p>
  *
  * @author zhengqingya
  * @description
@@ -23,8 +21,8 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@ApiModel("商城-店铺信息-详情-请求参数")
-public class SmsShopDetailDTO extends BaseDTO {
+@ApiModel("商城-店铺信息-分页列表-响应参数")
+public class WebSmsShopPageVO extends BaseVO {
 
     @ApiModelProperty("门店ID")
     private Integer shopId;
@@ -35,13 +33,13 @@ public class SmsShopDetailDTO extends BaseDTO {
     @ApiModelProperty("门店名称")
     private String shopName;
 
-    @ApiModelProperty("省编码")
+    @ApiModelProperty("省代码")
     private Integer provinceCode;
 
-    @ApiModelProperty("市编码")
+    @ApiModelProperty("市代码")
     private Integer cityCode;
 
-    @ApiModelProperty("区编码")
+    @ApiModelProperty("区代码")
     private Integer areaCode;
 
     @ApiModelProperty("省名称")
@@ -101,19 +99,9 @@ public class SmsShopDetailDTO extends BaseDTO {
     @ApiModelProperty("一天中结束营业时间点")
     private String endTime;
 
-    @ApiModelProperty("创建时间")
-    private Date createTime;
 
-    @ApiModelProperty("更新时间")
-    private Date updateTime;
+    public void handleData() {
 
-    @ApiModelProperty("创建人id")
-    private Long createBy;
-
-    @ApiModelProperty("更新人id")
-    private Long updateBy;
-
-    @ApiModelProperty("是否删除(0->否,1->是)")
-    private Byte isDeleted;
+    }
 
 }
