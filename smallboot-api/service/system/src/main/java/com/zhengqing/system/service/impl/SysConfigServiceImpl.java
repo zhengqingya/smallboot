@@ -14,13 +14,13 @@ import com.zhengqing.common.core.custom.validator.common.ValidList;
 import com.zhengqing.common.db.constant.MybatisConstant;
 import com.zhengqing.common.redis.util.RedisUtil;
 import com.zhengqing.system.constant.SystemConstant;
-import com.zhengqing.system.entity.SysProperty;
-import com.zhengqing.system.mapper.SysPropertyMapper;
-import com.zhengqing.system.model.dto.SysPropertyPageDTO;
-import com.zhengqing.system.model.dto.SysPropertySaveDTO;
-import com.zhengqing.system.model.vo.SysPropertyPageVO;
-import com.zhengqing.system.model.vo.SysPropertyVO;
-import com.zhengqing.system.service.ISysPropertyService;
+import com.zhengqing.system.entity.SysConfig;
+import com.zhengqing.system.mapper.SysConfigMapper;
+import com.zhengqing.system.model.dto.SysConfigPageDTO;
+import com.zhengqing.system.model.dto.SysConfigSaveDTO;
+import com.zhengqing.system.model.vo.SysConfigPageVO;
+import com.zhengqing.system.model.vo.SysConfigVO;
+import com.zhengqing.system.service.ISysConfigService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -33,7 +33,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * <p> 系统管理-系统属性 服务实现类 </p>
+ * <p> 系统管理-系统配置 服务实现类 </p>
  *
  * @author zhengqingya
  * @description
@@ -41,32 +41,32 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Service
-public class SysPropertyServiceImpl extends ServiceImpl<SysPropertyMapper, SysProperty> implements ISysPropertyService {
+public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig> implements ISysConfigService {
 
     @Resource
-    private SysPropertyMapper sysPropertyMapper;
+    private SysConfigMapper sysConfigMapper;
 
     @Override
-    public IPage<SysPropertyPageVO> listPage(SysPropertyPageDTO params) {
-        return this.sysPropertyMapper.selectListPage(new Page(), params);
+    public IPage<SysConfigPageVO> listPage(SysConfigPageDTO params) {
+        return this.sysConfigMapper.selectListPage(new Page(), params);
     }
 
     @Override
-    public Map<String, SysPropertyVO> mapByKey(List<String> keyList) {
+    public Map<String, SysConfigVO> mapByKey(List<String> keyList) {
         this.checkKey(keyList);
-        Map<String, SysPropertyVO> dataMap = Maps.newHashMap();
-        List<SysPropertyVO> dataList = this.listByKey(keyList);
-        for (SysPropertyVO item : dataList) {
+        Map<String, SysConfigVO> dataMap = Maps.newHashMap();
+        List<SysConfigVO> dataList = this.listByKey(keyList);
+        for (SysConfigVO item : dataList) {
             dataMap.put(item.getKey(), item);
         }
         return dataMap;
     }
 
     @Override
-    public List<SysPropertyVO> listByKey(List<String> keyList) {
-        List<SysPropertyVO> dataList = this.listFromCacheByKey(keyList);
+    public List<SysConfigVO> listByKey(List<String> keyList) {
+        List<SysConfigVO> dataList = this.listFromCacheByKey(keyList);
         if (CollectionUtils.isEmpty(dataList)) {
-            log.warn("[系统管理] 系统属性缓存丢失，请检查：{}", keyList);
+            log.warn("[系统管理] 系统配置缓存丢失，请检查：{}", keyList);
             // 如果缓存数据为空，则从db获取
             return this.listFromDbByKey(keyList);
         }
@@ -74,19 +74,19 @@ public class SysPropertyServiceImpl extends ServiceImpl<SysPropertyMapper, SysPr
     }
 
     @Override
-    public List<SysPropertyVO> listFromDbByKey(List<String> keyList) {
+    public List<SysConfigVO> listFromDbByKey(List<String> keyList) {
         this.checkKey(keyList);
-        return this.sysPropertyMapper.selectDataListByKey(keyList);
+        return this.sysConfigMapper.selectDataListByKey(keyList);
     }
 
     @Override
-    public List<SysPropertyVO> listFromCacheByKey(List<String> keyList) {
+    public List<SysConfigVO> listFromCacheByKey(List<String> keyList) {
         this.checkKey(keyList);
-        List<SysPropertyVO> dataList = Lists.newLinkedList();
+        List<SysConfigVO> dataList = Lists.newLinkedList();
         keyList.forEach(keyItem -> {
-            String dataJsonStr = RedisUtil.get(SystemConstant.CACHE_SYS_PROPERTY_PREFIX + keyItem);
+            String dataJsonStr = RedisUtil.get(SystemConstant.CACHE_SYS_CONFIG_PREFIX + keyItem);
             if (StringUtils.isNotBlank(dataJsonStr)) {
-                dataList.add(JSONObject.parseObject(dataJsonStr, SysPropertyVO.class));
+                dataList.add(JSONObject.parseObject(dataJsonStr, SysConfigVO.class));
             }
         });
         return dataList;
@@ -114,18 +114,18 @@ public class SysPropertyServiceImpl extends ServiceImpl<SysPropertyMapper, SysPr
     }
 
     @Override
-    public SysProperty detail(Integer id) {
-        SysProperty detailData = this.sysPropertyMapper.selectById(id);
+    public SysConfig detail(Integer id) {
+        SysConfig detailData = this.sysConfigMapper.selectById(id);
         Assert.notNull(detailData, "该数据不存在！");
         return detailData;
     }
 
     @Override
-    public SysProperty detailByKey(String key) {
+    public SysConfig detailByKey(String key) {
         Assert.notBlank(key, "属性不能为空!");
-        SysProperty detailData = this.sysPropertyMapper.selectOne(
-                new LambdaQueryWrapper<SysProperty>()
-                        .eq(SysProperty::getKey, key)
+        SysConfig detailData = this.sysConfigMapper.selectOne(
+                new LambdaQueryWrapper<SysConfig>()
+                        .eq(SysConfig::getKey, key)
                         .last(MybatisConstant.LIMIT_ONE));
         Assert.notNull(detailData, "该数据不存在！");
         return detailData;
@@ -133,31 +133,31 @@ public class SysPropertyServiceImpl extends ServiceImpl<SysPropertyMapper, SysPr
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void addOrUpdateData(SysPropertySaveDTO params) {
+    public void addOrUpdateData(SysConfigSaveDTO params) {
         Integer id = params.getId();
         String key = params.getKey();
 
         // 校验key是否重复
-        SysProperty sysPropertyOld = this.sysPropertyMapper.selectOne(
-                new LambdaQueryWrapper<SysProperty>()
-                        .eq(SysProperty::getKey, key)
+        SysConfig sysConfigOld = this.sysConfigMapper.selectOne(
+                new LambdaQueryWrapper<SysConfig>()
+                        .eq(SysConfig::getKey, key)
                         .last(MybatisConstant.LIMIT_ONE)
         );
-        Assert.isTrue(sysPropertyOld == null || sysPropertyOld.getId().equals(id), "key重复，请重新输入！");
-        
+        Assert.isTrue(sysConfigOld == null || sysConfigOld.getId().equals(id), "key重复，请重新输入！");
+
         // 保存新数据
-        this.sysPropertyMapper.batchInsertOrUpdate(Lists.newArrayList(params));
+        this.sysConfigMapper.batchInsertOrUpdate(Lists.newArrayList(params));
         // 更新redis缓存
         this.updateCache(Lists.newArrayList(key));
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void saveBatch(ValidList<SysPropertySaveDTO> dataList) {
+    public void saveBatch(ValidList<SysConfigSaveDTO> dataList) {
         if (CollectionUtils.isEmpty(dataList)) {
             return;
         }
-        List<String> keyList = dataList.stream().map(SysPropertySaveDTO::getKey).collect(Collectors.toList());
+        List<String> keyList = dataList.stream().map(SysConfigSaveDTO::getKey).collect(Collectors.toList());
         this.checkKey(keyList);
         dataList.forEach(item -> {
             item.setId(null);
@@ -167,9 +167,9 @@ public class SysPropertyServiceImpl extends ServiceImpl<SysPropertyMapper, SysPr
             item.setCurrentUserId(SysUserContext.getUserId());
         });
         // 删除旧数据
-        this.sysPropertyMapper.deleteByKeyList(keyList);
+        this.sysConfigMapper.deleteByKeyList(keyList);
         // 保存新数据
-        this.sysPropertyMapper.batchInsertOrUpdate(dataList);
+        this.sysConfigMapper.batchInsertOrUpdate(dataList);
         // 更新redis缓存
         this.updateCache(keyList);
     }
@@ -178,9 +178,9 @@ public class SysPropertyServiceImpl extends ServiceImpl<SysPropertyMapper, SysPr
     @Transactional(rollbackFor = Exception.class)
     public void deleteByKey(String key) {
         Assert.notBlank(key, "属性不能为空!");
-        this.sysPropertyMapper.deleteByKey(key);
-        String redisKey = SystemConstant.CACHE_SYS_PROPERTY_PREFIX + key;
-        log.info("[系统管理] 删除系统属性缓存：[{}]", redisKey);
+        this.sysConfigMapper.deleteByKeyList(Lists.newArrayList(key));
+        String redisKey = SystemConstant.CACHE_SYS_CONFIG_PREFIX + key;
+        log.info("[系统管理] 删除系统配置缓存：[{}]", redisKey);
         RedisUtil.delete(redisKey);
     }
 
@@ -196,19 +196,19 @@ public class SysPropertyServiceImpl extends ServiceImpl<SysPropertyMapper, SysPr
         if (CollectionUtils.isEmpty(keyList)) {
             return;
         }
-        List<SysPropertyVO> dataList = this.listFromDbByKey(keyList);
+        List<SysConfigVO> dataList = this.listFromDbByKey(keyList);
         if (CollectionUtils.isEmpty(dataList)) {
             return;
         }
         dataList.forEach(item -> {
-            String key = SystemConstant.CACHE_SYS_PROPERTY_PREFIX + item.getKey();
+            String key = SystemConstant.CACHE_SYS_CONFIG_PREFIX + item.getKey();
             // 加入||更新 缓存
             if (RedisUtil.hasKey(key)) {
                 RedisUtil.delete(key);
-                log.info("[系统管理] 系统属性[{}] 更新之前删除缓存" + key);
+                log.info("[系统管理] 系统配置[{}] 更新之前删除缓存" + key);
             }
             RedisUtil.set(key, JSON.toJSONString(item));
-            log.info("[系统管理] 系统属性[{}] 加入缓存" + key);
+            log.info("[系统管理] 系统配置[{}] 加入缓存" + key);
         });
     }
 

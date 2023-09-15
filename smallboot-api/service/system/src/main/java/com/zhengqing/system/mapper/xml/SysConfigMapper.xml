@@ -1,28 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zhengqing.system.mapper.SysPropertyMapper">
+<mapper namespace="com.zhengqing.system.mapper.SysConfigMapper">
 
-    <select id="selectListPage" resultType="com.zhengqing.system.model.vo.SysPropertyPageVO">
+    <select id="selectListPage" resultType="com.zhengqing.system.model.vo.SysConfigPageVO">
         SELECT
         id,
         `key`,
         `value`,
-        remark
-        FROM t_sys_property
+        remark,
+        type
+        FROM t_sys_config
         WHERE is_deleted=0
         <if test="filter.key!=null and filter.key!=''">
             AND `key` LIKE CONCAT( '%', #{filter.key} , '%' )
         </if>
+        <if test="filter.type!=null">
+            AND type = #{filter.type}
+        </if>
         ORDER BY id DESC
     </select>
 
-    <select id="selectDataListByKey" resultType="com.zhengqing.system.model.vo.SysPropertyVO">
+    <select id="selectDataListByKey" resultType="com.zhengqing.system.model.vo.SysConfigVO">
         SELECT
         id,
         `key`,
         `value`,
-        remark
-        FROM t_sys_property
+        remark,
+        type
+        FROM t_sys_config
         WHERE is_deleted=0
         <if test="keyList != null and keyList.size() > 0">
             AND `key` IN
@@ -33,9 +38,9 @@
         ORDER BY id DESC
     </select>
 
-    <update id="deleteByKeyList">
+    <update id="logicDeleteByKeyList">
         <if test="keyList != null and keyList.size() > 0">
-            UPDATE t_sys_property
+            UPDATE t_sys_config
             SET is_deleted=1
             WHERE `key` IN
             <foreach item="item" index="index" collection="keyList" open="(" separator="," close=")">
@@ -44,12 +49,21 @@
         </if>
     </update>
 
+    <delete id="deleteByKeyList">
+        DELETE FROM t_sys_config WHERE `key` IN
+        <foreach item="item" index="index" collection="keyList" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+
     <insert id="batchInsertOrUpdate">
-        INSERT t_sys_property (
+        INSERT t_sys_config (
         id,
         `key`,
         value,
         remark,
+        type,
         create_by,
         update_by,
         create_time,
@@ -62,6 +76,7 @@
             #{item.key},
             #{item.value},
             #{item.remark},
+            #{item.type},
             #{item.currentUserId},
             #{item.currentUserId},
             now(),
@@ -72,6 +87,7 @@
         `key` = VALUES(`key`),
         value = VALUES(value),
         remark = VALUES(remark),
+        type = VALUES(type),
         update_by = VALUES(update_by),
         update_time = VALUES(update_time);
     </insert>

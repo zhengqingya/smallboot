@@ -2,7 +2,7 @@
   <el-cascader
     v-bind="$attrs"
     :props="{
-      value: 'code',
+      value: 'name',
       label: 'name',
       children: 'children',
     }"

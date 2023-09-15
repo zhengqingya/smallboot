@@ -35,7 +35,7 @@ import com.zhengqing.mall.model.vo.*;
 import com.zhengqing.mall.service.*;
 import com.zhengqing.system.enums.SysDictTypeEnum;
 import com.zhengqing.system.service.ISysDictService;
-import com.zhengqing.system.service.ISysPropertyService;
+import com.zhengqing.system.service.ISysConfigService;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -85,7 +85,7 @@ public class WebOmsOrderServiceImpl extends OmsOrderServiceImpl<OmsOrderMapper, 
     private ISysDictService sysDictService;
 
     @Resource
-    private ISysPropertyService sysPropertyService;
+    private ISysConfigService iSysConfigService;
 
     @Resource
     private RabbitTemplate rabbitTemplate;
@@ -94,7 +94,7 @@ public class WebOmsOrderServiceImpl extends OmsOrderServiceImpl<OmsOrderMapper, 
 //    public WebOmsOrderSetVO getOrderSet() {
 //        // 1、订单-设置
 //        List<String> sysPropertyKeyList = SysPropertyKeyEnum.LIST_MALL_ORDER_SET.stream().map(SysPropertyKeyEnum::getKey).collect(Collectors.toList());
-//        List<SysPropertyVO> orderSetDataList = this.sysPropertyService.listByKey(sysPropertyKeyList);
+//        List<SysPropertyVO> orderSetDataList = this.iSysConfigService.listByKey(sysPropertyKeyList);
 //        Assert.notNull(orderSetDataList, "系統属性缓存丢失，请刷新重试或联系系统管理员！");
 //
 //        // 2、订单-发货微信消息通知
@@ -127,7 +127,7 @@ public class WebOmsOrderServiceImpl extends OmsOrderServiceImpl<OmsOrderMapper, 
 //        log.info("[商城] 保存订单设置数据：{}", params);
 //        // 1、保存订单设置数据
 //        ValidList<SysPropertySaveDTO> setList = params.getSetList();
-//        ApiResult<Boolean> setDataWrapper = this.sysPropertyService.saveBatch(setList);
+//        ApiResult<Boolean> setDataWrapper = this.iSysConfigService.saveBatch(setList);
 //        if (setDataWrapper.checkIsFail()) {
 //            log.error("[商城] 订单设置数据保存失败:{}", setDataWrapper);
 //            throw new MyException("订单设置数据保存失败，请联系系统管理员！");

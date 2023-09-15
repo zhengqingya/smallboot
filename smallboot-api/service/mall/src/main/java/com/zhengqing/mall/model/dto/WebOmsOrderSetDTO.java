@@ -3,9 +3,9 @@ package com.zhengqing.mall.model.dto;
 import com.zhengqing.common.core.custom.parameter.CheckParam;
 import com.zhengqing.common.core.custom.validator.common.ValidList;
 import com.zhengqing.mall.model.enums.OmsOrderStockCheckTypeEnum;
-import com.zhengqing.system.enums.SysPropertyKeyEnum;
+import com.zhengqing.system.enums.SysConfigConfigKeyEnum;
 import com.zhengqing.system.model.dto.SysDictSaveBatchDTO;
-import com.zhengqing.system.model.dto.SysPropertySaveDTO;
+import com.zhengqing.system.model.dto.SysConfigSaveDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -41,7 +41,7 @@ public class WebOmsOrderSetDTO implements CheckParam {
     @Valid
     @NotEmpty(message = "订单设置数据不能为空！")
     @ApiModelProperty("订单设置")
-    private ValidList<SysPropertySaveDTO> setList;
+    private ValidList<SysConfigSaveDTO> setList;
 
     /**
      * {@link OmsOrderStockCheckTypeEnum}
@@ -52,10 +52,10 @@ public class WebOmsOrderSetDTO implements CheckParam {
 
     @Override
     public void checkParam() {
-        this.setList.add(SysPropertySaveDTO.builder()
-                .key(SysPropertyKeyEnum.MALL_ORDER_SET_STOCK_CHECK_TYPE.getKey())
+        this.setList.add(SysConfigSaveDTO.builder()
+                .key(SysConfigConfigKeyEnum.MALL_ORDER_SET_STOCK_CHECK_TYPE.getKey())
                 .value(String.valueOf(this.payType))
-                .remark(SysPropertyKeyEnum.MALL_ORDER_SET_STOCK_CHECK_TYPE.getDesc())
+                .remark(SysConfigConfigKeyEnum.MALL_ORDER_SET_STOCK_CHECK_TYPE.getDesc())
                 .build());
     }
 

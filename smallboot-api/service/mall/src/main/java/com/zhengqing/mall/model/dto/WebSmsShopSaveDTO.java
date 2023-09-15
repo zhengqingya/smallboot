@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -41,14 +42,23 @@ public class WebSmsShopSaveDTO extends BaseDTO {
     @ApiModelProperty("门店名称")
     private String shopName;
 
+    @ApiModelProperty("省名称")
+    private String provinceName;
+
+    @ApiModelProperty("市名称")
+    private String cityName;
+
+    @ApiModelProperty("区名称")
+    private String areaName;
+
     @ApiModelProperty("门店详细地址")
     private String address;
 
     @ApiModelProperty("门店坐标-经度")
-    private String longitude;
+    private BigDecimal longitude;
 
     @ApiModelProperty("门店坐标-纬度")
-    private String latitude;
+    private BigDecimal latitude;
 
     /**
      * {@link SmsShopTypeEnum}
@@ -82,13 +92,13 @@ public class WebSmsShopSaveDTO extends BaseDTO {
 
     // ↓↓↓↓↓↓ 外卖信息 =======================
 
-    @ApiModelProperty("外卖配送费（满?分,配送费?分）")
-    private String deliverFeeList;
+//    @ApiModelProperty("外卖配送费（满?分,配送费?分）")
+//    private JSONArray deliverFeeList;
 
     @ApiModelProperty("外卖配送距离（单位：米）")
     private Integer deliverDistance;
 
-    @ApiModelProperty("外卖配送范围")
-    private String deliverScopeList;
+//    @ApiModelProperty("外卖配送范围")
+//    private JSONArray deliverScopeList;
 
 }

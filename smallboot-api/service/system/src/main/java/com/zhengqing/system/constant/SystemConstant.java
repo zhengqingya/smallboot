@@ -20,9 +20,9 @@ public interface SystemConstant {
      */
     String CACHE_SYS_DICT_PREFIX = "smallboot:system:dict:";
     /**
-     * 系统属性缓存
+     * 系统配置缓存
      */
-    String CACHE_SYS_PROPERTY_PREFIX = "smallboot:system:property:";
+    String CACHE_SYS_CONFIG_PREFIX = "smallboot:system:config:";
     /**
      * 系统缓存
      */

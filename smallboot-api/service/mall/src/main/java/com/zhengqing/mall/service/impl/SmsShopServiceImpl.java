@@ -52,29 +52,22 @@ public class SmsShopServiceImpl extends ServiceImpl<SmsShopMapper, SmsShop> impl
     @Transactional(rollbackFor = Exception.class)
     public void addOrUpdateData(WebSmsShopSaveDTO params) {
         Integer shopId = params.getShopId();
-        String shopName = params.getShopName();
-        String address = params.getAddress();
-        Integer type = params.getType();
-        String contactName = params.getContactName();
-        String contactPhone = params.getContactPhone();
-        String longitude = params.getLongitude();
-        String latitude = params.getLatitude();
-        String deliverFeeJson = params.getDeliverFeeList();
-        Integer deliverDistance = params.getDeliverDistance();
-        String deliverScopeJson = params.getDeliverScopeList();
 
         SmsShop.builder()
                 .shopId(shopId)
-                .shopName(shopName)
-                .address(address)
-                .type(type)
-                .contactName(contactName)
-                .contactPhone(contactPhone)
-                .longitude(longitude)
-                .latitude(latitude)
-                .deliverFeeList(deliverFeeJson)
-                .deliverDistance(deliverDistance)
-                .deliverScopeList(deliverScopeJson)
+                .shopName(params.getShopName())
+                .provinceName(params.getProvinceName())
+                .cityName(params.getCityName())
+                .areaName(params.getAreaName())
+                .address(params.getAddress())
+                .type(params.getType())
+                .contactName(params.getContactName())
+                .contactPhone(params.getContactPhone())
+                .longitude(params.getLongitude())
+                .latitude(params.getLatitude())
+//                .deliverFeeList(params.getDeliverFeeList())
+                .deliverDistance(params.getDeliverDistance())
+//                .deliverScopeList(params.getDeliverScopeList())
                 .isShow(params.getIsShow())
                 .snackStatus(params.getSnackStatus())
                 .takeoutStatus(params.getTakeoutStatus())

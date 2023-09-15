@@ -3,11 +3,11 @@ package com.zhengqing.system.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhengqing.common.core.custom.validator.common.ValidList;
-import com.zhengqing.system.entity.SysProperty;
-import com.zhengqing.system.model.dto.SysPropertyPageDTO;
-import com.zhengqing.system.model.dto.SysPropertySaveDTO;
-import com.zhengqing.system.model.vo.SysPropertyPageVO;
-import com.zhengqing.system.model.vo.SysPropertyVO;
+import com.zhengqing.system.entity.SysConfig;
+import com.zhengqing.system.model.dto.SysConfigPageDTO;
+import com.zhengqing.system.model.dto.SysConfigSaveDTO;
+import com.zhengqing.system.model.vo.SysConfigPageVO;
+import com.zhengqing.system.model.vo.SysConfigVO;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -15,13 +15,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * <p> 系统管理-系统属性 服务类 </p>
+ * <p> 系统管理-系统配置 服务类 </p>
  *
  * @author zhengqingya
  * @description
  * @date 2021/09/06 22:57
  */
-public interface ISysPropertyService extends IService<SysProperty> {
+public interface ISysConfigService extends IService<SysConfig> {
 
     /**
      * 分页列表
@@ -31,17 +31,17 @@ public interface ISysPropertyService extends IService<SysProperty> {
      * @author zhengqingya
      * @date 2020/9/10 14:44
      */
-    IPage<SysPropertyPageVO> listPage(SysPropertyPageDTO params);
+    IPage<SysConfigPageVO> listPage(SysConfigPageDTO params);
 
     /**
      * 通过属性key查询数据
      *
      * @param keyList 属性key
-     * @return 属性key -> 系统属性
+     * @return 属性key -> 系统配置
      * @author zhengqingya
      * @date 2021/09/06 22:57
      */
-    Map<String, SysPropertyVO> mapByKey(@NotEmpty(message = "属性key不能为空!") List<String> keyList);
+    Map<String, SysConfigVO> mapByKey(@NotEmpty(message = "属性key不能为空!") List<String> keyList);
 
     /**
      * 列表
@@ -51,27 +51,27 @@ public interface ISysPropertyService extends IService<SysProperty> {
      * @author zhengqingya
      * @date 2021/9/7 11:04
      */
-    List<SysPropertyVO> listByKey(@NotEmpty(message = "属性key不能为空!") List<String> keyList);
+    List<SysConfigVO> listByKey(@NotEmpty(message = "属性key不能为空!") List<String> keyList);
 
     /**
      * 通过属性key查询数据 - 数据库方式
      *
      * @param keyList 属性key
-     * @return 系统属性
+     * @return 系统配置
      * @author zhengqingya
      * @date 2021/09/06 22:57
      */
-    List<SysPropertyVO> listFromDbByKey(@NotEmpty(message = "属性key不能为空!") List<String> keyList);
+    List<SysConfigVO> listFromDbByKey(@NotEmpty(message = "属性key不能为空!") List<String> keyList);
 
     /**
      * 通过属性key查询数据 - 缓存方式
      *
      * @param keyList 属性key
-     * @return 系统属性
+     * @return 系统配置
      * @author zhengqingya
      * @date 2021/09/06 22:57
      */
-    List<SysPropertyVO> listFromCacheByKey(@NotEmpty(message = "属性key不能为空!") List<String> keyList);
+    List<SysConfigVO> listFromCacheByKey(@NotEmpty(message = "属性key不能为空!") List<String> keyList);
 
     /**
      * 详情
@@ -81,7 +81,7 @@ public interface ISysPropertyService extends IService<SysProperty> {
      * @author zhengqingya
      * @date 2021/09/06 22:57
      */
-    SysProperty detail(Integer id);
+    SysConfig detail(Integer id);
 
     /**
      * 详情
@@ -91,7 +91,7 @@ public interface ISysPropertyService extends IService<SysProperty> {
      * @author zhengqingya
      * @date 2021/09/06 22:57
      */
-    SysProperty detailByKey(@NotBlank(message = "属性不能为空!") String key);
+    SysConfig detailByKey(@NotBlank(message = "属性不能为空!") String key);
 
     /**
      * 新增或更新
@@ -101,7 +101,7 @@ public interface ISysPropertyService extends IService<SysProperty> {
      * @author zhengqingya
      * @date 2021/09/06 22:57
      */
-    void addOrUpdateData(SysPropertySaveDTO params);
+    void addOrUpdateData(SysConfigSaveDTO params);
 
     /**
      * 批量保存
@@ -111,7 +111,7 @@ public interface ISysPropertyService extends IService<SysProperty> {
      * @author zhengqingya
      * @date 2021/09/06 22:57
      */
-    void saveBatch(@NotEmpty(message = "属性不能为空!") ValidList<SysPropertySaveDTO> dataList);
+    void saveBatch(@NotEmpty(message = "属性不能为空!") ValidList<SysConfigSaveDTO> dataList);
 
     /**
      * 根据属性key删除数据

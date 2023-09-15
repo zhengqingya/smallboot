@@ -51,8 +51,8 @@ export const useUserStore = defineStore('user', () => {
     let result = await sysUserApi.getUserPerm();
     userObj.value = result.data;
 
-    // 初始化省市区数据
-    store.system.useSystemStore().initProvinceCityAreaList();
+    // 初始化系统设置数据
+    store.system.useSystemStore().init();
   }
 
   const routerList = computed(() => {

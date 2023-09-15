@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -42,14 +43,14 @@ public class SmsShop extends BaseEntity<SmsShop> {
     @ApiModelProperty("门店名称")
     private String shopName;
 
-    @ApiModelProperty("省代码")
-    private Integer provinceCode;
-
-    @ApiModelProperty("市代码")
-    private Integer cityCode;
-
-    @ApiModelProperty("区代码")
-    private Integer areaCode;
+//    @ApiModelProperty("省代码")
+//    private Integer provinceCode;
+//
+//    @ApiModelProperty("市代码")
+//    private Integer cityCode;
+//
+//    @ApiModelProperty("区代码")
+//    private Integer areaCode;
 
     @ApiModelProperty("省名称")
     private String provinceName;
@@ -64,10 +65,10 @@ public class SmsShop extends BaseEntity<SmsShop> {
     private String address;
 
     @ApiModelProperty("门店坐标-经度")
-    private String longitude;
+    private BigDecimal longitude;
 
     @ApiModelProperty("门店坐标-纬度")
-    private String latitude;
+    private BigDecimal latitude;
 
     /**
      * {@link SmsShopTypeEnum}
@@ -101,13 +102,13 @@ public class SmsShop extends BaseEntity<SmsShop> {
 
     // ↓↓↓↓↓↓ 外卖信息 =======================
 
-    @ApiModelProperty("外卖配送费（满?分,配送费?分）")
-    private String deliverFeeList;
+//    @ApiModelProperty("外卖配送费（满?分,配送费?分）")
+//    private JSONArray deliverFeeList;
 
     @ApiModelProperty("外卖配送距离（单位：米）")
     private Integer deliverDistance;
 
-    @ApiModelProperty("外卖配送范围")
-    private String deliverScopeList;
+//    @ApiModelProperty("外卖配送范围")
+//    private JSONArray deliverScopeList;
 
 }

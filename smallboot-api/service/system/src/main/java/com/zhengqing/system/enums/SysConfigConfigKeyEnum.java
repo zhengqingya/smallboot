@@ -2,7 +2,6 @@ package com.zhengqing.system.enums;
 
 import com.google.common.collect.Lists;
 import com.zhengqing.common.base.exception.MyException;
-import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -10,7 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * <p> 系统-系统属性key枚举 </p>
+ * <p> 系统-系统配置key枚举 </p>
  *
  * @author zhengqingya
  * @description
@@ -18,8 +17,7 @@ import java.util.List;
  */
 @Getter
 @AllArgsConstructor
-@ApiModel("系统-系统属性-类型")
-public enum SysPropertyKeyEnum {
+public enum SysConfigConfigKeyEnum {
 
     // ====================================== ↓↓↓↓↓↓ 商城 ↓↓↓↓↓↓ ======================================
 
@@ -37,15 +35,15 @@ public enum SysPropertyKeyEnum {
     private final String value;
     private final String desc;
 
-    private static final List<SysPropertyKeyEnum> LIST = Lists.newArrayList();
+    private static final List<SysConfigConfigKeyEnum> LIST = Lists.newArrayList();
 
     /**
      * 商城-订单-设置-枚举数据
      */
-    public static final List<SysPropertyKeyEnum> LIST_MALL_ORDER_SET = Lists.newArrayList();
+    public static final List<SysConfigConfigKeyEnum> LIST_MALL_ORDER_SET = Lists.newArrayList();
 
     static {
-        LIST.addAll(Arrays.asList(SysPropertyKeyEnum.values()));
+        LIST.addAll(Arrays.asList(SysConfigConfigKeyEnum.values()));
         // 商城-订单-设置-枚举数据
         LIST_MALL_ORDER_SET.add(MALL_ORDER_SET_AUTO_RECEIVE_MILLISECOND);
 //        LIST_MALL_ORDER_SET.add(MALL_ORDER_SET_UN_PAY_CLOSE_MILLISECOND);
@@ -56,20 +54,20 @@ public enum SysPropertyKeyEnum {
     }
 
     /**
-     * 根据指定的系统属性key查找相应枚举类
+     * 根据指定的系统配置key查找相应枚举类
      *
-     * @param key 系统属性key
-     * @return 系统属性key枚举
+     * @param key 系统配置key
+     * @return 系统配置key枚举
      * @author zhengqingya
      * @date 2021/8/19 9:50
      */
-    public static SysPropertyKeyEnum getEnum(String key) {
-        for (SysPropertyKeyEnum itemEnum : LIST) {
+    public static SysConfigConfigKeyEnum getEnum(String key) {
+        for (SysConfigConfigKeyEnum itemEnum : LIST) {
             if (itemEnum.getKey().equals(key)) {
                 return itemEnum;
             }
         }
-        throw new MyException("未找到指定的系统属性key！");
+        throw new MyException("未找到指定的系统配置key！");
     }
 
 }

@@ -13,11 +13,11 @@ import com.zhengqing.mall.model.vo.MallTabConditionListVO;
 import com.zhengqing.mall.model.vo.PmsSkuVO;
 import com.zhengqing.mall.service.MallCommonService;
 import com.zhengqing.system.enums.SysDictTypeEnum;
-import com.zhengqing.system.enums.SysPropertyKeyEnum;
+import com.zhengqing.system.enums.SysConfigConfigKeyEnum;
 import com.zhengqing.system.model.dto.SysDictSaveBatchDTO;
-import com.zhengqing.system.model.dto.SysPropertySaveDTO;
+import com.zhengqing.system.model.dto.SysConfigSaveDTO;
 import com.zhengqing.system.service.ISysDictService;
-import com.zhengqing.system.service.ISysPropertyService;
+import com.zhengqing.system.service.ISysConfigService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -44,7 +44,7 @@ public class MallCommonServiceImpl implements MallCommonService {
     private ISysDictService sysDictService;
 
     @Resource
-    private ISysPropertyService sysPropertyService;
+    private ISysConfigService iSysConfigService;
 
     @Override
     public MallFileVO uploadFile(MultipartFile file) {
@@ -225,10 +225,10 @@ public class MallCommonServiceImpl implements MallCommonService {
      */
     private void initOrderSetData() {
         // 订单-设置
-        ValidList<SysPropertySaveDTO> dataList = new ValidList<>();
-        SysPropertyKeyEnum.LIST_MALL_ORDER_SET.forEach(
-                item -> dataList.add(SysPropertySaveDTO.builder().key(item.getKey()).value(item.getValue()).remark(item.getDesc()).build()));
-        this.sysPropertyService.saveBatch(dataList);
+        ValidList<SysConfigSaveDTO> dataList = new ValidList<>();
+        SysConfigConfigKeyEnum.LIST_MALL_ORDER_SET.forEach(
+                item -> dataList.add(SysConfigSaveDTO.builder().key(item.getKey()).value(item.getValue()).remark(item.getDesc()).build()));
+        this.iSysConfigService.saveBatch(dataList);
 
         // 订单-发货微信消息通知
         String codeForMsg = SysDictTypeEnum.MALL_ORDER_DELIVER_WX_MSG_NOTICE.getCode();

@@ -5,12 +5,13 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.zhengqing.common.db.entity.BaseEntity;
+import com.zhengqing.system.enums.SysConfigTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 /**
- * <p> 系统管理-系统属性 </p>
+ * <p> 系统管理-系统配置 </p>
  *
  * @author zhengqingya
  * @description
@@ -21,9 +22,9 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("t_sys_property")
-@ApiModel("系统管理-系统属性")
-public class SysProperty extends BaseEntity<SysProperty> {
+@TableName("t_sys_config")
+@ApiModel("系统管理-系统配置")
+public class SysConfig extends BaseEntity<SysConfig> {
 
     @ApiModelProperty("主键ID")
     @TableId(value = "id", type = IdType.AUTO)
@@ -38,5 +39,11 @@ public class SysProperty extends BaseEntity<SysProperty> {
 
     @ApiModelProperty("备注")
     private String remark;
+
+    /**
+     * {@link SysConfigTypeEnum}
+     */
+    @ApiModelProperty("类型（1:配置 2:属性）")
+    private Integer type;
 
 }

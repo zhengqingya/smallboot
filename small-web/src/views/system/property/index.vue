@@ -8,7 +8,7 @@
       </template>
     </base-header>
 
-    <base-table-p ref="baseTableRef" api="sys_property.listPage" :params="listQuery">
+    <base-table-p ref="baseTableRef" api="sys_config.listPage" :params="listQuery">
       <el-table-column prop="key" label="属性key" />
       <el-table-column prop="value" label="属性value" />
       <el-table-column prop="remark" label="备注" />
@@ -46,7 +46,7 @@ const state = reactive({
   form: {},
   dialogVisible: false,
   listLoading: false,
-  listQuery: {},
+  listQuery: { type: 2 },
   dialogStatus: '',
 });
 const { form, dialogVisible, listQuery, dialogStatus } = toRefs(state);
@@ -57,7 +57,8 @@ async function refreshTableData() {
 function saveForm() {
   proxy.$refs.formRef.validate(async (valid) => {
     if (valid) {
-      let res = await proxy.$api.sys_property[state.form.id ? 'update' : 'add'](state.form);
+      state.form.type = 2;
+      let res = await proxy.$api.sys_config[state.form.id ? 'update' : 'add'](state.form);
       proxy.submitOk(res.msg);
       refreshTableData();
       state.dialogVisible = false;
@@ -75,7 +76,7 @@ function add() {
   state.form = {};
 }
 async function deleteData(id) {
-  let res = await proxy.$api.sys_property.delete(id);
+  let res = await proxy.$api.sys_config.delete(id);
   proxy.submitOk(res.msg);
   refreshTableData();
 }

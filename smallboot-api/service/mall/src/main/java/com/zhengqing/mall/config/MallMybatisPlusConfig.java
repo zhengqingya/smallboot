@@ -32,6 +32,7 @@ public class MallMybatisPlusConfig {
         MybatisPlusConfig.TENANT_ID_TABLE.add("pms_spu_rate");
         MybatisPlusConfig.TENANT_ID_TABLE.add("pms_spu_rate_reply_relation");
         MybatisPlusConfig.TENANT_ID_TABLE.add("pms_sku");
+        MybatisPlusConfig.TENANT_ID_TABLE.add("sms_shop");
     }
 
 }

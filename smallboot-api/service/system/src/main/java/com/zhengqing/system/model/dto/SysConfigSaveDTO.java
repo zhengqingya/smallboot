@@ -2,6 +2,7 @@ package com.zhengqing.system.model.dto;
 
 import com.zhengqing.common.base.model.dto.BaseDTO;
 import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
+import com.zhengqing.system.enums.SysConfigTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -14,7 +15,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 /**
- * <p> 系统管理-系统属性-保存-提交参数 </p>
+ * <p> 系统管理-系统配置-保存-提交参数 </p>
  *
  * @author zhengqingya
  * @description
@@ -25,8 +26,8 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@ApiModel("系统管理-系统属性-保存-提交参数")
-public class SysPropertySaveDTO extends BaseDTO {
+@ApiModel("系统管理-系统配置-保存-提交参数")
+public class SysConfigSaveDTO extends BaseDTO {
 
     @NotNull(message = "主键ID不能为空！", groups = UpdateGroup.class)
     @ApiModelProperty(value = "主键ID", example = "1")
@@ -43,5 +44,12 @@ public class SysPropertySaveDTO extends BaseDTO {
     @NotBlank(message = "备注不能为空!")
     @ApiModelProperty(value = "备注", example = "this is remark!")
     private String remark;
+
+    /**
+     * {@link SysConfigTypeEnum}
+     */
+    @NotNull(message = "类型不能为空！")
+    @ApiModelProperty("类型（1:配置 2:属性）")
+    private Integer type;
 
 }

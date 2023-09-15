@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 
-const BASE_API = '/web/api/system/property';
+const BASE_API = '/web/api/system/config';
 
 export default {
   listPage(query, headers) {
@@ -32,6 +32,27 @@ export default {
       params: {
         id: id,
       },
+    });
+  },
+  list(query) {
+    return request({
+      url: BASE_API + '/list',
+      method: 'get',
+      params: query,
+    });
+  },
+  listByKey(query) {
+    return request({
+      url: BASE_API + '/listByKey',
+      method: 'get',
+      params: query,
+    });
+  },
+  saveBatch(data) {
+    return request({
+      url: BASE_API + '/saveBatch',
+      method: 'post',
+      data,
     });
   },
 };

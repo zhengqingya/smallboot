@@ -32,4 +32,11 @@ export default {
       params: params,
     });
   },
+  detail(params) {
+    return request({
+      url: BASE_API + '/detail',
+      method: 'get',
+      params: params,
+    });
+  },
 };

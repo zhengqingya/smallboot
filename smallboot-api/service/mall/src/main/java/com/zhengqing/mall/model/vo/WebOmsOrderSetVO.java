@@ -3,7 +3,7 @@ package com.zhengqing.mall.model.vo;
 import com.zhengqing.common.base.model.vo.BaseVO;
 import com.zhengqing.mall.model.enums.OmsOrderStockCheckTypeEnum;
 import com.zhengqing.system.model.vo.SysDictVO;
-import com.zhengqing.system.model.vo.SysPropertyVO;
+import com.zhengqing.system.model.vo.SysConfigVO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -35,7 +35,7 @@ public class WebOmsOrderSetVO extends BaseVO {
     private List<SysDictVO> wxMsgList;
 
     @ApiModelProperty("订单设置")
-    private List<SysPropertyVO> setList;
+    private List<SysConfigVO> setList;
 
     /**
      * {@link OmsOrderStockCheckTypeEnum}

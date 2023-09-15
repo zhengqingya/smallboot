@@ -3,33 +3,7 @@
 <mapper namespace="com.zhengqing.mall.mapper.SmsShopMapper">
 
     <select id="selectDataPage" resultType="com.zhengqing.mall.model.vo.WebSmsShopPageVO">
-        SELECT
-        shop_id,
-        tenant_id,
-        shop_name,
-        province_code,
-        city_code,
-        area_code,
-        province_name,
-        city_name,
-        area_name,
-        address,
-        type,
-        contact_name,
-        contact_phone,
-        longitude,
-        latitude,
-        deliver_fee_json,
-        deliver_distance,
-        deliver_scope_list,
-        is_show,
-        snack_status,
-        takeout_status,
-        open_status,
-        open_time_list,
-        start_time,
-        end_time
-        FROM sms_shop
+        SELECT * FROM sms_shop
         <where>
             is_deleted=0
             <if test="filter.shopId!=null">
@@ -43,42 +17,14 @@
     </select>
 
     <select id="detail" resultType="com.zhengqing.mall.model.vo.WebSmsShopDetailVO">
-        SELECT
-        shop_id,
-        tenant_id,
-        shop_name,
-        province_code,
-        city_code,
-        area_code,
-        province_name,
-        city_name,
-        area_name,
-        address,
-        type,
-        contact_name,
-        contact_phone,
-        longitude,
-        latitude,
-        deliver_fee_json,
-        deliver_distance,
-        deliver_scope_list,
-        is_show,
-        snack_status,
-        takeout_status,
-        open_status,
-        open_time_list,
-        start_time,
-        end_time
-        FROM sms_shop
+        SELECT * FROM sms_shop
         <where>
             is_deleted=0
             <if test="filter.shopId!=null">
                 AND shop_id = #{filter.shopId}
             </if>
-            <if test="filter.shopName!=null and filter.shopName!=''">
-                AND shop_name LIKE CONCAT( '%', #{filter.shopName} , '%' )
-            </if>
         </where>
+        LIMIT 1
     </select>
 
 </mapper>

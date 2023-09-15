@@ -10,12 +10,14 @@ import lombok.RequiredArgsConstructor;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.zhengqing.utils.MyBeanUtils;
 import ${package.vo}.${entity}DetailVO;
 import ${package.vo}.${entity}PageVO;
 import ${package.dto}.${entity}PageDTO;
 import ${package.dto}.${entity}DetailDTO;
 import ${package.dto}.${entity}SaveDTO;
+import ${package.mapper}.${entity}Mapper;
+import ${package.entity}.${entity};
+import ${package.service}.I${entity}Service;
 import lombok.extern.slf4j.Slf4j;
 
 /**
