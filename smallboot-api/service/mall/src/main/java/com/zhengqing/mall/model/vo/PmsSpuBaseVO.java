@@ -2,6 +2,8 @@ package com.zhengqing.mall.model.vo;
 
 import com.zhengqing.common.base.model.vo.BaseVO;
 import com.zhengqing.common.core.custom.fileprefix.FilePrefix;
+import com.zhengqing.mall.model.bo.MallDictBO;
+import com.zhengqing.mall.model.bo.MallFileBO;
 import com.zhengqing.mall.model.bo.PmsSkuBO;
 import com.zhengqing.mall.model.enums.PmsSpuPresellStatusEnum;
 import com.zhengqing.mall.model.enums.PmsSpuTypeEnum;
@@ -109,7 +111,26 @@ public class PmsSpuBaseVO extends BaseVO {
     @ApiModelProperty("预售状态")
     private Byte presellStatus;
 
-    public void handleData(List<?> skuList) {
+
+//    @ApiModelProperty("商品属性")
+//    private List<WebPmsAttrBO> attrList;
+
+    @ApiModelProperty(value = "轮播图")
+    private List<MallFileBO> slideImgList;
+
+    @ApiModelProperty("商品详情图")
+    private List<MallFileBO> detailImgList;
+
+    @ApiModelProperty(value = "商品关联服务")
+    private List<MallDictBO> serviceList;
+
+    @ApiModelProperty(value = "商品关联说明")
+    private List<MallDictBO> explainList;
+
+    @ApiModelProperty("规格明细列表")
+    private List<PmsSkuBO> skuList;
+
+    public void handleData(List<PmsSkuBO> skuList) {
         this.handleSkuData(skuList);
         this.typeName = PmsSpuTypeEnum.getEnum(this.type).getDesc();
         // 是否获取预售价格区间值，否则取销售区间价格

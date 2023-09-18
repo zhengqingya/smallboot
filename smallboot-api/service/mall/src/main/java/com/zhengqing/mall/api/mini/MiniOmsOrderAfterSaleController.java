@@ -3,13 +3,13 @@ package com.zhengqing.mall.api.mini;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.mall.entity.OmsOrderAfterSale;
-import com.zhengqing.mall.model.dto.MiniOmsOrderAfterSalePageDTO;
 import com.zhengqing.mall.model.dto.MiniOmsOrderAfterSaleUpdateDTO;
 import com.zhengqing.mall.model.dto.MiniOmsOrderRepealAfterSaleDTO;
 import com.zhengqing.mall.model.dto.OmsOrderAfterSaleDeleteDTO;
+import com.zhengqing.mall.model.dto.OmsOrderAfterSalePageDTO;
 import com.zhengqing.mall.model.enums.OmsOrderAfterSaleStatusEnum;
-import com.zhengqing.mall.model.vo.MiniOmsOrderAfterSaleDetailVO;
-import com.zhengqing.mall.model.vo.MiniOmsOrderAfterSalePageVO;
+import com.zhengqing.mall.model.vo.OmsOrderAfterSaleDetailVO;
+import com.zhengqing.mall.model.vo.OmsOrderAfterSalePageVO;
 import com.zhengqing.mall.service.IOmsOrderAfterSaleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -35,14 +35,14 @@ public class MiniOmsOrderAfterSaleController {
 
     @GetMapping("page")
     @ApiOperation("列表分页")
-    public IPage<MiniOmsOrderAfterSalePageVO> page(@Validated @ModelAttribute MiniOmsOrderAfterSalePageDTO params) {
+    public IPage<OmsOrderAfterSalePageVO> page(@Validated @ModelAttribute OmsOrderAfterSalePageDTO params) {
         return this.iOmsOrderAfterSaleService.page(params);
     }
 
     @GetMapping("")
     @ApiOperation("详情")
-    public MiniOmsOrderAfterSaleDetailVO detail(@RequestParam String afterSaleNo) {
-        return this.iOmsOrderAfterSaleService.detailByMini(afterSaleNo);
+    public OmsOrderAfterSaleDetailVO detail(@RequestParam String afterSaleNo) {
+        return this.iOmsOrderAfterSaleService.detailData(afterSaleNo);
     }
 
     @PutMapping("")

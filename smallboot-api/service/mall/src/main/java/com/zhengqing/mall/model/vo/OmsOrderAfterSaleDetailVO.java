@@ -28,7 +28,7 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ApiModel("web-商城-售后-详情-展示视图")
-public class WebOmsOrderAfterSaleDetailVO extends WebOmsOrderAfterSaleBaseVO {
+public class OmsOrderAfterSaleDetailVO extends WebOmsOrderAfterSaleBaseVO {
 
     @ApiModelProperty("退款,退/换货 原因")
     private String afterReason;

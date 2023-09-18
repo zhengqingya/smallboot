@@ -453,68 +453,6 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
     }
 
     @Override
-    public List<MallTabConditionListVO> getTabCondition(MiniOmsOrderPageDTO params) {
-        params.setOrderStatus(null);
-        // 查询tab条件数量
-        List<MallTabConditionListVO> tabDataList = this.omsOrderMapper.selectTabConditionByMini(
-                params);
-        List<MallTabConditionListVO> result = this.iMallCommonService.getTabDataList(tabDataList,
-                SysDictTypeEnum.MALL_ORDER_TAB_CONDITION_MINI);
-        for (MallTabConditionListVO item : result) {
-            if (MiniOmsOrderTabEnum.AFTER_SALE.getValue().equals(item.getValue())) {
-                item.setNum(this.iOmsOrderAfterSaleService.getHandleIngNum(params.getUserId()));
-                item.setIsAfterSale(true);
-                break;
-            }
-        }
-        return result;
-    }
-
-    @Override
-    public IPage<MiniOmsOrderPageVO> page(MiniOmsOrderPageDTO params) {
-        IPage<MiniOmsOrderPageVO> miniOmsOrderPage = this.omsOrderMapper.selectDataListByMini(
-                new Page<>(), params);
-        List<MiniOmsOrderPageVO> list = miniOmsOrderPage.getRecords();
-        if (CollectionUtils.isEmpty(list)) {
-            return miniOmsOrderPage;
-        }
-        // 订单编号list
-        List<String> orderNoList = list.stream().map(MiniOmsOrderPageVO::getOrderNo)
-                .collect(Collectors.toList());
-        // 查询订单关联商品数据
-        Map<String, List<OmsOrderItemVO>> orderItemMap = this.iOmsOrderItemService.mapInfo(
-                OmsOrderItemDTO.builder()
-                        .orderNoList(orderNoList).build());
-        list.forEach(item -> {
-            String orderNo = item.getOrderNo();
-            List<OmsOrderItemVO> miniOmsOrderItemList = orderItemMap.get(orderNo);
-            item.setSpuList(miniOmsOrderItemList);
-            item.handleData();
-        });
-        return miniOmsOrderPage;
-    }
-
-    @Override
-    public MiniOmsOrderDetailVO detailByMini(String orderNo) {
-        // 1、订单主体详情
-        MiniOmsOrderDetailVO miniOmsOrderDetailVO = this.omsOrderMapper.detailByMini(orderNo);
-        Assert.notNull(miniOmsOrderDetailVO, "该订单不存在！");
-
-        // 2、订单关联商品详情
-        List<OmsOrderItemVO> orderItemList = this.iOmsOrderItemService.listByOrderNo(orderNo);
-        miniOmsOrderDetailVO.setSpuList(orderItemList);
-
-        // 3、订单关联配送详情
-        List<OmsOrderShippingVO> shippingList = this.iOmsOrderShippingService.listByOrderNo(
-                orderNo);
-        miniOmsOrderDetailVO.setShippingList(shippingList);
-
-        // 4、处理数据
-        miniOmsOrderDetailVO.handleData();
-        return miniOmsOrderDetailVO;
-    }
-
-    @Override
     @Transactional(rollbackFor = Exception.class)
     public void unPayCallback(MiniOmsOrderUnPayDTO params) {
         String orderNo = params.getOrderNo();
@@ -800,18 +738,28 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
 //    }
 
     @Override
-    public List<MallTabConditionListVO> getTabCondition(WebOmsOrderPageDTO params) {
+    public List<MallTabConditionListVO> getTabCondition(OmsOrderPageDTO params) {
         params.setOrderStatus(null);
+
         // 查询tab条件数量
         List<MallTabConditionListVO> tabDataList = this.omsOrderMapper.selectTabConditionByWeb(params);
+
+        List<MallTabConditionListVO> result = this.iMallCommonService.getTabDataList(tabDataList, SysDictTypeEnum.MALL_ORDER_TAB_CONDITION_WEB);
+        for (MallTabConditionListVO item : result) {
+            if (WebOmsOrderTabEnum.AFTER_SALE.getValue().equals(item.getValue())) {
+                item.setNum(this.iOmsOrderAfterSaleService.getHandleIngNum(UmsUserContext.getUserId()));
+                item.setIsAfterSale(true);
+                break;
+            }
+        }
+
         return this.iMallCommonService.getTabDataList(tabDataList, SysDictTypeEnum.MALL_ORDER_TAB_CONDITION_WEB);
     }
 
     @Override
-    public IPage<WebOmsOrderPageVO> page(WebOmsOrderPageDTO params) {
-        IPage<WebOmsOrderPageVO> result = this.omsOrderMapper.selectDataListByWeb(
-                new Page<>(), params);
-        List<WebOmsOrderPageVO> list = result.getRecords();
+    public IPage<OmsOrderBaseVO> page(OmsOrderPageDTO params) {
+        IPage<OmsOrderBaseVO> result = this.omsOrderMapper.selectDataList(new Page<>(), params);
+        List<OmsOrderBaseVO> list = result.getRecords();
         this.handleOrderListData(list);
         return result;
     }
@@ -824,12 +772,11 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
      * @author zhengqingya
      * @date 2021/10/25 9:52
      */
-    private List<WebOmsOrderPageVO> handleOrderListData(List<WebOmsOrderPageVO> list) {
+    private List<OmsOrderBaseVO> handleOrderListData(List<OmsOrderBaseVO> list) {
         // 订单编号list
-        List<String> orderNoList = list.stream().map(WebOmsOrderPageVO::getOrderNo).collect(Collectors.toList());
+        List<String> orderNoList = list.stream().map(OmsOrderBaseVO::getOrderNo).collect(Collectors.toList());
         // 查询订单关联商品数据
-        Map<String, List<OmsOrderItemVO>> orderItemMap = this.iOmsOrderItemService.mapInfo(
-                OmsOrderItemDTO.builder().orderNoList(orderNoList).build());
+        Map<String, List<OmsOrderItemVO>> orderItemMap = this.iOmsOrderItemService.mapInfo(OmsOrderItemDTO.builder().orderNoList(orderNoList).build());
         // 查询订单关联配送数据
         Map<String, List<OmsOrderShippingVO>> shippingInfoMap = this.iOmsOrderShippingService.mapByOrderNoList(orderNoList);
         // 查询订单关联售后数据
@@ -856,13 +803,14 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
     }
 
     @Override
-    public WebOmsOrderDetailVO detail(String orderNo) {
+    public OmsOrderBaseVO detail(String orderNo) {
         log.info("[商城] 查询订单详情 订单编号：{}", orderNo);
         // 1、查询订单基本信息
-        WebOmsOrderDetailVO orderDetail = this.omsOrderMapper.detailByWeb(orderNo);
+        OmsOrderBaseVO orderDetail = this.omsOrderMapper.detailData(orderNo);
         Assert.notNull(orderDetail, "该订单不存在！");
         // 2、查询关联物流信息
         List<OmsOrderShippingVO> orderShippingList = this.iOmsOrderShippingService.listByOrderNo(orderNo);
+        orderDetail.setShippingList(orderShippingList);
         if (!CollectionUtils.isEmpty(orderShippingList)) {
             OmsOrderShippingVO orderShipping = orderShippingList.get(0);
             orderDetail.setShippingObj(WebOmsOrderReShippingBO.builder()
@@ -975,7 +923,7 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
 
     @Override
     @SneakyThrows(Exception.class)
-    public void export(HttpServletResponse response, WebOmsOrderPageDTO params) {
+    public void export(HttpServletResponse response, OmsOrderPageDTO params) {
         // 1、查询订单数据
         List<WebOmsOrderExportVO> exportOrderDataList = this.getExportOrderData(params);
         if (!CollectionUtils.isEmpty(exportOrderDataList)) {
@@ -1001,7 +949,7 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
      * @author zhengqingya
      * @date 2021/7/6 18:00
      */
-    private List<WebOmsOrderExportVO> getExportOrderData(WebOmsOrderPageDTO params) {
+    private List<WebOmsOrderExportVO> getExportOrderData(OmsOrderPageDTO params) {
         List<WebOmsOrderExportVO> resultList = Lists.newLinkedList();
         List<WebOmsOrderExportVO> orderList = this.omsOrderMapper.selectExportDataListByWeb(params);
         // 订单编号list

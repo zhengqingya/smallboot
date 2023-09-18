@@ -4,8 +4,13 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhengqing.mall.entity.OmsOrderAfterSale;
 import com.zhengqing.mall.model.bo.OmsOrderAfterSaleCloseBO;
-import com.zhengqing.mall.model.dto.*;
-import com.zhengqing.mall.model.vo.*;
+import com.zhengqing.mall.model.dto.MiniOmsOrderRepealAfterSaleDTO;
+import com.zhengqing.mall.model.dto.OmsOrderAfterSaleDeleteDTO;
+import com.zhengqing.mall.model.dto.OmsOrderAfterSalePageDTO;
+import com.zhengqing.mall.model.dto.WebOmsOrderAfterSaleUpdateDTO;
+import com.zhengqing.mall.model.vo.MallTabConditionListVO;
+import com.zhengqing.mall.model.vo.OmsOrderAfterSaleDetailVO;
+import com.zhengqing.mall.model.vo.OmsOrderAfterSalePageVO;
 import com.zhengqing.pay.model.bo.PayOrderNotifyBO;
 
 import java.util.List;
@@ -131,26 +136,6 @@ public interface IOmsOrderAfterSaleService extends IService<OmsOrderAfterSale> {
     List<String> getNoApplyReOrderItemIdListByOrderNo(String orderNo);
 
     /**
-     * 分页列表
-     *
-     * @param params 提交参数
-     * @return 订单信息
-     * @author zhengqingya
-     * @date 2021/10/18 11:46
-     */
-    IPage<MiniOmsOrderAfterSalePageVO> page(MiniOmsOrderAfterSalePageDTO params);
-
-    /**
-     * 详情
-     *
-     * @param afterSaleNo 售后编号
-     * @return 详情数据
-     * @author zhengqingya
-     * @date 2021/10/21 11:06
-     */
-    MiniOmsOrderAfterSaleDetailVO detailByMini(String afterSaleNo);
-
-    /**
      * 申请售后-撤销
      *
      * @param params
@@ -168,7 +153,7 @@ public interface IOmsOrderAfterSaleService extends IService<OmsOrderAfterSale> {
      * @author zhengqingya
      * @date 2021/8/26 15:45
      */
-    List<MallTabConditionListVO> getTabCondition(WebOmsOrderAfterSalePageDTO params);
+    List<MallTabConditionListVO> getTabCondition(OmsOrderAfterSalePageDTO params);
 
     /**
      * 分页列表
@@ -178,7 +163,7 @@ public interface IOmsOrderAfterSaleService extends IService<OmsOrderAfterSale> {
      * @author zhengqingya
      * @date 2021/10/22 16:04
      */
-    IPage<WebOmsOrderAfterSalePageVO> page(WebOmsOrderAfterSalePageDTO params);
+    IPage<OmsOrderAfterSalePageVO> page(OmsOrderAfterSalePageDTO params);
 
     /**
      * 详情
@@ -188,7 +173,7 @@ public interface IOmsOrderAfterSaleService extends IService<OmsOrderAfterSale> {
      * @author zhengqingya
      * @date 2021/10/21 11:06
      */
-    WebOmsOrderAfterSaleDetailVO detailByWeb(String afterSaleNo);
+    OmsOrderAfterSaleDetailVO detailData(String afterSaleNo);
 
     /**
      * 更新

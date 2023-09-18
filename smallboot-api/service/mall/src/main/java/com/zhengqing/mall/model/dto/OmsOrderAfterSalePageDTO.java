@@ -34,7 +34,7 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ApiModel("web-商城-售后列表-查询参数")
-public class WebOmsOrderAfterSalePageDTO extends BasePageDTO implements CheckParam {
+public class OmsOrderAfterSalePageDTO extends BasePageDTO implements CheckParam {
 
     /**
      * {@link OmsOrderAfterSaleTabEnum}

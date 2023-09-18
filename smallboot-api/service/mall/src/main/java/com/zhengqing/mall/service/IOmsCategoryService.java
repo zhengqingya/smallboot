@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhengqing.mall.entity.PmsCategory;
 import com.zhengqing.mall.model.dto.*;
-import com.zhengqing.mall.model.vo.*;
+import com.zhengqing.mall.model.vo.MiniPmsCategoryReSpuListVO;
+import com.zhengqing.mall.model.vo.WebPmsCategoryListVO;
+import com.zhengqing.mall.model.vo.WebPmsCategoryPageVO;
 
 import java.util.List;
 
@@ -36,26 +38,6 @@ public interface IOmsCategoryService extends IService<PmsCategory> {
      * @date 2022/3/2 11:39
      */
     void deleteBatch(List<String> idList);
-
-    /**
-     * 分页列表
-     *
-     * @param params 查询参数
-     * @return 查询结果
-     * @author zhengqingya
-     * @date 2022/02/10 14:01
-     */
-    IPage<MiniPmsCategoryPageVO> page(MiniPmsCategoryPageDTO params);
-
-    /**
-     * 列表
-     *
-     * @param params 查询参数
-     * @return 查询结果
-     * @author zhengqingya
-     * @date 2022/3/7 18:43
-     */
-    List<MiniPmsCategoryListVO> list(MiniPmsCategoryListDTO params);
 
     /**
      * 列表(包含关联商品数据)

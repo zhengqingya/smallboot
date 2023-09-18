@@ -31,7 +31,13 @@ import java.util.Date;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ApiModel("web-商城-订单信息-分页列表-请求参数")
-public class WebOmsOrderPageDTO extends BasePageDTO implements CheckParam {
+public class OmsOrderPageDTO extends BasePageDTO implements CheckParam {
+
+    @ApiModelProperty("搜索关键字（订单号或商品名称）")
+    private String keyWord;
+
+    @ApiModelProperty("数据类型（1:今日订单 2：历史订单）")
+    private Integer dataType;
 
     /**
      * {@link WebOmsOrderTabEnum}

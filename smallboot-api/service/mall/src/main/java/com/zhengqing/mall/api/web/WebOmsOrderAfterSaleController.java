@@ -2,11 +2,11 @@ package com.zhengqing.mall.api.web;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.common.base.constant.ServiceConstant;
-import com.zhengqing.mall.model.dto.WebOmsOrderAfterSalePageDTO;
+import com.zhengqing.mall.model.dto.OmsOrderAfterSalePageDTO;
 import com.zhengqing.mall.model.dto.WebOmsOrderAfterSaleUpdateDTO;
 import com.zhengqing.mall.model.vo.MallTabConditionListVO;
-import com.zhengqing.mall.model.vo.WebOmsOrderAfterSaleDetailVO;
-import com.zhengqing.mall.model.vo.WebOmsOrderAfterSalePageVO;
+import com.zhengqing.mall.model.vo.OmsOrderAfterSaleDetailVO;
+import com.zhengqing.mall.model.vo.OmsOrderAfterSalePageVO;
 import com.zhengqing.mall.service.IOmsOrderAfterSaleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -34,21 +34,21 @@ public class WebOmsOrderAfterSaleController {
 
     @GetMapping("getTabCondition")
     @ApiOperation("获取tab条件")
-    public List<MallTabConditionListVO> getTabCondition(@ModelAttribute WebOmsOrderAfterSalePageDTO params) {
+    public List<MallTabConditionListVO> getTabCondition(@ModelAttribute OmsOrderAfterSalePageDTO params) {
         params.setTabValue(null);
         return this.iOmsOrderAfterSaleService.getTabCondition(params);
     }
 
     @GetMapping("page")
     @ApiOperation("列表分页")
-    public IPage<WebOmsOrderAfterSalePageVO> page(@Validated @ModelAttribute WebOmsOrderAfterSalePageDTO params) {
+    public IPage<OmsOrderAfterSalePageVO> page(@Validated @ModelAttribute OmsOrderAfterSalePageDTO params) {
         return this.iOmsOrderAfterSaleService.page(params);
     }
 
     @GetMapping("")
     @ApiOperation("详情")
-    public WebOmsOrderAfterSaleDetailVO detail(@RequestParam String afterSaleNo) {
-        return this.iOmsOrderAfterSaleService.detailByWeb(afterSaleNo);
+    public OmsOrderAfterSaleDetailVO detail(@RequestParam String afterSaleNo) {
+        return this.iOmsOrderAfterSaleService.detailData(afterSaleNo);
     }
 
     @PutMapping("")

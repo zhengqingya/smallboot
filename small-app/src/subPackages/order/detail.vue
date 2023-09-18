@@ -150,6 +150,8 @@ async function orderDetail() {
 // 购物车数据
 async function getCartList() {
   let cartList = await proxy.$api.cart.list();
+  // 过滤掉已失效的商品
+  cartList = cartList.filter((e) => !e.isLose);
   let sumPrice = cartList.reduce((total, item) => (total += item.num * item.price), 0);
   orderObj.value.spuList = cartList;
   orderObj.value.totalPrice = sumPrice;

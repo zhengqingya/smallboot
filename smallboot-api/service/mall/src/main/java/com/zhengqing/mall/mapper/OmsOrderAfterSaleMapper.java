@@ -4,8 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.mall.entity.OmsOrderAfterSale;
 import com.zhengqing.mall.model.bo.PmsSkuStockBO;
-import com.zhengqing.mall.model.dto.MiniOmsOrderAfterSalePageDTO;
-import com.zhengqing.mall.model.dto.WebOmsOrderAfterSalePageDTO;
+import com.zhengqing.mall.model.dto.OmsOrderAfterSalePageDTO;
 import com.zhengqing.mall.model.vo.*;
 import org.apache.ibatis.annotations.Param;
 
@@ -28,7 +27,7 @@ public interface OmsOrderAfterSaleMapper extends BaseMapper<OmsOrderAfterSale> {
      * @author zhengqingya
      * @date 2021/8/26 15:45
      */
-    List<MallTabConditionListVO> selectTabCondition(@Param("filter") WebOmsOrderAfterSalePageDTO filter);
+    List<MallTabConditionListVO> selectTabCondition(@Param("filter") OmsOrderAfterSalePageDTO filter);
 
     /**
      * 分页列表
@@ -39,7 +38,7 @@ public interface OmsOrderAfterSaleMapper extends BaseMapper<OmsOrderAfterSale> {
      * @author zhengqingya
      * @date 2021/10/18 11:46
      */
-    IPage<WebOmsOrderAfterSalePageVO> selectDataListByWeb(IPage<WebOmsOrderAfterSalePageVO> page, @Param("filter") WebOmsOrderAfterSalePageDTO filter);
+    IPage<OmsOrderAfterSalePageVO> selectDataListByWeb(IPage<OmsOrderAfterSalePageVO> page, @Param("filter") OmsOrderAfterSalePageDTO filter);
 
     /**
      * 查询该订单是否处理售后(售后中/售后完成)
@@ -69,7 +68,7 @@ public interface OmsOrderAfterSaleMapper extends BaseMapper<OmsOrderAfterSale> {
      * @author zhengqingya
      * @date 2021/8/30 17:31
      */
-    WebOmsOrderAfterSaleDetailVO detailByWeb(@Param("afterSaleNo") String afterSaleNo);
+    OmsOrderAfterSaleDetailVO detailByWeb(@Param("afterSaleNo") String afterSaleNo);
 
     /**
      * 查询该售后订单关联的商品信息
@@ -94,25 +93,6 @@ public interface OmsOrderAfterSaleMapper extends BaseMapper<OmsOrderAfterSale> {
 
     // ------------------------------------------------------------------------------------------------------
 
-    /**
-     * 分页列表
-     *
-     * @param filter 查询过滤参数
-     * @return 售后信息
-     * @author zhengqingya
-     * @date 2021/10/18 11:46
-     */
-    IPage<MiniOmsOrderAfterSalePageVO> selectDataListByMini(IPage<MiniOmsOrderAfterSalePageVO> page, @Param("filter") MiniOmsOrderAfterSalePageDTO filter);
-
-    /**
-     * 详情
-     *
-     * @param afterSaleNo 售后编号
-     * @return 详情
-     * @author zhengqingya
-     * @date 2021/8/30 17:31
-     */
-    MiniOmsOrderAfterSaleDetailVO detailByMini(@Param("afterSaleNo") String afterSaleNo);
 
     /**
      * 根据订单号查询不可申请售后的订单详情ids

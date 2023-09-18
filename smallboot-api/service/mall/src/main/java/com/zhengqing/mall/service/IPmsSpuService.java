@@ -47,7 +47,7 @@ public interface IPmsSpuService extends IService<PmsSpu> {
      * @author zhengqingya
      * @date 2021/12/22 17:12
      */
-    void handleSpuData(PmsSpuDetailVO spuDetail);
+    void handleSpuData(PmsSpuBaseVO spuDetail);
 
     /**
      * sku-列表
@@ -80,27 +80,6 @@ public interface IPmsSpuService extends IService<PmsSpu> {
     PmsSkuVO sku(String skuId);
 
     /**
-     * 列表分页
-     *
-     * @param params 查询参数
-     * @return 查询结果
-     * @author zhengqingya
-     * @date 2021/08/17 15:33
-     */
-    IPage<MiniPmsSpuPageVO> page(MiniPmsSpuPageDTO params);
-
-    /**
-     * 详情
-     *
-     * @param spuId 商品id
-     * @return 商品详情
-     * @author zhengqingya
-     * @date 2021/8/20 9:18
-     */
-    MiniPmsSpuDetailVO detailByMini(String spuId);
-
-
-    /**
      * 预售提醒 -- 存储需要通知的用户信息
      *
      * @param params 提交参数
@@ -128,7 +107,7 @@ public interface IPmsSpuService extends IService<PmsSpu> {
      * @author zhengqingya
      * @date 2021/8/26 15:45
      */
-    List<MallTabConditionListVO> getTabCondition(WebPmsSpuPageDTO params);
+    List<MallTabConditionListVO> getTabCondition(PmsSpuPageDTO params);
 
     /**
      * 列表分页
@@ -138,7 +117,7 @@ public interface IPmsSpuService extends IService<PmsSpu> {
      * @author zhengqingya
      * @date 2021/08/17 15:33
      */
-    IPage<WebPmsSpuPageVO> page(WebPmsSpuPageDTO params);
+    IPage<PmsSpuBaseVO> page(PmsSpuPageDTO params);
 
     /**
      * 列表
@@ -168,7 +147,7 @@ public interface IPmsSpuService extends IService<PmsSpu> {
      * @author zhengqingya
      * @date 2021/8/20 9:18
      */
-    WebPmsSpuDetailVO detail(String id);
+    PmsSpuBaseVO detail(String id);
 
     /**
      * 新增或更新

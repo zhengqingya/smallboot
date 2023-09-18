@@ -2,10 +2,9 @@ package com.zhengqing.mall.api.mini;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.common.base.constant.ServiceConstant;
-import com.zhengqing.mall.model.dto.MiniPmsSpuPageDTO;
 import com.zhengqing.mall.model.dto.MiniPmsSpuPresellRemindDTO;
-import com.zhengqing.mall.model.vo.MiniPmsSpuDetailVO;
-import com.zhengqing.mall.model.vo.MiniPmsSpuPageVO;
+import com.zhengqing.mall.model.dto.PmsSpuPageDTO;
+import com.zhengqing.mall.model.vo.PmsSpuBaseVO;
 import com.zhengqing.mall.service.IPmsSpuService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -32,14 +31,14 @@ public class MiniPmsSpuController {
 
     @GetMapping("page")
     @ApiOperation("列表分页")
-    public IPage<MiniPmsSpuPageVO> page(@Validated @ModelAttribute MiniPmsSpuPageDTO params) {
+    public IPage<PmsSpuBaseVO> page(@Validated @ModelAttribute PmsSpuPageDTO params) {
         return this.iPmsSpuService.page(params);
     }
 
     @GetMapping("{id}")
     @ApiOperation("详情")
-    public MiniPmsSpuDetailVO detail(@ApiParam("商品id") @PathVariable String id) {
-        return this.iPmsSpuService.detailByMini(id);
+    public PmsSpuBaseVO detail(@ApiParam("商品id") @PathVariable String id) {
+        return this.iPmsSpuService.detail(id);
     }
 
     @PostMapping("presellRemind")

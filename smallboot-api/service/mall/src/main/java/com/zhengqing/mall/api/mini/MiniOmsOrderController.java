@@ -1,11 +1,13 @@
 package com.zhengqing.mall.api.mini;
 
-import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.base.exception.MyException;
 import com.zhengqing.mall.model.dto.*;
-import com.zhengqing.mall.model.vo.*;
+import com.zhengqing.mall.model.vo.MallTabConditionListVO;
+import com.zhengqing.mall.model.vo.MiniOmsSpuBuyVO;
+import com.zhengqing.mall.model.vo.MiniPmsOrderReAfterSaleStatusVO;
+import com.zhengqing.mall.model.vo.OmsOrderBaseVO;
 import com.zhengqing.mall.service.IOmsOrderService;
 import com.zhengqing.pay.model.vo.PayOrderCreateVO;
 import io.swagger.annotations.Api;
@@ -34,22 +36,21 @@ public class MiniOmsOrderController {
 
     @GetMapping("getTabCondition")
     @ApiOperation("获取tab条件")
-    public List<MallTabConditionListVO> getTabCondition(@ModelAttribute MiniOmsOrderPageDTO params) {
-        Assert.notNull(params.getUserId(), "用户id不能为空！");
+    public List<MallTabConditionListVO> getTabCondition(@ModelAttribute OmsOrderPageDTO params) {
         params.setTabValue(null);
         return this.iOmsOrderService.getTabCondition(params);
     }
 
     @GetMapping("page")
     @ApiOperation("列表分页")
-    public IPage<MiniOmsOrderPageVO> page(@Validated @ModelAttribute MiniOmsOrderPageDTO params) {
+    public IPage<OmsOrderBaseVO> page(@Validated @ModelAttribute OmsOrderPageDTO params) {
         return this.iOmsOrderService.page(params);
     }
 
     @GetMapping("{orderNo}")
     @ApiOperation("详情")
-    public MiniOmsOrderDetailVO detail(@PathVariable String orderNo) {
-        return this.iOmsOrderService.detailByMini(orderNo);
+    public OmsOrderBaseVO detail(@PathVariable String orderNo) {
+        return this.iOmsOrderService.detail(orderNo);
     }
 
     @PostMapping("create")

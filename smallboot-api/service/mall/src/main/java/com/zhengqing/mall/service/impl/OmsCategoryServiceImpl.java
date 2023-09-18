@@ -11,7 +11,10 @@ import com.zhengqing.common.db.constant.MybatisConstant;
 import com.zhengqing.mall.entity.PmsCategory;
 import com.zhengqing.mall.mapper.PmsCategoryMapper;
 import com.zhengqing.mall.model.dto.*;
-import com.zhengqing.mall.model.vo.*;
+import com.zhengqing.mall.model.vo.MiniPmsCategoryReSpuListVO;
+import com.zhengqing.mall.model.vo.PmsCategoryReSpuListVO;
+import com.zhengqing.mall.model.vo.WebPmsCategoryListVO;
+import com.zhengqing.mall.model.vo.WebPmsCategoryPageVO;
 import com.zhengqing.mall.service.IOmsCategoryService;
 import com.zhengqing.mall.service.IPmsCategorySpuRelationService;
 import lombok.RequiredArgsConstructor;
@@ -56,16 +59,6 @@ public class OmsCategoryServiceImpl extends ServiceImpl<PmsCategoryMapper, PmsCa
         this.pmsCategoryMapper.delete(
                 new LambdaQueryWrapper<PmsCategory>().in(PmsCategory::getId, idList)
         );
-    }
-
-    @Override
-    public IPage<MiniPmsCategoryPageVO> page(MiniPmsCategoryPageDTO params) {
-        return this.pmsCategoryMapper.selectPageForMini(new Page<>(), params);
-    }
-
-    @Override
-    public List<MiniPmsCategoryListVO> list(MiniPmsCategoryListDTO params) {
-        return this.pmsCategoryMapper.selectListForMini(params);
     }
 
     @Override

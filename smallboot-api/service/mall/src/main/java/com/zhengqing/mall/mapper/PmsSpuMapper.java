@@ -26,7 +26,7 @@ public interface PmsSpuMapper extends BaseMapper<PmsSpu> {
      * @author zhengqingya
      * @date 2021/8/26 15:45
      */
-    List<MallTabConditionListVO> selectTabCondition(@Param("filter") WebPmsSpuPageDTO filter);
+    List<MallTabConditionListVO> selectTabCondition(@Param("filter") PmsSpuPageDTO filter);
 
     /**
      * 列表分页
@@ -37,7 +37,7 @@ public interface PmsSpuMapper extends BaseMapper<PmsSpu> {
      * @author zhengqingya
      * @date 2021/08/17 15:33
      */
-    IPage<WebPmsSpuPageVO> selectDataListByWeb(IPage<WebPmsSpuPageVO> page, @Param("filter") WebPmsSpuPageDTO filter);
+    IPage<PmsSpuBaseVO> selectDataList(IPage<PmsSpuBaseVO> page, @Param("filter") PmsSpuPageDTO filter);
 
     /**
      * 列表
@@ -68,7 +68,7 @@ public interface PmsSpuMapper extends BaseMapper<PmsSpu> {
      * @author zhengqingya
      * @date 2021/8/20 9:18
      */
-    WebPmsSpuDetailVO detailByWeb(@Param("id") String id);
+    PmsSpuBaseVO detailData(@Param("id") String id);
 
     /**
      * 批量更新商品上下架状态
@@ -112,19 +112,6 @@ public interface PmsSpuMapper extends BaseMapper<PmsSpu> {
      */
     void updateBatchSort(@Param("list") List<WebPmsSpuEditSortListDTO> list);
 
-    // ------------------------------------------------------------------------------------------------------
-
-    /**
-     * 列表
-     *
-     * @param page   分页参数
-     * @param filter 查询过滤参数
-     * @return 查询结果
-     * @author zhengqingya
-     * @date 2021/08/17 15:33
-     */
-    IPage<MiniPmsSpuPageVO> selectDataListByMini(IPage<MiniPmsSpuPageVO> page, @Param("filter") MiniPmsSpuPageDTO filter);
-
     /**
      * 列表-sku
      *
@@ -134,15 +121,5 @@ public interface PmsSpuMapper extends BaseMapper<PmsSpu> {
      * @date 2021/08/17 15:33
      */
     List<PmsSkuVO> selectSkuList(@Param("filter") PmsSkuDTO filter);
-
-    /**
-     * 详情
-     *
-     * @param id 商品id
-     * @return 商品详情
-     * @author zhengqingya
-     * @date 2021/8/20 9:18
-     */
-    MiniPmsSpuDetailVO detailByMini(@Param("id") String id);
 
 }

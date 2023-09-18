@@ -57,7 +57,7 @@
         GROUP BY t.after_status
     </select>
 
-    <select id="selectDataListByWeb" resultType="com.zhengqing.mall.model.vo.WebOmsOrderAfterSalePageVO">
+    <select id="selectDataListByWeb" resultType="com.zhengqing.mall.model.vo.OmsOrderAfterSalePageVO">
         SELECT oas.after_sale_no,
         oas.after_type,
         oas.after_status,
@@ -75,7 +75,7 @@
         ORDER BY oas.after_sale_no DESC
     </select>
 
-    <select id="detailByWeb" resultType="com.zhengqing.mall.model.vo.WebOmsOrderAfterSaleDetailVO">
+    <select id="detailByWeb" resultType="com.zhengqing.mall.model.vo.OmsOrderAfterSaleDetailVO">
         SELECT oas.after_sale_no,
                oas.after_type,
                oas.after_reason,
@@ -149,61 +149,6 @@
         </foreach>
         AND oas.after_status IN (1, 3, 5, 8, 9)
         GROUP BY oasi.order_item_id
-    </select>
-
-    <select id="selectDataListByMini" resultType="com.zhengqing.mall.model.vo.MiniOmsOrderAfterSalePageVO">
-        SELECT oas.after_sale_no,
-        oas.after_type,
-        oas.after_status,
-        oas.refund_price,
-        GROUP_CONCAT(oasi.order_item_id) orderItemIds
-        FROM oms_order_after_sale oas
-        JOIN oms_order_after_sale_item oasi ON oas.after_sale_no = oasi.after_sale_no
-        JOIN oms_order_item oi ON oi.order_item_id = oasi.order_item_id
-        WHERE oas.is_deleted = 0
-        <if test="filter.keyWord!=null and filter.keyWord!=''">
-            AND
-            (
-            oas.after_sale_no LIKE CONCAT( #{filter.keyWord} , '%' )
-            OR
-            oi.name LIKE CONCAT( #{filter.keyWord} , '%' )
-            )
-        </if>
-        <if test="filter.userId!=null">
-            AND oas.user_id = #{filter.userId}
-        </if>
-        GROUP BY oas.after_sale_no
-        ORDER BY oas.after_sale_no DESC
-    </select>
-
-    <select id="detailByMini" resultType="com.zhengqing.mall.model.vo.MiniOmsOrderAfterSaleDetailVO">
-        SELECT oas.after_sale_no,
-               oas.order_no,
-               oas.after_type,
-               oas.after_status,
-               oas.after_reason,
-               oas.after_explain,
-               oas.refund_price,
-               oas.refund_time,
-               oas.cert_img_json,
-               oas.apply_time,
-               oas.handler_result_for_refund,
-               oas.handler_remark_for_refund,
-               oas.handler_time_for_refund,
-               oas.handler_result_for_apply,
-               oas.handler_remark_for_apply,
-               oas.handler_time_for_apply,
-               oas.close_time,
-               oas.update_time,
-               oas.seller_auto_close_time,
-               oas.buyer_auto_close_time,
-               oas.return_logistics_code,
-               oas.return_logistics_no,
-               GROUP_CONCAT(oasi.order_item_id) orderItemIds
-        FROM oms_order_after_sale oas
-                 JOIN oms_order_after_sale_item oasi ON oas.after_sale_no = oasi.after_sale_no
-        WHERE oas.is_deleted = 0
-          AND oas.after_sale_no = #{afterSaleNo}
     </select>
 
     <select id="selectHandleIngNum" resultType="java.lang.Integer">

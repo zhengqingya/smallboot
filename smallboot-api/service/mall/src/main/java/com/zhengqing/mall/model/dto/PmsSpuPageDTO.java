@@ -30,7 +30,7 @@ import java.util.Date;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ApiModel("web-商城-商品分页列表-查询参数")
-public class WebPmsSpuPageDTO extends BasePageDTO implements CheckParam {
+public class PmsSpuPageDTO extends BasePageDTO implements CheckParam {
 
     /**
      * {@link PmsSpuTabEnum}

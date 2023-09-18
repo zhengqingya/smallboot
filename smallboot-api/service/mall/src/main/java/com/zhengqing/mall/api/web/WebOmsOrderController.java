@@ -3,11 +3,10 @@ package com.zhengqing.mall.api.web;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.mall.model.dto.OmsOrderCancelDTO;
-import com.zhengqing.mall.model.dto.WebOmsOrderPageDTO;
+import com.zhengqing.mall.model.dto.OmsOrderPageDTO;
 import com.zhengqing.mall.model.dto.WebOmsOrderSendSpuDTO;
 import com.zhengqing.mall.model.vo.MallTabConditionListVO;
-import com.zhengqing.mall.model.vo.WebOmsOrderDetailVO;
-import com.zhengqing.mall.model.vo.WebOmsOrderPageVO;
+import com.zhengqing.mall.model.vo.OmsOrderBaseVO;
 import com.zhengqing.mall.service.IOmsOrderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -50,20 +49,20 @@ public class WebOmsOrderController {
 
     @GetMapping("getTabCondition")
     @ApiOperation("获取tab条件")
-    public List<MallTabConditionListVO> getTabCondition(@ModelAttribute WebOmsOrderPageDTO params) {
+    public List<MallTabConditionListVO> getTabCondition(@ModelAttribute OmsOrderPageDTO params) {
         params.setTabValue(null);
         return this.iOmsOrderService.getTabCondition(params);
     }
 
     @GetMapping("page")
     @ApiOperation("分页列表")
-    public IPage<WebOmsOrderPageVO> page(@Validated @ModelAttribute WebOmsOrderPageDTO params) {
+    public IPage<OmsOrderBaseVO> page(@Validated @ModelAttribute OmsOrderPageDTO params) {
         return this.iOmsOrderService.page(params);
     }
 
     @GetMapping("{orderNo}")
     @ApiOperation("详情")
-    public WebOmsOrderDetailVO detail(@PathVariable String orderNo) {
+    public OmsOrderBaseVO detail(@PathVariable String orderNo) {
         return this.iOmsOrderService.detail(orderNo);
     }
 
@@ -89,7 +88,7 @@ public class WebOmsOrderController {
 
     @GetMapping("export")
     @ApiOperation("导出(最多导出10000条数据)")
-    public void export(HttpServletResponse response, @ModelAttribute WebOmsOrderPageDTO params) {
+    public void export(HttpServletResponse response, @ModelAttribute OmsOrderPageDTO params) {
         this.iOmsOrderService.export(response, params);
     }
 

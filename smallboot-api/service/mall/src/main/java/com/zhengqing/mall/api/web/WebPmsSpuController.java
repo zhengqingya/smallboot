@@ -6,9 +6,8 @@ import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
 import com.zhengqing.common.core.custom.validator.common.ValidList;
 import com.zhengqing.mall.model.dto.*;
 import com.zhengqing.mall.model.vo.MallTabConditionListVO;
-import com.zhengqing.mall.model.vo.WebPmsSpuDetailVO;
+import com.zhengqing.mall.model.vo.PmsSpuBaseVO;
 import com.zhengqing.mall.model.vo.WebPmsSpuListVO;
-import com.zhengqing.mall.model.vo.WebPmsSpuPageVO;
 import com.zhengqing.mall.service.IPmsSpuService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,14 +35,14 @@ public class WebPmsSpuController {
 
     @GetMapping("getTabCondition")
     @ApiOperation("获取tab条件")
-    public List<MallTabConditionListVO> getTabCondition(@Validated @ModelAttribute WebPmsSpuPageDTO params) {
+    public List<MallTabConditionListVO> getTabCondition(@Validated @ModelAttribute PmsSpuPageDTO params) {
         params.setTabValue(null);
         return this.iPmsSpuService.getTabCondition(params);
     }
 
     @GetMapping("page")
     @ApiOperation("列表分页")
-    public IPage<WebPmsSpuPageVO> page(@Validated @ModelAttribute WebPmsSpuPageDTO params) {
+    public IPage<PmsSpuBaseVO> page(@Validated @ModelAttribute PmsSpuPageDTO params) {
         return this.iPmsSpuService.page(params);
     }
 
@@ -55,7 +54,7 @@ public class WebPmsSpuController {
 
     @GetMapping("")
     @ApiOperation("详情")
-    public WebPmsSpuDetailVO detail(@RequestParam String id) {
+    public PmsSpuBaseVO detail(@RequestParam String id) {
         return this.iPmsSpuService.detail(id);
     }
 

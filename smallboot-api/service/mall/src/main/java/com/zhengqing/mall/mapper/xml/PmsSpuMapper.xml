@@ -72,7 +72,7 @@
         GROUP BY spu.is_put
     </select>
 
-    <select id="selectDataListByWeb" resultType="com.zhengqing.mall.model.vo.WebPmsSpuPageVO">
+    <select id="selectDataList" resultType="com.zhengqing.mall.model.vo.PmsSpuBaseVO">
         <include refid="PAGE"/>
         <include refid="PAGE_CONDITION"/>
         GROUP BY spu.id
@@ -113,7 +113,7 @@
         </foreach>
     </select>
 
-    <resultMap id="detailByWeb" type="com.zhengqing.mall.model.vo.WebPmsSpuDetailVO">
+    <resultMap id="detailData" type="com.zhengqing.mall.model.vo.PmsSpuBaseVO">
         <!--        <result column="attr_list"-->
         <!--                property="attrList"-->
         <!--                typeHandler="com.zhengqing.mall.config.mybatis.handler.MallListAttrTypeHandler"></result>-->
@@ -131,7 +131,7 @@
                 typeHandler="com.zhengqing.mall.config.mybatis.handler.MallListDictTypeHandler"></result>
     </resultMap>
 
-    <select id="detailByWeb" resultMap="detailByWeb">
+    <select id="detailData" resultMap="detailData">
         <include refid="DETAIL"/>
         AND id = #{id}
     </select>
@@ -176,16 +176,6 @@
 
     <!-- ============================================================================================================ -->
 
-    <select id="selectDataListByMini" resultType="com.zhengqing.mall.model.vo.MiniPmsSpuPageVO">
-        <include refid="PAGE"/>
-        FROM pms_spu spu
-        WHERE spu.is_deleted = 0 AND spu.is_show=1
-        <if test="filter.name!=null and filter.name!=''">
-            AND spu.name LIKE CONCAT( #{filter.name} , '%' )
-        </if>
-        ORDER BY spu.sort ASC, spu.id DESC
-    </select>
-
     <resultMap id="selectSkuList" type="com.zhengqing.mall.model.vo.PmsSkuVO">
         <result column="spec_list"
                 property="specList"
@@ -216,30 +206,6 @@
         <foreach collection="filter.skuIdList" separator="," open="(" close=")" item="skuId">
             #{skuId}
         </foreach>
-    </select>
-
-    <resultMap id="detailByMini" type="com.zhengqing.mall.model.vo.MiniPmsSpuDetailVO">
-        <!--        <result column="attr_list"-->
-        <!--                property="attrList"-->
-        <!--                typeHandler="com.zhengqing.mall.config.mybatis.handler.MallListAttrTypeHandler"></result>-->
-        <result column="slide_img_list"
-                property="slideImgList"
-                typeHandler="com.zhengqing.mall.config.mybatis.handler.MallListFileTypeHandler"></result>
-        <result column="detail_img_list"
-                property="detailImgList"
-                typeHandler="com.zhengqing.mall.config.mybatis.handler.MallListFileTypeHandler"></result>
-        <result column="service_list"
-                property="serviceList"
-                typeHandler="com.zhengqing.mall.config.mybatis.handler.MallListDictTypeHandler"></result>
-        <result column="explain_list"
-                property="explainList"
-                typeHandler="com.zhengqing.mall.config.mybatis.handler.MallListDictTypeHandler"></result>
-    </resultMap>
-
-    <select id="detailByMini" resultMap="detailByMini">
-        <include refid="DETAIL"/>
-        AND id = #{id}
-        AND is_show = 1
     </select>
 
 </mapper>

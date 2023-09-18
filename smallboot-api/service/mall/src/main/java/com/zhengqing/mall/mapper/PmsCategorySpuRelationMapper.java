@@ -10,7 +10,6 @@ import com.zhengqing.mall.model.dto.WebPmsCategorySpuRelationPageDTO;
 import com.zhengqing.mall.model.vo.PmsCategoryReSpuListVO;
 import com.zhengqing.mall.model.vo.WebPmsCategorySpuRelationListVO;
 import com.zhengqing.mall.model.vo.WebPmsCategorySpuRelationPageVO;
-import com.zhengqing.mall.model.vo.WebPmsSpuPageVO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -33,7 +32,7 @@ public interface PmsCategorySpuRelationMapper extends BaseMapper<PmsCategorySpuR
      * @author zhengqingya
      * @date 2022/3/2 10:19
      */
-    IPage<WebPmsCategorySpuRelationPageVO> selectDataPage(IPage<WebPmsSpuPageVO> page, @Param("filter") WebPmsCategorySpuRelationPageDTO filter);
+    IPage<WebPmsCategorySpuRelationPageVO> selectDataPage(IPage<WebPmsCategorySpuRelationPageVO> page, @Param("filter") WebPmsCategorySpuRelationPageDTO filter);
 
     /**
      * 列表

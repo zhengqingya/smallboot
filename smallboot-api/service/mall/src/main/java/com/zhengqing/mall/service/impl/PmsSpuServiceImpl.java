@@ -93,7 +93,7 @@ public class PmsSpuServiceImpl extends ServiceImpl<PmsSpuMapper, PmsSpu> impleme
     }
 
     @Override
-    public void handleSpuData(PmsSpuDetailVO spuDetail) {
+    public void handleSpuData(PmsSpuBaseVO spuDetail) {
         List<MallDictBO> serviceList = new ObjectMapper().convertValue(spuDetail.getServiceList(), new TypeReference<List<MallDictBO>>() {
         });
         List<MallDictBO> explainList = new ObjectMapper().convertValue(spuDetail.getExplainList(), new TypeReference<List<MallDictBO>>() {
@@ -171,41 +171,6 @@ public class PmsSpuServiceImpl extends ServiceImpl<PmsSpuMapper, PmsSpu> impleme
     }
 
     @Override
-    public IPage<MiniPmsSpuPageVO> page(MiniPmsSpuPageDTO params) {
-        IPage<MiniPmsSpuPageVO> result = this.pmsSpuMapper.selectDataListByMini(new Page<>(), params);
-        List<MiniPmsSpuPageVO> list = result.getRecords();
-        if (!CollectionUtils.isEmpty(list)) {
-            // 商品ids
-            List<String> spuIdList = list.stream().map(MiniPmsSpuPageVO::getId).collect(Collectors.toList());
-            // 查询关联规格数据
-            Map<String, List<PmsSkuBO>> skuDataMap = this.iPmsSkuService.mapBySpuId(spuIdList);
-            // 封装数据
-            list.forEach(item -> {
-                String id = item.getId();
-                List<PmsSkuBO> miniPmsSkuList = skuDataMap.get(id);
-                item.setSkuList(miniPmsSkuList);
-                // 处理数据
-                item.handleData(miniPmsSkuList);
-            });
-        }
-        return result;
-    }
-
-    @Override
-    public MiniPmsSpuDetailVO detailByMini(String spuId) {
-        MiniPmsSpuDetailVO spuDetail = this.pmsSpuMapper.detailByMini(spuId);
-        Assert.notNull(spuDetail, "该数据不存在！");
-        // 查询关联规格数据
-        List<PmsSkuBO> skuList = this.iPmsSkuService.listBySpuId(spuId);
-        spuDetail.setSkuList(skuList);
-        // 处理数据
-        spuDetail.handleData(skuList);
-        // 实时获取关联服务和说明数据
-//        this.handleSpuData(spuDetail);
-        return spuDetail;
-    }
-
-    @Override
     public void presellRemind(MiniPmsSpuPresellRemindDTO params) {
         log.info("[商城] 预售提醒参数：{}", JSON.toJSONString(params));
         String spuId = params.getSpuId();
@@ -234,7 +199,7 @@ public class PmsSpuServiceImpl extends ServiceImpl<PmsSpuMapper, PmsSpu> impleme
         log.info("[商城] 预售提醒 参数：[{}]", JSON.toJSONString(params));
         String spuId = params.getSpuId();
         // 1、查询商品详情
-        MiniPmsSpuDetailVO spuDetail = this.detailByMini(spuId);
+        PmsSpuBaseVO spuDetail = this.detail(spuId);
         if (!spuDetail.getIsPresell()) {
             log.warn("[商城] 预售提醒 参数：[{}] 已非预售状态 商品详情：[{}]", JSON.toJSONString(params), JSON.toJSONString(spuDetail));
             return;
@@ -257,7 +222,7 @@ public class PmsSpuServiceImpl extends ServiceImpl<PmsSpuMapper, PmsSpu> impleme
     }
 
     @Override
-    public List<MallTabConditionListVO> getTabCondition(WebPmsSpuPageDTO params) {
+    public List<MallTabConditionListVO> getTabCondition(PmsSpuPageDTO params) {
         params.setIsPut(null);
         // 查询tab条件数量
         List<MallTabConditionListVO> tabDataList = this.pmsSpuMapper.selectTabCondition(params);
@@ -266,17 +231,17 @@ public class PmsSpuServiceImpl extends ServiceImpl<PmsSpuMapper, PmsSpu> impleme
     }
 
     @Override
-    public IPage<WebPmsSpuPageVO> page(WebPmsSpuPageDTO params) {
-        IPage<WebPmsSpuPageVO> result = this.pmsSpuMapper.selectDataListByWeb(new Page<>(), params);
-        List<WebPmsSpuPageVO> list = result.getRecords();
+    public IPage<PmsSpuBaseVO> page(PmsSpuPageDTO params) {
+        IPage<PmsSpuBaseVO> result = this.pmsSpuMapper.selectDataList(new Page<>(), params);
+        List<PmsSpuBaseVO> list = result.getRecords();
         if (CollectionUtils.isEmpty(list)) {
             return result;
         }
         // 商品ids
-        List<String> spuIdList = list.stream().map(WebPmsSpuPageVO::getId).collect(Collectors.toList());
+        List<String> spuIdList = list.stream().map(PmsSpuBaseVO::getId).collect(Collectors.toList());
         // 查询关联规格数据
         Map<String, List<PmsSkuBO>> skuDataMap = this.iPmsSkuService.mapBySpuId(spuIdList);
-        for (WebPmsSpuPageVO item : list) {
+        for (PmsSpuBaseVO item : list) {
             String id = item.getId();
             List<PmsSkuBO> skuItemList = skuDataMap.get(id);
             item.setSkuList(skuItemList);
@@ -304,8 +269,8 @@ public class PmsSpuServiceImpl extends ServiceImpl<PmsSpuMapper, PmsSpu> impleme
     }
 
     @Override
-    public WebPmsSpuDetailVO detail(String id) {
-        WebPmsSpuDetailVO spuDetail = this.pmsSpuMapper.detailByWeb(id);
+    public PmsSpuBaseVO detail(String id) {
+        PmsSpuBaseVO spuDetail = this.pmsSpuMapper.detailData(id);
         Assert.notNull(spuDetail, "该数据不存在！");
         // 查询关联规格数据
         List<PmsSkuBO> skuList = this.iPmsSkuService.listBySpuId(id);

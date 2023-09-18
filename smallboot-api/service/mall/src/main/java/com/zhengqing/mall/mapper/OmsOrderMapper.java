@@ -3,9 +3,10 @@ package com.zhengqing.mall.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.mall.entity.OmsOrder;
-import com.zhengqing.mall.model.dto.MiniOmsOrderPageDTO;
-import com.zhengqing.mall.model.dto.WebOmsOrderPageDTO;
-import com.zhengqing.mall.model.vo.*;
+import com.zhengqing.mall.model.dto.OmsOrderPageDTO;
+import com.zhengqing.mall.model.vo.MallTabConditionListVO;
+import com.zhengqing.mall.model.vo.OmsOrderBaseVO;
+import com.zhengqing.mall.model.vo.WebOmsOrderExportVO;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
@@ -50,7 +51,7 @@ public interface OmsOrderMapper extends BaseMapper<OmsOrder> {
      * @author zhengqingya
      * @date 2021/8/26 15:45
      */
-    List<MallTabConditionListVO> selectTabConditionByWeb(@Param("filter") WebOmsOrderPageDTO filter);
+    List<MallTabConditionListVO> selectTabConditionByWeb(@Param("filter") OmsOrderPageDTO filter);
 
     /**
      * 列表分页
@@ -61,7 +62,7 @@ public interface OmsOrderMapper extends BaseMapper<OmsOrder> {
      * @author zhengqingya
      * @date 2021/08/30 13:40
      */
-    IPage<WebOmsOrderPageVO> selectDataListByWeb(IPage<WebOmsOrderPageVO> page, @Param("filter") WebOmsOrderPageDTO filter);
+    IPage<OmsOrderBaseVO> selectDataList(IPage<OmsOrderBaseVO> page, @Param("filter") OmsOrderPageDTO filter);
 
     /**
      * 查询导出订单数据
@@ -71,7 +72,7 @@ public interface OmsOrderMapper extends BaseMapper<OmsOrder> {
      * @author zhengqingya
      * @date 2021/08/30 13:40
      */
-    List<WebOmsOrderExportVO> selectExportDataListByWeb(@Param("filter") WebOmsOrderPageDTO filter);
+    List<WebOmsOrderExportVO> selectExportDataListByWeb(@Param("filter") OmsOrderPageDTO filter);
 
     /**
      * 详情
@@ -81,39 +82,8 @@ public interface OmsOrderMapper extends BaseMapper<OmsOrder> {
      * @author zhengqingya
      * @date 2021/8/30 17:31
      */
-    WebOmsOrderDetailVO detailByWeb(@Param("orderNo") String orderNo);
+    OmsOrderBaseVO detailData(@Param("orderNo") String orderNo);
 
-    // ------------------------------------------------------------------------------------------------------
-
-    /**
-     * 获取tab条件 - mini
-     *
-     * @param filter 查询过滤参数
-     * @return tab条件
-     * @author zhengqingya
-     * @date 2021/8/26 15:45
-     */
-    List<MallTabConditionListVO> selectTabConditionByMini(@Param("filter") MiniOmsOrderPageDTO filter);
-
-    /**
-     * 分页列表
-     *
-     * @param filter 查询过滤参数
-     * @return 订单信息
-     * @author zhengqingya
-     * @date 2021/10/18 11:46
-     */
-    IPage<MiniOmsOrderPageVO> selectDataListByMini(IPage<MiniOmsOrderPageVO> page, @Param("filter") MiniOmsOrderPageDTO filter);
-
-    /**
-     * 详情
-     *
-     * @param orderNo 订单编号
-     * @return 详情
-     * @author zhengqingya
-     * @date 2021/8/30 17:31
-     */
-    MiniOmsOrderDetailVO detailByMini(@Param("orderNo") String orderNo);
 
     /**
      * 查询此订单售后处理截止时间

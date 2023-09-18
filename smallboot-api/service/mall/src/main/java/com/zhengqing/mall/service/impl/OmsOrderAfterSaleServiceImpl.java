@@ -198,48 +198,6 @@ public class OmsOrderAfterSaleServiceImpl extends ServiceImpl<OmsOrderAfterSaleM
     }
 
     @Override
-    public IPage<MiniOmsOrderAfterSalePageVO> page(MiniOmsOrderAfterSalePageDTO params) {
-        IPage<MiniOmsOrderAfterSalePageVO> miniOmsAfterSalePage = this.omsOrderAfterSaleMapper.selectDataListByMini(
-                new Page<>(), params
-        );
-        List<MiniOmsOrderAfterSalePageVO> afterSaleList = miniOmsAfterSalePage.getRecords();
-        if (CollectionUtils.isEmpty(afterSaleList)) {
-            return miniOmsAfterSalePage;
-        }
-        // 售后关联商品ids
-        List<String> orderItemIdList = Lists.newLinkedList();
-        afterSaleList.forEach(item -> {
-            item.handleOrderItemIdList();
-            orderItemIdList.addAll(item.getOrderItemIdList());
-        });
-        // 查询关联商品数据
-        List<OmsOrderItemVO> orderItemList = this.iOmsOrderItemService.listInfo(OmsOrderItemDTO.builder().orderItemIdList(orderItemIdList).build());
-        Map<String, OmsOrderItemVO> orderItemMap = orderItemList.stream().collect(Collectors.toMap(OmsOrderItemVO::getId, t -> t, (k1, k2) -> k1));
-        afterSaleList.forEach(item -> {
-            List<OmsOrderItemVO> spuList = Lists.newLinkedList();
-            List<String> orderItemIdListItem = item.getOrderItemIdList();
-            orderItemIdListItem.forEach(orderItemId -> spuList.add(orderItemMap.get(orderItemId)));
-            item.setSpuList(spuList);
-            item.handleData();
-        });
-        return miniOmsAfterSalePage;
-    }
-
-    @Override
-    public MiniOmsOrderAfterSaleDetailVO detailByMini(String afterSaleNo) {
-        // 订单主体详情
-        MiniOmsOrderAfterSaleDetailVO orderAfterSaleDetailVO = this.omsOrderAfterSaleMapper.detailByMini(afterSaleNo);
-        Assert.notNull(orderAfterSaleDetailVO, "该售后数据不存在！");
-        // 处理数据
-        orderAfterSaleDetailVO.handleData();
-        // 查询关联商品数据
-        List<OmsOrderItemVO> orderItemList = this.iOmsOrderItemService.listInfo(
-                OmsOrderItemDTO.builder().orderItemIdList(orderAfterSaleDetailVO.getOrderItemIdList()).build());
-        orderAfterSaleDetailVO.setSpuList(orderItemList);
-        return orderAfterSaleDetailVO;
-    }
-
-    @Override
     @Transactional(rollbackFor = Exception.class)
     public void repeal(MiniOmsOrderRepealAfterSaleDTO params) {
         log.info("[商城] 售后-撤销-提交参数：[{}] ", params);
@@ -273,7 +231,7 @@ public class OmsOrderAfterSaleServiceImpl extends ServiceImpl<OmsOrderAfterSaleM
     }
 
     @Override
-    public List<MallTabConditionListVO> getTabCondition(WebOmsOrderAfterSalePageDTO params) {
+    public List<MallTabConditionListVO> getTabCondition(OmsOrderAfterSalePageDTO params) {
         params.setAfterStatusList(null);
         // 查询tab条件数量
         List<MallTabConditionListVO> tabDataList = this.omsOrderAfterSaleMapper.selectTabCondition(params);
@@ -303,9 +261,9 @@ public class OmsOrderAfterSaleServiceImpl extends ServiceImpl<OmsOrderAfterSaleM
 
 
     @Override
-    public IPage<WebOmsOrderAfterSalePageVO> page(WebOmsOrderAfterSalePageDTO params) {
-        IPage<WebOmsOrderAfterSalePageVO> afterSalePage = this.omsOrderAfterSaleMapper.selectDataListByWeb(new Page<>(), params);
-        List<WebOmsOrderAfterSalePageVO> afterSaleList = afterSalePage.getRecords();
+    public IPage<OmsOrderAfterSalePageVO> page(OmsOrderAfterSalePageDTO params) {
+        IPage<OmsOrderAfterSalePageVO> afterSalePage = this.omsOrderAfterSaleMapper.selectDataListByWeb(new Page<>(), params);
+        List<OmsOrderAfterSalePageVO> afterSaleList = afterSalePage.getRecords();
         if (CollectionUtils.isEmpty(afterSaleList)) {
             return afterSalePage;
         }
@@ -329,9 +287,9 @@ public class OmsOrderAfterSaleServiceImpl extends ServiceImpl<OmsOrderAfterSaleM
     }
 
     @Override
-    public WebOmsOrderAfterSaleDetailVO detailByWeb(String afterSaleNo) {
+    public OmsOrderAfterSaleDetailVO detailData(String afterSaleNo) {
         // 订单主体详情
-        WebOmsOrderAfterSaleDetailVO orderAfterSaleDetailVO = this.omsOrderAfterSaleMapper.detailByWeb(afterSaleNo);
+        OmsOrderAfterSaleDetailVO orderAfterSaleDetailVO = this.omsOrderAfterSaleMapper.detailByWeb(afterSaleNo);
         Assert.notNull(orderAfterSaleDetailVO, "该售后数据不存在！");
         // 处理数据
         orderAfterSaleDetailVO.handleData();

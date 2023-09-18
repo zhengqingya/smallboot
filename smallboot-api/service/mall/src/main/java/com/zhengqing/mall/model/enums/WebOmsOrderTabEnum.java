@@ -43,7 +43,11 @@ public enum WebOmsOrderTabEnum {
     /**
      * 已完成
      */
-    FINISH((byte) 5, 5, "已完成");
+    FINISH((byte) 5, 5, "已完成"),
+    /**
+     * 退款/售后 -- 注：mini端此tab栏数据单独从售后订单拉取数据
+     */
+    AFTER_SALE((byte) 100, 7, "退款/售后");
 
 
     /**

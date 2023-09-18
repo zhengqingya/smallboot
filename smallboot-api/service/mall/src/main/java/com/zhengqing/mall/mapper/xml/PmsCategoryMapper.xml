@@ -41,19 +41,6 @@
         </foreach>
     </update>
 
-    <select id="selectPageForMini" resultType="com.zhengqing.mall.model.vo.MiniPmsCategoryPageVO">
-        SELECT
-        id,
-        name
-        FROM pms_category
-        WHERE is_deleted = 0
-        AND is_show = 1
-        <if test="filter.name!=null and filter.name!=''">
-            AND name LIKE CONCAT( #{filter.name} , '%' )
-        </if>
-        ORDER BY sort ASC
-    </select>
-
     <select id="selectReSpuDataListForMini" resultType="com.zhengqing.mall.model.vo.MiniPmsCategoryReSpuListVO">
         SELECT
         c.id,
@@ -67,19 +54,6 @@
         </if>
         GROUP BY c.id
         ORDER BY c.sort ASC, c.create_time DESC
-    </select>
-
-    <select id="selectListForMini" resultType="com.zhengqing.mall.model.vo.MiniPmsCategoryListVO">
-        SELECT
-        id,
-        name
-        FROM pms_category
-        WHERE is_deleted = 0
-        AND is_show = 1
-        <if test="filter.name!=null and filter.name!=''">
-            AND name LIKE CONCAT( #{filter.name} , '%' )
-        </if>
-        ORDER BY sort ASC
     </select>
 
 </mapper>

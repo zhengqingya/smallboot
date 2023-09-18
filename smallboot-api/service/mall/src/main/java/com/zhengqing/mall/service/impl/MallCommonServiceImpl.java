@@ -7,7 +7,10 @@ import com.zhengqing.common.base.exception.MyException;
 import com.zhengqing.common.core.custom.validator.common.ValidList;
 import com.zhengqing.mall.constant.MallAppConstant;
 import com.zhengqing.mall.model.bo.PmsSpuBuyNumInfoBO;
-import com.zhengqing.mall.model.enums.*;
+import com.zhengqing.mall.model.enums.MallResultCodeEnum;
+import com.zhengqing.mall.model.enums.OmsOrderAfterSaleTabEnum;
+import com.zhengqing.mall.model.enums.PmsSpuTabEnum;
+import com.zhengqing.mall.model.enums.WebOmsOrderTabEnum;
 import com.zhengqing.mall.model.vo.MallFileVO;
 import com.zhengqing.mall.model.vo.MallTabConditionListVO;
 import com.zhengqing.mall.model.vo.PmsSkuVO;
@@ -114,15 +117,6 @@ public class MallCommonServiceImpl implements IMallCommonService {
                 break;
             case MALL_ORDER_TAB_CONDITION_WEB:
                 for (WebOmsOrderTabEnum orderTabEnum : WebOmsOrderTabEnum.LIST) {
-                    tabList.add(MallTabConditionListVO.builder().
-                            sort(orderTabEnum.getTabSort())
-                            .name(orderTabEnum.getName())
-                            .value(orderTabEnum.getValue())
-                            .build());
-                }
-                break;
-            case MALL_ORDER_TAB_CONDITION_MINI:
-                for (MiniOmsOrderTabEnum orderTabEnum : MiniOmsOrderTabEnum.LIST) {
                     tabList.add(MallTabConditionListVO.builder().
                             sort(orderTabEnum.getTabSort())
                             .name(orderTabEnum.getName())

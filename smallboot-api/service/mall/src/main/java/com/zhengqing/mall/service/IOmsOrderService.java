@@ -4,7 +4,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhengqing.mall.entity.OmsOrder;
 import com.zhengqing.mall.model.dto.*;
-import com.zhengqing.mall.model.vo.*;
+import com.zhengqing.mall.model.vo.MallTabConditionListVO;
+import com.zhengqing.mall.model.vo.MiniOmsSpuBuyVO;
+import com.zhengqing.mall.model.vo.MiniPmsOrderReAfterSaleStatusVO;
+import com.zhengqing.mall.model.vo.OmsOrderBaseVO;
 import com.zhengqing.pay.model.bo.PayOrderNotifyBO;
 import com.zhengqing.pay.model.vo.PayOrderCreateVO;
 import org.springframework.web.multipart.MultipartFile;
@@ -111,35 +114,6 @@ public interface IOmsOrderService extends IService<OmsOrder> {
      */
     void paySuccessCallback(PayOrderNotifyBO payOrderNotifyBO);
 
-    /**
-     * 获取tab条件
-     *
-     * @param params 查询参数
-     * @return tab条件
-     * @author zhengqingya
-     * @date 2021/8/26 15:45
-     */
-    List<MallTabConditionListVO> getTabCondition(MiniOmsOrderPageDTO params);
-
-    /**
-     * 分页列表
-     *
-     * @param params 提交参数
-     * @return 订单信息
-     * @author zhengqingya
-     * @date 2021/10/18 11:46
-     */
-    IPage<MiniOmsOrderPageVO> page(MiniOmsOrderPageDTO params);
-
-    /**
-     * 详情
-     *
-     * @param orderNo 订单号
-     * @return 详情数据
-     * @author zhengqingya
-     * @date 2021/10/21 11:06
-     */
-    MiniOmsOrderDetailVO detailByMini(String orderNo);
 
     /**
      * 订单未支付处理
@@ -203,8 +177,6 @@ public interface IOmsOrderService extends IService<OmsOrder> {
      */
     void applyAfterSale(MiniOmsOrderApplyAfterSaleDTO params);
 
-    // web ------------------------------------------
-
     /**
      * 获取订单设置数据
      *
@@ -232,7 +204,7 @@ public interface IOmsOrderService extends IService<OmsOrder> {
      * @author zhengqingya
      * @date 2021/8/26 15:45
      */
-    List<MallTabConditionListVO> getTabCondition(WebOmsOrderPageDTO params);
+    List<MallTabConditionListVO> getTabCondition(OmsOrderPageDTO params);
 
     /**
      * 分页列表
@@ -242,7 +214,7 @@ public interface IOmsOrderService extends IService<OmsOrder> {
      * @author zhengqingya
      * @date 2021/08/30 13:40
      */
-    IPage<WebOmsOrderPageVO> page(WebOmsOrderPageDTO params);
+    IPage<OmsOrderBaseVO> page(OmsOrderPageDTO params);
 
     /**
      * 查询订单
@@ -252,7 +224,7 @@ public interface IOmsOrderService extends IService<OmsOrder> {
      * @author zhengqingya
      * @date 2021/08/30 13:40
      */
-    WebOmsOrderDetailVO detail(String orderNo);
+    OmsOrderBaseVO detail(String orderNo);
 
     /**
      * 订单发货
@@ -273,7 +245,7 @@ public interface IOmsOrderService extends IService<OmsOrder> {
      * @author zhengqingya
      * @date 2021/7/6 17:53
      */
-    void export(HttpServletResponse response, WebOmsOrderPageDTO params);
+    void export(HttpServletResponse response, OmsOrderPageDTO params);
 
     /**
      * 批量导入发货
@@ -284,5 +256,5 @@ public interface IOmsOrderService extends IService<OmsOrder> {
      * @date 2022/1/25 10:10
      */
     void importBatchSendSpu(MultipartFile file);
-    
+
 }
