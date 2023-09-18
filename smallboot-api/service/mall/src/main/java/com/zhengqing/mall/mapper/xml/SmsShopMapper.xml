@@ -16,7 +16,13 @@
         ORDER BY create_time DESC
     </select>
 
-    <select id="detail" resultType="com.zhengqing.mall.model.vo.WebSmsShopDetailVO">
+    <resultMap id="detail" type="com.zhengqing.mall.model.vo.WebSmsShopDetailVO">
+        <result column="open_time_list"
+                property="openTimeList"
+                typeHandler="com.zhengqing.mall.config.mybatis.handler.ShopListOpenTimeTypeHandler"></result>
+    </resultMap>
+
+    <select id="detail" resultMap="detail">
         SELECT * FROM sms_shop
         <where>
             is_deleted=0

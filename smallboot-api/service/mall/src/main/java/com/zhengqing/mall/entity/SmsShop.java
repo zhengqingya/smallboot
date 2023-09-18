@@ -102,13 +102,14 @@ public class SmsShop extends BaseEntity<SmsShop> {
 
     // ↓↓↓↓↓↓ 外卖信息 =======================
 
-//    @ApiModelProperty("外卖配送费（满?分,配送费?分）")
-//    private JSONArray deliverFeeList;
-
     @ApiModelProperty("外卖配送距离（单位：米）")
     private Integer deliverDistance;
 
 //    @ApiModelProperty("外卖配送范围")
 //    private JSONArray deliverScopeList;
+
+//    @ApiModelProperty("外卖配送费（满?分,配送费?分）")
+//    private JSONArray deliverFeeList;
+
 
 }
