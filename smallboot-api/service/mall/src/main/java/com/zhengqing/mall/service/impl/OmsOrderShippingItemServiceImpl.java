@@ -1,20 +1,19 @@
 package com.zhengqing.mall.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhengqing.common.core.util.IdGeneratorUtil;
 import com.zhengqing.common.db.constant.MybatisConstant;
 import com.zhengqing.mall.entity.OmsOrderShippingItem;
 import com.zhengqing.mall.mapper.OmsOrderShippingItemMapper;
-import com.zhengqing.mall.service.OmsOrderShippingItemService;
+import com.zhengqing.mall.service.IOmsOrderShippingItemService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -26,10 +25,10 @@ import java.util.List;
  */
 @Slf4j
 @Service
-public class OmsOrderShippingItemServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<OmsOrderShippingItemMapper, OmsOrderShippingItem> implements OmsOrderShippingItemService<OmsOrderShippingItem> {
+@RequiredArgsConstructor
+public class OmsOrderShippingItemServiceImpl extends ServiceImpl<OmsOrderShippingItemMapper, OmsOrderShippingItem> implements IOmsOrderShippingItemService {
 
-    @Resource
-    private OmsOrderShippingItemMapper omsOrderShippingItemMapper;
+    private final OmsOrderShippingItemMapper omsOrderShippingItemMapper;
 
 
     @Override

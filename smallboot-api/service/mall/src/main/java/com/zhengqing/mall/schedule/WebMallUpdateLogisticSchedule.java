@@ -1,6 +1,6 @@
 package com.zhengqing.mall.schedule;
 
-import com.zhengqing.mall.service.OmsLogisticService;
+import com.zhengqing.mall.service.IOmsLogisticService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -20,7 +20,7 @@ import javax.annotation.Resource;
 @Component
 public class WebMallUpdateLogisticSchedule {
     @Resource
-    private OmsLogisticService omsLogisticService;
+    private IOmsLogisticService iOmsLogisticService;
 
     /**
      * 每天凌晨1点触发执行1次
@@ -36,7 +36,7 @@ public class WebMallUpdateLogisticSchedule {
     @Scheduled(cron = "0 0 01 * * ?")
 //    @SchedulerLock(name = "updateLogisticForDb", lockAtMostFor = "5m", lockAtLeastFor = "5m")
     public void updateLogisticForDb() {
-        this.omsLogisticService.updateDb();
+        this.iOmsLogisticService.updateDb();
     }
 
 }

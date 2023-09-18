@@ -3,13 +3,12 @@ package com.zhengqing.mall.api.web;
 import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.mall.model.dto.OmsLogisticDTO;
 import com.zhengqing.mall.model.vo.OmsLogisticVO;
-import com.zhengqing.mall.service.OmsLogisticService;
+import com.zhengqing.mall.service.IOmsLogisticService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.Resource;
 
 
 /**
@@ -20,12 +19,12 @@ import javax.annotation.Resource;
  * @date 2021/08/17 15:33
  */
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(ServiceConstant.SERVICE_API_PREFIX_WEB_MALL + "/common")
 @Api(tags = {"web-通用"})
 public class WebMallCommonController {
 
-    @Resource
-    private OmsLogisticService omsLogisticService;
+    private final IOmsLogisticService omsLogisticService;
 
     @GetMapping("getLogisticInfo")
     @ApiOperation("查询物流")

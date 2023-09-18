@@ -1,23 +1,22 @@
 package com.zhengqing.mall.service.impl;
 
 import cn.hutool.core.lang.Assert;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
 import com.zhengqing.common.core.util.IdGeneratorUtil;
-import com.zhengqing.mall.model.vo.OmsOrderShippingItemVO;
-import com.zhengqing.mall.model.vo.OmsOrderShippingVO;
 import com.zhengqing.mall.entity.OmsOrderShipping;
 import com.zhengqing.mall.mapper.OmsOrderShippingMapper;
-import com.zhengqing.mall.service.OmsLogisticService;
-import com.zhengqing.mall.service.OmsOrderShippingService;
+import com.zhengqing.mall.model.vo.OmsOrderShippingItemVO;
+import com.zhengqing.mall.model.vo.OmsOrderShippingVO;
+import com.zhengqing.mall.service.IOmsLogisticService;
+import com.zhengqing.mall.service.IOmsOrderShippingService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -31,13 +30,11 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Service
-public class OmsOrderShippingServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<OmsOrderShippingMapper, OmsOrderShipping> implements OmsOrderShippingService<OmsOrderShipping> {
+@RequiredArgsConstructor
+public class OmsOrderShippingServiceImpl extends ServiceImpl<OmsOrderShippingMapper, OmsOrderShipping> implements IOmsOrderShippingService {
 
-    @Resource
-    private OmsOrderShippingMapper omsOrderShippingMapper;
-
-    @Resource
-    private OmsLogisticService omsLogisticService;
+    private final OmsOrderShippingMapper omsOrderShippingMapper;
+    private final IOmsLogisticService iOmsLogisticService;
 
 
     @Override
@@ -85,7 +82,7 @@ public class OmsOrderShippingServiceImpl<M extends BaseMapper<T>, T> extends Ser
         if (StringUtils.isBlank(logisticsNo)) {
             return;
         }
-        this.omsLogisticService.saveLogistic(logisticsCode, logisticsNo, receiverPhone);
+        this.iOmsLogisticService.saveLogistic(logisticsCode, logisticsNo, receiverPhone);
     }
 
     @Override

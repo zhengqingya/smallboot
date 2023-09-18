@@ -4,14 +4,13 @@ import com.alibaba.fastjson.JSON;
 import com.zhengqing.common.base.context.TenantIdContext;
 import com.zhengqing.mall.constant.MallRabbitMqConstant;
 import com.zhengqing.mall.model.dto.MiniOmsOrderConfirmReceiptDTO;
-import com.zhengqing.mall.service.WebOmsOrderService;
+import com.zhengqing.mall.service.IOmsOrderService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.annotation.Resource;
 
 
 /**
@@ -25,10 +24,10 @@ import javax.annotation.Resource;
  */
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class WebMallRabbitAutoConfirmReceiptConsumer {
 
-    @Resource
-    private WebOmsOrderService webOmsOrderService;
+    private final IOmsOrderService iOmsOrderService;
 
     @RabbitHandler
     @Transactional(rollbackFor = Exception.class)
@@ -36,7 +35,7 @@ public class WebMallRabbitAutoConfirmReceiptConsumer {
     public void onMessage(MiniOmsOrderConfirmReceiptDTO params) {
         try {
             TenantIdContext.setTenantId(params.getTenantId());
-            this.webOmsOrderService.confirmReceipt(params);
+            this.iOmsOrderService.confirmReceipt(params);
         } catch (Exception e) {
             log.error("[商城] 发货后？毫秒后自动确认收货处理参数：[{}] 错误信息：{}", JSON.toJSONString(params), e);
             throw e;

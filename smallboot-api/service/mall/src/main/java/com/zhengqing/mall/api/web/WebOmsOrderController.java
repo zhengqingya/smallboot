@@ -8,14 +8,14 @@ import com.zhengqing.mall.model.dto.WebOmsOrderSendSpuDTO;
 import com.zhengqing.mall.model.vo.MallTabConditionListVO;
 import com.zhengqing.mall.model.vo.WebOmsOrderDetailVO;
 import com.zhengqing.mall.model.vo.WebOmsOrderPageVO;
-import com.zhengqing.mall.service.WebOmsOrderService;
+import com.zhengqing.mall.service.IOmsOrderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
@@ -28,23 +28,23 @@ import java.util.List;
  * @date 2021/08/30 13:40
  */
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(ServiceConstant.SERVICE_API_PREFIX_WEB_MALL + "/order")
 @Api(tags = {"web-订单"})
 public class WebOmsOrderController {
 
-    @Resource
-    private WebOmsOrderService webOmsOrderService;
+    private final IOmsOrderService iOmsOrderService;
 
 //    @GetMapping("set")
 //    @ApiOperation("订单设置-查询")
 //    public WebOmsOrderSetVO getOrderSet() {
-//        return this.webOmsOrderService.getOrderSet();
+//        return this.iOmsOrderService.getOrderSet();
 //    }
 //
 //    @PutMapping("set")
 //    @ApiOperation("订单设置-更新")
 //    public Boolean updateOrderSet(@Validated @RequestBody WebOmsOrderSetDTO params) {
-//        this.webOmsOrderService.updateOrderSet(params);
+//        this.iOmsOrderService.updateOrderSet(params);
 //        return true;
 //    }
 
@@ -52,45 +52,45 @@ public class WebOmsOrderController {
     @ApiOperation("获取tab条件")
     public List<MallTabConditionListVO> getTabCondition(@ModelAttribute WebOmsOrderPageDTO params) {
         params.setTabValue(null);
-        return this.webOmsOrderService.getTabCondition(params);
+        return this.iOmsOrderService.getTabCondition(params);
     }
 
     @GetMapping("page")
     @ApiOperation("分页列表")
     public IPage<WebOmsOrderPageVO> page(@Validated @ModelAttribute WebOmsOrderPageDTO params) {
-        return this.webOmsOrderService.page(params);
+        return this.iOmsOrderService.page(params);
     }
 
     @GetMapping("{orderNo}")
     @ApiOperation("详情")
     public WebOmsOrderDetailVO detail(@PathVariable String orderNo) {
-        return this.webOmsOrderService.detail(orderNo);
+        return this.iOmsOrderService.detail(orderNo);
     }
 
     @PutMapping("cancel")
     @ApiOperation("待支付-取消订单")
     public Boolean cancel(@Validated @RequestBody OmsOrderCancelDTO params) {
-        this.webOmsOrderService.cancelOrderForBusiness(params);
+        this.iOmsOrderService.cancelOrderForBusiness(params);
         return true;
     }
 
     @PostMapping("sendSpu")
     @ApiOperation("订单发货")
     public Boolean sendSpu(@Validated @RequestBody WebOmsOrderSendSpuDTO params) {
-        this.webOmsOrderService.sendSpu(params);
+        this.iOmsOrderService.sendSpu(params);
         return true;
     }
 
     @PostMapping("importBatchSendSpu")
     @ApiOperation("导入批量发货")
     public void importBatchSendSpu(MultipartFile file) {
-        this.webOmsOrderService.importBatchSendSpu(file);
+        this.iOmsOrderService.importBatchSendSpu(file);
     }
 
     @GetMapping("export")
     @ApiOperation("导出(最多导出10000条数据)")
     public void export(HttpServletResponse response, @ModelAttribute WebOmsOrderPageDTO params) {
-        this.webOmsOrderService.export(response, params);
+        this.iOmsOrderService.export(response, params);
     }
 
 }

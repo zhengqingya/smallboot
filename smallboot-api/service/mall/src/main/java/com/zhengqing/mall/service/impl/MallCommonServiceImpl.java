@@ -11,18 +11,18 @@ import com.zhengqing.mall.model.enums.*;
 import com.zhengqing.mall.model.vo.MallFileVO;
 import com.zhengqing.mall.model.vo.MallTabConditionListVO;
 import com.zhengqing.mall.model.vo.PmsSkuVO;
-import com.zhengqing.mall.service.MallCommonService;
-import com.zhengqing.system.enums.SysDictTypeEnum;
+import com.zhengqing.mall.service.IMallCommonService;
 import com.zhengqing.system.enums.SysConfigConfigKeyEnum;
-import com.zhengqing.system.model.dto.SysDictSaveBatchDTO;
+import com.zhengqing.system.enums.SysDictTypeEnum;
 import com.zhengqing.system.model.dto.SysConfigSaveDTO;
-import com.zhengqing.system.service.ISysDictService;
+import com.zhengqing.system.model.dto.SysDictSaveBatchDTO;
 import com.zhengqing.system.service.ISysConfigService;
+import com.zhengqing.system.service.ISysDictService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Resource;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -38,13 +38,11 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Service
-public class MallCommonServiceImpl implements MallCommonService {
+@RequiredArgsConstructor
+public class MallCommonServiceImpl implements IMallCommonService {
 
-    @Resource
-    private ISysDictService sysDictService;
-
-    @Resource
-    private ISysConfigService iSysConfigService;
+    private final ISysDictService iSysDictService;
+    private final ISysConfigService iSysConfigService;
 
     @Override
     public MallFileVO uploadFile(MultipartFile file) {
@@ -214,7 +212,7 @@ public class MallCommonServiceImpl implements MallCommonService {
         saveDictDataMap.put(codeForExplain, explainList);
 
         // 保存
-        this.sysDictService.addOrUpdateBatch(saveDictDataMap, true);
+        this.iSysDictService.addOrUpdateBatch(saveDictDataMap, true);
     }
 
     /**
@@ -241,7 +239,7 @@ public class MallCommonServiceImpl implements MallCommonService {
                 .sort(1)
                 .build());
         saveDictDataMap.put(SysDictTypeEnum.MALL_ORDER_DELIVER_WX_MSG_NOTICE.getCode(), msgList);
-        this.sysDictService.addOrUpdateBatch(saveDictDataMap, true);
+        this.iSysDictService.addOrUpdateBatch(saveDictDataMap, true);
 
     }
 

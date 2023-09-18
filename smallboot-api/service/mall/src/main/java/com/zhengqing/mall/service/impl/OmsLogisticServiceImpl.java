@@ -12,21 +12,21 @@ import com.google.common.collect.Maps;
 import com.zhengqing.common.base.context.TenantIdContext;
 import com.zhengqing.common.core.util.IdGeneratorUtil;
 import com.zhengqing.common.db.constant.MybatisConstant;
+import com.zhengqing.mall.entity.OmsLogistic;
+import com.zhengqing.mall.mapper.OmsLogisticMapper;
 import com.zhengqing.mall.model.dto.MallLogisticsDTO;
 import com.zhengqing.mall.model.dto.OmsLogisticDTO;
 import com.zhengqing.mall.model.enums.TpsLogisticsCodeEnum;
 import com.zhengqing.mall.model.enums.TpsLogisticsStatusEnum;
 import com.zhengqing.mall.model.vo.OmsLogisticVO;
 import com.zhengqing.mall.model.vo.TpsLogisticsVO;
-import com.zhengqing.mall.entity.OmsLogistic;
-import com.zhengqing.mall.mapper.OmsLogisticMapper;
-import com.zhengqing.mall.service.OmsLogisticService;
+import com.zhengqing.mall.service.IOmsLogisticService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
-import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -41,10 +41,10 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Service
-public class OmsLogisticServiceImpl extends ServiceImpl<OmsLogisticMapper, OmsLogistic> implements OmsLogisticService {
+@RequiredArgsConstructor
+public class OmsLogisticServiceImpl extends ServiceImpl<OmsLogisticMapper, OmsLogistic> implements IOmsLogisticService {
 
-    @Resource
-    private OmsLogisticMapper omsLogisticMapper;
+    private final OmsLogisticMapper omsLogisticMapper;
 
 
     @Override

@@ -9,13 +9,13 @@ import com.zhengqing.mall.model.dto.WebPmsCategoryPageDTO;
 import com.zhengqing.mall.model.dto.WebPmsCategorySaveDTO;
 import com.zhengqing.mall.model.vo.WebPmsCategoryListVO;
 import com.zhengqing.mall.model.vo.WebPmsCategoryPageVO;
-import com.zhengqing.mall.service.WebOmsCategoryService;
+import com.zhengqing.mall.service.IOmsCategoryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 
@@ -27,48 +27,48 @@ import java.util.List;
  * @date 2022/02/10 14:01
  */
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(ServiceConstant.SERVICE_API_PREFIX_WEB_MALL + "/category")
 @Api(tags = {"web-分类"})
 public class WebPmsCategoryController {
 
-    @Resource
-    private WebOmsCategoryService webPmsCategoryService;
+    private final IOmsCategoryService iOmsCategoryService;
 
     @GetMapping("page")
     @ApiOperation("分页列表")
     public IPage<WebPmsCategoryPageVO> page(@Validated @ModelAttribute WebPmsCategoryPageDTO params) {
-        return this.webPmsCategoryService.page(params);
+        return this.iOmsCategoryService.page(params);
     }
 
     @GetMapping("list")
     @ApiOperation("列表")
     public List<WebPmsCategoryListVO> list(@Validated @ModelAttribute WebPmsCategoryListDTO params) {
-        return this.webPmsCategoryService.list(params);
+        return this.iOmsCategoryService.list(params);
     }
 
     @PostMapping("")
     @ApiOperation("新增")
     public String add(@Validated @RequestBody WebPmsCategorySaveDTO params) {
         params.setId(null);
-        return this.webPmsCategoryService.addOrUpdateData(params);
+        return this.iOmsCategoryService.addOrUpdateData(params);
     }
 
     @PutMapping("")
     @ApiOperation("更新")
     public String update(@Validated(UpdateGroup.class) @RequestBody WebPmsCategorySaveDTO params) {
-        return this.webPmsCategoryService.addOrUpdateData(params);
+        return this.iOmsCategoryService.addOrUpdateData(params);
     }
 
     @DeleteMapping("deleteBatch")
     @ApiOperation("批量删除")
     public void deleteBatch(@RequestParam List<String> idList) {
-        this.webPmsCategoryService.deleteBatchForBusiness(idList);
+        this.iOmsCategoryService.deleteBatchForBusiness(idList);
     }
 
     @PutMapping("updateBatchShow")
     @ApiOperation("批量更新显示状态")
     public Boolean updateBatchShow(@Validated @RequestBody WebPmsCategoryEditShowDTO params) {
-        this.webPmsCategoryService.updateBatchShow(params);
+        this.iOmsCategoryService.updateBatchShow(params);
         return true;
     }
 
