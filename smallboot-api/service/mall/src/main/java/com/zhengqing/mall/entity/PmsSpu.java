@@ -45,13 +45,6 @@ public class PmsSpu extends BaseEntity<PmsSpu> {
     @ApiModelProperty("排序")
     private Integer sort;
 
-    @ApiModelProperty("封面图")
-    private String coverImg;
-
-    @ApiModelProperty("轮播图")
-    @TableField(typeHandler = MallListFileTypeHandler.class)
-    private List<MallFileBO> slideImgList;
-
     /**
      * {@link PmsSpuTypeEnum}
      */
@@ -67,9 +60,23 @@ public class PmsSpu extends BaseEntity<PmsSpu> {
     @ApiModelProperty("优惠券数量")
     private Integer couponNum;
 
+    @ApiModelProperty("封面图")
+    private String coverImg;
+
+    @ApiModelProperty("轮播图")
+    @TableField(typeHandler = MallListFileTypeHandler.class)
+    private List<MallFileBO> slideImgList;
+
     @ApiModelProperty("商品详情图")
     @TableField(typeHandler = MallListFileTypeHandler.class)
     private List<MallFileBO> detailImgList;
+
+    /**
+     * linePrice值为空时，MP更新数据库时不忽略此字段值
+     */
+    @TableField(updateStrategy = FieldStrategy.IGNORED)
+    @ApiModelProperty("商品划线价格(单位:分)")
+    private Integer linePrice;
 
     @ApiModelProperty("运费(单位:分 0:包邮)")
     private Integer freight;
@@ -83,13 +90,6 @@ public class PmsSpu extends BaseEntity<PmsSpu> {
 
     @ApiModelProperty("是否显示(false->隐藏；true->显示)")
     private Boolean isShow;
-
-    /**
-     * linePrice值为空时，MP更新数据库时不忽略此字段值
-     */
-    @TableField(updateStrategy = FieldStrategy.IGNORED)
-    @ApiModelProperty("商品划线价格(单位:分)")
-    private Integer linePrice;
 
     @ApiModelProperty("是否预售(0->否；1->是)")
     private Boolean isPresell;

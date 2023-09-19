@@ -1,6 +1,7 @@
 package com.zhengqing.mall.model.bo;
 
 import com.zhengqing.common.base.model.bo.BaseBO;
+import com.zhengqing.common.core.custom.fileprefix.FilePrefix;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -30,6 +31,7 @@ public class MallFileBO extends BaseBO {
     @ApiModelProperty(value = "文件名", required = true, example = "test.jpg")
     private String name;
 
+    @FilePrefix
     @NotBlank(message = "文件url不能为空!")
     @ApiModelProperty(value = "文件url", required = true, example = "https://www.zhengqingya.com/test.png")
     private String url;

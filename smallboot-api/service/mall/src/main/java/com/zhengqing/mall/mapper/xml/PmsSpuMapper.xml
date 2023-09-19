@@ -28,22 +28,6 @@
         </if>
     </sql>
 
-    <sql id="PAGE">
-        SELECT spu.id,
-               spu.name,
-               spu.cover_img,
-               spu.type,
-               spu.is_put,
-               spu.is_show,
-               spu.is_presell,
-               spu.presell_end_time,
-               spu.presell_start_time,
-               spu.presell_deliver_day,
-               spu.line_price,
-               spu.sort,
-               spu.freight
-    </sql>
-
     <select id="selectTabCondition" resultType="com.zhengqing.mall.model.vo.MallTabConditionListVO">
         SELECT
         spu.is_put value,
@@ -71,7 +55,8 @@
     </resultMap>
 
     <select id="selectDataList" resultMap="baseVOMap">
-        <include refid="PAGE"/>
+        SELECT
+        spu.*
         <include refid="PAGE_CONDITION"/>
         GROUP BY spu.id
         ORDER BY spu.sort ASC, spu.id DESC

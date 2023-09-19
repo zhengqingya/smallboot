@@ -2,6 +2,7 @@ package com.zhengqing.mall.model.vo;
 
 import com.zhengqing.common.base.model.vo.BaseVO;
 import com.zhengqing.common.core.custom.fileprefix.FilePrefix;
+import com.zhengqing.common.core.custom.fileprefix.FilePrefixValid;
 import com.zhengqing.mall.model.bo.MallDictBO;
 import com.zhengqing.mall.model.bo.MallFileBO;
 import com.zhengqing.mall.model.bo.PmsSkuBO;
@@ -29,6 +30,7 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
+@FilePrefixValid
 @EqualsAndHashCode(callSuper = true)
 @ApiModel("商城-商品base-展示视图")
 public class PmsSpuBaseVO extends BaseVO {
@@ -39,9 +41,8 @@ public class PmsSpuBaseVO extends BaseVO {
     @ApiModelProperty("名称")
     private String name;
 
-    @FilePrefix
-    @ApiModelProperty("封面图")
-    private String coverImg;
+    @ApiModelProperty("排序")
+    private Integer sort;
 
     /**
      * {@link PmsSpuTypeEnum}
@@ -52,32 +53,65 @@ public class PmsSpuBaseVO extends BaseVO {
     @ApiModelProperty("类型值")
     private String typeName;
 
+    @ApiModelProperty("优惠券ID")
+    private Long couponId;
+
+    @ApiModelProperty("优惠券名称")
+    private String couponName;
+
+    @ApiModelProperty("优惠券数量")
+    private Integer couponNum;
+
+    @FilePrefix
+    @ApiModelProperty("封面图")
+    private String coverImg;
+
+    @FilePrefixValid
+    @ApiModelProperty("轮播图")
+    private List<MallFileBO> slideImgList;
+
+    @FilePrefixValid
+    @ApiModelProperty("商品详情图")
+    private List<MallFileBO> detailImgList;
+
+    @ApiModelProperty("商品划线价格(单位:分)")
+    private Integer linePrice;
+
+    @ApiModelProperty("运费(单位:分 0:包邮)")
+    private Integer freight;
+
+//    @ApiModelProperty("商品属性")
+//    private List<WebPmsAttrBO> attrList;
+
     @ApiModelProperty("是否上架(false->下架；true->上架)")
     private Boolean isPut;
 
     @ApiModelProperty("是否显示(false->隐藏；true->显示)")
     private Boolean isShow;
 
-    @ApiModelProperty("是否预售(false->否；true->是)")
+    @ApiModelProperty("是否预售(0->否；1->是)")
     private Boolean isPresell;
-
-    @ApiModelProperty("预售开始时间")
-    private Date presellStartTime;
 
     @ApiModelProperty("预售结束时间")
     private Date presellEndTime;
 
+    @ApiModelProperty("预售开始时间")
+    private Date presellStartTime;
+
     @ApiModelProperty("预售-发货日期(购买之后？天之后发货)")
     private Integer presellDeliverDay;
 
-    @ApiModelProperty("商品划线价格(单位:分)")
-    private Integer linePrice;
+    @ApiModelProperty(value = "商品关联服务")
+    private List<MallDictBO> serviceList;
 
-    @ApiModelProperty("排序")
-    private Integer sort;
+    @ApiModelProperty(value = "商品关联说明")
+    private List<MallDictBO> explainList;
 
-    @ApiModelProperty("运费(单位:分 0:包邮)")
-    private Integer freight;
+    @ApiModelProperty("商品详情-文案")
+    private String description;
+
+    @ApiModelProperty("规格明细列表")
+    private List<PmsSkuBO> skuList;
 
     // =========== ↓↓↓↓↓↓ 下面为规格表中计算出的数据值 ↓↓↓↓↓↓ ============
 
@@ -110,25 +144,6 @@ public class PmsSpuBaseVO extends BaseVO {
      */
     @ApiModelProperty("预售状态")
     private Byte presellStatus;
-
-
-//    @ApiModelProperty("商品属性")
-//    private List<WebPmsAttrBO> attrList;
-
-    @ApiModelProperty(value = "轮播图")
-    private List<MallFileBO> slideImgList;
-
-    @ApiModelProperty("商品详情图")
-    private List<MallFileBO> detailImgList;
-
-    @ApiModelProperty(value = "商品关联服务")
-    private List<MallDictBO> serviceList;
-
-    @ApiModelProperty(value = "商品关联说明")
-    private List<MallDictBO> explainList;
-
-    @ApiModelProperty("规格明细列表")
-    private List<PmsSkuBO> skuList;
 
     public void handleData(List<PmsSkuBO> skuList) {
         this.handleSkuData(skuList);
