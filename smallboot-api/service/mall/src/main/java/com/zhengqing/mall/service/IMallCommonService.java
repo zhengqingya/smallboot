@@ -1,11 +1,9 @@
 package com.zhengqing.mall.service;
 
 import com.zhengqing.mall.model.bo.PmsSpuBuyNumInfoBO;
-import com.zhengqing.mall.model.vo.MallFileVO;
 import com.zhengqing.mall.model.vo.MallTabConditionListVO;
 import com.zhengqing.mall.model.vo.PmsSkuVO;
 import com.zhengqing.system.enums.SysDictTypeEnum;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 import java.util.List;
@@ -19,16 +17,6 @@ import java.util.Map;
  * @date 2021/8/30 19:19
  */
 public interface IMallCommonService {
-
-    /**
-     * 上传文件
-     *
-     * @param file: 文件
-     * @return 文件信息
-     * @author zhengqingya
-     * @date 2021/6/24 9:47
-     */
-    MallFileVO uploadFile(MultipartFile file);
 
     /**
      * 查询自动收货毫秒

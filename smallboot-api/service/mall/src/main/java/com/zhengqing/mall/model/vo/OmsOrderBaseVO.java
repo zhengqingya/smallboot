@@ -3,7 +3,6 @@ package com.zhengqing.mall.model.vo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zhengqing.common.base.model.vo.BaseVO;
 import com.zhengqing.mall.model.bo.OmsOrderReceiverAddressBO;
-import com.zhengqing.mall.model.bo.WebOmsOrderReShippingBO;
 import com.zhengqing.mall.model.enums.OmsOrderStatusEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -108,11 +107,8 @@ public class OmsOrderBaseVO extends BaseVO {
 
     // ========================== ↓↓↓↓↓↓ 其它信息 ↓↓↓↓↓↓ ==========================
 
-    @ApiModelProperty("配送信息（注：目前暂时只支持单个物流）")
-    private WebOmsOrderReShippingBO shippingObj;
-
     @ApiModelProperty(value = "订单关联配送信息")
-    private List<OmsOrderShippingVO> shippingList;
+    private List<OmsOrderDeliverVO> deliverList;
 
     @ApiModelProperty("订单关联商品信息")
     private List<OmsOrderItemVO> spuList;

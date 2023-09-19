@@ -42,6 +42,9 @@ public class PmsSpuPageDTO extends BasePageDTO implements CheckParam {
     @ApiModelProperty(value = "是否上架(0->下架；1->上架)", hidden = true)
     private Boolean isPut;
 
+    @ApiModelProperty("id")
+    private String id;
+
     @ApiModelProperty("名称")
     private String name;
 

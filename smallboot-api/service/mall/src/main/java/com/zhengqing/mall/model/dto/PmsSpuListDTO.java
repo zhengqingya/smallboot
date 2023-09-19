@@ -19,8 +19,11 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel("web-商城-商品列表-查询参数")
-public class WebPmsSpuListDTO implements CheckParam {
+@ApiModel("商城-商品列表-查询参数")
+public class PmsSpuListDTO implements CheckParam {
+
+    @ApiModelProperty("id")
+    private String id;
 
     @ApiModelProperty("名称")
     private String name;

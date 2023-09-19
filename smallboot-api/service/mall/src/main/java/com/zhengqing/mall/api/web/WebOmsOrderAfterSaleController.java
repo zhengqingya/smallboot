@@ -5,8 +5,7 @@ import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.mall.model.dto.OmsOrderAfterSalePageDTO;
 import com.zhengqing.mall.model.dto.WebOmsOrderAfterSaleUpdateDTO;
 import com.zhengqing.mall.model.vo.MallTabConditionListVO;
-import com.zhengqing.mall.model.vo.OmsOrderAfterSaleDetailVO;
-import com.zhengqing.mall.model.vo.OmsOrderAfterSalePageVO;
+import com.zhengqing.mall.model.vo.OmsOrderAfterSaleBaseVO;
 import com.zhengqing.mall.service.IOmsOrderAfterSaleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -41,14 +40,14 @@ public class WebOmsOrderAfterSaleController {
 
     @GetMapping("page")
     @ApiOperation("列表分页")
-    public IPage<OmsOrderAfterSalePageVO> page(@Validated @ModelAttribute OmsOrderAfterSalePageDTO params) {
+    public IPage<OmsOrderAfterSaleBaseVO> page(@Validated @ModelAttribute OmsOrderAfterSalePageDTO params) {
         return this.iOmsOrderAfterSaleService.page(params);
     }
 
     @GetMapping("")
     @ApiOperation("详情")
-    public OmsOrderAfterSaleDetailVO detail(@RequestParam String afterSaleNo) {
-        return this.iOmsOrderAfterSaleService.detailData(afterSaleNo);
+    public OmsOrderAfterSaleBaseVO detail(@RequestParam String afterSaleNo) {
+        return this.iOmsOrderAfterSaleService.detail(afterSaleNo);
     }
 
     @PutMapping("")

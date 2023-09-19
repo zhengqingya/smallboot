@@ -47,7 +47,7 @@ public interface PmsSpuMapper extends BaseMapper<PmsSpu> {
      * @author zhengqingya
      * @date 2021/08/17 15:33
      */
-    List<WebPmsSpuListVO> selectListByWeb(@Param("filter") WebPmsSpuListDTO filter);
+    List<WebPmsSpuListVO> selectListByWeb(@Param("filter") PmsSpuListDTO filter);
 
     /**
      * 查询商品类型
@@ -58,17 +58,6 @@ public interface PmsSpuMapper extends BaseMapper<PmsSpu> {
      * @date 2021/8/20 16:20
      */
     List<PmsSpuTypeVO> selectDataTypeList(@Param("idList") List<String> idList);
-
-
-    /**
-     * 详情
-     *
-     * @param id 商品id
-     * @return 商品详情
-     * @author zhengqingya
-     * @date 2021/8/20 9:18
-     */
-    PmsSpuBaseVO detailData(@Param("id") String id);
 
     /**
      * 批量更新商品上下架状态

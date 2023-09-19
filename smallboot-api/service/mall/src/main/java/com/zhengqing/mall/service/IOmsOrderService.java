@@ -178,25 +178,6 @@ public interface IOmsOrderService extends IService<OmsOrder> {
     void applyAfterSale(MiniOmsOrderApplyAfterSaleDTO params);
 
     /**
-     * 获取订单设置数据
-     *
-     * @return 订单设置数据
-     * @author zhengqingya
-     * @date 2021/9/24 14:29
-     */
-//    WebOmsOrderSetVO getOrderSet();
-
-    /**
-     * 更新订单设置数据
-     *
-     * @param params 提交数据
-     * @return void
-     * @author zhengqingya
-     * @date 2021/9/24 14:30
-     */
-//    void updateOrderSet(@Validated @RequestBody WebOmsOrderSetDTO params);
-
-    /**
      * 获取tab条件
      *
      * @param params 查询参数

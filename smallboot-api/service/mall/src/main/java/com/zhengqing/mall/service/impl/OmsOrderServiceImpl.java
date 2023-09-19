@@ -1,6 +1,7 @@
 package com.zhengqing.mall.service.impl;
 
 import cn.hutool.core.lang.Assert;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.context.AnalysisContext;
@@ -33,8 +34,6 @@ import com.zhengqing.pay.model.dto.PayOrderCreateDTO;
 import com.zhengqing.pay.model.vo.PayOrderCreateVO;
 import com.zhengqing.pay.service.IPayService;
 import com.zhengqing.system.enums.SysDictTypeEnum;
-import com.zhengqing.system.service.ISysConfigService;
-import com.zhengqing.system.service.ISysDictService;
 import com.zhengqing.ums.model.vo.UmsUserVO;
 import com.zhengqing.ums.service.IUmsUserService;
 import lombok.RequiredArgsConstructor;
@@ -77,12 +76,8 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
     private final RabbitTemplate rabbitTemplate;
     private final IOmsOrderAfterSaleService iOmsOrderAfterSaleService;
     private final IOmsOrderAfterSaleItemService iOmsOrderAfterSaleItemService;
-    private final IOmsOrderShippingService iOmsOrderShippingService;
+    private final IOmsOrderDeliverService iOmsOrderDeliverService;
     private final IUmsUserService iUmsUserService;
-    private final IOmsOrderShippingItemService iOmsOrderShippingItemService;
-    private final ISysDictService iSysDictService;
-    private final ISysConfigService iSysConfigService;
-
 
     @Override
     public OmsOrder getOrder(String orderNo) {
@@ -194,7 +189,7 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
     public void confirmReceipt(MiniOmsOrderConfirmReceiptDTO params) {
         log.info("[商城] 订单-确认收货-提交参数：[{}] ", params);
         String orderNo = params.getOrderNo();
-        String shippingId = params.getShippingId();
+        String deliverId = params.getDeliverId();
 
         // 1、查询订单
         OmsOrder order = this.getOrder(orderNo);
@@ -211,19 +206,14 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
         order.setAfterSaleEndTime(new Date(System.currentTimeMillis() + buyerApplyAfterSaleMillisecond));
         order.updateById();
 
-        // 判断是否属于纯虚拟商品的订单
-        if (StringUtils.isBlank(shippingId)) {
-            // 3、该订单为纯虚拟商品 -- 更新订单下的所有商品状态
-            this.iOmsOrderItemService.updateBatchStatusByOrderNo(orderNo, OmsOrderItemStatusEnum.FINISH);
-        } else {
-            // 3、更新商品状态
-            // 先获取关联商品ids
-            List<String> orderItemIdList = this.iOmsOrderShippingItemService.listForOrderItemId(orderNo, shippingId);
-            this.iOmsOrderItemService.updateBatchStatus(orderItemIdList, OmsOrderItemStatusEnum.FINISH);
+        // 3、更新商品状态
+        this.iOmsOrderItemService.updateBatchStatusByOrderNo(orderNo, OmsOrderItemStatusEnum.FINISH);
 
+        // 判断是否属于纯虚拟商品的订单
+        if (StrUtil.isNotBlank(deliverId)) {
             // 4、更新配送信息
-            this.iOmsOrderShippingService.updateData(OmsOrderShipping.builder()
-                    .id(shippingId)
+            this.iOmsOrderDeliverService.updateData(OmsOrderDeliver.builder()
+                    .id(deliverId)
                     .receiptTime(new Date())
                     .build());
         }
@@ -443,7 +433,6 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
                     MiniOmsOrderConfirmReceiptDTO.builder()
                             .orderNo(orderNo)
                             .tenantId(TenantIdContext.getTenantId())
-                            .shippingId(null)
                             .build(), message -> {
                         // 配置消息延时时间
                         message.getMessageProperties().setHeader("x-delay", autoReceiptMillisecond);
@@ -604,7 +593,6 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
         String refundReason = params.getReason();
         String explain = params.getExplain();
         Integer refundPrice = params.getRefundPrice();
-        String certImgJson = params.getCertImgJson();
 
         // 1、校验是否可申请售后
         OmsOrder order = this.getOrder(orderNo);
@@ -646,7 +634,7 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
                 .freight(order.getFreight())
                 .applyRefundPrice(refundPrice)
                 .refundPrice(refundPrice)
-                .certImgJson(certImgJson)
+                .certImgList(params.getCertImgList())
                 .applyTime(new Date())
                 .receiverName(order.getReceiverName())
                 .receiverPhone(order.getReceiverPhone())
@@ -680,63 +668,6 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
                 });
     }
 
-
-//    @Override
-//    public WebOmsOrderSetVO getOrderSet() {
-//        // 1、订单-设置
-//        List<String> sysPropertyKeyList = SysPropertyKeyEnum.LIST_MALL_ORDER_SET.stream().map(SysPropertyKeyEnum::getKey).collect(Collectors.toList());
-//        List<SysPropertyVO> orderSetDataList = this.iSysConfigService.listByKey(sysPropertyKeyList);
-//        Assert.notNull(orderSetDataList, "系統属性缓存丢失，请刷新重试或联系系统管理员！");
-//
-//        // 2、订单-发货微信消息通知
-//        ApiResult<List<SysDictVO>> dictDataWrapper = this.sysDictService.listByOpenCode(SysDictTypeEnum.MALL_ORDER_DELIVER_WX_MSG_NOTICE.getCode());
-//        dictDataWrapper.checkForRpc();
-//        // 微信消息数据
-//        List<SysDictVO> dictListByWxMsgList = dictDataWrapper.getData();
-//        Assert.notNull(dictListByWxMsgList, "数据字典缓存丢失，请联系系统管理员！");
-//
-//        // 3、减库存设置
-//        SysPropertyVO payTypeProperty = null;
-//        for (SysPropertyVO sysPropertyVO : orderSetDataList) {
-//            if (SysPropertyKeyEnum.MALL_ORDER_SET_STOCK_CHECK_TYPE.getKey().equals(sysPropertyVO.getKey())) {
-//                payTypeProperty = sysPropertyVO;
-//                break;
-//            }
-//        }
-//        orderSetDataList.remove(payTypeProperty);
-//
-//        // 4、封装返回数据
-//        return WebOmsOrderSetVO.builder()
-//                .wxMsgList(dictListByWxMsgList)
-//                .setList(orderSetDataList)
-//                .payType(Byte.valueOf(payTypeProperty.getValue()))
-//                .build();
-//    }
-//
-//    @Override
-//    public void updateOrderSet(WebOmsOrderSetDTO params) {
-//        log.info("[商城] 保存订单设置数据：{}", params);
-//        // 1、保存订单设置数据
-//        ValidList<SysPropertySaveDTO> setList = params.getSetList();
-//        ApiResult<Boolean> setDataWrapper = this.iSysConfigService.saveBatch(setList);
-//        if (setDataWrapper.checkIsFail()) {
-//            log.error("[商城] 订单设置数据保存失败:{}", setDataWrapper);
-//            throw new MyException("订单设置数据保存失败，请联系系统管理员！");
-//        }
-//
-//        // 2、保存微信消息通知数据
-//        ValidList<SysDictSaveBatchDTO> wxMsgList = params.getWxMsgList();
-//        ApiResult<Boolean> wxMsgDataWrapper = this.sysDictService.addOrUpdateBatch(new HashMap<String, ValidList<SysDictSaveBatchDTO>>(1) {
-//            {
-//                this.put(SysDictTypeEnum.MALL_ORDER_DELIVER_WX_MSG_NOTICE.getCode(), wxMsgList);
-//            }
-//        });
-//        if (wxMsgDataWrapper.checkIsFail()) {
-//            log.error("[商城] 微信消息数据保存失败:{}", setDataWrapper);
-//            throw new MyException("微信消息数据保存失败，请联系系统管理员！");
-//        }
-//    }
-
     @Override
     public List<MallTabConditionListVO> getTabCondition(OmsOrderPageDTO params) {
         params.setOrderStatus(null);
@@ -748,7 +679,6 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
         for (MallTabConditionListVO item : result) {
             if (WebOmsOrderTabEnum.AFTER_SALE.getValue().equals(item.getValue())) {
                 item.setNum(this.iOmsOrderAfterSaleService.getHandleIngNum(UmsUserContext.getUserId()));
-                item.setIsAfterSale(true);
                 break;
             }
         }
@@ -778,7 +708,7 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
         // 查询订单关联商品数据
         Map<String, List<OmsOrderItemVO>> orderItemMap = this.iOmsOrderItemService.mapInfo(OmsOrderItemDTO.builder().orderNoList(orderNoList).build());
         // 查询订单关联配送数据
-        Map<String, List<OmsOrderShippingVO>> shippingInfoMap = this.iOmsOrderShippingService.mapByOrderNoList(orderNoList);
+        Map<String, List<OmsOrderDeliverVO>> deliverInfoMap = this.iOmsOrderDeliverService.mapByOrderNoList(orderNoList);
         // 查询订单关联售后数据
         Map<String, Boolean> afterSaleInfoMap = this.iOmsOrderAfterSaleService.mapByOrderNoList(orderNoList);
         list.forEach(item -> {
@@ -786,14 +716,7 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
             // 装载关联商品数据
             item.setSpuList(orderItemMap.get(orderNo));
             // 装载关联配送数据
-            List<OmsOrderShippingVO> omsOrderShippingList = shippingInfoMap.get(orderNo);
-            if (!CollectionUtils.isEmpty(omsOrderShippingList)) {
-                OmsOrderShippingVO omsOrderShippingVO = omsOrderShippingList.get(0);
-                item.setShippingObj(WebOmsOrderReShippingBO.builder()
-                        .logisticsCode(omsOrderShippingVO.getLogisticsCode())
-                        .logisticsNo(omsOrderShippingVO.getLogisticsNo())
-                        .build());
-            }
+            item.setDeliverList(deliverInfoMap.get(orderNo));
             // 装载关联售后数据
             item.setIsAfterSale(afterSaleInfoMap.get(orderNo));
             // 处理数据
@@ -805,28 +728,7 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
     @Override
     public OmsOrderBaseVO detail(String orderNo) {
         log.info("[商城] 查询订单详情 订单编号：{}", orderNo);
-        // 1、查询订单基本信息
-        OmsOrderBaseVO orderDetail = this.omsOrderMapper.detailData(orderNo);
-        Assert.notNull(orderDetail, "该订单不存在！");
-        // 2、查询关联物流信息
-        List<OmsOrderShippingVO> orderShippingList = this.iOmsOrderShippingService.listByOrderNo(orderNo);
-        orderDetail.setShippingList(orderShippingList);
-        if (!CollectionUtils.isEmpty(orderShippingList)) {
-            OmsOrderShippingVO orderShipping = orderShippingList.get(0);
-            orderDetail.setShippingObj(WebOmsOrderReShippingBO.builder()
-                    .logisticsCode(orderShipping.getLogisticsCode())
-                    .logisticsNo(orderShipping.getLogisticsNo())
-                    .build());
-        }
-        // 3、查询订单关联是否售后
-        Boolean isAfterSale = this.iOmsOrderAfterSaleService.mapByOrderNoList(Lists.newArrayList(orderNo)).get(orderNo);
-        orderDetail.setIsAfterSale(isAfterSale);
-        // 4、查询关联商品数据
-        List<OmsOrderItemVO> orderReSpuList = this.iOmsOrderItemService.listByOrderNo(orderNo);
-        orderDetail.setSpuList(orderReSpuList);
-        // 5、处理数据
-        orderDetail.handleData();
-        return orderDetail;
+        return this.page(OmsOrderPageDTO.builder().orderNo(orderNo).build()).getRecords().get(0);
     }
 
     @Override
@@ -835,8 +737,6 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
         log.info("[商城] 订单-发货-提交参数：{}", params);
         String orderNo = params.getOrderNo();
         List<String> orderItemIdList = params.getOrderItemIdList();
-        // 校验此批商品在之前是否发过货
-        Assert.isFalse(this.iOmsOrderShippingItemService.checkSend(orderNo, orderItemIdList), MallResultCodeEnum.部分商品已发货.getDesc());
         // 查询自动收货时间
         long autoReceiptMillisecond = this.iMallCommonService.getAutoReceiptMillisecond();
         // 发货逻辑处理
@@ -869,6 +769,8 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
 
         // 1、订单状态 -> 发货
         OmsOrder order = this.getOrder(orderNo);
+        Byte orderStatus = order.getOrderStatus();
+        Assert.isTrue(OmsOrderStatusEnum.UN_BILL.getStatus().equals(orderStatus), "无法发货：" + OmsOrderStatusEnum.getEnum(orderStatus).getDesc());
         order.setOrderStatus(OmsOrderStatusEnum.BILL.getStatus());
         order.setAutoReceiptTime(autoReceiptTime);
         order.updateById();
@@ -877,7 +779,7 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
         this.iOmsOrderItemService.updateBatchStatus(orderItemIdList, OmsOrderItemStatusEnum.BILL);
 
         // 3、新增物流信息
-        String shippingId = this.iOmsOrderShippingService.addData(OmsOrderShipping.builder()
+        this.iOmsOrderDeliverService.addData(OmsOrderDeliver.builder()
                 .orderNo(orderNo)
                 .receiverName(receiverName)
                 .receiverPhone(receiverPhone)
@@ -895,17 +797,10 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
 
         // 4、新增物流详情信息
         Map<String, OmsOrderItemVO> orderItemMap = this.iOmsOrderItemService.mapSkuBaseInfo(orderItemIdList);
-        List<OmsOrderShippingItem> omsOrderShippingItemSaveList = Lists.newLinkedList();
         StringJoiner spuNameSj = new StringJoiner(",");
         for (OmsOrderItemVO orderItemBO : orderItemMap.values()) {
-            omsOrderShippingItemSaveList.add(OmsOrderShippingItem.builder()
-                    .orderNo(orderNo)
-                    .shippingId(shippingId)
-                    .orderItemId(orderItemBO.getId())
-                    .build());
             spuNameSj.add(orderItemBO.getName());
         }
-        this.iOmsOrderShippingItemService.addOrUpdateBatchData(omsOrderShippingItemSaveList);
 
         // 5、mq延时-自动确认收货
         this.rabbitTemplate.convertAndSend(MallRabbitMqConstant.MALL_EVENT_DELAY_EXCHANGE,
@@ -913,7 +808,6 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
                 MiniOmsOrderConfirmReceiptDTO.builder()
                         .orderNo(orderNo)
                         .tenantId(TenantIdContext.getTenantId())
-                        .shippingId(shippingId)
                         .build(), message -> {
                     // 配置消息延时时间
                     message.getMessageProperties().setHeader("x-delay", autoReceiptMillisecond);
@@ -955,19 +849,18 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
         // 订单编号list
         List<String> orderNoList = orderList.stream().map(WebOmsOrderExportVO::getOrderNo).collect(Collectors.toList());
         // 查询订单关联商品数据
-        Map<String, List<OmsOrderItemVO>> orderItemMap = this.iOmsOrderItemService.mapInfo(
-                OmsOrderItemDTO.builder().orderNoList(orderNoList).build());
+        Map<String, List<OmsOrderItemVO>> orderItemMap = this.iOmsOrderItemService.mapInfo(OmsOrderItemDTO.builder().orderNoList(orderNoList).build());
         // 查询订单关联配送数据
-        Map<String, List<OmsOrderShippingVO>> shippingInfoMap = this.iOmsOrderShippingService.mapByOrderNoList(orderNoList);
+        Map<String, List<OmsOrderDeliverVO>> deliverInfoMap = this.iOmsOrderDeliverService.mapByOrderNoList(orderNoList);
         for (WebOmsOrderExportVO item : orderList) {
             String orderNoItem = item.getOrderNo();
             item.setOrderStatusName(OmsOrderStatusEnum.getEnum(item.getOrderStatus()).getDesc());
             // 装载关联配送数据
-            List<OmsOrderShippingVO> omsOrderShippingList = shippingInfoMap.get(orderNoItem);
-            if (!CollectionUtils.isEmpty(omsOrderShippingList)) {
-                OmsOrderShippingVO omsOrderShippingVO = omsOrderShippingList.get(0);
-                item.setLogisticsCode(omsOrderShippingVO.getLogisticsCode());
-                item.setLogisticsNo(omsOrderShippingVO.getLogisticsNo());
+            List<OmsOrderDeliverVO> omsOrderDeliverList = deliverInfoMap.get(orderNoItem);
+            if (!CollectionUtils.isEmpty(omsOrderDeliverList)) {
+                OmsOrderDeliverVO omsOrderDeliverVO = omsOrderDeliverList.get(0);
+                item.setLogisticsCode(omsOrderDeliverVO.getLogisticsCode());
+                item.setLogisticsNo(omsOrderDeliverVO.getLogisticsNo());
             }
 
             // 订单关联的商品数据

@@ -1,7 +1,5 @@
 package com.zhengqing.mall.model.vo;
 
-import com.alibaba.fastjson.JSON;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zhengqing.common.base.model.vo.BaseVO;
 import com.zhengqing.mall.model.bo.MallFileBO;
 import com.zhengqing.mall.model.bo.PmsSkuSpecBO;
@@ -43,16 +41,8 @@ public class MiniPmsSpuRatePageVO extends BaseVO {
     @ApiModelProperty("评价内容")
     private String content;
 
-    @JsonIgnore
-    @ApiModelProperty(value = "评价图片或视频", hidden = true)
-    private String resourceJson;
-
     @ApiModelProperty(value = "评价图片或视频")
     private List<MallFileBO> resourceList;
-
-    @JsonIgnore
-    @ApiModelProperty(value = "商品规格属性", hidden = true)
-    private String specJson;
 
     @ApiModelProperty(value = "商品规格")
     private List<PmsSkuSpecBO> specList;
@@ -61,8 +51,6 @@ public class MiniPmsSpuRatePageVO extends BaseVO {
     private Date createTime;
 
     public void handleData() {
-        this.resourceList = JSON.parseArray(this.resourceJson, MallFileBO.class);
-        this.specList = JSON.parseArray(this.specJson, PmsSkuSpecBO.class);
     }
 
 }

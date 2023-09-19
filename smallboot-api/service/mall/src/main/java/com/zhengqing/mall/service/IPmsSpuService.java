@@ -127,7 +127,7 @@ public interface IPmsSpuService extends IService<PmsSpu> {
      * @author zhengqingya
      * @date 2021/08/17 15:33
      */
-    List<WebPmsSpuListVO> list(WebPmsSpuListDTO params);
+    List<WebPmsSpuListVO> list(PmsSpuListDTO params);
 
     /**
      * 查询商品类型

@@ -33,7 +33,4 @@ public class MallTabConditionListVO {
     @ApiModelProperty("排序")
     private Integer sort;
 
-    @ApiModelProperty("是否单独处理售后订单数据 -- 只在mini端处理")
-    private Boolean isAfterSale;
-
 }

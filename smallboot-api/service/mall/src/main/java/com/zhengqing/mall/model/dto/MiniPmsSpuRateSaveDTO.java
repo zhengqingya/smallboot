@@ -1,6 +1,5 @@
 package com.zhengqing.mall.model.dto;
 
-import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zhengqing.common.base.model.dto.BaseDTO;
 import com.zhengqing.common.core.custom.parameter.CheckParam;
@@ -86,10 +85,6 @@ public class MiniPmsSpuRateSaveDTO extends BaseDTO implements CheckParam {
         @ApiModelProperty(value = "评价图片或视频")
         private List<MallFileBO> resourceList;
 
-        @JsonIgnore
-        @ApiModelProperty(value = "评价图片或视频", hidden = true)
-        private String resourceJson;
-
         @ApiModelProperty(value = "评价内容", example = "nice nice nice.")
         private String content;
 
@@ -128,7 +123,6 @@ public class MiniPmsSpuRateSaveDTO extends BaseDTO implements CheckParam {
     @Override
     public void checkParam() {
         this.rateList.forEach(item -> {
-            item.resourceJson = JSON.toJSONString(item.resourceList);
             Integer sumLevel = item.descLevel + item.logisticsLevel + item.serviceLevel;
             if (sumLevel >= 9) {
                 item.rateType = PmsSpuRateTypeEnum.GOOD.getType();

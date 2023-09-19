@@ -9,8 +9,7 @@ import com.zhengqing.mall.model.dto.OmsOrderAfterSaleDeleteDTO;
 import com.zhengqing.mall.model.dto.OmsOrderAfterSalePageDTO;
 import com.zhengqing.mall.model.dto.WebOmsOrderAfterSaleUpdateDTO;
 import com.zhengqing.mall.model.vo.MallTabConditionListVO;
-import com.zhengqing.mall.model.vo.OmsOrderAfterSaleDetailVO;
-import com.zhengqing.mall.model.vo.OmsOrderAfterSalePageVO;
+import com.zhengqing.mall.model.vo.OmsOrderAfterSaleBaseVO;
 import com.zhengqing.pay.model.bo.PayOrderNotifyBO;
 
 import java.util.List;
@@ -33,7 +32,7 @@ public interface IOmsOrderAfterSaleService extends IService<OmsOrderAfterSale> {
      * @author zhengqingya
      * @date 2022/3/4 16:12
      */
-    OmsOrderAfterSale detail(String afterSaleNo);
+    OmsOrderAfterSale detailBase(String afterSaleNo);
 
     /**
      * 新增
@@ -163,7 +162,7 @@ public interface IOmsOrderAfterSaleService extends IService<OmsOrderAfterSale> {
      * @author zhengqingya
      * @date 2021/10/22 16:04
      */
-    IPage<OmsOrderAfterSalePageVO> page(OmsOrderAfterSalePageDTO params);
+    IPage<OmsOrderAfterSaleBaseVO> page(OmsOrderAfterSalePageDTO params);
 
     /**
      * 详情
@@ -173,7 +172,7 @@ public interface IOmsOrderAfterSaleService extends IService<OmsOrderAfterSale> {
      * @author zhengqingya
      * @date 2021/10/21 11:06
      */
-    OmsOrderAfterSaleDetailVO detailData(String afterSaleNo);
+    OmsOrderAfterSaleBaseVO detail(String afterSaleNo);
 
     /**
      * 更新

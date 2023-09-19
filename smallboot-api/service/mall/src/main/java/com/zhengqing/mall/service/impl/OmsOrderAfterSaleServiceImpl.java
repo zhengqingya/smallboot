@@ -66,7 +66,7 @@ public class OmsOrderAfterSaleServiceImpl extends ServiceImpl<OmsOrderAfterSaleM
 
 
     @Override
-    public OmsOrderAfterSale detail(String afterSaleNo) {
+    public OmsOrderAfterSale detailBase(String afterSaleNo) {
         OmsOrderAfterSale detailData = this.omsOrderAfterSaleMapper.selectById(afterSaleNo);
         Assert.notNull(detailData, "该售后数据不存在！");
         return detailData;
@@ -261,9 +261,10 @@ public class OmsOrderAfterSaleServiceImpl extends ServiceImpl<OmsOrderAfterSaleM
 
 
     @Override
-    public IPage<OmsOrderAfterSalePageVO> page(OmsOrderAfterSalePageDTO params) {
-        IPage<OmsOrderAfterSalePageVO> afterSalePage = this.omsOrderAfterSaleMapper.selectDataListByWeb(new Page<>(), params);
-        List<OmsOrderAfterSalePageVO> afterSaleList = afterSalePage.getRecords();
+    public IPage<OmsOrderAfterSaleBaseVO> page(OmsOrderAfterSalePageDTO params) {
+        // 订单主体详情
+        IPage<OmsOrderAfterSaleBaseVO> afterSalePage = this.omsOrderAfterSaleMapper.selectDataList(new Page<>(), params);
+        List<OmsOrderAfterSaleBaseVO> afterSaleList = afterSalePage.getRecords();
         if (CollectionUtils.isEmpty(afterSaleList)) {
             return afterSalePage;
         }
@@ -287,17 +288,8 @@ public class OmsOrderAfterSaleServiceImpl extends ServiceImpl<OmsOrderAfterSaleM
     }
 
     @Override
-    public OmsOrderAfterSaleDetailVO detailData(String afterSaleNo) {
-        // 订单主体详情
-        OmsOrderAfterSaleDetailVO orderAfterSaleDetailVO = this.omsOrderAfterSaleMapper.detailByWeb(afterSaleNo);
-        Assert.notNull(orderAfterSaleDetailVO, "该售后数据不存在！");
-        // 处理数据
-        orderAfterSaleDetailVO.handleData();
-        // 查询关联商品数据
-        List<OmsOrderItemVO> orderItemList = this.iOmsOrderItemService.listInfo(
-                OmsOrderItemDTO.builder().orderItemIdList(orderAfterSaleDetailVO.getOrderItemIdList()).build());
-        orderAfterSaleDetailVO.setSpuList(orderItemList);
-        return orderAfterSaleDetailVO;
+    public OmsOrderAfterSaleBaseVO detail(String afterSaleNo) {
+        return this.page(OmsOrderAfterSalePageDTO.builder().afterSaleNo(afterSaleNo).build()).getRecords().get(0);
     }
 
     @Override

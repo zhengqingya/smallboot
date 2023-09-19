@@ -5,10 +5,12 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.zhengqing.common.db.entity.BaseEntity;
+import com.zhengqing.mall.config.mybatis.handler.MallListFileTypeHandler;
+import com.zhengqing.mall.config.mybatis.handler.MallListSpecTypeHandler;
+import com.zhengqing.mall.model.bo.MallFileBO;
 import com.zhengqing.mall.model.bo.PmsSkuSpecBO;
 import com.zhengqing.mall.model.enums.PmsSpuRateOperatorTypeEnum;
 import com.zhengqing.mall.model.enums.PmsSpuRateTypeEnum;
-import com.zhengqing.mall.config.mybatis.handler.MallListSpecTypeHandler;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -70,7 +72,8 @@ public class PmsSpuRate extends BaseEntity<PmsSpuRate> {
     private String operatorIcon;
 
     @ApiModelProperty("评价图片或视频")
-    private String resourceJson;
+    @TableField(typeHandler = MallListFileTypeHandler.class)
+    private List<MallFileBO> resourceList;
 
     @ApiModelProperty("评价内容")
     private String content;

@@ -21,8 +21,7 @@ public class MallMybatisPlusConfig {
         MybatisPlusConfig.TENANT_ID_TABLE.add("oms_order_after_sale");
         MybatisPlusConfig.TENANT_ID_TABLE.add("oms_order_after_sale_item");
         MybatisPlusConfig.TENANT_ID_TABLE.add("oms_order_item");
-        MybatisPlusConfig.TENANT_ID_TABLE.add("oms_order_shipping");
-        MybatisPlusConfig.TENANT_ID_TABLE.add("oms_order_shipping_item");
+        MybatisPlusConfig.TENANT_ID_TABLE.add("oms_order_deliver");
         MybatisPlusConfig.TENANT_ID_TABLE.add("pms_attr_key");
         MybatisPlusConfig.TENANT_ID_TABLE.add("pms_attr_value");
         MybatisPlusConfig.TENANT_ID_TABLE.add("pms_category");

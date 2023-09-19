@@ -4,10 +4,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.base.exception.MyException;
 import com.zhengqing.mall.model.dto.*;
-import com.zhengqing.mall.model.vo.MallTabConditionListVO;
-import com.zhengqing.mall.model.vo.MiniOmsSpuBuyVO;
-import com.zhengqing.mall.model.vo.MiniPmsOrderReAfterSaleStatusVO;
-import com.zhengqing.mall.model.vo.OmsOrderBaseVO;
+import com.zhengqing.mall.model.vo.*;
+import com.zhengqing.mall.service.IOmsLogisticService;
 import com.zhengqing.mall.service.IOmsOrderService;
 import com.zhengqing.pay.model.vo.PayOrderCreateVO;
 import io.swagger.annotations.Api;
@@ -33,6 +31,7 @@ import java.util.List;
 public class MiniOmsOrderController {
 
     private final IOmsOrderService iOmsOrderService;
+    private final IOmsLogisticService iOmsLogisticService;
 
     @GetMapping("getTabCondition")
     @ApiOperation("获取tab条件")
@@ -112,6 +111,12 @@ public class MiniOmsOrderController {
     public Boolean confirmReceipt(@Validated @RequestBody MiniOmsOrderConfirmReceiptDTO params) {
         this.iOmsOrderService.confirmReceipt(params);
         return true;
+    }
+
+    @GetMapping("getLogisticInfo")
+    @ApiOperation("查询物流")
+    public OmsLogisticVO getLogisticInfo(@Validated @ModelAttribute OmsLogisticDTO params) {
+        return this.iOmsLogisticService.detail(params);
     }
 
 }

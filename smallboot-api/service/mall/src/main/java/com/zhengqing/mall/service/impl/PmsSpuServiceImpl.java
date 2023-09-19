@@ -245,13 +245,15 @@ public class PmsSpuServiceImpl extends ServiceImpl<PmsSpuMapper, PmsSpu> impleme
             String id = item.getId();
             List<PmsSkuBO> skuItemList = skuDataMap.get(id);
             item.setSkuList(skuItemList);
+            // 实时获取关联服务和说明数据
+//        this.handleSpuData(item);
             item.handleData(skuItemList);
         }
         return result;
     }
 
     @Override
-    public List<WebPmsSpuListVO> list(WebPmsSpuListDTO params) {
+    public List<WebPmsSpuListVO> list(PmsSpuListDTO params) {
         return this.pmsSpuMapper.selectListByWeb(params);
     }
 
@@ -270,16 +272,7 @@ public class PmsSpuServiceImpl extends ServiceImpl<PmsSpuMapper, PmsSpu> impleme
 
     @Override
     public PmsSpuBaseVO detail(String id) {
-        PmsSpuBaseVO spuDetail = this.pmsSpuMapper.detailData(id);
-        Assert.notNull(spuDetail, "该数据不存在！");
-        // 查询关联规格数据
-        List<PmsSkuBO> skuList = this.iPmsSkuService.listBySpuId(id);
-        spuDetail.setSkuList(skuList);
-        // 处理数据
-        spuDetail.handleData(skuList);
-        // 实时获取关联服务和说明数据
-//        this.handleSpuData(spuDetail);
-        return spuDetail;
+        return this.page(PmsSpuPageDTO.builder().build()).getRecords().get(0);
     }
 
     @Override

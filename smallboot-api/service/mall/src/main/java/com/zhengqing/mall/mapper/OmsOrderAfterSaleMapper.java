@@ -5,7 +5,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.mall.entity.OmsOrderAfterSale;
 import com.zhengqing.mall.model.bo.PmsSkuStockBO;
 import com.zhengqing.mall.model.dto.OmsOrderAfterSalePageDTO;
-import com.zhengqing.mall.model.vo.*;
+import com.zhengqing.mall.model.vo.MallTabConditionListVO;
+import com.zhengqing.mall.model.vo.OmsOrderAfterSaleBaseVO;
+import com.zhengqing.mall.model.vo.OmsOrderAfterSaleItemVO;
+import com.zhengqing.mall.model.vo.OmsOrderAfterSaleVO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -38,7 +41,7 @@ public interface OmsOrderAfterSaleMapper extends BaseMapper<OmsOrderAfterSale> {
      * @author zhengqingya
      * @date 2021/10/18 11:46
      */
-    IPage<OmsOrderAfterSalePageVO> selectDataListByWeb(IPage<OmsOrderAfterSalePageVO> page, @Param("filter") OmsOrderAfterSalePageDTO filter);
+    IPage<OmsOrderAfterSaleBaseVO> selectDataList(IPage<OmsOrderAfterSaleBaseVO> page, @Param("filter") OmsOrderAfterSalePageDTO filter);
 
     /**
      * 查询该订单是否处理售后(售后中/售后完成)
@@ -61,16 +64,6 @@ public interface OmsOrderAfterSaleMapper extends BaseMapper<OmsOrderAfterSale> {
     List<OmsOrderAfterSaleItemVO> selectOrderItemIdsReAfterSaleStatus(@Param("orderNoList") List<String> orderNoList);
 
     /**
-     * 详情
-     *
-     * @param afterSaleNo 售后编号
-     * @return 详情
-     * @author zhengqingya
-     * @date 2021/8/30 17:31
-     */
-    OmsOrderAfterSaleDetailVO detailByWeb(@Param("afterSaleNo") String afterSaleNo);
-
-    /**
      * 查询该售后订单关联的商品信息
      *
      * @param afterSaleNo 售后订单编号
@@ -90,9 +83,6 @@ public interface OmsOrderAfterSaleMapper extends BaseMapper<OmsOrderAfterSale> {
      * @date 2021/12/3 17:42
      */
     int selectHandleIngNum(@Param("userId") Long userId);
-
-    // ------------------------------------------------------------------------------------------------------
-
 
     /**
      * 根据订单号查询不可申请售后的订单详情ids

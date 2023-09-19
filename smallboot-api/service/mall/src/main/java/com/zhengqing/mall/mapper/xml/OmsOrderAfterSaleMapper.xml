@@ -57,52 +57,17 @@
         GROUP BY t.after_status
     </select>
 
-    <select id="selectDataListByWeb" resultType="com.zhengqing.mall.model.vo.OmsOrderAfterSalePageVO">
-        SELECT oas.after_sale_no,
-        oas.after_type,
-        oas.after_status,
-        oas.refund_price,
-        oas.user_phone,
-        oas.pay_price,
-        oas.freight,
-        oas.apply_time,
-        oas.receiver_name,
-        oas.receiver_phone,
-        oas.receiver_address,
-        GROUP_CONCAT(oasi.order_item_id) orderItemIds
+    <resultMap id="baseVOMap" type="com.zhengqing.mall.model.vo.OmsOrderAfterSaleBaseVO">
+        <result column="cert_img_list"
+                property="certImgList"
+                typeHandler="com.zhengqing.mall.config.mybatis.handler.MallListFileTypeHandler"></result>
+    </resultMap>
+
+    <select id="selectDataList" resultMap="baseVOMap">
+        SELECT oas.*
         <include refid="CONDITION_COMMON_PAGE"/>
         GROUP BY oas.after_sale_no
         ORDER BY oas.after_sale_no DESC
-    </select>
-
-    <select id="detailByWeb" resultType="com.zhengqing.mall.model.vo.OmsOrderAfterSaleDetailVO">
-        SELECT oas.after_sale_no,
-               oas.after_type,
-               oas.after_reason,
-               oas.after_explain,
-               oas.refund_price,
-               oas.refund_time,
-               oas.cert_img_json,
-               oas.apply_time,
-               oas.after_status,
-               oas.handler_result_for_refund,
-               oas.handler_remark_for_refund,
-               oas.handler_time_for_refund,
-               oas.handler_result_for_apply,
-               oas.handler_remark_for_apply,
-               oas.handler_time_for_apply,
-               oas.close_time,
-               oas.seller_auto_close_time,
-               oas.buyer_auto_close_time,
-               oas.receiver_name,
-               oas.receiver_phone,
-               oas.receiver_address,
-               oas.return_logistics_code,
-               oas.return_logistics_no,
-               GROUP_CONCAT(oasi.order_item_id) orderItemIds
-        FROM oms_order_after_sale oas
-                 JOIN oms_order_after_sale_item oasi ON oas.after_sale_no = oasi.after_sale_no
-        WHERE oas.after_sale_no = #{afterSaleNo}
     </select>
 
 

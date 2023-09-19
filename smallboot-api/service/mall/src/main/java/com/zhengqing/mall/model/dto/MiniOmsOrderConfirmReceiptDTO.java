@@ -1,7 +1,6 @@
 package com.zhengqing.mall.model.dto;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zhengqing.common.base.model.dto.BaseDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -38,10 +37,9 @@ public class MiniOmsOrderConfirmReceiptDTO extends BaseDTO {
 
     //    @NotBlank(message = "配送ID不能为空！")
     @ApiModelProperty("配送ID(纯虚拟商品无此值)")
-    private String shippingId;
+    private String deliverId;
 
-    @JsonIgnore
-    @ApiModelProperty(value = "租户id(后端mq自动收货使用)", hidden = true)
+    @ApiModelProperty("租户id(后端mq自动收货使用)")
     private Integer tenantId;
 
 }

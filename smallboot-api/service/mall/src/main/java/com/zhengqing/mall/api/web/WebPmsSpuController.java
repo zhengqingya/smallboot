@@ -48,7 +48,7 @@ public class WebPmsSpuController {
 
     @GetMapping("list")
     @ApiOperation("列表")
-    public List<WebPmsSpuListVO> list(@Validated @ModelAttribute WebPmsSpuListDTO params) {
+    public List<WebPmsSpuListVO> list(@Validated @ModelAttribute PmsSpuListDTO params) {
         return this.iPmsSpuService.list(params);
     }
 

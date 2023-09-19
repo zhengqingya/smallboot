@@ -11,7 +11,6 @@ import com.zhengqing.mall.model.enums.MallResultCodeEnum;
 import com.zhengqing.mall.model.enums.OmsOrderAfterSaleTabEnum;
 import com.zhengqing.mall.model.enums.PmsSpuTabEnum;
 import com.zhengqing.mall.model.enums.WebOmsOrderTabEnum;
-import com.zhengqing.mall.model.vo.MallFileVO;
 import com.zhengqing.mall.model.vo.MallTabConditionListVO;
 import com.zhengqing.mall.model.vo.PmsSkuVO;
 import com.zhengqing.mall.service.IMallCommonService;
@@ -24,7 +23,6 @@ import com.zhengqing.system.service.ISysDictService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Comparator;
 import java.util.Date;
@@ -46,17 +44,6 @@ public class MallCommonServiceImpl implements IMallCommonService {
 
     private final ISysDictService iSysDictService;
     private final ISysConfigService iSysConfigService;
-
-    @Override
-    public MallFileVO uploadFile(MultipartFile file) {
-        String originalFilename = file.getOriginalFilename();
-        return MallFileVO.builder()
-                .name(originalFilename)
-//                .url(MinIoUtil.upload("mall", file))
-                .url("xxx")
-                .type(file.getContentType())
-                .build();
-    }
 
     @Override
     public long getAutoReceiptMillisecond() {

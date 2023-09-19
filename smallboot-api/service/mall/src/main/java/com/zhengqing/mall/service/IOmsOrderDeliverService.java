@@ -1,8 +1,8 @@
 package com.zhengqing.mall.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.zhengqing.mall.entity.OmsOrderShipping;
-import com.zhengqing.mall.model.vo.OmsOrderShippingVO;
+import com.zhengqing.mall.entity.OmsOrderDeliver;
+import com.zhengqing.mall.model.vo.OmsOrderDeliverVO;
 
 import java.util.List;
 import java.util.Map;
@@ -14,7 +14,7 @@ import java.util.Map;
  * @description
  * @date 2021/08/30 13:56
  */
-public interface IOmsOrderShippingService extends IService<OmsOrderShipping> {
+public interface IOmsOrderDeliverService extends IService<OmsOrderDeliver> {
 
     /**
      * 详情
@@ -24,7 +24,7 @@ public interface IOmsOrderShippingService extends IService<OmsOrderShipping> {
      * @author zhengqingya
      * @date 2021/08/30 13:56
      */
-    OmsOrderShipping detail(String id);
+    OmsOrderDeliver detail(String id);
 
     /**
      * 删除数据
@@ -39,22 +39,22 @@ public interface IOmsOrderShippingService extends IService<OmsOrderShipping> {
     /**
      * 新增
      *
-     * @param omsOrderShipping 配送信息
+     * @param omsOrderDeliver 配送信息
      * @return void
      * @author zhengqingya
      * @date 2021/10/15 9:48
      */
-    String addData(OmsOrderShipping omsOrderShipping);
+    String addData(OmsOrderDeliver omsOrderDeliver);
 
     /**
      * 更新
      *
-     * @param omsOrderShipping 配送信息
+     * @param omsOrderDeliver 配送信息
      * @return void
      * @author zhengqingya
      * @date 2021/10/15 9:48
      */
-    String updateData(OmsOrderShipping omsOrderShipping);
+    String updateData(OmsOrderDeliver omsOrderDeliver);
 
     /**
      * 根据订单号查询关联配送信息
@@ -64,7 +64,7 @@ public interface IOmsOrderShippingService extends IService<OmsOrderShipping> {
      * @author zhengqingya
      * @date 2021/08/30 13:56
      */
-    List<OmsOrderShippingVO> listByOrderNo(String orderNo);
+    List<OmsOrderDeliverVO> listByOrderNo(String orderNo);
 
     /**
      * 根据订单号查询关联配送信息
@@ -74,7 +74,7 @@ public interface IOmsOrderShippingService extends IService<OmsOrderShipping> {
      * @author zhengqingya
      * @date 2021/08/30 13:56
      */
-    List<OmsOrderShippingVO> listByOrderNoList(List<String> orderNoList);
+    List<OmsOrderDeliverVO> listByOrderNoList(List<String> orderNoList);
 
     /**
      * 根据订单号查询关联配送信息
@@ -84,6 +84,6 @@ public interface IOmsOrderShippingService extends IService<OmsOrderShipping> {
      * @author zhengqingya
      * @date 2021/08/30 13:56
      */
-    Map<String, List<OmsOrderShippingVO>> mapByOrderNoList(List<String> orderNoList);
+    Map<String, List<OmsOrderDeliverVO>> mapByOrderNoList(List<String> orderNoList);
 
 }

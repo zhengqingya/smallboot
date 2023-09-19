@@ -2,14 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhengqing.mall.mapper.PmsSpuRateMapper">
 
-    <select id="selectDataList" resultType="com.zhengqing.mall.model.vo.MiniPmsSpuRatePageVO">
+    <resultMap id="map" type="com.zhengqing.mall.model.vo.MiniPmsSpuRatePageVO">
+        <result column="resource_list"
+                property="resourceList"
+                typeHandler="com.zhengqing.mall.config.mybatis.handler.MallListFileTypeHandler"></result>
+        <result column="spec_list"
+                property="specList"
+                typeHandler="com.zhengqing.mall.config.mybatis.handler.MallListSpecTypeHandler"></result>
+    </resultMap>
+
+    <select id="selectDataList" resultMap="map">
         SELECT
         id,
         operator_id,
         operator_name,
         content,
-        resource_json,
-        attr_json,
+        resource_list,
+        spec_list,
         create_time
         FROM pms_spu_rate
         WHERE is_deleted = 0

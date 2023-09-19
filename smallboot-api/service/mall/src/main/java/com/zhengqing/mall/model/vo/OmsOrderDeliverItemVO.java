@@ -8,26 +8,23 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * <p> 商城-文件-数据 </p>
+ * <p> 商城-订单-配送商品-展示视图 </p>
  *
  * @author zhengqingya
  * @description
- * @date 2021/6/24 10:07
+ * @date 2021/10/18 14:48
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel("商城-文件-数据")
-public class MallFileVO {
+@ApiModel("商城-订单-配送商品-展示视图")
+public class OmsOrderDeliverItemVO {
 
-    @ApiModelProperty("文件名")
+    @ApiModelProperty("名称")
     private String name;
 
-    @ApiModelProperty("文件url")
-    private String url;
-
-    @ApiModelProperty("文件类型")
-    private String type;
+    @ApiModelProperty("封面图")
+    private String coverImg;
 
 }

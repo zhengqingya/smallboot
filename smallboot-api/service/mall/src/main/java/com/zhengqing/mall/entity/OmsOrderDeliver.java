@@ -2,7 +2,7 @@ package com.zhengqing.mall.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
-import com.zhengqing.mall.model.enums.OmsOrderShippingReceiptTypeEnum;
+import com.zhengqing.mall.model.enums.OmsOrderDeliverReceiptTypeEnum;
 import com.zhengqing.mall.model.enums.TpsLogisticsCodeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -22,9 +22,9 @@ import java.util.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("oms_order_shipping")
+@TableName("oms_order_deliver")
 @ApiModel("商城-订单配送表")
-public class OmsOrderShipping extends Model<OmsOrderShipping> {
+public class OmsOrderDeliver extends Model<OmsOrderDeliver> {
 
     @ApiModelProperty("ID")
     @TableId(type = IdType.INPUT)
@@ -97,7 +97,7 @@ public class OmsOrderShipping extends Model<OmsOrderShipping> {
     private String wxNoticeMsg;
 
     /**
-     * {@link OmsOrderShippingReceiptTypeEnum }
+     * {@link OmsOrderDeliverReceiptTypeEnum }
      */
 //    @ApiModelProperty("收货类型(1->手动收货 2->自动收货)")
 //    private Byte receiptType;

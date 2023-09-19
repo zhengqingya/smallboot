@@ -22,7 +22,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ApiModel("web-商城-订单配送表-分页列表-请求参数")
-public class WebOmsOrderShippingListDTO extends BaseDTO {
+public class WebOmsOrderDeliverListDTO extends BaseDTO {
 
     @ApiModelProperty("xxx")
     private String xxx;

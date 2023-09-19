@@ -73,7 +73,7 @@ public class PmsSpuRateServiceImpl extends ServiceImpl<PmsSpuRateMapper, PmsSpuR
                 .operatorId(operatorId)
                 .operatorName(operatorName)
                 .operatorIcon(operatorIcon)
-                .resourceJson(item.getResourceJson())
+                .resourceList(item.getResourceList())
                 .content(item.getContent())
                 .isShow(true)
                 .descLevel(item.getDescLevel())

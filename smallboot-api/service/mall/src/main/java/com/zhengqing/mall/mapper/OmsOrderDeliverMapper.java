@@ -1,8 +1,8 @@
 package com.zhengqing.mall.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.zhengqing.mall.model.vo.OmsOrderShippingVO;
-import com.zhengqing.mall.entity.OmsOrderShipping;
+import com.zhengqing.mall.entity.OmsOrderDeliver;
+import com.zhengqing.mall.model.vo.OmsOrderDeliverVO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
  * @description
  * @date 2021/08/30 13:56
  */
-public interface OmsOrderShippingMapper extends BaseMapper<OmsOrderShipping> {
+public interface OmsOrderDeliverMapper extends BaseMapper<OmsOrderDeliver> {
 
     /**
      * 列表
@@ -24,6 +24,6 @@ public interface OmsOrderShippingMapper extends BaseMapper<OmsOrderShipping> {
      * @author zhengqingya
      * @date 2021/08/30 13:56
      */
-    List<OmsOrderShippingVO> selectDataListByOrderNo(@Param("orderNoList") List<String> orderNoList);
+    List<OmsOrderDeliverVO> selectDataListByOrderNo(@Param("orderNoList") List<String> orderNoList);
 
 }

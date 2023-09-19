@@ -18,7 +18,7 @@ import java.util.List;
  */
 @Getter
 @AllArgsConstructor
-public enum OmsOrderShippingReceiptTypeEnum {
+public enum OmsOrderDeliverReceiptTypeEnum {
 
     /**
      * 手动收货
@@ -38,18 +38,18 @@ public enum OmsOrderShippingReceiptTypeEnum {
      */
     private final String desc;
 
-    private static final List<OmsOrderShippingReceiptTypeEnum> LIST = Lists.newArrayList();
+    private static final List<OmsOrderDeliverReceiptTypeEnum> LIST = Lists.newArrayList();
 
     static {
-        LIST.addAll(Arrays.asList(OmsOrderShippingReceiptTypeEnum.values()));
+        LIST.addAll(Arrays.asList(OmsOrderDeliverReceiptTypeEnum.values()));
     }
 
     /**
      * 根据指定配送收货类型查找相应枚举
      */
-    public static OmsOrderShippingReceiptTypeEnum getEnum(Byte shippingStatus) {
-        for (OmsOrderShippingReceiptTypeEnum itemEnum : LIST) {
-            if (itemEnum.getType().equals(shippingStatus)) {
+    public static OmsOrderDeliverReceiptTypeEnum getEnum(Byte type) {
+        for (OmsOrderDeliverReceiptTypeEnum itemEnum : LIST) {
+            if (itemEnum.getType().equals(type)) {
                 return itemEnum;
             }
         }

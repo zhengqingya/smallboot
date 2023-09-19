@@ -5,6 +5,9 @@
     <sql id="PAGE_CONDITION">
         FROM pms_spu spu
         WHERE spu.is_deleted = 0
+        <if test="filter.id!=null">
+            spu.id = #{filter.id}
+        </if>
         <if test="filter.name!=null and filter.name!=''">
             AND spu.name LIKE CONCAT( #{filter.name} , '%' )
         </if>
@@ -41,29 +44,6 @@
                spu.freight
     </sql>
 
-    <sql id="DETAIL">
-        SELECT id,
-               type,
-               name,
-               cover_img,
-               is_put,
-               is_show,
-               is_presell,
-               presell_end_time,
-               presell_start_time,
-               presell_deliver_day,
-               freight,
-               sort,
-               line_price,
-               attr_list,
-               slide_img_list,
-               detail_img_list,
-               service_list,
-               explain_list
-        FROM pms_spu
-        WHERE is_deleted = 0
-    </sql>
-
     <select id="selectTabCondition" resultType="com.zhengqing.mall.model.vo.MallTabConditionListVO">
         SELECT
         spu.is_put value,
@@ -72,7 +52,25 @@
         GROUP BY spu.is_put
     </select>
 
-    <select id="selectDataList" resultType="com.zhengqing.mall.model.vo.PmsSpuBaseVO">
+    <resultMap id="baseVOMap" type="com.zhengqing.mall.model.vo.PmsSpuBaseVO">
+        <!--        <result column="attr_list"-->
+        <!--                property="attrList"-->
+        <!--                typeHandler="com.zhengqing.mall.config.mybatis.handler.MallListAttrTypeHandler"></result>-->
+        <result column="slide_img_list"
+                property="slideImgList"
+                typeHandler="com.zhengqing.mall.config.mybatis.handler.MallListFileTypeHandler"></result>
+        <result column="detail_img_list"
+                property="detailImgList"
+                typeHandler="com.zhengqing.mall.config.mybatis.handler.MallListFileTypeHandler"></result>
+        <result column="service_list"
+                property="serviceList"
+                typeHandler="com.zhengqing.mall.config.mybatis.handler.MallListDictTypeHandler"></result>
+        <result column="explain_list"
+                property="explainList"
+                typeHandler="com.zhengqing.mall.config.mybatis.handler.MallListDictTypeHandler"></result>
+    </resultMap>
+
+    <select id="selectDataList" resultMap="baseVOMap">
         <include refid="PAGE"/>
         <include refid="PAGE_CONDITION"/>
         GROUP BY spu.id
@@ -86,6 +84,9 @@
         FROM pms_spu spu
         LEFT JOIN pms_category_spu_relation jcpr ON spu.id = jcpr.spu_id
         WHERE spu.is_deleted = 0
+        <if test="filter.id!=null">
+            spu.id = #{filter.id}
+        </if>
         <if test="filter.name!=null and filter.name!=''">
             AND spu.name LIKE CONCAT( #{filter.name} , '%' )
         </if>
@@ -111,29 +112,6 @@
         <foreach collection="idList" separator="," open="(" close=")" item="id">
             #{id}
         </foreach>
-    </select>
-
-    <resultMap id="detailData" type="com.zhengqing.mall.model.vo.PmsSpuBaseVO">
-        <!--        <result column="attr_list"-->
-        <!--                property="attrList"-->
-        <!--                typeHandler="com.zhengqing.mall.config.mybatis.handler.MallListAttrTypeHandler"></result>-->
-        <result column="slide_img_list"
-                property="slideImgList"
-                typeHandler="com.zhengqing.mall.config.mybatis.handler.MallListFileTypeHandler"></result>
-        <result column="detail_img_list"
-                property="detailImgList"
-                typeHandler="com.zhengqing.mall.config.mybatis.handler.MallListFileTypeHandler"></result>
-        <result column="service_list"
-                property="serviceList"
-                typeHandler="com.zhengqing.mall.config.mybatis.handler.MallListDictTypeHandler"></result>
-        <result column="explain_list"
-                property="explainList"
-                typeHandler="com.zhengqing.mall.config.mybatis.handler.MallListDictTypeHandler"></result>
-    </resultMap>
-
-    <select id="detailData" resultMap="detailData">
-        <include refid="DETAIL"/>
-        AND id = #{id}
     </select>
 
     <update id="updateBatchPut">

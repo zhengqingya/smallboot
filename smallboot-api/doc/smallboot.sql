@@ -11,7 +11,7 @@
  Target Server Version : 50726 (5.7.26-log)
  File Encoding         : 65001
 
- Date: 18/09/2023 11:48:16
+ Date: 19/09/2023 16:23:13
 */
 
 SET NAMES utf8mb4;
@@ -88,6 +88,7 @@ CREATE TABLE `oms_order`  (
 -- ----------------------------
 -- Records of oms_order
 -- ----------------------------
+INSERT INTO `oms_order` VALUES (1703717164000378880, 1, 'oT_ym5AicCHtMBq_yeo0JLZ8GDEY', 1, '郑清', '15183388888', 1, NULL, NULL, NULL, '2023-09-18 18:31:40', 200, 0, 200, 2, 1, '测试', NULL, 0, NULL, '2023-09-19 09:35:23', 1, NULL, NULL, '', 2, NULL, NULL, 0, '2023-09-18 18:26:40', '2023-09-19 09:35:23', 1, 0, 0);
 
 -- ----------------------------
 -- Table structure for oms_order_after_sale
@@ -100,6 +101,7 @@ CREATE TABLE `oms_order_after_sale`  (
   `username` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '用户名称',
   `user_phone` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '用户电话',
   `order_no` bigint(20) NOT NULL COMMENT '订单编号',
+  `order_item_ids` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '订单详情ids',
   `after_type` tinyint(2) UNSIGNED NOT NULL DEFAULT 1 COMMENT '售后类型(1-退款 2-退货退款 3-换货)',
   `after_status` tinyint(2) UNSIGNED NOT NULL DEFAULT 1 COMMENT '售后状态(1->用户申请售后 2->用户撤销申请 3->同意申请 4->拒绝申请 5->申请退款 6->同意退款 7->拒绝退款 8->退款中 9->售后完成 10->已关闭)',
   `after_reason` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '退款,退/换货 原因',
@@ -110,7 +112,7 @@ CREATE TABLE `oms_order_after_sale`  (
   `apply_refund_price` int(11) UNSIGNED NULL DEFAULT NULL COMMENT '申请退款金额 (单位：分)',
   `refund_price` int(11) UNSIGNED NULL DEFAULT 0 COMMENT '实际退款金额 (单位：分)',
   `refund_time` datetime NULL DEFAULT NULL COMMENT '退款时间',
-  `cert_img_json` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '凭证图',
+  `cert_img_list` json NULL COMMENT '凭证图',
   `apply_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '售后申请时间',
   `return_logistics_company` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '退/换货 物流公司',
   `return_logistics_code` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '退/换货 物流公司编码',
@@ -162,6 +164,39 @@ CREATE TABLE `oms_order_after_sale_item`  (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for oms_order_deliver
+-- ----------------------------
+DROP TABLE IF EXISTS `oms_order_deliver`;
+CREATE TABLE `oms_order_deliver`  (
+  `id` bigint(20) NOT NULL COMMENT '主键ID',
+  `tenant_id` int(11) UNSIGNED NOT NULL COMMENT '租户ID',
+  `order_no` bigint(20) NOT NULL COMMENT '订单编号',
+  `receiver_name` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '收货人姓名',
+  `receiver_phone` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '收货人电话',
+  `receiver_address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '收货人地址',
+  `deliverer_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '发货人',
+  `deliverer_phone` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '发货人电话',
+  `deliverer_address` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '发货地址',
+  `deliver_time` datetime NULL DEFAULT NULL COMMENT '发货时间',
+  `logistics_company` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '物流公司',
+  `logistics_code` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '物流公司编码',
+  `logistics_no` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '物流单号',
+  `receipt_time` datetime NULL DEFAULT NULL COMMENT '收货时间',
+  `auto_receipt_time` datetime NULL DEFAULT NULL COMMENT '自动收货时间',
+  `wx_notice_msg` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '微信通知消息',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `create_by` bigint(20) NULL DEFAULT NULL COMMENT '创建人id',
+  `update_by` bigint(20) NULL DEFAULT NULL COMMENT '更新人id',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `idx_order_no`(`order_no`) USING BTREE COMMENT '订单编号'
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商城-订单配送表' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of oms_order_deliver
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for oms_order_item
 -- ----------------------------
 DROP TABLE IF EXISTS `oms_order_item`;
@@ -194,6 +229,8 @@ CREATE TABLE `oms_order_item`  (
 -- ----------------------------
 -- Records of oms_order_item
 -- ----------------------------
+INSERT INTO `oms_order_item` VALUES (1703717164155568128, 1, 1703717164000378880, 1, 1701132647401549824, 1701132647711928320, '杨枝甘露', 'http://127.0.0.1:886/2023-09-11/1701132579127914496-美图29.jpg', '[{\"attrKeyId\":\"1661577306127466496\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1661577430681518080\",\"attrValueName\":\"绿色\"}]', 1, 100, 100, 101, 2, 0, NULL, NULL, NULL, 0, '2023-09-18 18:26:40', '2023-09-19 09:35:22');
+INSERT INTO `oms_order_item` VALUES (1703717164155568129, 1, 1703717164000378880, 1, 1701133260151615488, 1701133260352942080, '西柚柠檬', 'http://127.0.0.1:886/2023-09-11/1701133198966353920-美图84.png', '[{\"attrKeyId\":\"1661577306127466496\",\"attrKeyName\":\"颜色\",\"attrValueId\":\"1661577389468286976\",\"attrValueName\":\"蓝色\"}]', 1, 100, 100, 101, 2, 0, NULL, NULL, NULL, 0, '2023-09-18 18:26:40', '2023-09-19 09:35:22');
 
 -- ----------------------------
 -- Table structure for oms_order_setting
@@ -218,56 +255,6 @@ CREATE TABLE `oms_order_setting`  (
 
 -- ----------------------------
 -- Records of oms_order_setting
--- ----------------------------
-
--- ----------------------------
--- Table structure for oms_order_shipping
--- ----------------------------
-DROP TABLE IF EXISTS `oms_order_shipping`;
-CREATE TABLE `oms_order_shipping`  (
-  `id` bigint(20) NOT NULL COMMENT '主键ID',
-  `tenant_id` int(11) UNSIGNED NOT NULL COMMENT '租户ID',
-  `order_no` bigint(20) NOT NULL COMMENT '订单编号',
-  `receiver_name` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '收货人姓名',
-  `receiver_phone` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '收货人电话',
-  `receiver_address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '收货人地址',
-  `deliverer_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '发货人',
-  `deliverer_phone` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '发货人电话',
-  `deliverer_address` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '发货地址',
-  `deliver_time` datetime NULL DEFAULT NULL COMMENT '发货时间',
-  `logistics_company` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '物流公司',
-  `logistics_code` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '物流公司编码',
-  `logistics_no` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '物流单号',
-  `receipt_time` datetime NULL DEFAULT NULL COMMENT '收货时间',
-  `auto_receipt_time` datetime NULL DEFAULT NULL COMMENT '自动收货时间',
-  `wx_notice_msg` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '微信通知消息',
-  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  `create_by` bigint(20) NULL DEFAULT NULL COMMENT '创建人id',
-  `update_by` bigint(20) NULL DEFAULT NULL COMMENT '更新人id',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `idx_order_no`(`order_no`) USING BTREE COMMENT '订单编号'
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商城-订单配送表' ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of oms_order_shipping
--- ----------------------------
-
--- ----------------------------
--- Table structure for oms_order_shipping_item
--- ----------------------------
-DROP TABLE IF EXISTS `oms_order_shipping_item`;
-CREATE TABLE `oms_order_shipping_item`  (
-  `id` bigint(20) NOT NULL COMMENT '主键ID',
-  `tenant_id` int(11) UNSIGNED NOT NULL COMMENT '租户ID',
-  `order_no` bigint(20) NOT NULL COMMENT '订单编号',
-  `order_item_id` bigint(20) NOT NULL COMMENT '订单详情id',
-  `shipping_id` bigint(20) NOT NULL COMMENT '配送id',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商城-订单配送详情表' ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of oms_order_shipping_item
 -- ----------------------------
 
 -- ----------------------------
@@ -344,7 +331,7 @@ CREATE TABLE `pms_category`  (
 -- Records of pms_category
 -- ----------------------------
 INSERT INTO `pms_category` VALUES (1532285889399619584, 1, 0, 'NICE', 1, 1, '2022-06-02 16:59:59', '2022-06-02 16:59:59', 0, 0, 0);
-INSERT INTO `pms_category` VALUES (1532285975026335744, 1, 0, '六一专属', 1, 1, '2022-06-02 17:00:20', '2022-06-02 17:00:20', 0, 0, 0);
+INSERT INTO `pms_category` VALUES (1532285975026335744, 1, 0, '六一专属', 1, 1, '2022-06-02 17:00:20', '2023-09-18 17:08:42', 0, 1, 0);
 INSERT INTO `pms_category` VALUES (1533982865094737920, 1, 0, 'GOODS', 3, 1, '2022-06-07 09:23:10', '2023-09-11 17:03:30', 0, 1, 0);
 
 -- ----------------------------
@@ -509,12 +496,12 @@ CREATE TABLE `pms_spu_rate`  (
   `order_item_id` bigint(20) NOT NULL COMMENT '订单详情id',
   `spu_id` bigint(20) NOT NULL COMMENT '商品id',
   `sku_id` bigint(20) NOT NULL COMMENT '商品sku-id',
-  `spec_list` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '商品规格属性',
+  `spec_list` json NOT NULL COMMENT '商品规格属性',
   `operator_type` tinyint(2) NOT NULL COMMENT '操作人类型(1->买家 2->商家)',
   `operator_id` bigint(20) NOT NULL COMMENT '操作人id',
   `operator_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '操作人名称',
   `operator_icon` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '操作人头像',
-  `resource_json` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '评价图片或视频',
+  `resource_list` json NOT NULL COMMENT '评价图片或视频',
   `content` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '评价内容',
   `is_show` tinyint(1) UNSIGNED NOT NULL DEFAULT 1 COMMENT '是否显示(0->隐藏；1->显示)',
   `desc_level` tinyint(4) NULL DEFAULT NULL COMMENT '描述相符',
@@ -596,7 +583,7 @@ CREATE TABLE `sms_shop`  (
 -- ----------------------------
 -- Records of sms_shop
 -- ----------------------------
-INSERT INTO `sms_shop` VALUES (1, 1, '天府三街测试门店', '四川省', '成都市', '武侯区', '四川省成都市武侯区天府四街', 104.046547, 30.542101, 1, '小郑', '15183308888', 1, 0, 0, 1, '[{\"endTime\": \"22:00\", \"weekList\": [1, 2, 3, 4, 5, 6, 7], \"startTime\": \"09:00\"}]', 1000, NULL, NULL, '2023-09-15 18:20:55', '2023-09-18 11:05:57', 1, 1, 0);
+INSERT INTO `sms_shop` VALUES (1, 1, '天府三街测试门店', '四川省', '成都市', '武侯区', '四川省成都市武侯区天府四街', 104.046547, 30.542101, 1, '小郑', '15183308888', 1, 0, 0, 1, '[{\"endTime\": \"22:00\", \"weekList\": [1, 2, 3, 4, 5, 6, 7], \"startTime\": \"09:00\"}]', 1000, NULL, NULL, '2023-09-15 18:20:55', '2023-09-18 17:09:53', 1, 1, 0);
 INSERT INTO `sms_shop` VALUES (2, 1, '高新区分店', '四川省', '成都市', '武侯区', '四川省成都市武侯区天府四街', 104.046547, 30.542101, 1, '小郑', '15183308888', 1, 0, 0, 1, '[{\"endTime\": \"22:00\", \"weekList\": [1, 2, 3, 4, 5, 6, 7], \"startTime\": \"09:00\"}]', 1000, NULL, NULL, '2023-09-15 18:20:55', '2023-09-18 11:33:31', 1, 1, 0);
 
 -- ----------------------------
@@ -4321,33 +4308,33 @@ CREATE TABLE `t_sys_role_menu`  (
 -- ----------------------------
 -- Records of t_sys_role_menu
 -- ----------------------------
-INSERT INTO `t_sys_role_menu` VALUES (1, 1, 1, 1, '2023-08-31 16:36:56', 0, '2023-09-18 11:30:52');
-INSERT INTO `t_sys_role_menu` VALUES (2, 1, 3, 1, '2023-08-31 16:36:56', 0, '2023-09-18 11:30:52');
-INSERT INTO `t_sys_role_menu` VALUES (3, 1, 4, 1, '2023-08-31 16:36:56', 0, '2023-09-18 11:30:52');
-INSERT INTO `t_sys_role_menu` VALUES (4, 1, 5, 1, '2023-08-31 16:36:56', 0, '2023-09-18 11:30:52');
-INSERT INTO `t_sys_role_menu` VALUES (5, 1, 6, 1, '2023-08-31 16:36:56', 0, '2023-09-18 11:30:52');
-INSERT INTO `t_sys_role_menu` VALUES (6, 1, 7, 1, '2023-08-31 16:36:56', 0, '2023-09-18 11:30:52');
-INSERT INTO `t_sys_role_menu` VALUES (7, 1, 9, 1, '2023-08-31 16:36:56', 0, '2023-09-18 11:30:52');
-INSERT INTO `t_sys_role_menu` VALUES (8, 1, 10, 1, '2023-08-31 16:36:56', 0, '2023-09-18 11:30:52');
-INSERT INTO `t_sys_role_menu` VALUES (9, 1, 11, 1, '2023-08-31 16:36:56', 0, '2023-09-18 11:30:52');
-INSERT INTO `t_sys_role_menu` VALUES (10, 1, 12, 1, '2023-08-31 16:36:56', 0, '2023-09-18 11:30:52');
-INSERT INTO `t_sys_role_menu` VALUES (11, 1, 13, 1, '2023-08-31 16:36:56', 0, '2023-09-18 11:30:52');
-INSERT INTO `t_sys_role_menu` VALUES (12, 1, 14, 1, '2023-08-31 16:36:56', 0, '2023-09-18 11:30:52');
-INSERT INTO `t_sys_role_menu` VALUES (13, 1, 15, 1, '2023-08-31 16:36:56', 0, '2023-09-18 11:30:52');
-INSERT INTO `t_sys_role_menu` VALUES (14, 1, 16, 1, '2023-08-31 16:36:56', 0, '2023-09-18 11:30:52');
-INSERT INTO `t_sys_role_menu` VALUES (15, 1, 17, 1, '2023-08-31 16:36:56', 0, '2023-09-18 11:30:52');
-INSERT INTO `t_sys_role_menu` VALUES (16, 1, 18, 1, '2023-08-31 16:36:56', 0, '2023-09-18 11:30:52');
-INSERT INTO `t_sys_role_menu` VALUES (17, 1, 19, 1, '2023-08-31 16:36:56', 0, '2023-09-18 11:30:52');
-INSERT INTO `t_sys_role_menu` VALUES (18, 1, 25, 1, '2023-08-31 16:36:56', 0, '2023-09-18 11:30:52');
-INSERT INTO `t_sys_role_menu` VALUES (19, 1, 20, 1, '2023-08-31 16:36:56', 0, '2023-09-18 11:30:52');
-INSERT INTO `t_sys_role_menu` VALUES (20, 1, 22, 1, '2023-08-31 16:36:56', 0, '2023-09-18 11:30:52');
-INSERT INTO `t_sys_role_menu` VALUES (21, 1, 21, 1, '2023-08-31 16:36:56', 0, '2023-09-18 11:30:52');
-INSERT INTO `t_sys_role_menu` VALUES (22, 1, 23, 1, '2023-08-31 16:36:56', 0, '2023-09-18 11:30:52');
-INSERT INTO `t_sys_role_menu` VALUES (23, 1, 24, 1, '2023-08-31 16:36:56', 0, '2023-09-18 11:30:52');
+INSERT INTO `t_sys_role_menu` VALUES (1, 1, 1, 1, '2023-08-31 16:36:56', 0, '2023-09-19 16:22:13');
+INSERT INTO `t_sys_role_menu` VALUES (2, 1, 3, 1, '2023-08-31 16:36:56', 0, '2023-09-19 16:22:13');
+INSERT INTO `t_sys_role_menu` VALUES (3, 1, 4, 1, '2023-08-31 16:36:56', 0, '2023-09-19 16:22:13');
+INSERT INTO `t_sys_role_menu` VALUES (4, 1, 5, 1, '2023-08-31 16:36:56', 0, '2023-09-19 16:22:13');
+INSERT INTO `t_sys_role_menu` VALUES (5, 1, 6, 1, '2023-08-31 16:36:56', 0, '2023-09-19 16:22:13');
+INSERT INTO `t_sys_role_menu` VALUES (6, 1, 7, 1, '2023-08-31 16:36:56', 0, '2023-09-19 16:22:13');
+INSERT INTO `t_sys_role_menu` VALUES (7, 1, 9, 1, '2023-08-31 16:36:56', 0, '2023-09-19 16:22:13');
+INSERT INTO `t_sys_role_menu` VALUES (8, 1, 10, 1, '2023-08-31 16:36:56', 0, '2023-09-19 16:22:13');
+INSERT INTO `t_sys_role_menu` VALUES (9, 1, 11, 1, '2023-08-31 16:36:56', 0, '2023-09-19 16:22:13');
+INSERT INTO `t_sys_role_menu` VALUES (10, 1, 12, 1, '2023-08-31 16:36:56', 0, '2023-09-19 16:22:13');
+INSERT INTO `t_sys_role_menu` VALUES (11, 1, 13, 1, '2023-08-31 16:36:56', 0, '2023-09-19 16:22:13');
+INSERT INTO `t_sys_role_menu` VALUES (12, 1, 14, 1, '2023-08-31 16:36:56', 0, '2023-09-19 16:22:13');
+INSERT INTO `t_sys_role_menu` VALUES (13, 1, 15, 1, '2023-08-31 16:36:56', 0, '2023-09-19 16:22:13');
+INSERT INTO `t_sys_role_menu` VALUES (14, 1, 16, 1, '2023-08-31 16:36:56', 0, '2023-09-19 16:22:13');
+INSERT INTO `t_sys_role_menu` VALUES (15, 1, 17, 1, '2023-08-31 16:36:56', 0, '2023-09-19 16:22:13');
+INSERT INTO `t_sys_role_menu` VALUES (16, 1, 18, 1, '2023-08-31 16:36:56', 0, '2023-09-19 16:22:13');
+INSERT INTO `t_sys_role_menu` VALUES (17, 1, 19, 1, '2023-08-31 16:36:56', 0, '2023-09-19 16:22:13');
+INSERT INTO `t_sys_role_menu` VALUES (18, 1, 25, 1, '2023-08-31 16:36:56', 0, '2023-09-19 16:22:13');
+INSERT INTO `t_sys_role_menu` VALUES (19, 1, 20, 1, '2023-08-31 16:36:56', 0, '2023-09-19 16:22:13');
+INSERT INTO `t_sys_role_menu` VALUES (20, 1, 22, 1, '2023-08-31 16:36:56', 0, '2023-09-19 16:22:13');
+INSERT INTO `t_sys_role_menu` VALUES (21, 1, 21, 1, '2023-08-31 16:36:56', 0, '2023-09-19 16:22:13');
+INSERT INTO `t_sys_role_menu` VALUES (22, 1, 23, 1, '2023-08-31 16:36:56', 0, '2023-09-19 16:22:13');
+INSERT INTO `t_sys_role_menu` VALUES (23, 1, 24, 1, '2023-08-31 16:36:56', 0, '2023-09-19 16:22:13');
 INSERT INTO `t_sys_role_menu` VALUES (24, 2, 1, 1, '2023-08-31 16:38:01', 1, '2023-08-31 16:38:01');
-INSERT INTO `t_sys_role_menu` VALUES (25, 1, 27, 1, '2023-09-13 11:16:00', 0, '2023-09-18 11:30:52');
-INSERT INTO `t_sys_role_menu` VALUES (26, 1, 28, 1, '2023-09-13 17:55:38', 0, '2023-09-18 11:30:52');
-INSERT INTO `t_sys_role_menu` VALUES (27, 1, 29, 1, '2023-09-15 16:45:04', 0, '2023-09-18 11:30:52');
+INSERT INTO `t_sys_role_menu` VALUES (25, 1, 27, 1, '2023-09-13 11:16:00', 0, '2023-09-19 16:22:13');
+INSERT INTO `t_sys_role_menu` VALUES (26, 1, 28, 1, '2023-09-13 17:55:38', 0, '2023-09-19 16:22:13');
+INSERT INTO `t_sys_role_menu` VALUES (27, 1, 29, 1, '2023-09-15 16:45:04', 0, '2023-09-19 16:22:13');
 
 -- ----------------------------
 -- Table structure for t_sys_role_permission
@@ -4367,10 +4354,10 @@ CREATE TABLE `t_sys_role_permission`  (
 -- ----------------------------
 -- Records of t_sys_role_permission
 -- ----------------------------
-INSERT INTO `t_sys_role_permission` VALUES (1, 1, 1, 1, '2023-08-31 16:37:43', 0, '2023-09-18 11:30:52');
-INSERT INTO `t_sys_role_permission` VALUES (2, 1, 2, 1, '2023-08-31 16:37:43', 0, '2023-09-18 11:30:52');
-INSERT INTO `t_sys_role_permission` VALUES (3, 1, 3, 1, '2023-08-31 16:37:43', 0, '2023-09-18 11:30:52');
-INSERT INTO `t_sys_role_permission` VALUES (4, 1, 4, 1, '2023-08-31 16:37:43', 0, '2023-09-18 11:30:52');
+INSERT INTO `t_sys_role_permission` VALUES (1, 1, 1, 1, '2023-08-31 16:37:43', 0, '2023-09-19 16:22:13');
+INSERT INTO `t_sys_role_permission` VALUES (2, 1, 2, 1, '2023-08-31 16:37:43', 0, '2023-09-19 16:22:13');
+INSERT INTO `t_sys_role_permission` VALUES (3, 1, 3, 1, '2023-08-31 16:37:43', 0, '2023-09-19 16:22:13');
+INSERT INTO `t_sys_role_permission` VALUES (4, 1, 4, 1, '2023-08-31 16:37:43', 0, '2023-09-19 16:22:13');
 
 -- ----------------------------
 -- Table structure for t_sys_user
@@ -4437,7 +4424,7 @@ CREATE TABLE `t_sys_user_role`  (
 -- ----------------------------
 -- Records of t_sys_user_role
 -- ----------------------------
-INSERT INTO `t_sys_user_role` VALUES (1, 1, 1, 0, '2023-08-31 15:54:57', 0, '2023-09-18 11:30:52');
+INSERT INTO `t_sys_user_role` VALUES (1, 1, 1, 0, '2023-08-31 15:54:57', 0, '2023-09-19 16:22:13');
 INSERT INTO `t_sys_user_role` VALUES (2, 2, 10, 1, '2023-08-26 18:26:25', 1, '2023-08-26 18:26:25');
 
 -- ----------------------------

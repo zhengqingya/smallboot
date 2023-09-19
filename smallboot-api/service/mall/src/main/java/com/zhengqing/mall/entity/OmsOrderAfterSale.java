@@ -1,9 +1,12 @@
 package com.zhengqing.mall.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.zhengqing.common.db.entity.IsDeletedBaseEntity;
+import com.zhengqing.mall.config.mybatis.handler.MallListFileTypeHandler;
+import com.zhengqing.mall.model.bo.MallFileBO;
 import com.zhengqing.mall.model.bo.OmsOrderReceiverAddressBO;
 import com.zhengqing.mall.model.enums.OmsOrderAfterSaleSpuStatusEnum;
 import com.zhengqing.mall.model.enums.OmsOrderAfterSaleStatusEnum;
@@ -14,6 +17,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>  商城-售后表 </p>
@@ -93,7 +97,8 @@ public class OmsOrderAfterSale extends IsDeletedBaseEntity<OmsOrderAfterSale> {
     private Date refundTime;
 
     @ApiModelProperty("凭证图")
-    private String certImgJson;
+    @TableField(typeHandler = MallListFileTypeHandler.class)
+    private List<MallFileBO> certImgList;
 
     @ApiModelProperty("售后申请时间")
     private Date applyTime;

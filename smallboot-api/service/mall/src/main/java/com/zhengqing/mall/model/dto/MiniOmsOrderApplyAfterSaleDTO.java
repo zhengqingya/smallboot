@@ -1,7 +1,6 @@
 package com.zhengqing.mall.model.dto;
 
 import cn.hutool.core.lang.Assert;
-import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 import com.zhengqing.common.core.custom.parameter.CheckParam;
@@ -83,10 +82,6 @@ public class MiniOmsOrderApplyAfterSaleDTO implements CheckParam {
     @ApiModelProperty(value = "凭证图")
     private List<MallFileBO> certImgList;
 
-    @JsonIgnore
-    @ApiModelProperty(value = "凭证图", hidden = true)
-    private String certImgJson;
-
     @Override
     public void checkParam() {
         OmsOrderSaleTypeEnum orderSaleTypeEnum = OmsOrderSaleTypeEnum.getEnum(this.afterType);
@@ -97,7 +92,6 @@ public class MiniOmsOrderApplyAfterSaleDTO implements CheckParam {
         if (CollectionUtils.isEmpty(this.certImgList)) {
             this.certImgList = Lists.newArrayList();
         }
-        this.certImgJson = JSON.toJSONString(this.certImgList);
 
         // 售后状态处理
         this.afterStatus = OmsOrderSaleTypeEnum.REFUND == orderSaleTypeEnum

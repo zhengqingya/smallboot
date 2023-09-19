@@ -2,7 +2,7 @@ package com.zhengqing.mall.model.vo;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.zhengqing.mall.model.enums.OmsOrderShippingReceiptTypeEnum;
+import com.zhengqing.mall.model.enums.OmsOrderDeliverReceiptTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -25,10 +25,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel("商城-订单配送-参数")
-public class OmsOrderShippingVO {
+public class OmsOrderDeliverVO {
 
     @ApiModelProperty("主键ID")
-    private String shippingId;
+    private String id;
 
     @JsonIgnore
     @ApiModelProperty(value = "订单编号", hidden = true)
@@ -71,7 +71,7 @@ public class OmsOrderShippingVO {
     private String logisticsNo;
 
     /**
-     * {@link OmsOrderShippingReceiptTypeEnum }
+     * {@link OmsOrderDeliverReceiptTypeEnum }
      */
 //    @ApiModelProperty("收货类型(1->手动收货 2->自动收货)")
 //    private Byte receiptType;
@@ -83,7 +83,7 @@ public class OmsOrderShippingVO {
     private Date autoReceiptTime;
 
     @ApiModelProperty(value = "关联商品详情")
-    private List<OmsOrderShippingItemVO> spuList;
+    private List<OmsOrderDeliverItemVO> spuList;
 
     // ========================== ↓↓↓↓↓↓ 隐藏字段->只在后台处理使用 ↓↓↓↓↓↓ ==========================
 

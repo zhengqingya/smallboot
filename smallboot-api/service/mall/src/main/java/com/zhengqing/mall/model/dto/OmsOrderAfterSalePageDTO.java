@@ -61,7 +61,6 @@ public class OmsOrderAfterSalePageDTO extends BasePageDTO implements CheckParam 
     @ApiModelProperty("商品名称")
     private String spuName;
 
-
     @ApiModelProperty("用户电话")
     private String userPhone;
 

@@ -5,7 +5,7 @@
     <sql id="CONDITION_COMMON_PAGE">
         FROM oms_order o
         JOIN oms_order_item oi ON o.order_no=oi.order_no
-        LEFT JOIN oms_order_shipping os ON o.order_no=os.order_no
+        LEFT JOIN oms_order_deliver os ON o.order_no=os.order_no
         <where>
             <if test="filter.orderStatus!=null">
                 AND o.order_status = #{filter.orderStatus}
