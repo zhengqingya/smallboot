@@ -61,13 +61,13 @@ $align: (
 
 @each $alignKey, $alignVal in $align {
   @each $justifyKey, $justifyVal in $justify {
+    // flex-start-center
+    .flex-#{$justifyKey}-#{$alignKey} {
+      display: flex;
+      justify-content: #{$justifyVal};
+      align-items: #{$alignVal};
+    }
     @each $directionKey, $directionVal in $direction {
-      // flex-start-center
-      .flex-#{$justifyKey}-#{$alignKey} {
-        display: flex;
-        justify-content: #{$justifyVal};
-        align-items: #{$alignVal};
-      }
       // flex-r-start-center
       .flex-#{$directionKey}-#{$justifyKey}-#{$alignKey} {
         display: flex;

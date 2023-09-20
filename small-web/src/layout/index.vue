@@ -2,7 +2,7 @@
   <!-- <h1>{{ route.meta }}</h1> -->
   <div v-show="isLogin && !$route.meta.isParentView" class="flex h-full w-full">
     <!-- 侧边栏菜单 -->
-    <sidebar v-if="isShowMenu" id="sidebar" class="w-200" />
+    <sidebar v-if="isShowMenu" id="sidebar" style="width: 200px" />
 
     <div class="flex-1 flex-column">
       <div id="top">
