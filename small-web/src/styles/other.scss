@@ -83,3 +83,10 @@
     display: #{$val};
   }
 }
+
+// 光标形状 eg: cursor-pointer
+@each $val in pointer, crosshair {
+  .cursor-#{$val} {
+    cursor: #{$val};
+  }
+}

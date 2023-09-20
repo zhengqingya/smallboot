@@ -3,6 +3,7 @@ import { defineStore } from 'pinia';
 export const useSettingsStore = defineStore('settings', () => {
   let isShowMenu = ref(true); // 是否显示菜单
   let tabsList = ref([]); // Tabs标签页数据
+  let menuType = ref(2); // 1:element-plus菜单 2:自定义菜单
 
   function update() {
     isShowMenu.value = !isShowMenu.value;
@@ -26,5 +27,5 @@ export const useSettingsStore = defineStore('settings', () => {
     }
   }
 
-  return { isShowMenu, update, tabsList, getTabsList, activeTabs };
+  return { isShowMenu, update, tabsList, getTabsList, activeTabs, menuType };
 });

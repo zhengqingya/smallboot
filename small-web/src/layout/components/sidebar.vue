@@ -1,27 +1,26 @@
 <template>
-  <el-menu v-if="type === 1" class="menu" router :default-active="$route.meta.fullPath" :collapse="false" :unique-opened="false" @select="handleSelect">
-    <el-scrollbar>
-      <sidebar-item :router-list="routerList" />
-    </el-scrollbar>
-  </el-menu>
-  <div v-else class="menu p-20">
-    <div v-for="item in routerList" :key="item.path">
-      <div v-if="item.meta.isShow">
-        <h2 @click="handleSelect(item.meta.fullPath)">
-          <el-icon v-if="item.meta && item.meta.icon"><component :is="item.meta.icon" /></el-icon> <span>{{ item.meta.title }}</span>
-        </h2>
-
-        <div v-for="secondItem in item.children" :key="secondItem.path">
-          <div v-if="secondItem.meta.isShow" @click="handleSelect(secondItem.meta.fullPath)">
-            <span>{{ secondItem.meta.title }}</span>
+  <div class="menu">
+    <h1 class="flex-center-center p-y-10 text-color-primary" style="width: 200px">SmallBoot</h1>
+    <el-menu v-if="menuType === 1" router :default-active="$route.meta.fullPath" :collapse="false" :unique-opened="false" @select="handleSelect">
+      <el-scrollbar>
+        <sidebar-item :router-list="routerList" />
+      </el-scrollbar>
+    </el-menu>
+    <div v-else class="p-x-20 p-y-10">
+      <div v-for="item in routerList" :key="item.path">
+        <div v-if="item.meta.isShow">
+          <div class="font-bold cursor-pointer" @click="handleSelect(item.meta.fullPath)">
+            <el-icon v-if="item.meta && item.meta.icon" size="12"><component :is="item.meta.icon" /></el-icon>
+            {{ item.meta.title }}
+          </div>
+          <div class="grid-start-center-2 m-t-10 m-b-15">
+            <div v-for="secondItem in item.children" :key="secondItem.path" class="text-color-grey" style="height: 25px">
+              <div class="cursor-pointer" @click="handleSelect(secondItem.meta.fullPath)">
+                {{ secondItem.meta.title }}
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-
-    <div class="grid-2 second-menu bg-color-red h-full" style="height: 500px">
-      <div v-for="item in 20" :key="item" class="bg-color-primary">
-        {{ item }}
       </div>
     </div>
   </div>
@@ -33,7 +32,7 @@ import { getCurrentInstance, toRefs } from 'vue';
 const { proxy } = getCurrentInstance();
 let { routerList, routerMap } = toRefs(proxy.$store.user.useUserStore());
 let { activeTabs } = proxy.$store.settings.useSettingsStore();
-let type = 1; // 1:element-plus菜单 2:自定义菜单
+let { menuType } = toRefs(proxy.$store.settings.useSettingsStore());
 
 /**
  * 选中菜单时触发
@@ -44,10 +43,14 @@ let type = 1; // 1:element-plus菜单 2:自定义菜单
  */
 function handleSelect(index, indexPath, item, routeResult) {
   // console.log(index, indexPath, item, routeResult);
-  if (type === 2) {
+  let router = routerMap.value[index];
+  if (router.children.length > 0) {
+    return;
+  }
+  if (menuType.value === 2) {
     proxy.$router.push(index);
   }
-  activeTabs(routerMap.value[index]);
+  activeTabs(router);
 }
 </script>
 

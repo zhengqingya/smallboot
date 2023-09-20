@@ -39,10 +39,13 @@
           <a target="_blank" href="https://gitee.com/zhengqingya">
             <el-dropdown-item>Gitee</el-dropdown-item>
           </a>
+          <el-dropdown-item @click="handleSettings">系统设置</el-dropdown-item>
           <el-dropdown-item divided @click="logout">退出</el-dropdown-item>
         </el-dropdown-menu>
       </template>
     </el-dropdown>
+
+    <settings ref="settingsRef" />
   </div>
 </template>
 <script setup>
@@ -51,10 +54,15 @@ const route = useRoute();
 import { ArrowRight } from '@element-plus/icons-vue';
 import { getCurrentInstance, toRefs } from 'vue';
 const { proxy } = getCurrentInstance();
+import settings from './settings.vue';
 
 let useUserStore = proxy.$store.user.useUserStore();
 let { logout } = useUserStore;
 let { userObj } = toRefs(useUserStore);
+
+function handleSettings() {
+  proxy.$refs.settingsRef.open();
+}
 </script>
 <style lang="scss" scoped>
 .app {
