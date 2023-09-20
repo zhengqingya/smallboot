@@ -12,9 +12,14 @@
           <el-icon v-if="item.meta && item.meta.icon" size="12"><component :is="item.meta.icon" /></el-icon>
           {{ item.meta.title }}
         </div>
-        <div class="grid-start-center-2 m-t-10 m-b-15">
+        <div class="grid-start-center-2 m-t-10 m-b-10">
           <div v-for="secondItem in item.children.filter((e) => e.meta.isShow)" :key="secondItem.path" class="text-color-grey" style="height: 25px">
-            <div class="cursor-pointer" @click="handleSelect(secondItem.meta.fullPath)">
+            <div
+              class="cursor-pointer"
+              :class="{
+                'text-color-primary': $route.meta.fullPath === secondItem.meta.fullPath,
+              }"
+              @click="handleSelect(secondItem.meta.fullPath)">
               {{ secondItem.meta.title }}
             </div>
           </div>

@@ -238,21 +238,14 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
 
         // ==================================== ↓↓↓↓↓↓ 1、校验数据 ↓↓↓↓↓↓ ====================================
         // 商品规格ids
-        List<String> skuIdList = spuList.stream()
-                .map(MiniPmsSpuBuySkuDTO::getSkuId).collect(Collectors.toList());
+        List<String> skuIdList = spuList.stream().map(MiniPmsSpuBuySkuDTO::getSkuId).collect(Collectors.toList());
         // 查询商品sku数据
-        List<PmsSkuVO> mysqlSkuList = this.iPmsSpuService.listBySku(
-                PmsSkuDTO.builder()
-                        .skuIdList(skuIdList)
-                        .build());
+        List<PmsSkuVO> mysqlSkuList = this.iPmsSpuService.listBySku(PmsSkuDTO.builder().skuIdList(skuIdList).build());
         Assert.isTrue(!CollectionUtils.isEmpty(mysqlSkuList), "购买商品已失效！");
-        Map<String, PmsSkuVO> mysqlSkuMap = mysqlSkuList.stream()
-                .collect(Collectors.toMap(PmsSkuVO::getSkuId, t -> t, (k1, k2) -> k1));
+        Map<String, PmsSkuVO> mysqlSkuMap = mysqlSkuList.stream().collect(Collectors.toMap(PmsSkuVO::getSkuId, t -> t, (k1, k2) -> k1));
         // 求出这些商品中的最大运费，然后与提交运费值对比校验
-        Integer mysqlMaxFreight = mysqlSkuList.stream().map(PmsSkuVO::getFreight)
-                .max(Integer::compareTo).get();
-        Assert.isTrue(mysqlMaxFreight.equals(freight),
-                String.format("商品运费变更 程序计算值：%s 提交值：%s", mysqlMaxFreight, freight));
+        Integer mysqlMaxFreight = mysqlSkuList.stream().map(PmsSkuVO::getFreight).max(Integer::compareTo).get();
+        Assert.isTrue(mysqlMaxFreight.equals(freight), String.format("商品运费变更 程序计算值：%s 提交值：%s", mysqlMaxFreight, freight));
         // 商品总价 TODO 暂未考虑使用优惠券的情况！！！
         Integer mysqlSumPrice = 0;
         // 校验商品是否可以购买
@@ -411,8 +404,7 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
             order.setAutoReceiptTime(this.iMallCommonService.getAutoReceiptTime());
         }
         // 订单状态更新
-        order.setOrderStatus(isVirtual ? OmsOrderStatusEnum.BILL.getStatus()
-                : OmsOrderStatusEnum.UN_BILL.getStatus());
+        order.setOrderStatus(isVirtual ? OmsOrderStatusEnum.BILL.getStatus() : OmsOrderStatusEnum.UN_BILL.getStatus());
 
         // 1、订单更新
         order.setPayNo(payNo);
@@ -459,13 +451,11 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
         String orderNo = params.getOrderNo();
         OmsOrder order = this.getOrder(orderNo);
         OmsOrderStatusEnum orderStatusEnum = OmsOrderStatusEnum.getEnum(order.getOrderStatus());
-        Assert.isTrue(OmsOrderStatusEnum.UN_PAY == orderStatusEnum,
-                "无法支付，该订单状态为：" + orderStatusEnum.getDesc());
+        Assert.isTrue(OmsOrderStatusEnum.UN_PAY == orderStatusEnum, "无法支付，该订单状态为：" + orderStatusEnum.getDesc());
         // 1、支付是否校验库存
         if (OmsOrderStockCheckTypeEnum.PAY.getType().equals(order.getStockCheckType())) {
             // 1.1、查询该订单关联商品
-            List<OmsOrderItemVO> orderReSpuList = this.iOmsOrderItemService.listByOrderNo(
-                    orderNo);
+            List<OmsOrderItemVO> orderReSpuList = this.iOmsOrderItemService.listByOrderNo(orderNo);
             List<PmsSkuStockBO> skuStockList = Lists.newLinkedList();
             orderReSpuList.forEach(item -> skuStockList.add(PmsSkuStockBO.builder()
                     .skuId(item.getSkuId())
@@ -500,8 +490,7 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
         // 1、支付是否校验库存
         if (OmsOrderStockCheckTypeEnum.PAY.getType().equals(order.getStockCheckType())) {
             // 1.1、查询该订单关联商品
-            List<OmsOrderItemVO> orderReSpuList = this.iOmsOrderItemService.listByOrderNo(
-                    orderNo);
+            List<OmsOrderItemVO> orderReSpuList = this.iOmsOrderItemService.listByOrderNo(orderNo);
             List<PmsSkuStockBO> skuStockList = Lists.newLinkedList();
             orderReSpuList.forEach(item -> skuStockList.add(PmsSkuStockBO.builder()
                     .skuId(item.getSkuId())
@@ -534,14 +523,11 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
         OmsOrder order = this.getOrder(orderNo);
         Byte orderStatus = order.getOrderStatus();
         // 1、查询订单关联商品信息
-        List<OmsOrderItemVO> orderReSpuList = this.iOmsOrderItemService.listByOrderNo(
-                orderNo);
+        List<OmsOrderItemVO> orderReSpuList = this.iOmsOrderItemService.listByOrderNo(orderNo);
         int orderReSpuSize = orderReSpuList.size();
-        Map<Byte, List<OmsOrderItemVO>> groupOrderReSpuListByStatus = orderReSpuList.stream()
-                .collect(Collectors.groupingBy(OmsOrderItemVO::getStatus));
+        Map<Byte, List<OmsOrderItemVO>> groupOrderReSpuListByStatus = orderReSpuList.stream().collect(Collectors.groupingBy(OmsOrderItemVO::getStatus));
         // 未发货商品信息
-        List<OmsOrderItemVO> omsOrderItemList = groupOrderReSpuListByStatus.get(
-                OmsOrderStatusEnum.UN_BILL.getStatus());
+        List<OmsOrderItemVO> omsOrderItemList = groupOrderReSpuListByStatus.get(OmsOrderStatusEnum.UN_BILL.getStatus());
         // 2、未支付或全部商品未发货才能修改地址
         if (OmsOrderStatusEnum.UN_PAY.getStatus().equals(orderStatus)
                 || (orderReSpuSize > 0 && !CollectionUtils.isEmpty(omsOrderItemList)
@@ -564,8 +550,7 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
         // 2、订单关联商品详情
         List<OmsOrderItemVO> orderItemList = this.iOmsOrderItemService.listByOrderNo(orderNo);
         // 3、不可申请售后的订单详情ids
-        List<String> noApplyReOrderItemIdList = this.iOmsOrderAfterSaleService.getNoApplyReOrderItemIdListByOrderNo(
-                orderNo);
+        List<String> noApplyReOrderItemIdList = this.iOmsOrderAfterSaleService.getNoApplyReOrderItemIdListByOrderNo(orderNo);
         // 4、封装每一个商品时候可售后状态
         List<MiniOmsReSpuAfterSaleStatusVO> spuList = Lists.newArrayList();
         orderItemList.forEach(orderItem -> spuList.add(
@@ -735,24 +720,9 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
     @Transactional(rollbackFor = Exception.class)
     public void sendSpu(WebOmsOrderSendSpuDTO params) {
         log.info("[商城] 订单-发货-提交参数：{}", params);
-        String orderNo = params.getOrderNo();
-        List<String> orderItemIdList = params.getOrderItemIdList();
         // 查询自动收货时间
         long autoReceiptMillisecond = this.iMallCommonService.getAutoReceiptMillisecond();
-        // 发货逻辑处理
-        this.sendSpuBase(params, autoReceiptMillisecond);
-    }
 
-    /**
-     * 发货 -- base
-     *
-     * @param params                 发货参数
-     * @param autoReceiptMillisecond 自动收货时间
-     * @return void
-     * @author zhengqingya
-     * @date 2022/1/25 10:54
-     */
-    private void sendSpuBase(WebOmsOrderSendSpuDTO params, long autoReceiptMillisecond) {
         String orderNo = params.getOrderNo();
         String receiverName = params.getReceiverName();
         List<String> orderItemIdList = params.getOrderItemIdList();
@@ -950,10 +920,8 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
                         continue;
                     }
 
-                    // 查询自动收货时间
-                    long autoReceiptMillisecond = OmsOrderServiceImpl.this.iMallCommonService.getAutoReceiptMillisecond();
                     // 发货逻辑处理
-                    OmsOrderServiceImpl.this.sendSpuBase(WebOmsOrderSendSpuDTO.builder()
+                    OmsOrderServiceImpl.this.sendSpu(WebOmsOrderSendSpuDTO.builder()
                             .orderNo(orderNoItem)
                             .orderItemIdList(OmsOrderServiceImpl.this.iOmsOrderItemService.orderItemListByOrderNo(orderNoItem))
                             .logisticsCode(item.getLogisticsCode())
@@ -962,7 +930,7 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
                             .receiverName(orderItem.getReceiverName())
                             .receiverPhone(orderItem.getReceiverPhone())
                             .receiverAddress(orderItem.getReceiverAddress())
-                            .build(), autoReceiptMillisecond);
+                            .build());
                 }
                 log.info("[商城] 订单发货处理成功！");
             }

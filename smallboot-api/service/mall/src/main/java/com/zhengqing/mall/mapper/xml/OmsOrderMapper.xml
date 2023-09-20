@@ -43,29 +43,6 @@
         </where>
     </sql>
 
-    <sql id="CONDITION_COMMON_ORDER">
-        o
-        .
-        order_no
-        ,
-        o.total_price,
-        o.pay_price,
-        o.freight,
-        o.user_id,
-        o.username,
-        o.user_phone,
-        o.order_status,
-        o.create_time,
-        o.update_time,
-        o.un_pay_end_time,
-        o.receiver_name,
-        o.receiver_phone,
-        o.receiver_address,
-        o.auto_receipt_time,
-        o.after_sale_end_time,
-        o.is_send_coupon
-    </sql>
-
     <update id="deleteBatchOrder">
         UPDATE oms_order
         SET is_deleted = 1
@@ -91,7 +68,23 @@
 
     <select id="selectDataList" resultType="com.zhengqing.mall.model.vo.OmsOrderBaseVO">
         SELECT
-        <include refid="CONDITION_COMMON_ORDER"/>
+        o.order_no,
+        o.total_price,
+        o.pay_price,
+        o.freight,
+        o.user_id,
+        o.username,
+        o.user_phone,
+        o.order_status,
+        o.create_time,
+        o.update_time,
+        o.un_pay_end_time,
+        o.receiver_name `receiverAddressObj.receiverName`,
+        o.receiver_phone `receiverAddressObj.receiverPhone`,
+        o.receiver_address `receiverAddressObj.receiverAddress`,
+        o.auto_receipt_time,
+        o.after_sale_end_time,
+        o.is_send_coupon
         <include refid="CONDITION_COMMON_PAGE"/>
         GROUP BY o.order_no
         ORDER BY o.order_no DESC
@@ -114,13 +107,6 @@
         GROUP BY o.order_no
         ORDER BY o.order_no DESC
         LIMIT 10000
-    </select>
-
-    <select id="detailData" resultType="com.zhengqing.mall.model.vo.OmsOrderBaseVO">
-        SELECT
-        <include refid="CONDITION_COMMON_ORDER"/>
-        FROM oms_order o
-        WHERE o.order_no = #{orderNo}
     </select>
 
     <select id="getAfterSaleEndTime" resultType="java.util.Date">

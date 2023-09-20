@@ -74,16 +74,6 @@ public interface OmsOrderMapper extends BaseMapper<OmsOrder> {
      */
     List<WebOmsOrderExportVO> selectExportDataListByWeb(@Param("filter") OmsOrderPageDTO filter);
 
-    /**
-     * 详情
-     *
-     * @param orderNo 订单编号
-     * @return 详情
-     * @author zhengqingya
-     * @date 2021/8/30 17:31
-     */
-    OmsOrderBaseVO detailData(@Param("orderNo") String orderNo);
-
 
     /**
      * 查询此订单售后处理截止时间

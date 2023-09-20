@@ -226,8 +226,7 @@ public class PmsSpuServiceImpl extends ServiceImpl<PmsSpuMapper, PmsSpu> impleme
         params.setIsPut(null);
         // 查询tab条件数量
         List<MallTabConditionListVO> tabDataList = this.pmsSpuMapper.selectTabCondition(params);
-        return this.iMallCommonService.getTabDataList(tabDataList,
-                SysDictTypeEnum.MALL_SPU_TAB_CONDITION);
+        return this.iMallCommonService.getTabDataList(tabDataList, SysDictTypeEnum.MALL_SPU_TAB_CONDITION);
     }
 
     @Override
