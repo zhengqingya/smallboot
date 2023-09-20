@@ -70,10 +70,6 @@ export const useUserStore = defineStore('user', () => {
     for (let index = 0; index < permList.length; index++) {
       let permItem = permList[index];
 
-      if (!permItem.meta.isShow) {
-        continue;
-      }
-
       // 填充字段数据
       if (!permItem.meta) {
         permItem.meta = {};

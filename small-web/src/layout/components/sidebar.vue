@@ -7,17 +7,15 @@
       </el-scrollbar>
     </el-menu>
     <div v-else class="p-x-20 p-y-10">
-      <div v-for="item in routerList" :key="item.path">
-        <div v-if="item.meta.isShow">
-          <div class="font-bold cursor-pointer" @click="handleSelect(item.meta.fullPath)">
-            <el-icon v-if="item.meta && item.meta.icon" size="12"><component :is="item.meta.icon" /></el-icon>
-            {{ item.meta.title }}
-          </div>
-          <div class="grid-start-center-2 m-t-10 m-b-15">
-            <div v-for="secondItem in item.children" :key="secondItem.path" class="text-color-grey" style="height: 25px">
-              <div class="cursor-pointer" @click="handleSelect(secondItem.meta.fullPath)">
-                {{ secondItem.meta.title }}
-              </div>
+      <div v-for="item in routerList.filter((e) => e.meta.isShow)" :key="item.path">
+        <div class="font-bold cursor-pointer" @click="handleSelect(item.meta.fullPath)">
+          <el-icon v-if="item.meta && item.meta.icon" size="12"><component :is="item.meta.icon" /></el-icon>
+          {{ item.meta.title }}
+        </div>
+        <div class="grid-start-center-2 m-t-10 m-b-15">
+          <div v-for="secondItem in item.children.filter((e) => e.meta.isShow)" :key="secondItem.path" class="text-color-grey" style="height: 25px">
+            <div class="cursor-pointer" @click="handleSelect(secondItem.meta.fullPath)">
+              {{ secondItem.meta.title }}
             </div>
           </div>
         </div>
