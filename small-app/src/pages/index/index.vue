@@ -5,7 +5,7 @@
     <view class="introText h-full flex-center-center">Vue3+Vite4 小程序</view>
 
     <navigator :url="'/subPackages/product/shop'">
-      <text>测试</text>
+      <view>测试</view>
     </navigator>
   </base-wrapper>
 </template>

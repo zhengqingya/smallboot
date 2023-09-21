@@ -1,10 +1,13 @@
 <template>
-  <view class="h-full overflow-y-scroll">
-    <!-- 分类关联商品数据 -->
+  <view class="h-full flex-column">
+    <view style="height: 300rpx"><view v-for="item in 13">hello</view></view>
+
     <base-linkage
-      :list="shopProvinceCityAreaList"
+      class="h-full overflow-y-scroll"
+      ref="linkageRef"
+      flexLayout1="flex-rr-start-stretch"
       categoryClass="category-fixed-right"
-      category-width="100rpx">
+      category-width="60rpx">
       <template #empty>
         <u-empty mode="data" text="数据为空" />
       </template>
@@ -20,16 +23,18 @@
           {{ data.name }}
         </view>
         <view
-          class="flex-center-center p-l-20"
+          style="height: 60rpx"
           v-for="(item, index) in data.children"
           :key="index"
           @tap="showSpuDetailModal(data, item)">
-          <view class="flex-1 h-full">
+          <view class="flex-start-center h-full p-l-20">
             <text class="font-size-base">{{ item.name }}</text>
           </view>
         </view>
       </template>
     </base-linkage>
+
+    <view class="bg-color-red flex-center-center" style="height: 200rpx">hello</view>
   </view>
 </template>
 
@@ -60,6 +65,7 @@ async function init() {
     // isShop: true,
   });
   shopProvinceCityAreaList.value = getGroupArrayObj(res, 'name');
+  proxy.$refs.linkageRef.init(shopProvinceCityAreaList.value);
 }
 
 // 根据首字母分组
