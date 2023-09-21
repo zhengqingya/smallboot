@@ -28,6 +28,9 @@ public class SysProvinceCityArea extends BaseEntity<SysProvinceCityArea> {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
+    @ApiModelProperty("父ID")
+    private Integer parentId;
+
     @ApiModelProperty("父代码")
     private String parentCode;
 

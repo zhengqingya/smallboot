@@ -3,6 +3,10 @@
     <u-swiper :list="bannerList" indicator indicatorMode="line" circular height="550rpx" />
 
     <view class="introText h-full flex-center-center">Vue3+Vite4 小程序</view>
+
+    <navigator :url="'/subPackages/product/shop'">
+      <text>测试</text>
+    </navigator>
   </base-wrapper>
 </template>
 

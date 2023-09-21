@@ -9,6 +9,9 @@
             <if test="filter.isShop!=null">
                 AND is_shop = #{filter.isShop}
             </if>
+            <if test="filter.type!=null">
+                AND type >= #{filter.type}
+            </if>
         </where>
         ORDER BY code ASC
     </select>

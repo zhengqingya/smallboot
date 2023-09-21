@@ -57,6 +57,8 @@
     "default-passive-events": "^2.0.0",
     "pinia": "^2.0.36",
     "pinia-plugin-persistedstate": "^3.2.0",
+    "pinyin": "^3.0.0-alpha.5",
+    "segmentit": "^2.0.3",
     "uview-plus": "^3.1.37",
     "vue": "3.3.4",
     "vue-i18n": "9.2.2"

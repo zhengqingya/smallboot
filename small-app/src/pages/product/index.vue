@@ -1,8 +1,14 @@
 <template>
   <base-wrapper activeTabName="product">
     <!-- 店铺 -->
-    <shop ref="shopRef" />
-    <base-linkage :list="reSpuList" category-width="25%">
+    <!-- <shop ref="shopRef" /> -->
+
+    <!-- 分类关联商品数据 -->
+    <base-linkage
+      class="h-full"
+      :list="reSpuList"
+      categoryClass="p-r-10 bg-color-lightgrey text-color-grey"
+      category-width="25%">
       <template #empty>
         <u-empty mode="data" text="商品为空" />
       </template>
@@ -16,12 +22,12 @@
         </view>
       </template>
       <template #categoryReList="{ data }">
-        <view style="height: 30rpx" class="font-size-base font-bold flex-start-center">
+        <view style="height: 30rpx" class="flex-start-center font-size-base font-bold">
           {{ data.name }}
         </view>
         <view>
           <view
-            class="flex-center-center p-10"
+            class="flex-center-center m-10"
             style="height: 160rpx"
             v-for="(spuItem, index) in data.spuList"
             :key="index"
@@ -46,8 +52,9 @@
       </template>
     </base-linkage>
 
-    <!--  商品详情  -->
+    <!--  商品sku详情  -->
     <sku ref="skuRef" @close="handleCloseSkuChoose" />
+
     <!-- 购物车 -->
     <cart ref="cartRef" v-model="cartList" />
   </base-wrapper>

@@ -2,10 +2,11 @@
   <view v-if="list.length === 0" class="h-full flex-center-center">
     <slot name="empty" />
   </view>
-  <view v-else class="h-full flex overflow-y-scroll">
+  <view v-else class="h-full flex overflow-y-scroll" :class="flexLayout">
     <scroll-view
       :style="{ width: categoryWidth }"
-      class="bg-color-lightgrey text-color-grey p-r-10"
+      :class="categoryClass"
+      class="category"
       scroll-with-animation
       scroll-y>
       <view
@@ -19,6 +20,7 @@
 
     <scroll-view
       class="flex-1 p-20"
+      :class="categoryReDataClass"
       scroll-with-animation
       scroll-y
       :scroll-top="categoryScrollTop"
@@ -43,6 +45,21 @@ let currentCategoryId = ref(0); // 当前分类id
 let cateScrollTopList = ref([]); // 左侧分类关联右边商品滑动的顶部位置
 let categoryScrollTop = ref(0); // 竖向滚动条位置
 const props = defineProps({
+  // 布局
+  flexLayout: {
+    type: String,
+    default: 'flex',
+  },
+  // 分类样式
+  categoryClass: {
+    type: String,
+    default: '',
+  },
+  // 分类关联数据样式
+  categoryReDataClass: {
+    type: String,
+    default: '',
+  },
   // 分类&关联商品数据 eg: [{ name:'分类1', list:[{name:'测试'}] }]
   list: {
     type: Array,
@@ -125,6 +142,12 @@ function calcSize() {
 </script>
 
 <style lang="scss" scoped>
+.category-fixed-right {
+  position: fixed;
+  right: 0;
+  transform: translate(0, 50%);
+  z-index: 2;
+}
 .category-re-item-box {
   &:nth-last-child(1) {
     margin-bottom: 100rpx;

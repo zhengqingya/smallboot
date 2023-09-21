@@ -1,5 +1,6 @@
 package com.zhengqing.system.model.vo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zhengqing.common.base.model.vo.BaseVO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -26,22 +27,29 @@ import java.util.List;
 @ApiModel("系统管理-省市区-树-响应参数")
 public class SysProvinceCityAreaTreeVO extends BaseVO {
 
-    @ApiModelProperty("主键ID")
+    @ApiModelProperty(value = "主键ID")
     private Integer id;
 
-    @ApiModelProperty("父代码")
+    @JsonIgnore
+    @ApiModelProperty(value = "父ID", hidden = true)
+    private Integer parentId;
+
+    @JsonIgnore
+    @ApiModelProperty(value = "父代码", hidden = true)
     private String parentCode;
 
     @ApiModelProperty("名称")
     private String name;
 
-    @ApiModelProperty("行政区代码")
+    @JsonIgnore
+    @ApiModelProperty(value = "行政区代码", hidden = true)
     private String code;
 
     /**
      * {@link com.zhengqing.system.enums.SysProvinceCityAreaTypeEnum}
      */
-    @ApiModelProperty("类型（1:省 2:市 3:区）")
+    @JsonIgnore
+    @ApiModelProperty(value = "类型（1:省 2:市 3:区）", hidden = true)
     private Integer type;
 
     @ApiModelProperty("子集")
