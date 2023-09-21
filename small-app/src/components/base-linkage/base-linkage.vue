@@ -22,10 +22,14 @@
       scroll-with-animation
       scroll-y
       :scroll-top="categoryScrollTop"
-      @scroll="handleSpuScroll">
+      @scroll="handleCategoryReDataScroll">
       <view id="ads"></view>
       <view>
-        <view class="spu-box" :id="`cate-${item.id}`" v-for="(item, index) in list" :key="index">
+        <view
+          class="category-re-item-box"
+          :id="`cate-${item.id}`"
+          v-for="(item, index) in list"
+          :key="index">
           <slot name="categoryReList" :data="item" />
         </view>
       </view>
@@ -39,10 +43,12 @@ let currentCategoryId = ref(0); // 当前分类id
 let cateScrollTopList = ref([]); // 左侧分类关联右边商品滑动的顶部位置
 let categoryScrollTop = ref(0); // 竖向滚动条位置
 const props = defineProps({
+  // 分类&关联商品数据 eg: [{ name:'分类1', list:[{name:'测试'}] }]
   list: {
     type: Array,
     default: () => [],
   },
+  // 分类宽度 eg: 25%
   categoryWidth: {
     type: String,
     default: '',
@@ -68,13 +74,13 @@ async function init() {
   }, 500);
 }
 
-// 点击左侧分类时，动态滑动右侧数据到关联分类位置
+// 点击分类时，动态滑动关联数据到关联分类位置
 function hanleCategoryTap(id) {
   currentCategoryId.value = id;
   categoryScrollTop.value = props.list.find((item) => item.id == id).top;
 }
-// 右侧商品滚动时触发
-function handleSpuScroll({ detail }) {
+// 分类关联数据滚动时触发
+function handleCategoryReDataScroll({ detail }) {
   const { scrollTop } = detail;
 
   if (cateScrollTopList.value.includes(categoryScrollTop.value)) {
@@ -119,7 +125,7 @@ function calcSize() {
 </script>
 
 <style lang="scss" scoped>
-.spu-box {
+.category-re-item-box {
   &:nth-last-child(1) {
     margin-bottom: 100rpx;
   }
