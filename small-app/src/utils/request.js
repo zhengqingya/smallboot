@@ -50,7 +50,7 @@ const request = ({
         const { code, msg } = res.data;
         if (code == 200) {
           return resolve(res.data.data);
-        } else if (code == -1) {
+        } else if (code == -1 || code == 401) {
           // token过期 =》 先清除本地缓存，再授权登录
           logout();
           uni.switchTab({
