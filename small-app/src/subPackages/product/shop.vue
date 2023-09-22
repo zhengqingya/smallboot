@@ -1,40 +1,24 @@
 <template>
-  <view class="h-full flex-column">
-    <base-linkage
-      class="h-full overflow-y-scroll"
-      :list="shopProvinceCityAreaList"
-      categoryClass="category-right"
-      category-width="60rpx">
-      <template #empty>
-        <u-empty mode="data" text="数据为空" />
-      </template>
-      <template #category="{ data, isActive }">
-        <view class="category-item flex-center-center" :class="{ active: isActive }">
-          <text class="font-size-sm">{{ data.name }}</text>
-        </view>
-      </template>
-      <template #categoryReList="{ data }">
-        <view
-          style="height: 60rpx"
-          class="flex-start-center font-size-base font-bold bg-color-lightgrey p-l-20">
-          {{ data.name }}
-        </view>
-        <view
-          style="height: 60rpx"
-          v-for="(item, index) in data.children"
-          :key="index"
-          @tap="showSpuDetailModal(data, item)">
-          <view class="flex-start-center h-full p-l-20">
-            <text class="font-size-base">{{ item.name }}</text>
-          </view>
-        </view>
-      </template>
-    </base-linkage>
+  <view class="h-full flex-column p-x-20">
+    <view class="flex-start-center" style="height: 80rpx">
+      <navigator :url="'/subPackages/product/region'" class="flex-start-center">
+        <text class="font-bold font-size-base">{{ chooseRegionData.name }}</text>
+        <u-icon name="arrow-right" color="#999" size="16"></u-icon>
+      </navigator>
+    </view>
+    <view class="" style="height: 30vh">map</view>
+    <view class="h-full">
+      <view class="bg-color-red" v-for="item in 10">
+        {{ item }}
+      </view>
+    </view>
   </view>
 </template>
 
 <script setup>
 const { proxy } = getCurrentInstance();
+let { chooseRegionData } = toRefs(proxy.$store.system.useSystemStore());
+
 const props = defineProps({
   modelValue: {
     type: Array,
@@ -44,11 +28,6 @@ const props = defineProps({
 });
 let shopProvinceCityAreaList = ref([]);
 
-// 暴露方法
-defineExpose({
-  init,
-});
-
 onMounted(() => {
   init();
 });
@@ -57,38 +36,8 @@ async function init() {
   // 省市区数据
   let res = await proxy.$api.common.provinceCityAreaTree({
     type: 1,
-    // isShop: true,
   });
-  shopProvinceCityAreaList.value = getGroupArrayObj(res.data, 'name');
-}
-
-// 根据首字母分组
-function getGroupArrayObj(list, attr) {
-  let resultList = [];
-  const map = new Map();
-  list.forEach((item, index, arr) => {
-    let key = proxy.$filters.getInitialsToUpperCase(item[attr]);
-    if (!map.has(key)) {
-      let value = arr.filter((a) => proxy.$filters.getInitialsToUpperCase(a[attr]) == key);
-      map.set(key, value);
-      resultList.push({ name: key, children: value });
-    }
-  });
-  return resultList;
 }
 </script>
 
-<style lang="scss" scoped>
-.category-item {
-  &.active {
-    color: #000;
-    font-weight: bold;
-  }
-}
-
-.action1 {
-  position: sticky;
-  top: 120rpx;
-  z-index: 3;
-}
-</style>
+<style lang="scss" scoped></style>

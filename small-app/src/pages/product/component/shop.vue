@@ -1,24 +1,19 @@
 <template>
   <view class="app flex-start-center p-30 m-b-2" style="height: 80rpx">
-    <text class="font-bold font-size-base">天府三街测试门店 ></text>
+    <navigator :url="'/subPackages/product/shop'">
+      <text class="font-bold font-size-base">天府三街测试门店: {{ chooseRegionData.name }}</text>
+    </navigator>
   </view>
 </template>
 
 <script setup>
 const { proxy } = getCurrentInstance();
-
+let { chooseRegionData } = toRefs(proxy.$store.system.useSystemStore());
 const props = defineProps({
-  modelValue: {
-    type: Array,
-    required: false,
-    default: () => [],
-  },
+  modelValue: { type: Array, required: false, default: () => [] },
 });
 
-// 暴露方法
-defineExpose({
-  init,
-});
+defineExpose({ init });
 
 async function init() {}
 </script>

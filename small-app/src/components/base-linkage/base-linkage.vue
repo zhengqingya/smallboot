@@ -1,6 +1,6 @@
 <template>
   <!-- 使用外层class需要加上 "h-full overflow-y-scroll" 微信小程序才能兼容剩余高度 -->
-  <view class="h-full">
+  <view class="h-full overflow-y-scroll">
     <view v-if="dataList.length === 0" class="flex-center-center h-full">
       <slot name="empty" />
     </view>
@@ -8,7 +8,7 @@
       <scroll-view
         :style="{ width: categoryWidth }"
         :class="categoryClass"
-        class="category h-full"
+        class="category"
         scroll-with-animation
         scroll-y>
         <view
@@ -58,7 +58,7 @@ const props = defineProps({
   // 分类关联数据样式
   categoryReDataClass: { type: String, default: '' },
   // 分类&关联商品数据 eg: [{ name:'分类1', list:[{name:'测试'}] }]
-  list: { type: Array, default: () => [] },
+  // list: { type: Array, default: () => [] },
   // 分类宽度 eg: 25%
   categoryWidth: { type: String, default: '' },
 });
@@ -66,13 +66,16 @@ let dataList = ref([]); // 分类&关联商品数据 eg: [{ name:'分类1', list
 
 // dom加载完后，在组件更新之后调用
 onUpdated(() => {
-  init();
+  // init();
 });
 
-// defineExpose({ init });
+defineExpose({ init });
 
-async function init() {
-  dataList.value = props.list;
+async function init(list) {
+  // if (cateScrollTopList.value.length > 0) {
+  //   return; // 微信小程序中点击分类时由于会修改list值从而导致自动触发这里的计算，即累计数据，所以改为手动提交数据吧...
+  // }
+  dataList.value = list;
 
   // 自己定义的内部的customCategoryId分类关联值数据等...
   for (var i = 0; i < dataList.value.length; i++) {
@@ -98,7 +101,6 @@ function hanleCategoryTap(customCategoryId) {
 // 分类关联数据滚动时触发
 function handleCategoryReDataScroll({ detail }) {
   const { scrollTop } = detail;
-
   if (cateScrollTopList.value.includes(categoryScrollTop.value)) {
     // 这里标识是从左侧分类点击触发的滚动
     categoryScrollTop.value = scrollTop;
@@ -146,6 +148,7 @@ function calcSize() {
   position: relative;
   .category-right {
     position: absolute;
+    // 靠右侧
     margin-left: 90%;
     // 垂直居中
     margin-top: 50%;

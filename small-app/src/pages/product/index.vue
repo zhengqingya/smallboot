@@ -6,7 +6,7 @@
     <!-- 分类关联商品数据 -->
     <base-linkage
       class="h-full overflow-y-scroll"
-      :list="reSpuList"
+      ref="linkageRef"
       categoryClass="p-r-10 bg-color-lightgrey text-color-grey"
       category-width="25%">
       <template #empty>
@@ -81,6 +81,7 @@ async function init() {
   let res = await proxy.$api.category.reSpuList();
   reSpuList.value = res.data;
   showCart();
+  proxy.$refs.linkageRef.init(reSpuList.value);
 }
 
 // 购物车

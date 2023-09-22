@@ -56,6 +56,18 @@
       ]
     },
     {
+      "root": "subPackages/product",
+      "pages": [
+        {
+          "path": "region",
+          "style": {
+            "navigationBarTitleText": "选择城市",
+            "enablePullDownRefresh": false
+          }
+        }
+      ]
+    },
+    {
       "root": "subPackages/order",
       "pages": [
         {
