@@ -52,12 +52,7 @@
             "navigationBarTitleText": "选择门店",
             "enablePullDownRefresh": false
           }
-        }
-      ]
-    },
-    {
-      "root": "subPackages/product",
-      "pages": [
+        },
         {
           "path": "region",
           "style": {

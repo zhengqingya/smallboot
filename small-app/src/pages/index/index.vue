@@ -6,11 +6,11 @@
       <text>Vue3+Vite4 小程序</text>
     </view>
 
-    <navigator :url="'/subPackages/product/shop'">
+    <!-- <navigator :url="'/subPackages/product/shop'">
       <view class="h-full bg-color-primary" style="height: 300rpx">
         <view>选择门店</view>
       </view>
-    </navigator>
+    </navigator> -->
   </base-wrapper>
 </template>
 

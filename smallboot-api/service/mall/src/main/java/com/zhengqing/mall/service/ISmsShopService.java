@@ -17,6 +17,16 @@ import com.zhengqing.mall.model.vo.SmsShopBaseVO;
 public interface ISmsShopService extends IService<SmsShop> {
 
     /**
+     * 详情
+     *
+     * @param shopId 店铺ID
+     * @return 详情
+     * @author zhengqingya
+     * @date 2023/09/13 09:51
+     */
+    SmsShop detailData(Integer shopId);
+
+    /**
      * 分页列表
      *
      * @param params 查询参数

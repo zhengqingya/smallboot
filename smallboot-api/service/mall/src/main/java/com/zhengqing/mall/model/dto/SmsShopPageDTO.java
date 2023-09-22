@@ -30,5 +30,13 @@ public class SmsShopPageDTO extends BaseDTO {
     @ApiModelProperty("门店名称")
     private String shopName;
 
+    @ApiModelProperty("省名称")
+    private String provinceName;
+
+    @ApiModelProperty("市名称")
+    private String cityName;
+
+    @ApiModelProperty("区名称")
+    private String areaName;
 
 }

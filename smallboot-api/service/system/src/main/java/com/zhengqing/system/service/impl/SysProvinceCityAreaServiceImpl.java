@@ -1,14 +1,20 @@
 package com.zhengqing.system.service.impl;
 
+import cn.hutool.core.lang.Assert;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.zhengqing.common.db.constant.MybatisConstant;
 import com.zhengqing.system.entity.SysProvinceCityArea;
+import com.zhengqing.system.enums.SysProvinceCityAreaTypeEnum;
 import com.zhengqing.system.mapper.SysProvinceCityAreaMapper;
+import com.zhengqing.system.model.dto.SysProvinceCityAreaBindReShopDTO;
 import com.zhengqing.system.model.dto.SysProvinceCityAreaTreeDTO;
 import com.zhengqing.system.model.vo.SysProvinceCityAreaTreeVO;
 import com.zhengqing.system.service.ISysProvinceCityAreaService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,7 +36,7 @@ public class SysProvinceCityAreaServiceImpl extends ServiceImpl<SysProvinceCityA
     @Override
     public List<SysProvinceCityAreaTreeVO> tree(SysProvinceCityAreaTreeDTO params) {
         List<SysProvinceCityAreaTreeVO> list = this.sysProvinceCityAreaMapper.selectDataList(params);
-        List<SysProvinceCityAreaTreeVO> result = list.stream().filter(e -> params.getType().equals(e.getType())).collect(Collectors.toList());
+        List<SysProvinceCityAreaTreeVO> result = list.stream().filter(e -> e.getType().equals(params.getType())).collect(Collectors.toList());
         result.forEach(item -> item.setChildren(this.recurveTree(item.getId(), list)));
         return result;
     }
@@ -49,6 +55,23 @@ public class SysProvinceCityAreaServiceImpl extends ServiceImpl<SysProvinceCityA
             item.setChildren(this.recurveTree(item.getId(), allList));
         }
         return list;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void bindReShop(SysProvinceCityAreaBindReShopDTO params) {
+        String areaName = params.getAreaName();
+        SysProvinceCityArea sysProvinceCityArea = this.sysProvinceCityAreaMapper.selectOne(
+                new LambdaQueryWrapper<SysProvinceCityArea>()
+                        .eq(SysProvinceCityArea::getType, SysProvinceCityAreaTypeEnum.AREA.getType())
+                        .eq(SysProvinceCityArea::getName, areaName)
+                        .last(MybatisConstant.LIMIT_ONE)
+        );
+
+        Assert.notNull(sysProvinceCityArea, areaName + "不存在！");
+
+        sysProvinceCityArea.setIsShop(params.getIsShop());
+        sysProvinceCityArea.updateById();
     }
 
 }

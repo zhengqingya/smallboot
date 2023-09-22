@@ -53,10 +53,10 @@ onMounted(() => {
 });
 
 async function init() {
-  // 省市区数据
+  // 区数据
   let res = await proxy.$api.common.provinceCityAreaTree({
-    type: 1,
-    // isShop: true,
+    type: 3,
+    isShop: true,
   });
   shopProvinceCityAreaList.value = getGroupArrayObj(res.data, 'name');
   proxy.$refs.linkageRef.init(shopProvinceCityAreaList.value);

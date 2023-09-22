@@ -2,6 +2,7 @@ package com.zhengqing.system.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhengqing.system.entity.SysProvinceCityArea;
+import com.zhengqing.system.model.dto.SysProvinceCityAreaBindReShopDTO;
 import com.zhengqing.system.model.dto.SysProvinceCityAreaTreeDTO;
 import com.zhengqing.system.model.vo.SysProvinceCityAreaTreeVO;
 
@@ -25,5 +26,15 @@ public interface ISysProvinceCityAreaService extends IService<SysProvinceCityAre
      * @date 2023/09/14 11:38
      */
     List<SysProvinceCityAreaTreeVO> tree(SysProvinceCityAreaTreeDTO params);
+
+    /**
+     * 绑定或解除 关联店铺
+     *
+     * @param params 提交参数
+     * @return 查询结果
+     * @author zhengqingya
+     * @date 2023/09/14 11:38
+     */
+    void bindReShop(SysProvinceCityAreaBindReShopDTO params);
 
 }

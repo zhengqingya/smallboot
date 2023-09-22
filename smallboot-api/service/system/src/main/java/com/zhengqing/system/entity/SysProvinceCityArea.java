@@ -3,7 +3,7 @@ package com.zhengqing.system.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.zhengqing.common.db.entity.BaseEntity;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -22,7 +22,7 @@ import lombok.*;
 @NoArgsConstructor
 @TableName("t_sys_province_city_area")
 @ApiModel("系统管理-省市区")
-public class SysProvinceCityArea extends BaseEntity<SysProvinceCityArea> {
+public class SysProvinceCityArea extends Model<SysProvinceCityArea> {
 
     @ApiModelProperty("主键ID")
     @TableId(value = "id", type = IdType.AUTO)

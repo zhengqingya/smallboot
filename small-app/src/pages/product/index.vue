@@ -1,7 +1,13 @@
 <template>
   <base-wrapper activeTabName="product">
     <!-- 店铺 -->
-    <shop ref="shopRef" />
+    <view class="shop flex-c-center-start p-20 m-b-2" style="height: 100rpx">
+      <navigator hover-class="none" :url="'/subPackages/product/shop'" class="flex-start-center">
+        <text class="font-bold font-size-base">{{ chooseShop.shopName }}</text>
+        <u-icon name="arrow-right" color="#999" size="16"></u-icon>
+      </navigator>
+      <view class="m-t-10 font-size-sm text-color-grey">该门店距离您1.2km</view>
+    </view>
 
     <!-- 分类关联商品数据 -->
     <base-linkage
@@ -62,11 +68,12 @@
 
 <script setup>
 const { proxy } = getCurrentInstance();
-import shop from './component/shop.vue';
+import { onLoad } from '@dcloudio/uni-app';
 import cart from './component/cart.vue';
 import sku from './component/sku.vue';
+let { chooseRegionData, chooseShop } = toRefs(proxy.$store.system.useSystemStore());
 
-const orderType = ref('takein'); // 堂食：takein  外卖：takeout
+// const orderType = ref('takein'); // 堂食：takein  外卖：takeout
 let reSpuList = ref([]); // 分类关联的商品列表数据
 let spu = ref({}); // 当前选择的商品
 let cateScrollTopList = ref([]); // 左侧分类关联右边商品滑动的顶部位置
@@ -77,7 +84,14 @@ onMounted(() => {
   init();
 });
 
+// watch：监听器
+watch(chooseShop, (newValue, oldValue) => {
+  console.log('监听器执行了... ', newValue, oldValue);
+  init();
+});
+
 async function init() {
+  console.log('店铺ID：', chooseShop.value);
   let res = await proxy.$api.category.reSpuList();
   reSpuList.value = res.data;
   showCart();
@@ -127,6 +141,9 @@ function handleCloseSkuChoose() {
 </script>
 
 <style lang="scss" scoped>
+.shop {
+  box-shadow: 1rpx 0 5rpx rgba(0, 0, 0, 0.2);
+}
 .category-item {
   border-left: 10rpx solid transparent;
   &.active {

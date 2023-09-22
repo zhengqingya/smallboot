@@ -19,6 +19,15 @@
             <if test="filter.shopName!=null and filter.shopName!=''">
                 AND shop_name LIKE CONCAT( '%', #{filter.shopName} , '%' )
             </if>
+            <if test="filter.provinceName!=null and filter.provinceName!=''">
+                AND province_name = #{filter.provinceName}
+            </if>
+            <if test="filter.cityName!=null and filter.cityName!=''">
+                AND city_name = #{filter.cityName}
+            </if>
+            <if test="filter.areaName!=null and filter.areaName!=''">
+                AND area_name = #{filter.areaName}
+            </if>
         </where>
         ORDER BY create_time DESC
     </select>
