@@ -79,7 +79,8 @@ defineExpose({
 
 async function init() {
   // 购物车数据
-  cartList.value = await proxy.$api.cart.list();
+  let res = await proxy.$api.cart.list();
+  cartList.value = res.data;
   // 过滤掉已失效的商品
   cartList.value = cartList.value.filter((e) => !e.isLose);
   commitCartDataToParent();

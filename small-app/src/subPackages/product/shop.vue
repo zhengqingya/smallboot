@@ -1,12 +1,9 @@
 <template>
   <view class="h-full flex-column">
-    <view style="height: 300rpx"><view v-for="item in 13">hello</view></view>
-
     <base-linkage
       class="h-full overflow-y-scroll"
-      ref="linkageRef"
-      flexLayout1="flex-rr-start-stretch"
-      categoryClass="category-fixed-right"
+      :list="shopProvinceCityAreaList"
+      categoryClass="category-right"
       category-width="60rpx">
       <template #empty>
         <u-empty mode="data" text="数据为空" />
@@ -33,8 +30,6 @@
         </view>
       </template>
     </base-linkage>
-
-    <view class="bg-color-red flex-center-center" style="height: 200rpx">hello</view>
   </view>
 </template>
 
@@ -64,8 +59,7 @@ async function init() {
     type: 1,
     // isShop: true,
   });
-  shopProvinceCityAreaList.value = getGroupArrayObj(res, 'name');
-  proxy.$refs.linkageRef.init(shopProvinceCityAreaList.value);
+  shopProvinceCityAreaList.value = getGroupArrayObj(res.data, 'name');
 }
 
 // 根据首字母分组
@@ -90,5 +84,11 @@ function getGroupArrayObj(list, attr) {
     color: #000;
     font-weight: bold;
   }
+}
+
+.action1 {
+  position: sticky;
+  top: 120rpx;
+  z-index: 3;
 }
 </style>

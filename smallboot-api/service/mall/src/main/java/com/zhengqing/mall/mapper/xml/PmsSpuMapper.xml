@@ -6,7 +6,7 @@
         FROM pms_spu spu
         WHERE spu.is_deleted = 0
         <if test="filter.id!=null">
-            spu.id = #{filter.id}
+            AND spu.id = #{filter.id}
         </if>
         <if test="filter.name!=null and filter.name!=''">
             AND spu.name LIKE CONCAT( #{filter.name} , '%' )

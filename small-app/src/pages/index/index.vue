@@ -2,11 +2,15 @@
   <base-wrapper activeTabName="index">
     <u-swiper :list="bannerList" indicator indicatorMode="line" circular height="550rpx" />
 
-    <view class="introText h-full flex-center-center">Vue3+Vite4 小程序</view>
+    <view class="introText h-full flex-center-center">
+      <text>Vue3+Vite4 小程序</text>
+    </view>
 
-    <navigator :url="'/subPackages/product/shop'">
-      <view>测试</view>
-    </navigator>
+    <view class="h-full bg-color-primary" style="width: 600rpx">
+      <navigator :url="'/subPackages/product/shop'">
+        <view>进入店铺</view>
+      </navigator>
+    </view>
   </base-wrapper>
 </template>
 

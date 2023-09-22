@@ -19,7 +19,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
- * <p>商城-店铺信息-详情-响应参数</p>
+ * <p>商城-店铺信息-响应参数</p>
  *
  * @author zhengqingya
  * @description
@@ -30,8 +30,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@ApiModel("商城-店铺信息-详情-响应参数")
-public class WebSmsShopDetailVO extends BaseVO {
+@ApiModel("商城-店铺信息-响应参数")
+public class SmsShopBaseVO extends BaseVO {
 
 
     // ↓↓↓↓↓↓ 基本信息 =======================

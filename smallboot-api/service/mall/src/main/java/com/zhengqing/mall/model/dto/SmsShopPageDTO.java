@@ -9,10 +9,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import javax.validation.constraints.NotNull;
-
 /**
- * <p> 商城-店铺信息-详情-请求参数 </p>
+ * <p> 商城-店铺信息-分页列表-请求参数 </p>
  *
  * @author zhengqingya
  * @description
@@ -23,11 +21,14 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@ApiModel("商城-店铺信息-详情-请求参数")
-public class WebSmsShopDetailDTO extends BaseDTO {
+@ApiModel("商城-店铺信息-分页列表-请求参数")
+public class SmsShopPageDTO extends BaseDTO {
 
-    @NotNull(message = "门店ID不能为空！")
     @ApiModelProperty("门店ID")
     private Integer shopId;
+
+    @ApiModelProperty("门店名称")
+    private String shopName;
+
 
 }

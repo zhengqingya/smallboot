@@ -1,12 +1,12 @@
 <template>
   <base-wrapper activeTabName="product">
     <!-- 店铺 -->
-    <!-- <shop ref="shopRef" /> -->
+    <shop ref="shopRef" />
 
     <!-- 分类关联商品数据 -->
     <base-linkage
       class="h-full overflow-y-scroll"
-      ref="linkageRef"
+      :list="reSpuList"
       categoryClass="p-r-10 bg-color-lightgrey text-color-grey"
       category-width="25%">
       <template #empty>
@@ -31,7 +31,7 @@
             style="height: 160rpx"
             v-for="(spuItem, index) in data.spuList"
             :key="index"
-            @tap="showSpuDetailModal(data, spuItem)">
+            @tap="showSpuDetailModal(spuItem)">
             <image class="img-base" :src="spuItem.coverImg" />
             <view class="flex-1 flex-c-between-start h-full p-10">
               <text class="font-size-lg text-overflow-1">{{ spuItem.name }}</text>
@@ -78,9 +78,9 @@ onMounted(() => {
 });
 
 async function init() {
-  reSpuList.value = await proxy.$api.category.reSpuList();
+  let res = await proxy.$api.category.reSpuList();
+  reSpuList.value = res.data;
   showCart();
-  proxy.$refs.linkageRef.init(reSpuList.value);
 }
 
 // 购物车
@@ -113,8 +113,9 @@ function getCategoryCartNum(categoryId) {
   return sum;
 }
 // 选规格-商品详情
-async function showSpuDetailModal(item, spu) {
-  spu.value = await proxy.$api.spu.detail(spu.id);
+async function showSpuDetailModal(spu) {
+  let res = await proxy.$api.spu.detail(spu.id);
+  spu.value = res.data;
   spu.value.num = 1;
   await proxy.$refs.skuRef.show(spu.value);
 }

@@ -75,8 +75,8 @@ async function getApiData(isFirst) {
   }
   if (!props.isPage) {
     // 直接请求处理数据
-    let result = await apiMethod(props.params);
-    dataResult.value = result.data;
+    let res = await apiMethod(props.params);
+    dataResult.value = res.data;
     return;
   }
 
@@ -91,7 +91,8 @@ async function getApiData(isFirst) {
   }
 
   // 请求处理数据
-  let result = await apiMethod(props.params, pageParams.value);
+  let res = await apiMethod(props.params, pageParams.value);
+  let result = res.data;
   total.value = result.total;
   pageParams.value.pageNum = result.current;
   dataList.value = isFirst ? result.records : [...dataList.value, ...result.records];

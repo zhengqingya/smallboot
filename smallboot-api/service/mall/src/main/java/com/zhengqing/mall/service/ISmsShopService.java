@@ -3,11 +3,9 @@ package com.zhengqing.mall.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhengqing.mall.entity.SmsShop;
-import com.zhengqing.mall.model.dto.WebSmsShopDetailDTO;
-import com.zhengqing.mall.model.dto.WebSmsShopPageDTO;
+import com.zhengqing.mall.model.dto.SmsShopPageDTO;
 import com.zhengqing.mall.model.dto.WebSmsShopSaveDTO;
-import com.zhengqing.mall.model.vo.WebSmsShopDetailVO;
-import com.zhengqing.mall.model.vo.WebSmsShopPageVO;
+import com.zhengqing.mall.model.vo.SmsShopBaseVO;
 
 /**
  * <p>  商城-店铺信息 服务类 </p>
@@ -26,17 +24,17 @@ public interface ISmsShopService extends IService<SmsShop> {
      * @author zhengqingya
      * @date 2023/09/13 09:51
      */
-    IPage<WebSmsShopPageVO> page(WebSmsShopPageDTO params);
+    IPage<SmsShopBaseVO> page(SmsShopPageDTO params);
 
     /**
      * 详情
      *
-     * @param params 查询参数
+     * @param shopId 店铺ID
      * @return 详情
      * @author zhengqingya
      * @date 2023/09/13 09:51
      */
-    WebSmsShopDetailVO detail(WebSmsShopDetailDTO params);
+    SmsShopBaseVO detail(Integer shopId);
 
     /**
      * 新增或更新

@@ -142,14 +142,16 @@ onLoad((params) => {
 
 // 订单详情
 async function orderDetail() {
-  orderObj.value = await proxy.$api.order.detail(orderNo.value);
+  let res = await proxy.$api.order.detail(orderNo.value);
+  orderObj.value = res.data;
   if (!orderObj.value.orderRemark) {
     orderObj.value.orderRemark = ' 无';
   }
 }
 // 购物车数据
 async function getCartList() {
-  let cartList = await proxy.$api.cart.list();
+  let res = await proxy.$api.cart.list();
+  let cartList = res.data;
   // 过滤掉已失效的商品
   cartList = cartList.filter((e) => !e.isLose);
   let sumPrice = cartList.reduce((total, item) => (total += item.num * item.price), 0);
@@ -165,13 +167,14 @@ async function getCartList() {
 }
 // 创建订单
 async function createOrder() {
-  let { orderNo } = await proxy.$api.order.create({
+  let res = await proxy.$api.order.create({
     skuList: orderObj.value.spuList,
     freight: orderObj.value.freight,
     totalPrice: orderObj.value.totalPrice,
     payPrice: orderObj.value.payPrice,
     orderRemark: orderObj.value.orderRemark,
   });
+  let { orderNo } = res.data;
   // 跳转到订单详情页面
   uni.redirectTo({
     url: '/subPackages/order/detail?orderNo=' + orderNo,

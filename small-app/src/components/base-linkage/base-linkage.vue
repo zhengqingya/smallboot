@@ -1,10 +1,10 @@
 <template>
   <!-- 使用外层class需要加上 "h-full overflow-y-scroll" 微信小程序才能兼容剩余高度 -->
   <view class="h-full">
-    <view v-if="list.length === 0" class="flex-center-center h-full">
+    <view v-if="dataList.length === 0" class="flex-center-center h-full">
       <slot name="empty" />
     </view>
-    <view v-else class="flex h-full" :class="flexLayout">
+    <view v-else class="box flex h-full" :class="flexLayout">
       <scroll-view
         :style="{ width: categoryWidth }"
         :class="categoryClass"
@@ -12,16 +12,19 @@
         scroll-with-animation
         scroll-y>
         <view
-          :class="{ active: item.id === currentCategoryId }"
-          v-for="(item, index) in list"
+          :class="{ active: item.customCategoryId === currentCategoryId }"
+          v-for="(item, index) in dataList"
           :key="index"
-          @tap="hanleCategoryTap(item.id)">
-          <slot name="category" :data="item" :isActive="item.id === currentCategoryId" />
+          @tap="hanleCategoryTap(item.customCategoryId)">
+          <slot
+            name="category"
+            :data="item"
+            :isActive="item.customCategoryId === currentCategoryId" />
         </view>
       </scroll-view>
 
       <scroll-view
-        class="flex-1 p-20 h-full"
+        class="flex-1 h-full"
         :class="categoryReDataClass"
         scroll-with-animation
         scroll-y
@@ -31,8 +34,8 @@
         <view>
           <view
             class="category-re-data-item-box"
-            :id="`cate-${item.id}`"
-            v-for="(item, index) in list"
+            :id="`cate-${item.customCategoryId}`"
+            v-for="(item, index) in dataList"
             :key="index">
             <slot name="categoryReList" :data="item" />
           </view>
@@ -49,61 +52,48 @@ let cateScrollTopList = ref([]); // 左侧分类关联右边商品滑动的顶�
 let categoryScrollTop = ref(0); // 竖向滚动条位置
 const props = defineProps({
   // 布局
-  flexLayout: {
-    type: String,
-    default: 'flex',
-  },
+  flexLayout: { type: String, default: 'flex' },
   // 分类样式
-  categoryClass: {
-    type: String,
-    default: '',
-  },
+  categoryClass: { type: String, default: '' },
   // 分类关联数据样式
-  categoryReDataClass: {
-    type: String,
-    default: '',
-  },
+  categoryReDataClass: { type: String, default: '' },
   // 分类&关联商品数据 eg: [{ name:'分类1', list:[{name:'测试'}] }]
-  // list: {
-  //   type: Array,
-  //   default: () => [],
-  // },
+  list: { type: Array, default: () => [] },
   // 分类宽度 eg: 25%
-  categoryWidth: {
-    type: String,
-    default: '',
-  },
+  categoryWidth: { type: String, default: '' },
 });
-let list = ref([]); // 分类&关联商品数据 eg: [{ name:'分类1', list:[{name:'测试'}] }]
+let dataList = ref([]); // 分类&关联商品数据 eg: [{ name:'分类1', list:[{name:'测试'}] }]
 
 // dom加载完后，在组件更新之后调用
 onUpdated(() => {
-  // init();
+  init();
 });
 
-defineExpose({ init });
+// defineExpose({ init });
 
-async function init(data) {
-  list.value = data;
+async function init() {
+  dataList.value = props.list;
 
-  // 自己定义的内部的id分类关联值数据等...
-  for (var i = 0; i < list.value.length; i++) {
-    list.value[i].id = i + 1;
+  // 自己定义的内部的customCategoryId分类关联值数据等...
+  for (var i = 0; i < dataList.value.length; i++) {
+    dataList.value[i].customCategoryId = i + 1;
   }
-  if (list.value.length > 0) {
-    currentCategoryId.value = list.value[0].id;
+  if (dataList.value.length > 0) {
+    currentCategoryId.value = dataList.value[0].customCategoryId;
   }
 
   // 延时防止dom未加载完
   setTimeout(() => {
     calcSize();
-  }, 1000);
+  }, 500);
 }
 
 // 点击分类时，动态滑动关联数据到关联分类位置
-function hanleCategoryTap(id) {
-  currentCategoryId.value = id;
-  categoryScrollTop.value = list.value.find((item) => item.id == id).top;
+function hanleCategoryTap(customCategoryId) {
+  currentCategoryId.value = customCategoryId;
+  categoryScrollTop.value = dataList.value.find(
+    (item) => item.customCategoryId == customCategoryId
+  ).top;
 }
 // 分类关联数据滚动时触发
 function handleCategoryReDataScroll({ detail }) {
@@ -115,13 +105,13 @@ function handleCategoryReDataScroll({ detail }) {
     return;
   }
 
-  let len = list.value.length;
-  let endE = list.value[len - 1];
+  let len = dataList.value.length;
+  let endE = dataList.value[len - 1];
   let endTop = endE.top;
   for (let i = 0; i < len; i++) {
-    let item = list.value[i];
+    let item = dataList.value[i];
     if (item.top <= scrollTop) {
-      currentCategoryId.value = item.id;
+      currentCategoryId.value = item.customCategoryId;
     }
   }
 }
@@ -137,8 +127,8 @@ function calcSize() {
       h += Math.floor(data.height);
     })
     .exec();
-  list.value.forEach((item) => {
-    let view = uni.createSelectorQuery().in(proxy).select(`#cate-${item.id}`);
+  dataList.value.forEach((item) => {
+    let view = uni.createSelectorQuery().in(proxy).select(`#cate-${item.customCategoryId}`);
     view
       .fields({ size: true }, (data) => {
         item.top = h;
@@ -152,32 +142,22 @@ function calcSize() {
 </script>
 
 <style lang="scss" scoped>
-.category-fixed-right {
-  // position: absolute;
-  // position: sticky;
-  // left: 100%;
-  // top: 50%; /* 将元素垂直居中 */
-  // transform: translateY(-50%); /* 使用transform属性将元素垂直居中 */
-  // text-align: center; /* 设置元素内部内容的水平居中 */
+.box {
+  position: relative;
+  .category-right {
+    position: absolute;
+    margin-left: 90%;
+    // 垂直居中
+    margin-top: 50%;
+    transform: translateY(-25%);
+    z-index: 2;
+  }
 
-  // width: 100%;
-  // width: 50rpx;
-  // float: right;
-  // top: 50%;
-
-  z-index: 2;
-  background-color: beige;
-
-  position: sticky;
-  // top: 44px;
-  left: 100%;
-  // top: 50%;
-  // transform: translateY(-50%);
-}
-.category-re-data-item-box {
-  &:nth-last-child(1) {
-    // margin-bottom: 100rpx;
-    // background-color: red;
+  .category-re-data-item-box {
+    &:nth-last-child(1) {
+      // margin-bottom: 100rpx;
+      // background-color: red;
+    }
   }
 }
 </style>

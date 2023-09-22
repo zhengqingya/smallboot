@@ -1,16 +1,13 @@
 package com.zhengqing.mall.service.impl;
 
-import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhengqing.mall.entity.SmsShop;
 import com.zhengqing.mall.mapper.SmsShopMapper;
-import com.zhengqing.mall.model.dto.WebSmsShopDetailDTO;
-import com.zhengqing.mall.model.dto.WebSmsShopPageDTO;
+import com.zhengqing.mall.model.dto.SmsShopPageDTO;
 import com.zhengqing.mall.model.dto.WebSmsShopSaveDTO;
-import com.zhengqing.mall.model.vo.WebSmsShopDetailVO;
-import com.zhengqing.mall.model.vo.WebSmsShopPageVO;
+import com.zhengqing.mall.model.vo.SmsShopBaseVO;
 import com.zhengqing.mall.service.ISmsShopService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,18 +31,16 @@ public class SmsShopServiceImpl extends ServiceImpl<SmsShopMapper, SmsShop> impl
     private final SmsShopMapper smsShopMapper;
 
     @Override
-    public IPage<WebSmsShopPageVO> page(WebSmsShopPageDTO params) {
-        IPage<WebSmsShopPageVO> result = this.smsShopMapper.selectDataPage(new Page<>(), params);
-        List<WebSmsShopPageVO> list = result.getRecords();
-        list.forEach(WebSmsShopPageVO::handleData);
+    public IPage<SmsShopBaseVO> page(SmsShopPageDTO params) {
+        IPage<SmsShopBaseVO> result = this.smsShopMapper.selectDataPage(new Page<>(), params);
+        List<SmsShopBaseVO> list = result.getRecords();
+        list.forEach(SmsShopBaseVO::handleData);
         return result;
     }
 
     @Override
-    public WebSmsShopDetailVO detail(WebSmsShopDetailDTO params) {
-        WebSmsShopDetailVO detailData = this.smsShopMapper.detail(params);
-        Assert.notNull(detailData, "该数据不存在！");
-        return detailData;
+    public SmsShopBaseVO detail(Integer shopId) {
+        return this.page(SmsShopPageDTO.builder().shopId(shopId).build()).getRecords().get(0);
     }
 
     @Override

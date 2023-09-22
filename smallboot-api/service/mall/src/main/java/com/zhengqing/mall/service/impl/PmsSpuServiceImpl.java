@@ -271,7 +271,7 @@ public class PmsSpuServiceImpl extends ServiceImpl<PmsSpuMapper, PmsSpu> impleme
 
     @Override
     public PmsSpuBaseVO detail(String id) {
-        return this.page(PmsSpuPageDTO.builder().build()).getRecords().get(0);
+        return this.page(PmsSpuPageDTO.builder().id(id).build()).getRecords().get(0);
     }
 
     @Override

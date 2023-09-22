@@ -5,11 +5,9 @@ import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.common.core.custom.repeatsubmit.NoRepeatSubmit;
 import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
-import com.zhengqing.mall.model.dto.WebSmsShopDetailDTO;
-import com.zhengqing.mall.model.dto.WebSmsShopPageDTO;
+import com.zhengqing.mall.model.dto.SmsShopPageDTO;
 import com.zhengqing.mall.model.dto.WebSmsShopSaveDTO;
-import com.zhengqing.mall.model.vo.WebSmsShopDetailVO;
-import com.zhengqing.mall.model.vo.WebSmsShopPageVO;
+import com.zhengqing.mall.model.vo.SmsShopBaseVO;
 import com.zhengqing.mall.service.ISmsShopService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -35,14 +33,14 @@ public class WebSmsShopController extends BaseController {
 
     @GetMapping("page")
     @ApiOperation("分页列表")
-    public IPage<WebSmsShopPageVO> page(@Validated @ModelAttribute WebSmsShopPageDTO params) {
+    public IPage<SmsShopBaseVO> page(@Validated @ModelAttribute SmsShopPageDTO params) {
         return this.smsShopService.page(params);
     }
 
     @GetMapping("detail")
     @ApiOperation("详情")
-    public WebSmsShopDetailVO detail(@Validated @ModelAttribute WebSmsShopDetailDTO params) {
-        return this.smsShopService.detail(params);
+    public SmsShopBaseVO detail(@RequestParam Integer shopId) {
+        return this.smsShopService.detail(shopId);
     }
 
     @NoRepeatSubmit

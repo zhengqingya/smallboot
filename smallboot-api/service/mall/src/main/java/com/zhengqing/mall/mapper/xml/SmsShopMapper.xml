@@ -2,7 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhengqing.mall.mapper.SmsShopMapper">
 
-    <select id="selectDataPage" resultType="com.zhengqing.mall.model.vo.WebSmsShopPageVO">
+
+    <resultMap id="pageMap" type="com.zhengqing.mall.model.vo.SmsShopBaseVO">
+        <result column="open_time_list"
+                property="openTimeList"
+                typeHandler="com.zhengqing.mall.config.mybatis.handler.ShopListOpenTimeTypeHandler"></result>
+    </resultMap>
+
+    <select id="selectDataPage" resultMap="pageMap">
         SELECT * FROM sms_shop
         <where>
             is_deleted=0
@@ -16,21 +23,5 @@
         ORDER BY create_time DESC
     </select>
 
-    <resultMap id="detail" type="com.zhengqing.mall.model.vo.WebSmsShopDetailVO">
-        <result column="open_time_list"
-                property="openTimeList"
-                typeHandler="com.zhengqing.mall.config.mybatis.handler.ShopListOpenTimeTypeHandler"></result>
-    </resultMap>
-
-    <select id="detail" resultMap="detail">
-        SELECT * FROM sms_shop
-        <where>
-            is_deleted=0
-            <if test="filter.shopId!=null">
-                AND shop_id = #{filter.shopId}
-            </if>
-        </where>
-        LIMIT 1
-    </select>
 
 </mapper>
