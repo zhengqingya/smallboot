@@ -13,6 +13,7 @@
 3. MyBatis-Plus3.5.2
 4. Redis6.0.8
 5. Docker
+6. RabbitMQ
 
 前端技术栈：
 
@@ -30,7 +31,13 @@
 - 后端项目说明&运行见 [`smallboot-api/README.md`](smallboot-api/README.md)
 - app项目说明&运行见 [`small-app/README.md`](small-app/README.md)
 
-### 三、页面截图
+### 三、视频教程
+
+- 前端Vue3一小时快速入门学习：https://www.bilibili.com/video/BV1ap4y177eY
+- Vue3+Vite4+Pinia+ElementPlus从0到1 web项目搭建：https://www.bilibili.com/video/BV1Hz4y1j7Mw
+- Vue3+Vite4+Pinia+uni-app小程序从0-1项目搭建：https://www.bilibili.com/video/BV1up4y1P73i
+
+### 四、页面截图
 
 ![](./images/login.png)
 ![](./images/README-1693477951182.png)
