@@ -1,4 +1,4 @@
-package com.zhengqing.system.api;
+package com.zhengqing.system.api.web;
 
 import com.google.common.collect.Lists;
 import com.zhengqing.common.base.constant.ServiceConstant;
@@ -11,11 +11,11 @@ import com.zhengqing.system.model.vo.SysDictVO;
 import com.zhengqing.system.service.ISysDictService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
@@ -29,13 +29,13 @@ import java.util.Map;
  * @date 2020/4/15 20:50
  */
 @Slf4j
+@RequiredArgsConstructor
 @RestController
 @RequestMapping(ServiceConstant.SERVICE_API_PREFIX_WEB_SYSTEM + "/dict")
-@Api(tags = "基础模块 - 数据字典接口")
-public class SysDictController extends BaseController {
+@Api(tags = "web-基础模块-数据字典接口")
+public class WebSysDictController extends BaseController {
 
-    @Resource
-    private ISysDictService sysDictService;
+    private final ISysDictService sysDictService;
 
     @PostMapping("initCache")
     @ApiOperation("初始化缓存数据")

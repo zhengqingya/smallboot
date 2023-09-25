@@ -1,4 +1,4 @@
-package com.zhengqing.system.api;
+package com.zhengqing.system.api.web;
 
 import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.file.util.FileStorageUtil;
@@ -21,8 +21,8 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(ServiceConstant.SERVICE_API_PREFIX_WEB_SYSTEM + "/file")
-@Api(tags = {"web-系统管理 - 文件上传"})
-public class SysFileController {
+@Api(tags = {"web-系统管理-文件上传"})
+public class WebSysFileController {
 
     private final FileStorageUtil fileStorageUtil;
 

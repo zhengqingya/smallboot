@@ -1,4 +1,4 @@
-package com.zhengqing.system.api;
+package com.zhengqing.system.api.web;
 
 import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.core.api.BaseController;
@@ -27,9 +27,9 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(ServiceConstant.SERVICE_API_PREFIX_WEB_SYSTEM + "/admin")
-@Api(tags = "管理员api")
+@Api(tags = "web-管理员api")
 @RequiredArgsConstructor
-public class SysAdminController extends BaseController {
+public class WebSysAdminController extends BaseController {
 
     private final ISysPermissionService sysPermissionService;
     private final ISysPermBusinessService sysPermBusinessService;

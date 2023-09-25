@@ -18,4 +18,11 @@ export default {
       params: query,
     });
   },
+  listSystemConfigByKey(query) {
+    return request({
+      url: BASE_API + '/system/config/listByKey',
+      method: 'get',
+      params: query,
+    });
+  },
 };

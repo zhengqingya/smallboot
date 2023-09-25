@@ -1,4 +1,4 @@
-package com.zhengqing.system.api;
+package com.zhengqing.system.api.web;
 
 import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.base.context.SysUserContext;
@@ -29,8 +29,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(ServiceConstant.SERVICE_API_PREFIX_WEB_SYSTEM + "/perm")
-@Api(tags = "系统管理 - 权限接口")
-public class SysPermController extends BaseController {
+@Api(tags = "web-系统管理-权限接口")
+public class WebSysPermController extends BaseController {
 
     private final ISysPermBusinessService sysPermBusinessService;
 

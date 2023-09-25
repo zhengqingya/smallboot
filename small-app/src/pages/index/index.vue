@@ -6,11 +6,16 @@
       <text>Vue3+Vite4 小程序</text>
     </view>
 
-    <!-- <navigator :url="'/subPackages/product/shop'">
-      <view class="h-full bg-color-primary" style="height: 300rpx">
+    <view @click="test" style="height: 100rpx" class="bg-color-red">
+      <view>test</view>
+      <view>test</view>
+    </view>
+
+    <navigator :url="'/subPackages/product/shop'">
+      <view class="h-full bg-color-primary" style="height: 100rpx">
         <view>选择门店</view>
       </view>
-    </navigator> -->
+    </navigator>
   </base-wrapper>
 </template>
 
@@ -20,6 +25,31 @@ const bannerList = ref([
   'http://127.0.0.1:886/2023-09-11/1701130377848147968-美图35.jpg',
   'http://127.0.0.1:886/2023-09-11/1701131110123294720-美图13.png',
 ]);
+
+function test() {
+  console.log('來了');
+  uni.getLocation({
+    type: 'gcj02', // 返回可以用于uni.openLocation的经纬度
+    isHighAccuracy: true, // 开启高精度定位
+    success: function (res) {
+      console.log('111', res);
+      const latitude = res.latitude;
+      const longitude = res.longitude;
+
+      // 使用应用内置地图查看位置
+      uni.openLocation({
+        latitude: latitude,
+        longitude: longitude,
+        success: function () {
+          console.log('success');
+        },
+      });
+    },
+    fail: function (err) {
+      console.log('异常：', err);
+    },
+  });
+}
 </script>
 
 <style lang="scss" scoped>

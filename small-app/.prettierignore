@@ -3,3 +3,4 @@ uni_modules
 src/uni_modules
 unpackage
 dist
+src/utils/qqmap-wx-jssdk*

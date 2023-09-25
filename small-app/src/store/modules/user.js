@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import api from '@/api';
 import config from '@/config.js';
+import store from '@/store';
 
 export const useUserStore = defineStore('user', () => {
   let isLogin = ref(false);
@@ -31,6 +32,12 @@ export const useUserStore = defineStore('user', () => {
       },
     });
   }
+
+  // watch：监听器
+  watch(isLogin, (newValue, oldValue) => {
+    // 初始化系统设置数据
+    store.system.useSystemStore().init();
+  });
 
   // 退出登录
   function logout() {

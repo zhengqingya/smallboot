@@ -1,31 +1,27 @@
 <script setup>
 import { onLaunch, onShow, onHide } from '@dcloudio/uni-app';
 const { proxy } = getCurrentInstance();
+let { login, localLogin } = proxy.$store.user.useUserStore();
 
 onLaunch(() => {
   console.log('App Launch');
 });
-onShow(() => {
+onShow(async () => {
   console.log('App Show');
 
   // #ifndef MP-WEIXIN
   uni.hideTabBar(); // 隐藏原生tabBar
+  localLogin();
   // #endif
 
   // #ifdef MP-WEIXIN
   getUpdateManager();
-  login();
+  await login(); // 静默登录
   // #endif
 });
 onHide(() => {
   console.log('App Hide');
 });
-
-// 静默登录
-function login() {
-  let { login } = proxy.$store.user.useUserStore();
-  login();
-}
 
 // 小程序更新 https://uniapp.dcloud.net.cn/api/other/update.html
 function getUpdateManager() {

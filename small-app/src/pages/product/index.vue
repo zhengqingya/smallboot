@@ -1,12 +1,15 @@
 <template>
   <base-wrapper activeTabName="product">
     <!-- 店铺 -->
-    <view class="shop flex-c-center-start p-20 m-b-2" style="height: 100rpx">
-      <navigator hover-class="none" :url="'/subPackages/product/shop'" class="flex-start-center">
-        <text class="font-bold font-size-base">{{ chooseShop.shopName }}</text>
-        <u-icon name="arrow-right" color="#999" size="16"></u-icon>
-      </navigator>
-      <view class="m-t-10 font-size-sm text-color-grey">该门店距离您1.2km</view>
+    <view class="shop flex-between-center p-10 m-b-2" style="height: 100rpx">
+      <view class="flex-c-center-start">
+        <navigator hover-class="none" :url="'/subPackages/product/shop'" class="flex-start-center">
+          <text class="font-bold font-size-base">{{ chooseShop.shopName }}</text>
+          <u-icon name="arrow-right" color="#999" size="16"></u-icon>
+        </navigator>
+        <view class="m-t-10 font-size-sm text-color-grey">该门店距离您1.2km</view>
+      </view>
+      <view class="font-size-base">堂食</view>
     </view>
 
     <!-- 分类关联商品数据 -->

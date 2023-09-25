@@ -1,6 +1,6 @@
 <template>
   <view class="h-full flex-column">
-    <view class="flex-start-center p-x-20" style="height: 80rpx">
+    <view class="region flex-start-center p-x-20" style="height: 100rpx">
       <navigator hover-class="none" :url="'/subPackages/product/region'" class="flex-start-center">
         <text class="font-bold font-size-base">{{ chooseRegionData.name }}</text>
         <u-icon name="arrow-right" color="#999" size="16"></u-icon>
@@ -43,13 +43,20 @@
 
 <script setup>
 const { proxy } = getCurrentInstance();
-let { chooseRegionData, chooseShop } = toRefs(proxy.$store.system.useSystemStore());
+let { chooseRegionData, chooseShop, lbs_qq_key } = toRefs(proxy.$store.system.useSystemStore());
+// import QQMapWX from '@/utils/qqmap-wx-jssdk.min.js';
 
 onMounted(() => {
   init();
 });
 
-async function init() {}
+async function init() {
+  // 实例化API核心类
+  // let qqmapsdk = new QQMapWX({
+  //   key: lbs_qq_key.value,
+  // });
+  // console.log('init xxx', qqmapsdk);
+}
 
 function goProductPage(data) {
   chooseShop.value = data;
@@ -57,4 +64,8 @@ function goProductPage(data) {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.region {
+  box-shadow: 1rpx 0 5rpx rgba(0, 0, 0, 0.2);
+}
+</style>

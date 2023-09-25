@@ -1,4 +1,4 @@
-package com.zhengqing.system.api;
+package com.zhengqing.system.api.web;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.common.base.constant.ServiceConstant;
@@ -35,8 +35,8 @@ import javax.validation.Valid;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(ServiceConstant.SERVICE_API_PREFIX_WEB_SYSTEM + "/user")
-@Api(tags = "系统管理 - 用户管理接口")
-public class SysUserController extends BaseController {
+@Api(tags = "web-系统管理-用户管理接口")
+public class WebSysUserController extends BaseController {
 
     private final ISysUserService sysUserService;
 

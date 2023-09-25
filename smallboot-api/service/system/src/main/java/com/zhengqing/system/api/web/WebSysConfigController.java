@@ -1,4 +1,4 @@
-package com.zhengqing.system.api;
+package com.zhengqing.system.api.web;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.common.base.constant.ServiceConstant;
@@ -13,10 +13,10 @@ import com.zhengqing.system.model.vo.SysConfigVO;
 import com.zhengqing.system.service.ISysConfigService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
@@ -29,12 +29,12 @@ import java.util.Map;
  * @date 2021/09/06 22:57
  */
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(ServiceConstant.SERVICE_API_PREFIX_WEB_SYSTEM + "/config")
-@Api(tags = {"系统管理-系统配置接口"})
-public class SysConfigController extends BaseController {
+@Api(tags = {"web-系统管理-系统配置接口"})
+public class WebSysConfigController extends BaseController {
 
-    @Resource
-    private ISysConfigService iSysConfigService;
+    private final ISysConfigService iSysConfigService;
 
     @GetMapping("listPage")
     @ApiOperation("列表分页")

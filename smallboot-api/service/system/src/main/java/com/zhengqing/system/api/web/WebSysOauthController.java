@@ -1,4 +1,4 @@
-package com.zhengqing.system.api;
+package com.zhengqing.system.api.web;
 
 import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.core.api.BaseController;
@@ -8,12 +8,12 @@ import com.zhengqing.system.model.vo.SysOauthDataListVO;
 import com.zhengqing.system.service.ISysOauthService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.zhyd.oauth.model.AuthCallback;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
@@ -27,13 +27,13 @@ import java.util.List;
  * @date 2020/6/21 21:18
  */
 @Slf4j
+@RequiredArgsConstructor
 @RestController
 @RequestMapping(ServiceConstant.SERVICE_API_PREFIX_WEB_SYSTEM + "/oauth")
-@Api(tags = "系统管理 - 三方登录接口")
-public class SysOauthController extends BaseController {
+@Api(tags = "web-系统管理-三方登录接口")
+public class WebSysOauthController extends BaseController {
 
-    @Resource
-    private ISysOauthService sysOauthService;
+    private final ISysOauthService sysOauthService;
 
     @RequestMapping("{oauthType}")
     @ApiOperation("第三方账号授权")

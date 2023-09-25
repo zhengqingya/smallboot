@@ -1,4 +1,4 @@
-package com.zhengqing.system.api;
+package com.zhengqing.system.api.web;
 
 import com.google.common.collect.Lists;
 import com.zhengqing.common.base.constant.ServiceConstant;
@@ -34,8 +34,8 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(ServiceConstant.SERVICE_API_PREFIX_WEB_SYSTEM + "/menu")
-@Api(tags = "系统管理 - 菜单表接口")
-public class SysMenuController extends BaseController {
+@Api(tags = "web-系统管理-菜单表接口")
+public class WebSysMenuController extends BaseController {
 
     private final ISysMenuService sysMenuService;
 

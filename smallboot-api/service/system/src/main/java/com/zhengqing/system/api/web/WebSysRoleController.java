@@ -1,4 +1,4 @@
-package com.zhengqing.system.api;
+package com.zhengqing.system.api.web;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.common.base.constant.ServiceConstant;
@@ -34,8 +34,8 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(ServiceConstant.SERVICE_API_PREFIX_WEB_SYSTEM + "/role")
-@Api(tags = "系统管理 - 角色管理接口")
-public class SysRoleController extends BaseController {
+@Api(tags = "web-系统管理-角色管理接口")
+public class WebSysRoleController extends BaseController {
 
     private final ISysRoleService roleService;
     private final ISysPermBusinessService sysPermBusinessService;

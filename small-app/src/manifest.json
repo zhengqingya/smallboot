@@ -58,6 +58,12 @@
     "usingComponents": true,
     /* 组件按需注入 */
     "lazyCodeLoading": "requiredComponents"
+    // "permission": {
+    //   "scope.userLocation": {
+    //     "desc": "您的位置信息将用于获取最近门店位置"
+    //   }
+    // },
+    // "requiredPrivateInfos": ["getLocation"]
   },
   "mp-alipay": {
     "usingComponents": true

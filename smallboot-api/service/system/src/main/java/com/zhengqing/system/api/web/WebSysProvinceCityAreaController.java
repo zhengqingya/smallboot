@@ -1,4 +1,4 @@
-package com.zhengqing.system.api;
+package com.zhengqing.system.api.web;
 
 import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.core.api.BaseController;
@@ -27,8 +27,8 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(ServiceConstant.SERVICE_API_PREFIX_WEB_SYSTEM + "/pca")
-@Api(tags = {"系统管理-省市区"})
-public class SysProvinceCityAreaController extends BaseController {
+@Api(tags = {"web-系统管理-省市区"})
+public class WebSysProvinceCityAreaController extends BaseController {
 
     private final ISysProvinceCityAreaService sysProvinceCityAreaService;
 
