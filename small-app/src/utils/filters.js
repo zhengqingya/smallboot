@@ -1,4 +1,4 @@
-import pinyin from 'pinyin';
+import { pinyin } from 'pinyin-pro';
 
 export const filters = {
   // 获取性别值
@@ -9,8 +9,10 @@ export const filters = {
   },
   // 取中文首字母大写 eg: 北京市 -> B
   getInitialsToUpperCase: (chineseText) => {
-    const pinyinArray = pinyin(chineseText, { style: pinyin.STYLE_NORMAL });
-    const initials = pinyinArray.map((pinyin) => pinyin[0].charAt(0));
-    return initials.join('').substring(0, 1).toUpperCase();
+    const initials = pinyin(chineseText.substring(0, 1), { toneType: 'none' })
+      .substring(0, 1)
+      .toUpperCase();
+    // console.log('首字母大写:', initials);
+    return initials;
   },
 };

@@ -43,20 +43,13 @@
 
 <script setup>
 const { proxy } = getCurrentInstance();
-let { chooseRegionData, chooseShop, lbs_qq_key } = toRefs(proxy.$store.system.useSystemStore());
-// import QQMapWX from '@/utils/qqmap-wx-jssdk.min.js';
+let { chooseRegionData, chooseShop } = toRefs(proxy.$store.system.useSystemStore());
 
 onMounted(() => {
   init();
 });
 
-async function init() {
-  // 实例化API核心类
-  // let qqmapsdk = new QQMapWX({
-  //   key: lbs_qq_key.value,
-  // });
-  // console.log('init xxx', qqmapsdk);
-}
+async function init() {}
 
 function goProductPage(data) {
   chooseShop.value = data;

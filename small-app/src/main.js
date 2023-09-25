@@ -14,6 +14,8 @@ import mixin from '@/utils/mixin.js';
 import { filters } from '@/utils/filters.js';
 // uviewPlus
 import uviewPlus from 'uview-plus';
+// 地图工具类
+import qqmap from '@/utils/qqmap.js';
 
 export function createApp() {
   const app = createSSRApp(App);
@@ -32,6 +34,7 @@ export function createApp() {
   app.mixin(mixin);
   app.config.globalProperties.$filters = filters;
   app.use(uviewPlus);
+  app.config.globalProperties.$qqmap = qqmap;
 
   return {
     app,
