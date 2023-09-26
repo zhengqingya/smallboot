@@ -51,51 +51,21 @@ zhCn.el.pagination = {
 };
 const { proxy } = getCurrentInstance();
 const props = defineProps({
-  indexCode: {
-    type: Boolean,
-    default: false,
-  },
-  selection: {
-    type: Boolean,
-    default: false,
-  },
-  // 动态渲染的表格字段
-  columns: {
-    type: Array,
-    default: () => [], // :columns="[{ prop: 'name', label: '名称', width: '100' }]" =>  <el-table-column prop="name" label="名称" width="100" />
-  },
-  params: {
-    type: Object,
-    default: () => {},
-  },
-  api: {
-    type: String,
-    default: '',
-  },
-  data: {
-    type: Array,
-    default: () => [],
-  },
-  isPage: {
-    //是否分页
-    type: Boolean,
-    default: () => true,
-  },
+  indexCode: { type: Boolean, default: false },
+  selection: { type: Boolean, default: false },
+  // 动态渲染的表格字段 :columns="[{ prop: 'name', label: '名称', width: '100' }]" =>  <el-table-column prop="name" label="名称" width="100" />
+  columns: { type: Array, default: () => [] },
+  params: { type: Object, default: () => {} },
+  api: { type: String, default: '' },
+  data: { type: Array, default: () => [] },
+  //是否分页
+  isPage: { type: Boolean, default: () => true },
 });
 
 let isLoading = $ref(true);
-let pageParams = $ref({
-  pageNum: 1,
-  pageSize: 10,
-});
+let pageParams = $ref({ pageNum: 1, pageSize: 10 });
 // 分页响应数据
-let pageRes = $ref({
-  current: 1,
-  pages: 1,
-  size: 10,
-  total: 0,
-  records: [],
-});
+let pageRes = $ref({ current: 1, pages: 1, size: 10, total: 0, records: [] });
 let tableDataList = $ref([]); // 列表响应数据
 
 // 暴露方法

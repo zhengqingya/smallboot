@@ -3,6 +3,7 @@ package com.zhengqing.mall.api.mini;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.core.api.BaseController;
+import com.zhengqing.mall.model.dto.SmsShopLatelyDTO;
 import com.zhengqing.mall.model.dto.SmsShopPageDTO;
 import com.zhengqing.mall.model.vo.SmsShopBaseVO;
 import com.zhengqing.mall.service.ISmsShopService;
@@ -26,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(ServiceConstant.SERVICE_API_PREFIX_MINI_MALL + "/sms/shop")
-@Api(tags = {"商城-店铺信息"})
+@Api(tags = {"mini-商城-店铺信息"})
 public class MiniSmsShopController extends BaseController {
 
     private final ISmsShopService smsShopService;
@@ -35,6 +36,12 @@ public class MiniSmsShopController extends BaseController {
     @ApiOperation("分页列表")
     public IPage<SmsShopBaseVO> page(@Validated @ModelAttribute SmsShopPageDTO params) {
         return this.smsShopService.page(params);
+    }
+
+    @GetMapping("lately")
+    @ApiOperation("最近门店")
+    public SmsShopBaseVO lately(@Validated @ModelAttribute SmsShopLatelyDTO params) {
+        return this.smsShopService.lately(params);
     }
 
 }

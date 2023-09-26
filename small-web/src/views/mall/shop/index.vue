@@ -17,22 +17,51 @@
       <!-- <el-table-column label="店铺类型" prop="type" align="center"></el-table-column> -->
       <el-table-column label="是否显示 " prop="isShow" align="center">
         <template #default="scope">
-          <span>{{ scope.row.isShow ? '是' : '否' }}</span>
+          <base-switch
+            v-model="scope.row.isShow"
+            api="sms_shop.updateBatchStatus"
+            :params="{
+              shopIdList: [scope.row.shopId],
+              isShow: !scope.row.isShow,
+            }"
+            :active-action-icon="View"
+            :inactive-action-icon="Hide" />
         </template>
       </el-table-column>
       <el-table-column label="堂食状态" prop="snackStatus" align="center">
         <template #default="scope">
-          <span>{{ scope.row.snackStatus ? '开启' : '关闭' }}</span>
+          <base-switch
+            v-model="scope.row.snackStatus"
+            api="sms_shop.updateBatchStatus"
+            :params="{
+              shopIdList: [scope.row.shopId],
+              snackStatus: !scope.row.snackStatus,
+            }"
+            on-color="#13ce66" />
         </template>
       </el-table-column>
       <el-table-column label="外卖状态" prop="takeoutStatus" align="center">
         <template #default="scope">
-          <span>{{ scope.row.takeoutStatus ? '开启' : '关闭' }}</span>
+          <base-switch
+            v-model="scope.row.takeoutStatus"
+            api="sms_shop.updateBatchStatus"
+            :params="{
+              shopIdList: [scope.row.shopId],
+              takeoutStatus: !scope.row.takeoutStatus,
+            }"
+            on-color="rgb(241, 99, 211)" />
         </template>
       </el-table-column>
       <el-table-column label="门店营业状态" prop="openStatus" align="center">
         <template #default="scope">
-          <span>{{ scope.row.openStatus ? '营业中' : '未营业' }}</span>
+          <base-switch
+            v-model="scope.row.openStatus"
+            api="sms_shop.updateBatchStatus"
+            :params="{
+              shopIdList: [scope.row.shopId],
+              openStatus: !scope.row.openStatus,
+            }"
+            on-color="#E6A23C" />
         </template>
       </el-table-column>
 
@@ -53,6 +82,7 @@
 
 <script setup>
 const { proxy } = getCurrentInstance();
+import { Hide, View } from '@element-plus/icons-vue';
 let listQuery = $ref({});
 let form = $ref({});
 let dialogVisible = $ref(false);

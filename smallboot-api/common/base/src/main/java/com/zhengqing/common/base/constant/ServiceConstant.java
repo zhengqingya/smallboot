@@ -21,6 +21,10 @@ public interface ServiceConstant {
     String SERVICE_API_PREFIX_WEB = "/web/api";
     String SERVICE_API_PREFIX_MINI = "/mini/api";
     /**
+     * 测试接口前缀 -- 统一放行
+     */
+    String SERVICE_API_PREFIX_TEST = "/api/test";
+    /**
      * 各服务api前缀
      */
     String SERVICE_API_PREFIX_WEB_SYSTEM = SERVICE_API_PREFIX_WEB + "/system";

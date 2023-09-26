@@ -39,4 +39,12 @@ export default {
       params: params,
     });
   },
+  // 批量更新状态
+  updateBatchStatus(data) {
+    return request({
+      url: BASE_API + '/updateBatchStatus',
+      method: 'put',
+      data: data,
+    });
+  },
 };

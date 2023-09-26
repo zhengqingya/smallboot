@@ -13,6 +13,8 @@
       api="shop.page"
       :params="{
         areaName: chooseRegionData.name,
+        longitude: userGeo.longitude,
+        latitude: userGeo.latitude,
       }"
       :loadmoreNum="10">
       <template #empty>
@@ -33,7 +35,10 @@
                 营业时间： {{ item.openTimeList[0].startTime }}- {{ item.openTimeList[0].endTime }}
               </view>
             </view>
-            <u-icon name="arrow-right" color="#999" size="20"></u-icon>
+            <view class="flex-center-center">
+              <view class="font-size-sm">距离{{ $filters.calDistance(item.distance) }}</view>
+              <u-icon name="arrow-right" color="#999" size="20" />
+            </view>
           </view>
         </view>
       </template>
@@ -44,12 +49,21 @@
 <script setup>
 const { proxy } = getCurrentInstance();
 let { chooseRegionData, chooseShop } = toRefs(proxy.$store.system.useSystemStore());
+let { userGeo } = toRefs(proxy.$store.user.useUserStore());
 
 onMounted(() => {
   init();
 });
 
-async function init() {}
+async function init() {
+  if (!chooseRegionData.value.name) {
+    if (chooseShop.value.areaName) {
+      chooseRegionData.value.name = chooseShop.value.areaName;
+    } else {
+      uni.redirectTo({ url: '/subPackages/product/region' });
+    }
+  }
+}
 
 function goProductPage(data) {
   chooseShop.value = data;

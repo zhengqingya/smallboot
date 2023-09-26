@@ -6,6 +6,7 @@ import com.zhengqing.common.auth.custom.open.ApiOpen;
 import com.zhengqing.common.auth.model.dto.AuthLoginDTO;
 import com.zhengqing.common.auth.model.vo.AuthLoginVO;
 import com.zhengqing.common.auth.service.IAuthService;
+import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.web.custom.noreturnhandle.NoReturnHandle;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -29,7 +30,7 @@ import java.util.Map;
  */
 @Slf4j
 @RestController
-@RequestMapping("/auth")
+@RequestMapping(ServiceConstant.SERVICE_API_PREFIX_WEB + "/auth")
 @Api(tags = "授权认证api")
 @RequiredArgsConstructor
 public class WebAuthController {

@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhengqing.mall.mapper.SmsShopMapper">
 
-
     <resultMap id="pageMap" type="com.zhengqing.mall.model.vo.SmsShopBaseVO">
         <result column="open_time_list"
                 property="openTimeList"
@@ -28,9 +27,33 @@
             <if test="filter.areaName!=null and filter.areaName!=''">
                 AND area_name = #{filter.areaName}
             </if>
+            <if test="filter.isShow!=null">
+                AND is_show = #{filter.isShow}
+            </if>
         </where>
         ORDER BY create_time DESC
     </select>
 
+    <update id="updateBatchStatus">
+        UPDATE sms_shop
+        <set>
+            <if test="filter.isShow!=null">
+                is_show = #{filter.isShow},
+            </if>
+            <if test="filter.snackStatus!=null">
+                snack_status = #{filter.snackStatus},
+            </if>
+            <if test="filter.takeoutStatus!=null">
+                takeout_status = #{filter.takeoutStatus},
+            </if>
+            <if test="filter.openStatus!=null">
+                open_status = #{filter.openStatus},
+            </if>
+        </set>
+        WHERE is_deleted = 0 AND shop_id IN
+        <foreach collection="filter.shopIdList" separator="," open="(" close=")" item="shopId">
+            #{shopId}
+        </foreach>
+    </update>
 
 </mapper>

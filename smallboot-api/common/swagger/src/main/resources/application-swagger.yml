@@ -23,4 +23,4 @@ knife4j:
     username: admin
     # Basic认证密码
     password: 123456
-  passwordTokenUrl: http://127.0.0.1:888/auth/knife4j # 授权地址
+  passwordTokenUrl: http://127.0.0.1:888/web/api/auth/knife4j # 授权地址

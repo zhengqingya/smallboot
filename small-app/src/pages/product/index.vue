@@ -1,13 +1,15 @@
 <template>
   <base-wrapper activeTabName="product">
     <!-- 店铺 -->
-    <view class="shop flex-between-center p-10 m-b-2" style="height: 100rpx">
+    <view class="shop flex-between-center p-10 m-b-2" style="height: 100rpx" v-if="chooseShop">
       <view class="flex-c-center-start">
         <navigator hover-class="none" :url="'/subPackages/product/shop'" class="flex-start-center">
           <text class="font-bold font-size-base">{{ chooseShop.shopName }}</text>
           <u-icon name="arrow-right" color="#999" size="16"></u-icon>
         </navigator>
-        <view class="m-t-10 font-size-sm text-color-grey">该门店距离您1.2km</view>
+        <view class="m-t-10 font-size-sm text-color-grey">
+          该门店距离您{{ $filters.calDistance(chooseShop.distance) }}
+        </view>
       </view>
       <view class="font-size-base">堂食</view>
     </view>
@@ -75,6 +77,7 @@ import { onLoad } from '@dcloudio/uni-app';
 import cart from './component/cart.vue';
 import sku from './component/sku.vue';
 let { chooseRegionData, chooseShop } = toRefs(proxy.$store.system.useSystemStore());
+let { userGeo } = toRefs(proxy.$store.user.useUserStore());
 
 // const orderType = ref('takein'); // 堂食：takein  外卖：takeout
 let reSpuList = ref([]); // 分类关联的商品列表数据
@@ -84,21 +87,52 @@ let categoryScrollTop = ref(0); // 竖向滚动条位置
 let cartList = ref([]); // 购物车数据
 
 onMounted(() => {
+  // #ifdef MP-WEIXIN
+  initLocation();
+  // #endif
+
+  // #ifndef MP-WEIXIN
   init();
+  // #endif
 });
 
 // watch：监听器
 watch(chooseShop, (newValue, oldValue) => {
-  console.log('监听器执行了... ', newValue, oldValue);
-  init();
+  if (newValue) {
+    init();
+  }
 });
 
 async function init() {
-  console.log('店铺ID：', chooseShop.value);
   let res = await proxy.$api.category.reSpuList();
   reSpuList.value = res.data;
   showCart();
   proxy.$refs.linkageRef.init(reSpuList.value);
+}
+
+function initLocation() {
+  if (chooseShop.value && chooseShop.value.shopId) {
+    init();
+    return;
+  }
+  uni.getLocation({
+    type: 'gcj02',
+    isHighAccuracy: true, // 开启高精度定位
+    success: async function (res) {
+      userGeo.value = res;
+      let apiRes = await proxy.$api.shop.lately({
+        longitude: res.longitude,
+        latitude: res.latitude,
+      });
+      chooseShop.value = apiRes.data;
+      if (!chooseShop.value) {
+        uni.redirectTo({ url: '/subPackages/product/region' });
+      }
+    },
+    fail: function (err) {
+      console.log('product定位获取异常：', err);
+    },
+  });
 }
 
 // 购物车

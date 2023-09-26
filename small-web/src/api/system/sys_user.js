@@ -13,7 +13,7 @@ export default {
   // 登录
   login(data) {
     return request({
-      url: '/auth/login',
+      url: '/web/api/auth/login',
       method: 'post',
       data,
       // headers: {
@@ -25,7 +25,7 @@ export default {
   // 注销
   logout() {
     return request({
-      url: '/auth/logout',
+      url: '/web/api/auth/logout',
       method: 'delete',
     });
   },

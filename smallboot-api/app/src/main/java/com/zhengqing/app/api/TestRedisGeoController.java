@@ -1,5 +1,6 @@
 package com.zhengqing.app.api;
 
+import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.common.redis.model.bo.RedisGeoPoint;
 import com.zhengqing.common.redis.util.RedisGeoUtil;
@@ -22,7 +23,7 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-@RequestMapping("/api/test/redis/geo")
+@RequestMapping(ServiceConstant.SERVICE_API_PREFIX_TEST + "/redis/geo")
 @Api(tags = "test-redis-geo-api")
 public class TestRedisGeoController extends BaseController {
 

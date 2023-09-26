@@ -1,6 +1,7 @@
 package com.zhengqing.app.api;
 
 import cn.hutool.json.JSONUtil;
+import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.common.core.custom.limit.ApiLimit;
 import com.zhengqing.system.mapper.SysUserMapper;
@@ -26,7 +27,7 @@ import java.util.Map;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/test")
+@RequestMapping(ServiceConstant.SERVICE_API_PREFIX_TEST)
 @Api(tags = "test-api")
 public class TestAppController extends BaseController {
 

@@ -35,7 +35,7 @@ function test() {
       const latitude = res.latitude;
       const longitude = res.longitude;
 
-      proxy.$qqmap.reverseGeocoder(res);
+      // proxy.$qqmap.reverseGeocoder(res);
     },
     fail: function (err) {
       console.log('异常：', err);

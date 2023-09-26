@@ -10,4 +10,12 @@ export default {
       params: params,
     });
   },
+  // 最近门店
+  lately(params) {
+    return request({
+      url: BASE_API + '/lately',
+      method: 'get',
+      params: params,
+    });
+  },
 };

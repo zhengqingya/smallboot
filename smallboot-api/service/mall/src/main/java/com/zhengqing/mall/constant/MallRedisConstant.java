@@ -13,6 +13,13 @@ import java.util.concurrent.TimeUnit;
  */
 public interface MallRedisConstant {
 
+    // ====================================== ↓↓↓↓↓↓ 门店 ↓↓↓↓↓↓ ======================================
+
+    /**
+     * 门店位置
+     */
+    String SHOP_GEO_LOCATION = "smallboot:mall:shop:geo_location:";
+
     // ====================================== ↓↓↓↓↓↓ 商品 ↓↓↓↓↓↓ ======================================
 
     /**

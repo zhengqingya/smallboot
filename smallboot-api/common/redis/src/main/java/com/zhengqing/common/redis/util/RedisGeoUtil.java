@@ -42,9 +42,22 @@ public class RedisGeoUtil {
      */
     public static Long geoAdd(String key, Point point, String member) {
         if (redisTemplate.hasKey(key)) {
-            redisTemplate.opsForGeo().remove(key, member);
+            geoDel(key, member);
         }
         return redisTemplate.opsForGeo().add(key, point, member);
+    }
+
+    /**
+     * 删除经纬度信息
+     *
+     * @param key    key
+     * @param member 成员
+     * @return java.lang.Long
+     * @author zhengqingya
+     * @date 2019/11/27 15:53
+     */
+    public static Long geoDel(String key, String member) {
+        return redisTemplate.opsForGeo().remove(key, member);
     }
 
     /**
@@ -106,7 +119,7 @@ public class RedisGeoUtil {
      * @param lng           经度
      * @param lat           纬度
      * @param distanceValue 距离值
-     * @param metric        距离单位
+     * @param metric        距离单位 {@link RedisGeoCommands.DistanceUnit}
      * @param count         限定返回的记录数
      * @return 满足条件的数据
      * @author zhengqingya

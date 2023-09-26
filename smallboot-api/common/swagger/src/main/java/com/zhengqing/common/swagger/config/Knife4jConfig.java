@@ -72,10 +72,18 @@ public class Knife4jConfig {
                 .apis(RequestHandlerSelectors.withClassAnnotation(Api.class))
 //                .apis(RequestHandlerSelectors.basePackage("com.zhengqing"))
                 .paths(PathSelectors.any())
-                .build()
+                .build();
+        return this.commonHandle(docket);
+    }
+
+    /**
+     * 统一处理
+     */
+    private Docket commonHandle(Docket docket) {
+        return docket
                 // 插件扩展 -- ex:自定义md文档
                 .extensions(this.openApiExtensionResolver.buildExtensions(this.applicationName))
-//                // 默认全局参数
+                // 默认全局参数
 //                .globalRequestParameters(
 //                        Lists.newArrayList(
 //                                new RequestParameterBuilder()
@@ -86,7 +94,6 @@ public class Knife4jConfig {
 //                                        .build()
 //                        )
 //                )
-
                 // 服务开启授权认证请求头
                 .securityContexts(
                         Lists.newArrayList(
@@ -106,7 +113,8 @@ public class Knife4jConfig {
                                         .forPaths(PathSelectors.ant("/**"))
                                         .build()
                         )
-                ) // 密码模式
+                )
+                // 密码模式
                 .securitySchemes(
                         Lists.newArrayList(
                                 new OAuthBuilder()
@@ -115,7 +123,6 @@ public class Knife4jConfig {
                                         .build()
                         )
                 );
-        return docket;
     }
 
     @Bean
@@ -127,7 +134,7 @@ public class Knife4jConfig {
                 .apis(RequestHandlerSelectors.basePackage("com.zhengqing.system"))
                 .paths(PathSelectors.any())
                 .build();
-        return docket;
+        return this.commonHandle(docket);
     }
 
     @Bean
@@ -139,7 +146,7 @@ public class Knife4jConfig {
                 .apis(RequestHandlerSelectors.basePackage("com.zhengqing.wxmp"))
                 .paths(PathSelectors.any())
                 .build();
-        return docket;
+        return this.commonHandle(docket);
     }
 
     @Bean
@@ -151,7 +158,7 @@ public class Knife4jConfig {
                 .apis(RequestHandlerSelectors.basePackage("com.zhengqing.mall"))
                 .paths(PathSelectors.any())
                 .build();
-        return docket;
+        return this.commonHandle(docket);
     }
 
     @Bean
@@ -163,7 +170,7 @@ public class Knife4jConfig {
                 .select()
                 .paths(PathSelectors.ant("/api/test/**"))
                 .build();
-        return docket;
+        return this.commonHandle(docket);
     }
 
     /**

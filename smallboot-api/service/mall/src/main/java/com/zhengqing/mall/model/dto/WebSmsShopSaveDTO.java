@@ -16,7 +16,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -62,11 +61,11 @@ public class WebSmsShopSaveDTO extends BaseDTO {
 
     @NotNull(message = "门店坐标-经度不能为空！")
     @ApiModelProperty("门店坐标-经度")
-    private BigDecimal longitude;
+    private Double longitude;
 
     @NotNull(message = "门店坐标-纬度不能为空！")
     @ApiModelProperty("门店坐标-纬度")
-    private BigDecimal latitude;
+    private Double latitude;
 
     /**
      * {@link SmsShopTypeEnum}

@@ -12,7 +12,6 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -65,10 +64,10 @@ public class SmsShop extends BaseEntity<SmsShop> {
     private String address;
 
     @ApiModelProperty("门店坐标-经度")
-    private BigDecimal longitude;
+    private Double longitude;
 
     @ApiModelProperty("门店坐标-纬度")
-    private BigDecimal latitude;
+    private Double latitude;
 
     /**
      * {@link SmsShopTypeEnum}

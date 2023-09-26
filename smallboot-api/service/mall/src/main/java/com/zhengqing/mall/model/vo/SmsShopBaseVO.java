@@ -15,7 +15,6 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -56,10 +55,13 @@ public class SmsShopBaseVO extends BaseVO {
     private String address;
 
     @ApiModelProperty("门店坐标-经度")
-    private BigDecimal longitude;
+    private Double longitude;
 
     @ApiModelProperty("门店坐标-纬度")
-    private BigDecimal latitude;
+    private Double latitude;
+
+    @ApiModelProperty("门店距离 单位：m（查询时传入经纬度才会计算此字段值）")
+    private Double distance;
 
     /**
      * {@link SmsShopTypeEnum}

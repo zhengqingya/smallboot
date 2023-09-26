@@ -6,6 +6,7 @@ import store from '@/store';
 export const useUserStore = defineStore('user', () => {
   let isLogin = ref(false);
   let userObj = ref({});
+  let userGeo = ref({}); // 用户授权后存储的地理位置
   let isTest = ref(config.baseUrl.includes('127.0.0.1'));
 
   // 登录
@@ -35,8 +36,10 @@ export const useUserStore = defineStore('user', () => {
 
   // watch：监听器
   watch(isLogin, (newValue, oldValue) => {
-    // 初始化系统设置数据
-    store.system.useSystemStore().init();
+    if (newValue) {
+      // 初始化系统设置数据
+      store.system.useSystemStore().init();
+    }
   });
 
   // 退出登录
@@ -58,5 +61,5 @@ export const useUserStore = defineStore('user', () => {
     userObj.value = res.data;
   }
 
-  return { isLogin, isTest, userObj, login, logout, localLogin };
+  return { isLogin, isTest, userObj, userGeo, login, logout, localLogin };
 });

@@ -1,6 +1,7 @@
 package com.zhengqing.app.api;
 
 import cn.hutool.core.date.DateUtil;
+import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.common.redis.util.RedissonUtil;
 import io.swagger.annotations.Api;
@@ -24,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/test/redisson")
+@RequestMapping(ServiceConstant.SERVICE_API_PREFIX_TEST + "/redisson")
 @Api(tags = "test-redisson")
 public class TestRedissonController extends BaseController {
 

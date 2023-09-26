@@ -3,6 +3,7 @@ package com.zhengqing.app.api;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.lang.Assert;
 import com.zhengqing.app.mapper.DemoMapper;
+import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.common.core.custom.limit.ApiLimit;
 import com.zhengqing.common.redis.util.RedisUtil;
@@ -27,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/test/seckill")
+@RequestMapping(ServiceConstant.SERVICE_API_PREFIX_TEST + "/seckill")
 @Api(tags = "test-seckill")
 public class TestSeckillController extends BaseController {
 
