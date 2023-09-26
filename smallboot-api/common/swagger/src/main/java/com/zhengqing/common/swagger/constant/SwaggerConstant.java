@@ -16,11 +16,6 @@ public interface SwaggerConstant {
     String PAGE_SIZE = "pageSize";
 
     /**
-     * 认证请求头
-     */
-    String REQUEST_HEADER_AUTHORIZATION = "Authorization-smallboot";
-
-    /**
      * 租户ID
      */
     String TENANT_ID = "TENANT_ID";

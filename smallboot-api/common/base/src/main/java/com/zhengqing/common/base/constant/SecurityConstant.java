@@ -12,7 +12,7 @@ public interface SecurityConstant {
     /**
      * 认证请求头key
      */
-    String AUTHORIZATION_KEY = "Authorization-smallboot";
+    String AUTHORIZATION_KEY = "Authorization";
 
     /**
      * Basic认证前缀

@@ -4,12 +4,15 @@ import com.zhengqing.common.base.constant.AppConstant;
 import com.zhengqing.common.base.model.vo.ApiResult;
 import com.zhengqing.common.base.model.vo.PageVO;
 import com.zhengqing.common.base.util.MyBeanUtil;
+import com.zhengqing.common.web.custom.noreturnhandle.NoReturnHandle;
 import org.springframework.core.MethodParameter;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 import org.springframework.web.context.request.NativeWebRequest;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.method.support.HandlerMethodReturnValueHandler;
 import org.springframework.web.method.support.ModelAndViewContainer;
+import org.springframework.web.servlet.HandlerMapping;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -45,8 +48,19 @@ public class MyHandlerMethodReturnValueHandler implements HandlerMethodReturnVal
             this.returnValueHandler.handleReturnValue(returnValue, returnType, mavContainer, webRequest);
             return;
         }
+
         // 判断该api是否需要是否处理返回值
         String method = nativeRequest.getMethod();
+
+        // 判断此方法上是否有直接放行不处理返回值的注解
+        HandlerMethod handlerMethod = (HandlerMethod) nativeRequest.getAttribute(HandlerMapping.BEST_MATCHING_HANDLER_ATTRIBUTE);
+        boolean isNoReturnHandle = handlerMethod.getMethod().isAnnotationPresent(NoReturnHandle.class);
+        if (isNoReturnHandle) {
+            this.returnValueHandler.handleReturnValue(returnValue, returnType, mavContainer, webRequest);
+            return;
+        }
+
+        // 其它情况
         String servletPath = nativeRequest.getServletPath();
         // "POST:/auth/oauth/token"
         String restfulPath = method + ":" + servletPath;

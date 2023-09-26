@@ -1,9 +1,7 @@
 package com.zhengqing.ums.service.impl;
 
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
-import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.lang.Assert;
-import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -124,7 +122,7 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
     private UmsUserVO getLocalLogin() {
         UmsUserVO result = this.getUser(1L);
         // 登录认证
-        StpUtil.login(JSONUtil.toJsonStr(
+        AuthLoginVO authLoginVO = AuthUtil.login(
                 JwtUserBO.builder()
                         .authSourceEnum(AuthSourceEnum.C)
                         .userId(String.valueOf(result.getId()))
@@ -132,9 +130,9 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
                         .username(result.getNickname())
                         .roleCodeList(Lists.newArrayList())
                         .build()
-        ));
-        result.setTokenName(StpUtil.getTokenName());
-        result.setTokenValue(StpUtil.getTokenValue());
+        );
+        result.setTokenName(authLoginVO.getTokenName());
+        result.setTokenValue(authLoginVO.getTokenValue());
         return result;
     }
 

@@ -49,11 +49,6 @@ public interface BaseConstant {
     int DEFAULT_PAGE_SIZE = 10;
 
     /**
-     * 请求头中的用户信息标识
-     */
-    String REQUEST_HEADER_TOKEN = "Authorization-smallboot";
-
-    /**
      * rpc服务调用不需要封装返回值的api
      * 　　 ?　 =>　 匹配一个字符
      * 　　 *　 =>  匹配0个及以上字符
@@ -61,8 +56,8 @@ public interface BaseConstant {
      */
     List<String> RETURN_VALUE_HANDLER_EXCLUDE_API_LIST = Lists.newArrayList(
             "*:/rpc/client/**/*",
-            "POST:/oauth/token",
-            "POST:/auth/oauth/token",
+//            "POST:/oauth/token",
+//            "POST:/auth/oauth/token",
             "*:" + ServiceConstant.SERVICE_API_PREFIX_WX_MP + "/*",
             "*:/wx/pay/callback/*"
     );

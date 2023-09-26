@@ -6,7 +6,6 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.google.common.collect.Lists;
 import com.zhengqing.common.auth.config.SaTokenProperty;
-import com.zhengqing.common.base.constant.AppConstant;
 import com.zhengqing.common.base.constant.SecurityConstant;
 import com.zhengqing.common.base.context.JwtUserContext;
 import com.zhengqing.common.base.context.SysUserContext;
@@ -116,7 +115,7 @@ public class HandlerInterceptorForToken implements HandlerInterceptor {
      * @date 2023/2/13 15:52
      */
     private JwtUserBO checkPermission(HttpServletRequest request) {
-        String token = request.getHeader(AppConstant.REQUEST_HEADER_TOKEN);
+        String token = request.getHeader(SecurityConstant.AUTHORIZATION_KEY);
         if (StrUtil.isBlank(token)) {
             throw new MyException(ApiResultCodeEnum.UN_LOGIN.getCode(), "无操作权限");
         }
