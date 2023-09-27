@@ -64,7 +64,10 @@ public class SmsShopServiceImpl extends ServiceImpl<SmsShopMapper, SmsShop> impl
                 e.setDistance(
                         GeoUtil.getDistanceMeters(
                                 me,
-                                new LngLatBO(e.getLongitude(), e.getLatitude())
+                                LngLatBO.builder()
+                                        .longitude(e.getLongitude())
+                                        .latitude(e.getLatitude())
+                                        .build()
                         )
                 );
                 e.handleData();

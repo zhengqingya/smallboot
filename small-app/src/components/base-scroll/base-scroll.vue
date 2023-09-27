@@ -21,7 +21,7 @@
         </view>
       </view>
       <view v-else class="h-full">
-        <slot :data="dataResult" />
+        <slot :data="dataList" />
       </view>
     </scroll-view>
   </view>
@@ -42,13 +42,24 @@ let current = ref(0);
 let total = ref(1);
 let isReFresh = ref(true);
 let dataList = ref([]);
-let dataResult = ref(null);
 let loadmoreStatus = ref('loadmore');
 
 // 页面显示就触发
 onShow(() => {
   getApiData(true);
 });
+
+watch(
+  dataList,
+  (newValue, oldValue) => {
+    // console.log('监听器执行了... ', newValue);
+    proxy.$emit('changeData', newValue);
+  },
+  {
+    // immediate: true, // 初始化执行一次
+    deep: true, // 深度监听
+  }
+);
 
 // 上拉加载更多 -- 滑到底部触发
 function onPushRefresh() {
@@ -76,7 +87,7 @@ async function getApiData(isFirst) {
   if (!props.isPage) {
     // 直接请求处理数据
     let res = await apiMethod(props.params);
-    dataResult.value = res.data;
+    dataList.value = res.data;
     return;
   }
 

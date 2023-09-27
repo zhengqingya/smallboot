@@ -18,9 +18,9 @@ public class GeoTest {
     public void test() throws Exception {
         Double distanceMeters = GeoUtil.getDistanceMeters(
                 // 天府三街
-                new LngLatBO(104.07520, 30.55262),
+                LngLatBO.builder().longitude(104.07520).latitude(30.55262).build(),
                 // 天府五街
-                new LngLatBO(104.07547, 30.54295)
+                LngLatBO.builder().longitude(104.07547).latitude(30.54295).build()
         );
 
         // 格式化-保留两位小数

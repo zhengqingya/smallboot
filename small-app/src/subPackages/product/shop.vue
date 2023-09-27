@@ -6,9 +6,17 @@
         <u-icon name="arrow-right" color="#999" size="16"></u-icon>
       </navigator>
     </view>
-    <view class="flex-center-center" style="height: 30vh">map地图数据待开发</view>
+    <view class="flex-center-center" style="height: 30vh">
+      <map
+        style="width: 100%; height: 300rpx"
+        :latitude="userGeo.latitude"
+        :longitude="userGeo.longitude"
+        scale="15"
+        :markers="markerList"></map>
+    </view>
     <base-scroll
       class="h-full overflow-y-scroll bg-color-lightgrey"
+      @changeData="changeData"
       :isPage="true"
       api="shop.page"
       :params="{
@@ -50,6 +58,7 @@
 const { proxy } = getCurrentInstance();
 let { chooseRegionData, chooseShop } = toRefs(proxy.$store.system.useSystemStore());
 let { userGeo } = toRefs(proxy.$store.user.useUserStore());
+let markerList = ref([]); // 地图标点数据
 
 onMounted(() => {
   init();
@@ -68,6 +77,26 @@ async function init() {
 function goProductPage(data) {
   chooseShop.value = data;
   uni.switchTab({ url: '/pages/product/index' });
+}
+
+function changeData(list) {
+  list.forEach((item) => {
+    // console.log('111', item);
+    markerList.value.push({
+      id: item.shopId,
+      latitude: item.latitude,
+      longitude: item.longitude,
+      iconPath: 'http://127.0.0.1:886/2023-09-11/1701130377848147968-美图35.jpg',
+      width: 30,
+      height: 30,
+      callout: {
+        display: 'ALWAYS',
+        content: item.shopName,
+        borderRadius: 2,
+        padding: 5,
+      },
+    });
+  });
 }
 </script>
 

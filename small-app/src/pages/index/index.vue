@@ -6,16 +6,7 @@
       <text>Vue3+Vite4 小程序</text>
     </view>
 
-    <!-- <view @click="test" style="height: 100rpx" class="bg-color-red">
-      <view>test</view>
-      <view>test</view>
-    </view> -->
-    <!-- <view>{{ $qqmap.qqmapsdkSearch('天府三街') }}</view> -->
-    <!-- <navigator :url="'/subPackages/product/shop'">
-      <view class="h-full bg-color-primary" style="height: 100rpx">
-        <view>选择门店</view>
-      </view>
-    </navigator> -->
+    <!-- <view @click="test" style="height: 300rpx" class="bg-color-red">test</view> -->
   </base-wrapper>
 </template>
 
@@ -31,11 +22,11 @@ function test() {
     type: 'gcj02', // 返回可以用于uni.openLocation的经纬度
     isHighAccuracy: true, // 开启高精度定位
     success: function (res) {
-      console.log('111', res);
+      console.log('uni.getLocation', res);
       const latitude = res.latitude;
       const longitude = res.longitude;
 
-      // proxy.$qqmap.reverseGeocoder(res);
+      proxy.$qqmap.reverseGeocoder(res);
     },
     fail: function (err) {
       console.log('异常：', err);

@@ -22,7 +22,7 @@ export const filters = {
   // 计算位置距离
   calDistance(distanceMeters) {
     if (!distanceMeters) {
-      return 0 + 'm';
+      return '?m';
     }
     let d = this.keepTwoDecimal(distanceMeters / 1000);
     if (d.indexOf(0) == 0) {

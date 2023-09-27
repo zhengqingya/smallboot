@@ -92,6 +92,9 @@ onMounted(() => {
   // #endif
 
   // #ifndef MP-WEIXIN
+  if (!chooseShop.value || !chooseShop.value.shopId) {
+    uni.redirectTo({ url: '/subPackages/product/region' });
+  }
   init();
   // #endif
 });

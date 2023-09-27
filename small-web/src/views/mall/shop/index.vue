@@ -84,29 +84,10 @@
 const { proxy } = getCurrentInstance();
 import { Hide, View } from '@element-plus/icons-vue';
 let listQuery = $ref({});
-let form = $ref({});
-let dialogVisible = $ref(false);
-let dialogStatus = $ref('');
-let rules = $ref({});
 
 function refreshTableData() {
   proxy.$refs.baseTableRef.refresh();
 }
-// function handleDetail(row) {
-//   form = Object.assign({}, row);
-//   dialogStatus = 'detail';
-//   dialogVisible = true;
-// }
-// function handleAdd() {
-//   form = {};
-//   dialogStatus = 'add';
-//   dialogVisible = true;
-// }
-// function handleUpdate(row) {
-//   form = Object.assign({}, row);
-//   dialogStatus = 'update';
-//   dialogVisible = true;
-// }
 async function handleDelete(row) {
   let res = await proxy.$api.sms_shop.delete({ shopId: row.shopId });
   refreshTableData();
