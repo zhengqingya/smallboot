@@ -1,8 +1,10 @@
 package com.zhengqing.system.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.google.common.collect.Lists;
 import com.zhengqing.common.db.constant.MybatisConstant;
 import com.zhengqing.system.entity.SysProvinceCityArea;
 import com.zhengqing.system.enums.SysProvinceCityAreaTypeEnum;
@@ -16,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -60,18 +63,63 @@ public class SysProvinceCityAreaServiceImpl extends ServiceImpl<SysProvinceCityA
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void bindReShop(SysProvinceCityAreaBindReShopDTO params) {
+        Boolean isShop = params.getIsShop();
+        String provinceName = params.getProvinceName();
+        String cityName = params.getCityName();
         String areaName = params.getAreaName();
-        SysProvinceCityArea sysProvinceCityArea = this.sysProvinceCityAreaMapper.selectOne(
+        ArrayList<String> nameList = Lists.newArrayList(provinceName, cityName, areaName);
+
+        List<SysProvinceCityArea> provinceCityAreaList = this.sysProvinceCityAreaMapper.selectList(
                 new LambdaQueryWrapper<SysProvinceCityArea>()
-                        .eq(SysProvinceCityArea::getType, SysProvinceCityAreaTypeEnum.AREA.getType())
-                        .eq(SysProvinceCityArea::getName, areaName)
-                        .last(MybatisConstant.LIMIT_ONE)
+                        .in(SysProvinceCityArea::getName, nameList)
         );
 
-        Assert.notNull(sysProvinceCityArea, areaName + "不存在！");
+        Assert.notEmpty(provinceCityAreaList, areaName + "不存在！");
 
-        sysProvinceCityArea.setIsShop(params.getIsShop());
-        sysProvinceCityArea.updateById();
+
+        provinceCityAreaList.forEach(e -> {
+            Integer id = e.getId();
+            switch (SysProvinceCityAreaTypeEnum.getEnum(e.getType())) {
+                case PROVINCE:
+                    e.setIsShop(this.isShop(isShop, id, SysProvinceCityAreaTypeEnum.CITY, nameList));
+                    break;
+                case CITY:
+                    e.setIsShop(this.isShop(isShop, id, SysProvinceCityAreaTypeEnum.AREA, nameList));
+                    break;
+                case AREA:
+                    e.setIsShop(isShop);
+                    break;
+                default:
+                    break;
+            }
+        });
+
+        super.updateBatchById(provinceCityAreaList);
+    }
+
+    /**
+     * 判断关联省市区下是否存在关联门店数据
+     *
+     * @param isShop          是否关联
+     * @param id              主键ID
+     * @param typeEnum        省市区类型 {@link SysProvinceCityAreaTypeEnum}
+     * @param excludeNameList 需要排除的省市区名称
+     * @return true:存在 false:不存在
+     * @author zhengqingya
+     */
+    private boolean isShop(boolean isShop, Integer id, SysProvinceCityAreaTypeEnum typeEnum, List<String> excludeNameList) {
+        if (isShop) {
+            return isShop;
+        }
+        List<SysProvinceCityArea> list = this.sysProvinceCityAreaMapper.selectList(
+                new LambdaQueryWrapper<SysProvinceCityArea>()
+                        .eq(SysProvinceCityArea::getType, typeEnum.getType())
+                        .eq(SysProvinceCityArea::getParentId, id)
+                        .eq(SysProvinceCityArea::getIsShop, true)
+                        .notIn(SysProvinceCityArea::getName, excludeNameList)
+                        .last(MybatisConstant.LIMIT_ONE)
+        );
+        return CollUtil.isNotEmpty(list);
     }
 
 }

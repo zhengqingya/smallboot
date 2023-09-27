@@ -1,7 +1,12 @@
 package com.zhengqing.system.enums;
 
+import com.google.common.collect.Lists;
+import com.zhengqing.common.base.exception.MyException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * <p> 省市区类型 </p>
@@ -19,5 +24,20 @@ public enum SysProvinceCityAreaTypeEnum {
     AREA(3);
 
     private final Integer type;
+
+    private static final List<SysProvinceCityAreaTypeEnum> LIST = Lists.newArrayList();
+
+    static {
+        LIST.addAll(Arrays.asList(SysProvinceCityAreaTypeEnum.values()));
+    }
+
+    public static SysProvinceCityAreaTypeEnum getEnum(Integer type) {
+        for (SysProvinceCityAreaTypeEnum itemEnum : LIST) {
+            if (itemEnum.getType().equals(type)) {
+                return itemEnum;
+            }
+        }
+        throw new MyException("未找到指定的数据类型！");
+    }
 
 }

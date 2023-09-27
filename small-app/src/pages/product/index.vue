@@ -1,9 +1,13 @@
 <template>
   <base-wrapper activeTabName="product">
     <!-- 店铺 -->
-    <view class="shop flex-between-center p-10 m-b-2" style="height: 100rpx" v-if="chooseShop">
+    <view class="shop flex-between-center p-10 m-b-2" v-if="chooseShop">
       <view class="flex-c-center-start">
-        <navigator hover-class="none" :url="'/subPackages/product/shop'" class="flex-start-center">
+        <navigator
+          hover-class="none"
+          :url="'/subPackages/product/shop'"
+          class="flex-start-center"
+          style="height: 40rpx">
           <text class="font-bold font-size-base">{{ chooseShop.shopName }}</text>
           <u-icon name="arrow-right" color="#999" size="16"></u-icon>
         </navigator>
@@ -77,7 +81,7 @@ import { onLoad } from '@dcloudio/uni-app';
 import cart from './component/cart.vue';
 import sku from './component/sku.vue';
 let { chooseRegionData, chooseShop } = toRefs(proxy.$store.system.useSystemStore());
-let { userGeo } = toRefs(proxy.$store.user.useUserStore());
+let { userGeoObj } = toRefs(proxy.$store.user.useUserStore());
 
 // const orderType = ref('takein'); // 堂食：takein  外卖：takeout
 let reSpuList = ref([]); // 分类关联的商品列表数据
@@ -122,7 +126,7 @@ function initLocation() {
     type: 'gcj02',
     isHighAccuracy: true, // 开启高精度定位
     success: async function (res) {
-      userGeo.value = res;
+      userGeoObj.value = res;
       let apiRes = await proxy.$api.shop.lately({
         longitude: res.longitude,
         latitude: res.latitude,

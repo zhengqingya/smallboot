@@ -22,15 +22,15 @@ export const useSystemStore = defineStore('system', () => {
     let res = await sys_config.listByKey({ keyList: 'lbs_qq_key' });
     lbs_qq_key.value = res.data.lbs_qq_key.value;
     // 加载地图数据
-    loadScript(lbs_qq_key.value);
+    loadScript();
   }
 
   // 异步加载地图 https://lbs.qq.com/webDemoCenter/glAPI/glMap/mapAsync
-  function loadScript(key) {
+  function loadScript() {
     //创建script标签，并设置src属性添加到body中
     var script = document.createElement('script');
     script.type = 'text/javascript';
-    script.src = 'https://map.qq.com/api/gljs?v=1.exp&key=' + key + '&libraries=service';
+    script.src = 'https://map.qq.com/api/gljs?v=1.exp&key=' + lbs_qq_key.value + '&libraries=service';
     document.body.appendChild(script);
   }
 

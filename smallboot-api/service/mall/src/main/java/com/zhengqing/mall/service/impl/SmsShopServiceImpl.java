@@ -162,7 +162,9 @@ public class SmsShopServiceImpl extends ServiceImpl<SmsShopMapper, SmsShop> impl
 
     @Override
     public SmsShopBaseVO lately(SmsShopLatelyDTO params) {
-        List<RedisGeoPoint> geoPointList = RedisGeoUtil.geoNear(this.getShopGeoKey(), params.getLongitude(), params.getLatitude(), 3, RedisGeoCommands.DistanceUnit.KILOMETERS, 1);
+        Double longitude = params.getLongitude();
+        Double latitude = params.getLatitude();
+        List<RedisGeoPoint> geoPointList = RedisGeoUtil.geoNear(this.getShopGeoKey(), longitude, latitude, 3, RedisGeoCommands.DistanceUnit.KILOMETERS, 1);
         if (CollUtil.isEmpty(geoPointList)) {
             return null;
         }
@@ -170,7 +172,12 @@ public class SmsShopServiceImpl extends ServiceImpl<SmsShopMapper, SmsShop> impl
         String shopId = redisGeoPoint.getMember();
 
         try {
-            return this.detail(SmsShopPageDTO.builder().shopId(Integer.valueOf(shopId)).isShow(true).build());
+            return this.detail(SmsShopPageDTO.builder()
+                    .shopId(Integer.valueOf(shopId))
+                    .longitude(longitude)
+                    .latitude(latitude)
+                    .isShow(true)
+                    .build());
         } catch (Exception e) {
             return null;
         }
@@ -194,9 +201,7 @@ public class SmsShopServiceImpl extends ServiceImpl<SmsShopMapper, SmsShop> impl
         }
         this.smsShopMapper.updateBatchStatus(params);
 
-        if (isShow) {
-            shopIdList.forEach(shopId -> this.handleRegion(true, this.detailData(shopId)));
-        }
+        shopIdList.forEach(shopId -> this.handleRegion(isShow, this.detailData(shopId)));
     }
 
 }

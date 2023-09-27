@@ -26,7 +26,7 @@
           <el-form-item label="详细地址:">
             <div class="flex-between-center w-full">
               <el-input v-model="form.address" :disabled="isDetail" />
-              <el-button v-if="!isDetail" @click="addressToLocation">点击生成经纬度</el-button>
+              <!-- <el-button v-if="!isDetail" @click="$refs.mapRef.addressToLocation(form.address)">点击生成经纬度</el-button> -->
             </div>
           </el-form-item>
           <el-form-item label="门店坐标:">
@@ -35,7 +35,7 @@
               <div class="m-l-10">纬度 <el-input v-model="form.latitude" style="width: 50%" :disabled="isDetail" /></div>
             </div>
           </el-form-item>
-          <base-map ref="mapRef" />
+          <base-map ref="mapRef" v-model="geoObj" @change-geo-data="changeGeoData" />
         </el-form>
       </base-card>
 
@@ -102,13 +102,10 @@ let shopId = $ref(null);
 let isDetail = $ref(false);
 let form = $ref({});
 let openTimeDayList = $ref(['周一', '周二', '周三', '周四', '周五', '周六', '周日']);
+let geoObj = ref({});
 
-onMounted(() => {
+onMounted(async () => {
   isDetail = proxy.$route.query.isDetail == 'true';
-  if (!isDetail) {
-    // proxy.$refs.mapRef.initMap({ lat: 30.56079, lng: 104.07483 });
-    proxy.$refs.mapRef.initMap();
-  }
 
   if (proxy.$route.query.isAdd) {
     form = { isShow: true, type: 1 };
@@ -118,9 +115,15 @@ onMounted(() => {
       proxy.$router.push('/mall/shop');
       return;
     }
-    initData();
+    await initData();
+
+    if (!isDetail) {
+      // proxy.$refs.mapRef.init({ lng: form.longitude, lat: form.latitude });
+    }
   }
 });
+
+onUpdated(() => {});
 
 async function initData() {
   let res = await proxy.$api.sms_shop.detail({ shopId: shopId });
@@ -128,14 +131,20 @@ async function initData() {
   form.provinceCityAreaList = [form.provinceName, form.cityName, form.areaName];
   form.openTimeStartAndEndArray = [form.openTimeList[0].startTime, form.openTimeList[0].endTime];
   form.openTimeList = null;
+
+  geoObj.value = {
+    lng: form.longitude,
+    lat: form.latitude,
+    address: form.address,
+    provinceCityAreaList: form.provinceCityAreaList,
+  };
 }
 
-async function addressToLocation() {
-  let locationObj = await proxy.$refs.mapRef.addressToLocation(form.address);
-  if (locationObj) {
-    form.latitude = locationObj.lat;
-    form.longitude = locationObj.lng;
-  }
+function changeGeoData(data) {
+  form.latitude = data.lat;
+  form.longitude = data.lng;
+  form.address = data.address;
+  form.provinceCityAreaList = data.provinceCityAreaList;
 }
 
 function submitForm() {

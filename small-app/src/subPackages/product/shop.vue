@@ -1,19 +1,24 @@
 <template>
   <view class="h-full flex-column">
-    <view class="region flex-start-center p-x-20" style="height: 100rpx">
-      <navigator hover-class="none" :url="'/subPackages/product/region'" class="flex-start-center">
+    <view class="region flex-start-center p-x-20">
+      <navigator
+        hover-class="none"
+        :url="'/subPackages/product/region'"
+        class="flex-start-center"
+        style="height: 80rpx">
         <text class="font-bold font-size-base">{{ chooseRegionData.name }}</text>
         <u-icon name="arrow-right" color="#999" size="16"></u-icon>
       </navigator>
     </view>
-    <view class="flex-center-center" style="height: 30vh">
-      <map
-        style="width: 100%; height: 300rpx"
-        :latitude="userGeo.latitude"
-        :longitude="userGeo.longitude"
-        scale="15"
-        :markers="markerList"></map>
-    </view>
+
+    <map
+      v-if="markerList.length > 0"
+      style="width: 100%; height: 60vh"
+      :latitude="markerList[0].latitude"
+      :longitude="markerList[0].longitude"
+      scale="15"
+      :markers="markerList"></map>
+
     <base-scroll
       class="h-full overflow-y-scroll bg-color-lightgrey"
       @changeData="changeData"
@@ -21,8 +26,8 @@
       api="shop.page"
       :params="{
         areaName: chooseRegionData.name,
-        longitude: userGeo.longitude,
-        latitude: userGeo.latitude,
+        longitude: userGeoObj.longitude,
+        latitude: userGeoObj.latitude,
       }"
       :loadmoreNum="10">
       <template #empty>
@@ -57,7 +62,7 @@
 <script setup>
 const { proxy } = getCurrentInstance();
 let { chooseRegionData, chooseShop } = toRefs(proxy.$store.system.useSystemStore());
-let { userGeo } = toRefs(proxy.$store.user.useUserStore());
+let { userGeoObj } = toRefs(proxy.$store.user.useUserStore());
 let markerList = ref([]); // 地图标点数据
 
 onMounted(() => {
