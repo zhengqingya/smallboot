@@ -26,7 +26,7 @@
 }
 
 @each $key, $val in ('sm': 24rpx, 'base': 28rpx, 'lg': 32rpx) {
-  // font-size-base
+  // font-size-sm
   .font-size-#{$key} {
     font-size: $val !important;
   }

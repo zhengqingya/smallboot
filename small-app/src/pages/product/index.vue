@@ -2,20 +2,18 @@
   <base-wrapper activeTabName="product">
     <!-- 店铺 -->
     <view class="shop flex-between-center p-10 m-b-2" v-if="chooseShop">
-      <view class="flex-c-center-start">
-        <navigator
-          hover-class="none"
-          :url="'/subPackages/product/shop'"
-          class="flex-start-center"
-          style="height: 40rpx">
-          <text class="font-bold font-size-base">{{ chooseShop.shopName }}</text>
-          <u-icon name="arrow-right" color="#999" size="16"></u-icon>
+      <view class="flex-c-center-start" style="height: 80rpx">
+        <navigator hover-class="none" :url="'/subPackages/product/shop'" class="flex-column">
+          <view class="flex-start-center">
+            <text class="font-bold">{{ chooseShop.shopName }}</text>
+            <u-icon name="arrow-right" color="#999" size="16"></u-icon>
+          </view>
+          <view class="m-t-10 font-size-sm text-color-grey">
+            该门店距离您{{ $filters.calDistance(chooseShop.distance) }}
+          </view>
         </navigator>
-        <view class="m-t-10 font-size-sm text-color-grey">
-          该门店距离您{{ $filters.calDistance(chooseShop.distance) }}
-        </view>
       </view>
-      <view class="font-size-base">堂食</view>
+      <view class="">堂食</view>
     </view>
 
     <!-- 分类关联商品数据 -->
@@ -29,7 +27,7 @@
       </template>
       <template #category="{ data, isActive }">
         <view
-          class="category-item flex-center-center position-relative font-size-base"
+          class="category-item flex-center-center position-relative"
           :class="{ active: isActive }"
           style="height: 90rpx">
           <text class="text-overflow-1">{{ data.name }}</text>
@@ -37,7 +35,7 @@
         </view>
       </template>
       <template #categoryReList="{ data }">
-        <view style="height: 30rpx" class="flex-start-center font-size-base font-bold">
+        <view style="height: 30rpx; padding-left: 10rpx" class="flex-start-center font-bold">
           {{ data.name }}
         </view>
         <view>
@@ -49,13 +47,11 @@
             @tap="showSpuDetailModal(spuItem)">
             <image class="img-base" :src="spuItem.coverImg" />
             <view class="flex-1 flex-c-between-start h-full p-10">
-              <text class="font-size-lg text-overflow-1">{{ spuItem.name }}</text>
+              <text class="text-overflow-1">{{ spuItem.name }}</text>
 
-              <text class="font-size-base text-color-grey">库存：{{ spuItem.usableStockSum }}</text>
+              <text class="text-color-grey">库存：{{ spuItem.usableStockSum }}</text>
               <view class="w-full flex-between-center">
-                <text class="font-size-base font-bold">
-                  ￥{{ spuItem.skuList[0].sellPrice / 100 }}
-                </text>
+                <text class="font-bold">￥{{ spuItem.skuList[0].sellPrice / 100 }}</text>
                 <view class="flex-between-center position-relative">
                   <u-icon name="plus" />
                   <!-- <up-badge :value="getSkuNum(spuItem)" max="99" :inverted="true" :offset="[-15, -10]" :absolute="true" /> -->

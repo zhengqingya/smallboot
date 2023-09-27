@@ -1,7 +1,7 @@
 <template>
   <view class="h-full flex-column">
     <view class="tab flex-around-center" style="height: 80rpx">
-      <text class="font-bold font-size-base">城市</text>
+      <text class="font-bold">城市</text>
       <!-- <text class=" ">地区</text> -->
     </view>
     <base-linkage
@@ -18,9 +18,7 @@
         </view>
       </template>
       <template #categoryReList="{ data }">
-        <view
-          style="height: 60rpx"
-          class="flex-start-center font-size-base font-bold bg-color-lightgrey p-l-20">
+        <view style="height: 60rpx" class="flex-start-center font-bold bg-color-lightgrey p-l-20">
           {{ data.name }}
         </view>
         <view
@@ -29,7 +27,7 @@
           :key="index"
           @tap="chooseCity(item)">
           <view class="flex-start-center h-full p-l-20">
-            <text class="font-size-base">{{ item.name }}</text>
+            <text class="">{{ item.name }}</text>
           </view>
         </view>
       </template>

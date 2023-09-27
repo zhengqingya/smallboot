@@ -12,7 +12,7 @@
     <scroll-view class="app" v-if="orderObj" scroll-y>
       <view class="p-x-20">
         <view v-if="!isCreateOrder" class="h-200 flex-c-center-center">
-          <view class="font-size-lg font-bold text-color-primary">
+          <view class="font-bold text-color-primary">
             {{ orderObj.orderStatusName }}
           </view>
           <u-count-down
@@ -30,15 +30,15 @@
             :key="index">
             <image :src="item.coverImg" class="img-sm" />
             <view class="flex-column flex-1 m-l-10">
-              <view class="font-size-base text-overflow-1">
+              <view class="text-overflow-1">
                 {{ item.name }}
               </view>
               <view class="font-size-sm text-color-grey m-t-10 text-overflow-1">
                 {{ item.specDesc }}
               </view>
             </view>
-            <view class="font-size-base m-r-30">￥{{ item.price / 100 }}</view>
-            <view class="font-size-base text-color-grey">x{{ item.num }}</view>
+            <view class="m-r-30">￥{{ item.price / 100 }}</view>
+            <view class="text-color-grey">x{{ item.num }}</view>
           </view>
         </view>
 

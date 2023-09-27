@@ -13,7 +13,7 @@
       </template>
       <template #default="{ list }">
         <view
-          class="bg-color-white m-20 m-y-20 p-20 font-size-base"
+          class="bg-color-white m-20 m-y-20 p-20"
           style="border-radius: 10rpx"
           v-for="(orderItem, index) in list"
           :key="index"
@@ -21,7 +21,7 @@
           <view class="top flex-between-start">
             <view class="left flex-start-center">
               <u-icon name="home" :size="20" color="rgb(94,94,94)"></u-icon>
-              <view class="m-x-10 font-bold font-size-base">成都高新区天府三街测试店</view>
+              <view class="m-x-10 font-bold">成都高新区天府三街测试店</view>
               <u-icon name="arrow-right" color="rgb(203,203,203)" :size="18"></u-icon>
             </view>
             <view class="flex-c-center-end">
@@ -45,15 +45,15 @@
               :key="index">
               <image :src="item.coverImg" class="img-sm" />
               <view class="flex-column flex-1 m-l-10">
-                <view class="font-size-base text-overflow-1">
+                <view class="text-overflow-1">
                   {{ item.name }}
                 </view>
                 <view class="font-size-sm text-color-grey m-t-10 text-overflow-1">
                   {{ item.specList.map((obj) => obj.attrValueName).join(',') }}
                 </view>
               </view>
-              <view class="font-size-base m-r-30">￥{{ item.price / 100 }}</view>
-              <view class="font-size-base text-color-grey">x{{ item.num }}</view>
+              <view class="m-r-30">￥{{ item.price / 100 }}</view>
+              <view class="text-color-grey">x{{ item.num }}</view>
             </view>
           </view>
           <view class="flex-c-center-end m-t-10">

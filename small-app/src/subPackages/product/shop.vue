@@ -5,8 +5,8 @@
         hover-class="none"
         :url="'/subPackages/product/region'"
         class="flex-start-center"
-        style="height: 80rpx">
-        <text class="font-bold font-size-base">{{ chooseRegionData.name }}</text>
+        style="height: 100rpx">
+        <text class="font-bold">{{ chooseRegionData.name }}</text>
         <u-icon name="arrow-right" color="#999" size="16"></u-icon>
       </navigator>
     </view>
@@ -25,7 +25,7 @@
       :isPage="true"
       api="shop.page"
       :params="{
-        areaName: chooseRegionData.name,
+        cityName: chooseRegionData.name,
         longitude: userGeoObj.longitude,
         latitude: userGeoObj.latitude,
       }"
@@ -35,7 +35,7 @@
       </template>
       <template #default="{ list }">
         <view
-          class="bg-color-white m-20 p-20 font-size-base"
+          class="bg-color-white m-20 p-20"
           style="border-radius: 10rpx; border-radius: 10rpx"
           v-for="(item, index) in list"
           :key="index"
@@ -71,8 +71,8 @@ onMounted(() => {
 
 async function init() {
   if (!chooseRegionData.value.name) {
-    if (chooseShop.value.areaName) {
-      chooseRegionData.value.name = chooseShop.value.areaName;
+    if (chooseShop.value.cityName) {
+      chooseRegionData.value.name = chooseShop.value.cityName;
     } else {
       uni.redirectTo({ url: '/subPackages/product/region' });
     }
@@ -85,6 +85,7 @@ function goProductPage(data) {
 }
 
 function changeData(list) {
+  markerList.value = [];
   list.forEach((item) => {
     // console.log('111', item);
     markerList.value.push({

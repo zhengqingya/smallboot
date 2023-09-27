@@ -4,7 +4,7 @@
       <view class="top flex p-10" style="height: 200rpx">
         <image :src="spu.coverImg" class="img-base m-l-10"></image>
         <view class="spu-info m-l-30">
-          <view class="font-size-lg font-bold">{{ spu.name }}</view>
+          <view class="font-bold">{{ spu.name }}</view>
           <view class="m-t-10 font-bold text-color-red">
             <view v-if="chooseSkuData">￥{{ chooseSkuData.sellPrice / 100 }}</view>
             <view v-else>
@@ -12,7 +12,7 @@
               <view v-else>￥{{ spu.minPrice / 100 }} - {{ spu.maxPrice / 100 }}</view>
             </view>
           </view>
-          <view class="m-t-10 font-size-base">
+          <view class="m-t-10">
             库存：{{ chooseSkuData ? chooseSkuData.usableStock : spu.usableStock }}
           </view>
         </view>
@@ -40,7 +40,7 @@
       </scroll-view>
       <view class="flex-between-center bg-color-lightgrey p-x-20" style="height: 100rpx">
         <view class="left flex-column-center-start flex-1">
-          <!-- <view class="font-size-base" v-if="chooseSkuData">
+          <!-- <view class="" v-if="chooseSkuData">
                         ￥{{ chooseSkuData.sellPrice / 100 }}
                     </view> -->
           <view class="text-color-grey font-size-sm text-overflow-1">

@@ -22,9 +22,7 @@
     <u-overlay :show="isShowDetail" @click="isShowDetail = false" zIndex="1" opacity="0.3" />
 
     <view class="detail w-full bg-color-white" :class="{ active: isShowDetail }">
-      <view
-        class="flex-end-center p-x-30 p-y-10 text-color-primary font-size-base"
-        @click="clearCart">
+      <view class="flex-end-center p-x-30 p-y-10 text-color-primary" @click="clearCart">
         <u-icon size="15" name="trash" />
         <text>清空</text>
       </view>
@@ -36,19 +34,19 @@
           :key="index">
           <image :src="item.coverImg" class="img-sm" />
           <view class="flex-column flex-1 m-l-10">
-            <view class="font-size-base text-overflow-1">
+            <view class="text-overflow-1">
               {{ item.name }}
             </view>
             <view class="font-size-sm text-color-grey m-t-10 text-overflow-1">
               {{ item.specDesc }}
             </view>
           </view>
-          <view class="font-size-base m-r-30 text-color-red">
+          <view class="m-r-30 text-color-red">
             <text>￥{{ item.price / 100 }}</text>
           </view>
           <view class="flex-between-center">
             <u-icon name="minus" size="12" @tap="changeSkuNum(item, -1)" />
-            <view style="width: 60rpx" class="flex-center-center font-size-base m-x-10">
+            <view style="width: 60rpx" class="flex-center-center m-x-10">
               {{ item.num }}
             </view>
             <u-icon name="plus" size="12" @tap="changeSkuNum(item, +1)" />

@@ -29,6 +29,7 @@ import org.springframework.data.redis.connection.RedisGeoCommands;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -72,6 +73,8 @@ public class SmsShopServiceImpl extends ServiceImpl<SmsShopMapper, SmsShop> impl
                 );
                 e.handleData();
             });
+            // 升序
+            list.sort(Comparator.comparing(SmsShopBaseVO::getDistance));
         } else {
             list.forEach(SmsShopBaseVO::handleData);
         }
