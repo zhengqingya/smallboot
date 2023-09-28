@@ -1,19 +1,17 @@
 <template>
-  <base-wrapper class="flex-center-start">
-    <div v-if="mapObj" style="width: 80vh">
-      <div class="item">
-        <div class="title">{{ mapObj.lbs_qq_key.remark }}：</div>
+  <base-wrapper class="flex-cc-center-start">
+    <div class="flex-end-center">
+      <el-button type="warning" @click="saveBatch">保 存</el-button>
+    </div>
+
+    <div v-if="mapObj" class="flex-center-start">
+      <base-card :title="mapObj.lbs_qq_key.remark" style="width: 400px">
         <el-input v-model="mapObj.lbs_qq_key.value" />
-      </div>
+      </base-card>
 
-      <div class="item">
-        <div class="title">{{ mapObj.mall_index_slide_img_list.remark }}：</div>
+      <base-card :title="mapObj.mall_index_slide_img_list.remark" style="width: 400px">
         <base-upload-multi v-model="mapObj.mall_index_slide_img_list.value" />
-      </div>
-
-      <div class="flex-center-center m-t-20">
-        <el-button type="primary" @click="saveBatch">保 存</el-button>
-      </div>
+      </base-card>
     </div>
   </base-wrapper>
 </template>
@@ -39,17 +37,4 @@ async function saveBatch() {
   init();
 }
 </script>
-<style lang="scss" scoped>
-.item {
-  display: flex;
-  margin-top: 10px;
-  .title {
-    display: flex;
-    align-items: center;
-
-    width: 150px;
-    font-size: 10px;
-    font-weight: bold;
-  }
-}
-</style>
+<style lang="scss" scoped></style>
