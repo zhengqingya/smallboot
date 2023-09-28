@@ -22,19 +22,23 @@
 const { proxy } = getCurrentInstance();
 let { tokenObj } = toRefs(proxy.$store.user.useUserStore());
 let props = defineProps({
-  modelValue: {
-    type: Array,
-    default: () => [],
-  },
+  modelValue: { type: Array, default: () => [] },
 });
-
+let fileList = $ref([]);
 let uploadUrl = import.meta.env.VITE_APP_BASE_FILE_API;
 let dialogImageUrl = $ref(null);
 let dialogVisible = $ref(false);
 
-const fileList = computed(() => {
-  return props.modelValue;
-});
+watch(
+  () => props.modelValue,
+  (val) => {
+    fileList = val;
+  },
+  {
+    immediate: true, // 初始化执行一次
+    deep: true, // 深度监听
+  },
+);
 
 function onPreview(uploadFile) {
   dialogImageUrl = uploadFile.url;
@@ -59,6 +63,7 @@ async function onSuccess(res, uploadFile, fileList) {
     name: data.name,
     url: data.url,
   });
+
   proxy.$emit('update:modelValue', fileList);
 }
 

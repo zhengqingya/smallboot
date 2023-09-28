@@ -14,6 +14,8 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * <p>
  * Controller 切面
@@ -60,17 +62,27 @@ public class ControllerAspect {
                 pageDTO.setPageSize(ServletUtil.getParameterToInt(BaseConstant.PAGE_SIZE, BaseConstant.DEFAULT_PAGE_SIZE));
             }
 
-            // 参数校验处理
-            if (paramObj instanceof CheckParam) {
-                CheckParam checkParam = (CheckParam) paramObj;
-                checkParam.checkParam();
-            }
 
-            // 处理参数数据
-            if (paramObj instanceof HandleParam) {
-                HandleParam handleParam = (HandleParam) paramObj;
-                handleParam.handleParam();
+            this.handleData(paramObj);
+
+            if (paramObj instanceof List) {
+                List list = (List) paramObj;
+                list.forEach(this::handleData);
             }
+        }
+    }
+
+    private void handleData(Object paramObj) {
+        // 参数校验处理
+        if (paramObj instanceof CheckParam) {
+            CheckParam checkParam = (CheckParam) paramObj;
+            checkParam.checkParam();
+        }
+
+        // 处理参数数据
+        if (paramObj instanceof HandleParam) {
+            HandleParam handleParam = (HandleParam) paramObj;
+            handleParam.handleParam();
         }
     }
 

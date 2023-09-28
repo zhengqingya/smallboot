@@ -1,8 +1,12 @@
 package com.zhengqing.system.model.vo;
 
 
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zhengqing.common.base.model.vo.BaseVO;
+import com.zhengqing.system.enums.SysConfigKeyEnum;
 import com.zhengqing.system.enums.SysConfigTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -35,7 +39,7 @@ public class SysConfigVO extends BaseVO {
     private String key;
 
     @ApiModelProperty("属性value")
-    private String value;
+    private Object value;
 
     @ApiModelProperty("备注")
     private String remark;
@@ -45,5 +49,11 @@ public class SysConfigVO extends BaseVO {
      */
     @ApiModelProperty("类型（1:配置 2:属性）")
     private Integer type;
+
+    public void handleData() {
+        if (SysConfigKeyEnum.MALL_INDEX_SLIDE_IMG_LIST.getKey().equals(this.key)) {
+            this.value = JSONUtil.toList(StrUtil.toString(this.value), JSONObject.class);
+        }
+    }
 
 }

@@ -21,6 +21,9 @@ public enum SysConfigKeyEnum {
 
     // ====================================== ↓↓↓↓↓↓ 商城 ↓↓↓↓↓↓ ======================================
 
+    LBS_QQ_KEY("lbs_qq_key", null, "腾讯地图key"),
+    MALL_INDEX_SLIDE_IMG_LIST("mall_index_slide_img_list", null, "商城首页轮播图"),
+
     /**
      * 商城-订单-设置
      */

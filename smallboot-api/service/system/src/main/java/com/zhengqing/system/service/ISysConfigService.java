@@ -24,6 +24,15 @@ import java.util.Map;
 public interface ISysConfigService extends IService<SysConfig> {
 
     /**
+     * 初始化缓存
+     *
+     * @return void
+     * @author zhengqingya
+     * @date 2020/9/12 17:37
+     */
+    void initCache();
+
+    /**
      * 分页列表
      *
      * @param params 查询参数

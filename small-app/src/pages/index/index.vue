@@ -1,6 +1,11 @@
 <template>
   <base-wrapper activeTabName="index">
-    <u-swiper :list="bannerList" indicator indicatorMode="line" circular height="550rpx" />
+    <u-swiper
+      :list="mall_index_slide_img_list.map((item) => item.url)"
+      indicator
+      indicatorMode="line"
+      circular
+      height="550rpx" />
 
     <view class="introText h-full flex-center-center">
       <text>Vue3+Vite4 小程序</text>
@@ -12,10 +17,8 @@
 
 <script setup>
 const { proxy } = getCurrentInstance();
-const bannerList = ref([
-  'http://127.0.0.1:886/2023-09-11/1701130377848147968-美图35.jpg',
-  'http://127.0.0.1:886/2023-09-11/1701131110123294720-美图13.png',
-]);
+let { mall_index_slide_img_list } = toRefs(proxy.$store.system.useSystemStore());
+const bannerList = ref([]);
 
 function test() {
   uni.getLocation({

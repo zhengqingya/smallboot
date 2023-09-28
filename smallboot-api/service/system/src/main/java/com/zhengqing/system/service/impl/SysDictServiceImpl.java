@@ -282,16 +282,8 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
         Map<String, List<SysDictVO>> dictDataMap = this.listFromDbByOpenCode(codeList);
         dictDataMap.forEach((code, dictList) -> {
             String key = SystemConstant.CACHE_SYS_DICT_PREFIX + code;
-            // 加入||更新 缓存
-            if (RedisUtil.hasKey(key)) {
-                RedisUtil.delete(key);
-                log.info("数据字典[{}] 更新之前删除缓存" + key);
-            }
-            if (CollectionUtils.isEmpty(dictList)) {
-                dictList = Lists.newArrayList();
-            }
             RedisUtil.set(key, JSON.toJSONString(dictList));
-            log.info("数据字典[{}] 加入缓存" + key);
+            log.info("数据字典[{}] 更新缓存" + key);
         });
     }
 

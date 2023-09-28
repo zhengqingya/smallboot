@@ -1,8 +1,9 @@
 package com.zhengqing.system.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Assert;
+import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -25,7 +26,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -47,8 +47,41 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
     private SysConfigMapper sysConfigMapper;
 
     @Override
+    public void initCache() {
+        List<SysConfig> list = this.sysConfigMapper.selectList(null);
+        if (CollUtil.isEmpty(list)) {
+            return;
+        }
+        list.forEach(item -> {
+            String key = SystemConstant.CACHE_SYS_CONFIG_PREFIX + item.getKey();
+            RedisUtil.set(key, JSON.toJSONString(item));
+        });
+        log.info("初始化系统配置缓存成功!");
+    }
+
+    /**
+     * 更新redis缓存
+     *
+     * @param keyList 属性key
+     * @return void
+     * @author zhengqingya
+     * @date 2021/9/7 11:21
+     */
+    private void updateCache(List<String> keyList) {
+        List<SysConfigVO> dataList = this.listFromDbByKey(keyList);
+        if (CollUtil.isEmpty(dataList)) {
+            return;
+        }
+        dataList.forEach(item -> {
+            String key = SystemConstant.CACHE_SYS_CONFIG_PREFIX + item.getKey();
+            RedisUtil.set(key, JSON.toJSONString(item));
+            log.info("[系统管理] 系统配置[{}] 加入缓存" + key);
+        });
+    }
+
+    @Override
     public IPage<SysConfigPageVO> listPage(SysConfigPageDTO params) {
-        return this.sysConfigMapper.selectListPage(new Page(), params);
+        return this.sysConfigMapper.selectListPage(new Page<>(), params);
     }
 
     @Override
@@ -65,7 +98,7 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
     @Override
     public List<SysConfigVO> listByKey(List<String> keyList) {
         List<SysConfigVO> dataList = this.listFromCacheByKey(keyList);
-        if (CollectionUtils.isEmpty(dataList)) {
+        if (CollUtil.isEmpty(dataList)) {
             log.warn("[系统管理] 系统配置缓存丢失，请检查：{}", keyList);
             // 如果缓存数据为空，则从db获取
             return this.listFromDbByKey(keyList);
@@ -75,8 +108,13 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
 
     @Override
     public List<SysConfigVO> listFromDbByKey(List<String> keyList) {
+        if (CollUtil.isEmpty(keyList)) {
+            return Lists.newArrayList();
+        }
         this.checkKey(keyList);
-        return this.sysConfigMapper.selectDataListByKey(keyList);
+        List<SysConfigVO> dataList = this.sysConfigMapper.selectDataListByKey(keyList);
+        dataList.forEach(SysConfigVO::handleData);
+        return dataList;
     }
 
     @Override
@@ -86,9 +124,10 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
         keyList.forEach(keyItem -> {
             String dataJsonStr = RedisUtil.get(SystemConstant.CACHE_SYS_CONFIG_PREFIX + keyItem);
             if (StringUtils.isNotBlank(dataJsonStr)) {
-                dataList.add(JSONObject.parseObject(dataJsonStr, SysConfigVO.class));
+                dataList.add(JSONUtil.toBean(dataJsonStr, SysConfigVO.class));
             }
         });
+        dataList.forEach(SysConfigVO::handleData);
         return dataList;
     }
 
@@ -110,7 +149,7 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
                 .filter(entry -> entry.getValue() > 1)
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toList());
-        Assert.isTrue(CollectionUtils.isEmpty(repeatKeyDataList), "属性key重复，请重新输入！");
+        Assert.isTrue(CollUtil.isEmpty(repeatKeyDataList), "属性key重复，请重新输入！");
     }
 
     @Override
@@ -154,7 +193,7 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void saveBatch(ValidList<SysConfigSaveDTO> dataList) {
-        if (CollectionUtils.isEmpty(dataList)) {
+        if (CollUtil.isEmpty(dataList)) {
             return;
         }
         List<String> keyList = dataList.stream().map(SysConfigSaveDTO::getKey).collect(Collectors.toList());
@@ -182,34 +221,6 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
         String redisKey = SystemConstant.CACHE_SYS_CONFIG_PREFIX + key;
         log.info("[系统管理] 删除系统配置缓存：[{}]", redisKey);
         RedisUtil.delete(redisKey);
-    }
-
-    /**
-     * 更新redis缓存
-     *
-     * @param keyList 属性key
-     * @return void
-     * @author zhengqingya
-     * @date 2021/9/7 11:21
-     */
-    private void updateCache(List<String> keyList) {
-        if (CollectionUtils.isEmpty(keyList)) {
-            return;
-        }
-        List<SysConfigVO> dataList = this.listFromDbByKey(keyList);
-        if (CollectionUtils.isEmpty(dataList)) {
-            return;
-        }
-        dataList.forEach(item -> {
-            String key = SystemConstant.CACHE_SYS_CONFIG_PREFIX + item.getKey();
-            // 加入||更新 缓存
-            if (RedisUtil.hasKey(key)) {
-                RedisUtil.delete(key);
-                log.info("[系统管理] 系统配置[{}] 更新之前删除缓存" + key);
-            }
-            RedisUtil.set(key, JSON.toJSONString(item));
-            log.info("[系统管理] 系统配置[{}] 加入缓存" + key);
-        });
     }
 
 }

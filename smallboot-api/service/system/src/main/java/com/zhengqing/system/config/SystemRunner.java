@@ -1,6 +1,7 @@
 package com.zhengqing.system.config;
 
 import com.zhengqing.common.core.config.AppCommonRunner;
+import com.zhengqing.system.service.ISysConfigService;
 import com.zhengqing.system.service.ISysDictService;
 import com.zhengqing.system.service.ISysPermBusinessService;
 import lombok.RequiredArgsConstructor;
@@ -21,9 +22,9 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class SystemRunner extends AppCommonRunner {
 
-    private final ISysDictService dictService;
-
-    private final ISysPermBusinessService sysPermBusinessService;
+    private final ISysDictService iSysDictService;
+    private final ISysPermBusinessService iSysPermBusinessService;
+    private final ISysConfigService iSysConfigService;
 
     @Override
     public void run(String... args) throws Exception {
@@ -35,13 +36,16 @@ public class SystemRunner extends AppCommonRunner {
 //        this.dictService.initElIconData();
 
         // 数据字典
-        this.dictService.initCache();
+        this.iSysDictService.initCache();
+
+        // 系统配置
+        iSysConfigService.initCache();
 
         // 初始化超级管理员权限
-        this.sysPermBusinessService.initSuperAdminPerm();
+        this.iSysPermBusinessService.initSuperAdminPerm();
 
         // 权限缓存
-        this.sysPermBusinessService.refreshRedisPerm();
+        this.iSysPermBusinessService.refreshRedisPerm();
 
 //        log.info("服务初始化之后，执行方法 end...");
     }

@@ -17,10 +17,7 @@
 const { proxy } = getCurrentInstance();
 let { tokenObj } = toRefs(proxy.$store.user.useUserStore());
 defineProps({
-  modelValue: {
-    type: String,
-    default: '',
-  },
+  modelValue: { type: String, default: '' },
 });
 
 let uploadUrl = import.meta.env.VITE_APP_BASE_FILE_API;

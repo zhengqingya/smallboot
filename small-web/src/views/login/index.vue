@@ -1,6 +1,6 @@
 <template>
   <base-wrapper class="bg-color-primary flex-center-center">
-    <div class="flex-c-center-center bg-color-white b-rd-10" style="height: 400px; width: 500px">
+    <div class="flex-c-center-center bg-color-white" style="height: 400px; width: 500px; border-radius: 10px">
       <h1 class="font-size-lg">SmallBoot</h1>
       <div class="m-t-20">
         <el-form ref="loginFormRef" :model="loginForm" :rules="loginRules">
