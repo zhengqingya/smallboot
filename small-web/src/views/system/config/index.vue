@@ -9,7 +9,7 @@
         <el-input v-model="mapObj.lbs_qq_key.value" />
       </base-card>
 
-      <base-card :title="mapObj.mall_index_slide_img_list.remark" style="width: 400px">
+      <base-card :title="mapObj.mall_index_slide_img_list.remark" style="width: 800px">
         <base-upload-multi v-model="mapObj.mall_index_slide_img_list.value" />
       </base-card>
     </div>
