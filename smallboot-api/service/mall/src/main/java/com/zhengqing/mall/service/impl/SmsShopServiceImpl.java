@@ -98,6 +98,7 @@ public class SmsShopServiceImpl extends ServiceImpl<SmsShopMapper, SmsShop> impl
         SmsShop smsShop = SmsShop.builder()
                 .shopId(shopId)
                 .shopName(params.getShopName())
+                .headImgList(params.getHeadImgList())
                 .provinceName(params.getProvinceName())
                 .cityName(params.getCityName())
                 .areaName(params.getAreaName())

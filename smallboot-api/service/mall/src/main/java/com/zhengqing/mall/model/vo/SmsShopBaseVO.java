@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.zhengqing.common.base.model.vo.BaseVO;
 import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
 import com.zhengqing.mall.config.mybatis.handler.ShopListOpenTimeTypeHandler;
+import com.zhengqing.mall.model.bo.MallFileBO;
 import com.zhengqing.mall.model.bo.SmsShopOpenTimeBO;
 import com.zhengqing.mall.model.enums.SmsShopTypeEnum;
 import io.swagger.annotations.ApiModel;
@@ -41,6 +42,9 @@ public class SmsShopBaseVO extends BaseVO {
 
     @ApiModelProperty("门店名称")
     private String shopName;
+
+    @ApiModelProperty("门店头图")
+    private List<MallFileBO> headImgList;
 
     @ApiModelProperty("省名称")
     private String provinceName;

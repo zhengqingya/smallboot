@@ -92,7 +92,7 @@ function changeData(list) {
       id: item.shopId,
       latitude: item.latitude,
       longitude: item.longitude,
-      iconPath: 'http://127.0.0.1:886/2023-09-11/1701130377848147968-美图35.jpg',
+      iconPath: item.headImgList[0].url,
       width: 30,
       height: 30,
       callout: {

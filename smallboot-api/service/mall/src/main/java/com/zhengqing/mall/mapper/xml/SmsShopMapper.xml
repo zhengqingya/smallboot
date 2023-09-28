@@ -3,6 +3,9 @@
 <mapper namespace="com.zhengqing.mall.mapper.SmsShopMapper">
 
     <resultMap id="pageMap" type="com.zhengqing.mall.model.vo.SmsShopBaseVO">
+        <result column="head_img_list"
+                property="headImgList"
+                typeHandler="com.zhengqing.mall.config.mybatis.handler.MallListFileTypeHandler"></result>
         <result column="open_time_list"
                 property="openTimeList"
                 typeHandler="com.zhengqing.mall.config.mybatis.handler.ShopListOpenTimeTypeHandler"></result>

@@ -2,6 +2,7 @@ package com.zhengqing.mall.model.dto;
 
 import com.zhengqing.common.base.model.dto.BaseDTO;
 import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
+import com.zhengqing.mall.model.bo.MallFileBO;
 import com.zhengqing.mall.model.bo.SmsShopOpenTimeBO;
 import com.zhengqing.mall.model.enums.SmsShopTypeEnum;
 import io.swagger.annotations.ApiModel;
@@ -42,6 +43,10 @@ public class WebSmsShopSaveDTO extends BaseDTO {
     @NotBlank(message = "门店名称不能为空！")
     @ApiModelProperty("门店名称")
     private String shopName;
+
+    @NotEmpty(message = "门店头图不能为空！")
+    @ApiModelProperty("门店头图")
+    private List<MallFileBO> headImgList;
 
     @NotBlank(message = "省名称不能为空！")
     @ApiModelProperty("省名称")

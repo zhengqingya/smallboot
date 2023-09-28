@@ -5,7 +5,9 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.zhengqing.common.db.entity.BaseEntity;
+import com.zhengqing.mall.config.mybatis.handler.MallListFileTypeHandler;
 import com.zhengqing.mall.config.mybatis.handler.ShopListOpenTimeTypeHandler;
+import com.zhengqing.mall.model.bo.MallFileBO;
 import com.zhengqing.mall.model.bo.SmsShopOpenTimeBO;
 import com.zhengqing.mall.model.enums.SmsShopTypeEnum;
 import io.swagger.annotations.ApiModel;
@@ -41,6 +43,10 @@ public class SmsShop extends BaseEntity<SmsShop> {
 
     @ApiModelProperty("门店名称")
     private String shopName;
+
+    @ApiModelProperty("门店头图")
+    @TableField(typeHandler = MallListFileTypeHandler.class)
+    private List<MallFileBO> headImgList;
 
 //    @ApiModelProperty("省代码")
 //    private Integer provinceCode;

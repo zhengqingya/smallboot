@@ -20,6 +20,9 @@
               <el-radio :label="true">显示</el-radio>
             </el-radio-group>
           </el-form-item>
+          <el-form-item label="门店头图:">
+            <base-upload-multi v-model="form.headImgList" :disabled="isDetail" />
+          </el-form-item>
           <el-form-item label="所属地区:">
             <province-city-area v-model="form.provinceCityAreaList" :disabled="isDetail" />
           </el-form-item>

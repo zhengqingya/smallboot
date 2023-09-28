@@ -11,7 +11,7 @@
  Target Server Version : 50726 (5.7.26-log)
  File Encoding         : 65001
 
- Date: 27/09/2023 18:09:42
+ Date: 28/09/2023 10:15:39
 */
 
 SET NAMES utf8mb4;
@@ -456,19 +456,19 @@ CREATE TABLE `pms_spu`  (
   `coupon_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '优惠券名字',
   `coupon_num` int(11) NULL DEFAULT NULL COMMENT '优惠券数量',
   `cover_img` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '封面图',
-  `slide_img_list` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '轮播图',
-  `detail_img_list` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '商品详情图',
+  `slide_img_list` json NULL COMMENT '轮播图',
+  `detail_img_list` json NULL COMMENT '商品详情图',
   `line_price` int(11) UNSIGNED NULL DEFAULT NULL COMMENT '商品划线价格(单位:分)',
   `freight` int(11) UNSIGNED NULL DEFAULT NULL COMMENT '运费(单位:分 0:包邮)',
-  `attr_list` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '商品属性',
+  `attr_list` json NULL COMMENT '商品属性',
   `is_put` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否上架(0->下架；1->上架)',
   `is_show` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否显示(0->隐藏；1->显示)',
   `is_presell` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否预售(0->否；1->是)',
   `presell_start_time` datetime NULL DEFAULT NULL COMMENT '预售开始时间',
   `presell_end_time` datetime NULL DEFAULT NULL COMMENT '预售结束时间',
   `presell_deliver_day` int(11) NULL DEFAULT NULL COMMENT '预售-发货日期(购买之后？天之后发货)',
-  `service_list` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '商品关联服务',
-  `explain_list` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '商品关联说明',
+  `service_list` json NULL COMMENT '商品关联服务',
+  `explain_list` json NULL COMMENT '商品关联说明',
   `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '商品详情-文案',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
@@ -481,17 +481,17 @@ CREATE TABLE `pms_spu`  (
 -- ----------------------------
 -- Records of pms_spu
 -- ----------------------------
-INSERT INTO `pms_spu` VALUES (1534420706752856064, 1, '熊猫限定帆布袋', 1, 101, 1, '买一送一', 100, 'http://127.0.0.1:886/2023-09-11/1701130313880817664-美图15.jpg', '[{\"name\":\"美图17.jpg\",\"url\":\"http://127.0.0.1:886/2023-09-11/1701130329332633600-美图17.jpg\"}]', '[{\"name\":\"美图28.jpg\",\"url\":\"http://127.0.0.1:886/2023-09-11/1701130353953198080-美图28.jpg\"}]', NULL, 0, NULL, 1, 1, 0, '2021-08-25 09:00:00', '2021-08-26 23:59:59', 15, '[{\"code\":\"btn\",\"name\":\"添加\",\"value\":\"add\",\"sort\":1,\"remark\":\"this is the add.\"}]', '[{\"code\":\"btn\",\"name\":\"添加\",\"value\":\"add\",\"sort\":1,\"remark\":\"this is the add.\"}]', NULL, '2022-06-08 14:22:59', '2023-09-11 15:07:49', 0, 1, 0);
-INSERT INTO `pms_spu` VALUES (1661570067979304960, 1, '测试商品', 2, 101, NULL, NULL, NULL, 'http://127.0.0.1:886/2023-09-11/1701130124151476224-美图13.png', '[{\"name\":\"美图14.jpg\",\"url\":\"http://127.0.0.1:886/2023-09-11/1701130154048475136-美图14.jpg\"}]', '[{\"name\":\"美图8.jpg\",\"url\":\"http://127.0.0.1:886/2023-09-11/1701130181730881536-美图8.jpg\"}]', NULL, 0, NULL, 1, 1, 0, NULL, NULL, NULL, '[]', '[]', NULL, '2023-05-25 11:09:09', '2023-09-11 15:07:22', 1, 1, 0);
-INSERT INTO `pms_spu` VALUES (1701131118611034112, 1, '草莓', 0, 101, NULL, NULL, NULL, 'http://127.0.0.1:886/2023-09-11/1701131004875624448-美图13.png', '[{\"name\":\"美图14.jpg\",\"url\":\"http://127.0.0.1:886/2023-09-11/1701131018809102336-美图14.jpg\"}]', '[{\"name\":\"美图13.png\",\"url\":\"http://127.0.0.1:886/2023-09-11/1701131028594413568-美图13.png\"}]', NULL, 0, NULL, 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, '2023-09-11 15:10:39', '2023-09-11 15:10:39', 1, 1, 0);
-INSERT INTO `pms_spu` VALUES (1701132492304576512, 1, '葡萄', 0, 101, NULL, NULL, NULL, 'http://127.0.0.1:886/2023-09-11/1701132413926862848-美图13.png', '[{\"name\":\"美图52.jpg\",\"url\":\"http://127.0.0.1:886/2023-09-11/1701132427608682496-美图52.jpg\"}]', '[{\"name\":\"美图35.jpg\",\"url\":\"http://127.0.0.1:886/2023-09-11/1701132454091517952-美图35.jpg\"}]', NULL, 0, NULL, 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, '2023-09-11 15:16:06', '2023-09-11 15:16:06', 1, 1, 0);
-INSERT INTO `pms_spu` VALUES (1701132647401549824, 1, '杨枝甘露', 0, 101, NULL, NULL, NULL, 'http://127.0.0.1:886/2023-09-11/1701132579127914496-美图29.jpg', '[{\"name\":\"美图15.jpg\",\"url\":\"http://127.0.0.1:886/2023-09-11/1701132589601091584-美图15.jpg\"}]', '[{\"name\":\"美图15.jpg\",\"url\":\"http://127.0.0.1:886/2023-09-11/1701132596077096960-美图15.jpg\"}]', NULL, 0, NULL, 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, '2023-09-11 15:16:43', '2023-09-11 15:16:43', 1, 1, 0);
-INSERT INTO `pms_spu` VALUES (1701132775487205376, 1, '水蜜桃', 0, 101, NULL, NULL, NULL, 'http://127.0.0.1:886/2023-09-11/1701132714977226752-美图30.jpg', '[{\"name\":\"美图15.jpg\",\"url\":\"http://127.0.0.1:886/2023-09-11/1701132723642658816-美图15.jpg\"}]', '[{\"name\":\"美图15.jpg\",\"url\":\"http://127.0.0.1:886/2023-09-11/1701132731699916800-美图15.jpg\"}]', NULL, 0, NULL, 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, '2023-09-11 15:17:14', '2023-09-11 15:17:14', 1, 1, 0);
-INSERT INTO `pms_spu` VALUES (1701133018807169024, 1, '茉莉小雪', 0, 101, NULL, NULL, NULL, 'http://127.0.0.1:886/2023-09-11/1701132952983007232-美图35.jpg', '[{\"name\":\"美图14.jpg\",\"url\":\"http://127.0.0.1:886/2023-09-11/1701132959723253760-美图14.jpg\"}]', '[{\"name\":\"美图21.jpg\",\"url\":\"http://127.0.0.1:886/2023-09-11/1701132968145416192-美图21.jpg\"}]', NULL, 0, NULL, 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, '2023-09-11 15:18:12', '2023-09-11 15:18:12', 1, 1, 0);
-INSERT INTO `pms_spu` VALUES (1701133260151615488, 1, '西柚柠檬', 0, 101, NULL, NULL, NULL, 'http://127.0.0.1:886/2023-09-11/1701133198966353920-美图84.png', '[{\"name\":\"美图12.jpg\",\"url\":\"http://127.0.0.1:886/2023-09-11/1701133213742886912-美图12.jpg\"}]', '[{\"name\":\"美图21.jpg\",\"url\":\"http://127.0.0.1:886/2023-09-11/1701133206499323904-美图21.jpg\"}]', NULL, 0, NULL, 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, '2023-09-11 15:19:09', '2023-09-11 15:19:09', 1, 1, 0);
-INSERT INTO `pms_spu` VALUES (1701133818556084224, 1, '珍珠奶茶', 0, 101, NULL, NULL, NULL, 'http://127.0.0.1:886/2023-09-11/1701133757224022016-美图13.png', '[{\"name\":\"美图13.png\",\"url\":\"http://127.0.0.1:886/2023-09-11/1701133766556348416-美图13.png\"}]', '[{\"name\":\"美图13.png\",\"url\":\"http://127.0.0.1:886/2023-09-11/1701133771987972096-美图13.png\"}]', NULL, 0, NULL, 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, '2023-09-11 15:21:23', '2023-09-11 15:21:23', 1, 1, 0);
-INSERT INTO `pms_spu` VALUES (1701133961695096832, 1, '火腿芝士', 0, 101, NULL, NULL, NULL, 'http://127.0.0.1:886/2023-09-11/1701133898647564288-美图13.png', '[{\"name\":\"美图8.jpg\",\"url\":\"http://127.0.0.1:886/2023-09-11/1701133907451408384-美图8.jpg\"}]', '[{\"name\":\"美图13.png\",\"url\":\"http://127.0.0.1:886/2023-09-11/1701133918457262080-美图13.png\"}]', NULL, 0, NULL, 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, '2023-09-11 15:21:57', '2023-09-11 15:21:57', 1, 1, 0);
-INSERT INTO `pms_spu` VALUES (1701134202930491392, 1, '吐司', 0, 101, NULL, '', NULL, 'http://127.0.0.1:886/2023-09-11/1701134128944214016-美图13.png', '[{\"name\":\"美图28.jpg\",\"url\":\"http://127.0.0.1:886/2023-09-11/1701134144794488832-美图28.jpg\"}]', '[{\"name\":\"美图13.png\",\"url\":\"http://127.0.0.1:886/2023-09-11/1701134153787076608-美图13.png\"}]', NULL, 0, NULL, 1, 1, 0, NULL, NULL, NULL, '[]', '[]', NULL, '2023-09-11 15:22:54', '2023-09-19 18:06:36', 1, 1, 0);
+INSERT INTO `pms_spu` VALUES (1534420706752856064, 1, '熊猫限定帆布袋', 1, 101, 1, '买一送一', 100, 'http://127.0.0.1:886/2023-09-11/1701130313880817664-美图15.jpg', '[{\"url\": \"http://127.0.0.1:886/2023-09-11/1701130329332633600-美图17.jpg\", \"name\": \"美图17.jpg\"}]', '[{\"url\": \"http://127.0.0.1:886/2023-09-11/1701130353953198080-美图28.jpg\", \"name\": \"美图28.jpg\"}]', NULL, 0, NULL, 1, 1, 0, '2021-08-25 09:00:00', '2021-08-26 23:59:59', 15, '[{\"code\": \"btn\", \"name\": \"添加\", \"sort\": 1, \"value\": \"add\", \"remark\": \"this is the add.\"}]', '[{\"code\": \"btn\", \"name\": \"添加\", \"sort\": 1, \"value\": \"add\", \"remark\": \"this is the add.\"}]', NULL, '2022-06-08 14:22:59', '2023-09-11 15:07:49', 0, 1, 0);
+INSERT INTO `pms_spu` VALUES (1661570067979304960, 1, '测试商品', 2, 101, NULL, NULL, NULL, 'http://127.0.0.1:886/2023-09-11/1701130124151476224-美图13.png', '[{\"url\": \"http://127.0.0.1:886/2023-09-11/1701130154048475136-美图14.jpg\", \"name\": \"美图14.jpg\"}]', '[{\"url\": \"http://127.0.0.1:886/2023-09-11/1701130181730881536-美图8.jpg\", \"name\": \"美图8.jpg\"}]', NULL, 0, NULL, 1, 1, 0, NULL, NULL, NULL, '[]', '[]', NULL, '2023-05-25 11:09:09', '2023-09-11 15:07:22', 1, 1, 0);
+INSERT INTO `pms_spu` VALUES (1701131118611034112, 1, '草莓', 0, 101, NULL, NULL, NULL, 'http://127.0.0.1:886/2023-09-11/1701131004875624448-美图13.png', '[{\"url\": \"http://127.0.0.1:886/2023-09-11/1701131018809102336-美图14.jpg\", \"name\": \"美图14.jpg\"}]', '[{\"url\": \"http://127.0.0.1:886/2023-09-11/1701131028594413568-美图13.png\", \"name\": \"美图13.png\"}]', NULL, 0, NULL, 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, '2023-09-11 15:10:39', '2023-09-11 15:10:39', 1, 1, 0);
+INSERT INTO `pms_spu` VALUES (1701132492304576512, 1, '葡萄', 0, 101, NULL, NULL, NULL, 'http://127.0.0.1:886/2023-09-11/1701132413926862848-美图13.png', '[{\"url\": \"http://127.0.0.1:886/2023-09-11/1701132427608682496-美图52.jpg\", \"name\": \"美图52.jpg\"}]', '[{\"url\": \"http://127.0.0.1:886/2023-09-11/1701132454091517952-美图35.jpg\", \"name\": \"美图35.jpg\"}]', NULL, 0, NULL, 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, '2023-09-11 15:16:06', '2023-09-11 15:16:06', 1, 1, 0);
+INSERT INTO `pms_spu` VALUES (1701132647401549824, 1, '杨枝甘露', 0, 101, NULL, NULL, NULL, 'http://127.0.0.1:886/2023-09-11/1701132579127914496-美图29.jpg', '[{\"url\": \"http://127.0.0.1:886/2023-09-11/1701132589601091584-美图15.jpg\", \"name\": \"美图15.jpg\"}]', '[{\"url\": \"http://127.0.0.1:886/2023-09-11/1701132596077096960-美图15.jpg\", \"name\": \"美图15.jpg\"}]', NULL, 0, NULL, 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, '2023-09-11 15:16:43', '2023-09-11 15:16:43', 1, 1, 0);
+INSERT INTO `pms_spu` VALUES (1701132775487205376, 1, '水蜜桃', 0, 101, NULL, NULL, NULL, 'http://127.0.0.1:886/2023-09-11/1701132714977226752-美图30.jpg', '[{\"url\": \"http://127.0.0.1:886/2023-09-11/1701132723642658816-美图15.jpg\", \"name\": \"美图15.jpg\"}]', '[{\"url\": \"http://127.0.0.1:886/2023-09-11/1701132731699916800-美图15.jpg\", \"name\": \"美图15.jpg\"}]', NULL, 0, NULL, 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, '2023-09-11 15:17:14', '2023-09-11 15:17:14', 1, 1, 0);
+INSERT INTO `pms_spu` VALUES (1701133018807169024, 1, '茉莉小雪', 0, 101, NULL, NULL, NULL, 'http://127.0.0.1:886/2023-09-11/1701132952983007232-美图35.jpg', '[{\"url\": \"http://127.0.0.1:886/2023-09-11/1701132959723253760-美图14.jpg\", \"name\": \"美图14.jpg\"}]', '[{\"url\": \"http://127.0.0.1:886/2023-09-11/1701132968145416192-美图21.jpg\", \"name\": \"美图21.jpg\"}]', NULL, 0, NULL, 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, '2023-09-11 15:18:12', '2023-09-11 15:18:12', 1, 1, 0);
+INSERT INTO `pms_spu` VALUES (1701133260151615488, 1, '西柚柠檬', 0, 101, NULL, NULL, NULL, 'http://127.0.0.1:886/2023-09-11/1701133198966353920-美图84.png', '[{\"url\": \"http://127.0.0.1:886/2023-09-11/1701133213742886912-美图12.jpg\", \"name\": \"美图12.jpg\"}]', '[{\"url\": \"http://127.0.0.1:886/2023-09-11/1701133206499323904-美图21.jpg\", \"name\": \"美图21.jpg\"}]', NULL, 0, NULL, 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, '2023-09-11 15:19:09', '2023-09-11 15:19:09', 1, 1, 0);
+INSERT INTO `pms_spu` VALUES (1701133818556084224, 1, '珍珠奶茶', 0, 101, NULL, NULL, NULL, 'http://127.0.0.1:886/2023-09-11/1701133757224022016-美图13.png', '[{\"url\": \"http://127.0.0.1:886/2023-09-11/1701133766556348416-美图13.png\", \"name\": \"美图13.png\"}]', '[{\"url\": \"http://127.0.0.1:886/2023-09-11/1701133771987972096-美图13.png\", \"name\": \"美图13.png\"}]', NULL, 0, NULL, 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, '2023-09-11 15:21:23', '2023-09-11 15:21:23', 1, 1, 0);
+INSERT INTO `pms_spu` VALUES (1701133961695096832, 1, '火腿芝士', 0, 101, NULL, NULL, NULL, 'http://127.0.0.1:886/2023-09-11/1701133898647564288-美图13.png', '[{\"url\": \"http://127.0.0.1:886/2023-09-11/1701133907451408384-美图8.jpg\", \"name\": \"美图8.jpg\"}]', '[{\"url\": \"http://127.0.0.1:886/2023-09-11/1701133918457262080-美图13.png\", \"name\": \"美图13.png\"}]', NULL, 0, NULL, 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, '2023-09-11 15:21:57', '2023-09-11 15:21:57', 1, 1, 0);
+INSERT INTO `pms_spu` VALUES (1701134202930491392, 1, '吐司', 0, 101, NULL, '', NULL, 'http://127.0.0.1:886/2023-09-11/1701134128944214016-美图13.png', '[{\"url\": \"http://127.0.0.1:886/2023-09-11/1701134144794488832-美图28.jpg\", \"name\": \"美图28.jpg\"}]', '[{\"url\": \"http://127.0.0.1:886/2023-09-11/1701134153787076608-美图13.png\", \"name\": \"美图13.png\"}]', NULL, 0, NULL, 1, 1, 0, NULL, NULL, NULL, '[]', '[]', NULL, '2023-09-11 15:22:54', '2023-09-19 18:06:36', 1, 1, 0);
 
 -- ----------------------------
 -- Table structure for pms_spu_rate
@@ -563,6 +563,7 @@ CREATE TABLE `sms_shop`  (
   `shop_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '门店ID',
   `tenant_id` int(11) UNSIGNED NOT NULL COMMENT '租户ID',
   `shop_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '门店名称',
+  `head_img_list` json NULL COMMENT '门店头图',
   `province_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '省名称',
   `city_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '市名称',
   `area_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '区名称',
@@ -591,9 +592,9 @@ CREATE TABLE `sms_shop`  (
 -- ----------------------------
 -- Records of sms_shop
 -- ----------------------------
-INSERT INTO `sms_shop` VALUES (1, 1, '天府三街测试门店', '四川省', '成都市', '武侯区', '四川省成都市武侯区天府三街', 104.069038, 30.546109, 1, '小郑', '15183308888', 1, 0, 0, 0, '[{\"endTime\": \"22:00\", \"weekList\": [1, 2, 3, 4, 5, 6, 7], \"startTime\": \"09:00\"}]', 1000, NULL, NULL, '2023-09-15 18:20:55', '2023-09-27 17:37:21', 1, 1, 0);
-INSERT INTO `sms_shop` VALUES (2, 1, '高新区天府五街分店', '四川省', '成都市', '武侯区', '四川省成都市武侯区天府五街', 104.069398, 30.536950, 1, '小郑', '15183308888', 1, 1, 1, 1, '[{\"endTime\": \"22:00\", \"weekList\": [1, 2, 3, 4, 5, 6, 7], \"startTime\": \"09:00\"}]', 1000, NULL, NULL, '2023-09-15 18:20:55', '2023-09-27 17:37:22', 1, 1, 0);
-INSERT INTO `sms_shop` VALUES (4, 1, '四川大学测试店', '四川省', '成都市', '双流区', '四川省成都市双流区明远路', 103.999260, 30.557481, 1, '小郑', '15183008888', 1, 0, 0, 0, '[{\"endTime\": \"18:00\", \"weekList\": [1, 2, 3, 4, 5, 6, 7], \"startTime\": \"09:00\"}]', 3, NULL, NULL, '2023-09-26 14:54:42', '2023-09-27 17:37:17', 1, 1, 0);
+INSERT INTO `sms_shop` VALUES (1, 1, '天府三街测试门店', '[{\"url\": \"http://127.0.0.1:886/2023-09-28/1707215712688414720-美图28.jpg\", \"name\": \"美图28.jpg\"}]', '四川省', '成都市', '武侯区', '四川省成都市武侯区天府三街', 104.069038, 30.546109, 1, '小郑', '15183308888', 1, 0, 0, 0, '[{\"endTime\": \"22:00\", \"weekList\": [1, 2, 3, 4, 5, 6, 7], \"startTime\": \"09:00\"}]', 1000, NULL, NULL, '2023-09-15 18:20:55', '2023-09-28 10:08:41', 1, 1, 0);
+INSERT INTO `sms_shop` VALUES (2, 1, '高新区天府五街分店', '[{\"url\": \"http://127.0.0.1:886/2023-09-28/1707215751968071680-美图35.jpg\", \"name\": \"美图35.jpg\"}]', '四川省', '成都市', '武侯区', '四川省成都市武侯区天府五街', 104.069398, 30.536950, 1, '小郑', '15183308888', 1, 1, 1, 1, '[{\"endTime\": \"22:00\", \"weekList\": [1, 2, 3, 4, 5, 6, 7], \"startTime\": \"09:00\"}]', 1000, NULL, NULL, '2023-09-15 18:20:55', '2023-09-28 10:08:50', 1, 1, 0);
+INSERT INTO `sms_shop` VALUES (4, 1, '四川大学测试店', '[{\"url\": \"http://127.0.0.1:886/2023-09-28/1707215650717573120-美图13.png\", \"name\": \"美图13.png\"}, {\"url\": \"http://127.0.0.1:886/2023-09-28/1707215658992934912-美图15.jpg\", \"name\": \"美图15.jpg\"}]', '四川省', '成都市', '双流区', '四川省成都市双流区明远路', 103.999260, 30.557481, 1, '小郑', '15183008888', 1, 0, 0, 0, '[{\"endTime\": \"18:00\", \"weekList\": [1, 2, 3, 4, 5, 6, 7], \"startTime\": \"09:00\"}]', 3, NULL, NULL, '2023-09-26 14:54:42', '2023-09-28 10:08:28', 1, 1, 0);
 
 -- ----------------------------
 -- Table structure for t_sys_config
@@ -4318,33 +4319,33 @@ CREATE TABLE `t_sys_role_menu`  (
 -- ----------------------------
 -- Records of t_sys_role_menu
 -- ----------------------------
-INSERT INTO `t_sys_role_menu` VALUES (1, 1, 1, 1, '2023-08-31 16:36:56', 0, '2023-09-27 17:36:13');
-INSERT INTO `t_sys_role_menu` VALUES (2, 1, 3, 1, '2023-08-31 16:36:56', 0, '2023-09-27 17:36:13');
-INSERT INTO `t_sys_role_menu` VALUES (3, 1, 4, 1, '2023-08-31 16:36:56', 0, '2023-09-27 17:36:13');
-INSERT INTO `t_sys_role_menu` VALUES (4, 1, 5, 1, '2023-08-31 16:36:56', 0, '2023-09-27 17:36:13');
-INSERT INTO `t_sys_role_menu` VALUES (5, 1, 6, 1, '2023-08-31 16:36:56', 0, '2023-09-27 17:36:13');
-INSERT INTO `t_sys_role_menu` VALUES (6, 1, 7, 1, '2023-08-31 16:36:56', 0, '2023-09-27 17:36:13');
-INSERT INTO `t_sys_role_menu` VALUES (7, 1, 9, 1, '2023-08-31 16:36:56', 0, '2023-09-27 17:36:13');
-INSERT INTO `t_sys_role_menu` VALUES (8, 1, 10, 1, '2023-08-31 16:36:56', 0, '2023-09-27 17:36:13');
-INSERT INTO `t_sys_role_menu` VALUES (9, 1, 11, 1, '2023-08-31 16:36:56', 0, '2023-09-27 17:36:13');
-INSERT INTO `t_sys_role_menu` VALUES (10, 1, 12, 1, '2023-08-31 16:36:56', 0, '2023-09-27 17:36:13');
-INSERT INTO `t_sys_role_menu` VALUES (11, 1, 13, 1, '2023-08-31 16:36:56', 0, '2023-09-27 17:36:13');
-INSERT INTO `t_sys_role_menu` VALUES (12, 1, 14, 1, '2023-08-31 16:36:56', 0, '2023-09-27 17:36:13');
-INSERT INTO `t_sys_role_menu` VALUES (13, 1, 15, 1, '2023-08-31 16:36:56', 0, '2023-09-27 17:36:13');
-INSERT INTO `t_sys_role_menu` VALUES (14, 1, 16, 1, '2023-08-31 16:36:56', 0, '2023-09-27 17:36:13');
-INSERT INTO `t_sys_role_menu` VALUES (15, 1, 17, 1, '2023-08-31 16:36:56', 0, '2023-09-27 17:36:13');
-INSERT INTO `t_sys_role_menu` VALUES (16, 1, 18, 1, '2023-08-31 16:36:56', 0, '2023-09-27 17:36:13');
-INSERT INTO `t_sys_role_menu` VALUES (17, 1, 19, 1, '2023-08-31 16:36:56', 0, '2023-09-27 17:36:13');
-INSERT INTO `t_sys_role_menu` VALUES (18, 1, 25, 1, '2023-08-31 16:36:56', 0, '2023-09-27 17:36:13');
-INSERT INTO `t_sys_role_menu` VALUES (19, 1, 20, 1, '2023-08-31 16:36:56', 0, '2023-09-27 17:36:13');
-INSERT INTO `t_sys_role_menu` VALUES (20, 1, 22, 1, '2023-08-31 16:36:56', 0, '2023-09-27 17:36:13');
-INSERT INTO `t_sys_role_menu` VALUES (21, 1, 21, 1, '2023-08-31 16:36:56', 0, '2023-09-27 17:36:13');
-INSERT INTO `t_sys_role_menu` VALUES (22, 1, 23, 1, '2023-08-31 16:36:56', 0, '2023-09-27 17:36:13');
-INSERT INTO `t_sys_role_menu` VALUES (23, 1, 24, 1, '2023-08-31 16:36:56', 0, '2023-09-27 17:36:13');
+INSERT INTO `t_sys_role_menu` VALUES (1, 1, 1, 1, '2023-08-31 16:36:56', 0, '2023-09-28 10:08:17');
+INSERT INTO `t_sys_role_menu` VALUES (2, 1, 3, 1, '2023-08-31 16:36:56', 0, '2023-09-28 10:08:17');
+INSERT INTO `t_sys_role_menu` VALUES (3, 1, 4, 1, '2023-08-31 16:36:56', 0, '2023-09-28 10:08:17');
+INSERT INTO `t_sys_role_menu` VALUES (4, 1, 5, 1, '2023-08-31 16:36:56', 0, '2023-09-28 10:08:17');
+INSERT INTO `t_sys_role_menu` VALUES (5, 1, 6, 1, '2023-08-31 16:36:56', 0, '2023-09-28 10:08:17');
+INSERT INTO `t_sys_role_menu` VALUES (6, 1, 7, 1, '2023-08-31 16:36:56', 0, '2023-09-28 10:08:17');
+INSERT INTO `t_sys_role_menu` VALUES (7, 1, 9, 1, '2023-08-31 16:36:56', 0, '2023-09-28 10:08:17');
+INSERT INTO `t_sys_role_menu` VALUES (8, 1, 10, 1, '2023-08-31 16:36:56', 0, '2023-09-28 10:08:17');
+INSERT INTO `t_sys_role_menu` VALUES (9, 1, 11, 1, '2023-08-31 16:36:56', 0, '2023-09-28 10:08:17');
+INSERT INTO `t_sys_role_menu` VALUES (10, 1, 12, 1, '2023-08-31 16:36:56', 0, '2023-09-28 10:08:17');
+INSERT INTO `t_sys_role_menu` VALUES (11, 1, 13, 1, '2023-08-31 16:36:56', 0, '2023-09-28 10:08:17');
+INSERT INTO `t_sys_role_menu` VALUES (12, 1, 14, 1, '2023-08-31 16:36:56', 0, '2023-09-28 10:08:17');
+INSERT INTO `t_sys_role_menu` VALUES (13, 1, 15, 1, '2023-08-31 16:36:56', 0, '2023-09-28 10:08:17');
+INSERT INTO `t_sys_role_menu` VALUES (14, 1, 16, 1, '2023-08-31 16:36:56', 0, '2023-09-28 10:08:17');
+INSERT INTO `t_sys_role_menu` VALUES (15, 1, 17, 1, '2023-08-31 16:36:56', 0, '2023-09-28 10:08:17');
+INSERT INTO `t_sys_role_menu` VALUES (16, 1, 18, 1, '2023-08-31 16:36:56', 0, '2023-09-28 10:08:17');
+INSERT INTO `t_sys_role_menu` VALUES (17, 1, 19, 1, '2023-08-31 16:36:56', 0, '2023-09-28 10:08:17');
+INSERT INTO `t_sys_role_menu` VALUES (18, 1, 25, 1, '2023-08-31 16:36:56', 0, '2023-09-28 10:08:17');
+INSERT INTO `t_sys_role_menu` VALUES (19, 1, 20, 1, '2023-08-31 16:36:56', 0, '2023-09-28 10:08:17');
+INSERT INTO `t_sys_role_menu` VALUES (20, 1, 22, 1, '2023-08-31 16:36:56', 0, '2023-09-28 10:08:17');
+INSERT INTO `t_sys_role_menu` VALUES (21, 1, 21, 1, '2023-08-31 16:36:56', 0, '2023-09-28 10:08:17');
+INSERT INTO `t_sys_role_menu` VALUES (22, 1, 23, 1, '2023-08-31 16:36:56', 0, '2023-09-28 10:08:17');
+INSERT INTO `t_sys_role_menu` VALUES (23, 1, 24, 1, '2023-08-31 16:36:56', 0, '2023-09-28 10:08:17');
 INSERT INTO `t_sys_role_menu` VALUES (24, 2, 1, 1, '2023-08-31 16:38:01', 1, '2023-08-31 16:38:01');
-INSERT INTO `t_sys_role_menu` VALUES (25, 1, 27, 1, '2023-09-13 11:16:00', 0, '2023-09-27 17:36:13');
-INSERT INTO `t_sys_role_menu` VALUES (26, 1, 28, 1, '2023-09-13 17:55:38', 0, '2023-09-27 17:36:13');
-INSERT INTO `t_sys_role_menu` VALUES (27, 1, 29, 1, '2023-09-15 16:45:04', 0, '2023-09-27 17:36:13');
+INSERT INTO `t_sys_role_menu` VALUES (25, 1, 27, 1, '2023-09-13 11:16:00', 0, '2023-09-28 10:08:17');
+INSERT INTO `t_sys_role_menu` VALUES (26, 1, 28, 1, '2023-09-13 17:55:38', 0, '2023-09-28 10:08:17');
+INSERT INTO `t_sys_role_menu` VALUES (27, 1, 29, 1, '2023-09-15 16:45:04', 0, '2023-09-28 10:08:17');
 
 -- ----------------------------
 -- Table structure for t_sys_role_permission
@@ -4364,10 +4365,10 @@ CREATE TABLE `t_sys_role_permission`  (
 -- ----------------------------
 -- Records of t_sys_role_permission
 -- ----------------------------
-INSERT INTO `t_sys_role_permission` VALUES (1, 1, 1, 1, '2023-08-31 16:37:43', 0, '2023-09-27 17:36:13');
-INSERT INTO `t_sys_role_permission` VALUES (2, 1, 2, 1, '2023-08-31 16:37:43', 0, '2023-09-27 17:36:13');
-INSERT INTO `t_sys_role_permission` VALUES (3, 1, 3, 1, '2023-08-31 16:37:43', 0, '2023-09-27 17:36:13');
-INSERT INTO `t_sys_role_permission` VALUES (4, 1, 4, 1, '2023-08-31 16:37:43', 0, '2023-09-27 17:36:13');
+INSERT INTO `t_sys_role_permission` VALUES (1, 1, 1, 1, '2023-08-31 16:37:43', 0, '2023-09-28 10:08:17');
+INSERT INTO `t_sys_role_permission` VALUES (2, 1, 2, 1, '2023-08-31 16:37:43', 0, '2023-09-28 10:08:17');
+INSERT INTO `t_sys_role_permission` VALUES (3, 1, 3, 1, '2023-08-31 16:37:43', 0, '2023-09-28 10:08:17');
+INSERT INTO `t_sys_role_permission` VALUES (4, 1, 4, 1, '2023-08-31 16:37:43', 0, '2023-09-28 10:08:17');
 
 -- ----------------------------
 -- Table structure for t_sys_user
@@ -4434,7 +4435,7 @@ CREATE TABLE `t_sys_user_role`  (
 -- ----------------------------
 -- Records of t_sys_user_role
 -- ----------------------------
-INSERT INTO `t_sys_user_role` VALUES (1, 1, 1, 0, '2023-08-31 15:54:57', 0, '2023-09-27 17:36:12');
+INSERT INTO `t_sys_user_role` VALUES (1, 1, 1, 0, '2023-08-31 15:54:57', 0, '2023-09-28 10:08:17');
 INSERT INTO `t_sys_user_role` VALUES (2, 2, 10, 1, '2023-08-26 18:26:25', 1, '2023-08-26 18:26:25');
 
 -- ----------------------------
