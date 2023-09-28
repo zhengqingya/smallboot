@@ -3,7 +3,7 @@ package com.zhengqing.mall.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhengqing.mall.entity.OmsLogistic;
 import com.zhengqing.mall.model.dto.OmsLogisticDTO;
-import com.zhengqing.mall.model.enums.TpsLogisticsCodeEnum;
+import com.zhengqing.mall.enums.TpsLogisticsCodeEnum;
 import com.zhengqing.mall.model.vo.OmsLogisticVO;
 
 /**

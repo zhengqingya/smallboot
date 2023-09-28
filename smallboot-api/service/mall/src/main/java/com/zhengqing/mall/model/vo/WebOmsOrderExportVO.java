@@ -6,7 +6,7 @@ import com.alibaba.excel.annotation.write.style.ColumnWidth;
 import com.alibaba.excel.annotation.write.style.ContentRowHeight;
 import com.alibaba.excel.annotation.write.style.HeadRowHeight;
 import com.zhengqing.mall.model.bo.OmsOrderReceiverAddressBO;
-import com.zhengqing.mall.model.enums.OmsOrderStatusEnum;
+import com.zhengqing.mall.enums.OmsOrderStatusEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;

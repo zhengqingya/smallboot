@@ -1,7 +1,7 @@
 package com.zhengqing.mall.model.dto;
 
 import com.zhengqing.common.base.model.dto.BasePageDTO;
-import com.zhengqing.mall.model.enums.PmsSpuRateTypeEnum;
+import com.zhengqing.mall.enums.PmsSpuRateTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;

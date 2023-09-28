@@ -2,8 +2,8 @@ package com.zhengqing.mall.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
-import com.zhengqing.mall.model.enums.OmsOrderDeliverReceiptTypeEnum;
-import com.zhengqing.mall.model.enums.TpsLogisticsCodeEnum;
+import com.zhengqing.mall.enums.OmsOrderDeliverReceiptTypeEnum;
+import com.zhengqing.mall.enums.TpsLogisticsCodeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;

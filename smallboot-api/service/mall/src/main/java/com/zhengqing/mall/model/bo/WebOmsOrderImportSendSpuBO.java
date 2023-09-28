@@ -1,7 +1,7 @@
 package com.zhengqing.mall.model.bo;
 
 import com.alibaba.excel.annotation.ExcelProperty;
-import com.zhengqing.mall.model.enums.TpsLogisticsCodeEnum;
+import com.zhengqing.mall.enums.TpsLogisticsCodeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;

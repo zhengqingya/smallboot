@@ -1,7 +1,7 @@
 package com.zhengqing.mall.model.vo;
 
 import com.zhengqing.common.base.model.vo.BaseVO;
-import com.zhengqing.mall.model.enums.PmsSpuTypeEnum;
+import com.zhengqing.mall.enums.PmsSpuTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;

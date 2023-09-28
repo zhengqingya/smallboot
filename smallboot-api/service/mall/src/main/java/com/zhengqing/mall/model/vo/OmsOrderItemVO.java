@@ -3,9 +3,9 @@ package com.zhengqing.mall.model.vo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zhengqing.mall.model.bo.PmsSkuSpecBO;
-import com.zhengqing.mall.model.enums.OmsOrderItemStatusEnum;
-import com.zhengqing.mall.model.enums.OmsOrderItemTypeEnum;
-import com.zhengqing.mall.model.enums.PmsSpuTypeEnum;
+import com.zhengqing.mall.enums.OmsOrderItemStatusEnum;
+import com.zhengqing.mall.enums.OmsOrderItemTypeEnum;
+import com.zhengqing.mall.enums.PmsSpuTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;

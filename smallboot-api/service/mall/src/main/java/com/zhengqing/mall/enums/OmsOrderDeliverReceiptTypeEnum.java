@@ -1,4 +1,4 @@
-package com.zhengqing.mall.model.enums;
+package com.zhengqing.mall.enums;
 
 import com.google.common.collect.Lists;
 import com.zhengqing.common.base.exception.MyException;

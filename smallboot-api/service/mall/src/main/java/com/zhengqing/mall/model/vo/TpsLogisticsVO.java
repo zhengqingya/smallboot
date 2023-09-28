@@ -1,8 +1,8 @@
 package com.zhengqing.mall.model.vo;
 
 import com.google.common.collect.Lists;
-import com.zhengqing.mall.model.enums.TpsLogisticsStatusEnum;
-import com.zhengqing.mall.model.enums.TpsLogisticsCodeEnum;
+import com.zhengqing.mall.enums.TpsLogisticsStatusEnum;
+import com.zhengqing.mall.enums.TpsLogisticsCodeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;

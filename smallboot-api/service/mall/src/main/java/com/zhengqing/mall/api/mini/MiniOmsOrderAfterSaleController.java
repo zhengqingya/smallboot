@@ -7,7 +7,7 @@ import com.zhengqing.mall.model.dto.MiniOmsOrderAfterSaleUpdateDTO;
 import com.zhengqing.mall.model.dto.MiniOmsOrderRepealAfterSaleDTO;
 import com.zhengqing.mall.model.dto.OmsOrderAfterSaleDeleteDTO;
 import com.zhengqing.mall.model.dto.OmsOrderAfterSalePageDTO;
-import com.zhengqing.mall.model.enums.OmsOrderAfterSaleStatusEnum;
+import com.zhengqing.mall.enums.OmsOrderAfterSaleStatusEnum;
 import com.zhengqing.mall.model.vo.OmsOrderAfterSaleBaseVO;
 import com.zhengqing.mall.service.IOmsOrderAfterSaleService;
 import io.swagger.annotations.Api;

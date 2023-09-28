@@ -2,7 +2,7 @@ package com.zhengqing.mall.model.vo;
 
 import com.zhengqing.common.base.model.vo.BaseVO;
 import com.zhengqing.mall.model.bo.OmsOrderReceiverAddressBO;
-import com.zhengqing.mall.model.enums.OmsOrderStatusEnum;
+import com.zhengqing.mall.enums.OmsOrderStatusEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;

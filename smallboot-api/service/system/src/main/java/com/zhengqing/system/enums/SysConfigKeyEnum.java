@@ -17,7 +17,7 @@ import java.util.List;
  */
 @Getter
 @AllArgsConstructor
-public enum SysConfigConfigKeyEnum {
+public enum SysConfigKeyEnum {
 
     // ====================================== ↓↓↓↓↓↓ 商城 ↓↓↓↓↓↓ ======================================
 
@@ -35,15 +35,15 @@ public enum SysConfigConfigKeyEnum {
     private final String value;
     private final String desc;
 
-    private static final List<SysConfigConfigKeyEnum> LIST = Lists.newArrayList();
+    private static final List<SysConfigKeyEnum> LIST = Lists.newArrayList();
 
     /**
      * 商城-订单-设置-枚举数据
      */
-    public static final List<SysConfigConfigKeyEnum> LIST_MALL_ORDER_SET = Lists.newArrayList();
+    public static final List<SysConfigKeyEnum> LIST_MALL_ORDER_SET = Lists.newArrayList();
 
     static {
-        LIST.addAll(Arrays.asList(SysConfigConfigKeyEnum.values()));
+        LIST.addAll(Arrays.asList(SysConfigKeyEnum.values()));
         // 商城-订单-设置-枚举数据
         LIST_MALL_ORDER_SET.add(MALL_ORDER_SET_AUTO_RECEIVE_MILLISECOND);
 //        LIST_MALL_ORDER_SET.add(MALL_ORDER_SET_UN_PAY_CLOSE_MILLISECOND);
@@ -61,8 +61,8 @@ public enum SysConfigConfigKeyEnum {
      * @author zhengqingya
      * @date 2021/8/19 9:50
      */
-    public static SysConfigConfigKeyEnum getEnum(String key) {
-        for (SysConfigConfigKeyEnum itemEnum : LIST) {
+    public static SysConfigKeyEnum getEnum(String key) {
+        for (SysConfigKeyEnum itemEnum : LIST) {
             if (itemEnum.getKey().equals(key)) {
                 return itemEnum;
             }

@@ -9,7 +9,7 @@ import com.zhengqing.mall.config.mybatis.handler.MallListFileTypeHandler;
 import com.zhengqing.mall.config.mybatis.handler.ShopListOpenTimeTypeHandler;
 import com.zhengqing.mall.model.bo.MallFileBO;
 import com.zhengqing.mall.model.bo.SmsShopOpenTimeBO;
-import com.zhengqing.mall.model.enums.SmsShopTypeEnum;
+import com.zhengqing.mall.enums.SmsShopTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;

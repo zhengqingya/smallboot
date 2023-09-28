@@ -6,7 +6,7 @@ import com.zhengqing.common.core.custom.parameter.CheckParam;
 import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
 import com.zhengqing.mall.model.bo.MallDictBO;
 import com.zhengqing.mall.model.bo.MallFileBO;
-import com.zhengqing.mall.model.enums.PmsSpuTypeEnum;
+import com.zhengqing.mall.enums.PmsSpuTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;

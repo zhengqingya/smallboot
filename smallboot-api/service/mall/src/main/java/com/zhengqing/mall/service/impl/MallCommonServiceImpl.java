@@ -7,14 +7,14 @@ import com.zhengqing.common.base.exception.MyException;
 import com.zhengqing.common.core.custom.validator.common.ValidList;
 import com.zhengqing.mall.constant.MallAppConstant;
 import com.zhengqing.mall.model.bo.PmsSpuBuyNumInfoBO;
-import com.zhengqing.mall.model.enums.MallResultCodeEnum;
-import com.zhengqing.mall.model.enums.OmsOrderAfterSaleTabEnum;
-import com.zhengqing.mall.model.enums.PmsSpuTabEnum;
-import com.zhengqing.mall.model.enums.WebOmsOrderTabEnum;
+import com.zhengqing.mall.enums.MallResultCodeEnum;
+import com.zhengqing.mall.enums.OmsOrderAfterSaleTabEnum;
+import com.zhengqing.mall.enums.PmsSpuTabEnum;
+import com.zhengqing.mall.enums.WebOmsOrderTabEnum;
 import com.zhengqing.mall.model.vo.MallTabConditionListVO;
 import com.zhengqing.mall.model.vo.PmsSkuVO;
 import com.zhengqing.mall.service.IMallCommonService;
-import com.zhengqing.system.enums.SysConfigConfigKeyEnum;
+import com.zhengqing.system.enums.SysConfigKeyEnum;
 import com.zhengqing.system.enums.SysDictTypeEnum;
 import com.zhengqing.system.model.dto.SysConfigSaveDTO;
 import com.zhengqing.system.model.dto.SysDictSaveBatchDTO;
@@ -205,8 +205,7 @@ public class MallCommonServiceImpl implements IMallCommonService {
     private void initOrderSetData() {
         // 订单-设置
         ValidList<SysConfigSaveDTO> dataList = new ValidList<>();
-        SysConfigConfigKeyEnum.LIST_MALL_ORDER_SET.forEach(
-                item -> dataList.add(SysConfigSaveDTO.builder().key(item.getKey()).value(item.getValue()).remark(item.getDesc()).build()));
+        SysConfigKeyEnum.LIST_MALL_ORDER_SET.forEach(item -> dataList.add(SysConfigSaveDTO.builder().key(item.getKey()).value(item.getValue()).remark(item.getDesc()).build()));
         this.iSysConfigService.saveBatch(dataList);
 
         // 订单-发货微信消息通知
@@ -221,7 +220,6 @@ public class MallCommonServiceImpl implements IMallCommonService {
                 .build());
         saveDictDataMap.put(SysDictTypeEnum.MALL_ORDER_DELIVER_WX_MSG_NOTICE.getCode(), msgList);
         this.iSysDictService.addOrUpdateBatch(saveDictDataMap, true);
-
     }
 
 }

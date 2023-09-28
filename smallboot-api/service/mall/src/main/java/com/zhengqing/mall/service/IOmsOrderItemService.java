@@ -3,8 +3,8 @@ package com.zhengqing.mall.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhengqing.mall.entity.OmsOrderItem;
 import com.zhengqing.mall.model.dto.OmsOrderItemDTO;
-import com.zhengqing.mall.model.enums.OmsOrderItemStatusEnum;
-import com.zhengqing.mall.model.enums.OmsOrderStatusEnum;
+import com.zhengqing.mall.enums.OmsOrderItemStatusEnum;
+import com.zhengqing.mall.enums.OmsOrderStatusEnum;
 import com.zhengqing.mall.model.vo.OmsOrderItemVO;
 
 import java.util.List;

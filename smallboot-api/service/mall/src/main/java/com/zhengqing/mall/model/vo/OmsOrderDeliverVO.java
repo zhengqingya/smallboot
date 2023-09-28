@@ -2,7 +2,7 @@ package com.zhengqing.mall.model.vo;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.zhengqing.mall.model.enums.OmsOrderDeliverReceiptTypeEnum;
+import com.zhengqing.mall.enums.OmsOrderDeliverReceiptTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
