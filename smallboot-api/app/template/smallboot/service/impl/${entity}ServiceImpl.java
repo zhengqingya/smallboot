@@ -52,16 +52,10 @@ public class ${entity}ServiceImpl extends ServiceImpl<${entity}Mapper, ${entity}
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void addOrUpdateData(${entity}SaveDTO params) {
-<#list columnInfoList as item>
-<#if item.columnNameDb != "create_by" && item.columnNameDb != "create_time" && item.columnNameDb != "update_by" && item.columnNameDb != "update_time" && item.columnNameDb != "is_deleted">
-        ${item.columnTypeJava} ${item.columnNameJavaLower} = params.get${item.columnNameJavaUpper}();
-</#if>
-</#list>
-
         ${entity}.builder()
 <#list columnInfoList as item>
 <#if item.columnNameDb != "create_by" && item.columnNameDb != "create_time" && item.columnNameDb != "update_by" && item.columnNameDb != "update_time" && item.columnNameDb != "is_deleted">
-            .${item.columnNameJavaLower}(${item.columnNameJavaLower})
+            .${item.columnNameJavaLower}(params.get${item.columnNameJavaUpper}())
 </#if>
 </#list>
             .build()

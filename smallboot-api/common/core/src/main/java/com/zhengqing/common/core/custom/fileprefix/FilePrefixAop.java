@@ -2,6 +2,7 @@ package com.zhengqing.common.core.custom.fileprefix;
 
 import cn.hutool.core.util.URLUtil;
 import cn.hutool.http.HttpUtil;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -38,7 +39,7 @@ public class FilePrefixAop {
             return null;
         }
         try {
-            this.handleField(result);
+            this.handleClz(result);
         } catch (Exception e) {
             log.error("[FilePrefixAop] 处理异常：", e);
             return result;
@@ -47,20 +48,28 @@ public class FilePrefixAop {
     }
 
     @SneakyThrows(Exception.class)
-    private void handleField(Object data) {
+    private void handleClz(Object data) {
         if (data instanceof List) {
-            ((List<?>) data).forEach(this::handleField);
+            ((List<?>) data).forEach(this::handleClz);
+            return;
+        }
+
+        // 解析分页中的数据
+        Class<?> dataClz = data.getClass();
+        if (data instanceof Page) {
+            Page page = (Page) data;
+            this.handleClz(page.getRecords());
             return;
         }
 
         // 看下类上是否存在处理注解
-        FilePrefixValid filePrefixValid = AnnotationUtils.findAnnotation(data.getClass(), FilePrefixValid.class);
+        FilePrefixValid filePrefixValid = AnnotationUtils.findAnnotation(dataClz, FilePrefixValid.class);
         if (filePrefixValid == null) {
             return;
         }
 
         // 再看看字段
-        Field[] fields = data.getClass().getDeclaredFields();
+        Field[] fields = dataClz.getDeclaredFields();
         for (Field field : fields) {
             field.setAccessible(true);
             if (field.isAnnotationPresent(FilePrefix.class)) {
@@ -68,7 +77,7 @@ public class FilePrefixAop {
             } else if (field.isAnnotationPresent(FilePrefixValid.class)) {
                 Object fieldValue = field.get(data);
                 if (fieldValue instanceof List) {
-                    this.handleField(fieldValue);
+                    this.handleClz(fieldValue);
                 } else {
                     throw new Exception("[FilePrefixValid] 暂未定义处理该数据类型！");
                 }

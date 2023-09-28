@@ -5,7 +5,7 @@
             <#list queryColumnInfoList as item>
               <el-input v-model="listQuery.${item.columnNameJavaLower}"
                         placeholder="请输入${item.columnComment}" style="width:200px" clearable
-                        @clear="refreshTableData"></el-input>
+                        @clear="refreshTableData" />
             </#list>
         </#if>
       <el-button type="primary" @click="refreshTableData">查询</el-button>
@@ -23,8 +23,7 @@
                 </template>
               </el-table-column>
             <#else>
-              <el-table-column label="${item.columnComment}" prop="${item.columnNameJavaLower}"
-                               align="center"></el-table-column>
+              <el-table-column label="${item.columnComment}" prop="${item.columnNameJavaLower}" align="center" />
             </#if>
         </#list>
       <el-table-column align="center" label="操作">

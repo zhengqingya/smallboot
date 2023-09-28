@@ -1,12 +1,16 @@
 package com.zhengqing.system.api.web;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.common.base.constant.ServiceConstant;
-import com.zhengqing.common.file.util.FileStorageUtil;
+import com.zhengqing.system.model.dto.SysFilePageDTO;
+import com.zhengqing.system.model.vo.SysFilePageVO;
 import com.zhengqing.system.model.vo.SysFileVO;
+import com.zhengqing.system.service.ISysFileService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,17 +28,19 @@ import org.springframework.web.multipart.MultipartFile;
 @Api(tags = {"web-系统管理-文件上传"})
 public class WebSysFileController {
 
-    private final FileStorageUtil fileStorageUtil;
+    private final ISysFileService iSysFileService;
 
     @PostMapping("upload")
     @ApiOperation("上传文件")
     @SneakyThrows(Exception.class)
     public SysFileVO upload(@RequestPart @RequestParam MultipartFile file) {
-        return SysFileVO.builder()
-                .name(file.getOriginalFilename())
-                .url(this.fileStorageUtil.upload(file))
-                .type(file.getContentType())
-                .build();
+        return this.iSysFileService.upload(file);
+    }
+
+    @GetMapping("page")
+    @ApiOperation("分页列表")
+    public IPage<SysFilePageVO> page(@Validated @ModelAttribute SysFilePageDTO params) {
+        return this.iSysFileService.page(params);
     }
 
 }

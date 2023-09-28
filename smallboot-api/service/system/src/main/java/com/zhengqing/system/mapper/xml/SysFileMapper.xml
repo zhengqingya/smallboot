@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhengqing.system.mapper.SysFileMapper">
+
+    <select id="selectDataPage" resultType="com.zhengqing.system.model.vo.SysFilePageVO">
+        SELECT
+        *
+        FROM t_sys_file
+        <where>
+            <if test="filter.name!=null and filter.name!=''">
+                AND name LIKE CONCAT( '%', #{filter.name} , '%' )
+            </if>
+        </where>
+        ORDER BY create_time DESC
+    </select>
+
+</mapper>

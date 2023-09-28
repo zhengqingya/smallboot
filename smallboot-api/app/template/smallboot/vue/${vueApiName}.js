@@ -1,6 +1,6 @@
 import request from '@/utils/request';
 
-const BASE_API = "/api/${moduleName}/${entityNameLower}";
+const BASE_API = "/web/api/${moduleName}/${entityNameLower}";
 
 export default {
   page(query, headers) {
