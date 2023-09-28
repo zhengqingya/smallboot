@@ -42,6 +42,13 @@
 ![](./images/login.png)
 ![](./images/README-1693477951182.png)
 
+### 五、其它
+
+#### 1、git配置不忽略文件名大小写
+
+```shell
+git config core.ignorecase false
+```
 
 ---
 
