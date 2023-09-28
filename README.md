@@ -2,26 +2,32 @@
 
 > 项目地址：[https://gitee.com/zhengqingya/smallboot](https://gitee.com/zhengqingya/smallboot)
 
-> 微服务版本：https://gitee.com/zhengqingya/small-tools
-
 `SmallBoot`：Vue+SpringBoot 前后端分离的项目快速开发脚手架 & 多微信公众号管理平台 & 商城
 
-后端技术栈：
+#### 后端技术栈
 
 1. SpringBoot2.7.0
 2. MySQL5.7
 3. MyBatis-Plus3.5.2
 4. Redis6.0.8
-5. Docker
-6. RabbitMQ
+5. RabbitMQ
+6. Docker
 
-前端技术栈：
+#### 前端Web技术栈
 
-1. Vue3
-2. Vite4
-3. Pinia
-4. Vue Router
-5. Element Plus
+1. [Vue3](https://cn.vuejs.org/)
+2. [Vite4](https://cn.vitejs.dev/)
+3. [Vue Router](https://router.vuejs.org/zh/)
+4. [Pinia](https://pinia.vuejs.org/zh/)
+5. [Element Plus](https://element-plus.org/zh-CN/)
+
+#### 小程序技术栈
+
+1. [uni-app](https://uniapp.dcloud.net.cn/)
+2. [Vue3](https://cn.vuejs.org/)
+3. [Vite4](https://cn.vitejs.dev/)
+4. [uview-plus](https://uiadmin.net/uview-plus/)
+5. [Pinia](https://pinia.vuejs.org/zh/)
 
 ### 二、运行
 
@@ -55,3 +61,4 @@ git config core.ignorecase false
 > 学习总是在一点一滴中积累而成的，就像砌砖，总要结结实实。
 > 踏踏实实的学吧！加油！成功属于努力的人！
 > 🤖 希望你不只是关注+收藏！ 🤖
+
