@@ -40,6 +40,7 @@
             <el-table-column prop="name" label="字典名称" align="center" />
             <el-table-column prop="value" label="字典值" align="center" />
             <el-table-column prop="sort" label="排序" align="center" />
+            <el-table-column prop="remark" label="备注" align="center" />
             <el-table-column label="操作" align="center" width="150">
               <template #default="scope">
                 <el-button link @click="updateDict(scope.row)">编辑</el-button>

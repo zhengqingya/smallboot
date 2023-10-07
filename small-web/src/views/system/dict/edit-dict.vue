@@ -10,6 +10,9 @@
       <el-form-item label="排序：">
         <el-input-number v-model="form.sort" />
       </el-form-item>
+      <el-form-item label="备注：">
+        <el-input v-model="form.remark" :rows="3" type="textarea" />
+      </el-form-item>
     </el-form>
     <template #footer>
       <el-button @click="dialogVisible = false">取 消</el-button>
