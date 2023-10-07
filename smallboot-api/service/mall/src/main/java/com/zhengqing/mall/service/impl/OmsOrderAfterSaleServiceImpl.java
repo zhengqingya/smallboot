@@ -13,17 +13,17 @@ import com.zhengqing.common.core.util.IdGeneratorUtil;
 import com.zhengqing.mall.constant.MallAppConstant;
 import com.zhengqing.mall.constant.MallRabbitMqConstant;
 import com.zhengqing.mall.entity.OmsOrderAfterSale;
+import com.zhengqing.mall.enums.MallResultCodeEnum;
+import com.zhengqing.mall.enums.MallTabEnum;
+import com.zhengqing.mall.enums.OmsOrderAfterSaleStatusEnum;
+import com.zhengqing.mall.enums.OmsOrderSaleTypeEnum;
 import com.zhengqing.mall.mapper.OmsOrderAfterSaleMapper;
 import com.zhengqing.mall.model.bo.OmsOrderAfterSaleCloseBO;
 import com.zhengqing.mall.model.bo.PmsSkuStockBO;
 import com.zhengqing.mall.model.dto.*;
-import com.zhengqing.mall.enums.MallResultCodeEnum;
-import com.zhengqing.mall.enums.OmsOrderAfterSaleStatusEnum;
-import com.zhengqing.mall.enums.OmsOrderSaleTypeEnum;
 import com.zhengqing.mall.model.vo.*;
 import com.zhengqing.mall.service.*;
 import com.zhengqing.pay.model.bo.PayOrderNotifyBO;
-import com.zhengqing.system.enums.SysDictTypeEnum;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -235,7 +235,7 @@ public class OmsOrderAfterSaleServiceImpl extends ServiceImpl<OmsOrderAfterSaleM
         params.setAfterStatusList(null);
         // 查询tab条件数量
         List<MallTabConditionListVO> tabDataList = this.omsOrderAfterSaleMapper.selectTabCondition(params);
-        List<MallTabConditionListVO> tabResultList = this.iMallCommonService.getTabDataList(tabDataList, SysDictTypeEnum.MALL_ORDER_AFTER_SALE_TAB_CONDITION);
+        List<MallTabConditionListVO> tabResultList = this.iMallCommonService.getTabDataList(tabDataList, MallTabEnum.MALL_ORDER_AFTER_SALE_TAB_CONDITION);
         // 售后订单tab值需单独计算，因为一个tab对应多个状态值
         Map<Byte, Integer> tabDataMap = tabDataList.stream().collect(Collectors.toMap(MallTabConditionListVO::getValue, MallTabConditionListVO::getNum, (k1, k2) -> k1));
         for (MallTabConditionListVO item : tabResultList) {

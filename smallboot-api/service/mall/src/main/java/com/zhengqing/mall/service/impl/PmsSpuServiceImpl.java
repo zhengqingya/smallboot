@@ -1,5 +1,6 @@
 package com.zhengqing.mall.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
@@ -7,8 +8,6 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -20,6 +19,7 @@ import com.zhengqing.mall.constant.MallRabbitMqConstant;
 import com.zhengqing.mall.constant.MallRedisConstant;
 import com.zhengqing.mall.entity.PmsSku;
 import com.zhengqing.mall.entity.PmsSpu;
+import com.zhengqing.mall.enums.MallTabEnum;
 import com.zhengqing.mall.mapper.PmsSpuMapper;
 import com.zhengqing.mall.model.bo.MallDictBO;
 import com.zhengqing.mall.model.bo.PmsSkuBO;
@@ -41,7 +41,6 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -94,27 +93,23 @@ public class PmsSpuServiceImpl extends ServiceImpl<PmsSpuMapper, PmsSpu> impleme
 
     @Override
     public void handleSpuData(PmsSpuBaseVO spuDetail) {
-        List<MallDictBO> serviceList = new ObjectMapper().convertValue(spuDetail.getServiceList(), new TypeReference<List<MallDictBO>>() {
-        });
-        List<MallDictBO> explainList = new ObjectMapper().convertValue(spuDetail.getExplainList(), new TypeReference<List<MallDictBO>>() {
-        });
-        List<String> serviceValueList = serviceList.stream().map(e -> e.getValue()).collect(Collectors.toList());
-        List<String> explainValueList = explainList.stream().map(e -> e.getValue()).collect(Collectors.toList());
-        if (CollectionUtils.isEmpty(serviceValueList) && CollectionUtils.isEmpty(explainValueList)) {
+        List<String> serviceValueList = spuDetail.getServiceList().stream().map(MallDictBO::getValue).collect(Collectors.toList());
+        List<String> explainValueList = spuDetail.getExplainList().stream().map(MallDictBO::getValue).collect(Collectors.toList());
+        if (CollUtil.isEmpty(serviceValueList) && CollUtil.isEmpty(explainValueList)) {
             return;
         }
         // 查询服务和说明相关数据字典缓存
         List<String> codeList = Lists.newArrayList(SysDictTypeEnum.MALL_SPU_SERVICE.getCode(), SysDictTypeEnum.MALL_SPU_EXPLAIN.getCode());
         Map<String, List<SysDictVO>> dictDataMap = this.iSysDictService.listByOpenCode(codeList);
         // 服务
-        if (!CollectionUtils.isEmpty(serviceValueList)) {
+        if (CollUtil.isNotEmpty(serviceValueList)) {
             List<SysDictVO> dictListByService = dictDataMap.get(SysDictTypeEnum.MALL_SPU_SERVICE.getCode());
             List<SysDictVO> serviceDictList = dictListByService.stream().filter(e -> serviceValueList.contains(e.getValue())).collect(Collectors.toList());
             spuDetail.setServiceList(this.toDictBO(serviceDictList));
         }
         // 说明
         List<SysDictVO> dictListByExplain = dictDataMap.get(SysDictTypeEnum.MALL_SPU_EXPLAIN.getCode());
-        if (!CollectionUtils.isEmpty(explainValueList)) {
+        if (CollUtil.isNotEmpty(explainValueList)) {
             List<SysDictVO> explainDictList = dictListByExplain.stream().filter(e -> explainValueList.contains(e.getValue())).collect(Collectors.toList());
             spuDetail.setExplainList(this.toDictBO(explainDictList));
         }
@@ -130,7 +125,7 @@ public class PmsSpuServiceImpl extends ServiceImpl<PmsSpuMapper, PmsSpu> impleme
      */
     private List<MallDictBO> toDictBO(List<SysDictVO> dictVOList) {
         List<MallDictBO> resultList = Lists.newLinkedList();
-        if (CollectionUtils.isEmpty(dictVOList)) {
+        if (CollUtil.isEmpty(dictVOList)) {
             return resultList;
         }
         dictVOList.forEach(item -> resultList.add(MallDictBO.builder()
@@ -146,11 +141,11 @@ public class PmsSpuServiceImpl extends ServiceImpl<PmsSpuMapper, PmsSpu> impleme
     @Override
     public List<PmsSkuVO> listBySku(PmsSkuDTO params) {
         List<String> skuIdList = params.getSkuIdList();
-        if (CollectionUtils.isEmpty(skuIdList)) {
+        if (CollUtil.isEmpty(skuIdList)) {
             return Lists.newArrayList();
         }
         List<PmsSkuVO> pmsSkuList = this.pmsSpuMapper.selectSkuList(params);
-        if (!CollectionUtils.isEmpty(pmsSkuList)) {
+        if (!CollUtil.isEmpty(pmsSkuList)) {
             pmsSkuList.forEach(item -> item.handleData());
         }
         return pmsSkuList;
@@ -159,7 +154,7 @@ public class PmsSpuServiceImpl extends ServiceImpl<PmsSpuMapper, PmsSpu> impleme
     @Override
     public Map<String, PmsSkuVO> mapBySku(PmsSkuDTO params) {
         List<String> skuIdList = params.getSkuIdList();
-        if (CollectionUtils.isEmpty(skuIdList)) {
+        if (CollUtil.isEmpty(skuIdList)) {
             return Maps.newHashMap();
         }
         return this.listBySku(params).stream().collect(Collectors.toMap(PmsSkuVO::getSkuId, t -> t, (k1, k2) -> k1));
@@ -226,14 +221,14 @@ public class PmsSpuServiceImpl extends ServiceImpl<PmsSpuMapper, PmsSpu> impleme
         params.setIsPut(null);
         // 查询tab条件数量
         List<MallTabConditionListVO> tabDataList = this.pmsSpuMapper.selectTabCondition(params);
-        return this.iMallCommonService.getTabDataList(tabDataList, SysDictTypeEnum.MALL_SPU_TAB_CONDITION);
+        return this.iMallCommonService.getTabDataList(tabDataList, MallTabEnum.MALL_SPU_TAB_CONDITION);
     }
 
     @Override
     public IPage<PmsSpuBaseVO> page(PmsSpuPageDTO params) {
         IPage<PmsSpuBaseVO> result = this.pmsSpuMapper.selectDataList(new Page<>(), params);
         List<PmsSpuBaseVO> list = result.getRecords();
-        if (CollectionUtils.isEmpty(list)) {
+        if (CollUtil.isEmpty(list)) {
             return result;
         }
         // 商品ids
@@ -259,7 +254,7 @@ public class PmsSpuServiceImpl extends ServiceImpl<PmsSpuMapper, PmsSpu> impleme
     @Override
     public Map<String, PmsSpuTypeVO> mapSpuType(List<String> idList) {
         Map<String, PmsSpuTypeVO> resultMap = Maps.newHashMap();
-        if (CollectionUtils.isEmpty(idList)) {
+        if (CollUtil.isEmpty(idList)) {
             return resultMap;
         }
         List<PmsSpuTypeVO> list = this.pmsSpuMapper.selectDataTypeList(idList);
@@ -367,7 +362,7 @@ public class PmsSpuServiceImpl extends ServiceImpl<PmsSpuMapper, PmsSpu> impleme
 
             // 2、需删除的sku数据
             List<String> mysqlRemoveSkuList = mysqlSkuStrListOld.stream().filter(skuOld -> !skuStrListNew.contains(skuOld)).collect(Collectors.toList());
-            if (!CollectionUtils.isEmpty(mysqlRemoveSkuList)) {
+            if (CollUtil.isNotEmpty(mysqlRemoveSkuList)) {
                 mysqlRemoveSkuList.forEach(mysqlRemoveSku -> {
                     String mysqlRemoveSkuId = mysqlSkuStrToIdMap.get(mysqlRemoveSku);
                     mysqlRemoveSkuIdList.add(mysqlRemoveSkuId);
@@ -453,7 +448,7 @@ public class PmsSpuServiceImpl extends ServiceImpl<PmsSpuMapper, PmsSpu> impleme
         List<String> idList = params.getIdList();
         Boolean isPut = params.getIsPut();
         log.info("[商城] 批量更新商品上下架状态 商品ids:{} 是否上架：{}", idList, isPut);
-        if (CollectionUtils.isEmpty(idList)) {
+        if (CollUtil.isEmpty(idList)) {
             return;
         }
         this.pmsSpuMapper.updateBatchPut(idList, isPut);
@@ -465,7 +460,7 @@ public class PmsSpuServiceImpl extends ServiceImpl<PmsSpuMapper, PmsSpu> impleme
         List<String> idList = params.getIdList();
         Boolean isShow = params.getIsShow();
         log.info("[商城] 批量更新商品显示状态 商品ids:{} 是否显示：{}", idList, isShow);
-        if (CollectionUtils.isEmpty(idList)) {
+        if (CollUtil.isEmpty(idList)) {
             return;
         }
         this.pmsSpuMapper.updateBatchShow(idList, isShow);
@@ -478,7 +473,7 @@ public class PmsSpuServiceImpl extends ServiceImpl<PmsSpuMapper, PmsSpu> impleme
         List<String> idList = params.getIdList();
         Boolean isPresell = params.getIsPresell();
         Date presellStartTime = params.getPresellStartTime();
-        if (CollectionUtils.isEmpty(idList)) {
+        if (CollUtil.isEmpty(idList)) {
             return;
         }
         // 1、更新预售信息
@@ -512,7 +507,7 @@ public class PmsSpuServiceImpl extends ServiceImpl<PmsSpuMapper, PmsSpu> impleme
 
     @Override
     public void deleteBatch(List<String> spuIdList) {
-        if (CollectionUtils.isEmpty(spuIdList)) {
+        if (CollUtil.isEmpty(spuIdList)) {
             return;
         }
         // 1、删除商品数据
@@ -542,7 +537,7 @@ public class PmsSpuServiceImpl extends ServiceImpl<PmsSpuMapper, PmsSpu> impleme
                 spuIdReVirtualCouponList.add(spuId);
             }
         });
-        if (CollectionUtils.isEmpty(spuIdReVirtualCouponList)) {
+        if (CollUtil.isEmpty(spuIdReVirtualCouponList)) {
             return;
         }
         // 优惠券信息
@@ -567,7 +562,7 @@ public class PmsSpuServiceImpl extends ServiceImpl<PmsSpuMapper, PmsSpu> impleme
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void updateBatchSort(List<WebPmsSpuEditSortListDTO> list) {
-        if (CollectionUtils.isEmpty(list)) {
+        if (CollUtil.isEmpty(list)) {
             return;
         }
         this.pmsSpuMapper.updateBatchSort(list);

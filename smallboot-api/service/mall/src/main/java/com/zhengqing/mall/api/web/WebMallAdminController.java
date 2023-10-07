@@ -3,9 +3,7 @@ package com.zhengqing.mall.api.web;
 import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.mall.service.IMallCommonService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,11 +22,5 @@ import org.springframework.web.bind.annotation.RestController;
 public class WebMallAdminController {
 
     private final IMallCommonService iMallCommonService;
-
-    @GetMapping("initData")
-    @ApiOperation("初始化普通商品所需数据(系统模块中缓存数据) -- 仅第一次使用")
-    public void initData() {
-        this.iMallCommonService.initData();
-    }
 
 }

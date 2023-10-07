@@ -25,7 +25,7 @@ public interface MallAppConstant {
      */
     long AUTO_CLOSE_AFTER_MILLISECOND = 604800000;
     /**
-     * 自动收货毫秒 -- 7天
+     * 自动收货时间 -- 7天
      */
     long AUTO_RECEIPT_MILLISECOND = 604800000;
 

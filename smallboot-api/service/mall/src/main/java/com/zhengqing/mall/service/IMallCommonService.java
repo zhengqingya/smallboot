@@ -1,9 +1,9 @@
 package com.zhengqing.mall.service;
 
+import com.zhengqing.mall.enums.MallTabEnum;
 import com.zhengqing.mall.model.bo.PmsSpuBuyNumInfoBO;
 import com.zhengqing.mall.model.vo.MallTabConditionListVO;
 import com.zhengqing.mall.model.vo.PmsSkuVO;
-import com.zhengqing.system.enums.SysDictTypeEnum;
 
 import java.util.Date;
 import java.util.List;
@@ -39,22 +39,13 @@ public interface IMallCommonService {
     /**
      * 处理tab数据
      *
-     * @param tabDataList  tab数据
-     * @param dictTypeEnum 字典类型枚举
+     * @param tabDataList tab数据
+     * @param tabEnum     tab类型枚举
      * @return 处理过后的tab数据
      * @author zhengqingya
      * @date 2021/8/30 19:20
      */
-    List<MallTabConditionListVO> getTabDataList(List<MallTabConditionListVO> tabDataList, SysDictTypeEnum dictTypeEnum);
-
-    /**
-     * 初始化普通商品所需数据
-     *
-     * @return void
-     * @author zhengqingya
-     * @date 2021/11/25 17:31
-     */
-    void initData();
+    List<MallTabConditionListVO> getTabDataList(List<MallTabConditionListVO> tabDataList, MallTabEnum tabEnum);
 
     /**
      * 校验此人是否限购

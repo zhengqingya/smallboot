@@ -33,7 +33,6 @@ import com.zhengqing.pay.model.bo.PayOrderNotifyBO;
 import com.zhengqing.pay.model.dto.PayOrderCreateDTO;
 import com.zhengqing.pay.model.vo.PayOrderCreateVO;
 import com.zhengqing.pay.service.IPayService;
-import com.zhengqing.system.enums.SysDictTypeEnum;
 import com.zhengqing.ums.model.vo.UmsUserVO;
 import com.zhengqing.ums.service.IUmsUserService;
 import lombok.RequiredArgsConstructor;
@@ -660,7 +659,7 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
         // 查询tab条件数量
         List<MallTabConditionListVO> tabDataList = this.omsOrderMapper.selectTabConditionByWeb(params);
 
-        List<MallTabConditionListVO> result = this.iMallCommonService.getTabDataList(tabDataList, SysDictTypeEnum.MALL_ORDER_TAB_CONDITION_WEB);
+        List<MallTabConditionListVO> result = this.iMallCommonService.getTabDataList(tabDataList, MallTabEnum.MALL_ORDER_TAB_CONDITION_WEB);
         for (MallTabConditionListVO item : result) {
             if (WebOmsOrderTabEnum.AFTER_SALE.getValue().equals(item.getValue())) {
                 item.setNum(this.iOmsOrderAfterSaleService.getHandleIngNum(UmsUserContext.getUserId()));
@@ -668,7 +667,7 @@ public class OmsOrderServiceImpl extends ServiceImpl<OmsOrderMapper, OmsOrder> i
             }
         }
 
-        return this.iMallCommonService.getTabDataList(tabDataList, SysDictTypeEnum.MALL_ORDER_TAB_CONDITION_WEB);
+        return this.iMallCommonService.getTabDataList(tabDataList, MallTabEnum.MALL_ORDER_TAB_CONDITION_WEB);
     }
 
     @Override
