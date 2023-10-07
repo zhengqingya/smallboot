@@ -1,5 +1,6 @@
 package com.zhengqing.common.redis.util;
 
+import cn.hutool.core.util.IdUtil;
 import com.google.common.collect.Lists;
 import com.zhengqing.common.redis.model.bo.RedisGeoPoint;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,9 +42,9 @@ public class RedisGeoUtil {
      * @date 2019/11/27 15:53
      */
     public static Long geoAdd(String key, Point point, String member) {
-        if (redisTemplate.hasKey(key)) {
-            geoDel(key, member);
-        }
+//        if (redisTemplate.hasKey(key)) {
+//            geoDel(key, member);
+//        }
         return redisTemplate.opsForGeo().add(key, point, member);
     }
 
@@ -76,18 +77,39 @@ public class RedisGeoUtil {
 
     /**
      * 返回两个位置的距离，可以指定单位，比如米m，千米km，英里mi，英尺ft
-     * redis命令： geodist key 北京 上海
+     * redis命令： geodist key 北京 上海 km
      *
      * @param key     key
      * @param member1 成员1
      * @param member2 成员2
-     * @param metric  单位
+     * @param metric  距离单位 {@link RedisGeoCommands.DistanceUnit}
      * @return 距离
      * @author zhengqingya
      * @date 2019/11/27 15:58
      */
     public static Distance geoDist(String key, String member1, String member2, Metric metric) {
         return redisTemplate.opsForGeo().distance(key, member1, member2, metric);
+    }
+
+    /**
+     * 返回两个位置的距离
+     *
+     * @param aLng   成员1经度
+     * @param aLat   成员1纬度
+     * @param bLng   成员2经度
+     * @param bLat   成员2纬度
+     * @param metric 距离单位 {@link RedisGeoCommands.DistanceUnit}
+     * @return 距离
+     * @author zhengqingya
+     * @date 2019/11/27 15:58
+     */
+    public static Distance geoDist(Double aLng, Double aLat, Double bLng, Double bLat, Metric metric) {
+        String key = "redis_geo_two_point_distance:" + IdUtil.getSnowflakeNextId();
+        geoAdd(key, new Point(aLng, aLat), "member1");
+        geoAdd(key, new Point(bLng, bLat), "member2");
+        Distance distance = geoDist(key, "member1", "member2", metric);
+        RedisUtil.delete(key);
+        return distance;
     }
 
     /**
