@@ -21,28 +21,29 @@
       <el-table-column align="center" label="操作">
         <template #default="scope">
           <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
-          <el-button link @click="handleDetail(scope.row)">详情</el-button>
           <base-delete-btn @ok="handleDelete(scope.row)"></base-delete-btn>
         </template>
       </el-table-column>
     </base-table-p>
 
-    <base-dialog v-model="dialogVisible" :title="dialogTitleObj[dialogStatus]" width="30%">
-      <el-form ref="dataFormRef" :model="form" :rules="rules" label-width="100px">
+    <base-dialog v-model="dialogVisible" :title="dialogTitleObj[dialogStatus]" width="60%">
+      <el-form ref="dataFormRef" :model="form" label-width="100px">
         <el-form-item label="套餐名:">
           <el-input v-model="form.name" />
         </el-form-item>
         <el-form-item label="状态:">
           <el-radio-group v-model="form.status">
-            <el-radio :label="true">开启</el-radio>
-            <el-radio :label="false">禁用</el-radio>
+            <el-radio :label="1">开启</el-radio>
+            <el-radio :label="0">禁用</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="菜单权限:">
-          <el-input v-model="form.menuIdList" />
+          <div style="height: 400px; width: 100%" class="overflow-y-auto">
+            <menu-perm-tree v-if="dialogVisible && form.menuTree && form.menuTree.length > 0" v-model="form.menuTree" />
+          </div>
         </el-form-item>
         <el-form-item label="备注:">
-          <el-input v-model="form.remark" />
+          <el-input v-model="form.remark" :row="2" type="textarea" />
         </el-form-item>
       </el-form>
       <template #footer>
@@ -63,16 +64,47 @@ let dialogStatus = $ref('');
 function refreshTableData() {
   proxy.$refs.baseTableRef.refresh();
 }
-function handleAdd() {
-  form = { status: true };
+
+onMounted(() => {});
+
+async function getMenuTree() {
+  let res = await proxy.$api.sys_menu.menuTree();
+  return res.data;
+}
+
+async function handleAdd() {
+  form = { status: 1, menuTree: await getMenuTree() };
   dialogStatus = 'add';
   dialogVisible = true;
 }
-function handleUpdate(row) {
+async function handleUpdate(row) {
   form = Object.assign({}, row);
+
+  let menuTree = await getMenuTree();
+  recurveMenu(menuTree, form.menuIdList, form.permissionIdList);
+  form.menuTree = menuTree;
   dialogStatus = 'update';
   dialogVisible = true;
 }
+
+function recurveMenu(list, menuIdList, permissionIdList) {
+  list.forEach((menuItem) => {
+    if (menuIdList.includes(menuItem.menuId)) {
+      menuItem.isHasPerm = true;
+    }
+    if (menuItem.permList.length > 0) {
+      menuItem.permList.forEach((permItem) => {
+        if (permissionIdList.includes(permItem.id)) {
+          permItem.isHasPerm = true;
+        }
+      });
+    }
+    if (menuItem.children.length > 0) {
+      recurveMenu(menuItem.children, menuIdList, permissionIdList);
+    }
+  });
+}
+
 async function handleDelete(row) {
   let res = await proxy.$api.sys_tenant_package.delete({ id: row.id });
   refreshTableData();

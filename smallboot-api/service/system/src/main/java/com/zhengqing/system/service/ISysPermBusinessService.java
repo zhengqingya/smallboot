@@ -82,8 +82,8 @@ public interface ISysPermBusinessService {
     /**
      * 获取菜单树
      *
-     * @param roleIdList     角色ids
-     * @param isOnlyShowPerm 是否仅显示带权限的数据
+     * @param roleIdList     角色ids tips:为空时拿到所有权限
+     * @param isOnlyShowPerm 是否仅显示带权限的数据  false:显示所有权限
      * @return 菜单树信息
      * @author zhengqingya
      * @date 2021/1/13 20:44

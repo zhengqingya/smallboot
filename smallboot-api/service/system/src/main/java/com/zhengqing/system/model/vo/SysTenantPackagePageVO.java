@@ -9,6 +9,9 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.util.Date;
+import java.util.List;
+
 /**
  * <p>系统管理-租户套餐-分页列表-响应参数</p>
  *
@@ -37,8 +40,13 @@ public class SysTenantPackagePageVO extends BaseVO {
     private String remark;
 
     @ApiModelProperty("关联的菜单ids")
-    private String menuIdList;
+    private List<Integer> menuIdList;
 
+    @ApiModelProperty("关联的按钮权限ids")
+    private List<Integer> permissionIdList;
+
+    @ApiModelProperty(value = "创建时间")
+    private Date createTime;
 
     public void handleData() {
 

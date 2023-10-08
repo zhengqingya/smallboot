@@ -3,9 +3,9 @@
     <el-scrollbar>
       <base-right-click class="flex">
         <div v-for="item in tabsList" :key="item" class="item m-4" :class="{ active: $route.meta.fullPath === item.meta.fullPath }" style="display: inline-block; white-space: nowrap">
-          <div class="flex-between-center" style="height: 20px" @click.right="handleRightClick(item, $event)">
+          <div class="flex-between-center p-x-10" style="height: 25px" @click.right="handleRightClick(item, $event)">
             <router-link :to="item.meta.fullPath" @click="activeTabs(item)">
-              <span class="m-r-4">{{ item.meta.title }}</span>
+              <span class="m-r-4" :class="{ active: $route.meta.fullPath === item.meta.fullPath }">{{ item.meta.title }}</span>
             </router-link>
             <el-icon v-if="item.meta.fullPath !== '/'" :size="10" @click="handleClose(item)"> <Close /> </el-icon>
           </div>
@@ -60,14 +60,16 @@ function handleCloseAll() {
 }
 </script>
 <style lang="scss" scoped>
+.active {
+  color: var(--el-color-white);
+  background-color: var(--el-color-primary);
+}
+
 .app {
   position: relative;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
   .item {
     border: 1px solid #ebeef5;
-    &.active {
-      background: #00aaff;
-    }
   }
 
   .right-menu {

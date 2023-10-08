@@ -50,6 +50,7 @@ public class SysTenantPackageServiceImpl extends ServiceImpl<SysTenantPackageMap
                 .name(params.getName())
                 .status(params.getStatus())
                 .menuIdList(params.getMenuIdList())
+                .permissionIdList(params.getPermissionIdList())
                 .remark(params.getRemark())
                 .build()
                 .insertOrUpdate();

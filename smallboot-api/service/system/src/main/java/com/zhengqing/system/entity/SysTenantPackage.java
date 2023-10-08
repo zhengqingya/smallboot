@@ -24,7 +24,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("t_sys_tenant_package")
+@TableName(value = "t_sys_tenant_package", autoResultMap = true)
 @ApiModel("系统管理-租户套餐")
 public class SysTenantPackage extends BaseEntity<SysTenantPackage> {
 
@@ -41,6 +41,10 @@ public class SysTenantPackage extends BaseEntity<SysTenantPackage> {
     @ApiModelProperty("关联的菜单ids")
     @TableField(typeHandler = ListIntegerTypeHandler.class)
     private List<Integer> menuIdList;
+
+    @ApiModelProperty("关联的按钮权限ids")
+    @TableField(typeHandler = ListIntegerTypeHandler.class)
+    private List<Integer> permissionIdList;
 
     @ApiModelProperty("备注")
     private String remark;
