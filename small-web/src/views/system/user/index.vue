@@ -1,8 +1,8 @@
 <template>
   <base-wrapper>
     <base-header>
-      <el-input v-model="listQuery.username" clearable placeholder="请输入账号" style="width: 200px" @clear="refreshTableData" />
-      <el-input v-model="listQuery.nickname" clearable placeholder="请输入名称" style="width: 200px" @clear="refreshTableData" />
+      <base-input v-model="listQuery.username" label="账号" @clear="refreshTableData" />
+      <base-input v-model="listQuery.nickname" label="名称" @clear="refreshTableData" />
       <el-button type="primary" @click="refreshTableData">查询</el-button>
       <template #right>
         <el-button v-has-perm="'sys:user:add'" type="primary" @click="handleCreate">添加</el-button>

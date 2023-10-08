@@ -23,7 +23,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.common.core.custom.repeatsubmit.NoRepeatSubmit;
 import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
-import com.zhengqing.modules.smalltools.db.service.IStDbDataSourceService;
+import ${package.service}.I${entity}Service;
 import lombok.RequiredArgsConstructor;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

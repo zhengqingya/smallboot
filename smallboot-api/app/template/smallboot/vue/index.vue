@@ -3,9 +3,7 @@
     <base-header>
         <#if queryColumnInfoList??>
             <#list queryColumnInfoList as item>
-              <el-input v-model="listQuery.${item.columnNameJavaLower}"
-                        placeholder="请输入${item.columnComment}" style="width:200px" clearable
-                        @clear="refreshTableData" />
+              <base-input v-model="listQuery.${item.columnNameJavaLower}" label="${item.columnComment}" @clear="refreshTableData" />
             </#list>
         </#if>
       <el-button type="primary" @click="refreshTableData">查询</el-button>
