@@ -30,12 +30,12 @@ import java.util.List;
 @Api(tags = {"web-系统管理-省市区"})
 public class WebSysProvinceCityAreaController extends BaseController {
 
-    private final ISysProvinceCityAreaService sysProvinceCityAreaService;
+    private final ISysProvinceCityAreaService iSysProvinceCityAreaService;
 
     @GetMapping("tree")
     @ApiOperation("树")
     public List<SysProvinceCityAreaTreeVO> tree(@Validated @ModelAttribute SysProvinceCityAreaTreeDTO params) {
-        return this.sysProvinceCityAreaService.tree(params);
+        return this.iSysProvinceCityAreaService.tree(params);
     }
 
 }

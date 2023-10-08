@@ -25,6 +25,7 @@ import com.zhengqing.system.model.vo.SysDictVO;
 import com.zhengqing.system.processor.ElementIconPageProcessor;
 import com.zhengqing.system.service.ISysDictService;
 import com.zhengqing.system.service.ISysDictTypeService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Lazy;
@@ -53,14 +54,14 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @Validated
+@RequiredArgsConstructor
 public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> implements ISysDictService {
 
-    @Resource
-    private SysDictMapper sysDictMapper;
+    private final SysDictMapper sysDictMapper;
 
     @Lazy
     @Resource
-    private ISysDictTypeService sysDictTypeService;
+    private ISysDictTypeService iSysDictTypeService;
 
     @Override
     public List<SysDictVO> listByCode(String code) {
@@ -142,7 +143,7 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
     @Transactional(rollbackFor = Exception.class)
     public Integer addOrUpdateData(SysDictSaveDTO params) {
         String code = params.getCode();
-        SysDictType dictTypeData = this.sysDictTypeService.detailByCode(code);
+        SysDictType dictTypeData = this.iSysDictTypeService.detailByCode(code);
         Integer id = params.getId();
         String name = params.getName();
         String value = params.getValue();
@@ -196,7 +197,7 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
         List<String> codeList = Lists.newLinkedList();
         dictDataMap.forEach((code, dictListItem) -> codeList.add(code));
         this.checkKey(codeList);
-        Map<String, Integer> dictTypeIdMap = this.sysDictTypeService.getDictTypeIdMap(codeList);
+        Map<String, Integer> dictTypeIdMap = this.iSysDictTypeService.getDictTypeIdMap(codeList);
         dictDataMap.forEach((code, dictListItem) -> {
             MyValidatorUtil.validate(dictListItem);
             Integer dictTypeId = dictTypeIdMap.get(code);
@@ -205,7 +206,7 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
                     // 新增数据
                     String dictTypeName = dictListItem.get(0).getDictTypeName();
                     Assert.notBlank(dictTypeName, "新增字典类型数据时，字典类型名称值不能为空！");
-                    dictTypeId = this.sysDictTypeService.addOrUpdateData(SysDictTypeSaveDTO.builder()
+                    dictTypeId = this.iSysDictTypeService.addOrUpdateData(SysDictTypeSaveDTO.builder()
                             .code(code)
                             .name(dictTypeName)
                             .status(YesNoEnum.YES.getValue())
@@ -289,7 +290,7 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
 
     @Override
     public void initCache() {
-        List<SysDictTypeListVO> sysDictTypeList = this.sysDictTypeService.listByOpen();
+        List<SysDictTypeListVO> sysDictTypeList = this.iSysDictTypeService.listByOpen();
         if (!CollectionUtils.isEmpty(sysDictTypeList)) {
             List<String> codeList = sysDictTypeList.stream().map(SysDictTypeListVO::getCode).collect(Collectors.toList());
             Map<String, List<SysDictVO>> dictDataMap = this.listFromDbByOpenCode(codeList);

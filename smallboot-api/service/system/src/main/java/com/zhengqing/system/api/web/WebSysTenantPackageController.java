@@ -33,18 +33,18 @@ import java.util.List;
 @Api(tags = {"web-系统管理-租户套餐"})
 public class WebSysTenantPackageController extends BaseController {
 
-    private final ISysTenantPackageService sysTenantPackageService;
+    private final ISysTenantPackageService iSysTenantPackageService;
 
     @GetMapping("page")
     @ApiOperation("分页列表")
     public IPage<SysTenantPackagePageVO> page(@Validated @ModelAttribute SysTenantPackagePageDTO params) {
-        return this.sysTenantPackageService.page(params);
+        return this.iSysTenantPackageService.page(params);
     }
 
     @GetMapping("list")
     @ApiOperation("列表")
     public List<SysTenantPackageListVO> list(@Validated @ModelAttribute SysTenantPackageListDTO params) {
-        return this.sysTenantPackageService.list(params);
+        return this.iSysTenantPackageService.list(params);
     }
 
     @NoRepeatSubmit
@@ -52,20 +52,20 @@ public class WebSysTenantPackageController extends BaseController {
     @ApiOperation("新增")
     public void add(@Validated @RequestBody SysTenantPackageSaveDTO params) {
         params.setId(null);
-        this.sysTenantPackageService.addOrUpdateData(params);
+        this.iSysTenantPackageService.addOrUpdateData(params);
     }
 
     @NoRepeatSubmit
     @PutMapping("update")
     @ApiOperation("更新")
     public void update(@Validated(UpdateGroup.class) @RequestBody SysTenantPackageSaveDTO params) {
-        this.sysTenantPackageService.addOrUpdateData(params);
+        this.iSysTenantPackageService.addOrUpdateData(params);
     }
 
     @DeleteMapping("delete")
     @ApiOperation("删除")
     public void delete(@RequestParam Integer id) {
-        this.sysTenantPackageService.deleteData(id);
+        this.iSysTenantPackageService.deleteData(id);
     }
 
 }

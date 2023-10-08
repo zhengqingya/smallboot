@@ -22,12 +22,12 @@ import com.zhengqing.system.model.dto.SysConfigSaveDTO;
 import com.zhengqing.system.model.vo.SysConfigPageVO;
 import com.zhengqing.system.model.vo.SysConfigVO;
 import com.zhengqing.system.service.ISysConfigService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -41,10 +41,10 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig> implements ISysConfigService {
 
-    @Resource
-    private SysConfigMapper sysConfigMapper;
+    private final SysConfigMapper sysConfigMapper;
 
     @Override
     public void initCache() {

@@ -29,14 +29,14 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthServiceImpl implements IAuthService {
 
-    private final ISysPermBusinessService sysPermBusinessService;
+    private final ISysPermBusinessService iSysPermBusinessService;
 
     @Override
     public AuthLoginVO login(AuthLoginDTO params) {
         String username = params.getUsername();
         String password = params.getPassword();
 
-        SysUserPermVO userPerm = this.sysPermBusinessService.getUserPerm(SysUserPermDTO.builder().username(username).build());
+        SysUserPermVO userPerm = this.iSysPermBusinessService.getUserPerm(SysUserPermDTO.builder().username(username).build());
         boolean isValid = PasswordUtil.isValidPassword(password, userPerm.getPassword());
 
         // 校验原始密码是否正确

@@ -39,21 +39,21 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
 
-    private final ISysPermissionService sysPermissionService;
-    private final ISysUserService sysUserService;
-    private final ISysMenuService sysMenuService;
-    private final ISysRoleService sysRoleService;
-    private final ISysRoleMenuService sysRoleMenuService;
-    private final ISysUserRoleService sysUserRoleService;
-    private final ISysRolePermissionService sysRolePermissionService;
+    private final ISysPermissionService iSysPermissionService;
+    private final ISysUserService iSysUserService;
+    private final ISysMenuService iSysMenuService;
+    private final ISysRoleService iSysRoleService;
+    private final ISysRoleMenuService iSysRoleMenuService;
+    private final ISysUserRoleService iSysUserRoleService;
+    private final ISysRolePermissionService iSysRolePermissionService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void initSuperAdminPerm() {
         // 1、先查询超级管理员角色id再绑定
-        Integer roleId = this.sysRoleService.getRoleIdForSuperAdmin();
+        Integer roleId = this.iSysRoleService.getRoleIdForSuperAdmin();
         Assert.notNull(roleId, "超级管理员角色丢失！");
-        this.sysUserRoleService.addOrUpdateData(
+        this.iSysUserRoleService.addOrUpdateData(
                 SysUserRoleSaveDTO.builder()
                         .userId(AppConstant.SYSTEM_SUPER_ADMIN_USER_ID)
                         .roleIdList(Lists.newArrayList(roleId))
@@ -76,7 +76,7 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
     @Override
     public SysUserPermVO getUserPerm(SysUserPermDTO params) {
         // 1、拿到用户基础信息
-        SysUserPermVO userPerm = this.sysUserService.getUserPerm(params);
+        SysUserPermVO userPerm = this.iSysUserService.getUserPerm(params);
 
         // 2、权限树
         userPerm.setPermissionTreeList(this.tree(userPerm.getRoleIdList(), true));
@@ -88,7 +88,7 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
     @Override
     public SysRoleAllPermissionDetailVO permissionDetail(Integer roleId) {
         // 1、角色基本信息
-        SysRole sysRole = this.sysRoleService.getById(roleId);
+        SysRole sysRole = this.iSysRoleService.getById(roleId);
         Assert.notNull(sysRole, "角色不存在！");
 
         // 2、菜单权限树
@@ -110,7 +110,7 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
         RedisUtil.delete(SecurityConstant.URL_PERM_RE_ROLES);
 
         // 2、查询角色关联权限数据
-        List<SysRoleRePermListVO> roleRePermList = this.sysPermissionService.listRoleRePerm();
+        List<SysRoleRePermListVO> roleRePermList = this.iSysPermissionService.listRoleRePerm();
         if (CollectionUtils.isEmpty(roleRePermList)) {
             return;
         }
@@ -124,11 +124,21 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    public void refreshTenantRePerm(Integer tenantId, List<Integer> menuIdList, List<Integer> permissionIdList) {
+        if (!AppConstant.TENANT_ID_SMALL_BOOT.equals(tenantId)) {
+            // 更新非系统租户数据
+            this.iSysRoleMenuService.refreshTenantRePerm(tenantId, menuIdList);
+            this.iSysRolePermissionService.refreshTenantRePerm(tenantId, permissionIdList);
+        }
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
     public void saveRoleRePerm(SysRoleRePermSaveDTO params) {
         Integer roleId = params.getRoleId();
 
         // 1、先保存角色关联的菜单权限
-        this.sysRoleMenuService.saveRoleMenuIds(
+        this.iSysRoleMenuService.saveRoleMenuIds(
                 SysRoleReMenuSaveDTO.builder()
                         .roleId(roleId)
                         .menuIdList(params.getMenuIdList())
@@ -148,17 +158,17 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void saveRoleRePermIds(SysRoleRePermIdsSaveDTO params) {
-        this.sysRolePermissionService.savePerm(params);
+        this.iSysRolePermissionService.savePerm(params);
     }
 
 
     @Override
     public List<SysMenuTree> tree(List<Integer> roleIdList, boolean isOnlyShowPerm) {
         // 1、拿到所有菜单
-        List<SysMenuTree> allMenuList = this.sysMenuService.selectMenuTree(roleIdList, isOnlyShowPerm);
+        List<SysMenuTree> allMenuList = this.iSysMenuService.selectMenuTree(roleIdList, isOnlyShowPerm);
 
         // 2、全部url/btn权限
-        Map<Integer, List<SysRoleRePermVO>> mapPerm = this.sysPermissionService.mapPermByRole(roleIdList, isOnlyShowPerm);
+        Map<Integer, List<SysRoleRePermVO>> mapPerm = this.iSysPermissionService.mapPermByRole(roleIdList, isOnlyShowPerm);
 
         // 3、遍历出父菜单对应的子菜单 -- 递归
         return this.recurveMenu(AppConstant.PARENT_ID, allMenuList, mapPerm);

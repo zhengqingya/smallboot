@@ -34,8 +34,8 @@ import java.util.List;
 public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> implements ISysRoleService {
 
     private final SysRoleMapper sysRoleMapper;
-    private final ISysRoleMenuService sysRoleMenuService;
-    private final ISysRolePermissionService sysRolePermissionService;
+    private final ISysRoleMenuService iSysRoleMenuService;
+    private final ISysRolePermissionService iSysRolePermissionService;
 
     @Override
     public IPage<SysRoleListVO> listPage(SysRoleListDTO params) {
@@ -66,9 +66,9 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         SysRole sysRole = this.sysRoleMapper.selectById(roleId);
         Assert.isFalse(sysRole.getIsFixed(), "您没有权限删除固定角色！");
         // 1、删除该角色下关联的菜单
-        this.sysRoleMenuService.deleteAllMenusByRoleId(roleId);
+        this.iSysRoleMenuService.deleteAllMenusByRoleId(roleId);
         // 2、删除该角色下关联的按钮
-        this.sysRolePermissionService.delByRoleId(roleId);
+        this.iSysRolePermissionService.delByRoleId(roleId);
         // 3、删除角色
         this.removeById(roleId);
     }

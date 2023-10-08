@@ -58,4 +58,15 @@ public interface ISysRoleMenuService extends IService<SysRoleMenu> {
      */
     void deleteAllMenusByRoleId(Integer roleId);
 
+    /**
+     * 刷新租户关联权限
+     *
+     * @param tenantId   租户id
+     * @param menuIdList 菜单id
+     * @return void
+     * @author zhengqingya
+     * @date 2023/10/8 19:18
+     */
+    void refreshTenantRePerm(Integer tenantId, List<Integer> menuIdList);
+
 }

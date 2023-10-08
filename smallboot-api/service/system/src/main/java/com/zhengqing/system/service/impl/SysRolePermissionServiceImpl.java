@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.zhengqing.common.base.context.TenantIdContext;
 import com.zhengqing.system.entity.SysRolePermission;
 import com.zhengqing.system.mapper.SysRolePermissionMapper;
 import com.zhengqing.system.model.bo.SysRoleRePermBO;
@@ -116,4 +117,23 @@ public class SysRolePermissionServiceImpl extends ServiceImpl<SysRolePermissionM
         );
         this.saveOrUpdateBatch(saveList);
     }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void refreshTenantRePerm(Integer tenantId, List<Integer> permissionIdList) {
+        TenantIdContext.setTenantId(tenantId);
+
+        // 查询旧权限信息
+        List<SysRolePermission> oldList = this.sysRolePermissionMapper.selectList(null);
+        // 旧权限id
+        List<Integer> oldIdList = oldList.stream().map(SysRolePermission::getPermissionId).collect(Collectors.toList());
+        // 拿到要删除的旧权限id
+        List<Integer> dlePermIdList = CollUtil.subtractToList(oldIdList, permissionIdList);
+        if (CollUtil.isNotEmpty(dlePermIdList)) {
+            this.sysRolePermissionMapper.delete(new LambdaQueryWrapper<SysRolePermission>().in(SysRolePermission::getPermissionId, dlePermIdList));
+        }
+
+        TenantIdContext.remove();
+    }
+
 }

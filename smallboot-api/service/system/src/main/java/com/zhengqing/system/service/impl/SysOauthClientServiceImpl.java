@@ -6,10 +6,9 @@ import com.zhengqing.system.entity.SysOauthClient;
 import com.zhengqing.system.mapper.SysOauthClientMapper;
 import com.zhengqing.system.model.vo.SysOauthClientVO;
 import com.zhengqing.system.service.ISysOauthClientService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 
 /**
  * <p> oauth客户端 服务实现类 </p>
@@ -20,10 +19,10 @@ import javax.annotation.Resource;
  */
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class SysOauthClientServiceImpl extends ServiceImpl<SysOauthClientMapper, SysOauthClient> implements ISysOauthClientService {
 
-    @Resource
-    private SysOauthClientMapper sysOauthClientMapper;
+    private final SysOauthClientMapper sysOauthClientMapper;
 
     @Override
     public SysOauthClientVO detail(String clientId) {

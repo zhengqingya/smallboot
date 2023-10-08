@@ -28,6 +28,7 @@ import com.zhengqing.system.model.vo.SysOauthListVO;
 import com.zhengqing.system.service.ISysDictService;
 import com.zhengqing.system.service.ISysOauthService;
 import com.zhengqing.system.service.ISysUserService;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import me.zhyd.oauth.model.AuthCallback;
@@ -40,7 +41,6 @@ import me.zhyd.oauth.utils.AuthStateUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
@@ -58,19 +58,13 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @Transactional(rollbackFor = Exception.class)
+@RequiredArgsConstructor
 public class SysOauthServiceImpl extends ServiceImpl<SysOauthMapper, SysOauth> implements ISysOauthService {
 
-    @Resource
-    private SysOauthMapper sysOauthMapper;
-
-    @Resource
-    private SystemProperty systemProperty;
-
-    @Resource
-    private ISysUserService sysUserService;
-
-    @Resource
-    private ISysDictService dictService;
+    private final SysOauthMapper sysOauthMapper;
+    private final SystemProperty systemProperty;
+    private final ISysUserService iSysUserService;
+    private final ISysDictService iSysDictService;
 
     @Override
     @SneakyThrows(Exception.class)
@@ -232,7 +226,7 @@ public class SysOauthServiceImpl extends ServiceImpl<SysOauthMapper, SysOauth> i
         userSaveDTO.setEmail(email);
         userSaveDTO.setAvatarUrl(avatar);
 
-        Integer userId = this.sysUserService.addOrUpdateData(userSaveDTO);
+        Integer userId = this.iSysUserService.addOrUpdateData(userSaveDTO);
 
         SysOauthSaveDTO oauthSaveDTO = new SysOauthSaveDTO();
         oauthSaveDTO.setUserId(userId);
@@ -268,7 +262,7 @@ public class SysOauthServiceImpl extends ServiceImpl<SysOauthMapper, SysOauth> i
     @Override
     public List<SysOauthDataListVO> getOauthDataList(Integer userId) {
         List<SysOauthDataListVO> oauthDataList = Lists.newArrayList();
-        List<SysDictVO> oauthTypeList = this.dictService.listFromCacheByCode(Lists.newArrayList(SysDictTypeEnum.第三方帐号授权类型.getCode())).get(SysDictTypeEnum.第三方帐号授权类型.getCode());
+        List<SysDictVO> oauthTypeList = this.iSysDictService.listFromCacheByCode(Lists.newArrayList(SysDictTypeEnum.第三方帐号授权类型.getCode())).get(SysDictTypeEnum.第三方帐号授权类型.getCode());
         List<SysOauthListVO> oauthBindList = this.list(SysOauthListDTO.builder().userId(userId).build());
         List<Integer> oauthTypeBindList =
                 oauthBindList.stream().map(SysOauthListVO::getOauthType).collect(Collectors.toList());

@@ -31,21 +31,21 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WebSysAdminController extends BaseController {
 
-    private final ISysPermissionService sysPermissionService;
-    private final ISysPermBusinessService sysPermBusinessService;
+    private final ISysPermissionService iSysPermissionService;
+    private final ISysPermBusinessService iSysPermBusinessService;
     private final MyBaseMapper myBaseMapper;
-    private final ISysDictService sysDictService;
+    private final ISysDictService iSysDictService;
 
     @ApiOperation("获取角色权限映射数据")
     @GetMapping("listRoleRePerm")
     public List<SysRoleRePermListVO> listRoleRePerm() {
-        return this.sysPermissionService.listRoleRePerm();
+        return this.iSysPermissionService.listRoleRePerm();
     }
 
     @ApiOperation("刷新Redis缓存中的角色菜单权限")
     @GetMapping("refreshRedisPerm")
     public void refreshRedisPerm() {
-        this.sysPermBusinessService.refreshRedisPerm();
+        this.iSysPermBusinessService.refreshRedisPerm();
     }
 
     /**

@@ -24,6 +24,9 @@ import lombok.experimental.SuperBuilder;
 @ApiModel("系统管理-租户信息-列表-请求参数")
 public class SysTenantListDTO extends BaseDTO {
 
+    @ApiModelProperty("租户套餐ID")
+    private Integer packageId;
+    
     @ApiModelProperty("租户名")
     private String name;
 

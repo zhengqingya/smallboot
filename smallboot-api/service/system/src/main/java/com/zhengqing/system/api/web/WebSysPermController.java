@@ -32,12 +32,12 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = "web-系统管理-权限接口")
 public class WebSysPermController extends BaseController {
 
-    private final ISysPermBusinessService sysPermBusinessService;
+    private final ISysPermBusinessService iSysPermBusinessService;
 
     @GetMapping("getUserPerm")
     @ApiOperation("获取当前登录用户权限信息")
     public SysUserPermVO getUserPerm(@RequestParam(required = false) Integer userId) {
-        SysUserPermVO userPerm = this.sysPermBusinessService.getUserPerm(
+        SysUserPermVO userPerm = this.iSysPermBusinessService.getUserPerm(
                 SysUserPermDTO.builder()
                         .userId(userId == null ? SysUserContext.getUserId() : userId)
                         .build()
@@ -50,7 +50,7 @@ public class WebSysPermController extends BaseController {
     @PostMapping("saveRoleRePermIds")
     @ApiOperation("保存角色关联的菜单-按钮ids")
     public void saveRoleRePermIds(@Validated @RequestBody SysRoleRePermIdsSaveDTO params) {
-        this.sysPermBusinessService.saveRoleRePermIds(params);
+        this.iSysPermBusinessService.saveRoleRePermIds(params);
     }
 
 
@@ -58,7 +58,7 @@ public class WebSysPermController extends BaseController {
     @PostMapping("saveRoleRePerm")
     @ApiOperation("保存角色权限（菜单权限+按钮权限）")
     public void saveRoleRePerm(@Validated @RequestBody SysRoleRePermSaveDTO params) {
-        this.sysPermBusinessService.saveRoleRePerm(params);
+        this.iSysPermBusinessService.saveRoleRePerm(params);
     }
 
 }

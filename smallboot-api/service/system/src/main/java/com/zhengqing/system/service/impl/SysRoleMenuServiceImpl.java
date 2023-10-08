@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
+import com.zhengqing.common.base.context.TenantIdContext;
 import com.zhengqing.system.entity.SysRoleMenu;
 import com.zhengqing.system.mapper.SysRoleMenuMapper;
 import com.zhengqing.system.model.dto.SysRoleReMenuSaveDTO;
@@ -90,6 +91,24 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
     @Transactional(rollbackFor = Exception.class)
     public void deleteAllMenusByRoleId(Integer roleId) {
         this.sysRoleMenuMapper.deleteAllMenusByRoleId(roleId);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void refreshTenantRePerm(Integer tenantId, List<Integer> menuIdList) {
+        TenantIdContext.setTenantId(tenantId);
+
+        // 查询旧权限信息
+        List<SysRoleMenu> oldList = this.sysRoleMenuMapper.selectList(null);
+        // 旧菜单id
+        List<Integer> oldIdList = oldList.stream().map(SysRoleMenu::getMenuId).collect(Collectors.toList());
+        // 拿到要删除的旧菜单id
+        List<Integer> dleMenuIdList = CollUtil.subtractToList(oldIdList, menuIdList);
+        if (CollUtil.isNotEmpty(dleMenuIdList)) {
+            this.sysRoleMenuMapper.delete(new LambdaQueryWrapper<SysRoleMenu>().in(SysRoleMenu::getMenuId, dleMenuIdList));
+        }
+
+        TenantIdContext.remove();
     }
 
 }

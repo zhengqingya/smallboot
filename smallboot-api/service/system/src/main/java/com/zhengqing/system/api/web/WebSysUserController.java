@@ -38,58 +38,57 @@ import javax.validation.Valid;
 @Api(tags = "web-系统管理-用户管理接口")
 public class WebSysUserController extends BaseController {
 
-    private final ISysUserService sysUserService;
-
-    private final ISysUserRoleService sysUserRoleService;
+    private final ISysUserService iSysUserService;
+    private final ISysUserRoleService iSysUserRoleService;
 
     @GetMapping("listPage")
     @ApiOperation("列表分页")
     public IPage<SysUserListVO> listPage(@ModelAttribute SysUserListDTO params) {
-        return this.sysUserService.listPage(params);
+        return this.iSysUserService.listPage(params);
     }
 
     @NoRepeatSubmit
     @PostMapping("")
     @ApiOperation("新增")
     public Integer add(@Validated @RequestBody SysUserSaveDTO params) {
-        return this.sysUserService.addOrUpdateData(params);
+        return this.iSysUserService.addOrUpdateData(params);
     }
 
     @NoRepeatSubmit
     @PutMapping("")
     @ApiOperation("更新")
     public Integer update(@Validated(UpdateGroup.class) @RequestBody SysUserSaveDTO params) {
-        return this.sysUserService.addOrUpdateData(params);
+        return this.iSysUserService.addOrUpdateData(params);
     }
 
     @DeleteMapping("")
     @ApiOperation("删除")
     public void delete(@RequestParam Integer userId) {
-        this.sysUserService.deleteUser(userId);
+        this.iSysUserService.deleteUser(userId);
     }
 
     @GetMapping("")
     @ApiOperation("详情")
     public SysUserDetailVO detail(@RequestParam Integer userId) {
-        return this.sysUserService.detail(userId);
+        return this.iSysUserService.detail(userId);
     }
 
     @PutMapping("updatePassword")
     @ApiOperation("修改用户密码")
     public void updatePassword(@RequestBody @Valid SysUserUpdatePasswordDTO params) {
-        this.sysUserService.updatePassword(params);
+        this.iSysUserService.updatePassword(params);
     }
 
     @GetMapping("resetPassword")
     @ApiOperation("重置用户密码")
     public void resetPassword(@RequestParam Integer userId, @RequestParam(required = false) String password) {
-        this.sysUserService.resetPassword(userId, password);
+        this.iSysUserService.resetPassword(userId, password);
     }
 
     @PostMapping("saveRoleIds")
     @ApiOperation("保存用户角色ids")
     public void saveRoleIds(@Validated @RequestBody SysUserRoleSaveDTO params) {
-        this.sysUserRoleService.addOrUpdateData(params);
+        this.iSysUserRoleService.addOrUpdateData(params);
     }
 
 }

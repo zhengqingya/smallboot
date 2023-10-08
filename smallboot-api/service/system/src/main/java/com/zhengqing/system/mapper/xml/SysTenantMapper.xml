@@ -25,6 +25,9 @@
             <if test="filter.name!=null and filter.name!=''">
                 AND name LIKE CONCAT( '%', #{filter.name} , '%' )
             </if>
+            <if test="filter.packageId!=null">
+                AND package_id = #{filter.packageId}
+            </if>
         </where>
     </select>
 

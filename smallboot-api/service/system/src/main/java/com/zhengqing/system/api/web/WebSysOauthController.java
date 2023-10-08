@@ -33,36 +33,36 @@ import java.util.List;
 @Api(tags = "web-系统管理-三方登录接口")
 public class WebSysOauthController extends BaseController {
 
-    private final ISysOauthService sysOauthService;
+    private final ISysOauthService iSysOauthService;
 
     @RequestMapping("{oauthType}")
     @ApiOperation("第三方账号授权")
     public String handleOauth(@PathVariable String oauthType, HttpServletResponse response) {
-        return this.sysOauthService.handleOauth(oauthType, response);
+        return this.iSysOauthService.handleOauth(oauthType, response);
     }
 
     @RequestMapping("{oauthType}/callback")
     @ApiOperation("第三方账号授权回调处理")
     public void handleCallback(@PathVariable String oauthType, AuthCallback callback, HttpServletResponse response) {
-        this.sysOauthService.handleCallback(oauthType, callback, response);
+        this.iSysOauthService.handleCallback(oauthType, callback, response);
     }
 
     @PostMapping("bindThirdPart")
     @ApiOperation("第三方账号绑定")
     public Integer handleBindThirdPartData(@Validated @RequestBody SysOauthSaveDTO params) {
-        return this.sysOauthService.addOrUpdateData(params);
+        return this.iSysOauthService.addOrUpdateData(params);
     }
 
     @GetMapping("getOauthDataList")
     @ApiOperation("获取第三方账号绑定授权数据")
     public List<SysOauthDataListVO> getOauthDataList(@RequestParam Integer userId) {
-        return this.sysOauthService.getOauthDataList(userId);
+        return this.iSysOauthService.getOauthDataList(userId);
     }
 
     @PostMapping("removeBind")
     @ApiOperation("解除第三方账号绑定")
     public void removeBind(@RequestBody SysOauthRemoveBindDTO params) {
-        this.sysOauthService.removeBind(params);
+        this.iSysOauthService.removeBind(params);
     }
 
 }

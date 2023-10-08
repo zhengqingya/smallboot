@@ -37,46 +37,46 @@ import java.util.List;
 @Api(tags = "web-系统管理-角色管理接口")
 public class WebSysRoleController extends BaseController {
 
-    private final ISysRoleService roleService;
-    private final ISysPermBusinessService sysPermBusinessService;
-    private final ISysRolePermissionService sysRolePermissionService;
+    private final ISysRoleService iSysRoleService;
+    private final ISysPermBusinessService iSysPermBusinessService;
+    private final ISysRolePermissionService iSysRolePermissionService;
 
     @GetMapping("listPage")
     @ApiOperation("列表分页")
     public IPage<SysRoleListVO> listPage(@ModelAttribute SysRoleListDTO params) {
-        return this.roleService.listPage(params);
+        return this.iSysRoleService.listPage(params);
     }
 
     @GetMapping("list")
     @ApiOperation("列表")
     public List<SysRoleListVO> list(@ModelAttribute SysRoleListDTO params) {
-        return this.roleService.list(params);
+        return this.iSysRoleService.list(params);
     }
 
     @NoRepeatSubmit
     @PostMapping("")
     @ApiOperation("新增")
     public Integer add(@Validated @RequestBody SysRoleSaveDTO params) {
-        return this.roleService.addOrUpdateData(params);
+        return this.iSysRoleService.addOrUpdateData(params);
     }
 
     @NoRepeatSubmit
     @PutMapping("")
     @ApiOperation("更新")
     public Integer update(@Validated(UpdateGroup.class) @RequestBody SysRoleSaveDTO params) {
-        return this.roleService.addOrUpdateData(params);
+        return this.iSysRoleService.addOrUpdateData(params);
     }
 
     @GetMapping("detail")
     @ApiOperation("详情(角色信息+菜单树+按钮+所拥有的权限)")
     public SysRoleAllPermissionDetailVO detail(@RequestParam Integer roleId) {
-        return this.sysPermBusinessService.permissionDetail(roleId);
+        return this.iSysPermBusinessService.permissionDetail(roleId);
     }
 
     @DeleteMapping("")
     @ApiOperation("删除")
     public void delete(@RequestParam Integer roleId) {
-        this.roleService.deleteRoleAndRoleMenu(roleId);
+        this.iSysRoleService.deleteRoleAndRoleMenu(roleId);
     }
 
 }

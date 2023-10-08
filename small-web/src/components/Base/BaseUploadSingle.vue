@@ -3,7 +3,7 @@
     <el-upload
       v-bind="$attrs"
       :action="uploadUrl"
-      :headers="{ [tokenObj.tokenName]: tokenObj.tokenValue }"
+      :headers="{ [tokenObj.tokenName]: tokenObj.tokenValue, TENANT_ID: tenantId }"
       :show-file-list="false"
       :before-upload="beforeUpload"
       :on-success="onSuccess"
@@ -15,7 +15,7 @@
 </template>
 <script setup>
 const { proxy } = getCurrentInstance();
-let { tokenObj } = toRefs(proxy.$store.user.useUserStore());
+let { tenantId, tokenObj } = toRefs(proxy.$store.user.useUserStore());
 defineProps({
   modelValue: { type: String, default: '' },
 });

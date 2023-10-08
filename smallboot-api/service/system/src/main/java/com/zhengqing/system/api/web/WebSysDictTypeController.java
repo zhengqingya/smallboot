@@ -34,31 +34,31 @@ import java.util.stream.Collectors;
 @Api(tags = "web-基础模块-数据字典类型接口")
 public class WebSysDictTypeController extends BaseController {
 
-    private final ISysDictTypeService dictTypeService;
+    private final ISysDictTypeService iSysDictTypeService;
 
     @GetMapping("list")
     @ApiOperation("列表")
     public List<SysDictType> list() {
-        return this.dictTypeService.list().stream().sorted(Comparator.comparing(SysDictType::getSort)).collect(Collectors.toList());
+        return this.iSysDictTypeService.list().stream().sorted(Comparator.comparing(SysDictType::getSort)).collect(Collectors.toList());
     }
 
     @PostMapping("")
     @ApiOperation("新增")
     public Integer add(@Validated(CreateGroup.class) @RequestBody SysDictTypeSaveDTO params) {
         params.setId(null);
-        return this.dictTypeService.addOrUpdateData(params);
+        return this.iSysDictTypeService.addOrUpdateData(params);
     }
 
     @PutMapping("")
     @ApiOperation("更新")
     public Integer update(@Validated(UpdateGroup.class) @RequestBody SysDictTypeSaveDTO params) {
-        return this.dictTypeService.addOrUpdateData(params);
+        return this.iSysDictTypeService.addOrUpdateData(params);
     }
 
     @DeleteMapping("")
     @ApiOperation("删除")
     public void delete(@RequestParam Integer id) {
-        this.dictTypeService.deleteType(id);
+        this.iSysDictTypeService.deleteType(id);
     }
 
 }

@@ -37,11 +37,11 @@ import java.util.List;
 @Api(tags = "web-系统管理-菜单表接口")
 public class WebSysMenuController extends BaseController {
 
-    private final ISysMenuService sysMenuService;
+    private final ISysMenuService iSysMenuService;
 
-    private final ISysPermissionService sysPermissionService;
+    private final ISysPermissionService iSysPermissionService;
 
-    private final ISysPermBusinessService sysPermBusinessService;
+    private final ISysPermBusinessService iSysPermBusinessService;
 
     // @GetMapping("/listPage")
     // @ApiOperation("列表分页")
@@ -58,27 +58,27 @@ public class WebSysMenuController extends BaseController {
     @GetMapping("menuTree")
     @ApiOperation("菜单树")
     public List<SysMenuTree> menuTree(@RequestParam(required = false) Integer roleId) {
-        return this.sysPermBusinessService.tree(Lists.newArrayList(roleId), false);
+        return this.iSysPermBusinessService.tree(Lists.newArrayList(roleId), false);
     }
 
     @NoRepeatSubmit
     @PostMapping("")
     @ApiOperation("新增")
     public Integer add(@Validated @RequestBody SysMenuSaveDTO params) {
-        return this.sysMenuService.addOrUpdateData(params);
+        return this.iSysMenuService.addOrUpdateData(params);
     }
 
     @NoRepeatSubmit
     @PutMapping("")
     @ApiOperation("更新")
     public Integer update(@Validated(UpdateGroup.class) @RequestBody SysMenuSaveDTO params) {
-        return this.sysMenuService.addOrUpdateData(params);
+        return this.iSysMenuService.addOrUpdateData(params);
     }
 
     @DeleteMapping("")
     @ApiOperation("删除")
     public void delete(@RequestParam Integer menuId) {
-        this.sysMenuService.removeById(menuId);
+        this.iSysMenuService.removeById(menuId);
     }
 
     // 下：菜单按钮权限(菜单页面中配置页面所属按钮使用)
@@ -86,14 +86,14 @@ public class WebSysMenuController extends BaseController {
     @GetMapping("getPermListByMenuId")
     @ApiOperation("菜单关联按钮权限-列表")
     public List<SysMenuReBtnPermListVO> getPermListByMenuId(@RequestParam Integer menuId) {
-        return this.sysPermissionService.getPermListByMenuId(menuId);
+        return this.iSysPermissionService.getPermListByMenuId(menuId);
     }
 
     @DeleteMapping("deleteMenuReBtnPerm")
     @ApiOperation("菜单关联按钮权限-删除")
     public void deleteMenuReBtnPerm(@RequestParam Integer id) {
-        this.sysPermissionService.removeById(id);
-        this.sysPermBusinessService.refreshRedisPerm();
+        this.iSysPermissionService.removeById(id);
+        this.iSysPermBusinessService.refreshRedisPerm();
     }
 
     @NoRepeatSubmit
@@ -101,16 +101,16 @@ public class WebSysMenuController extends BaseController {
     @ApiOperation("菜单关联按钮权限-新增")
     public void addMenuReBtnPerm(@Validated @RequestBody SysMenuReBtnPermSaveDTO params) {
         params.setId(null);
-        this.sysPermissionService.addOrUpdateData(params);
-        this.sysPermBusinessService.refreshRedisPerm();
+        this.iSysPermissionService.addOrUpdateData(params);
+        this.iSysPermBusinessService.refreshRedisPerm();
     }
 
     @NoRepeatSubmit
     @PutMapping("updateMenuReBtnPerm")
     @ApiOperation("菜单关联按钮权限-更新")
     public void updateMenuReBtnPerm(@Validated(UpdateGroup.class) @RequestBody SysMenuReBtnPermSaveDTO params) {
-        this.sysPermissionService.addOrUpdateData(params);
-        this.sysPermBusinessService.refreshRedisPerm();
+        this.iSysPermissionService.addOrUpdateData(params);
+        this.iSysPermBusinessService.refreshRedisPerm();
     }
 
 }

@@ -14,6 +14,7 @@ import com.zhengqing.system.model.dto.SysDictTypeSaveDTO;
 import com.zhengqing.system.model.vo.SysDictTypeListVO;
 import com.zhengqing.system.service.ISysDictService;
 import com.zhengqing.system.service.ISysDictTypeService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -37,14 +38,14 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class SysDictTypeServiceImpl extends ServiceImpl<SysDictTypeMapper, SysDictType> implements ISysDictTypeService {
 
     @Lazy
     @Resource
-    private ISysDictService sysDictService;
+    private ISysDictService iSysDictService;
 
-    @Resource
-    private SysDictTypeMapper sysDictTypeMapper;
+    private final SysDictTypeMapper sysDictTypeMapper;
 
     @Override
     public List<SysDictTypeListVO> listByOpen() {
@@ -105,9 +106,9 @@ public class SysDictTypeServiceImpl extends ServiceImpl<SysDictTypeMapper, SysDi
             sysDictType.setCode(detail.getCode());
             this.sysDictTypeMapper.updateById(sysDictType);
         }
-        
+
         // 更新缓存
-        this.sysDictService.updateCache(Collections.singletonList(sysDictType.getCode()));
+        this.iSysDictService.updateCache(Collections.singletonList(sysDictType.getCode()));
         return sysDictType.getId();
     }
 
@@ -117,7 +118,7 @@ public class SysDictTypeServiceImpl extends ServiceImpl<SysDictTypeMapper, SysDi
         SysDictType sysDictType = this.sysDictTypeMapper.selectById(id);
         String code = sysDictType.getCode();
         // 1、 先删除数据字典
-        this.sysDictService.deleteDictByCode(code);
+        this.iSysDictService.deleteDictByCode(code);
         // 2、 再删除数据字典类型
         this.sysDictTypeMapper.deleteById(id);
         // 3、 最后删除缓存

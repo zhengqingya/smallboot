@@ -5,7 +5,7 @@
       v-model:file-list="fileList"
       :action="uploadUrl"
       list-type="picture-card"
-      :headers="{ [tokenObj.tokenName]: tokenObj.tokenValue }"
+      :headers="{ [tokenObj.tokenName]: tokenObj.tokenValue, TENANT_ID: tenantId }"
       :before-upload="beforeUpload"
       :on-success="onSuccess"
       :on-remove="onRemove"
@@ -20,7 +20,7 @@
 </template>
 <script setup>
 const { proxy } = getCurrentInstance();
-let { tokenObj } = toRefs(proxy.$store.user.useUserStore());
+let { tenantId, tokenObj } = toRefs(proxy.$store.user.useUserStore());
 let props = defineProps({
   modelValue: { type: Array, default: () => [] },
 });

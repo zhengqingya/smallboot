@@ -35,7 +35,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class WebAuthController {
 
-    private final IAuthService authService;
+    private final IAuthService iAuthService;
     @Value("${sa-token.token-prefix:}")
     private String tokenPrefix;
 
@@ -43,7 +43,7 @@ public class WebAuthController {
     @PostMapping("login")
     @ApiOperation("登录")
     public AuthLoginVO login(@Validated @RequestBody AuthLoginDTO params) {
-        return this.authService.login(params);
+        return this.iAuthService.login(params);
     }
 
     @ApiOpen
@@ -58,7 +58,7 @@ public class WebAuthController {
     @ApiOperation("登录(knife4j授权使用)")
     @PostMapping("knife4j")
     public Map<String, String> knife4j(@ApiIgnore Principal principal, @ModelAttribute AuthLoginDTO params) {
-        AuthLoginVO oAuth2AccessToken = this.authService.login(params);
+        AuthLoginVO oAuth2AccessToken = this.iAuthService.login(params);
         /**
          * UI授权成功后取值逻辑见：{@see /knife4j-spring-ui/3.0.3/knife4j-spring-ui-3.0.3.jar!/META-INF/resources/webjars/oauth/oauth2.html}
          *                 that.cacheValue.accessToken=data.token_type+" "+data.access_token;

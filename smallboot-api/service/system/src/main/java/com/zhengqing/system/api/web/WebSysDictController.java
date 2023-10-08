@@ -35,61 +35,61 @@ import java.util.Map;
 @Api(tags = "web-基础模块-数据字典接口")
 public class WebSysDictController extends BaseController {
 
-    private final ISysDictService sysDictService;
+    private final ISysDictService iSysDictService;
 
     @PostMapping("initCache")
     @ApiOperation("初始化缓存数据")
     public void initCache() {
-        this.sysDictService.initCache();
+        this.iSysDictService.initCache();
     }
 
     @GetMapping("listByCode")
     @ApiOperation("通过编码获取数据字典列表信息（启用+禁用数据）")
     public List<SysDictVO> listByCode(@RequestParam String code) {
-        return this.sysDictService.listByCode(code);
+        return this.iSysDictService.listByCode(code);
     }
 
     @GetMapping("listByOpenCode")
     @ApiOperation("通过编码获取数据字典列表（只含启用数据）")
     public Map<String, List<SysDictVO>> listByOpenCode(@RequestParam List<String> codeList) {
-        return this.sysDictService.listByOpenCode(codeList);
+        return this.iSysDictService.listByOpenCode(codeList);
     }
 
     @GetMapping("listFromDbByCode")
     @ApiOperation("通过编码获取数据字典列表信息 - 数据库方式（只含启用数据）")
     public List<SysDictVO> listFromDbByCode(@RequestParam String code) {
-        return this.sysDictService.listFromDbByOpenCode(Lists.newArrayList(code)).get(code);
+        return this.iSysDictService.listFromDbByOpenCode(Lists.newArrayList(code)).get(code);
     }
 
     @GetMapping("listFromCacheByCode")
     @ApiOperation("通过编码获取数据字典列表信息 - 缓存方式（只含启用数据）")
     public List<SysDictVO> listFromCacheByCode(@RequestParam String code) {
-        return this.sysDictService.listFromCacheByCode(Lists.newArrayList(code)).get(code);
+        return this.iSysDictService.listFromCacheByCode(Lists.newArrayList(code)).get(code);
     }
 
     @PostMapping("")
     @ApiOperation("新增")
     public Integer add(@Validated @RequestBody SysDictSaveDTO params) {
         params.setId(null);
-        return this.sysDictService.addOrUpdateData(params);
+        return this.iSysDictService.addOrUpdateData(params);
     }
 
     @PutMapping("")
     @ApiOperation("更新")
     public Integer update(@Validated(UpdateGroup.class) @RequestBody SysDictSaveDTO params) {
-        return this.sysDictService.addOrUpdateData(params);
+        return this.iSysDictService.addOrUpdateData(params);
     }
 
     @PutMapping("updateBatch")
     @ApiOperation("批量更新")
     public void updateBatch(@Validated @RequestBody Map<String, ValidList<SysDictSaveBatchDTO>> dictDataMap) {
-        this.sysDictService.addOrUpdateBatch(dictDataMap, false);
+        this.iSysDictService.addOrUpdateBatch(dictDataMap, false);
     }
 
     @DeleteMapping("")
     @ApiOperation("删除")
     public void delete(@RequestParam Integer id) {
-        this.sysDictService.deleteDictById(id);
+        this.iSysDictService.deleteDictById(id);
     }
 
 }

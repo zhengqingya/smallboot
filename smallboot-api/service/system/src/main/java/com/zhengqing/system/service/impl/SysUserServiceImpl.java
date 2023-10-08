@@ -47,8 +47,7 @@ import java.util.stream.Collectors;
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements ISysUserService {
 
     private final SysUserMapper sysUserMapper;
-
-    private final ISysUserRoleService sysUserRoleService;
+    private final ISysUserRoleService iSysUserRoleService;
 
     @Override
     public IPage<SysUserListVO> listPage(SysUserListDTO params) {
@@ -70,7 +69,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         }
         // 用户ids
         List<Integer> userIdList = userList.stream().map(SysUserListVO::getUserId).collect(Collectors.toList());
-        Map<Integer, List<Integer>> mapRoleInfo = this.sysUserRoleService.mapRoleId(userIdList);
+        Map<Integer, List<Integer>> mapRoleInfo = this.iSysUserRoleService.mapRoleId(userIdList);
         userList.forEach(userInfo -> {
             userInfo.setRoleIdList(mapRoleInfo.get(userInfo.getUserId()));
             userInfo.handleData();
@@ -110,7 +109,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             user.insert();
 
             // 绑定角色信息
-            this.sysUserRoleService.addOrUpdateData(
+            this.iSysUserRoleService.addOrUpdateData(
                     SysUserRoleSaveDTO.builder()
                             .userId(user.getUserId())
                             .roleIdList(Lists.newArrayList(SysUserReRoleEnum.凡人.getRoleId()))
@@ -129,7 +128,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             throw new MyException("您没有权限删除超级管理员！");
         }
         // 1、删除关联角色
-        this.sysUserRoleService.delByUserId(userId);
+        this.iSysUserRoleService.delByUserId(userId);
         // 2、删除该用户
         this.removeById(userId);
     }
