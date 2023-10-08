@@ -5,8 +5,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhengqing.system.entity.SysTenant;
 import com.zhengqing.system.mapper.SysTenantMapper;
+import com.zhengqing.system.model.dto.SysTenantListDTO;
 import com.zhengqing.system.model.dto.SysTenantPageDTO;
 import com.zhengqing.system.model.dto.SysTenantSaveDTO;
+import com.zhengqing.system.model.vo.SysTenantListVO;
 import com.zhengqing.system.model.vo.SysTenantPageVO;
 import com.zhengqing.system.service.ISysTenantService;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +38,11 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
         List<SysTenantPageVO> list = result.getRecords();
         list.forEach(SysTenantPageVO::handleData);
         return result;
+    }
+
+    @Override
+    public List<SysTenantListVO> list(SysTenantListDTO params) {
+        return this.sysTenantMapper.selectDataList(params);
     }
 
     @Override

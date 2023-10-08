@@ -31,6 +31,9 @@ public class WxMpUser extends BaseEntity<WxMpUser> {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
+    @ApiModelProperty("租户ID")
+    private Integer tenantId;
+    
     @ApiModelProperty("AppID")
     private String appId;
 

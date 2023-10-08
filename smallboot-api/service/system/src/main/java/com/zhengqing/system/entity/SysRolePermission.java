@@ -30,6 +30,9 @@ public class SysRolePermission extends BaseEntity<SysRolePermission> {
     @TableId(type = IdType.AUTO)
     private Integer id;
 
+    @ApiModelProperty("租户ID")
+    private Integer tenantId;
+    
     @ApiModelProperty(value = "角色ID")
     private Integer roleId;
 

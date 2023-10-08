@@ -1,12 +1,15 @@
 package com.zhengqing.system.api.web;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.zhengqing.common.auth.custom.open.ApiOpen;
 import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.common.core.custom.repeatsubmit.NoRepeatSubmit;
 import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
+import com.zhengqing.system.model.dto.SysTenantListDTO;
 import com.zhengqing.system.model.dto.SysTenantPageDTO;
 import com.zhengqing.system.model.dto.SysTenantSaveDTO;
+import com.zhengqing.system.model.vo.SysTenantListVO;
 import com.zhengqing.system.model.vo.SysTenantPageVO;
 import com.zhengqing.system.service.ISysTenantService;
 import io.swagger.annotations.Api;
@@ -14,6 +17,8 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 /**
@@ -35,6 +40,13 @@ public class WebSysTenantController extends BaseController {
     @ApiOperation("分页列表")
     public IPage<SysTenantPageVO> page(@Validated @ModelAttribute SysTenantPageDTO params) {
         return this.sysTenantService.page(params);
+    }
+
+    @ApiOpen
+    @GetMapping("list")
+    @ApiOperation("列表")
+    public List<SysTenantListVO> list(@Validated @ModelAttribute SysTenantListDTO params) {
+        return this.sysTenantService.list(params);
     }
 
     @NoRepeatSubmit

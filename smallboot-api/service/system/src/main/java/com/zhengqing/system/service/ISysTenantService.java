@@ -3,9 +3,13 @@ package com.zhengqing.system.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhengqing.system.entity.SysTenant;
+import com.zhengqing.system.model.dto.SysTenantListDTO;
 import com.zhengqing.system.model.dto.SysTenantPageDTO;
 import com.zhengqing.system.model.dto.SysTenantSaveDTO;
+import com.zhengqing.system.model.vo.SysTenantListVO;
 import com.zhengqing.system.model.vo.SysTenantPageVO;
+
+import java.util.List;
 
 /**
  * <p>  系统管理-租户信息 服务类 </p>
@@ -25,6 +29,16 @@ public interface ISysTenantService extends IService<SysTenant> {
      * @date 2023/10/08 15:40
      */
     IPage<SysTenantPageVO> page(SysTenantPageDTO params);
+
+    /**
+     * 列表
+     *
+     * @param params 查询参数
+     * @return 查询结果
+     * @author zhengqingya
+     * @date 2023/10/08 15:40
+     */
+    List<SysTenantListVO> list(SysTenantListDTO params);
 
     /**
      * 新增或更新

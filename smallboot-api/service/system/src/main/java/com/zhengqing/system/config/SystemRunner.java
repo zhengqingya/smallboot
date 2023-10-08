@@ -39,7 +39,7 @@ public class SystemRunner extends AppCommonRunner {
         this.iSysDictService.initCache();
 
         // 系统配置
-        iSysConfigService.initCache();
+        this.iSysConfigService.initCache();
 
         // 初始化超级管理员权限
         this.iSysPermBusinessService.initSuperAdminPerm();

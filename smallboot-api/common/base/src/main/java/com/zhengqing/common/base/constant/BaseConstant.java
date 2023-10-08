@@ -22,6 +22,11 @@ public interface BaseConstant {
     Integer PARENT_ID = 0;
 
     /**
+     * smallboot项目租户id
+     */
+    Integer TENANT_ID_SMALL_BOOT = 1;
+
+    /**
      * 获取项目根目录
      */
     String PROJECT_ROOT_DIRECTORY = System.getProperty("user.dir").replaceAll("\\\\", "/");

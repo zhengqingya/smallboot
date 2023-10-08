@@ -11,7 +11,7 @@
  Target Server Version : 50726 (5.7.26-log)
  File Encoding         : 65001
 
- Date: 08/10/2023 15:39:26
+ Date: 08/10/2023 19:03:23
 */
 
 SET NAMES utf8mb4;
@@ -602,6 +602,7 @@ INSERT INTO `sms_shop` VALUES (4, 1, '四川大学测试店', '[{\"url\": \"http
 DROP TABLE IF EXISTS `t_sys_config`;
 CREATE TABLE `t_sys_config`  (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `tenant_id` int(11) UNSIGNED NOT NULL COMMENT '租户ID',
   `key` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '属性key',
   `value` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '属性value',
   `remark` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '备注',
@@ -617,16 +618,16 @@ CREATE TABLE `t_sys_config`  (
 -- ----------------------------
 -- Records of t_sys_config
 -- ----------------------------
-INSERT INTO `t_sys_config` VALUES (10, 'hello', 'world', 'hello world !', 2, 0, '2021-09-07 10:45:45', 0, '2021-09-07 10:45:45', 0);
-INSERT INTO `t_sys_config` VALUES (12, 'test', '测试', 'this is test data.', 2, 1, '2023-02-15 11:19:46', 1, '2023-09-15 18:13:25', 0);
-INSERT INTO `t_sys_config` VALUES (59, 'mall_index_slide_img_list', '[{\"name\":\"美图13.png\",\"url\":\"http://127.0.0.1:886/2023-09-28/1707240834895855616-美图13.png\",\"uid\":\"1695893530664\",\"status\":\"success\"},{\"name\":\"美图35.jpg\",\"url\":\"http://127.0.0.1:886/2023-09-28/1707276699923857408-美图35.jpg\",\"uid\":\"1695893530665\",\"status\":\"success\"},{\"name\":\"美图28.jpg\",\"url\":\"http://127.0.0.1:886/2023-09-28/1707280259789041664-美图28.jpg\",\"uid\":\"1695893737396\",\"status\":\"success\"}]', '商城首页轮播图', 1, 1, '2023-09-28 17:45:01', 1, '2023-09-28 17:45:01', 0);
-INSERT INTO `t_sys_config` VALUES (60, 'lbs_qq_key', '666', '腾讯地图key', 1, 1, '2023-09-28 17:45:01', 1, '2023-09-28 17:45:01', 0);
-INSERT INTO `t_sys_config` VALUES (61, 'mall_order_set_auto_receive_millisecond', '864000000', '发货后？毫秒后自动确认收货', 1, 0, '2023-10-07 15:38:41', 0, '2023-10-07 15:39:08', 0);
-INSERT INTO `t_sys_config` VALUES (62, 'mall_order_set_un_pay_close_millisecond', '600000', '待付款订单？毫秒后自动关闭', 1, 0, '2023-10-07 15:39:41', NULL, NULL, 0);
-INSERT INTO `t_sys_config` VALUES (63, 'mall_order_set_buyer_apply_after_sale_handle_millisecond', '864000000', '买家发起售后申请？毫秒后，卖家未处理，自动关闭', 1, 0, '2023-10-07 15:40:37', NULL, NULL, 0);
-INSERT INTO `t_sys_config` VALUES (64, 'mall_order_set_after_sale_buyer_deliver_millisecond', '864000000', '待买家发货(买家申请售后，卖家同意后，买家未填写退货返回物流单号)？毫秒后自动关闭', 1, 0, '2023-10-07 15:41:01', NULL, NULL, 0);
-INSERT INTO `t_sys_config` VALUES (65, 'mall_order_set_buyer_apply_after_sale_millisecond', '864000000', '买家确认收货？毫秒后无法发起售后申请', 1, 0, '2023-10-07 15:41:11', NULL, NULL, 0);
-INSERT INTO `t_sys_config` VALUES (66, 'mall_order_set_stock_check_type', '1', '减库存设置（1：提交订单减库存 2：付款减库存）', 1, 0, '2023-10-07 15:41:29', NULL, NULL, 0);
+INSERT INTO `t_sys_config` VALUES (10, 1, 'hello', 'world', 'hello world !', 2, 0, '2021-09-07 10:45:45', 0, '2023-10-08 18:25:08', 0);
+INSERT INTO `t_sys_config` VALUES (12, 1, 'test', '测试', 'this is test data.', 2, 1, '2023-02-15 11:19:46', 1, '2023-10-08 18:25:08', 0);
+INSERT INTO `t_sys_config` VALUES (59, 1, 'mall_index_slide_img_list', '[{\"name\":\"美图13.png\",\"url\":\"http://127.0.0.1:886/2023-09-28/1707240834895855616-美图13.png\",\"uid\":\"1695893530664\",\"status\":\"success\"},{\"name\":\"美图35.jpg\",\"url\":\"http://127.0.0.1:886/2023-09-28/1707276699923857408-美图35.jpg\",\"uid\":\"1695893530665\",\"status\":\"success\"},{\"name\":\"美图28.jpg\",\"url\":\"http://127.0.0.1:886/2023-09-28/1707280259789041664-美图28.jpg\",\"uid\":\"1695893737396\",\"status\":\"success\"}]', '商城首页轮播图', 1, 1, '2023-09-28 17:45:01', 1, '2023-10-08 18:25:08', 0);
+INSERT INTO `t_sys_config` VALUES (60, 1, 'lbs_qq_key', '666', '腾讯地图key', 1, 1, '2023-09-28 17:45:01', 1, '2023-10-08 18:25:08', 0);
+INSERT INTO `t_sys_config` VALUES (61, 1, 'mall_order_set_auto_receive_millisecond', '864000000', '发货后？毫秒后自动确认收货', 1, 0, '2023-10-07 15:38:41', 0, '2023-10-08 18:25:08', 0);
+INSERT INTO `t_sys_config` VALUES (62, 1, 'mall_order_set_un_pay_close_millisecond', '600000', '待付款订单？毫秒后自动关闭', 1, 0, '2023-10-07 15:39:41', NULL, '2023-10-08 18:25:08', 0);
+INSERT INTO `t_sys_config` VALUES (63, 1, 'mall_order_set_buyer_apply_after_sale_handle_millisecond', '864000000', '买家发起售后申请？毫秒后，卖家未处理，自动关闭', 1, 0, '2023-10-07 15:40:37', NULL, '2023-10-08 18:25:08', 0);
+INSERT INTO `t_sys_config` VALUES (64, 1, 'mall_order_set_after_sale_buyer_deliver_millisecond', '864000000', '待买家发货(买家申请售后，卖家同意后，买家未填写退货返回物流单号)？毫秒后自动关闭', 1, 0, '2023-10-07 15:41:01', NULL, '2023-10-08 18:25:08', 0);
+INSERT INTO `t_sys_config` VALUES (65, 1, 'mall_order_set_buyer_apply_after_sale_millisecond', '864000000', '买家确认收货？毫秒后无法发起售后申请', 1, 0, '2023-10-07 15:41:11', NULL, '2023-10-08 18:25:08', 0);
+INSERT INTO `t_sys_config` VALUES (66, 1, 'mall_order_set_stock_check_type', '1', '减库存设置（1：提交订单减库存 2：付款减库存）', 1, 0, '2023-10-07 15:41:29', NULL, '2023-10-08 18:25:08', 0);
 
 -- ----------------------------
 -- Table structure for t_sys_dict
@@ -985,6 +986,7 @@ INSERT INTO `t_sys_dict_type` VALUES (10, 'mall_spu_explain', '商城-商品-说
 DROP TABLE IF EXISTS `t_sys_file`;
 CREATE TABLE `t_sys_file`  (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `tenant_id` int(11) UNSIGNED NOT NULL COMMENT '租户ID',
   `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '文件名',
   `url` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '文件地址',
   `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '文件类型',
@@ -1001,10 +1003,10 @@ CREATE TABLE `t_sys_file`  (
 -- ----------------------------
 -- Records of t_sys_file
 -- ----------------------------
-INSERT INTO `t_sys_file` VALUES (21, '美图13.png', '/2023-09-28/1707240834895855616-美图13.png', 'image/png', 'a846e6a993854b34f46e909b2e3971d7', 124751, '2023-09-28 11:48:29', '2023-09-28 11:48:29', 1, 1, 0);
-INSERT INTO `t_sys_file` VALUES (22, '美图14.jpg', '/2023-09-28/1707276494134525952-美图14.jpg', 'image/jpeg', '7612baeeb4e1f22b28c92400b1a727a6', 805694, '2023-09-28 14:10:11', '2023-09-28 14:10:11', 1, 1, 0);
-INSERT INTO `t_sys_file` VALUES (23, '美图35.jpg', '/2023-09-28/1707276699923857408-美图35.jpg', 'image/jpeg', 'bafca25d99f49411f09c76985654f78c', 115888, '2023-09-28 14:11:00', '2023-09-28 14:11:00', 1, 1, 0);
-INSERT INTO `t_sys_file` VALUES (24, '美图28.jpg', '/2023-09-28/1707280259789041664-美图28.jpg', 'image/jpeg', '4336d41fcd5a3076e54ed6f9d39e82d5', 874939, '2023-09-28 14:25:08', '2023-09-28 14:25:08', 1, 1, 0);
+INSERT INTO `t_sys_file` VALUES (21, 1, '美图13.png', '/2023-09-28/1707240834895855616-美图13.png', 'image/png', 'a846e6a993854b34f46e909b2e3971d7', 124751, '2023-09-28 11:48:29', '2023-10-08 18:25:02', 1, 1, 0);
+INSERT INTO `t_sys_file` VALUES (22, 1, '美图14.jpg', '/2023-09-28/1707276494134525952-美图14.jpg', 'image/jpeg', '7612baeeb4e1f22b28c92400b1a727a6', 805694, '2023-09-28 14:10:11', '2023-10-08 18:25:02', 1, 1, 0);
+INSERT INTO `t_sys_file` VALUES (23, 1, '美图35.jpg', '/2023-09-28/1707276699923857408-美图35.jpg', 'image/jpeg', 'bafca25d99f49411f09c76985654f78c', 115888, '2023-09-28 14:11:00', '2023-10-08 18:25:02', 1, 1, 0);
+INSERT INTO `t_sys_file` VALUES (24, 1, '美图28.jpg', '/2023-09-28/1707280259789041664-美图28.jpg', 'image/jpeg', '4336d41fcd5a3076e54ed6f9d39e82d5', 874939, '2023-09-28 14:25:08', '2023-10-08 18:25:02', 1, 1, 0);
 
 -- ----------------------------
 -- Table structure for t_sys_menu
@@ -1027,7 +1029,7 @@ CREATE TABLE `t_sys_menu`  (
   `update_time` datetime NOT NULL COMMENT '修改时间',
   `is_deleted` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否删除(1->是，0->否)',
   PRIMARY KEY (`menu_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 32 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-菜单表' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 33 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-菜单表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_sys_menu
@@ -1059,7 +1061,8 @@ INSERT INTO `t_sys_menu` VALUES (27, 19, '店铺', 'Shop', 'shop', 1, 'mall/shop
 INSERT INTO `t_sys_menu` VALUES (28, 19, '店铺-编辑', '', 'shop-edit', 1, 'mall/shop/edit', '', 0, 0, 1, '2023-09-13 17:55:23', 1, '2023-09-14 09:21:46', 0);
 INSERT INTO `t_sys_menu` VALUES (29, 3, '系统配置', 'SetUp', 'config', 18, 'system/config/index', NULL, 1, 1, 1, '2023-09-15 16:44:56', 1, '2023-09-15 16:44:56', 0);
 INSERT INTO `t_sys_menu` VALUES (30, 3, '文件上传记录', 'Files', 'file', 19, 'system/file/index', '', 1, 1, 1, '2023-09-28 11:50:14', 1, '2023-09-28 11:50:22', 0);
-INSERT INTO `t_sys_menu` VALUES (31, 3, '租户套餐', '', 'tenant-package', 2, 'system/tenant-package/index', '', 1, 1, 1, '2023-10-08 10:58:32', 1, '2023-10-08 10:58:32', 0);
+INSERT INTO `t_sys_menu` VALUES (31, 3, '租户套餐', 'Management', 'tenant-package', 2, 'system/tenant-package/index', '', 1, 1, 1, '2023-10-08 10:58:32', 1, '2023-10-08 17:04:43', 0);
+INSERT INTO `t_sys_menu` VALUES (32, 3, '租户列表', 'List', 'tenant', 1, 'system/tenant/index', '', 1, 1, 1, '2023-10-08 10:58:32', 1, '2023-10-08 17:04:22', 0);
 
 -- ----------------------------
 -- Table structure for t_sys_permission
@@ -4324,6 +4327,7 @@ INSERT INTO `t_sys_province_city_area` VALUES (13210, 3210, '820000', '澳门特
 DROP TABLE IF EXISTS `t_sys_role`;
 CREATE TABLE `t_sys_role`  (
   `role_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `tenant_id` int(11) UNSIGNED NOT NULL COMMENT '租户ID',
   `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '角色名',
   `code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '角色编号',
   `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT '状态(1:开启 0:禁用)',
@@ -4338,8 +4342,8 @@ CREATE TABLE `t_sys_role`  (
 -- ----------------------------
 -- Records of t_sys_role
 -- ----------------------------
-INSERT INTO `t_sys_role` VALUES (1, '超级管理员', 'super_admin', 1, 1, 1, '2020-08-22 15:01:51', 1, '2023-08-31 16:00:17');
-INSERT INTO `t_sys_role` VALUES (2, '凡人', 'everyman', 1, 1, 1, '2022-08-05 20:00:36', 1, '2023-08-31 16:00:30');
+INSERT INTO `t_sys_role` VALUES (1, 1, '超级管理员', 'super_admin', 1, 1, 1, '2020-08-22 15:01:51', 1, '2023-10-08 18:24:46');
+INSERT INTO `t_sys_role` VALUES (2, 1, '凡人', 'everyman', 1, 1, 1, '2022-08-05 20:00:36', 1, '2023-10-08 18:24:46');
 
 -- ----------------------------
 -- Table structure for t_sys_role_menu
@@ -4347,6 +4351,7 @@ INSERT INTO `t_sys_role` VALUES (2, '凡人', 'everyman', 1, 1, 1, '2022-08-05 2
 DROP TABLE IF EXISTS `t_sys_role_menu`;
 CREATE TABLE `t_sys_role_menu`  (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `tenant_id` int(11) UNSIGNED NOT NULL COMMENT '租户ID',
   `role_id` int(11) NOT NULL COMMENT '角色ID',
   `menu_id` int(11) NOT NULL COMMENT '菜单ID',
   `create_by` bigint(20) NOT NULL COMMENT '创建人',
@@ -4354,40 +4359,41 @@ CREATE TABLE `t_sys_role_menu`  (
   `update_by` bigint(20) NOT NULL COMMENT '修改人',
   `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 34 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-角色菜单关联表' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 35 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-角色菜单关联表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_sys_role_menu
 -- ----------------------------
-INSERT INTO `t_sys_role_menu` VALUES (1, 1, 1, 1, '2023-08-31 16:36:56', 0, '2023-10-08 15:34:51');
-INSERT INTO `t_sys_role_menu` VALUES (2, 1, 3, 1, '2023-08-31 16:36:56', 0, '2023-10-08 15:34:51');
-INSERT INTO `t_sys_role_menu` VALUES (3, 1, 4, 1, '2023-08-31 16:36:56', 0, '2023-10-08 15:34:51');
-INSERT INTO `t_sys_role_menu` VALUES (4, 1, 5, 1, '2023-08-31 16:36:56', 0, '2023-10-08 15:34:51');
-INSERT INTO `t_sys_role_menu` VALUES (5, 1, 6, 1, '2023-08-31 16:36:56', 0, '2023-10-08 15:34:52');
-INSERT INTO `t_sys_role_menu` VALUES (6, 1, 7, 1, '2023-08-31 16:36:56', 0, '2023-10-08 15:34:52');
-INSERT INTO `t_sys_role_menu` VALUES (7, 1, 9, 1, '2023-08-31 16:36:56', 0, '2023-10-08 15:34:52');
-INSERT INTO `t_sys_role_menu` VALUES (8, 1, 10, 1, '2023-08-31 16:36:56', 0, '2023-10-08 15:34:52');
-INSERT INTO `t_sys_role_menu` VALUES (9, 1, 11, 1, '2023-08-31 16:36:56', 0, '2023-10-08 15:34:52');
-INSERT INTO `t_sys_role_menu` VALUES (10, 1, 12, 1, '2023-08-31 16:36:56', 0, '2023-10-08 15:34:52');
-INSERT INTO `t_sys_role_menu` VALUES (11, 1, 13, 1, '2023-08-31 16:36:56', 0, '2023-10-08 15:34:52');
-INSERT INTO `t_sys_role_menu` VALUES (12, 1, 14, 1, '2023-08-31 16:36:56', 0, '2023-10-08 15:34:52');
-INSERT INTO `t_sys_role_menu` VALUES (13, 1, 15, 1, '2023-08-31 16:36:56', 0, '2023-10-08 15:34:52');
-INSERT INTO `t_sys_role_menu` VALUES (14, 1, 16, 1, '2023-08-31 16:36:56', 0, '2023-10-08 15:34:52');
-INSERT INTO `t_sys_role_menu` VALUES (15, 1, 17, 1, '2023-08-31 16:36:56', 0, '2023-10-08 15:34:52');
-INSERT INTO `t_sys_role_menu` VALUES (16, 1, 18, 1, '2023-08-31 16:36:56', 0, '2023-10-08 15:34:52');
-INSERT INTO `t_sys_role_menu` VALUES (17, 1, 19, 1, '2023-08-31 16:36:56', 0, '2023-10-08 15:34:52');
-INSERT INTO `t_sys_role_menu` VALUES (18, 1, 25, 1, '2023-08-31 16:36:56', 0, '2023-10-08 15:34:52');
-INSERT INTO `t_sys_role_menu` VALUES (19, 1, 20, 1, '2023-08-31 16:36:56', 0, '2023-10-08 15:34:52');
-INSERT INTO `t_sys_role_menu` VALUES (20, 1, 22, 1, '2023-08-31 16:36:56', 0, '2023-10-08 15:34:52');
-INSERT INTO `t_sys_role_menu` VALUES (21, 1, 21, 1, '2023-08-31 16:36:56', 0, '2023-10-08 15:34:52');
-INSERT INTO `t_sys_role_menu` VALUES (22, 1, 23, 1, '2023-08-31 16:36:56', 0, '2023-10-08 15:34:52');
-INSERT INTO `t_sys_role_menu` VALUES (23, 1, 24, 1, '2023-08-31 16:36:56', 0, '2023-10-08 15:34:52');
-INSERT INTO `t_sys_role_menu` VALUES (24, 2, 1, 1, '2023-08-31 16:38:01', 1, '2023-10-08 15:31:17');
-INSERT INTO `t_sys_role_menu` VALUES (25, 1, 27, 1, '2023-09-13 11:16:00', 0, '2023-10-08 15:34:52');
-INSERT INTO `t_sys_role_menu` VALUES (26, 1, 28, 1, '2023-09-13 17:55:38', 0, '2023-10-08 15:34:52');
-INSERT INTO `t_sys_role_menu` VALUES (27, 1, 29, 1, '2023-09-15 16:45:04', 0, '2023-10-08 15:34:52');
-INSERT INTO `t_sys_role_menu` VALUES (28, 1, 30, 1, '2023-09-28 11:50:35', 0, '2023-10-08 15:34:52');
-INSERT INTO `t_sys_role_menu` VALUES (29, 1, 31, 1, '2023-10-08 11:00:53', 0, '2023-10-08 15:34:51');
+INSERT INTO `t_sys_role_menu` VALUES (1, 1, 1, 1, 1, '2023-08-31 16:36:56', 0, '2023-10-08 18:58:41');
+INSERT INTO `t_sys_role_menu` VALUES (2, 1, 1, 3, 1, '2023-08-31 16:36:56', 0, '2023-10-08 18:58:41');
+INSERT INTO `t_sys_role_menu` VALUES (3, 1, 1, 4, 1, '2023-08-31 16:36:56', 0, '2023-10-08 18:58:41');
+INSERT INTO `t_sys_role_menu` VALUES (4, 1, 1, 5, 1, '2023-08-31 16:36:56', 0, '2023-10-08 18:58:41');
+INSERT INTO `t_sys_role_menu` VALUES (5, 1, 1, 6, 1, '2023-08-31 16:36:56', 0, '2023-10-08 18:58:41');
+INSERT INTO `t_sys_role_menu` VALUES (6, 1, 1, 7, 1, '2023-08-31 16:36:56', 0, '2023-10-08 18:58:41');
+INSERT INTO `t_sys_role_menu` VALUES (7, 1, 1, 9, 1, '2023-08-31 16:36:56', 0, '2023-10-08 18:58:41');
+INSERT INTO `t_sys_role_menu` VALUES (8, 1, 1, 10, 1, '2023-08-31 16:36:56', 0, '2023-10-08 18:58:41');
+INSERT INTO `t_sys_role_menu` VALUES (9, 1, 1, 11, 1, '2023-08-31 16:36:56', 0, '2023-10-08 18:58:41');
+INSERT INTO `t_sys_role_menu` VALUES (10, 1, 1, 12, 1, '2023-08-31 16:36:56', 0, '2023-10-08 18:58:41');
+INSERT INTO `t_sys_role_menu` VALUES (11, 1, 1, 13, 1, '2023-08-31 16:36:56', 0, '2023-10-08 18:58:41');
+INSERT INTO `t_sys_role_menu` VALUES (12, 1, 1, 14, 1, '2023-08-31 16:36:56', 0, '2023-10-08 18:58:41');
+INSERT INTO `t_sys_role_menu` VALUES (13, 1, 1, 15, 1, '2023-08-31 16:36:56', 0, '2023-10-08 18:58:41');
+INSERT INTO `t_sys_role_menu` VALUES (14, 1, 1, 16, 1, '2023-08-31 16:36:56', 0, '2023-10-08 18:58:41');
+INSERT INTO `t_sys_role_menu` VALUES (15, 1, 1, 17, 1, '2023-08-31 16:36:56', 0, '2023-10-08 18:58:41');
+INSERT INTO `t_sys_role_menu` VALUES (16, 1, 1, 18, 1, '2023-08-31 16:36:56', 0, '2023-10-08 18:58:41');
+INSERT INTO `t_sys_role_menu` VALUES (17, 1, 1, 19, 1, '2023-08-31 16:36:56', 0, '2023-10-08 18:58:41');
+INSERT INTO `t_sys_role_menu` VALUES (18, 1, 1, 25, 1, '2023-08-31 16:36:56', 0, '2023-10-08 18:58:41');
+INSERT INTO `t_sys_role_menu` VALUES (19, 1, 1, 20, 1, '2023-08-31 16:36:56', 0, '2023-10-08 18:58:41');
+INSERT INTO `t_sys_role_menu` VALUES (20, 1, 1, 22, 1, '2023-08-31 16:36:56', 0, '2023-10-08 18:58:41');
+INSERT INTO `t_sys_role_menu` VALUES (21, 1, 1, 21, 1, '2023-08-31 16:36:56', 0, '2023-10-08 18:58:41');
+INSERT INTO `t_sys_role_menu` VALUES (22, 1, 1, 23, 1, '2023-08-31 16:36:56', 0, '2023-10-08 18:58:42');
+INSERT INTO `t_sys_role_menu` VALUES (23, 1, 1, 24, 1, '2023-08-31 16:36:56', 0, '2023-10-08 18:58:42');
+INSERT INTO `t_sys_role_menu` VALUES (24, 1, 2, 1, 1, '2023-08-31 16:38:01', 1, '2023-10-08 18:25:29');
+INSERT INTO `t_sys_role_menu` VALUES (25, 1, 1, 27, 1, '2023-09-13 11:16:00', 0, '2023-10-08 18:58:41');
+INSERT INTO `t_sys_role_menu` VALUES (26, 1, 1, 28, 1, '2023-09-13 17:55:38', 0, '2023-10-08 18:58:41');
+INSERT INTO `t_sys_role_menu` VALUES (27, 1, 1, 29, 1, '2023-09-15 16:45:04', 0, '2023-10-08 18:58:41');
+INSERT INTO `t_sys_role_menu` VALUES (28, 1, 1, 30, 1, '2023-09-28 11:50:35', 0, '2023-10-08 18:58:41');
+INSERT INTO `t_sys_role_menu` VALUES (29, 1, 1, 31, 1, '2023-10-08 11:00:53', 0, '2023-10-08 18:58:41');
+INSERT INTO `t_sys_role_menu` VALUES (34, 1, 1, 32, 0, '2023-10-08 15:48:05', 0, '2023-10-08 18:58:41');
 
 -- ----------------------------
 -- Table structure for t_sys_role_permission
@@ -4395,6 +4401,7 @@ INSERT INTO `t_sys_role_menu` VALUES (29, 1, 31, 1, '2023-10-08 11:00:53', 0, '2
 DROP TABLE IF EXISTS `t_sys_role_permission`;
 CREATE TABLE `t_sys_role_permission`  (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `tenant_id` int(11) UNSIGNED NOT NULL COMMENT '租户ID',
   `role_id` int(11) NOT NULL COMMENT '角色ID',
   `permission_id` int(11) NOT NULL COMMENT '权限ID',
   `create_by` bigint(20) NOT NULL COMMENT '创建人',
@@ -4407,10 +4414,10 @@ CREATE TABLE `t_sys_role_permission`  (
 -- ----------------------------
 -- Records of t_sys_role_permission
 -- ----------------------------
-INSERT INTO `t_sys_role_permission` VALUES (1, 1, 1, 1, '2023-08-31 16:37:43', 0, '2023-10-08 15:34:52');
-INSERT INTO `t_sys_role_permission` VALUES (2, 1, 2, 1, '2023-08-31 16:37:43', 0, '2023-10-08 15:34:52');
-INSERT INTO `t_sys_role_permission` VALUES (3, 1, 3, 1, '2023-08-31 16:37:43', 0, '2023-10-08 15:34:52');
-INSERT INTO `t_sys_role_permission` VALUES (4, 1, 4, 1, '2023-08-31 16:37:43', 0, '2023-10-08 15:34:52');
+INSERT INTO `t_sys_role_permission` VALUES (1, 1, 1, 1, 1, '2023-08-31 16:37:43', 0, '2023-10-08 18:58:42');
+INSERT INTO `t_sys_role_permission` VALUES (2, 1, 1, 2, 1, '2023-08-31 16:37:43', 0, '2023-10-08 18:58:42');
+INSERT INTO `t_sys_role_permission` VALUES (3, 1, 1, 3, 1, '2023-08-31 16:37:43', 0, '2023-10-08 18:58:42');
+INSERT INTO `t_sys_role_permission` VALUES (4, 1, 1, 4, 1, '2023-08-31 16:37:43', 0, '2023-10-08 18:58:42');
 
 -- ----------------------------
 -- Table structure for t_sys_tenant
@@ -4431,11 +4438,13 @@ CREATE TABLE `t_sys_tenant`  (
   `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `is_deleted` bit(1) NOT NULL DEFAULT b'0' COMMENT '是否删除(1->是，0->否)',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-租户信息' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-租户信息' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_sys_tenant
 -- ----------------------------
+INSERT INTO `t_sys_tenant` VALUES (1, 'SmallBoot', '郑清', '15183308888', 1, '2023-10-08 05:02:06', 9999, 3, 1, '2023-10-08 17:02:17', 1, '2023-10-08 18:18:54', b'0');
+INSERT INTO `t_sys_tenant` VALUES (2, '测试租户', '小郑', '15183309999', 1, '2023-10-08 05:03:36', 10, 4, 1, '2023-10-08 17:03:42', 1, '2023-10-08 19:00:34', b'0');
 
 -- ----------------------------
 -- Table structure for t_sys_tenant_package
@@ -4468,6 +4477,7 @@ INSERT INTO `t_sys_tenant_package` VALUES (4, '普通套餐', 0, '[1]', '[]', '�
 DROP TABLE IF EXISTS `t_sys_user`;
 CREATE TABLE `t_sys_user`  (
   `user_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `tenant_id` int(11) UNSIGNED NOT NULL COMMENT '租户ID',
   `username` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '账号',
   `password` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '登录密码',
   `nickname` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '昵称',
@@ -4486,8 +4496,8 @@ CREATE TABLE `t_sys_user`  (
 -- ----------------------------
 -- Records of t_sys_user
 -- ----------------------------
-INSERT INTO `t_sys_user` VALUES (1, 'admin', '3014dcb9ee3639535d5d9301b32c840c', '郑清', 1, '15188888888', 'zhengqingya@it.com', 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80', 1, '2020-08-22 15:01:51', 1, '2023-08-26 19:09:05', 0);
-INSERT INTO `t_sys_user` VALUES (2, 'test', '3014dcb9ee3639535d5d9301b32c840c', '测试号', 1, '', '', 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80', 1, '2020-08-22 15:01:51', 1, '2023-08-26 17:20:59', 0);
+INSERT INTO `t_sys_user` VALUES (1, 1, 'admin', '3014dcb9ee3639535d5d9301b32c840c', '郑清', 1, '15188888888', 'zhengqingya@it.com', 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80', 1, '2020-08-22 15:01:51', 1, '2023-08-26 19:09:05', 0);
+INSERT INTO `t_sys_user` VALUES (2, 0, 'test', '3014dcb9ee3639535d5d9301b32c840c', '测试号', 1, '', '', 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80', 1, '2020-08-22 15:01:51', 1, '2023-08-26 17:20:59', 0);
 
 -- ----------------------------
 -- Table structure for t_sys_user_re_oauth
@@ -4495,6 +4505,7 @@ INSERT INTO `t_sys_user` VALUES (2, 'test', '3014dcb9ee3639535d5d9301b32c840c', 
 DROP TABLE IF EXISTS `t_sys_user_re_oauth`;
 CREATE TABLE `t_sys_user_re_oauth`  (
   `user_re_oauth_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `tenant_id` int(11) UNSIGNED NOT NULL COMMENT '租户ID',
   `user_id` int(11) NOT NULL COMMENT '用户id（关联表`t_sys_user`字段`user_id`）',
   `open_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '三方id',
   `oauth_type` tinyint(4) NOT NULL COMMENT '第三方授权类型',
@@ -4515,6 +4526,7 @@ CREATE TABLE `t_sys_user_re_oauth`  (
 DROP TABLE IF EXISTS `t_sys_user_role`;
 CREATE TABLE `t_sys_user_role`  (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `tenant_id` int(11) UNSIGNED NOT NULL COMMENT '租户ID',
   `user_id` int(11) NOT NULL COMMENT '用户ID',
   `role_id` int(11) NOT NULL COMMENT '角色ID',
   `create_by` bigint(20) NOT NULL COMMENT '创建人',
@@ -4522,13 +4534,14 @@ CREATE TABLE `t_sys_user_role`  (
   `update_by` bigint(20) NOT NULL COMMENT '修改人',
   `update_time` datetime NOT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-用户角色关联表' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-用户角色关联表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_sys_user_role
 -- ----------------------------
-INSERT INTO `t_sys_user_role` VALUES (1, 1, 1, 0, '2023-08-31 15:54:57', 0, '2023-10-08 15:34:51');
-INSERT INTO `t_sys_user_role` VALUES (2, 2, 10, 1, '2023-08-26 18:26:25', 1, '2023-08-26 18:26:25');
+INSERT INTO `t_sys_user_role` VALUES (1, 0, 1, 1, 0, '2023-08-31 15:54:57', 0, '2023-10-08 18:36:31');
+INSERT INTO `t_sys_user_role` VALUES (2, 0, 2, 10, 1, '2023-08-26 18:26:25', 1, '2023-08-26 18:26:25');
+INSERT INTO `t_sys_user_role` VALUES (3, 1, 1, 1, 0, '2023-10-08 18:38:41', 0, '2023-10-08 18:58:41');
 
 -- ----------------------------
 -- Table structure for t_wx_mp_account
@@ -4536,6 +4549,7 @@ INSERT INTO `t_sys_user_role` VALUES (2, 2, 10, 1, '2023-08-26 18:26:25', 1, '20
 DROP TABLE IF EXISTS `t_wx_mp_account`;
 CREATE TABLE `t_wx_mp_account`  (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `tenant_id` int(11) UNSIGNED NOT NULL COMMENT '租户ID',
   `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '名称',
   `type` tinyint(1) UNSIGNED NULL DEFAULT NULL COMMENT '账号类型（1：测试号；2：服务号；3：订阅号）',
   `account` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '公众号ID',
@@ -4555,7 +4569,7 @@ CREATE TABLE `t_wx_mp_account`  (
 -- ----------------------------
 -- Records of t_wx_mp_account
 -- ----------------------------
-INSERT INTO `t_wx_mp_account` VALUES (1, '郑清的测试账号', 1, 'gh_42e1dbad014e', 'wxe01d9bde2cc81b89', 'f292d6cb69755a7105863d97910a9579', '/wx/mp/portal/wxe01d9bde2cc81b89', 'test', '4J9GOBZ4VTElUFm0EvRDV6aJu5spvYXGkn1RJela56U', 'http://mmbiz.qpic.cn/mmbiz_jpg/8ytq3xBRtdjkBkb2JfibmdJCkT4t2ZSxo8PBwzZ6cgic64mMVicxibpqAyQY0kuiaHhMc3Yjh5J2ATy8kkQgfzbIFJA/0', '2023-03-16 15:39:45', '2023-08-28 18:01:49', 1, 1);
+INSERT INTO `t_wx_mp_account` VALUES (1, 1, '郑清的测试账号', 1, 'gh_42e1dbad014e', 'wxe01d9bde2cc81b89', 'f292d6cb69755a7105863d97910a9579', '/wx/mp/portal/wxe01d9bde2cc81b89', 'test', '4J9GOBZ4VTElUFm0EvRDV6aJu5spvYXGkn1RJela56U', 'http://mmbiz.qpic.cn/mmbiz_jpg/8ytq3xBRtdjkBkb2JfibmdJCkT4t2ZSxo8PBwzZ6cgic64mMVicxibpqAyQY0kuiaHhMc3Yjh5J2ATy8kkQgfzbIFJA/0', '2023-03-16 15:39:45', '2023-10-08 18:27:30', 1, 1);
 
 -- ----------------------------
 -- Table structure for t_wx_mp_msg_auto_reply
@@ -4563,6 +4577,7 @@ INSERT INTO `t_wx_mp_account` VALUES (1, '郑清的测试账号', 1, 'gh_42e1dba
 DROP TABLE IF EXISTS `t_wx_mp_msg_auto_reply`;
 CREATE TABLE `t_wx_mp_msg_auto_reply`  (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `tenant_id` int(11) UNSIGNED NOT NULL COMMENT '租户ID',
   `app_id` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'AppID',
   `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '名称',
   `type` tinyint(1) NOT NULL COMMENT '类型（1：关注时回复；2：关键词回复）',
@@ -4580,9 +4595,9 @@ CREATE TABLE `t_wx_mp_msg_auto_reply`  (
 -- ----------------------------
 -- Records of t_wx_mp_msg_auto_reply
 -- ----------------------------
-INSERT INTO `t_wx_mp_msg_auto_reply` VALUES (1, 'wxe01d9bde2cc81b89', '关注', 1, '', 1, 'text', '谢谢关注！', '2023-03-20 17:54:30', '2023-03-20 19:34:08', 1, 1);
-INSERT INTO `t_wx_mp_msg_auto_reply` VALUES (2, 'wxe01d9bde2cc81b89', '文本消息', 2, 'hello', 1, 'text', '自动回复：你好', '2023-03-20 19:30:47', '2023-03-20 19:30:47', 1, 1);
-INSERT INTO `t_wx_mp_msg_auto_reply` VALUES (3, 'wxe01d9bde2cc81b89', '图片消息', 2, '图片', 1, 'image', 'hm_a1Quvy6P39bspNEXRaIGBhVqBzDfHKxRCKhAZEtK7pyYDG2Hjc4B2L7Yg-p57', '2023-03-21 15:12:44', '2023-08-28 18:44:42', 1, 1);
+INSERT INTO `t_wx_mp_msg_auto_reply` VALUES (1, 1, 'wxe01d9bde2cc81b89', '关注', 1, '', 1, 'text', '谢谢关注！', '2023-03-20 17:54:30', '2023-10-08 18:27:53', 1, 1);
+INSERT INTO `t_wx_mp_msg_auto_reply` VALUES (2, 1, 'wxe01d9bde2cc81b89', '文本消息', 2, 'hello', 1, 'text', '自动回复：你好', '2023-03-20 19:30:47', '2023-10-08 18:27:53', 1, 1);
+INSERT INTO `t_wx_mp_msg_auto_reply` VALUES (3, 1, 'wxe01d9bde2cc81b89', '图片消息', 2, '图片', 1, 'image', 'hm_a1Quvy6P39bspNEXRaIGBhVqBzDfHKxRCKhAZEtK7pyYDG2Hjc4B2L7Yg-p57', '2023-03-21 15:12:44', '2023-10-08 18:27:53', 1, 1);
 
 -- ----------------------------
 -- Table structure for t_wx_mp_template_msg
@@ -4590,6 +4605,7 @@ INSERT INTO `t_wx_mp_msg_auto_reply` VALUES (3, 'wxe01d9bde2cc81b89', '图片消
 DROP TABLE IF EXISTS `t_wx_mp_template_msg`;
 CREATE TABLE `t_wx_mp_template_msg`  (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `tenant_id` int(11) UNSIGNED NOT NULL COMMENT '租户ID',
   `app_id` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'AppID',
   `template_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '模板ID',
   `title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '模板标题',
@@ -4606,8 +4622,8 @@ CREATE TABLE `t_wx_mp_template_msg`  (
 -- ----------------------------
 -- Records of t_wx_mp_template_msg
 -- ----------------------------
-INSERT INTO `t_wx_mp_template_msg` VALUES (15, 'wxe01d9bde2cc81b89', 'alASmcPvowZ2ZgaK2BWMWHMvsnXyz_tP_vQH5EEY8Kc', '早上好，单身狗☀', '{{txt1.DATA}}\n\n单身狗所在地区：{{city.DATA}}\n日期：{{date.DATA}} {{week.DATA}}\n\n{{txt2.DATA}}\n\n天气：{{wea.DATA}}\n最高气温：{{tem1.DATA}}\n最低气温：{{tem2.DATA}}\n风向：{{win.DATA}}\n风力：{{win_speed.DATA}}\n风速：{{win_meter.DATA}}\n湿度：{{humidity.DATA}}\n能见度：{{visibility.DATA}}\n气压：{{pressure.DATA}}\n空气质量：{{air.DATA}}\npm2.5含量：{{air_pm25.DATA}}\n空气等级：{{air_level.DATA}}\n温馨小提示：{{air_tips.DATA}}\n\n{{end1.DATA}}\n{{end2.DATA}}\n\n{{author.DATA}}', '[{\"name\": \"txt1\", \"color\": \"#20B2AA\", \"value\": \"今天心情不好，我问小狗怎么办，小狗说：汪汪汪☀☀☀☀☀☀☀☀☀☀☀☀☀\"}, {\"name\": \"city\", \"color\": \"#F093FB\", \"value\": \"四川成都\"}, {\"name\": \"date\", \"color\": \"#F093FB\", \"value\": \"2023-03-22\"}, {\"name\": \"week\", \"color\": \"#F093FB\", \"value\": \"星期三\"}, {\"name\": \"txt2\", \"color\": \"#1E90FF\", \"value\": \"单身狗出门也要看下今天的天气状况哦╰(*°▽°*)╯\"}, {\"name\": \"wea\", \"color\": \"#000\", \"value\": \"晴\"}, {\"name\": \"tem1\", \"color\": \"#000\", \"value\": \"25°\"}, {\"name\": \"tem2\", \"color\": \"#000\", \"value\": \"20°\"}, {\"name\": \"win\", \"color\": \"#000\", \"value\": \"南风\"}, {\"name\": \"win_speed\", \"color\": \"#000\", \"value\": \"2级\"}, {\"name\": \"win_meter\", \"color\": \"#000\", \"value\": \"6km/h\"}, {\"name\": \"humidity\", \"color\": \"#000\", \"value\": \"44%\"}, {\"name\": \"visibility\", \"color\": \"#000\", \"value\": \"10km\"}, {\"name\": \"pressure\", \"color\": \"#000\", \"value\": \"1000\"}, {\"name\": \"air\", \"color\": \"#000\", \"value\": \"60\"}, {\"name\": \"air_pm25\", \"color\": \"#000\", \"value\": \"31\"}, {\"name\": \"air_level\", \"color\": \"#000\", \"value\": \"良\"}, {\"name\": \"air_tips\", \"color\": \"#000\", \"value\": \"空气好，可以外出活动!\"}, {\"name\": \"end1\", \"color\": \"#FF4500\", \"value\": \"How are you still single? \"}, {\"name\": \"end2\", \"color\": \"#FF4500\", \"value\": \"你怎么还单着？\"}, {\"name\": \"author\", \"color\": \"#DDA0DD\", \"value\": \"zhengqingya\"}]', '2023-03-21 18:52:15', '2023-08-28 18:25:02', 1, 1, 0);
-INSERT INTO `t_wx_mp_template_msg` VALUES (16, 'wxe01d9bde2cc81b89', 'xEUCJF0EhbiHCIttO17lyXXmCxJHX6TeI9Sq7m6WV_I', 'test', '{{txt1.DATA}}\n\n所在地区：{{city.DATA}}', '[{\"name\": \"txt1\", \"color\": \"#E60E0E\", \"value\": \"测试\"}, {\"name\": \"city\", \"color\": \"#15F4D6\", \"value\": \"四川成都\"}]', '2023-03-21 18:52:15', '2023-08-28 18:24:56', 1, 1, 0);
+INSERT INTO `t_wx_mp_template_msg` VALUES (15, 1, 'wxe01d9bde2cc81b89', 'alASmcPvowZ2ZgaK2BWMWHMvsnXyz_tP_vQH5EEY8Kc', '早上好，单身狗☀', '{{txt1.DATA}}\n\n单身狗所在地区：{{city.DATA}}\n日期：{{date.DATA}} {{week.DATA}}\n\n{{txt2.DATA}}\n\n天气：{{wea.DATA}}\n最高气温：{{tem1.DATA}}\n最低气温：{{tem2.DATA}}\n风向：{{win.DATA}}\n风力：{{win_speed.DATA}}\n风速：{{win_meter.DATA}}\n湿度：{{humidity.DATA}}\n能见度：{{visibility.DATA}}\n气压：{{pressure.DATA}}\n空气质量：{{air.DATA}}\npm2.5含量：{{air_pm25.DATA}}\n空气等级：{{air_level.DATA}}\n温馨小提示：{{air_tips.DATA}}\n\n{{end1.DATA}}\n{{end2.DATA}}\n\n{{author.DATA}}', '[{\"name\": \"txt1\", \"color\": \"#20B2AA\", \"value\": \"今天心情不好，我问小狗怎么办，小狗说：汪汪汪☀☀☀☀☀☀☀☀☀☀☀☀☀\"}, {\"name\": \"city\", \"color\": \"#F093FB\", \"value\": \"四川成都\"}, {\"name\": \"date\", \"color\": \"#F093FB\", \"value\": \"2023-03-22\"}, {\"name\": \"week\", \"color\": \"#F093FB\", \"value\": \"星期三\"}, {\"name\": \"txt2\", \"color\": \"#1E90FF\", \"value\": \"单身狗出门也要看下今天的天气状况哦╰(*°▽°*)╯\"}, {\"name\": \"wea\", \"color\": \"#000\", \"value\": \"晴\"}, {\"name\": \"tem1\", \"color\": \"#000\", \"value\": \"25°\"}, {\"name\": \"tem2\", \"color\": \"#000\", \"value\": \"20°\"}, {\"name\": \"win\", \"color\": \"#000\", \"value\": \"南风\"}, {\"name\": \"win_speed\", \"color\": \"#000\", \"value\": \"2级\"}, {\"name\": \"win_meter\", \"color\": \"#000\", \"value\": \"6km/h\"}, {\"name\": \"humidity\", \"color\": \"#000\", \"value\": \"44%\"}, {\"name\": \"visibility\", \"color\": \"#000\", \"value\": \"10km\"}, {\"name\": \"pressure\", \"color\": \"#000\", \"value\": \"1000\"}, {\"name\": \"air\", \"color\": \"#000\", \"value\": \"60\"}, {\"name\": \"air_pm25\", \"color\": \"#000\", \"value\": \"31\"}, {\"name\": \"air_level\", \"color\": \"#000\", \"value\": \"良\"}, {\"name\": \"air_tips\", \"color\": \"#000\", \"value\": \"空气好，可以外出活动!\"}, {\"name\": \"end1\", \"color\": \"#FF4500\", \"value\": \"How are you still single? \"}, {\"name\": \"end2\", \"color\": \"#FF4500\", \"value\": \"你怎么还单着？\"}, {\"name\": \"author\", \"color\": \"#DDA0DD\", \"value\": \"zhengqingya\"}]', '2023-03-21 18:52:15', '2023-10-08 18:28:22', 1, 1, 0);
+INSERT INTO `t_wx_mp_template_msg` VALUES (16, 1, 'wxe01d9bde2cc81b89', 'xEUCJF0EhbiHCIttO17lyXXmCxJHX6TeI9Sq7m6WV_I', 'test', '{{txt1.DATA}}\n\n所在地区：{{city.DATA}}', '[{\"name\": \"txt1\", \"color\": \"#E60E0E\", \"value\": \"测试\"}, {\"name\": \"city\", \"color\": \"#15F4D6\", \"value\": \"四川成都\"}]', '2023-03-21 18:52:15', '2023-10-08 18:28:22', 1, 1, 0);
 
 -- ----------------------------
 -- Table structure for t_wx_mp_user
@@ -4615,6 +4631,7 @@ INSERT INTO `t_wx_mp_template_msg` VALUES (16, 'wxe01d9bde2cc81b89', 'xEUCJF0Ehb
 DROP TABLE IF EXISTS `t_wx_mp_user`;
 CREATE TABLE `t_wx_mp_user`  (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `tenant_id` int(11) UNSIGNED NOT NULL COMMENT '租户ID',
   `app_id` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'AppID',
   `openid` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '微信openid',
   `nickname` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '昵称',
@@ -4631,9 +4648,9 @@ CREATE TABLE `t_wx_mp_user`  (
 -- ----------------------------
 -- Records of t_wx_mp_user
 -- ----------------------------
-INSERT INTO `t_wx_mp_user` VALUES (8, 'wxe01d9bde2cc81b89', 'ojplN5nVM2H4c2yXFGKVrOVPrclM', '', '', 'ADD_SCENE_QR_CODE', '2023-08-16 09:44:41', '2023-08-28 18:27:16', '2023-08-28 18:27:16', 1, 1);
-INSERT INTO `t_wx_mp_user` VALUES (9, 'wxe01d9bde2cc81b89', 'ojplN5krzEif5V-Lv1iklr4_Re-s', '', '', 'ADD_SCENE_QR_CODE', '2023-06-15 16:18:21', '2023-08-28 18:27:16', '2023-08-28 18:27:16', 1, 1);
-INSERT INTO `t_wx_mp_user` VALUES (10, 'wxe01d9bde2cc81b89', 'ojplN5tMax4tNacU3tKeWCnL7qEU', '', '', 'ADD_SCENE_QR_CODE', '2023-03-20 19:34:19', '2023-08-28 18:27:16', '2023-08-28 18:27:16', 1, 1);
+INSERT INTO `t_wx_mp_user` VALUES (8, 1, 'wxe01d9bde2cc81b89', 'ojplN5nVM2H4c2yXFGKVrOVPrclM', '', '', 'ADD_SCENE_QR_CODE', '2023-08-16 09:44:41', '2023-08-28 18:27:16', '2023-10-08 18:28:34', 1, 1);
+INSERT INTO `t_wx_mp_user` VALUES (9, 1, 'wxe01d9bde2cc81b89', 'ojplN5krzEif5V-Lv1iklr4_Re-s', '', '', 'ADD_SCENE_QR_CODE', '2023-06-15 16:18:21', '2023-08-28 18:27:16', '2023-10-08 18:28:34', 1, 1);
+INSERT INTO `t_wx_mp_user` VALUES (10, 1, 'wxe01d9bde2cc81b89', 'ojplN5tMax4tNacU3tKeWCnL7qEU', '', '', 'ADD_SCENE_QR_CODE', '2023-03-20 19:34:19', '2023-08-28 18:27:16', '2023-10-08 18:28:34', 1, 1);
 
 -- ----------------------------
 -- Table structure for ums_user

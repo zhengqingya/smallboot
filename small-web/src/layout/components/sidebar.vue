@@ -1,7 +1,7 @@
 <template>
   <div class="menu">
-    <h1 class="flex-center-center p-y-10 text-color-primary" style="width: 200px">SmallBoot</h1>
-    <el-menu v-if="menuType === 1" router :default-active="$route.meta.fullPath" :collapse="false" :unique-opened="false" @select="handleSelect">
+    <h1 style="width: 200px" class="flex-center-center p-y-10 text-color-primary">SmallBoot</h1>
+    <el-menu v-if="menuType === 1" router :default-active="$route.meta.fullPath" :collapse="false" :unique-opened="true" @select="handleSelect">
       <el-scrollbar>
         <sidebar-item :router-list="routerList" />
       </el-scrollbar>

@@ -17,16 +17,17 @@ service.interceptors.request.use(
       throw new Error(`Expected 'config' and 'config.headers' not to be undefined`);
     }
 
-    const { isLogin, tokenObj } = toRefs(store.user.useUserStore());
+    const { tenantId, isLogin, tokenObj } = toRefs(store.user.useUserStore());
 
     if (isLogin.value) {
       // 授权认证
       config.headers[tokenObj.value.tokenName] = tokenObj.value.tokenValue;
-      // 租户ID
-      config.headers['TENANT_ID'] = '1';
       // 微信公众号appId
       config.headers['appId'] = localStorage.get('appId');
     }
+
+    // 租户ID
+    config.headers['TENANT_ID'] = tenantId.value;
     return config;
   },
   (error) => {

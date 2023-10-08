@@ -4,6 +4,10 @@
       <h1 class="font-size-lg">SmallBoot</h1>
       <div class="m-t-20">
         <el-form ref="loginFormRef" :model="loginForm" :rules="loginRules">
+          <el-form-item prop="tenantId">
+            <base-select v-model="loginForm.tenantId" placeholder="请选择租户" :option-props="{ label: 'name', value: 'id' }" api="sys_tenant.list" />
+            <!-- <el-input v-model="loginForm.tenantName" prefix-icon="House" placeholder="请输入租户名称" maxlength="30" /> -->
+          </el-form-item>
           <el-form-item prop="username">
             <el-input v-model="loginForm.username" prefix-icon="User" placeholder="请输入账号" maxlength="30" />
           </el-form-item>
@@ -32,6 +36,8 @@ const { login } = proxy.$store.user.useUserStore();
 const loginForm = $ref({});
 
 const loginRules = {
+  tenantId: [{ required: true, trigger: 'change', message: '请选择租户' }],
+  tenantName: [{ required: true, trigger: 'change', message: '请输入租户名称' }],
   username: [{ required: true, trigger: 'change', message: '请输入账号' }],
   password: [{ required: true, trigger: 'change', validator: validatePassword }],
 };

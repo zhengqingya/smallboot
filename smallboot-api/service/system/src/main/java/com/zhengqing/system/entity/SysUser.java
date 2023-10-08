@@ -34,6 +34,9 @@ public class SysUser extends IsDeletedBaseEntity<SysUser> {
     @TableId(type = IdType.AUTO)
     private Integer userId;
 
+    @ApiModelProperty("租户ID")
+    private Integer tenantId;
+    
     @ApiModelProperty(value = "账号")
     private String username;
 

@@ -2,7 +2,15 @@
   <!-- <h1>{{ route.meta }}</h1> -->
   <div v-show="isLogin && !$route.meta.isParentView" class="flex h-full w-full">
     <!-- 侧边栏菜单 -->
-    <sidebar v-if="isShowMenu" id="sidebar" style="width: 200px" />
+
+    <sidebar
+      v-if="isShowMenu"
+      id="sidebar"
+      :style="{
+        width: '200px',
+        // height: appHeight + 'px',
+        // 'overflow-x': 'hidden',
+      }" />
 
     <div class="flex-1 flex-column">
       <div id="top">
@@ -34,6 +42,7 @@ let { isLogin } = toRefs(proxy.$store.user.useUserStore());
 let { isShowMenu } = toRefs(proxy.$store.settings.useSettingsStore());
 let appMainWidth = ref(0);
 let appMainHeight = ref(0);
+let appHeight = ref(0);
 
 onMounted(() => {
   // 窗口宽高变化时触发 -- tips：window.onresize只能在项目内触发1次
@@ -62,6 +71,7 @@ function calWidthAndHeight() {
 
   let top = document.getElementById('top');
   let topH = top ? top.offsetHeight : 0;
+  appHeight.value = window.innerHeight;
   appMainHeight.value = window.innerHeight - topH;
 }
 </script>

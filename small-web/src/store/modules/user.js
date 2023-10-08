@@ -8,6 +8,7 @@ import store from '@/store';
 export const useUserStore = defineStore('user', () => {
   const route = useRoute();
   const router = useRouter();
+  let tenantId = ref(null);
   let isLogin = ref(false);
   let tokenObj = ref({});
   let userObj = ref({});
@@ -18,7 +19,9 @@ export const useUserStore = defineStore('user', () => {
     if (isLogin.value) {
       return;
     }
+    tenantId.value = loginObj.tenantId;
     let result = await sysUserApi.login({
+      tenantId: loginObj.tenantId,
       username: loginObj.username.trim(),
       password: loginObj.password.trim(),
     });
@@ -116,5 +119,5 @@ export const useUserStore = defineStore('user', () => {
     return result;
   }
 
-  return { isLogin, login, logout, tokenObj, userObj, getUserInfo, routerList, routerMap };
+  return { tenantId, isLogin, login, logout, tokenObj, userObj, getUserInfo, routerList, routerMap };
 });

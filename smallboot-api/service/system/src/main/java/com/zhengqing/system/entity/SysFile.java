@@ -28,6 +28,9 @@ public class SysFile extends BaseEntity<SysFile> {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
+    @ApiModelProperty("租户ID")
+    private Integer tenantId;
+    
     @ApiModelProperty("文件名")
     private String name;
 

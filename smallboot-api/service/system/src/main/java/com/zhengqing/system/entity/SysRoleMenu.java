@@ -30,6 +30,9 @@ public class SysRoleMenu extends BaseEntity<SysRoleMenu> {
     @ApiModelProperty(value = "主键ID")
     private Integer id;
 
+    @ApiModelProperty("租户ID")
+    private Integer tenantId;
+    
     @ApiModelProperty(value = "角色ID")
     private Integer roleId;
 

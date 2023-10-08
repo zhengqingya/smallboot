@@ -30,6 +30,9 @@ public class SysConfig extends BaseEntity<SysConfig> {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
+    @ApiModelProperty("租户ID")
+    private Integer tenantId;
+
     @TableField(value = "`key`")
     @ApiModelProperty("属性key")
     private String key;

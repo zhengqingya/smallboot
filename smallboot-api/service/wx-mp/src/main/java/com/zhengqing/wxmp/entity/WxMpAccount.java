@@ -30,6 +30,9 @@ public class WxMpAccount extends BaseEntity<WxMpAccount> {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
+    @ApiModelProperty("租户ID")
+    private Integer tenantId;
+    
     @ApiModelProperty("名称")
     private String name;
 

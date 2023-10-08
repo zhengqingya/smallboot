@@ -30,6 +30,9 @@ public class SysUserRole extends BaseEntity<SysUserRole> {
     @ApiModelProperty(value = "主键ID")
     private Integer id;
 
+    @ApiModelProperty("租户ID")
+    private Integer tenantId;
+
     @ApiModelProperty(value = "用户ID")
     private Integer userId;
 

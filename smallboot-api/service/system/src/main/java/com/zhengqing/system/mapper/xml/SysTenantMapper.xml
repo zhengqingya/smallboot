@@ -16,4 +16,16 @@
         ORDER BY tst.create_time DESC
     </select>
 
+    <select id="selectDataList" resultType="com.zhengqing.system.model.vo.SysTenantListVO">
+        SELECT id,
+        name
+        FROM t_sys_tenant
+        <where>
+            is_deleted=0 AND status=1
+            <if test="filter.name!=null and filter.name!=''">
+                AND name LIKE CONCAT( '%', #{filter.name} , '%' )
+            </if>
+        </where>
+    </select>
+
 </mapper>

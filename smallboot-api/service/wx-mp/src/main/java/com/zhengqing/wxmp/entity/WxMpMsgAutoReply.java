@@ -30,6 +30,9 @@ public class WxMpMsgAutoReply extends BaseEntity<WxMpMsgAutoReply> {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
+    @ApiModelProperty("租户ID")
+    private Integer tenantId;
+
     @ApiModelProperty("AppID")
     private String appId;
 
