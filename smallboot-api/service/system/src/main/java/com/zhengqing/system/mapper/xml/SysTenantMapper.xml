@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhengqing.system.mapper.SysTenantMapper">
+
+    <select id="selectDataPage" resultType="com.zhengqing.system.model.vo.SysTenantPageVO">
+        SELECT
+        tst.*, tstp.name packageName
+        FROM t_sys_tenant tst
+        LEFT JOIN t_sys_tenant_package tstp ON tst.package_id = tstp.id
+        <where>
+            tst.is_deleted=0
+            <if test="filter.name!=null and filter.name!=''">
+                AND tst.name LIKE CONCAT( '%', #{filter.name} , '%' )
+            </if>
+        </where>
+        ORDER BY tst.create_time DESC
+    </select>
+
+</mapper>
