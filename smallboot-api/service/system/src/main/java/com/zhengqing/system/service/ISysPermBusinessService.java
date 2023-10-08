@@ -59,16 +59,16 @@ public interface ISysPermBusinessService {
     void refreshRedisPerm();
 
     /**
-     * 刷新租户关联的菜单按钮权限
+     * 删除租户关联的菜单按钮权限
      *
-     * @param tenantId         租户id
-     * @param menuIdList       菜单权限
-     * @param permissionIdList 按钮权限
+     * @param tenantId      租户id
+     * @param delMenuIdList 菜单权限
+     * @param delPermIdList 按钮权限
      * @return void
      * @author zhengqingya
      * @date 2023/3/28 11:24
      */
-    void refreshTenantRePerm(Integer tenantId, List<Integer> menuIdList, List<Integer> permissionIdList);
+    void delTenantRePerm(Integer tenantId, List<Integer> delMenuIdList, List<Integer> delPermIdList);
 
     /**
      * 保存角色权限（菜单权限+按钮权限）

@@ -95,20 +95,14 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void refreshTenantRePerm(Integer tenantId, List<Integer> menuIdList) {
+    public void delReMenuId(Integer tenantId, List<Integer> delMenuIdList) {
         TenantIdContext.setTenantId(tenantId);
-
-        // 查询旧权限信息
-        List<SysRoleMenu> oldList = this.sysRoleMenuMapper.selectList(null);
-        // 旧菜单id
-        List<Integer> oldIdList = oldList.stream().map(SysRoleMenu::getMenuId).collect(Collectors.toList());
-        // 拿到要删除的旧菜单id
-        List<Integer> dleMenuIdList = CollUtil.subtractToList(oldIdList, menuIdList);
-        if (CollUtil.isNotEmpty(dleMenuIdList)) {
-            this.sysRoleMenuMapper.delete(new LambdaQueryWrapper<SysRoleMenu>().in(SysRoleMenu::getMenuId, dleMenuIdList));
+        if (CollUtil.isEmpty(delMenuIdList)) {
+            return;
         }
+        TenantIdContext.setTenantId(tenantId);
+        this.sysRoleMenuMapper.delete(new LambdaQueryWrapper<SysRoleMenu>().in(SysRoleMenu::getMenuId, delMenuIdList));
 
-        TenantIdContext.remove();
     }
 
 }

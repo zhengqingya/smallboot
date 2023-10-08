@@ -82,14 +82,14 @@ public interface ISysRolePermissionService extends IService<SysRolePermission> {
     void savePerm(SysRoleRePermIdsSaveDTO params);
 
     /**
-     * 刷新租户关联权限
+     * 删除租户关联权限
      *
-     * @param tenantId         租户id
-     * @param permissionIdList 按钮权限id
+     * @param tenantId      租户id
+     * @param delPermIdList 按钮权限id
      * @return void
      * @author zhengqingya
      * @date 2023/10/8 19:18
      */
-    void refreshTenantRePerm(Integer tenantId, List<Integer> permissionIdList);
+    void delByPermId(Integer tenantId, List<Integer> delPermIdList);
 
 }

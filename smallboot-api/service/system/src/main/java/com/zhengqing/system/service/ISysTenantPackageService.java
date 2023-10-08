@@ -21,6 +21,16 @@ import java.util.List;
 public interface ISysTenantPackageService extends IService<SysTenantPackage> {
 
     /**
+     * 查询详情
+     *
+     * @param id 主键id
+     * @return 查询结果
+     * @author zhengqingya
+     * @date 2023/10/08 10:34
+     */
+    SysTenantPackage detail(Integer id);
+
+    /**
      * 分页列表
      *
      * @param params 查询参数

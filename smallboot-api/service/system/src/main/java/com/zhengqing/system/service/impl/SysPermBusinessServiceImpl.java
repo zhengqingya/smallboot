@@ -124,11 +124,11 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void refreshTenantRePerm(Integer tenantId, List<Integer> menuIdList, List<Integer> permissionIdList) {
+    public void delTenantRePerm(Integer tenantId, List<Integer> delMenuIdList, List<Integer> delPermIdList) {
         if (!AppConstant.TENANT_ID_SMALL_BOOT.equals(tenantId)) {
             // 更新非系统租户数据
-            this.iSysRoleMenuService.refreshTenantRePerm(tenantId, menuIdList);
-            this.iSysRolePermissionService.refreshTenantRePerm(tenantId, permissionIdList);
+            this.iSysRoleMenuService.delReMenuId(tenantId, delMenuIdList);
+            this.iSysRolePermissionService.delByPermId(tenantId, delPermIdList);
         }
     }
 

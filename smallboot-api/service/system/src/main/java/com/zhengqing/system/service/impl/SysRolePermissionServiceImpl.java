@@ -120,20 +120,12 @@ public class SysRolePermissionServiceImpl extends ServiceImpl<SysRolePermissionM
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void refreshTenantRePerm(Integer tenantId, List<Integer> permissionIdList) {
-        TenantIdContext.setTenantId(tenantId);
-
-        // 查询旧权限信息
-        List<SysRolePermission> oldList = this.sysRolePermissionMapper.selectList(null);
-        // 旧权限id
-        List<Integer> oldIdList = oldList.stream().map(SysRolePermission::getPermissionId).collect(Collectors.toList());
-        // 拿到要删除的旧权限id
-        List<Integer> dlePermIdList = CollUtil.subtractToList(oldIdList, permissionIdList);
-        if (CollUtil.isNotEmpty(dlePermIdList)) {
-            this.sysRolePermissionMapper.delete(new LambdaQueryWrapper<SysRolePermission>().in(SysRolePermission::getPermissionId, dlePermIdList));
+    public void delByPermId(Integer tenantId, List<Integer> delPermIdList) {
+        if (CollUtil.isEmpty(delPermIdList)) {
+            return;
         }
-
-        TenantIdContext.remove();
+        TenantIdContext.setTenantId(tenantId);
+        this.sysRolePermissionMapper.delete(new LambdaQueryWrapper<SysRolePermission>().in(SysRolePermission::getPermissionId, delPermIdList));
     }
 
 }
