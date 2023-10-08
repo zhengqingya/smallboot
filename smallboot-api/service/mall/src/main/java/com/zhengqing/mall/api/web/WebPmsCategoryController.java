@@ -3,12 +3,10 @@ package com.zhengqing.mall.api.web;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
+import com.zhengqing.mall.model.dto.WebPmsCategoryBaseDTO;
 import com.zhengqing.mall.model.dto.WebPmsCategoryEditShowDTO;
-import com.zhengqing.mall.model.dto.WebPmsCategoryListDTO;
-import com.zhengqing.mall.model.dto.WebPmsCategoryPageDTO;
 import com.zhengqing.mall.model.dto.WebPmsCategorySaveDTO;
-import com.zhengqing.mall.model.vo.WebPmsCategoryListVO;
-import com.zhengqing.mall.model.vo.WebPmsCategoryPageVO;
+import com.zhengqing.mall.model.vo.WebPmsCategoryBaseVO;
 import com.zhengqing.mall.service.IOmsCategoryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,13 +34,13 @@ public class WebPmsCategoryController {
 
     @GetMapping("page")
     @ApiOperation("分页列表")
-    public IPage<WebPmsCategoryPageVO> page(@Validated @ModelAttribute WebPmsCategoryPageDTO params) {
+    public IPage<WebPmsCategoryBaseVO> page(@Validated @ModelAttribute WebPmsCategoryBaseDTO params) {
         return this.iOmsCategoryService.page(params);
     }
 
     @GetMapping("list")
     @ApiOperation("列表")
-    public List<WebPmsCategoryListVO> list(@Validated @ModelAttribute WebPmsCategoryListDTO params) {
+    public List<WebPmsCategoryBaseVO> list(@Validated @ModelAttribute WebPmsCategoryBaseDTO params) {
         return this.iOmsCategoryService.list(params);
     }
 

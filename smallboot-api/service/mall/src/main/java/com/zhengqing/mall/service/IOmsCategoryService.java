@@ -3,10 +3,12 @@ package com.zhengqing.mall.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhengqing.mall.entity.PmsCategory;
-import com.zhengqing.mall.model.dto.*;
+import com.zhengqing.mall.model.dto.MiniPmsCategoryReSpuListDTO;
+import com.zhengqing.mall.model.dto.WebPmsCategoryBaseDTO;
+import com.zhengqing.mall.model.dto.WebPmsCategoryEditShowDTO;
+import com.zhengqing.mall.model.dto.WebPmsCategorySaveDTO;
 import com.zhengqing.mall.model.vo.MiniPmsCategoryReSpuListVO;
-import com.zhengqing.mall.model.vo.WebPmsCategoryListVO;
-import com.zhengqing.mall.model.vo.WebPmsCategoryPageVO;
+import com.zhengqing.mall.model.vo.WebPmsCategoryBaseVO;
 
 import java.util.List;
 
@@ -69,7 +71,7 @@ public interface IOmsCategoryService extends IService<PmsCategory> {
      * @author zhengqingya
      * @date 2022/02/10 14:01
      */
-    IPage<WebPmsCategoryPageVO> page(WebPmsCategoryPageDTO params);
+    IPage<WebPmsCategoryBaseVO> page(WebPmsCategoryBaseDTO params);
 
     /**
      * 列表
@@ -79,7 +81,7 @@ public interface IOmsCategoryService extends IService<PmsCategory> {
      * @author zhengqingya
      * @date 2022/02/10 14:01
      */
-    List<WebPmsCategoryListVO> list(WebPmsCategoryListDTO params);
+    List<WebPmsCategoryBaseVO> list(WebPmsCategoryBaseDTO params);
 
     /**
      * 新增或更新

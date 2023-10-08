@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 /**
- * <p>商城-分类-分页列表-响应参数</p>
+ * <p>商城-分类-响应参数</p>
  *
  * @author zhengqingya
  * @description
@@ -21,8 +21,8 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@ApiModel("web-商城-分类-分页列表-响应参数")
-public class WebPmsCategoryPageVO extends BaseVO {
+@ApiModel("web-商城-分类-响应参数")
+public class WebPmsCategoryBaseVO extends BaseVO {
 
     @ApiModelProperty("主键ID")
     private String id;

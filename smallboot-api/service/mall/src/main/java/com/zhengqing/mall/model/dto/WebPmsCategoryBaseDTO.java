@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 /**
- * <p> 商城-分类-分页列表-请求参数 </p>
+ * <p> 商城-分类-请求参数 </p>
  *
  * @author zhengqingya
  * @description
@@ -21,8 +21,11 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@ApiModel("web-商城-分类-分页列表-请求参数")
-public class WebPmsCategoryPageDTO extends BasePageDTO {
+@ApiModel("web-商城-分类-请求参数")
+public class WebPmsCategoryBaseDTO extends BasePageDTO {
+
+    @ApiModelProperty("父分类id")
+    private String parentId;
 
     @ApiModelProperty(value = "分类名称", example = "高质量人类")
     private String name;

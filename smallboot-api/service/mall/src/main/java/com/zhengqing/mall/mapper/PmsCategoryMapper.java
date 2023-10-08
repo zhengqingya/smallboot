@@ -4,11 +4,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.mall.entity.PmsCategory;
 import com.zhengqing.mall.model.dto.MiniPmsCategoryReSpuListDTO;
-import com.zhengqing.mall.model.dto.WebPmsCategoryListDTO;
-import com.zhengqing.mall.model.dto.WebPmsCategoryPageDTO;
+import com.zhengqing.mall.model.dto.WebPmsCategoryBaseDTO;
 import com.zhengqing.mall.model.vo.MiniPmsCategoryReSpuListVO;
-import com.zhengqing.mall.model.vo.WebPmsCategoryListVO;
-import com.zhengqing.mall.model.vo.WebPmsCategoryPageVO;
+import com.zhengqing.mall.model.vo.WebPmsCategoryBaseVO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -31,7 +29,7 @@ public interface PmsCategoryMapper extends BaseMapper<PmsCategory> {
      * @author zhengqingya
      * @date 2022/02/10 14:01
      */
-    IPage<WebPmsCategoryPageVO> selectPageForWeb(IPage<WebPmsCategoryPageVO> page, @Param("filter") WebPmsCategoryPageDTO filter);
+    IPage<WebPmsCategoryBaseVO> selectDataList(IPage<WebPmsCategoryBaseVO> page, @Param("filter") WebPmsCategoryBaseDTO filter);
 
     /**
      * 列表
@@ -41,7 +39,7 @@ public interface PmsCategoryMapper extends BaseMapper<PmsCategory> {
      * @author zhengqingya
      * @date 2022/02/10 14:01
      */
-    List<WebPmsCategoryListVO> selectDataList(@Param("filter") WebPmsCategoryListDTO filter);
+    List<WebPmsCategoryBaseVO> selectDataList(@Param("filter") WebPmsCategoryBaseDTO filter);
 
     /**
      * 批量更新商品显示状态

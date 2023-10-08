@@ -1,5 +1,6 @@
 package com.zhengqing.mall.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -10,11 +11,13 @@ import com.zhengqing.common.core.util.IdGeneratorUtil;
 import com.zhengqing.common.db.constant.MybatisConstant;
 import com.zhengqing.mall.entity.PmsCategory;
 import com.zhengqing.mall.mapper.PmsCategoryMapper;
-import com.zhengqing.mall.model.dto.*;
+import com.zhengqing.mall.model.dto.MiniPmsCategoryReSpuListDTO;
+import com.zhengqing.mall.model.dto.WebPmsCategoryBaseDTO;
+import com.zhengqing.mall.model.dto.WebPmsCategoryEditShowDTO;
+import com.zhengqing.mall.model.dto.WebPmsCategorySaveDTO;
 import com.zhengqing.mall.model.vo.MiniPmsCategoryReSpuListVO;
 import com.zhengqing.mall.model.vo.PmsCategoryReSpuListVO;
-import com.zhengqing.mall.model.vo.WebPmsCategoryListVO;
-import com.zhengqing.mall.model.vo.WebPmsCategoryPageVO;
+import com.zhengqing.mall.model.vo.WebPmsCategoryBaseVO;
 import com.zhengqing.mall.service.IOmsCategoryService;
 import com.zhengqing.mall.service.IPmsCategorySpuRelationService;
 import lombok.RequiredArgsConstructor;
@@ -64,7 +67,7 @@ public class OmsCategoryServiceImpl extends ServiceImpl<PmsCategoryMapper, PmsCa
     @Override
     public List<MiniPmsCategoryReSpuListVO> reSpuList(MiniPmsCategoryReSpuListDTO params) {
         List<MiniPmsCategoryReSpuListVO> categoryReSpuList = this.pmsCategoryMapper.selectReSpuDataListForMini(params);
-        if (CollectionUtils.isEmpty(categoryReSpuList)) {
+        if (CollUtil.isEmpty(categoryReSpuList)) {
             return Lists.newArrayList();
         }
         this.handleReSpuData(categoryReSpuList);
@@ -75,7 +78,7 @@ public class OmsCategoryServiceImpl extends ServiceImpl<PmsCategoryMapper, PmsCa
     public IPage<MiniPmsCategoryReSpuListVO> reSpuPage(MiniPmsCategoryReSpuListDTO params) {
         IPage<MiniPmsCategoryReSpuListVO> categoryReSpuPage = this.pmsCategoryMapper.selectReSpuDataListForMini(new Page<>(), params);
         List<MiniPmsCategoryReSpuListVO> categoryReSpuList = categoryReSpuPage.getRecords();
-        if (CollectionUtils.isEmpty(categoryReSpuList)) {
+        if (CollUtil.isEmpty(categoryReSpuList)) {
             return categoryReSpuPage;
         }
         this.handleReSpuData(categoryReSpuList);
@@ -93,29 +96,13 @@ public class OmsCategoryServiceImpl extends ServiceImpl<PmsCategoryMapper, PmsCa
     }
 
     @Override
-    public IPage<WebPmsCategoryPageVO> page(WebPmsCategoryPageDTO params) {
-        IPage<WebPmsCategoryPageVO> result = this.pmsCategoryMapper.selectPageForWeb(
-                new Page<>(), params);
-        List<WebPmsCategoryPageVO> list = result.getRecords();
-        this.handleResultData(list);
-        return result;
+    public IPage<WebPmsCategoryBaseVO> page(WebPmsCategoryBaseDTO params) {
+        return this.pmsCategoryMapper.selectDataList(new Page<>(), params);
     }
 
     @Override
-    public List<WebPmsCategoryListVO> list(WebPmsCategoryListDTO params) {
+    public List<WebPmsCategoryBaseVO> list(WebPmsCategoryBaseDTO params) {
         return this.pmsCategoryMapper.selectDataList(params);
-    }
-
-    /**
-     * 处理数据
-     *
-     * @param list 数据
-     * @return void
-     * @author zhengqingya
-     * @date 2022/02/10 14:01
-     */
-    private void handleResultData(List<WebPmsCategoryPageVO> list) {
-
     }
 
     @Override

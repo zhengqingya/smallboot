@@ -2,22 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhengqing.mall.mapper.PmsCategoryMapper">
 
-    <select id="selectPageForWeb" resultType="com.zhengqing.mall.model.vo.WebPmsCategoryPageVO">
-        SELECT
-        id,
-        parent_id,
-        name,
-        sort,
-        is_show
-        FROM pms_category
-        WHERE is_deleted = 0
-        <if test="filter.name!=null and filter.name!=''">
-            AND name LIKE CONCAT( #{filter.name} , '%' )
-        </if>
-        ORDER BY sort ASC, create_time DESC
-    </select>
-
-    <select id="selectDataList" resultType="com.zhengqing.mall.model.vo.WebPmsCategoryListVO">
+    <select id="selectDataList" resultType="com.zhengqing.mall.model.vo.WebPmsCategoryBaseVO">
         SELECT
         id,
         parent_id,
