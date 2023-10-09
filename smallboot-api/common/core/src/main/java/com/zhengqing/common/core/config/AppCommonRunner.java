@@ -21,8 +21,8 @@ public abstract class AppCommonRunner implements CommandLineRunner {
 
     public void appRun() {
 //        log.info("《AppCommonRunner》: 服务初始化之后，执行方法 start...");
-        
-        TenantIdContext.setTenantId(AppConstant.TENANT_ID_SMALL_BOOT);
+
+        TenantIdContext.setTenantId(AppConstant.SMALL_BOOT_TENANT_ID);
 
 //        log.info("《AppCommonRunner》: 服务初始化之后，执行方法 end...");
     }

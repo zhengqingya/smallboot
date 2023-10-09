@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhengqing.system.entity.SysRole;
+import com.zhengqing.system.enums.SysRoleCodeEnum;
 import com.zhengqing.system.mapper.SysRoleMapper;
 import com.zhengqing.system.model.dto.SysRoleListDTO;
 import com.zhengqing.system.model.dto.SysRoleSaveDTO;
@@ -55,6 +56,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
                 .name(params.getName())
                 .code(params.getCode())
                 .status(params.getStatus())
+                .isFixed(params.getIsFixed())
                 .build();
         sysRole.insertOrUpdate();
         return sysRole.getRoleId();
@@ -74,8 +76,8 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     }
 
     @Override
-    public Integer getRoleIdForSuperAdmin() {
-        return this.sysRoleMapper.selectRoleIdForSuperAdmin();
+    public Integer getRoleIdByCode(SysRoleCodeEnum sysRoleCodeEnum) {
+        return this.sysRoleMapper.selectRoleIdByCode(sysRoleCodeEnum.getCode());
     }
 
 }

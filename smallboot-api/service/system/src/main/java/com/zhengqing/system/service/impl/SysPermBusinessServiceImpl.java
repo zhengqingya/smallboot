@@ -11,7 +11,9 @@ import com.zhengqing.common.base.context.TenantIdContext;
 import com.zhengqing.common.redis.util.RedisUtil;
 import com.zhengqing.system.entity.SysRole;
 import com.zhengqing.system.entity.SysTenantPackage;
+import com.zhengqing.system.enums.SysRoleCodeEnum;
 import com.zhengqing.system.model.bo.SysMenuTree;
+import com.zhengqing.system.model.bo.SysRoleRePermSaveBO;
 import com.zhengqing.system.model.dto.*;
 import com.zhengqing.system.model.vo.SysRoleAllPermissionDetailVO;
 import com.zhengqing.system.model.vo.SysRoleRePermListVO;
@@ -20,10 +22,12 @@ import com.zhengqing.system.model.vo.SysUserPermVO;
 import com.zhengqing.system.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -49,14 +53,18 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
     private final ISysRoleMenuService iSysRoleMenuService;
     private final ISysUserRoleService iSysUserRoleService;
     private final ISysRolePermissionService iSysRolePermissionService;
-    private final ISysTenantService iSysTenantService;
-    private final ISysTenantPackageService iSysTenantPackageService;
+    @Lazy
+    @Resource
+    private ISysTenantService iSysTenantService;
+    @Lazy
+    @Resource
+    private ISysTenantPackageService iSysTenantPackageService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void refreshSuperAdminPerm() {
         // 1、先查询超级管理员角色id再绑定
-        Integer roleId = this.iSysRoleService.getRoleIdForSuperAdmin();
+        Integer roleId = this.iSysRoleService.getRoleIdByCode(SysRoleCodeEnum.超级管理员);
         Assert.notNull(roleId, "超级管理员角色丢失！");
         this.iSysUserRoleService.addOrUpdateData(
                 SysUserRoleSaveDTO.builder()
@@ -69,12 +77,13 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
         List<SysMenuTree> menuTree = this.treeAll();
 
         // 3、保存角色关联的菜单和按钮权限
-        SysRoleRePermSaveDTO roleRePerm = SysRoleRePermSaveDTO.builder()
+        SysMenuPermBaseDTO permBO = SysMenuPermBaseDTO.builder().menuTree(menuTree).build();
+        permBO.handleParam();
+        this.saveRoleRePerm(SysRoleRePermSaveBO.builder()
                 .roleId(roleId)
-                .menuTree(menuTree)
-                .build();
-        roleRePerm.handleParam();
-        this.saveRoleRePerm(roleRePerm);
+                .menuIdList(permBO.getMenuIdList())
+                .permissionIdList(permBO.getPermissionIdList())
+                .build());
         log.info("刷新超级管理员权限成功!");
     }
 
@@ -86,7 +95,7 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
         SysMenuPermBaseDTO sysMenuPermBaseDTO = SysMenuPermBaseDTO.builder().menuTree(menuTree).build();
         sysMenuPermBaseDTO.handleParam();
         // 2、更新权限
-        this.iSysTenantPackageService.updateTenantIdRePerm(AppConstant.TENANT_ID_SMALL_BOOT, sysMenuPermBaseDTO.getMenuIdList(), sysMenuPermBaseDTO.getPermissionIdList());
+        this.iSysTenantPackageService.updateTenantIdRePerm(AppConstant.SMALL_BOOT_TENANT_ID, sysMenuPermBaseDTO.getMenuIdList(), sysMenuPermBaseDTO.getPermissionIdList());
         log.info("刷新系统租户权限成功!");
     }
 
@@ -109,7 +118,7 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
         Assert.notNull(sysRole, "角色不存在！");
 
         // 2、菜单权限树
-        List<SysMenuTree> menuTree = this.tree(Lists.newArrayList(roleId), false);
+        List<SysMenuTree> menuTree = this.baseTree(TenantIdContext.getTenantId(), Lists.newArrayList(roleId), false);
 
         return SysRoleAllPermissionDetailVO.builder()
                 .roleId(sysRole.getRoleId())
@@ -142,38 +151,40 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
     @Override
     public void refreshTenantRePerm(Integer tenantId) {
         // 只更新非系统租户数据
-        if (AppConstant.TENANT_ID_SMALL_BOOT.equals(tenantId) || tenantId == null) {
+        if (AppConstant.SMALL_BOOT_TENANT_ID.equals(tenantId) || tenantId == null) {
             return;
         }
+        TenantIdContext.setTenantId(tenantId);
 
         // 1、查询旧菜单权限
         List<Integer> menuIdListOld = this.iSysRoleMenuService.getMenuIdList(tenantId);
         List<Integer> permIdListOld = this.iSysRolePermissionService.getPermIdList(tenantId);
 
-        List<Integer> delMenuIdList = Lists.newArrayList();
-        List<Integer> delPermIdList = Lists.newArrayList();
-        SysTenantPackage sysTenantPackage = null;
-        try {
-            // 2、查询新租户套餐权限
-            sysTenantPackage = this.iSysTenantPackageService.detailReTenantId(tenantId);
+        // 2、查询新租户套餐权限
+        SysTenantPackage sysTenantPackage = this.iSysTenantPackageService.detailReTenantId(tenantId);
 
-            // 3、拿到要删除的旧权限id
-            delMenuIdList = CollUtil.subtractToList(menuIdListOld, sysTenantPackage.getMenuIdList());
-            delPermIdList = CollUtil.subtractToList(permIdListOld, sysTenantPackage.getPermissionIdList());
-        } catch (Exception e) {
-            log.warn("[系统管理] 租户或套餐数据已被删除 {}", e.toString());
-            delMenuIdList = menuIdListOld;
-            delPermIdList = permIdListOld;
-        }
+        // 3、拿到要删除的旧权限id
+        List<Integer> delMenuIdList = CollUtil.subtractToList(menuIdListOld, sysTenantPackage.getMenuIdList());
+        List<Integer> delPermIdList = CollUtil.subtractToList(permIdListOld, sysTenantPackage.getPermissionIdList());
 
-        // 4、更新权限
+        // 4、删除权限
         this.iSysRoleMenuService.delReMenuId(tenantId, delMenuIdList);
         this.iSysRolePermissionService.delByPermId(tenantId, delPermIdList);
+
+        // 5、给租户管理员默认加上最新的权限
+        this.saveRoleRePerm(
+                SysRoleRePermSaveBO.builder()
+                        .roleId(this.iSysRoleService.getRoleIdByCode(SysRoleCodeEnum.租户管理员))
+                        .menuIdList(sysTenantPackage.getMenuIdList())
+                        .permissionIdList(sysTenantPackage.getPermissionIdList())
+                        .build()
+        );
+        this.refreshRedisPerm();
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void saveRoleRePerm(SysRoleRePermSaveDTO params) {
+    public void saveRoleRePerm(SysRoleRePermSaveBO params) {
         Integer roleId = params.getRoleId();
 
         // 1、先保存角色关联的菜单权限
@@ -216,7 +227,7 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
      *
      * @param tenantId       角色ids tips:为空时拿到所有权限
      * @param roleIdList     角色ids tips:为空时拿到所有权限
-     * @param isOnlyShowPerm 是否仅显示带权限的数据  false:显示所有权限
+     * @param isOnlyShowPerm 是否仅显示带权限的数据  false:显示租户下所有权限 true:只显示角色有的权限（适用于用户获取角色权限）
      * @return 菜单树信息
      * @author zhengqingya
      * @date 2021/1/13 20:44

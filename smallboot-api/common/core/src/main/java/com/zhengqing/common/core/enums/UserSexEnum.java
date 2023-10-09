@@ -2,7 +2,6 @@ package com.zhengqing.common.core.enums;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
 import com.google.common.collect.Lists;
-import com.zhengqing.common.base.exception.MyException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -70,7 +69,7 @@ public enum UserSexEnum {
                 return itemEnum;
             }
         }
-        throw new MyException("未找到指定类型数据！");
+        return 未知;
     }
 
 }

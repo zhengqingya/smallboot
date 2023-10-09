@@ -3,6 +3,7 @@ package com.zhengqing.system.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhengqing.system.entity.SysRole;
+import com.zhengqing.system.enums.SysRoleCodeEnum;
 import com.zhengqing.system.model.dto.SysRoleListDTO;
 import com.zhengqing.system.model.dto.SysRoleSaveDTO;
 import com.zhengqing.system.model.vo.SysRoleListVO;
@@ -61,12 +62,13 @@ public interface ISysRoleService extends IService<SysRole> {
     void deleteRoleAndRoleMenu(Integer roleId);
 
     /**
-     * 查询超级管理员角色ID
+     * 根据code查询角色ID
      *
-     * @return 超级管理员角色ID
+     * @param sysRoleCodeEnum 角色code
+     * @return 角色ID
      * @author zhengqingya
      * @date 2020/9/10 18:03
      */
-    Integer getRoleIdForSuperAdmin();
+    Integer getRoleIdByCode(SysRoleCodeEnum sysRoleCodeEnum);
 
 }

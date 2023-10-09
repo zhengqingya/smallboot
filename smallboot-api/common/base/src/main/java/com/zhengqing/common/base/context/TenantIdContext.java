@@ -32,10 +32,13 @@ public class TenantIdContext {
         return TENANT_ID_THREAD_LOCAL.get();
     }
 
+    public static void setFlag(boolean flag) {
+        TENANT_ID_FLAG_THREAD_LOCAL.set(flag);
+    }
+
     public static void removeFlag() {
         TENANT_ID_FLAG_THREAD_LOCAL.set(false);
     }
-
 
     public static Boolean getFlag() {
         return TENANT_ID_FLAG_THREAD_LOCAL.get();

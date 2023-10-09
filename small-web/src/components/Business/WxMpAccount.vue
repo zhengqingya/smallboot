@@ -33,8 +33,8 @@ async function init() {
   let res = await proxy.$api.wx_mp_account.list();
   list = res.data;
   if (list.length == 0) {
-    alert('请先去添加账号！');
-    proxy.$router.push('/wx/mp/account');
+    // alert('请先去添加账号！');
+    // proxy.$router.push('/wx/mp/account');
     return;
   }
   if (appId == null) {

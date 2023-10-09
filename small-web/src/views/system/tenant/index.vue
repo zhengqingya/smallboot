@@ -24,8 +24,8 @@
       <el-table-column label="创建时间" prop="createTime" align="center" />
       <el-table-column align="center" label="操作">
         <template #default="scope">
-          <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
-          <base-delete-btn @ok="handleDelete(scope.row)"></base-delete-btn>
+          <el-button v-if="scope.row.id !== 1" link @click="handleUpdate(scope.row)">编辑</el-button>
+          <base-delete-btn v-if="scope.row.id !== 1" @ok="handleDelete(scope.row)"></base-delete-btn>
         </template>
       </el-table-column>
     </base-table-p>
@@ -55,6 +55,13 @@
         </el-form-item>
         <el-form-item label="租户套餐ID:">
           <base-select v-model="form.packageId" :option-props="{ label: 'name', value: 'id' }" api="sys_tenant_package.list" />
+        </el-form-item>
+
+        <el-form-item v-if="dialogStatus == 'add'" label="账号:">
+          <el-input v-model="form.username" />
+        </el-form-item>
+        <el-form-item v-if="dialogStatus == 'add'" label="密码:">
+          <el-input v-model="form.password" />
         </el-form-item>
       </el-form>
       <template #footer>

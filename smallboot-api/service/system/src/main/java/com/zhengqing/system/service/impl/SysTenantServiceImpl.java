@@ -4,21 +4,26 @@ import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.google.common.collect.Lists;
 import com.zhengqing.common.base.constant.AppConstant;
+import com.zhengqing.common.base.context.TenantIdContext;
+import com.zhengqing.common.db.util.TenantUtil;
 import com.zhengqing.system.entity.SysTenant;
+import com.zhengqing.system.entity.SysTenantPackage;
+import com.zhengqing.system.enums.SysRoleCodeEnum;
 import com.zhengqing.system.mapper.SysTenantMapper;
-import com.zhengqing.system.model.dto.SysTenantListDTO;
-import com.zhengqing.system.model.dto.SysTenantPageDTO;
-import com.zhengqing.system.model.dto.SysTenantSaveDTO;
+import com.zhengqing.system.model.bo.SysRoleRePermSaveBO;
+import com.zhengqing.system.model.dto.*;
 import com.zhengqing.system.model.vo.SysTenantListVO;
 import com.zhengqing.system.model.vo.SysTenantPageVO;
-import com.zhengqing.system.service.ISysPermBusinessService;
-import com.zhengqing.system.service.ISysTenantService;
+import com.zhengqing.system.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -34,7 +39,13 @@ import java.util.List;
 public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant> implements ISysTenantService {
 
     private final SysTenantMapper sysTenantMapper;
+    @Lazy
+    @Resource
+    private ISysTenantPackageService iSysTenantPackageService;
     private final ISysPermBusinessService iSysPermBusinessService;
+    private final ISysUserService iSysUserService;
+    private final ISysRoleService iSysRoleService;
+    private final ISysUserRoleService iSysUserRoleService;
 
     @Override
     public SysTenant detail(Integer id) {
@@ -60,8 +71,10 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
     @Transactional(rollbackFor = Exception.class)
     public void addOrUpdateData(SysTenantSaveDTO params) {
         Integer id = params.getId();
-        Assert.isFalse(AppConstant.TENANT_ID_SMALL_BOOT.equals(id), "系统租户不支持操作！");
-        SysTenant.builder()
+        Assert.isFalse(AppConstant.SMALL_BOOT_TENANT_ID.equals(id), "系统租户不支持操作！");
+        boolean isAdd = id == null;
+        Integer packageId = params.getPackageId();
+        SysTenant sysTenant = SysTenant.builder()
                 .id(id)
                 .name(params.getName())
                 .contactName(params.getContactName())
@@ -69,21 +82,72 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
                 .status(params.getStatus())
                 .expireTime(params.getExpireTime())
                 .accountCount(params.getAccountCount())
-                .packageId(params.getPackageId())
-                .build()
-                .insertOrUpdate();
+                .packageId(packageId)
+                .build();
+        sysTenant.insertOrUpdate();
 
-        if (id != null) {
-            this.iSysPermBusinessService.refreshTenantRePerm(id);
+        this.refreshTenantRePerm(sysTenant.getId());
+
+        if (isAdd) {
+            // 创建租户下的用户 & 分配角色权限
+            TenantUtil.execute(() -> {
+                TenantIdContext.setTenantId(sysTenant.getId());
+                SysTenantPackage sysTenantPackage = this.iSysTenantPackageService.detail(packageId);
+
+                // 创建角色
+                Integer roleId = this.iSysRoleService.addOrUpdateData(
+                        SysRoleSaveDTO.builder()
+                                .name(SysRoleCodeEnum.租户管理员.getName())
+                                .code(SysRoleCodeEnum.租户管理员.getCode())
+                                .isFixed(true)
+                                .build()
+                );
+
+                // 给角色绑定权限
+                this.iSysPermBusinessService.saveRoleRePerm(
+                        SysRoleRePermSaveBO.builder()
+                                .roleId(roleId)
+                                .menuIdList(sysTenantPackage.getMenuIdList())
+                                .permissionIdList(sysTenantPackage.getPermissionIdList())
+                                .build()
+                );
+
+                // 创建用户
+                Integer userId = this.iSysUserService.addOrUpdateData(SysUserSaveDTO.builder()
+                        .username(params.getUsername())
+                        .nickname(params.getUsername())
+                        .password(params.getPassword())
+                        .phone(params.getContactPhone())
+                        .build());
+
+                // 绑定角色信息
+                this.iSysUserRoleService.addOrUpdateData(
+                        SysUserRoleSaveDTO.builder()
+                                .userId(userId)
+                                .roleIdList(Lists.newArrayList(roleId))
+                                .build()
+                );
+            });
         }
     }
+
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void deleteData(Integer id) {
-        Assert.isFalse(AppConstant.TENANT_ID_SMALL_BOOT.equals(id), "系统租户不支持操作！");
+        Assert.isFalse(AppConstant.SMALL_BOOT_TENANT_ID.equals(id), "系统租户不支持操作！");
+        this.refreshTenantRePerm(id);
         this.sysTenantMapper.deleteById(id);
-        this.iSysPermBusinessService.refreshTenantRePerm(id);
+    }
+
+    /**
+     * 刷新租户权限
+     */
+    private void refreshTenantRePerm(Integer tenantId) {
+        if (tenantId == null) {
+            return;
+        }
+        TenantUtil.execute(() -> this.iSysPermBusinessService.refreshTenantRePerm(tenantId));
     }
 
 }

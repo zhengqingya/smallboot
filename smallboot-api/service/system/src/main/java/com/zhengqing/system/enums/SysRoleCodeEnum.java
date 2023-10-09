@@ -4,9 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * <p>
- * 用户关联角色枚举类
- * </p>
+ * <p> 角色枚举类 </p>
  *
  * @author zhengqingya
  * @description tips: 只列出系统默认自带的固定角色
@@ -14,12 +12,12 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum SysUserReRoleEnum {
+public enum SysRoleCodeEnum {
 
-    超级管理员(1, "超级管理员"),
-    凡人(2, "凡人");
+    超级管理员("super_admin", "超级管理员"),
+    租户管理员("tenant_admin", "租户管理员");
 
-    private final Integer roleId;
-    private final String desc;
+    private final String code;
+    private final String name;
 
 }

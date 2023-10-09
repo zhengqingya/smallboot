@@ -24,7 +24,12 @@ public interface BaseConstant {
     /**
      * smallboot项目租户id
      */
-    Integer TENANT_ID_SMALL_BOOT = 1;
+    Integer SMALL_BOOT_TENANT_ID = 1;
+
+    /**
+     * smallboot项目租户-超级套餐
+     */
+    Integer SMALL_BOOT_TENANT_ID_PACKAGE_ID = 1;
 
     /**
      * 获取项目根目录

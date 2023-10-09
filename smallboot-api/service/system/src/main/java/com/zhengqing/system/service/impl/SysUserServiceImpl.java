@@ -1,20 +1,22 @@
 package com.zhengqing.system.service.impl;
 
 import cn.hutool.core.lang.Assert;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.google.common.collect.Lists;
 import com.zhengqing.common.base.constant.AppConstant;
 import com.zhengqing.common.base.exception.MyException;
 import com.zhengqing.common.core.enums.UserSexEnum;
 import com.zhengqing.common.core.util.DesUtil;
 import com.zhengqing.common.db.constant.MybatisConstant;
 import com.zhengqing.system.entity.SysUser;
-import com.zhengqing.system.enums.SysUserReRoleEnum;
 import com.zhengqing.system.mapper.SysUserMapper;
-import com.zhengqing.system.model.dto.*;
+import com.zhengqing.system.model.dto.SysUserListDTO;
+import com.zhengqing.system.model.dto.SysUserPermDTO;
+import com.zhengqing.system.model.dto.SysUserSaveDTO;
+import com.zhengqing.system.model.dto.SysUserUpdatePasswordDTO;
 import com.zhengqing.system.model.vo.SysUserDetailVO;
 import com.zhengqing.system.model.vo.SysUserListVO;
 import com.zhengqing.system.model.vo.SysUserPermVO;
@@ -88,33 +90,20 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Transactional(rollbackFor = Exception.class)
     public Integer addOrUpdateData(SysUserSaveDTO params) {
         Integer userId = params.getUserId();
-        String username = params.getUsername();
-        String nickname = params.getNickname();
-        Byte sex = params.getSex();
-        String phone = params.getPhone();
-        String email = params.getEmail();
-        String avatarUrl = params.getAvatarUrl();
+        String password = params.getPassword();
 
         SysUser user = new SysUser();
         user.setUserId(userId);
-        user.setUsername(username);
-        user.setNickname(nickname);
-        user.setSexEnum(UserSexEnum.getEnum(sex));
-        user.setPhone(phone);
-        user.setEmail(email);
-        user.setAvatarUrl(avatarUrl);
+        user.setUsername(params.getUsername());
+        user.setNickname(params.getNickname());
+        user.setSexEnum(UserSexEnum.getEnum(params.getSex()));
+        user.setPhone(params.getPhone());
+        user.setEmail(params.getEmail());
+        user.setAvatarUrl(params.getAvatarUrl());
 
         if (userId == null) {
-            user.setPassword(PasswordUtil.encodePassword(AppConstant.DEFAULT_PASSWORD));
+            user.setPassword(PasswordUtil.encodePassword(StrUtil.isBlank(password) ? AppConstant.DEFAULT_PASSWORD : password));
             user.insert();
-
-            // 绑定角色信息
-            this.iSysUserRoleService.addOrUpdateData(
-                    SysUserRoleSaveDTO.builder()
-                            .userId(user.getUserId())
-                            .roleIdList(Lists.newArrayList(SysUserReRoleEnum.凡人.getRoleId()))
-                            .build()
-            );
         } else {
             user.updateById();
         }

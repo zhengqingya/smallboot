@@ -1,6 +1,7 @@
 package com.zhengqing.system.model.dto;
 
 import com.zhengqing.common.base.model.dto.BaseDTO;
+import com.zhengqing.common.core.custom.validator.common.CreateGroup;
 import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -9,9 +10,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.Date;
 
 /**
@@ -45,7 +48,6 @@ public class SysTenantSaveDTO extends BaseDTO {
     @ApiModelProperty("联系人手机号")
     private String contactPhone;
 
-
     @ApiModelProperty("租户状态(0->停用 1->开启)")
     private Integer status;
 
@@ -60,5 +62,16 @@ public class SysTenantSaveDTO extends BaseDTO {
     @NotNull(message = "租户套餐不能为空！")
     @ApiModelProperty("租户套餐ID")
     private Integer packageId;
+
+    @ApiModelProperty(value = "账号")
+    @NotBlank(groups = {CreateGroup.class}, message = "账号不能为空")
+    @Length(max = 100, message = "账号不能超过100个字符")
+    @Pattern(regexp = "^[\\u4E00-\\u9FA5A-Za-z0-9\\*]*$", message = "账号限制：最多100字符，包含文字、字母和数字")
+    private String username;
+
+    @Length(min = 6, message = "密码最少6位数!")
+    @NotBlank(groups = {CreateGroup.class}, message = "密码不能为空！")
+    @ApiModelProperty(value = "密码")
+    private String password;
 
 }

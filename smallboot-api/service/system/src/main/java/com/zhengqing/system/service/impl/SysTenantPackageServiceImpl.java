@@ -5,7 +5,8 @@ import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.zhengqing.common.base.context.TenantIdContext;
+import com.zhengqing.common.base.constant.AppConstant;
+import com.zhengqing.common.db.util.TenantUtil;
 import com.zhengqing.system.entity.SysTenant;
 import com.zhengqing.system.entity.SysTenantPackage;
 import com.zhengqing.system.mapper.SysTenantPackageMapper;
@@ -41,7 +42,9 @@ import java.util.List;
 public class SysTenantPackageServiceImpl extends ServiceImpl<SysTenantPackageMapper, SysTenantPackage> implements ISysTenantPackageService {
 
     private final SysTenantPackageMapper sysTenantPackageMapper;
-    private final ISysTenantService iSysTenantService;
+    @Lazy
+    @Resource
+    private ISysTenantService iSysTenantService;
     @Lazy
     @Resource
     private ISysPermBusinessService iSysPermBusinessService;
@@ -84,6 +87,7 @@ public class SysTenantPackageServiceImpl extends ServiceImpl<SysTenantPackageMap
     @Transactional(rollbackFor = Exception.class)
     public void addOrUpdateData(SysTenantPackageSaveDTO params) {
         Integer id = params.getId();
+        Assert.isFalse(AppConstant.SMALL_BOOT_TENANT_ID_PACKAGE_ID.equals(id), "超级套餐无法操作！");
         boolean isAdd = id != null;
         List<Integer> menuIdList = params.getMenuIdList();
         List<Integer> permissionIdList = params.getPermissionIdList();
@@ -98,10 +102,6 @@ public class SysTenantPackageServiceImpl extends ServiceImpl<SysTenantPackageMap
                 .remark(params.getRemark())
                 .build();
         sysTenantPackage.insertOrUpdate();
-
-        if (isAdd) {
-            return;
-        }
 
         // 2、刷新租户关联权限
         this.refreshAllTenantPermByPackageId(sysTenantPackage.getId());
@@ -124,20 +124,19 @@ public class SysTenantPackageServiceImpl extends ServiceImpl<SysTenantPackageMap
         }
 
         // 2、更新权限
-        Integer oldTenantId = TenantIdContext.getTenantId();
-        tenantList.forEach(e -> this.iSysPermBusinessService.refreshTenantRePerm(e.getId()));
-        TenantIdContext.setTenantId(oldTenantId);
+        TenantUtil.execute(() -> tenantList.forEach(e -> this.iSysPermBusinessService.refreshTenantRePerm(e.getId())));
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void deleteData(Integer id) {
+        Assert.isFalse(AppConstant.SMALL_BOOT_TENANT_ID_PACKAGE_ID.equals(id), "超级套餐无法操作！");
         // 1、校验数据是否存在
         this.detail(id);
-        // 2、删除套餐
-        this.sysTenantPackageMapper.deleteById(id);
-        // 3、刷新租户关联权限
+        // 2、刷新租户关联权限
         this.refreshAllTenantPermByPackageId(id);
+        // 3、删除套餐
+        this.sysTenantPackageMapper.deleteById(id);
     }
 
 }

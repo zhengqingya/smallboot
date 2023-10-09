@@ -16,14 +16,14 @@
       highlight-current
       @node-click="menuNodeClick"
       @check-change="changeCheckMenu" />
-    <div class="flex-1 m-l-20">
+    <div v-if="props.roleId" class="flex-1 m-l-20">
       <base-no-data v-if="!currentSelectedMenu">tips:点击左侧菜单可查看按钮权限</base-no-data>
       <base-no-data v-else-if="currentSelectedMenu.permList.length === 0">该菜单暂未分配按钮权限</base-no-data>
       <el-card v-else>
         <template #header>
           <div class="flex-between-center">
             <h3>编辑页面按钮权限</h3>
-            <el-button v-if="props.roleId" link @click="savePermIds">保存</el-button>
+            <el-button link @click="savePermIds">保存</el-button>
           </div>
         </template>
         <el-checkbox v-model="isCheckAllPerm" @change="changeCheckBoxPerm">全选</el-checkbox>

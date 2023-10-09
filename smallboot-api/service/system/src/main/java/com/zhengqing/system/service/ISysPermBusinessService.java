@@ -1,8 +1,8 @@
 package com.zhengqing.system.service;
 
 import com.zhengqing.system.model.bo.SysMenuTree;
+import com.zhengqing.system.model.bo.SysRoleRePermSaveBO;
 import com.zhengqing.system.model.dto.SysRoleRePermIdsSaveDTO;
-import com.zhengqing.system.model.dto.SysRoleRePermSaveDTO;
 import com.zhengqing.system.model.dto.SysUserPermDTO;
 import com.zhengqing.system.model.vo.SysRoleAllPermissionDetailVO;
 import com.zhengqing.system.model.vo.SysUserPermVO;
@@ -85,7 +85,7 @@ public interface ISysPermBusinessService {
      * @author zhengqingya
      * @date 2020/9/10 15:01
      */
-    void saveRoleRePerm(SysRoleRePermSaveDTO params);
+    void saveRoleRePerm(SysRoleRePermSaveBO params);
 
     /**
      * 保存角色关联菜单按钮权限ids

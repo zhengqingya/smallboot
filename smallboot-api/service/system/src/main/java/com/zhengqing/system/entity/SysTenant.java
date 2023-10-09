@@ -1,19 +1,14 @@
 package com.zhengqing.system.entity;
 
-import java.util.Date;
-
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.zhengqing.common.db.entity.BaseEntity;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.util.Date;
 
 /**
  * <p>  系统管理-租户信息 </p>
@@ -37,6 +32,9 @@ public class SysTenant extends BaseEntity<SysTenant> {
 
     @ApiModelProperty("租户名")
     private String name;
+
+    @ApiModelProperty("联系人用户id")
+    private Integer contactUserId;
 
     @ApiModelProperty("联系人")
     private String contactName;
