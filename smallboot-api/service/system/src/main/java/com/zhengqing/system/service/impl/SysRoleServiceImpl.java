@@ -40,12 +40,12 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 
     @Override
     public IPage<SysRoleListVO> listPage(SysRoleListDTO params) {
-        return this.sysRoleMapper.selectRoles(new Page(), params);
+        return this.sysRoleMapper.selectDataList(new Page<>(), params);
     }
 
     @Override
     public List<SysRoleListVO> list(SysRoleListDTO params) {
-        return this.sysRoleMapper.selectRoles(params);
+        return this.sysRoleMapper.selectDataList(params);
     }
 
     @Override
@@ -57,6 +57,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
                 .code(params.getCode())
                 .status(params.getStatus())
                 .isFixed(params.getIsFixed())
+                .sort(params.getSort())
                 .build();
         sysRole.insertOrUpdate();
         return sysRole.getRoleId();

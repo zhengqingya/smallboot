@@ -32,7 +32,7 @@ public class SysRoleAllPermissionDetailVO {
     @ApiModelProperty(value = "角色名")
     private String name;
 
-    @ApiModelProperty(value = "角色编号")
+    @ApiModelProperty(value = "角色编码")
     private String code;
 
     @ApiModelProperty(value = "状态(1:开启 0:禁用)")

@@ -27,7 +27,7 @@ import lombok.*;
 @ApiModel("角色管理")
 @TableName("t_sys_role")
 @FieldRepeatValidator(tableName = "t_sys_role", idDbName = "role_id", fieldNames = "code", dbFieldNames = {"code"},
-        message = "角色编号重复，请重新输入！")
+        message = "角色编码重复，请重新输入！")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SysRole extends BaseEntity<SysRole> {
 
@@ -41,7 +41,7 @@ public class SysRole extends BaseEntity<SysRole> {
     @ApiModelProperty(value = "角色名")
     private String name;
 
-    @ApiModelProperty(value = "角色编号")
+    @ApiModelProperty(value = "角色编码")
     private String code;
 
     @ApiModelProperty(value = "状态(1:开启 0:禁用)")
@@ -49,4 +49,7 @@ public class SysRole extends BaseEntity<SysRole> {
 
     @ApiModelProperty(value = "是否固定(false->否 true->是)")
     private Boolean isFixed;
+
+    @ApiModelProperty(value = "排序")
+    private Integer sort;
 }

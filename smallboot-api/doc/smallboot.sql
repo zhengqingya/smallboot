@@ -4330,7 +4330,7 @@ CREATE TABLE `t_sys_role`  (
   `role_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `tenant_id` int(11) UNSIGNED NOT NULL COMMENT '租户ID',
   `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '角色名',
-  `code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '角色编号',
+  `code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '角色编码',
   `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT '状态(1:开启 0:禁用)',
   `is_fixed` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否固定(0->否 1->是)',
   `create_by` bigint(20) NOT NULL COMMENT '创建人',

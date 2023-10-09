@@ -26,7 +26,7 @@ public class SysPermissionVO {
     @ApiModelProperty(value = "角色名")
     private String roleNames;
 
-    @ApiModelProperty(value = "角色编号")
+    @ApiModelProperty(value = "角色编码")
     private String roleCodes;
 
     @ApiModelProperty(value = "角色ID")

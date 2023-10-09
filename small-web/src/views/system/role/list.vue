@@ -11,6 +11,7 @@
     <base-table-p ref="baseTableRef" api="sys_role.listPage" :params="listQuery">
       <el-table-column prop="name" label="角色名" />
       <el-table-column prop="code" label="角色编码" />
+      <el-table-column prop="sort" label="排序" />
       <el-table-column label="操作" align="center" width="250">
         <template #default="scope">
           <el-button link @click="update(scope.row)">编辑</el-button>
@@ -29,6 +30,9 @@
         </el-form-item>
         <el-form-item label="角色编码：" prop="code">
           <el-input v-model="roleForm.code" placeholder="请输入角色编码" />
+        </el-form-item>
+        <el-form-item label="排序：" prop="sort">
+          <el-input v-model="roleForm.sort" placeholder="请输入排序" />
         </el-form-item>
       </el-form>
       <template #footer>

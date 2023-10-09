@@ -36,8 +36,8 @@ public class SysRoleSaveDTO extends BaseDTO {
     @ApiModelProperty(value = "角色名")
     private String name;
 
-    @NotBlank(message = "角色编号不能为空！")
-    @ApiModelProperty(value = "角色编号")
+    @NotBlank(message = "角色编码不能为空！")
+    @ApiModelProperty(value = "角色编码")
     private String code;
 
     @ApiModelProperty(value = "状态(1:开启 0:禁用)")
@@ -46,4 +46,6 @@ public class SysRoleSaveDTO extends BaseDTO {
     @ApiModelProperty(value = "是否固定(false->否 true->是)")
     private Boolean isFixed;
 
+    @ApiModelProperty(value = "排序")
+    private Integer sort;
 }
