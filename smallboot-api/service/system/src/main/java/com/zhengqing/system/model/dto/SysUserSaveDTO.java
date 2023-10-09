@@ -45,7 +45,6 @@ public class SysUserSaveDTO extends BaseDTO {
     private String username;
 
     @Length(min = 6, message = "密码最少6位数!")
-    @NotBlank(message = "密码不能为空！")
     @ApiModelProperty(value = "密码")
     private String password;
 

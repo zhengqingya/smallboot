@@ -32,7 +32,7 @@
           <el-input v-model="roleForm.code" placeholder="请输入角色编码" />
         </el-form-item>
         <el-form-item label="排序：" prop="sort">
-          <el-input v-model="roleForm.sort" placeholder="请输入排序" />
+          <el-input-number v-model="roleForm.sort" :min="1" controls-position="right" placeholder="请输入排序" />
         </el-form-item>
       </el-form>
       <template #footer>

@@ -25,8 +25,8 @@
       <el-table-column label="操作" align="center" width="230">
         <template #default="scope">
           <el-button link @click="handleUpdate(scope.row, 'update')">编辑</el-button>
-          <el-button link @click="handleUpdate(scope.row, 'role')">角色权限</el-button>
-          <base-delete-btn @ok="deleteData(scope.row.userId)" />
+          <el-button v-if="scope.row.userId != 1" link @click="handleUpdate(scope.row, 'role')">角色权限</el-button>
+          <base-delete-btn v-if="scope.row.userId != 1" @ok="deleteData(scope.row.userId)" />
           <el-button link @click="updatePwd(scope.row)">更新密码</el-button>
         </template>
       </el-table-column>
@@ -43,6 +43,9 @@
       <el-form ref="dataFormRef" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="账号:" prop="username">
           <el-input v-model="form.username" />
+        </el-form-item>
+        <el-form-item label="密码:" prop="password">
+          <el-input v-model="form.password" placeholder="默认：123456" />
         </el-form-item>
         <el-form-item label="昵称:" prop="nickname">
           <el-input v-model="form.nickname" />

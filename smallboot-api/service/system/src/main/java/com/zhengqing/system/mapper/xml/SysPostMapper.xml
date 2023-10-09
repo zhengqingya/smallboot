@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhengqing.system.mapper.SysPostMapper">
+
+    <select id="selectDataPage" resultType="com.zhengqing.system.model.vo.SysPostPageVO">
+        SELECT
+        *
+        FROM t_sys_post
+        <where>
+            <if test="filter.name!=null and filter.name!=''">
+                AND name LIKE CONCAT( '%', #{filter.name} , '%' )
+            </if>
+        </where>
+        ORDER BY sort ASC, create_time DESC
+    </select>
+
+    <select id="selectDataList" resultType="com.zhengqing.system.model.vo.SysPostListVO">
+        SELECT
+        id, name
+        FROM t_sys_post
+        <where>
+            status=1
+            <if test="filter.name!=null and filter.name!=''">
+                AND name LIKE CONCAT( '%', #{filter.name} , '%' )
+            </if>
+        </where>
+        ORDER BY sort ASC, create_time DESC
+    </select>
+
+</mapper>

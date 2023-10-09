@@ -1,9 +1,11 @@
 package com.zhengqing.system.service.impl;
 
 import cn.hutool.core.lang.Assert;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.zhengqing.common.db.constant.MybatisConstant;
 import com.zhengqing.system.entity.SysRole;
 import com.zhengqing.system.enums.SysRoleCodeEnum;
 import com.zhengqing.system.mapper.SysRoleMapper;
@@ -51,6 +53,10 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Integer addOrUpdateData(SysRoleSaveDTO params) {
+        // 校验名称是否重复
+        SysRole sysRoleOld = this.sysRoleMapper.selectOne(new LambdaQueryWrapper<SysRole>().eq(SysRole::getName, params.getName()).last(MybatisConstant.LIMIT_ONE));
+        Assert.isTrue(sysRoleOld == null || sysRoleOld.getRoleId().equals(params.getRoleId()), "名称重复，请重新输入！");
+
         SysRole sysRole = SysRole.builder()
                 .roleId(params.getRoleId())
                 .name(params.getName())

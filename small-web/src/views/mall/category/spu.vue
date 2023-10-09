@@ -60,7 +60,7 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="排序:" prop="sort">
-          <el-input v-model="form.sort"></el-input>
+          <el-input-number v-model="form.sort" :min="1" controls-position="right" placeholder="请输入排序" />
         </el-form-item>
       </el-form>
       <template #footer>

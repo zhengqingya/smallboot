@@ -26,7 +26,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="显示顺序:">
-        <el-input-number v-model="form.sort" />
+        <el-input-number v-model="form.sort" :min="1" controls-position="right" placeholder="请输入排序" />
       </el-form-item>
       <el-form-item label="重定向路径:">
         <el-input v-model="form.redirect" placeholder="输入重定向路径" />

@@ -36,7 +36,7 @@
             <el-input v-model="form.name"></el-input>
           </el-form-item>
           <el-form-item label="排序:" prop="sort">
-            <el-input v-model="form.sort"></el-input>
+            <el-input-number v-model="form.sort" :min="1" controls-position="right" placeholder="请输入排序" />
           </el-form-item>
           <el-form-item label="是否显示:" prop="isShow">
             <el-radio-group v-model="form.isShow">

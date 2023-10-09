@@ -8,7 +8,7 @@
         <el-input v-model="form.value" placeholder="输入字典值" />
       </el-form-item>
       <el-form-item label="排序：">
-        <el-input-number v-model="form.sort" />
+        <el-input-number v-model="form.sort" :min="1" controls-position="right" placeholder="请输入排序" />
       </el-form-item>
       <el-form-item label="备注：">
         <el-input v-model="form.remark" :rows="3" type="textarea" />
