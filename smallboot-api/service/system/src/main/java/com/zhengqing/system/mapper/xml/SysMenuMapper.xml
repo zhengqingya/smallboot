@@ -48,6 +48,12 @@
                 #{roleId}
             </foreach>
         </if>
+        <if test="menuIdList!=null and menuIdList.size>0">
+            AND sm.menu_id IN
+            <foreach collection="menuIdList" separator="," open="(" close=")" item="menuId">
+                #{menuId}
+            </foreach>
+        </if>
         WHERE sm.is_deleted = 0
         GROUP BY sm.menu_id
         ORDER BY sm.sort ASC

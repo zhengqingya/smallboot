@@ -74,6 +74,12 @@
                 #{roleId}
             </foreach>
         </if>
+        <if test="permIdList!=null and permIdList.size>0">
+            AND sp.id IN
+            <foreach collection="permIdList" separator="," open="(" close=")" item="permId">
+                #{permId}
+            </foreach>
+        </if>
         GROUP BY sp.menu_id, sp.id
     </select>
 

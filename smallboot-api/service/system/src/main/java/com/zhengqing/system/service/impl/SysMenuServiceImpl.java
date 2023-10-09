@@ -44,8 +44,8 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     }
 
     @Override
-    public List<SysMenuTree> selectMenuTree(List<Integer> roleIdList, boolean isOnlyShowPerm) {
-        return this.sysMenuMapper.selectMenuTree(roleIdList, isOnlyShowPerm);
+    public List<SysMenuTree> selectMenuTree(List<Integer> roleIdList, boolean isOnlyShowPerm, List<Integer> menuIdList) {
+        return this.sysMenuMapper.selectMenuTree(roleIdList, isOnlyShowPerm, menuIdList);
     }
 
     @Override

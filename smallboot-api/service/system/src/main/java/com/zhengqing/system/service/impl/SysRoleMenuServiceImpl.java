@@ -94,6 +94,11 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
     }
 
     @Override
+    public List<Integer> getMenuIdList(Integer tenantId) {
+        return this.sysRoleMenuMapper.selectMenuIdList(tenantId);
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public void delReMenuId(Integer tenantId, List<Integer> delMenuIdList) {
         TenantIdContext.setTenantId(tenantId);
@@ -102,7 +107,6 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
         }
         TenantIdContext.setTenantId(tenantId);
         this.sysRoleMenuMapper.delete(new LambdaQueryWrapper<SysRoleMenu>().in(SysRoleMenu::getMenuId, delMenuIdList));
-
     }
 
 }

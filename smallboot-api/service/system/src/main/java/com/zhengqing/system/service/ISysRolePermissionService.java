@@ -40,6 +40,14 @@ public interface ISysRolePermissionService extends IService<SysRolePermission> {
      */
     List<Integer> getPermByRoleIdAndMenuId(Integer roleId, Integer menuId);
 
+    /**
+     * 获取租户可访问的权限ids
+     *
+     * @return 可访问的权限ids
+     * @author zhengqingya
+     * @date 2020/9/10 18:09
+     */
+    List<Integer> getPermIdList(Integer tenantId);
 
     /**
      * 获取所有角色对应的权限数据

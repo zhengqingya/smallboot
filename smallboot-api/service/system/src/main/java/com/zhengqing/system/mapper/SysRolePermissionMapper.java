@@ -6,6 +6,7 @@ import com.zhengqing.system.model.bo.SysRoleRePermBO;
 import com.zhengqing.system.model.vo.SysRoleMenuBtnListVO;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -39,6 +40,16 @@ public interface SysRolePermissionMapper extends BaseMapper<SysRolePermission> {
      * @date 2020/9/10 17:58
      */
     List<Integer> selectIdsByRoleIdAndMenuId(@Param("roleId") Integer roleId, @Param("menuId") Integer menuId);
+
+    /**
+     * 获取租户可访问的权限ids
+     *
+     * @return 可访问的权限ids
+     * @author zhengqingya
+     * @date 2020/9/10 18:09
+     */
+    @Select("SELECT DISTINCT permission_id FROM t_sys_role_permission WHERE tenant_id = #{tenantId}")
+    List<Integer> selectPermIdList(@Param("tenantId") Integer tenantId);
 
     /**
      * 获取所有角色对应的权限数据

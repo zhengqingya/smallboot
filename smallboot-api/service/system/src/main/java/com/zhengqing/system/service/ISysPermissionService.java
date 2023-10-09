@@ -65,11 +65,12 @@ public interface ISysPermissionService extends IService<SysPermission> {
      *
      * @param roleIdList     角色ids
      * @param isOnlyShowPerm 是否仅显示带权限的数据
+     * @param permIdList     权限ids（只返回包含的结果）
      * @return 菜单ID -> btn/url权限 & 角色是否具有此权限
      * @author zhengqingya
      * @date 2022/6/14 14:55
      */
-    Map<Integer, List<SysRoleRePermVO>> mapPermByRole(List<Integer> roleIdList, boolean isOnlyShowPerm);
+    Map<Integer, List<SysRoleRePermVO>> mapPermByRole(List<Integer> roleIdList, boolean isOnlyShowPerm, List<Integer> permIdList);
 
     /**
      * 获取所有权限ids

@@ -1,6 +1,6 @@
-import request from '@/utils/request'
+import request from '@/utils/request';
 
-const BASE_API = '/web/api/system/menu'
+const BASE_API = '/web/api/system/menu';
 
 export default {
   menuTree(params) {
@@ -8,21 +8,28 @@ export default {
       url: BASE_API + '/menuTree',
       method: 'get',
       params: params,
-    })
+    });
+  },
+  menuTreeAll(params) {
+    return request({
+      url: BASE_API + '/menuTreeAll',
+      method: 'get',
+      params: params,
+    });
   },
   add(data) {
     return request({
       url: BASE_API,
       method: 'post',
       data,
-    })
+    });
   },
   update(data) {
     return request({
       url: BASE_API,
       method: 'put',
       data,
-    })
+    });
   },
   delete(menuId) {
     return request({
@@ -31,7 +38,7 @@ export default {
       params: {
         menuId: menuId,
       },
-    })
+    });
   },
   /**
    * 获取菜单关联按钮权限信息
@@ -43,7 +50,7 @@ export default {
       params: {
         menuId: id,
       },
-    })
+    });
   },
   /**
    * 删除菜单关联按钮权限
@@ -55,7 +62,7 @@ export default {
       params: {
         id: id,
       },
-    })
+    });
   },
   /**
    * 新增菜单关联按钮权限
@@ -65,7 +72,7 @@ export default {
       url: BASE_API + '/addMenuReBtnPerm',
       method: 'post',
       data,
-    })
+    });
   },
   /**
    * 更新菜单关联按钮权限
@@ -75,6 +82,6 @@ export default {
       url: BASE_API + '/updateMenuReBtnPerm',
       method: 'put',
       data,
-    })
+    });
   },
-}
+};

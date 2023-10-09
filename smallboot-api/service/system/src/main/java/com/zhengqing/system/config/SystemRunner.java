@@ -41,8 +41,10 @@ public class SystemRunner extends AppCommonRunner {
         // 系统配置
         this.iSysConfigService.initCache();
 
-        // 初始化超级管理员权限
-        this.iSysPermBusinessService.initSuperAdminPerm();
+        // 刷新超级管理员权限
+        this.iSysPermBusinessService.refreshSuperAdminPerm();
+        // 刷新系统租户权限
+        this.iSysPermBusinessService.refreshSysTenantRePerm();
 
         // 权限缓存
         this.iSysPermBusinessService.refreshRedisPerm();

@@ -46,10 +46,11 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
      *
      * @param roleIdList     角色ids
      * @param isOnlyShowPerm 是否仅显示带权限的数据
+     * @param menuIdList     菜单ids（只返回包含的结果）
      * @return 菜单信息
      * @author zhengqingya
      * @date 2020/9/10 20:30
      */
-    List<SysMenuTree> selectMenuTree(@Param("roleIdList") List<Integer> roleIdList, @Param("isOnlyShowPerm") boolean isOnlyShowPerm);
+    List<SysMenuTree> selectMenuTree(@Param("roleIdList") List<Integer> roleIdList, @Param("isOnlyShowPerm") boolean isOnlyShowPerm, @Param("menuIdList") List<Integer> menuIdList);
 
 }

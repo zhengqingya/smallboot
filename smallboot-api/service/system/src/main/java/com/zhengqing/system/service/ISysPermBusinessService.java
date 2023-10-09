@@ -21,13 +21,22 @@ import java.util.List;
 public interface ISysPermBusinessService {
 
     /**
-     * 初始化超级管理员权限
+     * 刷新超级管理员权限
      *
      * @return void
      * @author zhengqingya
      * @date 2023/3/28 11:24
      */
-    void initSuperAdminPerm();
+    void refreshSuperAdminPerm();
+
+    /**
+     * 刷新系统租户权限
+     *
+     * @return void
+     * @author zhengqingya
+     * @date 2023/3/28 11:24
+     */
+    void refreshSysTenantRePerm();
 
     /**
      * 获取用户的基本信息+角色+权限...
@@ -59,16 +68,14 @@ public interface ISysPermBusinessService {
     void refreshRedisPerm();
 
     /**
-     * 删除租户关联的菜单按钮权限
+     * 刷新租户关联的菜单按钮权限，删除旧权限中不存在于最新套餐权限中的权限
      *
-     * @param tenantId      租户id
-     * @param delMenuIdList 菜单权限
-     * @param delPermIdList 按钮权限
+     * @param tenantId 租户id
      * @return void
      * @author zhengqingya
      * @date 2023/3/28 11:24
      */
-    void delTenantRePerm(Integer tenantId, List<Integer> delMenuIdList, List<Integer> delPermIdList);
+    void refreshTenantRePerm(Integer tenantId);
 
     /**
      * 保存角色权限（菜单权限+按钮权限）
@@ -91,7 +98,7 @@ public interface ISysPermBusinessService {
     void saveRoleRePermIds(SysRoleRePermIdsSaveDTO params);
 
     /**
-     * 获取菜单树
+     * 获取菜单树 -- 根据租户获取
      *
      * @param roleIdList     角色ids tips:为空时拿到所有权限
      * @param isOnlyShowPerm 是否仅显示带权限的数据  false:显示所有权限
@@ -100,5 +107,14 @@ public interface ISysPermBusinessService {
      * @date 2021/1/13 20:44
      */
     List<SysMenuTree> tree(List<Integer> roleIdList, boolean isOnlyShowPerm);
+
+    /**
+     * 获取菜单树 -- 全部
+     *
+     * @return 菜单树信息
+     * @author zhengqingya
+     * @date 2021/1/13 20:44
+     */
+    List<SysMenuTree> treeAll();
 
 }

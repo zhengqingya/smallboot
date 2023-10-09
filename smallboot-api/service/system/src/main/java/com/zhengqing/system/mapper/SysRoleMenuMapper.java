@@ -53,6 +53,16 @@ public interface SysRoleMenuMapper extends BaseMapper<SysRoleMenu> {
     List<Integer> selectMenuIdsByRoleId(@Param("roleId") Integer roleId);
 
     /**
+     * 获取租户可访问的菜单ids
+     *
+     * @return 可访问的菜单ids
+     * @author zhengqingya
+     * @date 2020/9/10 18:09
+     */
+    @Select("SELECT DISTINCT menu_id FROM t_sys_role_menu WHERE tenant_id = #{tenantId}")
+    List<Integer> selectMenuIdList(@Param("tenantId") Integer tenantId);
+
+    /**
      * 获取角色ids可访问的菜单ids
      *
      * @param roleIdList: 角色ids

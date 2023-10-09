@@ -50,6 +50,11 @@ public class SysRolePermissionServiceImpl extends ServiceImpl<SysRolePermissionM
     }
 
     @Override
+    public List<Integer> getPermIdList(Integer tenantId) {
+        return this.sysRolePermissionMapper.selectPermIdList(tenantId);
+    }
+
+    @Override
     public Map<Integer, List<Integer>> mapRoleRePerm() {
         List<SysRoleRePermBO> list = this.sysRolePermissionMapper.selectRoleRePerm();
 

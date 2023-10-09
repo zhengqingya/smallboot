@@ -66,8 +66,8 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
     }
 
     @Override
-    public Map<Integer, List<SysRoleRePermVO>> mapPermByRole(List<Integer> roleIdList, boolean isOnlyShowPerm) {
-        List<SysRoleRePermVO> list = this.sysPermissionMapper.selectListPermByRole(roleIdList, isOnlyShowPerm);
+    public Map<Integer, List<SysRoleRePermVO>> mapPermByRole(List<Integer> roleIdList, boolean isOnlyShowPerm, List<Integer> permIdList) {
+        List<SysRoleRePermVO> list = this.sysPermissionMapper.selectListPermByRole(roleIdList, isOnlyShowPerm, permIdList);
         return list.stream().collect(Collectors.groupingBy(SysRoleRePermVO::getMenuId));
     }
 

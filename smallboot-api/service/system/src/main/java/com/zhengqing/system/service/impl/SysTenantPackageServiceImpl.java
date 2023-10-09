@@ -5,8 +5,8 @@ import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.google.common.collect.Lists;
 import com.zhengqing.common.base.context.TenantIdContext;
+import com.zhengqing.system.entity.SysTenant;
 import com.zhengqing.system.entity.SysTenantPackage;
 import com.zhengqing.system.mapper.SysTenantPackageMapper;
 import com.zhengqing.system.model.dto.SysTenantListDTO;
@@ -21,9 +21,11 @@ import com.zhengqing.system.service.ISysTenantPackageService;
 import com.zhengqing.system.service.ISysTenantService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -40,13 +42,32 @@ public class SysTenantPackageServiceImpl extends ServiceImpl<SysTenantPackageMap
 
     private final SysTenantPackageMapper sysTenantPackageMapper;
     private final ISysTenantService iSysTenantService;
-    private final ISysPermBusinessService iSysPermBusinessService;
+    @Lazy
+    @Resource
+    private ISysPermBusinessService iSysPermBusinessService;
 
     @Override
     public SysTenantPackage detail(Integer id) {
         SysTenantPackage sysTenantPackage = this.sysTenantPackageMapper.selectById(id);
         Assert.notNull(sysTenantPackage, "该套餐数据不存在！");
         return sysTenantPackage;
+    }
+
+    @Override
+    public SysTenantPackage detailReTenantId(Integer tenantId) {
+        SysTenant sysTenant = this.iSysTenantService.detail(tenantId);
+        return this.detail(sysTenant.getPackageId());
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateTenantIdRePerm(Integer tenantId, List<Integer> menuIdList, List<Integer> permissionIdList) {
+        // 1、查询租户套餐
+        SysTenantPackage sysTenantPackage = this.detailReTenantId(tenantId);
+        // 2、更新权限
+        sysTenantPackage.setMenuIdList(menuIdList);
+        sysTenantPackage.setPermissionIdList(permissionIdList);
+        sysTenantPackage.updateById();
     }
 
     @Override
@@ -82,37 +103,29 @@ public class SysTenantPackageServiceImpl extends ServiceImpl<SysTenantPackageMap
             return;
         }
 
-        // 2、删除租户关联权限
-        this.delTenantRePerm(sysTenantPackage.getId(), menuIdList, permissionIdList);
+        // 2、刷新租户关联权限
+        this.refreshAllTenantPermByPackageId(sysTenantPackage.getId());
     }
 
 
     /**
-     * 删除租户关联权限
+     * 刷新套餐下关联的所有租户权限
      *
-     * @param id            主键id
-     * @param newMenuIdList 新菜单
-     * @param newPermIdList 新按钮
+     * @param id 主键id
      * @return void
      * @author zhengqingya
      * @date 2023/10/8 21:23
      */
-    private void delTenantRePerm(Integer id, List<Integer> newMenuIdList, List<Integer> newPermIdList) {
+    private void refreshAllTenantPermByPackageId(Integer id) {
         // 1、查询该套餐关联的租户
         List<SysTenantListVO> tenantList = this.iSysTenantService.list(SysTenantListDTO.builder().packageId(id).build());
         if (CollUtil.isEmpty(tenantList)) {
             return;
         }
 
-        // 2、查询旧权限
-        SysTenantPackage sysTenantPackageOld = this.detail(id);
-        // 拿到要删除的旧权限id
-        List<Integer> dleMenuIdList = CollUtil.subtractToList(sysTenantPackageOld.getMenuIdList(), newMenuIdList);
-        List<Integer> dlePermIdList = CollUtil.subtractToList(sysTenantPackageOld.getPermissionIdList(), newPermIdList);
-
-        // 3、更新权限
+        // 2、更新权限
         Integer oldTenantId = TenantIdContext.getTenantId();
-        tenantList.forEach(e -> this.iSysPermBusinessService.delTenantRePerm(e.getId(), dleMenuIdList, dlePermIdList));
+        tenantList.forEach(e -> this.iSysPermBusinessService.refreshTenantRePerm(e.getId()));
         TenantIdContext.setTenantId(oldTenantId);
     }
 
@@ -121,10 +134,10 @@ public class SysTenantPackageServiceImpl extends ServiceImpl<SysTenantPackageMap
     public void deleteData(Integer id) {
         // 1、校验数据是否存在
         this.detail(id);
-        // 2、删除租户关联权限
-        this.delTenantRePerm(id, Lists.newArrayList(), Lists.newArrayList());
-        // 3、删除套餐
+        // 2、删除套餐
         this.sysTenantPackageMapper.deleteById(id);
+        // 3、刷新租户关联权限
+        this.refreshAllTenantPermByPackageId(id);
     }
 
 }

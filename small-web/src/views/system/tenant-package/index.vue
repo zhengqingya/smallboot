@@ -68,7 +68,7 @@ function refreshTableData() {
 onMounted(() => {});
 
 async function getMenuTree() {
-  let res = await proxy.$api.sys_menu.menuTree();
+  let res = await proxy.$api.sys_menu.menuTreeAll();
   return res.data;
 }
 

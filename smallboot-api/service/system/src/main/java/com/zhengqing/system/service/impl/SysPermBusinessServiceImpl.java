@@ -1,13 +1,16 @@
 package com.zhengqing.system.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Assert;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.zhengqing.common.base.constant.AppConstant;
 import com.zhengqing.common.base.constant.SecurityConstant;
+import com.zhengqing.common.base.context.TenantIdContext;
 import com.zhengqing.common.redis.util.RedisUtil;
 import com.zhengqing.system.entity.SysRole;
+import com.zhengqing.system.entity.SysTenantPackage;
 import com.zhengqing.system.model.bo.SysMenuTree;
 import com.zhengqing.system.model.dto.*;
 import com.zhengqing.system.model.vo.SysRoleAllPermissionDetailVO;
@@ -46,10 +49,12 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
     private final ISysRoleMenuService iSysRoleMenuService;
     private final ISysUserRoleService iSysUserRoleService;
     private final ISysRolePermissionService iSysRolePermissionService;
+    private final ISysTenantService iSysTenantService;
+    private final ISysTenantPackageService iSysTenantPackageService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void initSuperAdminPerm() {
+    public void refreshSuperAdminPerm() {
         // 1、先查询超级管理员角色id再绑定
         Integer roleId = this.iSysRoleService.getRoleIdForSuperAdmin();
         Assert.notNull(roleId, "超级管理员角色丢失！");
@@ -61,7 +66,7 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
         );
 
         // 2、先查询所有菜单和按钮数据
-        List<SysMenuTree> menuTree = this.tree(Lists.newArrayList(), false);
+        List<SysMenuTree> menuTree = this.treeAll();
 
         // 3、保存角色关联的菜单和按钮权限
         SysRoleRePermSaveDTO roleRePerm = SysRoleRePermSaveDTO.builder()
@@ -70,7 +75,19 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
                 .build();
         roleRePerm.handleParam();
         this.saveRoleRePerm(roleRePerm);
-        log.info("初始化超级管理员权限成功!");
+        log.info("刷新超级管理员权限成功!");
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void refreshSysTenantRePerm() {
+        // 1、先查询所有菜单和按钮数据
+        List<SysMenuTree> menuTree = this.treeAll();
+        SysMenuPermBaseDTO sysMenuPermBaseDTO = SysMenuPermBaseDTO.builder().menuTree(menuTree).build();
+        sysMenuPermBaseDTO.handleParam();
+        // 2、更新权限
+        this.iSysTenantPackageService.updateTenantIdRePerm(AppConstant.TENANT_ID_SMALL_BOOT, sysMenuPermBaseDTO.getMenuIdList(), sysMenuPermBaseDTO.getPermissionIdList());
+        log.info("刷新系统租户权限成功!");
     }
 
     @Override
@@ -123,13 +140,35 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void delTenantRePerm(Integer tenantId, List<Integer> delMenuIdList, List<Integer> delPermIdList) {
-        if (!AppConstant.TENANT_ID_SMALL_BOOT.equals(tenantId)) {
-            // 更新非系统租户数据
-            this.iSysRoleMenuService.delReMenuId(tenantId, delMenuIdList);
-            this.iSysRolePermissionService.delByPermId(tenantId, delPermIdList);
+    public void refreshTenantRePerm(Integer tenantId) {
+        // 只更新非系统租户数据
+        if (AppConstant.TENANT_ID_SMALL_BOOT.equals(tenantId) || tenantId == null) {
+            return;
         }
+
+        // 1、查询旧菜单权限
+        List<Integer> menuIdListOld = this.iSysRoleMenuService.getMenuIdList(tenantId);
+        List<Integer> permIdListOld = this.iSysRolePermissionService.getPermIdList(tenantId);
+
+        List<Integer> delMenuIdList = Lists.newArrayList();
+        List<Integer> delPermIdList = Lists.newArrayList();
+        SysTenantPackage sysTenantPackage = null;
+        try {
+            // 2、查询新租户套餐权限
+            sysTenantPackage = this.iSysTenantPackageService.detailReTenantId(tenantId);
+
+            // 3、拿到要删除的旧权限id
+            delMenuIdList = CollUtil.subtractToList(menuIdListOld, sysTenantPackage.getMenuIdList());
+            delPermIdList = CollUtil.subtractToList(permIdListOld, sysTenantPackage.getPermissionIdList());
+        } catch (Exception e) {
+            log.warn("[系统管理] 租户或套餐数据已被删除 {}", e.toString());
+            delMenuIdList = menuIdListOld;
+            delPermIdList = permIdListOld;
+        }
+
+        // 4、更新权限
+        this.iSysRoleMenuService.delReMenuId(tenantId, delMenuIdList);
+        this.iSysRolePermissionService.delByPermId(tenantId, delPermIdList);
     }
 
     @Override
@@ -164,13 +203,41 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
 
     @Override
     public List<SysMenuTree> tree(List<Integer> roleIdList, boolean isOnlyShowPerm) {
-        // 1、拿到所有菜单
-        List<SysMenuTree> allMenuList = this.iSysMenuService.selectMenuTree(roleIdList, isOnlyShowPerm);
+        return this.baseTree(TenantIdContext.getTenantId(), roleIdList, isOnlyShowPerm);
+    }
 
-        // 2、全部url/btn权限
-        Map<Integer, List<SysRoleRePermVO>> mapPerm = this.iSysPermissionService.mapPermByRole(roleIdList, isOnlyShowPerm);
+    @Override
+    public List<SysMenuTree> treeAll() {
+        return this.baseTree(null, null, false);
+    }
 
-        // 3、遍历出父菜单对应的子菜单 -- 递归
+    /**
+     * 获取菜单树
+     *
+     * @param tenantId       角色ids tips:为空时拿到所有权限
+     * @param roleIdList     角色ids tips:为空时拿到所有权限
+     * @param isOnlyShowPerm 是否仅显示带权限的数据  false:显示所有权限
+     * @return 菜单树信息
+     * @author zhengqingya
+     * @date 2021/1/13 20:44
+     */
+    public List<SysMenuTree> baseTree(Integer tenantId, List<Integer> roleIdList, boolean isOnlyShowPerm) {
+        // 1、查询租户权限
+        List<Integer> menuIdList = Lists.newArrayList();
+        List<Integer> permIdList = Lists.newArrayList();
+        if (tenantId != null) {
+            SysTenantPackage sysTenantPackage = this.iSysTenantPackageService.detailReTenantId(tenantId);
+            menuIdList = sysTenantPackage.getMenuIdList();
+            permIdList = sysTenantPackage.getPermissionIdList();
+        }
+
+        // 2、拿到所有菜单
+        List<SysMenuTree> allMenuList = this.iSysMenuService.selectMenuTree(roleIdList, isOnlyShowPerm, menuIdList);
+
+        // 3、全部url/btn权限
+        Map<Integer, List<SysRoleRePermVO>> mapPerm = this.iSysPermissionService.mapPermByRole(roleIdList, isOnlyShowPerm, permIdList);
+
+        // 4、遍历出父菜单对应的子菜单 -- 递归
         return this.recurveMenu(AppConstant.PARENT_ID, allMenuList, mapPerm);
     }
 

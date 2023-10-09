@@ -23,7 +23,7 @@ import java.util.List;
 
 /**
  * <p>
- * 系统管理 - 菜单表接口
+ * 系统管理 - 菜单&按钮接口
  * </p>
  *
  * @author zhengqingya
@@ -34,7 +34,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(ServiceConstant.SERVICE_API_PREFIX_WEB_SYSTEM + "/menu")
-@Api(tags = "web-系统管理-菜单表接口")
+@Api(tags = "web-系统管理-菜单&按钮接口")
 public class WebSysMenuController extends BaseController {
 
     private final ISysMenuService iSysMenuService;
@@ -56,29 +56,38 @@ public class WebSysMenuController extends BaseController {
     // }
 
     @GetMapping("menuTree")
-    @ApiOperation("菜单树")
+    @ApiOperation("菜单树(根据租户获取)")
     public List<SysMenuTree> menuTree(@RequestParam(required = false) Integer roleId) {
         return this.iSysPermBusinessService.tree(Lists.newArrayList(roleId), false);
+    }
+
+    @GetMapping("menuTreeAll")
+    @ApiOperation("菜单树(全部)")
+    public List<SysMenuTree> menuTreeAll() {
+        return this.iSysPermBusinessService.treeAll();
     }
 
     @NoRepeatSubmit
     @PostMapping("")
     @ApiOperation("新增")
-    public Integer add(@Validated @RequestBody SysMenuSaveDTO params) {
-        return this.iSysMenuService.addOrUpdateData(params);
+    public void add(@Validated @RequestBody SysMenuSaveDTO params) {
+        this.iSysMenuService.addOrUpdateData(params);
+        this.refreshPerm();
     }
 
     @NoRepeatSubmit
     @PutMapping("")
     @ApiOperation("更新")
-    public Integer update(@Validated(UpdateGroup.class) @RequestBody SysMenuSaveDTO params) {
-        return this.iSysMenuService.addOrUpdateData(params);
+    public void update(@Validated(UpdateGroup.class) @RequestBody SysMenuSaveDTO params) {
+        this.iSysMenuService.addOrUpdateData(params);
+        this.refreshPerm();
     }
 
     @DeleteMapping("")
     @ApiOperation("删除")
     public void delete(@RequestParam Integer menuId) {
         this.iSysMenuService.removeById(menuId);
+        this.refreshPerm();
     }
 
     // 下：菜单按钮权限(菜单页面中配置页面所属按钮使用)
@@ -94,6 +103,7 @@ public class WebSysMenuController extends BaseController {
     public void deleteMenuReBtnPerm(@RequestParam Integer id) {
         this.iSysPermissionService.removeById(id);
         this.iSysPermBusinessService.refreshRedisPerm();
+        this.refreshPerm();
     }
 
     @NoRepeatSubmit
@@ -103,6 +113,7 @@ public class WebSysMenuController extends BaseController {
         params.setId(null);
         this.iSysPermissionService.addOrUpdateData(params);
         this.iSysPermBusinessService.refreshRedisPerm();
+        this.refreshPerm();
     }
 
     @NoRepeatSubmit
@@ -111,6 +122,15 @@ public class WebSysMenuController extends BaseController {
     public void updateMenuReBtnPerm(@Validated(UpdateGroup.class) @RequestBody SysMenuReBtnPermSaveDTO params) {
         this.iSysPermissionService.addOrUpdateData(params);
         this.iSysPermBusinessService.refreshRedisPerm();
+        this.refreshPerm();
+    }
+
+    /**
+     * 刷新系统管理员权限 & 系统租户权限
+     */
+    private void refreshPerm() {
+        this.iSysPermBusinessService.refreshSuperAdminPerm();
+        this.iSysPermBusinessService.refreshSysTenantRePerm();
     }
 
 }
