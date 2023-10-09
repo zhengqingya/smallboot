@@ -33,7 +33,6 @@ public class SysDeptSaveDTO extends BaseDTO {
     @NotNull(groups = {UpdateGroup.class}, message = "主键ID不能为空!")
     private Integer id;
 
-    @NotNull(message = "父部门ID不能为空")
     @ApiModelProperty("父部门ID")
     private Integer parentId;
 
@@ -74,7 +73,7 @@ public class SysDeptSaveDTO extends BaseDTO {
     @ApiModelProperty("备注")
     private String remark;
 
-    @ApiModelProperty("最大用户数")
+    @ApiModelProperty("最大员工数")
     private Integer userNum;
 
 

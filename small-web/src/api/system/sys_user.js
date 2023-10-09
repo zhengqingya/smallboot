@@ -45,6 +45,13 @@ export default {
       headers,
     });
   },
+  list(query) {
+    return request({
+      url: BASE_API + '/list',
+      method: 'get',
+      params: query,
+    });
+  },
   add(data) {
     return request({
       url: BASE_API,

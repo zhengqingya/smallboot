@@ -10,6 +10,9 @@
             <if test="filter.name!=null and filter.name!=''">
                 AND name LIKE CONCAT( '%', #{filter.name} , '%' )
             </if>
+            <if test="filter.excludeDeptId!=null">
+                AND id != #{filter.excludeDeptId}
+            </if>
         </where>
         ORDER BY sort ASC, create_time DESC
     </select>

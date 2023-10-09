@@ -15,7 +15,7 @@
       <el-table-column label="排序" prop="sort" align="center" />
       <el-table-column label="状态" align="center">
         <template #default="scope">
-          <span>{{ scope.row.status === 1 ? '正常' : '停用' }}</span>
+          <base-tag v-model="scope.row.status" />
         </template>
       </el-table-column>
       <el-table-column label="备注" prop="remark" align="center" />
@@ -37,13 +37,10 @@
           <el-input v-model="form.code" />
         </el-form-item>
         <el-form-item label="状态:">
-          <el-radio-group v-model="form.status">
-            <el-radio :label="1">正常</el-radio>
-            <el-radio :label="0">停用</el-radio>
-          </el-radio-group>
+          <base-radio-group v-model="form.status" />
         </el-form-item>
         <el-form-item label="排序:">
-          <el-input-number v-model="form.sort" :min="1" controls-position="right" />
+          <el-input-number v-model="form.sort" :min="1" controls-position="right" placeholder="请输入排序" />
         </el-form-item>
         <el-form-item label="备注:">
           <el-input v-model="form.remark" :row="2" type="textarea" />

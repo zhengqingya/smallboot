@@ -72,7 +72,7 @@ public class SysDept extends BaseEntity<SysDept> {
     @ApiModelProperty("备注")
     private String remark;
 
-    @ApiModelProperty("最大用户数")
+    @ApiModelProperty("最大员工数")
     private Integer userNum;
 
 }

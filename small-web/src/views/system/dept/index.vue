@@ -8,68 +8,66 @@
       </template>
     </base-header>
 
-    <el-table :data="dataList" default-expand-all>
+    <el-table row-key="id" :tree-props="{ children: 'children', hasChildren: 'hasChildren' }" :data="dataList" default-expand-all>
       <el-table-column label="ID" prop="id" align="center" />
       <el-table-column label="部门名称" prop="name" align="center" />
-      <el-table-column label="排序" prop="sort" align="center" />
-      <el-table-column label="负责人id" prop="leaderUserId" align="center" />
       <el-table-column label="状态" align="center">
         <template #default="scope">
-          <span>{{ scope.row.status === 1 ? '正常' : '停用' }}</span>
+          <base-tag v-model="scope.row.status" />
         </template>
       </el-table-column>
       <el-table-column label="过期时间" prop="expireTime" align="center" />
       <el-table-column label="最大用户数" prop="userNum" align="center" />
-      <el-table-column label="备注" prop="remark" align="center" />
+      <el-table-column label="排序" prop="sort" align="center" />
       <el-table-column label="创建时间" prop="createTime" align="center" />
       <el-table-column align="center" label="操作">
         <template #default="scope">
           <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
-          <el-button link @click="handleDetail(scope.row)">详情</el-button>
           <base-delete-btn @ok="handleDelete(scope.row)"></base-delete-btn>
         </template>
       </el-table-column>
     </el-table>
 
     <base-dialog v-model="dialogVisible" :title="dialogTitleObj[dialogStatus]" width="60%">
-      <el-form v-if="dialogStatus !== 'detail'" ref="dataFormRef" :inline="true" :model="form" :rules="rules" label-width="100px">
-        <el-form-item label="父部门ID:">
-          <el-input v-model="form.parentId" />
+      <el-form ref="dataFormRef" :inline="true" :model="form" :rules="rules" label-width="100px">
+        <el-form-item v-if="form.parentId != 0" label="父部门:">
+          <base-cascader
+            v-if="dialogVisible"
+            v-model="form.parentId"
+            :params="{ excludeDeptId: form.id }"
+            placeholder="请选择(为空时标识顶级)"
+            :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true }"
+            api="sys_dept.tree" />
         </el-form-item>
         <el-form-item label="部门名称:">
           <el-input v-model="form.name" />
         </el-form-item>
-
         <el-form-item label="负责人:">
-          <el-input v-model="form.leaderUserId" />
+          <base-select v-model="form.leaderUserId" :option-props="{ label: 'nickname', value: 'userId' }" api="sys_user.list" />
         </el-form-item>
         <el-form-item label="状态:">
-          <el-radio-group v-model="form.status">
-            <el-radio :label="1">正常</el-radio>
-            <el-radio :label="0">停用</el-radio>
-          </el-radio-group>
+          <base-radio-group v-model="form.status" />
         </el-form-item>
         <el-form-item label="过期时间:">
           <el-date-picker v-model="form.expireTime" type="datetime" placeholder="请选择" format="YYYY-MM-DD hh:mm:ss" value-format="YYYY-MM-DD hh:mm:ss" />
         </el-form-item>
-        <el-form-item label="最大用户数:">
-          <el-input v-model="form.userNum" />
+        <el-form-item label="最大员工数:">
+          <el-input-number v-model="form.userNum" :min="1" controls-position="right" placeholder="请输入" />
         </el-form-item>
         <el-form-item label="所属地区:">
-          <province-city-area v-model="form.provinceCityAreaList" :disabled="isDetail" />
+          <province-city-area v-model="form.provinceCityAreaList" />
         </el-form-item>
         <el-form-item label="详细地址:">
           <el-input v-model="form.address" />
         </el-form-item>
         <el-form-item label="排序:">
-          <el-input-number v-model="form.sort" :min="1" controls-position="right" />
+          <el-input-number v-model="form.sort" :min="1" controls-position="right" placeholder="请输入排序" />
         </el-form-item>
       </el-form>
       <el-form-item label="备注:">
         <el-input v-model="form.remark" :row="2" type="textarea" />
       </el-form-item>
-
-      <template v-if="dialogStatus !== 'detail'" #footer>
+      <template #footer>
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="submitForm">确 定</el-button>
       </template>

@@ -21,6 +21,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * <p>
@@ -45,6 +46,12 @@ public class WebSysUserController extends BaseController {
     @ApiOperation("列表分页")
     public IPage<SysUserListVO> listPage(@ModelAttribute SysUserListDTO params) {
         return this.iSysUserService.listPage(params);
+    }
+
+    @GetMapping("list")
+    @ApiOperation("列表")
+    public List<SysUserListVO> list(@ModelAttribute SysUserListDTO params) {
+        return this.iSysUserService.list(params);
     }
 
     @NoRepeatSubmit

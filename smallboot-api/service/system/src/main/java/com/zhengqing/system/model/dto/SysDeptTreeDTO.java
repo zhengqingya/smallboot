@@ -27,4 +27,7 @@ public class SysDeptTreeDTO extends BaseDTO {
     @ApiModelProperty("部门名称")
     private String name;
 
+    @ApiModelProperty("排除指定部门id下级的数据")
+    private Integer excludeDeptId;
+
 }

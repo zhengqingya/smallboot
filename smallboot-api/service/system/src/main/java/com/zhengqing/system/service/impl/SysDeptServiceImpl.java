@@ -1,9 +1,9 @@
 package com.zhengqing.system.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.zhengqing.common.base.constant.AppConstant;
 import com.zhengqing.common.db.constant.MybatisConstant;
 import com.zhengqing.system.entity.SysDept;
 import com.zhengqing.system.mapper.SysDeptMapper;
@@ -13,6 +13,7 @@ import com.zhengqing.system.model.vo.SysDeptTreeVO;
 import com.zhengqing.system.service.ISysDeptService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.compress.utils.Lists;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,24 +37,32 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
     @Override
     public List<SysDeptTreeVO> tree(SysDeptTreeDTO params) {
         List<SysDeptTreeVO> list = this.sysDeptMapper.selectDataList(params);
-        return this.recurveDept(AppConstant.PARENT_ID, list);
+        if (CollUtil.isEmpty(list)) {
+            return Lists.newArrayList();
+        }
+        Integer firstParentId = list.stream().map(SysDeptTreeVO::getParentId).min(Integer::compareTo).get();
+        return this.recurveDept(firstParentId, list, params.getExcludeDeptId());
     }
 
     /**
      * 递归部门
      *
-     * @param parentId 父id
-     * @param allList  所有部门
+     * @param parentId      父id
+     * @param allList       所有部门
+     * @param excludeDeptId 排除指定部门id下级的数据
      * @return 菜单树列表
      * @author zhengqingya
      * @date 2020/9/10 20:56
      */
-    private List<SysDeptTreeVO> recurveDept(Integer parentId, List<SysDeptTreeVO> allList) {
+    private List<SysDeptTreeVO> recurveDept(Integer parentId, List<SysDeptTreeVO> allList, Integer excludeDeptId) {
+        if (parentId.equals(excludeDeptId)) {
+            return Lists.newArrayList();
+        }
         // 存放子集合
         List<SysDeptTreeVO> childList = allList.stream().filter(e -> e.getParentId().equals(parentId)).collect(Collectors.toList());
         // 递归
         childList.forEach(item -> {
-            item.setChildren(this.recurveDept(item.getId(), allList));
+            item.setChildren(this.recurveDept(item.getId(), allList, excludeDeptId));
             item.handleData();
         });
         return childList;

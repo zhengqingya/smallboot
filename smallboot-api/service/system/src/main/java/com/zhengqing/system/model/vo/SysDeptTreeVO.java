@@ -72,8 +72,11 @@ public class SysDeptTreeVO extends BaseVO {
     @ApiModelProperty("备注")
     private String remark;
 
-    @ApiModelProperty("最大用户数")
+    @ApiModelProperty("最大员工数")
     private Integer userNum;
+
+    @ApiModelProperty("创建时间")
+    private Date createTime;
 
     @ApiModelProperty("子级")
     private List<SysDeptTreeVO> children;

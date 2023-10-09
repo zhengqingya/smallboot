@@ -13,7 +13,7 @@
       <el-table-column label="套餐名" prop="name" align="center" />
       <el-table-column label="状态" prop="status" align="center">
         <template #default="scope">
-          <span>{{ scope.row.status ? '开启' : '禁用' }}</span>
+          <base-tag v-model="scope.row.status" />
         </template>
       </el-table-column>
       <el-table-column label="备注" prop="remark" align="center" />
@@ -33,8 +33,8 @@
         </el-form-item>
         <el-form-item label="状态:">
           <el-radio-group v-model="form.status">
-            <el-radio :label="1">开启</el-radio>
-            <el-radio :label="0">禁用</el-radio>
+            <el-radio :label="1">正常</el-radio>
+            <el-radio :label="0">停用</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="菜单权限:">
