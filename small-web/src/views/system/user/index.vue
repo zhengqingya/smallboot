@@ -41,15 +41,6 @@
     </base-dialog>
     <base-dialog v-else v-model="dialogVisible" :title="titleMap[dialogStatus]" width="50%">
       <el-form ref="dataFormRef" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="归属部门:">
-          <base-cascader
-            v-if="dialogVisible"
-            v-model="form.deptId"
-            style="width: 100%"
-            placeholder="请选择"
-            :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true }"
-            api="sys_dept.tree" />
-        </el-form-item>
         <el-form-item label="账号:" prop="username">
           <el-input v-model="form.username" />
         </el-form-item>
@@ -72,6 +63,18 @@
         </el-form-item>
         <el-form-item label="头像:" prop="avatarUrl">
           <base-upload-single v-model="form.avatarUrl" />
+        </el-form-item>
+        <el-form-item label="归属部门:">
+          <base-cascader
+            v-if="dialogVisible"
+            v-model="form.deptId"
+            style="width: 100%"
+            placeholder="请选择"
+            :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true }"
+            api="sys_dept.tree" />
+        </el-form-item>
+        <el-form-item label="岗位:" prop="postIdList">
+          <base-select v-if="dialogVisible" v-model="form.postIdList" :option-props="{ label: 'name', value: 'id' }" api="sys_post.list" />
         </el-form-item>
       </el-form>
       <template #footer>

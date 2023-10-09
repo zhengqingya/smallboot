@@ -42,10 +42,7 @@
           <el-input v-model="form.contactPhone" />
         </el-form-item>
         <el-form-item label="租户状态:">
-          <el-radio-group v-model="form.status">
-            <el-radio :label="1">正常</el-radio>
-            <el-radio :label="0">停用</el-radio>
-          </el-radio-group>
+          <base-radio-group v-model="form.status" />
         </el-form-item>
         <el-form-item label="过期时间:">
           <el-date-picker v-model="form.expireTime" type="datetime" placeholder="请选择" format="YYYY-MM-DD hh:mm:ss" value-format="YYYY-MM-DD hh:mm:ss" />
