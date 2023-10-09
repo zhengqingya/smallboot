@@ -100,6 +100,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         user.setPhone(params.getPhone());
         user.setEmail(params.getEmail());
         user.setAvatarUrl(params.getAvatarUrl());
+        user.setDeptId(params.getDeptId());
+        user.setPostIdList(params.getPostIdList());
 
         if (userId == null) {
             user.setPassword(PasswordUtil.encodePassword(StrUtil.isBlank(password) ? AppConstant.DEFAULT_PASSWORD : password));

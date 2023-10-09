@@ -5,10 +5,13 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.zhengqing.common.core.enums.UserSexEnum;
+import com.zhengqing.common.db.config.mybatis.handler.ListIntegerTypeHandler;
 import com.zhengqing.common.db.entity.IsDeletedBaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+
+import java.util.List;
 
 /**
  * <p>
@@ -24,7 +27,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ApiModel("系统管理-用户基础信息表")
-@TableName("t_sys_user")
+@TableName(value = "t_sys_user", autoResultMap = true)
 // 对注解分组的排序，可以通脱他判断先后顺序
 // @GroupSequence({FieldRepeatValidator.class,NotNull.class, Default.class})
 // @JsonIgnoreProperties(ignoreUnknown = true)
@@ -36,7 +39,7 @@ public class SysUser extends IsDeletedBaseEntity<SysUser> {
 
     @ApiModelProperty("租户ID")
     private Integer tenantId;
-    
+
     @ApiModelProperty(value = "账号")
     private String username;
 
@@ -58,5 +61,12 @@ public class SysUser extends IsDeletedBaseEntity<SysUser> {
 
     @ApiModelProperty(value = "头像")
     private String avatarUrl;
+
+    @ApiModelProperty(value = "部门id")
+    private Integer deptId;
+
+    @ApiModelProperty(value = "岗位ids")
+    @TableField(typeHandler = ListIntegerTypeHandler.class)
+    private List<Integer> postIdList;
 
 }

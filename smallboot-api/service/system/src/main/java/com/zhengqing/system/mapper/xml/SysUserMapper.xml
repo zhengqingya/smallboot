@@ -3,7 +3,14 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhengqing.system.mapper.SysUserMapper">
 
-    <select id="selectDataList" resultType="com.zhengqing.system.model.vo.SysUserListVO">
+    <resultMap id="listMap" type="com.zhengqing.system.model.vo.SysUserListVO">
+        <result column="post_id_list"
+                property="postIdList"
+                typeHandler="com.zhengqing.common.db.config.mybatis.handler.ListIntegerTypeHandler"></result>
+    </resultMap>
+
+
+    <select id="selectDataList" resultMap="listMap">
         SELECT
         *
         FROM t_sys_user
@@ -35,6 +42,10 @@
         <result property="email" column="email"/>
         <result property="avatarUrl" column="avatar_url"/>
         <result property="createTime" column="create_time"/>
+        <result property="deptId" column="dept_id"/>
+        <result column="post_id_list"
+                property="postIdList"
+                typeHandler="com.zhengqing.common.db.config.mybatis.handler.ListIntegerTypeHandler"></result>
         <collection property="roleIdList" ofType="String" javaType="list">
             <result column="roleId"/>
         </collection>
@@ -54,6 +65,8 @@
         su.email,
         su.avatar_url,
         su.create_time,
+        su.dept_id,
+        su.post_id_list,
         sr.role_id roleId,
         sr.code roleCode
         FROM t_sys_user su

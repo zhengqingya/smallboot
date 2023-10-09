@@ -2,10 +2,12 @@ package com.zhengqing.system.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Assert;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhengqing.common.base.constant.AppConstant;
+import com.zhengqing.common.db.constant.MybatisConstant;
 import com.zhengqing.common.db.util.TenantUtil;
 import com.zhengqing.system.entity.SysTenant;
 import com.zhengqing.system.entity.SysTenantPackage;
@@ -92,10 +94,15 @@ public class SysTenantPackageServiceImpl extends ServiceImpl<SysTenantPackageMap
         List<Integer> menuIdList = params.getMenuIdList();
         List<Integer> permissionIdList = params.getPermissionIdList();
 
+        // 校验名称是否重复
+        String name = params.getName();
+        SysTenantPackage sysTenantPackageOld = this.sysTenantPackageMapper.selectOne(new LambdaQueryWrapper<SysTenantPackage>().eq(SysTenantPackage::getName, name).last(MybatisConstant.LIMIT_ONE));
+        Assert.isTrue(sysTenantPackageOld == null || sysTenantPackageOld.getId().equals(id), "名称重复，请重新输入！");
+        
         // 1、保存套餐
         SysTenantPackage sysTenantPackage = SysTenantPackage.builder()
                 .id(id)
-                .name(params.getName())
+                .name(name)
                 .status(params.getStatus())
                 .menuIdList(menuIdList)
                 .permissionIdList(permissionIdList)

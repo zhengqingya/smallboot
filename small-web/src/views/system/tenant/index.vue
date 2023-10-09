@@ -83,13 +83,8 @@ let rules = $ref({});
 function refreshTableData() {
   proxy.$refs.baseTableRef.refresh();
 }
-function handleDetail(row) {
-  form = Object.assign({}, row);
-  dialogStatus = 'detail';
-  dialogVisible = true;
-}
 function handleAdd() {
-  form = {};
+  form = { status: 1 };
   dialogStatus = 'add';
   dialogVisible = true;
 }

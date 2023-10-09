@@ -66,6 +66,13 @@ public class SysUserPermVO extends BaseVO implements HandleParam {
     @ApiModelProperty(value = "创建时间")
     private Date createTime;
 
+    @ApiModelProperty(value = "部门id")
+    private Integer deptId;
+
+    @ApiModelProperty(value = "岗位ids")
+    private List<Integer> postIdList;
+
+
     // ================= ↓↓↓↓↓↓ 角色信息 ↓↓↓↓↓↓ =================
 
     @JsonIgnore

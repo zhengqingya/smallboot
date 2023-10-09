@@ -15,6 +15,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.util.List;
 
 /**
  * <p>
@@ -71,5 +72,11 @@ public class SysUserSaveDTO extends BaseDTO {
 
     @ApiModelProperty(value = "头像")
     private String avatarUrl;
+
+    @ApiModelProperty(value = "部门id")
+    private Integer deptId;
+
+    @ApiModelProperty(value = "岗位ids")
+    private List<Integer> postIdList;
 
 }

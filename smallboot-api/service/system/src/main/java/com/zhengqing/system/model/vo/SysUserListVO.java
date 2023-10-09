@@ -3,9 +3,11 @@ package com.zhengqing.system.model.vo;
 import com.zhengqing.common.core.custom.fileprefix.FilePrefix;
 import com.zhengqing.common.core.custom.fileprefix.FilePrefixValid;
 import com.zhengqing.common.core.enums.UserSexEnum;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
 import java.util.List;
@@ -20,7 +22,9 @@ import java.util.List;
  * @date 2020/4/15 10:48
  */
 @Data
-@ApiModel
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 @FilePrefixValid
 public class SysUserListVO {
 
@@ -57,6 +61,12 @@ public class SysUserListVO {
 
     @ApiModelProperty("角色ids")
     private List<Integer> roleIdList;
+
+    @ApiModelProperty(value = "部门id")
+    private Integer deptId;
+
+    @ApiModelProperty(value = "岗位ids")
+    private List<Integer> postIdList;
 
     public void handleData() {
         this.sexName = UserSexEnum.getEnum(this.sex).getDesc();

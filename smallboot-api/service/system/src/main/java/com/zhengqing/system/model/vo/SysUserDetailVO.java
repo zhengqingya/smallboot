@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -49,6 +50,12 @@ public class SysUserDetailVO {
 
     @ApiModelProperty(value = "创建时间")
     private Date createTime;
+
+    @ApiModelProperty(value = "部门id")
+    private Integer deptId;
+
+    @ApiModelProperty(value = "岗位ids")
+    private List<Integer> postIdList;
 
     public void handleData() {
         this.sexName = UserSexEnum.getEnum(this.sex).getDesc();

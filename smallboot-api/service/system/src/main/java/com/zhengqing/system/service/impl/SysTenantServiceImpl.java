@@ -1,12 +1,14 @@
 package com.zhengqing.system.service.impl;
 
 import cn.hutool.core.lang.Assert;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
 import com.zhengqing.common.base.constant.AppConstant;
 import com.zhengqing.common.base.context.TenantIdContext;
+import com.zhengqing.common.db.constant.MybatisConstant;
 import com.zhengqing.common.db.util.TenantUtil;
 import com.zhengqing.system.entity.SysTenant;
 import com.zhengqing.system.entity.SysTenantPackage;
@@ -73,10 +75,16 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
         Integer id = params.getId();
         Assert.isFalse(AppConstant.SMALL_BOOT_TENANT_ID.equals(id), "系统租户不支持操作！");
         boolean isAdd = id == null;
+        String name = params.getName();
+
+        // 校验名称是否重复
+        SysTenant sysTenantOld = this.sysTenantMapper.selectOne(new LambdaQueryWrapper<SysTenant>().eq(SysTenant::getName, name).last(MybatisConstant.LIMIT_ONE));
+        Assert.isTrue(sysTenantOld == null || sysTenantOld.getId().equals(id), "名称重复，请重新输入！");
+
         Integer packageId = params.getPackageId();
         SysTenant sysTenant = SysTenant.builder()
                 .id(id)
-                .name(params.getName())
+                .name(name)
                 .contactName(params.getContactName())
                 .contactPhone(params.getContactPhone())
                 .status(params.getStatus())
