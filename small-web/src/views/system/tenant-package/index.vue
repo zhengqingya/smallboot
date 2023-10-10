@@ -73,7 +73,9 @@ async function getMenuTree() {
 }
 
 async function handleAdd() {
-  form = { status: 1, menuTree: await getMenuTree() };
+  let menuTree = await getMenuTree();
+  recurveMenu(menuTree, [], []);
+  form = { status: 1, menuTree: menuTree };
   dialogStatus = 'add';
   dialogVisible = true;
 }

@@ -51,7 +51,7 @@
           <el-input v-model="form.accountCount" />
         </el-form-item>
         <el-form-item label="租户套餐ID:">
-          <base-select v-model="form.packageId" :option-props="{ label: 'name', value: 'id' }" api="sys_tenant_package.list" />
+          <base-select v-if="dialogVisible" v-model="form.packageId" :option-props="{ label: 'name', value: 'id' }" api="sys_tenant_package.list" />
         </el-form-item>
 
         <el-form-item v-if="dialogStatus == 'add'" label="账号:">

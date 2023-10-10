@@ -1,5 +1,6 @@
 <template>
-  <el-select filterable v-bind="$attrs" placeholder="请选择">
+  <span v-if="label" class="label">{{ label }} &nbsp;</span>
+  <el-select filterable v-bind="$attrs" :placeholder="label ? `请选择${label}` : '请选择'">
     <template #prefix> <slot name="prefix" /></template>
     <el-option v-for="item in list" :key="item[optionProps.value]" :label="item[optionProps.label]" :value="item[optionProps.value]" />
   </el-select>
@@ -12,6 +13,8 @@ const props = defineProps({
   params: { type: Object, required: false, default: () => {} },
   // :option-props="{ label: 'name', value: 'id' }"
   optionProps: { type: Object, default: () => {} },
+  dataList: { type: Array, default: () => [] },
+  label: { type: String, default: '' },
 });
 
 let list = $ref([]);
@@ -24,6 +27,10 @@ async function init() {
   if (props.api) {
     let res = await apiMethod(props.params);
     list = res.data;
+    return;
+  }
+  if (props.dataList) {
+    list = props.dataList;
   }
 }
 

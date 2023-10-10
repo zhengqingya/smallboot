@@ -94,8 +94,6 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
                 .build();
         sysTenant.insertOrUpdate();
 
-        this.refreshTenantRePerm(sysTenant.getId());
-
         if (isAdd) {
             // 创建租户下的用户 & 分配角色权限
             TenantUtil.execute(() -> {
@@ -136,6 +134,8 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
                                 .build()
                 );
             });
+        } else {
+            this.refreshTenantRePerm(sysTenant.getId());
         }
     }
 

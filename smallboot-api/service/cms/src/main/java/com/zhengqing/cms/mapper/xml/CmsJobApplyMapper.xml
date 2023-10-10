@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhengqing.cms.mapper.CmsJobApplyMapper">
+
+    <select id="selectDataPage" resultType="com.zhengqing.cms.model.vo.CmsJobApplyPageVO">
+        SELECT
+        cja.*, cj.name jobName
+        FROM cms_job_apply cja
+        LEFT JOIN cms_job cj ON cj.id = cja.job_id
+        <where>
+            cja.is_deleted=0
+            <if test="filter.jobId!=null">
+                AND cja.job_id = #{filter.jobId}
+            </if>
+            <if test="filter.status!=null">
+                AND cja.status = #{filter.status}
+            </if>
+            <if test="filter.contact!=null and filter.contact!=''">
+                AND cja.contact LIKE CONCAT( '%', #{filter.contact} , '%' )
+            </if>
+            <if test="filter.contactPhone!=null and filter.contactPhone!=''">
+                AND cja.contact_phone LIKE CONCAT( '%', #{filter.contactPhone} , '%' )
+            </if>
+        </where>
+        ORDER BY cja.create_time DESC
+    </select>
+
+
+</mapper>

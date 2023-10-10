@@ -1,4 +1,4 @@
-package com.zhengqing.system.config;
+package com.zhengqing.cms.config;
 
 import com.zhengqing.common.db.config.mybatis.MybatisPlusConfig;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +19,7 @@ public class CmsMybatisPlusConfig {
         MybatisPlusConfig.TENANT_ID_TABLE.add("cms_job");
         MybatisPlusConfig.TENANT_ID_TABLE.add("cms_job_category");
         MybatisPlusConfig.TENANT_ID_TABLE.add("cms_job_tag");
+        MybatisPlusConfig.TENANT_ID_TABLE.add("cms_job_apply");
     }
 
 }

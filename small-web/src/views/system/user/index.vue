@@ -191,7 +191,7 @@ function submitForm() {
 }
 function handelCurrentLoginUser() {
   if (form.value.userId === userObj.value.userId) {
-    logout();
+    // logout();
   }
 }
 </script>
