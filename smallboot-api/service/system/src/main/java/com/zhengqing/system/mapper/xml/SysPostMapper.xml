@@ -8,8 +8,11 @@
         FROM t_sys_post tsp
         LEFT JOIN t_sys_dept tsd ON tsd.id = tsp.dept_id
         <where>
-            <if test="filter.deptId!=null">
-                AND tsp.dept_id = #{filter.deptId}
+            <if test="filter.deptIdList != null and filter.deptIdList.size() > 0">
+                AND tsp.dept_id IN
+                <foreach item="deptId" index="index" collection="filter.deptIdList" open="(" separator="," close=")">
+                    #{deptId}
+                </foreach>
             </if>
             <if test="filter.name!=null and filter.name!=''">
                 AND tsp.name LIKE CONCAT( '%', #{filter.name} , '%' )

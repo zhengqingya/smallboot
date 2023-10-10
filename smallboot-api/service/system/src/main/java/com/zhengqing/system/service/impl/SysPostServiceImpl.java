@@ -13,6 +13,7 @@ import com.zhengqing.system.model.dto.SysPostPageDTO;
 import com.zhengqing.system.model.dto.SysPostSaveDTO;
 import com.zhengqing.system.model.vo.SysPostListVO;
 import com.zhengqing.system.model.vo.SysPostPageVO;
+import com.zhengqing.system.service.ISysDeptService;
 import com.zhengqing.system.service.ISysPostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,9 +35,15 @@ import java.util.List;
 public class SysPostServiceImpl extends ServiceImpl<SysPostMapper, SysPost> implements ISysPostService {
 
     private final SysPostMapper sysPostMapper;
+    private final ISysDeptService iSysDeptService;
 
     @Override
     public IPage<SysPostPageVO> page(SysPostPageDTO params) {
+        Integer deptId = params.getDeptId();
+        if (deptId != null) {
+            // 拿到子级部门
+            params.setDeptIdList(this.iSysDeptService.getChildDeptIdList(deptId));
+        }
         return this.sysPostMapper.selectDataPage(new Page<>(), params);
     }
 
