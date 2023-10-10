@@ -15,14 +15,21 @@
           <el-tag v-if="scope.row.code" type="success"> {{ scope.row.code }}</el-tag>
         </template>
       </el-table-column>
+      <el-table-column prop="code" label="固定角色">
+        <template #default="scope">
+          <base-tag v-model="scope.row.isFixed" data-type="yes" />
+        </template>
+      </el-table-column>
       <el-table-column prop="sort" label="排序" />
       <el-table-column label="操作" align="center" width="250">
         <template #default="scope">
-          <el-button link @click="update(scope.row)">编辑</el-button>
-          <router-link :to="{ path: '/system/role-edit', query: { id: scope.row.roleId } }">
-            <el-button link>权限</el-button>
-          </router-link>
-          <base-delete-btn @ok="deleteData(scope.row.roleId)" />
+          <div v-if="!scope.row.isFixed">
+            <el-button link @click="update(scope.row)">编辑</el-button>
+            <router-link :to="{ path: '/system/role-edit', query: { id: scope.row.roleId } }">
+              <el-button link>权限</el-button>
+            </router-link>
+            <base-delete-btn @ok="deleteData(scope.row.roleId)" />
+          </div>
         </template>
       </el-table-column>
     </base-table-p>
@@ -77,11 +84,9 @@ function update(row) {
   dialogStatus = 'update';
 }
 function add() {
+  roleForm = { isFixed: 0, sort: 100 };
   dialogVisible = true;
   dialogStatus = 'add';
-  roleForm.roleId = null;
-  roleForm.name = '';
-  roleForm.code = '';
 }
 async function deleteData(id) {
   let res = await proxy.$api.sys_role.delete(id);

@@ -55,6 +55,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     public Integer addOrUpdateData(SysRoleSaveDTO params) {
         // 校验名称是否重复
         SysRole sysRoleOld = this.sysRoleMapper.selectOne(new LambdaQueryWrapper<SysRole>().eq(SysRole::getName, params.getName()).last(MybatisConstant.LIMIT_ONE));
+        Assert.isTrue(sysRoleOld == null || !sysRoleOld.getIsFixed(), "您没有权限操作固定角色！");
         Assert.isTrue(sysRoleOld == null || sysRoleOld.getRoleId().equals(params.getRoleId()), "名称重复，请重新输入！");
 
         SysRole sysRole = SysRole.builder()
