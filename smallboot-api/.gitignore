@@ -16,3 +16,6 @@ target/
 logs
 docker/*.jar
 #tmp
+tmp/assets
+tmp/index.html
+tmp/vite.svg

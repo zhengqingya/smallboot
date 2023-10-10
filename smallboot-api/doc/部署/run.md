@@ -38,6 +38,8 @@ docker exec -it redis redis-cli -a 123456
 
 ### Nginx
 
+前端部署访问后端接口需配置 [nginx.conf](./nginx/conf/nginx.conf) 中的 `/prod-api/`
+
 ```shell
 # nginx修改配置后重载
 nginx -s reload
