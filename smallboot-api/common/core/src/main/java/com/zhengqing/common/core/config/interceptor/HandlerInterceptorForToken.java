@@ -9,6 +9,7 @@ import com.zhengqing.common.auth.config.SaTokenProperty;
 import com.zhengqing.common.base.constant.SecurityConstant;
 import com.zhengqing.common.base.context.JwtUserContext;
 import com.zhengqing.common.base.context.SysUserContext;
+import com.zhengqing.common.base.context.TenantIdContext;
 import com.zhengqing.common.base.context.UmsUserContext;
 import com.zhengqing.common.base.enums.ApiResultCodeEnum;
 import com.zhengqing.common.base.exception.MyException;
@@ -133,7 +134,7 @@ public class HandlerInterceptorForToken implements HandlerInterceptor {
          * [URL-角色集合]
          * [{'key':'GET:/web/api/user/*','value':['ADMIN','TEST']},...]
          */
-        Map<Object, Object> urlPermReRoleMap = RedisUtil.hGetAll(SecurityConstant.URL_PERM_RE_ROLES);
+        Map<Object, Object> urlPermReRoleMap = RedisUtil.hGetAll(SecurityConstant.URL_PERM_RE_ROLES + TenantIdContext.getTenantId());
 
         // 根据请求路径获取有访问权限的角色列表
         List<String> authorizedRoleList = Lists.newLinkedList();

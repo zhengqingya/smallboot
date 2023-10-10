@@ -1,37 +1,52 @@
 <template>
-  <base-wrapper>
-    <base-header>
-      <base-input v-model="listQuery.username" label="账号" @clear="refreshTableData" />
-      <base-input v-model="listQuery.nickname" label="名称" @clear="refreshTableData" />
-      <el-button type="primary" @click="refreshTableData">查询</el-button>
-      <template #right>
-        <el-button v-has-perm="'sys:user:add'" type="primary" @click="handleCreate">添加</el-button>
-      </template>
-    </base-header>
+  <base-wrapper class="flex">
+    <base-card title="组织架构" style="width: 200px">
+      <el-tree
+        :data="deptTreeData"
+        :props="{
+          children: 'children',
+          label: 'name',
+        }"
+        highlight-current
+        default-expand-all
+        :expand-on-click-node="false"
+        @node-click="handleNodeClick" />
+    </base-card>
 
-    <base-table-p ref="baseTableRef" api="sys_user.listPage" :params="listQuery">
-      <el-table-column :show-overflow-tooltip="true" prop="username" label="用户账号" />
-      <el-table-column prop="nickname" label="用户名称" />
-      <el-table-column prop="sexName" label="性别" />
-      <el-table-column prop="phone" label="手机号码" />
-      <el-table-column prop="email" label="邮箱" />
-      <el-table-column label="头像" prop="avatarUrl" align="center">
-        <template #default="scope">
-          <span>
-            <img :src="scope.row.avatarUrl" alt="" class="img-sm" />
-          </span>
+    <base-card title="用户管理" class="flex-1">
+      <base-header>
+        <base-cascader v-model="listQuery.deptId" clearable label="部门" :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true, emitPath: false }" api="sys_dept.tree" />
+        <base-input v-model="listQuery.username" label="账号" @clear="refreshTableData" />
+        <base-input v-model="listQuery.nickname" label="名称" @clear="refreshTableData" />
+        <el-button type="primary" @click="refreshTableData">查询</el-button>
+        <template #right>
+          <el-button v-has-perm="'sys:user:add'" type="primary" @click="handleCreate">添加</el-button>
         </template>
-      </el-table-column>
-      <el-table-column label="操作" align="center" width="230">
-        <template #default="scope">
-          <el-button link @click="handleUpdate(scope.row, 'update')">编辑</el-button>
-          <el-button v-if="scope.row.userId != 1" link @click="handleUpdate(scope.row, 'role')">角色权限</el-button>
-          <base-delete-btn v-if="scope.row.userId != 1" @ok="deleteData(scope.row.userId)" />
-          <el-button link @click="updatePwd(scope.row)">更新密码</el-button>
-        </template>
-      </el-table-column>
-    </base-table-p>
+      </base-header>
 
+      <base-table-p ref="baseTableRef" api="sys_user.listPage" :params="listQuery">
+        <el-table-column :show-overflow-tooltip="true" prop="username" label="用户账号" />
+        <el-table-column prop="nickname" label="用户名称" />
+        <el-table-column prop="sexName" label="性别" />
+        <el-table-column prop="phone" label="手机号码" />
+        <el-table-column prop="email" label="邮箱" />
+        <el-table-column label="头像" prop="avatarUrl" align="center">
+          <template #default="scope">
+            <span>
+              <img :src="scope.row.avatarUrl" alt="" class="img-sm" />
+            </span>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" align="center" width="230">
+          <template #default="scope">
+            <el-button link @click="handleUpdate(scope.row, 'update')">编辑</el-button>
+            <el-button v-if="scope.row.userId != 1" link @click="handleUpdate(scope.row, 'role')">角色权限</el-button>
+            <base-delete-btn v-if="scope.row.userId != 1" @ok="deleteData(scope.row.userId)" />
+            <el-button link @click="updatePwd(scope.row)">更新密码</el-button>
+          </template>
+        </el-table-column>
+      </base-table-p>
+    </base-card>
     <base-dialog v-if="dialogStatus === 'updatePwd'" v-model="dialogVisible" :title="titleMap[dialogStatus]" width="30%">
       <el-input v-model="newPassword" />
       <template #footer>
@@ -110,13 +125,26 @@ let rules = ref({
   pwd: [{ pattern: /^(\w){6,16}$/, message: '请设置6-16位字母、数字组合' }],
   nickname: [{ required: true, message: '请输入你昵称', trigger: 'blur' }],
 });
+let deptTreeData = ref([]);
+
+onMounted(() => {
+  init();
+});
+
+async function init() {
+  let res = await proxy.$api.sys_dept.tree();
+  deptTreeData.value = res.data;
+}
+function handleNodeClick(data) {
+  listQuery.value.deptId = data.id;
+  refreshTableData();
+}
 
 async function refreshTableData() {
   proxy.$refs.baseTableRef.refresh();
 }
 function handleCreate() {
-  form.value = {};
-  form.value.sex = 0;
+  form.value = { sex: 0, deptId: listQuery.value.deptId };
   dialogStatus.value = 'add';
   dialogVisible.value = true;
 }

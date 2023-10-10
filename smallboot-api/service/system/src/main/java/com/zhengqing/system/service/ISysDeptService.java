@@ -28,6 +28,16 @@ public interface ISysDeptService extends IService<SysDept> {
     List<SysDeptTreeVO> tree(SysDeptTreeDTO params);
 
     /**
+     * 获取指定部门下的子级部门（包含当前部门）
+     *
+     * @param deptId 部门id
+     * @return 查询结果
+     * @author zhengqingya
+     * @date 2023/10/09 18:10
+     */
+    List<Integer> getChildDeptIdList(Integer deptId);
+
+    /**
      * 新增或更新
      *
      * @param params 保存参数

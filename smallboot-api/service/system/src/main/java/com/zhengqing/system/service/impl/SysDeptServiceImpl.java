@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.google.common.collect.Lists;
 import com.zhengqing.common.db.constant.MybatisConstant;
 import com.zhengqing.system.entity.SysDept;
 import com.zhengqing.system.mapper.SysDeptMapper;
@@ -13,7 +14,6 @@ import com.zhengqing.system.model.vo.SysDeptTreeVO;
 import com.zhengqing.system.service.ISysDeptService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.compress.utils.Lists;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -66,6 +66,33 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
             item.handleData();
         });
         return childList;
+    }
+
+    @Override
+    public List<Integer> getChildDeptIdList(Integer deptId) {
+        return this.recurveDeptId(deptId, this.list(), Lists.newArrayList());
+    }
+
+    /**
+     * 递归部门
+     *
+     * @param parentId   父id
+     * @param allList    所有部门
+     * @param deptIdList 最终结果
+     * @return 菜单树列表
+     * @author zhengqingya
+     * @date 2020/9/10 20:56
+     */
+    private List<Integer> recurveDeptId(Integer parentId, List<SysDept> allList, List<Integer> deptIdList) {
+        deptIdList.add(parentId);
+        List<SysDept> childList = allList.stream().filter(e -> e.getParentId().equals(parentId)).collect(Collectors.toList());
+        if (CollUtil.isEmpty(childList)) {
+            return deptIdList;
+        }
+        for (SysDept item : childList) {
+            this.recurveDeptId(item.getId(), allList, deptIdList);
+        }
+        return deptIdList;
     }
 
     @Override

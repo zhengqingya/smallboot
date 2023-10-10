@@ -1,7 +1,20 @@
 <template>
-  <div class="menu">
+  <div
+    class="app"
+    :style="{
+      'background-color': menuType === 1 ? '#304156' : '#fff',
+    }">
     <h1 style="width: 200px" class="flex-center-center p-y-10 text-color-primary">SmallBoot</h1>
-    <el-menu v-if="menuType === 1" router :default-active="$route.meta.fullPath" :collapse="false" :unique-opened="true" @select="handleSelect">
+    <el-menu
+      v-if="menuType === 1"
+      background-color="#304156"
+      text-color="hsla(0,0%,100%,.65)"
+      active-text-color="#409EFF"
+      router
+      :default-active="$route.meta.fullPath"
+      :collapse="false"
+      :unique-opened="true"
+      @select="handleSelect">
       <el-scrollbar>
         <sidebar-item :router-list="routerList" />
       </el-scrollbar>
@@ -58,7 +71,11 @@ function handleSelect(index, indexPath, item, routeResult) {
 </script>
 
 <style lang="scss" scoped>
-.menu {
+.app {
   box-shadow: 1px 0 5px rgba(0, 0, 0, 0.2);
+}
+
+::v-deep(.el-menu) {
+  // --el-menu-bg-color: rgb(38, 52, 69) !important;
 }
 </style>

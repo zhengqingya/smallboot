@@ -15,6 +15,12 @@
         *
         FROM t_sys_user
         <where>
+            <if test="filter.deptIdList != null and filter.deptIdList.size() > 0">
+                AND dept_id IN
+                <foreach item="deptId" index="index" collection="filter.deptIdList" open="(" separator="," close=")">
+                    #{deptId}
+                </foreach>
+            </if>
             <if test="filter.username!=null and filter.username!=''">
                 AND username LIKE CONCAT( '%', #{filter.username} , '%' )
             </if>

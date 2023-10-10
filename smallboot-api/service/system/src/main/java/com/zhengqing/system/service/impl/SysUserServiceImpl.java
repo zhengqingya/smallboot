@@ -20,6 +20,7 @@ import com.zhengqing.system.model.dto.SysUserUpdatePasswordDTO;
 import com.zhengqing.system.model.vo.SysUserDetailVO;
 import com.zhengqing.system.model.vo.SysUserListVO;
 import com.zhengqing.system.model.vo.SysUserPermVO;
+import com.zhengqing.system.service.ISysDeptService;
 import com.zhengqing.system.service.ISysUserRoleService;
 import com.zhengqing.system.service.ISysUserService;
 import com.zhengqing.system.util.PasswordUtil;
@@ -50,9 +51,15 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     private final SysUserMapper sysUserMapper;
     private final ISysUserRoleService iSysUserRoleService;
+    private final ISysDeptService iSysDeptService;
 
     @Override
     public IPage<SysUserListVO> listPage(SysUserListDTO params) {
+        Integer deptId = params.getDeptId();
+        if (deptId != null) {
+            // 拿到子级部门
+            params.setDeptIdList(this.iSysDeptService.getChildDeptIdList(deptId));
+        }
         IPage<SysUserListVO> result = this.sysUserMapper.selectDataList(new Page<>(), params);
         this.handleUserList(result.getRecords());
         return result;

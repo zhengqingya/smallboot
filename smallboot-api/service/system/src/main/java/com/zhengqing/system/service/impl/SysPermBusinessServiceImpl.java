@@ -8,8 +8,10 @@ import com.google.common.collect.Maps;
 import com.zhengqing.common.base.constant.AppConstant;
 import com.zhengqing.common.base.constant.SecurityConstant;
 import com.zhengqing.common.base.context.TenantIdContext;
+import com.zhengqing.common.db.util.TenantUtil;
 import com.zhengqing.common.redis.util.RedisUtil;
 import com.zhengqing.system.entity.SysRole;
+import com.zhengqing.system.entity.SysTenant;
 import com.zhengqing.system.entity.SysTenantPackage;
 import com.zhengqing.system.enums.SysRoleCodeEnum;
 import com.zhengqing.system.model.bo.SysMenuTree;
@@ -132,19 +134,29 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void refreshRedisPerm() {
-        // 1、先删除缓存
-        RedisUtil.delete(SecurityConstant.URL_PERM_RE_ROLES);
-
-        // 2、查询角色关联权限数据
-        List<SysRoleRePermListVO> roleRePermList = this.iSysPermissionService.listRoleRePerm();
-        if (CollectionUtils.isEmpty(roleRePermList)) {
+        // 查询租户
+        List<SysTenant> tenantList = this.iSysTenantService.list();
+        if (CollUtil.isEmpty(tenantList)) {
             return;
         }
-        Map<String, String> roleReUrlPermMap = Maps.newHashMap();
-        roleRePermList.forEach(item -> roleReUrlPermMap.put(item.getUrlPerm(), JSON.toJSONString(item.getRoleCodeList())));
 
-        // 3、加入缓存中
-        RedisUtil.hPutAll(SecurityConstant.URL_PERM_RE_ROLES, roleReUrlPermMap);
+        TenantUtil.execute(() -> tenantList.forEach(e -> {
+            String redisKey = SecurityConstant.URL_PERM_RE_ROLES + e.getId();
+            // 1、先删除缓存
+            RedisUtil.delete(redisKey);
+
+            // 2、查询角色关联权限数据
+            List<SysRoleRePermListVO> roleRePermList = this.iSysPermissionService.listRoleRePerm();
+            if (CollectionUtils.isEmpty(roleRePermList)) {
+                return;
+            }
+            Map<String, String> roleReUrlPermMap = Maps.newHashMap();
+            roleRePermList.forEach(item -> roleReUrlPermMap.put(item.getUrlPerm(), JSON.toJSONString(item.getRoleCodeList())));
+
+            // 3、加入缓存中
+            RedisUtil.hPutAll(redisKey, roleReUrlPermMap);
+        }));
+        
         log.info("初始化URL权限缓存成功!");
     }
 

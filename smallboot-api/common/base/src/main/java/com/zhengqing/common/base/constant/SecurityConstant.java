@@ -67,7 +67,7 @@ public interface SecurityConstant {
      * url权限关联角色
      * [ {接口路径:[角色编码]},...]
      */
-    String URL_PERM_RE_ROLES = "smallboot:system:perm_rule:url";
+    String URL_PERM_RE_ROLES = "smallboot:system:perm_rule:url:";
 
     /**
      * 验证码
