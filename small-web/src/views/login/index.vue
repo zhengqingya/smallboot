@@ -1,11 +1,15 @@
 <template>
   <base-wrapper class="bg-color-primary flex-center-center">
     <div class="flex-c-center-center bg-color-white" style="height: 400px; width: 500px; border-radius: 10px">
-      <h1 class="font-size-lg">SmallBoot</h1>
+      <h1 class="font-size-lg">SmallBoot多租户管理系统</h1>
       <div class="m-t-20">
         <el-form ref="loginFormRef" :model="loginForm" :rules="loginRules">
           <el-form-item prop="tenantId">
-            <base-select v-model="loginForm.tenantId" placeholder="请选择租户" :option-props="{ label: 'name', value: 'id' }" api="sys_tenant.list" />
+            <base-select v-model="loginForm.tenantId" placeholder="请选择租户" :option-props="{ label: 'name', value: 'id' }" api="sys_tenant.list">
+              <template #prefix>
+                <el-icon> <OfficeBuilding /> </el-icon>
+              </template>
+            </base-select>
             <!-- <el-input v-model="loginForm.tenantName" prefix-icon="House" placeholder="请输入租户名称" maxlength="30" /> -->
           </el-form-item>
           <el-form-item prop="username">

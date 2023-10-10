@@ -32,6 +32,9 @@ public class SysPostSaveDTO extends BaseDTO {
     @NotNull(groups = {UpdateGroup.class}, message = "主键ID不能为空!")
     private Integer id;
 
+    @ApiModelProperty(value = "部门id")
+    private Integer deptId;
+
     @NotBlank(message = "岗位名称不能为空！")
     @ApiModelProperty("岗位名称")
     private String name;

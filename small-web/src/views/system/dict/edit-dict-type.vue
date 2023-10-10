@@ -7,10 +7,8 @@
       <el-form-item label="字典类型编码：">
         <el-input v-model="form.code" :disabled="form.id" placeholder="输入字典类型编码" />
       </el-form-item>
-      <el-form-item label="是否启用：">
-        <el-select v-model="form.status" placeholder="请选择" style="width: 280px">
-          <el-option v-for="item in statusList" :key="item.value" :label="item.name" :value="item.value" />
-        </el-select>
+      <el-form-item label="状态：">
+        <base-radio-group v-model="form.status" />
       </el-form-item>
     </el-form>
     <template #footer>
@@ -21,10 +19,6 @@
 </template>
 <script setup>
 const { proxy } = getCurrentInstance();
-let statusList = [
-  { value: 1, name: '启用' },
-  { value: 0, name: '禁用' },
-];
 let dialogVisible = $ref(false);
 let form = $ref({});
 let dialogStatus = $ref('');

@@ -1,5 +1,6 @@
 <template>
-  <el-select v-bind="$attrs" placeholder="请选择">
+  <el-select filterable v-bind="$attrs" placeholder="请选择">
+    <template #prefix> <slot name="prefix" /></template>
     <el-option v-for="item in list" :key="item[optionProps.value]" :label="item[optionProps.label]" :value="item[optionProps.value]" />
   </el-select>
 </template>

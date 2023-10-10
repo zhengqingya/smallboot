@@ -4,14 +4,18 @@
 
     <select id="selectDataPage" resultType="com.zhengqing.system.model.vo.SysPostPageVO">
         SELECT
-        *
-        FROM t_sys_post
+        tsp.*, tsd.name deptName
+        FROM t_sys_post tsp
+        LEFT JOIN t_sys_dept tsd ON tsd.id = tsp.dept_id
         <where>
+            <if test="filter.deptId!=null">
+                AND tsp.dept_id = #{filter.deptId}
+            </if>
             <if test="filter.name!=null and filter.name!=''">
-                AND name LIKE CONCAT( '%', #{filter.name} , '%' )
+                AND tsp.name LIKE CONCAT( '%', #{filter.name} , '%' )
             </if>
         </where>
-        ORDER BY sort ASC, create_time DESC
+        ORDER BY tsp.sort ASC, tsp.create_time DESC
     </select>
 
     <select id="selectDataList" resultType="com.zhengqing.system.model.vo.SysPostListVO">
@@ -20,6 +24,9 @@
         FROM t_sys_post
         <where>
             status=1
+            <if test="filter.deptId!=null">
+                AND dept_id = #{filter.deptId}
+            </if>
             <if test="filter.name!=null and filter.name!=''">
                 AND name LIKE CONCAT( '%', #{filter.name} , '%' )
             </if>

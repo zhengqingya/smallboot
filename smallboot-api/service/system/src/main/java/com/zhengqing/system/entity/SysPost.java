@@ -1,8 +1,6 @@
 package com.zhengqing.system.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import com.zhengqing.common.db.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -30,6 +28,13 @@ public class SysPost extends BaseEntity<SysPost> {
 
     @ApiModelProperty("租户ID")
     private Integer tenantId;
+
+    /**
+     * 值为空时，MP更新数据库时不忽略此字段值
+     */
+    @TableField(updateStrategy = FieldStrategy.IGNORED)
+    @ApiModelProperty(value = "部门id")
+    private Integer deptId;
 
     @ApiModelProperty("岗位名称")
     private String name;

@@ -29,8 +29,11 @@ public class SysPostPageVO extends BaseVO {
     @ApiModelProperty("主键ID")
     private Integer id;
 
-    @ApiModelProperty("租户ID")
-    private Integer tenantId;
+    @ApiModelProperty(value = "部门id")
+    private Integer deptId;
+
+    @ApiModelProperty(value = "部门名称")
+    private String deptName;
 
     @ApiModelProperty("岗位名称")
     private String name;

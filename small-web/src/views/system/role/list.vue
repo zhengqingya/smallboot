@@ -10,7 +10,11 @@
 
     <base-table-p ref="baseTableRef" api="sys_role.listPage" :params="listQuery">
       <el-table-column prop="name" label="角色名" />
-      <el-table-column prop="code" label="角色编码" />
+      <el-table-column prop="code" label="角色编码">
+        <template #default="scope">
+          <el-tag v-if="scope.row.code" type="success"> {{ scope.row.code }}</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column prop="sort" label="排序" />
       <el-table-column label="操作" align="center" width="250">
         <template #default="scope">

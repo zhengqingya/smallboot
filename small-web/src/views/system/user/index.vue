@@ -68,13 +68,14 @@
           <base-cascader
             v-if="dialogVisible"
             v-model="form.deptId"
+            clearable
             style="width: 100%"
             placeholder="请选择"
-            :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true }"
+            :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true, emitPath: false }"
             api="sys_dept.tree" />
         </el-form-item>
         <el-form-item label="岗位:" prop="postIdList">
-          <base-select v-if="dialogVisible" v-model="form.postIdList" :option-props="{ label: 'name', value: 'id' }" api="sys_post.list" />
+          <base-select v-if="dialogVisible" v-model="form.postIdList" tag-type="success" style="width: 100%" multiple clearable :option-props="{ label: 'name', value: 'id' }" api="sys_post.list" />
         </el-form-item>
       </el-form>
       <template #footer>

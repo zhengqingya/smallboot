@@ -27,7 +27,7 @@
           <base-cell label-width="100px">
             <base-cell-item label="字典类型名称">{{ selectedDictTypeData.name }}</base-cell-item>
             <base-cell-item label="字典类型编码">{{ selectedDictTypeData.code }}</base-cell-item>
-            <base-cell-item label="字典类型状态">{{ selectedDictTypeData.status == 1 ? '启用' : '停用' }}</base-cell-item>
+            <base-cell-item label="字典类型状态"><base-tag v-model="selectedDictTypeData.status" /> </base-cell-item>
           </base-cell>
         </base-card>
 

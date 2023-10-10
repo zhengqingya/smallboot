@@ -24,8 +24,10 @@ import lombok.experimental.SuperBuilder;
 @ApiModel("系统管理-岗位-分页列表-请求参数")
 public class SysPostPageDTO extends BaseDTO {
 
+    @ApiModelProperty(value = "部门id")
+    private Integer deptId;
+
     @ApiModelProperty("岗位名称")
     private String name;
-
 
 }

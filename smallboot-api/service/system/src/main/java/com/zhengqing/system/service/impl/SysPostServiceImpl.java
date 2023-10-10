@@ -57,6 +57,7 @@ public class SysPostServiceImpl extends ServiceImpl<SysPostMapper, SysPost> impl
 
         SysPost.builder()
                 .id(id)
+                .deptId(params.getDeptId())
                 .name(name)
                 .code(params.getCode())
                 .status(params.getStatus())

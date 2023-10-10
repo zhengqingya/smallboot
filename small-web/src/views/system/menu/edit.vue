@@ -62,7 +62,7 @@ let form = $ref({});
 let rules = {
   title: [{ required: true, message: '菜单标题不得为空', trigger: 'blur' }],
   path: [{ required: true, message: '菜单链接不得为空', trigger: 'blur' }],
-  component: [{ required: true, message: '菜单文件路径不得为空', trigger: 'blur' }],
+  // component: [{ required: true, message: '菜单文件路径不得为空', trigger: 'blur' }],
 };
 
 // 暴露方法

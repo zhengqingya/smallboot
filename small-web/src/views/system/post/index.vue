@@ -1,6 +1,13 @@
 <template>
   <base-wrapper>
     <base-header>
+      <base-cascader
+        v-model="listQuery.deptId"
+        style="margin-right: 10px"
+        clearable
+        label="部门"
+        :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true, emitPath: false }"
+        api="sys_dept.tree" />
       <base-input v-model="listQuery.name" label="岗位名称" @clear="refreshTableData" />
       <el-button type="primary" @click="refreshTableData">查询</el-button>
       <template #right>
@@ -10,6 +17,7 @@
 
     <base-table-p ref="baseTableRef" api="sys_post.page" :params="listQuery">
       <el-table-column label="ID" prop="id" align="center" />
+      <el-table-column label="归属部门" prop="deptName" align="center" />
       <el-table-column label="岗位名称" prop="name" align="center" />
       <el-table-column label="岗位编码" prop="code" align="center" />
       <el-table-column label="排序" prop="sort" align="center" />
@@ -30,6 +38,9 @@
 
     <base-dialog v-model="dialogVisible" :title="dialogTitleObj[dialogStatus]" width="30%">
       <el-form ref="dataFormRef" :model="form" label-width="100px">
+        <el-form-item label="归属部门:">
+          <base-cascader v-model="form.deptId" style="width: 100%" clearable :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true, emitPath: false }" api="sys_dept.tree" />
+        </el-form-item>
         <el-form-item label="岗位名称:">
           <el-input v-model="form.name" />
         </el-form-item>
