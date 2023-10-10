@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhengqing.cms.mapper.CmsJobMapper">
+
+    <resultMap id="pageMap" type="com.zhengqing.cms.model.vo.CmsJobPageVO">
+        <result column="tag_list"
+                property="tagList"
+                typeHandler="com.zhengqing.common.db.config.mybatis.handler.ListIntegerTypeHandler"></result>
+    </resultMap>
+
+    <select id="selectDataPage" resultMap="pageMap">
+        SELECT
+        cj.*, tsd.name deptName, tsp.name postName, cjc.name categroyName
+        FROM cms_job cj
+        LEFT JOIN t_sys_dept tsd ON tsd.id = cj.dept_id
+        LEFT JOIN t_sys_post tsp ON tsp.id = cj.post_id
+        LEFT JOIN cms_job_category cjc ON cjc.id = cj.category_id
+        <where>
+            cj.is_deleted=0
+            <if test="filter.deptId!=null">
+                AND cj.dept_id = #{filter.deptId}
+            </if>
+            <if test="filter.postId!=null">
+                AND cj.post_id = #{filter.postId}
+            </if>
+            <if test="filter.name!=null and filter.name!=''">
+                AND cj.name LIKE CONCAT( '%', #{filter.name} , '%' )
+            </if>
+            <if test="filter.categoryId!=null">
+                AND cj.category_id = #{filter.categoryId}
+            </if>
+        </where>
+        ORDER BY cj.sort ASC, cj.create_time DESC
+    </select>
+
+
+</mapper>

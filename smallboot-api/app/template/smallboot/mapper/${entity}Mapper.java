@@ -30,7 +30,7 @@ public interface ${entity}Mapper extends BaseMapper<${entity}> {
      * @author ${author}
      * @date ${date}
      */
-    IPage<${entity}PageVO> selectDataPage(IPage page, @Param("filter") ${entity}PageDTO filter);
+    IPage<${entity}PageVO> selectDataPage(IPage<${entity}PageVO> page, @Param("filter") ${entity}PageDTO filter);
 
     /**
      * 详情
