@@ -35,3 +35,10 @@ docker-compose -p smallboot up -d web
 # 连接redis
 docker exec -it redis redis-cli -a 123456
 ```
+
+### Nginx
+
+```shell
+# nginx修改配置后重载
+nginx -s reload
+```
