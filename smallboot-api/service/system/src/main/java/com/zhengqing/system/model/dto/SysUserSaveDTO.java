@@ -78,4 +78,7 @@ public class SysUserSaveDTO extends BaseDTO {
     @ApiModelProperty(value = "岗位ids")
     private List<Integer> postIdList;
 
+    @ApiModelProperty("角色ids")
+    private List<Integer> roleIdList;
+
 }

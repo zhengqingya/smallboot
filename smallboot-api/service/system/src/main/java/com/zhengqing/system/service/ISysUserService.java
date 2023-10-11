@@ -7,7 +7,6 @@ import com.zhengqing.system.model.dto.SysUserListDTO;
 import com.zhengqing.system.model.dto.SysUserPermDTO;
 import com.zhengqing.system.model.dto.SysUserSaveDTO;
 import com.zhengqing.system.model.dto.SysUserUpdatePasswordDTO;
-import com.zhengqing.system.model.vo.SysUserDetailVO;
 import com.zhengqing.system.model.vo.SysUserListVO;
 import com.zhengqing.system.model.vo.SysUserPermVO;
 
@@ -52,7 +51,7 @@ public interface ISysUserService extends IService<SysUser> {
      * @author zhengqingya
      * @date 2020/9/10 10:53
      */
-    SysUserDetailVO detail(Integer userId);
+    SysUser detail(Integer userId);
 
     /**
      * 新增或更新
@@ -83,17 +82,6 @@ public interface ISysUserService extends IService<SysUser> {
      * @date 2020/9/10 11:03
      */
     void updatePassword(SysUserUpdatePasswordDTO params);
-
-    /**
-     * 重置用户密码
-     *
-     * @param userId   用户ID
-     * @param password 密码
-     * @return void
-     * @author zhengqingya
-     * @date 2020/9/10 11:03
-     */
-    void resetPassword(Integer userId, String password);
 
     /**
      * 获取用户的基本信息+角色编码

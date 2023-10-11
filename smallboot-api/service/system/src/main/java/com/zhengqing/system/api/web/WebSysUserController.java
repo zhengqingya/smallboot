@@ -6,10 +6,8 @@ import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.common.core.custom.repeatsubmit.NoRepeatSubmit;
 import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
 import com.zhengqing.system.model.dto.SysUserListDTO;
-import com.zhengqing.system.model.dto.SysUserRoleSaveDTO;
 import com.zhengqing.system.model.dto.SysUserSaveDTO;
 import com.zhengqing.system.model.dto.SysUserUpdatePasswordDTO;
-import com.zhengqing.system.model.vo.SysUserDetailVO;
 import com.zhengqing.system.model.vo.SysUserListVO;
 import com.zhengqing.system.service.ISysUserRoleService;
 import com.zhengqing.system.service.ISysUserService;
@@ -74,28 +72,10 @@ public class WebSysUserController extends BaseController {
         this.iSysUserService.deleteUser(userId);
     }
 
-    @GetMapping("")
-    @ApiOperation("详情")
-    public SysUserDetailVO detail(@RequestParam Integer userId) {
-        return this.iSysUserService.detail(userId);
-    }
-
     @PutMapping("updatePassword")
     @ApiOperation("修改用户密码")
     public void updatePassword(@RequestBody @Valid SysUserUpdatePasswordDTO params) {
         this.iSysUserService.updatePassword(params);
-    }
-
-    @GetMapping("resetPassword")
-    @ApiOperation("重置用户密码")
-    public void resetPassword(@RequestParam Integer userId, @RequestParam(required = false) String password) {
-        this.iSysUserService.resetPassword(userId, password);
-    }
-
-    @PostMapping("saveRoleIds")
-    @ApiOperation("保存用户角色ids")
-    public void saveRoleIds(@Validated @RequestBody SysUserRoleSaveDTO params) {
-        this.iSysUserRoleService.addOrUpdateData(params);
     }
 
 }

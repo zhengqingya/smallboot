@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.system.entity.SysUser;
 import com.zhengqing.system.model.dto.SysUserListDTO;
 import com.zhengqing.system.model.dto.SysUserPermDTO;
-import com.zhengqing.system.model.vo.SysUserDetailVO;
 import com.zhengqing.system.model.vo.SysUserListVO;
 import com.zhengqing.system.model.vo.SysUserPermVO;
 import org.apache.ibatis.annotations.Param;
@@ -43,16 +42,6 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
      * @date 2020/9/10 10:34
      */
     List<SysUserListVO> selectDataList(@Param("filter") SysUserListDTO filter);
-
-    /**
-     * 根据用户id查询用户信息
-     *
-     * @param userId 用户id
-     * @return 用户信息
-     * @author zhengqingya
-     * @date 2020/9/10 10:49
-     */
-    SysUserDetailVO detail(@Param("userId") Integer userId);
 
     /**
      * 查询用户信息

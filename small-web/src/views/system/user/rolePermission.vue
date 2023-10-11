@@ -43,7 +43,7 @@ async function open(data) {
 }
 
 async function submitRoleForm() {
-  let res = await proxy.$api.sys_user.saveRoleIds(userForm.value);
+  let res = await proxy.$api.sys_user.update(userForm.value);
   proxy.$emit('save-succ');
   dialogRoleVisible.value = false;
   proxy.submitOk(res.msg);

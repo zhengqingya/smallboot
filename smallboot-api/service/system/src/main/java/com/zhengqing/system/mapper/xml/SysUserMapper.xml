@@ -9,7 +9,6 @@
                 typeHandler="com.zhengqing.common.db.config.mybatis.handler.ListIntegerTypeHandler"></result>
     </resultMap>
 
-
     <select id="selectDataList" resultMap="listMap">
         SELECT
         *
@@ -29,13 +28,6 @@
             </if>
         </where>
         ORDER BY user_id DESC
-    </select>
-
-    <select id="detail" resultType="com.zhengqing.system.model.vo.SysUserDetailVO">
-        SELECT *
-        FROM t_sys_user
-        WHERE is_deleted = 0
-          AND user_id = #{userId}
     </select>
 
     <resultMap id="selectUserPerm" type="com.zhengqing.system.model.vo.SysUserPermVO">

@@ -68,6 +68,9 @@ public class SysUserListVO {
     @ApiModelProperty(value = "岗位ids")
     private List<Integer> postIdList;
 
+    @ApiModelProperty(value = "是否固定(false->否 true->是)")
+    private Boolean isFixed;
+
     public void handleData() {
         this.sexName = UserSexEnum.getEnum(this.sex).getDesc();
     }

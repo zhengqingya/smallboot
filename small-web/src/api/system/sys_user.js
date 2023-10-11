@@ -96,14 +96,6 @@ export default {
       },
     });
   },
-  // 保存用户角色
-  saveRoleIds(data) {
-    return request({
-      url: BASE_API + '/saveRoleIds',
-      method: 'post',
-      data: data,
-    });
-  },
   // 修改密码
   updatePassword(data) {
     return request({

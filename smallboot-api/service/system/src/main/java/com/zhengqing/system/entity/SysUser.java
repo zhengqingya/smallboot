@@ -69,4 +69,7 @@ public class SysUser extends IsDeletedBaseEntity<SysUser> {
     @TableField(typeHandler = ListIntegerTypeHandler.class)
     private List<Integer> postIdList;
 
+    @ApiModelProperty(value = "是否固定(false->否 true->是)")
+    private Boolean isFixed;
+
 }

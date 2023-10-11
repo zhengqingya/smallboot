@@ -119,20 +119,13 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
                 );
 
                 // 创建用户
-                Integer userId = this.iSysUserService.addOrUpdateData(SysUserSaveDTO.builder()
+                this.iSysUserService.addOrUpdateData(SysUserSaveDTO.builder()
                         .username(params.getUsername())
                         .nickname(params.getUsername())
                         .password(params.getPassword())
                         .phone(params.getContactPhone())
+                        .roleIdList(Lists.newArrayList(roleId))
                         .build());
-
-                // 绑定角色信息
-                this.iSysUserRoleService.addOrUpdateData(
-                        SysUserRoleSaveDTO.builder()
-                                .userId(userId)
-                                .roleIdList(Lists.newArrayList(roleId))
-                                .build()
-                );
             });
         } else {
             this.refreshTenantRePerm(sysTenant.getId());

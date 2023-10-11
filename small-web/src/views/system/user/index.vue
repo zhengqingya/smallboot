@@ -40,8 +40,8 @@
         <el-table-column label="操作" align="center" width="230">
           <template #default="scope">
             <el-button link @click="handleUpdate(scope.row, 'update')">编辑</el-button>
-            <el-button v-if="scope.row.userId != 1" link @click="handleUpdate(scope.row, 'role')">角色权限</el-button>
-            <base-delete-btn v-if="scope.row.userId != 1" @ok="deleteData(scope.row.userId)" />
+            <el-button v-if="!scope.row.isFixed" link @click="handleUpdate(scope.row, 'role')">角色权限</el-button>
+            <base-delete-btn v-if="!scope.row.isFixed" @ok="deleteData(scope.row.userId)" />
             <el-button link @click="updatePwd(scope.row)">更新密码</el-button>
           </template>
         </el-table-column>

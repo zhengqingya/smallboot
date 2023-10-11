@@ -13,11 +13,7 @@ import com.zhengqing.common.core.util.DesUtil;
 import com.zhengqing.common.db.constant.MybatisConstant;
 import com.zhengqing.system.entity.SysUser;
 import com.zhengqing.system.mapper.SysUserMapper;
-import com.zhengqing.system.model.dto.SysUserListDTO;
-import com.zhengqing.system.model.dto.SysUserPermDTO;
-import com.zhengqing.system.model.dto.SysUserSaveDTO;
-import com.zhengqing.system.model.dto.SysUserUpdatePasswordDTO;
-import com.zhengqing.system.model.vo.SysUserDetailVO;
+import com.zhengqing.system.model.dto.*;
 import com.zhengqing.system.model.vo.SysUserListVO;
 import com.zhengqing.system.model.vo.SysUserPermVO;
 import com.zhengqing.system.service.ISysDeptService;
@@ -26,7 +22,6 @@ import com.zhengqing.system.service.ISysUserService;
 import com.zhengqing.system.util.PasswordUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -86,10 +81,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     @Override
-    public SysUserDetailVO detail(Integer userId) {
-        SysUserDetailVO detail = this.sysUserMapper.detail(userId);
+    public SysUser detail(Integer userId) {
+        SysUser detail = this.sysUserMapper.selectById(userId);
         Assert.notNull(detail, "用户不存在！");
-        detail.handleData();
         return detail;
     }
 
@@ -103,29 +97,41 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         SysUser sysUserOld = this.sysUserMapper.selectOne(new LambdaQueryWrapper<SysUser>().eq(SysUser::getUsername, params.getUsername()).last(MybatisConstant.LIMIT_ONE));
         Assert.isTrue(sysUserOld == null || sysUserOld.getUserId().equals(params.getUserId()), "用户名重复，请重新输入！");
 
-        SysUser user = new SysUser();
-        user.setUserId(userId);
-        user.setUsername(params.getUsername());
-        user.setNickname(params.getNickname());
-        user.setSexEnum(UserSexEnum.getEnum(params.getSex()));
-        user.setPhone(params.getPhone());
-        user.setEmail(params.getEmail());
-        user.setAvatarUrl(params.getAvatarUrl());
-        user.setDeptId(params.getDeptId());
-        user.setPostIdList(params.getPostIdList());
+        // 保存用户
+        SysUser sysUser = new SysUser();
+        sysUser.setUserId(userId);
+        sysUser.setUsername(params.getUsername());
+        sysUser.setNickname(params.getNickname());
+        sysUser.setSexEnum(UserSexEnum.getEnum(params.getSex()));
+        sysUser.setPhone(params.getPhone());
+        sysUser.setEmail(params.getEmail());
+        sysUser.setAvatarUrl(params.getAvatarUrl());
+        sysUser.setDeptId(params.getDeptId());
+        sysUser.setPostIdList(params.getPostIdList());
 
+        boolean isUpdateRole = true;
         if (userId == null) {
-            user.setPassword(PasswordUtil.encodePassword(StrUtil.isBlank(password) ? AppConstant.DEFAULT_PASSWORD : password));
-            user.insert();
+            sysUser.setPassword(PasswordUtil.encodePassword(StrUtil.isBlank(password) ? AppConstant.DEFAULT_PASSWORD : password));
+            sysUser.insert();
+            userId = sysUser.getUserId();
         } else {
-            user.updateById();
+            isUpdateRole = !sysUserOld.getIsFixed();
+            sysUser.updateById();
         }
-        return user.getUserId();
+
+        // 给用户绑定角色信息
+        if (isUpdateRole) {
+            this.iSysUserRoleService.addOrUpdateData(SysUserRoleSaveDTO.builder().userId(userId).roleIdList(params.getRoleIdList()).build());
+        }
+
+        return userId;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void deleteUser(Integer userId) {
+        SysUser sysUser = this.detail(userId);
+        Assert.isFalse(sysUser.getIsFixed(), "您没有权限删除系统用户！");
         if (AppConstant.SYSTEM_SUPER_ADMIN_USER_ID.equals(userId)) {
             throw new MyException("您没有权限删除超级管理员！");
         }
@@ -145,17 +151,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         Assert.isTrue(isValid, AppConstant.WRONG_OLD_PASSWORD);
         userInfo.setPassword(PasswordUtil.encodePassword(params.getNewPassword()));
         this.sysUserMapper.updateById(userInfo);
-    }
-
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void resetPassword(Integer userId, String password) {
-        SysUser sysUser = this.sysUserMapper.selectById(userId);
-        sysUser.setPassword(PasswordUtil.encodePassword(
-                StringUtils.isBlank(password) ? AppConstant.DEFAULT_PASSWORD : password
-        ));
-        this.sysUserMapper.updateById(sysUser);
     }
 
     @Override
