@@ -76,7 +76,7 @@ public class CmsJobSaveDTO extends BaseDTO {
     private List<Integer> tagList;
 
     @ApiModelProperty("简介")
-    private String intor;
+    private String intro;
 
     @NotNull(message = "招聘人数不能为空！")
     @ApiModelProperty("招聘人数")

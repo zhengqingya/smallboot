@@ -76,7 +76,7 @@ public class CmsJob extends IsDeletedBaseEntity<CmsJob> {
     private List<Integer> tagList;
 
     @ApiModelProperty("简介")
-    private String intor;
+    private String intro;
 
     @ApiModelProperty("招聘人数")
     private Integer userNum;

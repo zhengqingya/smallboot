@@ -110,8 +110,8 @@
           <el-input-number v-model="form.sort" :disabled="isDetail" :min="1" controls-position="right" placeholder="请输入排序" />
         </el-form-item>
         <el-form-item label="工作简介:" style="width: 100%">
-          <span v-if="isDetail" v-html="form.intor" />
-          <base-Editor v-else v-model="form.intor" />
+          <span v-if="isDetail" v-html="form.intro" />
+          <base-Editor v-else v-model="form.intro" />
         </el-form-item>
       </el-form>
       <template #footer>

@@ -86,7 +86,7 @@ public class CmsJobServiceImpl extends ServiceImpl<CmsJobMapper, CmsJob> impleme
                 .areaName(params.getAreaName())
                 .address(params.getAddress())
                 .tagList(params.getTagList())
-                .intor(params.getIntor())
+                .intro(params.getIntro())
                 .userNum(params.getUserNum())
                 .wageStart(params.getWageStart())
                 .wageEnd(params.getWageEnd())
