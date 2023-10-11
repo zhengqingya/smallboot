@@ -25,7 +25,7 @@
 
     <base-table-p ref="baseTableRef" api="cms_job_apply.page" :params="listQuery">
       <el-table-column label="ID" prop="id" align="center" />
-      <el-table-column label="职位名称" prop="jobName" align="center" />
+      <el-table-column label="职位名称" prop="jobObj.name" align="center" />
       <el-table-column label="状态" prop="statusName" align="center" />
       <el-table-column label="联系人" prop="contact" align="center" />
       <el-table-column label="联系电话" prop="contactPhone" align="center" />

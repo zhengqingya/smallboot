@@ -4,9 +4,8 @@
 
     <select id="selectDataPage" resultType="com.zhengqing.cms.model.vo.CmsJobApplyPageVO">
         SELECT
-        cja.*, cj.name jobName
+        cja.*
         FROM cms_job_apply cja
-        LEFT JOIN cms_job cj ON cj.id = cja.job_id
         <where>
             cja.is_deleted=0
             <if test="filter.jobId!=null">

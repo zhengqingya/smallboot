@@ -1,9 +1,9 @@
 package com.zhengqing.cms.api.web;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.zhengqing.cms.model.dto.CmsJobPageDTO;
+import com.zhengqing.cms.model.dto.CmsJobBaseDTO;
 import com.zhengqing.cms.model.dto.CmsJobSaveDTO;
-import com.zhengqing.cms.model.vo.CmsJobPageVO;
+import com.zhengqing.cms.model.vo.CmsJobBaseVO;
 import com.zhengqing.cms.service.ICmsJobService;
 import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.core.api.BaseController;
@@ -33,7 +33,7 @@ public class WebCmsJobController extends BaseController {
 
     @GetMapping("page")
     @ApiOperation("分页列表")
-    public IPage<CmsJobPageVO> page(@Validated @ModelAttribute CmsJobPageDTO params) {
+    public IPage<CmsJobBaseVO> page(@Validated @ModelAttribute CmsJobBaseDTO params) {
         return this.iCmsJobService.page(params);
     }
 

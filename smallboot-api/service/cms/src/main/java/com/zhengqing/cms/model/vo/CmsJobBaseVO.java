@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * <p>内容管理-招聘岗位-分页列表-响应参数</p>
+ * <p>内容管理-招聘岗位-base-响应参数</p>
  *
  * @author zhengqingya
  * @description
@@ -24,8 +24,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@ApiModel("内容管理-招聘岗位-分页列表-响应参数")
-public class CmsJobPageVO extends BaseVO {
+@ApiModel("内容管理-招聘岗位-base-响应参数")
+public class CmsJobBaseVO extends BaseVO {
 
     @ApiModelProperty("主键ID")
     private Integer id;

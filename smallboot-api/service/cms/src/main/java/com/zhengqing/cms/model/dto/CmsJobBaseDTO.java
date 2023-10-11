@@ -1,6 +1,6 @@
 package com.zhengqing.cms.model.dto;
 
-import com.zhengqing.common.base.model.dto.BaseDTO;
+import com.zhengqing.common.base.model.dto.BasePageDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -9,8 +9,10 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.util.List;
+
 /**
- * <p> 内容管理-招聘岗位-分页列表-请求参数 </p>
+ * <p> 内容管理-招聘岗位-base-请求参数 </p>
  *
  * @author zhengqingya
  * @description
@@ -21,9 +23,11 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@ApiModel("内容管理-招聘岗位-分页列表-请求参数")
-public class CmsJobPageDTO extends BaseDTO {
+@ApiModel("内容管理-招聘岗位-base-请求参数")
+public class CmsJobBaseDTO extends BasePageDTO {
 
+    @ApiModelProperty("id")
+    private List<Integer> idList;
 
     @ApiModelProperty("部门id")
     private Integer deptId;

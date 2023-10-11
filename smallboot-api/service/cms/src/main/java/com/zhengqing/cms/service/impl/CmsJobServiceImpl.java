@@ -8,9 +8,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhengqing.cms.entity.CmsJob;
 import com.zhengqing.cms.mapper.CmsJobMapper;
-import com.zhengqing.cms.model.dto.CmsJobPageDTO;
+import com.zhengqing.cms.model.dto.CmsJobBaseDTO;
 import com.zhengqing.cms.model.dto.CmsJobSaveDTO;
-import com.zhengqing.cms.model.vo.CmsJobPageVO;
+import com.zhengqing.cms.model.vo.CmsJobBaseVO;
 import com.zhengqing.cms.service.ICmsJobService;
 import com.zhengqing.cms.service.ICmsJobTagService;
 import com.zhengqing.common.db.constant.MybatisConstant;
@@ -40,11 +40,21 @@ public class CmsJobServiceImpl extends ServiceImpl<CmsJobMapper, CmsJob> impleme
     private final ICmsJobTagService iCmsJobTagService;
 
     @Override
-    public IPage<CmsJobPageVO> page(CmsJobPageDTO params) {
-        IPage<CmsJobPageVO> result = this.cmsJobMapper.selectDataPage(new Page<>(), params);
-        List<CmsJobPageVO> list = result.getRecords();
+    public IPage<CmsJobBaseVO> page(CmsJobBaseDTO params) {
+        IPage<CmsJobBaseVO> result = this.cmsJobMapper.selectDataList(new Page<>(), params);
+        List<CmsJobBaseVO> list = result.getRecords();
+        this.handleDataList(list);
+        return result;
+    }
+
+    @Override
+    public List<CmsJobBaseVO> list(CmsJobBaseDTO params) {
+        return this.handleDataList(this.cmsJobMapper.selectDataList(params));
+    }
+
+    private List<CmsJobBaseVO> handleDataList(List<CmsJobBaseVO> list) {
         if (CollUtil.isEmpty(list)) {
-            return result;
+            return list;
         }
         // 拿到标签名称
         List<Integer> tagIdList = Lists.newArrayList();
@@ -54,12 +64,18 @@ public class CmsJobServiceImpl extends ServiceImpl<CmsJobMapper, CmsJob> impleme
             e.setTagNameList(e.getTagList().stream().map(tagMap::get).collect(Collectors.toList()));
             e.handleData();
         });
-        return result;
+        return list;
     }
 
     @Override
-    public CmsJobPageVO detail(CmsJobPageDTO params) {
-        List<CmsJobPageVO> list = this.page(params).getRecords();
+    public Map<Integer, CmsJobBaseVO> map(List<Integer> idList) {
+        List<CmsJobBaseVO> list = this.list(CmsJobBaseDTO.builder().idList(idList).build());
+        return list.stream().collect(Collectors.toMap(CmsJobBaseVO::getId, t -> t, (oldData, newData) -> newData));
+    }
+
+    @Override
+    public CmsJobBaseVO detail(CmsJobBaseDTO params) {
+        List<CmsJobBaseVO> list = this.page(params).getRecords();
         Assert.notEmpty(list, "数据不存在！");
         return list.get(0);
     }

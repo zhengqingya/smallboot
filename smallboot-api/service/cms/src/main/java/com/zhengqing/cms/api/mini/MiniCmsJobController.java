@@ -1,11 +1,13 @@
 package com.zhengqing.cms.api.mini;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.zhengqing.cms.model.dto.CmsJobApplyPageDTO;
 import com.zhengqing.cms.model.dto.CmsJobApplySaveDTO;
+import com.zhengqing.cms.model.dto.CmsJobBaseDTO;
 import com.zhengqing.cms.model.dto.CmsJobCategoryListDTO;
-import com.zhengqing.cms.model.dto.CmsJobPageDTO;
+import com.zhengqing.cms.model.vo.CmsJobApplyPageVO;
+import com.zhengqing.cms.model.vo.CmsJobBaseVO;
 import com.zhengqing.cms.model.vo.CmsJobCategoryListVO;
-import com.zhengqing.cms.model.vo.CmsJobPageVO;
 import com.zhengqing.cms.service.ICmsJobApplyService;
 import com.zhengqing.cms.service.ICmsJobCategoryService;
 import com.zhengqing.cms.service.ICmsJobService;
@@ -47,14 +49,14 @@ public class MiniCmsJobController extends BaseController {
 
     @GetMapping("page")
     @ApiOperation("分页列表")
-    public IPage<CmsJobPageVO> page(@Validated @ModelAttribute CmsJobPageDTO params) {
+    public IPage<CmsJobBaseVO> page(@Validated @ModelAttribute CmsJobBaseDTO params) {
         params.setStatus(CommonStatusEnum.ENABLE.getStatus());
         return this.iCmsJobService.page(params);
     }
 
     @GetMapping("detail")
     @ApiOperation("详情")
-    public CmsJobPageVO detail(@Validated @ModelAttribute CmsJobPageDTO params) {
+    public CmsJobBaseVO detail(@Validated @ModelAttribute CmsJobBaseDTO params) {
         params.setStatus(CommonStatusEnum.ENABLE.getStatus());
         return this.iCmsJobService.detail(params);
     }
@@ -66,5 +68,10 @@ public class MiniCmsJobController extends BaseController {
         this.iCmsJobApplyService.addOrUpdateData(params);
     }
 
+    @GetMapping("apply/page")
+    @ApiOperation("申请-分页列表")
+    public IPage<CmsJobApplyPageVO> applyPage(@Validated @ModelAttribute CmsJobApplyPageDTO params) {
+        return this.iCmsJobApplyService.page(params);
+    }
 
 }

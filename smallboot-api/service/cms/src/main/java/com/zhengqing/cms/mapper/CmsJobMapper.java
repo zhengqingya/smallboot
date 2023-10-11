@@ -3,9 +3,11 @@ package com.zhengqing.cms.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.cms.entity.CmsJob;
-import com.zhengqing.cms.model.dto.CmsJobPageDTO;
-import com.zhengqing.cms.model.vo.CmsJobPageVO;
+import com.zhengqing.cms.model.dto.CmsJobBaseDTO;
+import com.zhengqing.cms.model.vo.CmsJobBaseVO;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p> 内容管理-招聘岗位 Mapper </p>
@@ -25,7 +27,16 @@ public interface CmsJobMapper extends BaseMapper<CmsJob> {
      * @author zhengqingya
      * @date 2023/10/10 15:08
      */
-    IPage<CmsJobPageVO> selectDataPage(IPage page, @Param("filter") CmsJobPageDTO filter);
+    IPage<CmsJobBaseVO> selectDataList(IPage<CmsJobBaseVO> page, @Param("filter") CmsJobBaseDTO filter);
 
+    /**
+     * 列表
+     *
+     * @param filter 查询过滤参数
+     * @return 查询结果
+     * @author zhengqingya
+     * @date 2023/10/10 15:08
+     */
+    List<CmsJobBaseVO> selectDataList(@Param("filter") CmsJobBaseDTO filter);
 
 }

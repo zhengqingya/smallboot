@@ -30,14 +30,11 @@ public class CmsJobApplyPageVO extends BaseVO {
     @ApiModelProperty("主键ID")
     private Integer id;
 
-    @ApiModelProperty("租户ID")
-    private Integer tenantId;
-
     @ApiModelProperty("职位id")
     private Integer jobId;
 
-    @ApiModelProperty("职位名称")
-    private String jobName;
+    @ApiModelProperty("职位信息")
+    private CmsJobBaseVO jobObj;
 
 
     /**
