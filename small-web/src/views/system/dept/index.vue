@@ -16,16 +16,16 @@
           <base-tag v-model="scope.row.status" />
         </template>
       </el-table-column>
-      <el-table-column label="过期时间" prop="expireTime" align="center">
+      <!-- <el-table-column label="过期时间" prop="expireTime" align="center">
         <template #default="scope">
           <el-tag v-if="scope.row.expireTime" type="warning"> {{ scope.row.expireTime }}</el-tag>
         </template>
-      </el-table-column>
-      <el-table-column label="最大用户数" prop="userNum" align="center">
+      </el-table-column> -->
+      <!-- <el-table-column label="最大用户数" prop="userNum" align="center">
         <template #default="scope">
           <el-tag v-if="scope.row.userNum" type="success"> {{ scope.row.userNum }}</el-tag>
         </template>
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column label="排序" prop="sort" align="center" />
       <el-table-column label="创建时间" prop="createTime" align="center" />
       <el-table-column align="center" label="操作">
@@ -58,7 +58,7 @@
           <base-radio-group v-model="form.status" />
         </el-form-item>
 
-        <div v-if="form.parentId == 0">
+        <!-- <div v-if="form.parentId == 0">
           <el-form-item label="所属地区:">
             <province-city-area v-model="form.provinceCityAreaList" />
           </el-form-item>
@@ -71,7 +71,7 @@
           <el-form-item label="最大员工数:">
             <el-input-number v-model="form.userNum" :min="1" controls-position="right" placeholder="请输入" />
           </el-form-item>
-        </div>
+        </div> -->
         <el-form-item label="排序:">
           <el-input-number v-model="form.sort" :min="1" controls-position="right" placeholder="请输入排序" />
         </el-form-item>

@@ -177,11 +177,7 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
         String key = params.getKey();
 
         // 校验key是否重复
-        SysConfig sysConfigOld = this.sysConfigMapper.selectOne(
-                new LambdaQueryWrapper<SysConfig>()
-                        .eq(SysConfig::getKey, key)
-                        .last(MybatisConstant.LIMIT_ONE)
-        );
+        SysConfig sysConfigOld = this.sysConfigMapper.selectOne(new LambdaQueryWrapper<SysConfig>().eq(SysConfig::getKey, key).last(MybatisConstant.LIMIT_ONE));
         Assert.isTrue(sysConfigOld == null || sysConfigOld.getId().equals(id), "key重复，请重新输入！");
 
         // 保存新数据

@@ -1,0 +1,17 @@
+douyin:
+  is-on-line: false # true:线上环境 false:沙盒环境
+
+  # app应用
+  app:
+    appid: xxx
+    appSecret: xxx
+
+  # 抖音开放api
+  open-api:
+    api-prefix: https://open.douyin.com # 请求api前缀
+
+  # 小程序
+  mini-app:
+    # 请求api前缀
+    api-prefix: https://developer.toutiao.com  # 线上地址
+    api-prefix-sandbox: https://open-sandbox.douyin.com # 沙盒地址

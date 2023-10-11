@@ -27,6 +27,7 @@
         <module>mq</module>
         <module>pay</module>
         <module>redis</module>
+        <module>sdk</module>
         <module>swagger</module>
         <module>web</module>
     </modules>

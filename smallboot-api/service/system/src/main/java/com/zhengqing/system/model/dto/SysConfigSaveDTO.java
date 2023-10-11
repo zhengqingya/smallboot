@@ -40,7 +40,7 @@ public class SysConfigSaveDTO extends BaseDTO implements HandleParam {
     @ApiModelProperty(value = "属性key", required = true, example = "hello")
     private String key;
 
-    @NotNull(message = "属性value不能为空!")
+    //    @NotNull(message = "属性value不能为空!")
     @ApiModelProperty(value = "属性value", required = true, example = "world")
     private Object value;
 

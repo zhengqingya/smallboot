@@ -21,6 +21,7 @@ spring:
       - swagger
       - web
       - ums
+      - douyin
 
 management:
   endpoints:
