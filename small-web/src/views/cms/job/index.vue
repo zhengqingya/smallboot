@@ -37,6 +37,7 @@
       <el-table-column align="center" label="操作">
         <template #default="scope">
           <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
+          <el-button link @click="handleDetail(scope.row)">详情</el-button>
           <base-delete-btn @ok="handleDelete(scope.row)"></base-delete-btn>
         </template>
       </el-table-column>
@@ -48,6 +49,7 @@
           <base-cascader
             v-if="dialogVisible"
             v-model="form.deptId"
+            :disabled="isDetail"
             style="width: 100%"
             clearable
             placeholder="请选择"
@@ -55,44 +57,61 @@
             api="sys_dept.tree" />
         </el-form-item>
         <el-form-item label="职位分类:" prop="categoryId">
-          <base-select v-if="dialogVisible" v-model="form.categoryId" tag-type="success" style="width: 100%" clearable :option-props="{ label: 'name', value: 'id' }" api="cms_job_category.list" />
+          <base-select
+            v-if="dialogVisible"
+            v-model="form.categoryId"
+            :disabled="isDetail"
+            tag-type="success"
+            style="width: 100%"
+            clearable
+            :option-props="{ label: 'name', value: 'id' }"
+            api="cms_job_category.list" />
         </el-form-item>
         <el-form-item label="职位名称:">
-          <el-input v-model="form.name" />
+          <el-input v-model="form.name" :disabled="isDetail" />
         </el-form-item>
         <el-form-item label="联系人:">
-          <el-input v-model="form.contact" />
+          <el-input v-model="form.contact" :disabled="isDetail" />
         </el-form-item>
         <el-form-item label="联系电话:">
-          <el-input v-model="form.contactPhone" />
+          <el-input v-model="form.contactPhone" :disabled="isDetail" />
         </el-form-item>
         <el-form-item label="所属地区:">
-          <province-city-area v-model="form.provinceCityAreaList" />
+          <province-city-area v-model="form.provinceCityAreaList" :disabled="isDetail" />
         </el-form-item>
         <el-form-item label="详细地址:">
-          <el-input v-model="form.address" />
+          <el-input v-model="form.address" :disabled="isDetail" />
         </el-form-item>
         <el-form-item label="福利标签:" style="width: 100%">
-          <base-select v-if="dialogVisible" v-model="form.tagList" tag-type="success" style="width: 100%" multiple clearable :option-props="{ label: 'name', value: 'id' }" api="cms_job_tag.list" />
+          <base-select
+            v-if="dialogVisible"
+            v-model="form.tagList"
+            :disabled="isDetail"
+            tag-type="success"
+            style="width: 100%"
+            multiple
+            clearable
+            :option-props="{ label: 'name', value: 'id' }"
+            api="cms_job_tag.list" />
         </el-form-item>
-
         <el-form-item label="薪资范围:">
-          <el-input-number v-model="form.wageStart" :min="1" controls-position="right" placeholder="最低工资" />
+          <el-input-number v-model="form.wageStart" :disabled="isDetail" :min="1" controls-position="right" placeholder="最低工资" />
           -
-          <el-input-number v-model="form.wageEnd" :min="1" controls-position="right" placeholder="最高工资" />
+          <el-input-number v-model="form.wageEnd" :disabled="isDetail" :min="1" controls-position="right" placeholder="最高工资" />
           元/月
         </el-form-item>
         <el-form-item label="招聘人数:">
-          <el-input-number v-model="form.userNum" :min="1" controls-position="right" />
+          <el-input-number v-model="form.userNum" :disabled="isDetail" :min="1" controls-position="right" />
         </el-form-item>
         <el-form-item label="状态:">
-          <base-radio-group v-model="form.status" />
+          <base-radio-group v-model="form.status" :disabled="isDetail" />
         </el-form-item>
         <el-form-item label="排序:">
-          <el-input-number v-model="form.sort" :min="1" controls-position="right" placeholder="请输入排序" />
+          <el-input-number v-model="form.sort" :disabled="isDetail" :min="1" controls-position="right" placeholder="请输入排序" />
         </el-form-item>
-        <el-form-item label="工作简介:">
-          <base-Editor v-model="form.intor" />
+        <el-form-item label="工作简介:" style="width: 100%">
+          <span v-if="isDetail" v-html="form.intor" />
+          <base-Editor v-else v-model="form.intor" />
         </el-form-item>
       </el-form>
       <template #footer>
@@ -110,6 +129,7 @@ let form = $ref({});
 let dialogVisible = $ref(false);
 let dialogStatus = $ref('');
 let rules = $ref({});
+let isDetail = $ref(false);
 
 function refreshTableData() {
   proxy.$refs.baseTableRef.refresh();
@@ -117,12 +137,21 @@ function refreshTableData() {
 function handleAdd() {
   form = { status: 1, userNum: 1, sort: 100 };
   dialogStatus = 'add';
+  isDetail = false;
+  dialogVisible = true;
+}
+function handleDetail(row) {
+  form = Object.assign({}, row);
+  form.provinceCityAreaList = [form.provinceName, form.cityName, form.areaName];
+  dialogStatus = 'detail';
+  isDetail = true;
   dialogVisible = true;
 }
 function handleUpdate(row) {
   form = Object.assign({}, row);
   form.provinceCityAreaList = [form.provinceName, form.cityName, form.areaName];
   dialogStatus = 'update';
+  isDetail = false;
   dialogVisible = true;
 }
 async function handleDelete(row) {

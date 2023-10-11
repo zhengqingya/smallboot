@@ -30,9 +30,6 @@ public class CmsJobPageVO extends BaseVO {
     @ApiModelProperty("主键ID")
     private Integer id;
 
-    @ApiModelProperty("租户ID")
-    private Integer tenantId;
-
     @ApiModelProperty("部门id")
     private Integer deptId;
 
@@ -80,6 +77,9 @@ public class CmsJobPageVO extends BaseVO {
 
     @ApiModelProperty("福利标签")
     private List<Integer> tagList;
+
+    @ApiModelProperty("福利标签")
+    private List<String> tagNameList;
 
     @ApiModelProperty("简介")
     private String intor;

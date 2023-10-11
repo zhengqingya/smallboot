@@ -27,6 +27,16 @@ public interface ICmsJobService extends IService<CmsJob> {
     IPage<CmsJobPageVO> page(CmsJobPageDTO params);
 
     /**
+     * 详情
+     *
+     * @param params 查询参数
+     * @return 查询结果
+     * @author zhengqingya
+     * @date 2023/10/10 15:08
+     */
+    CmsJobPageVO detail(CmsJobPageDTO params);
+
+    /**
      * 新增或更新
      *
      * @param params 保存参数

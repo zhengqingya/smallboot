@@ -1,10 +1,12 @@
 package com.zhengqing.cms.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.google.common.collect.Maps;
 import com.zhengqing.cms.entity.CmsJobTag;
 import com.zhengqing.cms.mapper.CmsJobTagMapper;
 import com.zhengqing.cms.model.dto.CmsJobTagListDTO;
@@ -20,6 +22,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * <p> 内容管理-招聘岗位标签 服务实现类 </p>
@@ -43,6 +47,16 @@ public class CmsJobTagServiceImpl extends ServiceImpl<CmsJobTagMapper, CmsJobTag
     @Override
     public List<CmsJobTagListVO> list(CmsJobTagListDTO params) {
         return this.cmsJobTagMapper.selectDataList(params);
+    }
+
+    @Override
+    public Map<Integer, String> map(List<Integer> idList) {
+        idList = idList.stream().distinct().collect(Collectors.toList());
+        if (CollUtil.isEmpty(idList)) {
+            return Maps.newHashMap();
+        }
+        List<CmsJobTag> list = this.cmsJobTagMapper.selectList(new LambdaQueryWrapper<CmsJobTag>().in(CmsJobTag::getId, idList));
+        return list.stream().collect(Collectors.toMap(CmsJobTag::getId, CmsJobTag::getName, (oldData, newData) -> newData));
     }
 
     @Override

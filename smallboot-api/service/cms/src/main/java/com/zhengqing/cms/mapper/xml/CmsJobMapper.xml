@@ -26,8 +26,14 @@
             <if test="filter.name!=null and filter.name!=''">
                 AND cj.name LIKE CONCAT( '%', #{filter.name} , '%' )
             </if>
+            <if test="filter.keyword!=null and filter.keyword!=''">
+                AND cj.name LIKE CONCAT( '%', #{filter.keyword} , '%' )
+            </if>
             <if test="filter.categoryId!=null">
                 AND cj.category_id = #{filter.categoryId}
+            </if>
+            <if test="filter.status!=null">
+                AND cj.status = #{filter.status}
             </if>
         </where>
         ORDER BY cj.sort ASC, cj.create_time DESC

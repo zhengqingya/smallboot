@@ -28,6 +28,9 @@ public class CmsJobPageDTO extends BaseDTO {
     @ApiModelProperty("部门id")
     private Integer deptId;
 
+    @ApiModelProperty("关键字")
+    private String keyword;
+
     @ApiModelProperty("名称")
     private String name;
 
@@ -37,5 +40,7 @@ public class CmsJobPageDTO extends BaseDTO {
     @ApiModelProperty("分类id")
     private Integer categoryId;
 
+    @ApiModelProperty("状态(0:停用 1:正常)")
+    private Integer status;
 
 }

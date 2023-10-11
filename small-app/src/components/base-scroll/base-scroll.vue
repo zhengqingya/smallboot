@@ -61,6 +61,15 @@ watch(
   }
 );
 
+// 暴露方法  使用eg: proxy.$refs.baseScrollRef.refresh();
+defineExpose({
+  refresh,
+});
+
+function refresh() {
+  onPullRefresh();
+}
+
 // 上拉加载更多 -- 滑到底部触发
 function onPushRefresh() {
   loadmoreStatus.value = 'loading';
@@ -79,7 +88,6 @@ function onPullRefresh() {
   }, 100);
 }
 
-// 分页查询订单数据
 async function getApiData(isFirst) {
   if (!props.api) {
     return;
