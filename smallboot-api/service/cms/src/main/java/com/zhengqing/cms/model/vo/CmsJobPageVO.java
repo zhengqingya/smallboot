@@ -52,7 +52,7 @@ public class CmsJobPageVO extends BaseVO {
     private Integer categoryId;
 
     @ApiModelProperty("分类名")
-    private String categroyName;
+    private String categoryName;
 
     @ApiModelProperty("排序")
     private Integer sort;

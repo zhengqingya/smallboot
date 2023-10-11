@@ -54,7 +54,6 @@ public class CmsJobCategoryServiceImpl extends ServiceImpl<CmsJobCategoryMapper,
 
         CmsJobCategory.builder()
                 .id(params.getId())
-                .tenantId(params.getTenantId())
                 .deptId(params.getDeptId())
                 .name(params.getName())
                 .sort(params.getSort())

@@ -35,6 +35,9 @@ public class CmsJobCategoryPageVO extends BaseVO {
     @ApiModelProperty("部门id")
     private Integer deptId;
 
+    @ApiModelProperty("部门名称")
+    private String deptName;
+
     @ApiModelProperty("名称")
     private String name;
 

@@ -8,6 +8,7 @@
         label="归属部门"
         :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true, emitPath: false }"
         api="sys_dept.tree" />
+      <base-select v-model="listQuery.categoryId" style="margin-right: 10px" clearable :option-props="{ label: 'name', value: 'id' }" api="cms_job_category.list" />
       <base-input v-model="listQuery.name" label="职位名称" @clear="refreshTableData" />
       <el-button type="primary" @click="refreshTableData">查询</el-button>
       <template #right>
@@ -18,6 +19,7 @@
     <base-table-p ref="baseTableRef" api="cms_job.page" :params="listQuery">
       <el-table-column label="ID" prop="id" align="center" />
       <el-table-column label="归属部门" prop="deptName" align="center" />
+      <el-table-column label="职位分类" prop="categoryName" align="center" />
       <el-table-column label="职位名称" prop="name" align="center" />
       <el-table-column label="状态" align="center">
         <template #default="scope">
@@ -51,6 +53,9 @@
             placeholder="请选择"
             :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true, emitPath: false }"
             api="sys_dept.tree" />
+        </el-form-item>
+        <el-form-item label="职位分类:" prop="categoryId">
+          <base-select v-if="dialogVisible" v-model="form.categoryId" tag-type="success" style="width: 100%" clearable :option-props="{ label: 'name', value: 'id' }" api="cms_job_category.list" />
         </el-form-item>
         <el-form-item label="职位名称:">
           <el-input v-model="form.name" />

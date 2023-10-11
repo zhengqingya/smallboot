@@ -9,8 +9,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
 
 /**
  * <p> 内容管理-招聘岗位分类-保存-提交参数 </p>
@@ -31,12 +32,11 @@ public class CmsJobCategorySaveDTO extends BaseDTO {
     @NotNull(groups = {UpdateGroup.class}, message = "主键ID不能为空!")
     private Integer id;
 
-    @ApiModelProperty("租户ID")
-    private Integer tenantId;
-
+    @NotNull(message = "请选择部门！")
     @ApiModelProperty("部门id")
     private Integer deptId;
 
+    @NotBlank(message = "名称不能为空！")
     @ApiModelProperty("名称")
     private String name;
 

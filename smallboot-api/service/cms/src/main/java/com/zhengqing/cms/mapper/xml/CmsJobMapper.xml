@@ -10,7 +10,7 @@
 
     <select id="selectDataPage" resultMap="pageMap">
         SELECT
-        cj.*, tsd.name deptName, tsp.name postName, cjc.name categroyName
+        cj.*, tsd.name deptName, tsp.name postName, cjc.name categoryName
         FROM cms_job cj
         LEFT JOIN t_sys_dept tsd ON tsd.id = cj.dept_id
         LEFT JOIN t_sys_post tsp ON tsp.id = cj.post_id

@@ -4,18 +4,19 @@
 
     <select id="selectDataPage" resultType="com.zhengqing.cms.model.vo.CmsJobCategoryPageVO">
         SELECT
-        *
-        FROM cms_job_category
+        cjc.*, tsd.name deptName
+        FROM cms_job_category cjc
+        LEFT JOIN t_sys_dept tsd ON tsd.id = cjc.dept_id
         <where>
-            is_deleted=0
+            cjc.is_deleted=0
             <if test="filter.deptId!=null">
-                AND dept_id = #{filter.deptId}
+                AND cjc.dept_id = #{filter.deptId}
             </if>
             <if test="filter.name!=null and filter.name!=''">
-                AND name LIKE CONCAT( '%', #{filter.name} , '%' )
+                AND cjc.name LIKE CONCAT( '%', #{filter.name} , '%' )
             </if>
         </where>
-        ORDER BY sort ASC, create_time DESC
+        ORDER BY cjc.sort ASC, cjc.create_time DESC
     </select>
 
     <select id="selectDataList" resultType="com.zhengqing.cms.model.vo.CmsJobCategoryListVO">
