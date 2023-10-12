@@ -30,7 +30,7 @@ public class UmsUserVO extends AuthLoginVO {
     @ApiModelProperty(value = "主键ID")
     private Long id;
 
-    @ApiModelProperty("微信openid")
+    @ApiModelProperty("openid")
     private String openid;
 
     @ApiModelProperty("昵称")

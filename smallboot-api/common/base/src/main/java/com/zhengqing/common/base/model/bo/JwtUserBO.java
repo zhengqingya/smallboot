@@ -36,7 +36,7 @@ public class JwtUserBO extends BaseBO {
     @ApiModelProperty("角色编码")
     private List<String> roleCodeList;
 
-    @ApiModelProperty("微信小程序openid")
+    @ApiModelProperty("小程序openid")
     private String openid;
 
 

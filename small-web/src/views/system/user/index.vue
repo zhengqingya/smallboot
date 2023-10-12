@@ -169,7 +169,8 @@ async function updatePwd(row) {
   dialogVisible.value = true;
 }
 async function submitPwd() {
-  let res = await proxy.$api.sys_user.resetPassword({ userId: form.value.userId, password: newPassword.value });
+  form.value.password = newPassword.value;
+  let res = await proxy.$api.sys_user.update(form.value);
   proxy.submitOk(res.msg, () => {
     handelCurrentLoginUser();
   });

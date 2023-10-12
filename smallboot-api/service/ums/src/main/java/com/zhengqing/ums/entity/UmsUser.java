@@ -33,8 +33,11 @@ public class UmsUser extends IsDeletedBaseEntity<UmsUser> {
     @ApiModelProperty("租户ID")
     private Integer tenantId;
 
-    @ApiModelProperty("微信openid")
+    @ApiModelProperty("openid")
     private String openid;
+
+    @ApiModelProperty("unionid")
+    private String unionid;
 
     @ApiModelProperty("昵称")
     private String nickname;
@@ -53,5 +56,11 @@ public class UmsUser extends IsDeletedBaseEntity<UmsUser> {
 
     @ApiModelProperty("头像")
     private String avatarUrl;
+
+    /**
+     * {@link com.zhengqing.ums.enums.MiniTypeEnum}
+     */
+    @ApiModelProperty("小程序类型")
+    private Integer type;
 
 }

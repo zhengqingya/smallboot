@@ -80,13 +80,6 @@ export default {
       data: { userId: id, status: status },
     });
   },
-  resetPassword(data) {
-    return request({
-      url: BASE_API + '/resetPassword',
-      method: 'get',
-      params: data,
-    });
-  },
   getUserInfoById(userId) {
     return request({
       url: BASE_API + '',

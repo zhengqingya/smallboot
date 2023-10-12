@@ -115,6 +115,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             sysUser.insert();
             userId = sysUser.getUserId();
         } else {
+            if (StrUtil.isNotBlank(password)) {
+                sysUser.setPassword(PasswordUtil.encodePassword(password));
+            }
             isUpdateRole = !sysUserOld.getIsFixed();
             sysUser.updateById();
         }

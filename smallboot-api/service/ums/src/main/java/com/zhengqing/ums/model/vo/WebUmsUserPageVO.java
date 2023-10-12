@@ -32,8 +32,11 @@ public class WebUmsUserPageVO extends BaseDTO {
     @ApiModelProperty("主键ID")
     private Long id;
 
-    @ApiModelProperty("微信openid")
+    @ApiModelProperty("openid")
     private String openid;
+
+    @ApiModelProperty("unionid")
+    private String unionid;
 
     @ApiModelProperty("昵称")
     private String nickname;

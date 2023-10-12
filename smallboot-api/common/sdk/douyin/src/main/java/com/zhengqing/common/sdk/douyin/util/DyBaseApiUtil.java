@@ -31,8 +31,9 @@ public class DyBaseApiUtil {
      * @date 2022/7/28 15:40
      */
     public static <T> T basePost(String url, Object requestBody, Class<T> clazz) {
-        String resultStr = HttpUtil.post(url, BeanUtil.beanToMap(requestBody));
-        log.debug("[抖音] \n 请求url: 【{}】 \n 请求体: 【{}】 \n 响应数据：【{}】", url, JSONUtil.toJsonStr(requestBody), resultStr);
+        String body = JSONUtil.toJsonStr(requestBody);
+        String resultStr = HttpUtil.post(url, body);
+        log.debug("[抖音] \n 请求url: 【{}】 \n 请求体: 【{}】 \n 响应数据：【{}】", url, body, resultStr);
         return JSONUtil.toBean(resultStr, clazz);
     }
 

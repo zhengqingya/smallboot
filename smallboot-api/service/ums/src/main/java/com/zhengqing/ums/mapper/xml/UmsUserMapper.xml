@@ -41,13 +41,7 @@
 
     <select id="selectWebPage" resultType="com.zhengqing.ums.model.vo.WebUmsUserPageVO">
         SELECT
-        id,
-        openid,
-        nickname,
-        phone,
-        sex,
-        avatar_url,
-        create_time
+        *
         FROM ums_user
         <where>
             <if test="filter.id!=null">

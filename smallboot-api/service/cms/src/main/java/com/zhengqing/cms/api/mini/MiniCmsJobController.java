@@ -11,6 +11,7 @@ import com.zhengqing.cms.model.vo.CmsJobCategoryListVO;
 import com.zhengqing.cms.service.ICmsJobApplyService;
 import com.zhengqing.cms.service.ICmsJobCategoryService;
 import com.zhengqing.cms.service.ICmsJobService;
+import com.zhengqing.common.auth.custom.open.ApiOpen;
 import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.base.enums.CommonStatusEnum;
 import com.zhengqing.common.core.api.BaseController;
@@ -41,12 +42,14 @@ public class MiniCmsJobController extends BaseController {
     private final ICmsJobCategoryService iCmsJobCategoryService;
     private final ICmsJobApplyService iCmsJobApplyService;
 
+    @ApiOpen
     @GetMapping("category/list")
     @ApiOperation("分类列表")
     public List<CmsJobCategoryListVO> list(@Validated @ModelAttribute CmsJobCategoryListDTO params) {
         return this.iCmsJobCategoryService.list(params);
     }
 
+    @ApiOpen
     @GetMapping("page")
     @ApiOperation("分页列表")
     public IPage<CmsJobBaseVO> page(@Validated @ModelAttribute CmsJobBaseDTO params) {
@@ -54,6 +57,7 @@ public class MiniCmsJobController extends BaseController {
         return this.iCmsJobService.page(params);
     }
 
+    @ApiOpen
     @GetMapping("detail")
     @ApiOperation("详情")
     public CmsJobBaseVO detail(@Validated @ModelAttribute CmsJobBaseDTO params) {

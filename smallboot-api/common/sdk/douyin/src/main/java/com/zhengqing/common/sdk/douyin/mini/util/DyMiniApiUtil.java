@@ -86,11 +86,7 @@ public class DyMiniApiUtil {
      * @date 2022/7/28 15:40
      */
     public static DyMiniLoginVO.Data jscode2session(DyMiniLoginDTO params) {
-        DyMiniLoginVO dyMiniLoginVO = DyBaseApiUtil.basePost("/api/apps/v2/jscode2session", params,
-                new HashMap<String, String>(1) {{
-                    this.put("access-token", getAccessToken(params.getAppid(), params.getSecret()));
-                }},
-                DyMiniLoginVO.class);
+        DyMiniLoginVO dyMiniLoginVO = DyBaseApiUtil.basePost(baseUrl() + "/api/apps/v2/jscode2session", params, DyMiniLoginVO.class);
         Assert.isTrue(DyMiniResultCodeEnum.SUCCESS.getCode().equals(dyMiniLoginVO.getErr_no()), dyMiniLoginVO.getErr_tips());
         return dyMiniLoginVO.getData();
     }

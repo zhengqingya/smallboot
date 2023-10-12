@@ -13,13 +13,14 @@ import com.zhengqing.common.base.model.bo.JwtUserBO;
 import com.zhengqing.common.core.enums.UserSexEnum;
 import com.zhengqing.common.core.util.IdGeneratorUtil;
 import com.zhengqing.common.db.constant.MybatisConstant;
+import com.zhengqing.common.sdk.douyin.mini.model.dto.DyMiniLoginDTO;
+import com.zhengqing.common.sdk.douyin.mini.model.vo.DyMiniLoginVO;
+import com.zhengqing.common.sdk.douyin.mini.util.DyMiniApiUtil;
 import com.zhengqing.ums.entity.UmsUser;
+import com.zhengqing.ums.enums.MiniTypeEnum;
 import com.zhengqing.ums.factory.WxMaFactory;
 import com.zhengqing.ums.mapper.UmsUserMapper;
-import com.zhengqing.ums.model.dto.UmsUserDTO;
-import com.zhengqing.ums.model.dto.UmsUserInfoDTO;
-import com.zhengqing.ums.model.dto.UmsUserWxLoginDTO;
-import com.zhengqing.ums.model.dto.WebUmsUserPageDTO;
+import com.zhengqing.ums.model.dto.*;
 import com.zhengqing.ums.model.vo.UmsUserVO;
 import com.zhengqing.ums.model.vo.WebUmsUserPageVO;
 import com.zhengqing.ums.service.IUmsUserService;
@@ -75,24 +76,48 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
         if (params.getIsLocalLogin()) {
             return this.getLocalLogin();
         }
+        return this.login(UmsUserLoginDTO.builder().code(params.getCode()).userInfo(params.getUserInfo()).build());
+    }
 
+    @Override
+    @SneakyThrows(Exception.class)
+    @Transactional(rollbackFor = Exception.class)
+    public UmsUserVO login(UmsUserLoginDTO params) {
         String code = params.getCode();
-        WxMaJscode2SessionResult wxMaJscode2SessionResult = this.wxMaFactory.wxMaService().jsCode2SessionInfo(code);
-        String openid = wxMaJscode2SessionResult.getOpenid();
+        Integer type = params.getType();
+        String appid = params.getAppid();
+        String openid = null;
+        String unionid = null;
+        switch (MiniTypeEnum.getEnum(type)) {
+            case 微信小程序:
+                WxMaJscode2SessionResult wxMaJscode2SessionResult = this.wxMaFactory.wxMaService().jsCode2SessionInfo(code);
+                openid = wxMaJscode2SessionResult.getOpenid();
+                break;
+            case 抖音小程序:
+                DyMiniLoginVO.Data dyData = DyMiniApiUtil.jscode2session(DyMiniLoginDTO.builder()
+                        .appid(appid)
+                        .secret(params.getSecret())
+                        .code(code)
+                        .anonymous_code(params.getAnonymousCode())
+                        .build());
+                openid = dyData.getOpenid();
+                unionid = dyData.getUnionid();
+                break;
+            default:
+                break;
+        }
 
         // 先查询数据库中有没有openid
-        UmsUser umsUser = this.umsUserMapper.selectOne(
-                new LambdaQueryWrapper<UmsUser>()
-                        .eq(UmsUser::getOpenid, openid)
-                        .last(MybatisConstant.LIMIT_ONE)
-        );
+        UmsUser umsUser = this.umsUserMapper.selectOne(new LambdaQueryWrapper<UmsUser>().eq(UmsUser::getOpenid, openid).last(MybatisConstant.LIMIT_ONE));
         if (umsUser == null) {
             // 注册用户
             UmsUserInfoDTO userInfo = params.getUserInfo();
             Long id = IdGeneratorUtil.nextId();
             umsUser = UmsUser.builder()
                     .id(id)
+                    .type(type)
                     .openid(openid)
+                    .unionid(unionid)
                     .nickname(userInfo.getNickname())
                     .phone(null)
                     .sex(UserSexEnum.未知.getType())
