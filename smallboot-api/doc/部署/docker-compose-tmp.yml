@@ -112,7 +112,6 @@ services:
       server.port: 888
       JAVA_OPTS: -XX:+UseG1GC
       spring.profiles.active: tmp
-    #      sbqtmp.ip: 172.16.16.88  # TODO 修改为宿主机ip
     #    ports:
     #      - "11888:888"
     depends_on:
