@@ -24,6 +24,9 @@ import lombok.experimental.SuperBuilder;
 @ApiModel("内容管理-职位申请-分页列表-请求参数")
 public class CmsJobApplyPageDTO extends BaseDTO {
 
+    @ApiModelProperty("创建人")
+    private Long createBy;
+
     @ApiModelProperty("职位id")
     private Integer jobId;
 

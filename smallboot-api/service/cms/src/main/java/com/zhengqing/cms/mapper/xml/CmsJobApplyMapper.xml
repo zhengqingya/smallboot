@@ -11,6 +11,9 @@
             <if test="filter.jobId!=null">
                 AND cja.job_id = #{filter.jobId}
             </if>
+            <if test="filter.createBy!=null">
+                AND cja.create_by = #{filter.createBy}
+            </if>
             <if test="filter.status!=null">
                 AND cja.status = #{filter.status}
             </if>

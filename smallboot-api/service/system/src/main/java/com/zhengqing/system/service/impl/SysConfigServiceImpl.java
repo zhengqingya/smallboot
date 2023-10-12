@@ -199,7 +199,7 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
             if (StringUtils.isBlank(item.getRemark())) {
                 item.setRemark("");
             }
-            item.setCurrentUserId(SysUserContext.getUserId());
+            item.setCurrentUserId(Long.valueOf(SysUserContext.getUserId()));
         });
         // 删除旧数据
         this.sysConfigMapper.deleteByKeyList(keyList);

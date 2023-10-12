@@ -44,7 +44,7 @@ public class NoRepeatSubmitAop {
      * @return java.lang.Object
      */
     @SneakyThrows
-    @Around("( execution(* com.zhengqing.*.api.*Controller.*(..)) || execution(* com.zhengqing..*.api.*Controller.*(..)) ) && @annotation(noRepeatSubmit)")
+    @Around("( execution(* com.zhengqing.*.api.*Controller.*(..)) || execution(* com.zhengqing..*.api.*Controller.*(..)) || execution(* com.zhengqing..*.api.*.*Controller.*(..)) ) && @annotation(noRepeatSubmit)")
     public Object doAround(ProceedingJoinPoint pjp, NoRepeatSubmit noRepeatSubmit) {
         HttpServletRequest request =
                 ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes()))

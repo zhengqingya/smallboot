@@ -31,7 +31,7 @@ public class BaseDTO implements Serializable {
     @JsonIgnore // 字段忽略
 //    @JsonProperty("userId") // 字段别名
     @ApiModelProperty(value = "当前用户ID", hidden = true)
-    private Integer currentUserId;
+    private Long currentUserId;
 
     @JsonIgnore
     @ApiModelProperty(value = "当前用户名称", hidden = true)

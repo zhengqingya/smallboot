@@ -1,7 +1,7 @@
 package com.zhengqing.common.core.aspect;
 
 import com.zhengqing.common.base.constant.BaseConstant;
-import com.zhengqing.common.base.context.SysUserContext;
+import com.zhengqing.common.base.context.JwtUserContext;
 import com.zhengqing.common.base.model.dto.BaseDTO;
 import com.zhengqing.common.base.model.dto.BasePageDTO;
 import com.zhengqing.common.core.custom.parameter.CheckParam;
@@ -51,8 +51,8 @@ public class ControllerAspect {
             // dto参数处理
             if (paramObj instanceof BaseDTO) {
                 BaseDTO baseDTO = (BaseDTO) paramObj;
-                baseDTO.setCurrentUserId(SysUserContext.getUserId());
-                baseDTO.setCurrentUsername(SysUserContext.getUsername());
+                baseDTO.setCurrentUserId(Long.valueOf(JwtUserContext.getUserId()));
+                baseDTO.setCurrentUsername(JwtUserContext.getUsername());
             }
 
             // page参数处理

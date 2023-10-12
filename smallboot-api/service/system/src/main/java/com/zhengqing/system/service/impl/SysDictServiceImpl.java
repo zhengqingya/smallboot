@@ -241,7 +241,7 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
                 item.setId(null);
                 item.setDictTypeId(dictTypeId);
                 item.setCode(code);
-                item.setCurrentUserId(SysUserContext.getUserId());
+                item.setCurrentUserId(Long.valueOf(SysUserContext.getUserId()));
                 if (item.getStatus() == null) {
                     item.setStatus(YesNoEnum.YES.getValue());
                 }

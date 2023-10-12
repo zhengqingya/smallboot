@@ -1,6 +1,8 @@
 package com.zhengqing.cms.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.lang.Assert;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -12,6 +14,8 @@ import com.zhengqing.cms.model.vo.CmsJobApplyPageVO;
 import com.zhengqing.cms.model.vo.CmsJobBaseVO;
 import com.zhengqing.cms.service.ICmsJobApplyService;
 import com.zhengqing.cms.service.ICmsJobService;
+import com.zhengqing.common.db.constant.MybatisConstant;
+import com.zhengqing.common.db.entity.BaseEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -55,9 +59,22 @@ public class CmsJobApplyServiceImpl extends ServiceImpl<CmsJobApplyMapper, CmsJo
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void addOrUpdateData(CmsJobApplySaveDTO params) {
+        Integer id = params.getId();
+        boolean isAdd = id == null;
+        Integer jobId = params.getJobId();
+        if (isAdd) {
+            CmsJobApply cmsJobApplyOld = this.cmsJobApplyMapper.selectOne(
+                    new LambdaQueryWrapper<CmsJobApply>()
+                            .eq(CmsJobApply::getJobId, jobId)
+                            .eq(BaseEntity::getCreateBy, params.getCurrentUserId())
+                            .last(MybatisConstant.LIMIT_ONE)
+            );
+            Assert.isNull(cmsJobApplyOld, "请不要重复申请报名！");
+        }
+
         CmsJobApply.builder()
-                .id(params.getId())
-                .jobId(params.getJobId())
+                .id(id)
+                .jobId(jobId)
                 .status(params.getStatus())
                 .contact(params.getContact())
                 .contactPhone(params.getContactPhone())

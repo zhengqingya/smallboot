@@ -75,6 +75,7 @@ public class MiniCmsJobController extends BaseController {
     @GetMapping("apply/page")
     @ApiOperation("申请-分页列表")
     public IPage<CmsJobApplyPageVO> applyPage(@Validated @ModelAttribute CmsJobApplyPageDTO params) {
+        params.setCreateBy(params.getCurrentUserId());
         return this.iCmsJobApplyService.page(params);
     }
 
