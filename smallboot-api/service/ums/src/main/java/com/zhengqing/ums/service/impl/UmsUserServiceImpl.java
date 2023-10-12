@@ -20,7 +20,10 @@ import com.zhengqing.ums.entity.UmsUser;
 import com.zhengqing.ums.enums.MiniTypeEnum;
 import com.zhengqing.ums.factory.WxMaFactory;
 import com.zhengqing.ums.mapper.UmsUserMapper;
-import com.zhengqing.ums.model.dto.*;
+import com.zhengqing.ums.model.dto.UmsUserDTO;
+import com.zhengqing.ums.model.dto.UmsUserInfoDTO;
+import com.zhengqing.ums.model.dto.UmsUserLoginDTO;
+import com.zhengqing.ums.model.dto.WebUmsUserPageDTO;
 import com.zhengqing.ums.model.vo.UmsUserVO;
 import com.zhengqing.ums.model.vo.WebUmsUserPageVO;
 import com.zhengqing.ums.service.IUmsUserService;
@@ -70,19 +73,12 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
-    @SneakyThrows(Exception.class)
-    public UmsUserVO wxLogin(UmsUserWxLoginDTO params) {
-        if (params.getIsLocalLogin()) {
-            return this.getLocalLogin();
-        }
-        return this.login(UmsUserLoginDTO.builder().code(params.getCode()).userInfo(params.getUserInfo()).build());
-    }
-
-    @Override
     @SneakyThrows(Exception.class)
     @Transactional(rollbackFor = Exception.class)
     public UmsUserVO login(UmsUserLoginDTO params) {
+        if (params.getIsLocalLogin()) {
+            return this.getLocalLogin();
+        }
         String code = params.getCode();
         Integer type = params.getType();
         String appid = params.getAppid();
@@ -111,19 +107,21 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
         UmsUser umsUser = this.umsUserMapper.selectOne(new LambdaQueryWrapper<UmsUser>().eq(UmsUser::getOpenid, openid).last(MybatisConstant.LIMIT_ONE));
         if (umsUser == null) {
             // 注册用户
-            UmsUserInfoDTO userInfo = params.getUserInfo();
             Long id = IdGeneratorUtil.nextId();
             umsUser = UmsUser.builder()
                     .id(id)
                     .type(type)
                     .openid(openid)
                     .unionid(unionid)
-                    .nickname(userInfo.getNickname())
                     .phone(null)
                     .sex(UserSexEnum.未知.getType())
                     .birthday(null)
-                    .avatarUrl(userInfo.getAvatarUrl())
                     .build();
+            UmsUserInfoDTO userInfo = params.getUserInfo();
+            if (userInfo != null) {
+                umsUser.setNickname(userInfo.getNickname());
+                umsUser.setAvatarUrl(userInfo.getAvatarUrl());
+            }
             umsUser.insert();
         }
 

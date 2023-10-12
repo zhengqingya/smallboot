@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
 
@@ -40,6 +41,7 @@ public class UmsUserInfoDTO extends BaseDTO {
     @ApiModelProperty("头像")
     private String avatarUrl;
 
+    @Length(max = 11, message = "手机号最多11位！")
     @ApiModelProperty("手机号码")
     private String phone;
 

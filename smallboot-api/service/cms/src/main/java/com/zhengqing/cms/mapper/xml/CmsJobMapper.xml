@@ -17,6 +17,9 @@
         LEFT JOIN cms_job_category cjc ON cjc.id = cj.category_id
         <where>
             cj.is_deleted=0
+            <if test="filter.id!=null">
+                AND cj.id = #{filter.id}
+            </if>
             <if test="filter.idList!=null and filter.idList.size>0">
                 AND cj.id IN
                 <foreach collection="filter.idList" separator="," open="(" close=")" item="id">

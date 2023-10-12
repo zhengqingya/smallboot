@@ -1,8 +1,7 @@
 package com.zhengqing.ums.model.dto;
 
-import com.zhengqing.common.base.exception.ParameterException;
 import com.zhengqing.common.base.model.dto.BaseDTO;
-import com.zhengqing.common.core.custom.parameter.CheckParam;
+import com.zhengqing.common.core.custom.parameter.HandleParam;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,7 +26,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class UmsUserLoginDTO extends BaseDTO implements CheckParam {
+public class UmsUserLoginDTO extends BaseDTO implements HandleParam {
 
     /**
      * {@link com.zhengqing.ums.enums.MiniTypeEnum}
@@ -53,8 +52,14 @@ public class UmsUserLoginDTO extends BaseDTO implements CheckParam {
     @ApiModelProperty("用户信息")
     private UmsUserInfoDTO userInfo;
 
-    @Override
-    public void checkParam() throws ParameterException {
-    }
+    @ApiModelProperty("是否本地测试登录(仅测试使用)")
+    private Boolean isLocalLogin;
 
+    @Override
+    public void handleParam() {
+        if (this.isLocalLogin == null) {
+            this.isLocalLogin = false;
+        }
+    }
+    
 }

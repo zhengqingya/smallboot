@@ -3,7 +3,10 @@ package com.zhengqing.ums.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhengqing.ums.entity.UmsUser;
-import com.zhengqing.ums.model.dto.*;
+import com.zhengqing.ums.model.dto.UmsUserDTO;
+import com.zhengqing.ums.model.dto.UmsUserInfoDTO;
+import com.zhengqing.ums.model.dto.UmsUserLoginDTO;
+import com.zhengqing.ums.model.dto.WebUmsUserPageDTO;
 import com.zhengqing.ums.model.vo.UmsUserVO;
 import com.zhengqing.ums.model.vo.WebUmsUserPageVO;
 
@@ -47,17 +50,6 @@ public interface IUmsUserService extends IService<UmsUser> {
      * @date 2022/6/10 16:00
      */
     UmsUserVO getUserInfo(UmsUserDTO params);
-
-
-    /**
-     * 微信小程序登录
-     *
-     * @param params 认证
-     * @return 用户信息
-     * @author zhengqingya
-     * @date 2022/12/7 11:05
-     */
-    UmsUserVO wxLogin(UmsUserWxLoginDTO params);
 
     /**
      * 小程序登录

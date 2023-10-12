@@ -7,7 +7,6 @@ import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.ums.model.dto.UmsUserDTO;
 import com.zhengqing.ums.model.dto.UmsUserInfoDTO;
 import com.zhengqing.ums.model.dto.UmsUserLoginDTO;
-import com.zhengqing.ums.model.dto.UmsUserWxLoginDTO;
 import com.zhengqing.ums.model.vo.UmsUserVO;
 import com.zhengqing.ums.service.IUmsUserService;
 import io.swagger.annotations.Api;
@@ -39,14 +38,14 @@ public class MiniUmsUserController extends BaseController {
     @ApiOpen
     @PostMapping("wxLogin")
     @ApiOperation("微信小程序登录")
-    public UmsUserVO wxLogin(@RequestBody UmsUserWxLoginDTO params) {
-        return this.sysUserService.wxLogin(params);
+    public UmsUserVO wxLogin(@RequestBody UmsUserLoginDTO params) {
+        return this.sysUserService.login(params);
     }
 
     @ApiOpen
     @PostMapping("login")
     @ApiOperation("小程序登录")
-    public UmsUserVO login(@Validated @RequestBody UmsUserLoginDTO params) {
+    public UmsUserVO login(@RequestBody UmsUserLoginDTO params) {
         return this.sysUserService.login(params);
     }
 

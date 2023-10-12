@@ -27,6 +27,9 @@ import java.util.List;
 public class CmsJobBaseDTO extends BasePageDTO {
 
     @ApiModelProperty("id")
+    private Integer id;
+
+    @ApiModelProperty("id")
     private List<Integer> idList;
 
     @ApiModelProperty("部门id")
