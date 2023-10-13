@@ -64,10 +64,10 @@
     <base-dialog v-else v-model="dialogVisible" :title="titleMap[dialogStatus]" width="50%">
       <el-form ref="dataFormRef" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="账号:" prop="username">
-          <el-input v-model="form.username" disabled />
+          <el-input v-model="form.username" :disabled="dialogStatus != 'add'" />
         </el-form-item>
         <el-form-item label="密码:" prop="password">
-          <el-input v-model="form.password" placeholder="默认：123456" />
+          <el-input v-model="form.password" placeholder="请输入密码" />
         </el-form-item>
         <el-form-item label="昵称:" prop="nickname">
           <el-input v-model="form.nickname" />
@@ -98,6 +98,9 @@
         </el-form-item>
         <el-form-item label="岗位:" prop="postIdList">
           <base-select v-if="dialogVisible" v-model="form.postIdList" tag-type="success" style="width: 100%" multiple clearable :option-props="{ label: 'name', value: 'id' }" api="sys_post.list" />
+        </el-form-item>
+        <el-form-item v-if="dialogStatus == 'add'" label="归属商户:" style="width: 100%">
+          <base-select v-if="dialogVisible" v-model="form.merchantId" clearable style="width: 100%" :option-props="{ label: 'name', value: 'id' }" api="sys_merchant.list" />
         </el-form-item>
       </el-form>
       <template #footer>
