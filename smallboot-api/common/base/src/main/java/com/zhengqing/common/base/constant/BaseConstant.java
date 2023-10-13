@@ -62,7 +62,7 @@ public interface BaseConstant {
     int DEFAULT_PAGE_SIZE = 10;
 
     /**
-     * rpc服务调用不需要封装返回值的api
+     * 服务调用不需要封装返回值的api
      * 　　 ?　 =>　 匹配一个字符
      * 　　 *　 =>  匹配0个及以上字符
      * 　　 **　=>  匹配0个及以上目录

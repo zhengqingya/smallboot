@@ -35,12 +35,11 @@ public class UmsUserLoginDTO extends BaseDTO implements HandleParam {
     @ApiModelProperty("小程序类型")
     private Integer type;
 
-    @NotBlank
-    @ApiModelProperty("小程序appid")
-    private String appid;
+    @ApiModelProperty("第三方小程序应用 appid")
+    private String component_appid;
 
-    @ApiModelProperty("小程序secret")
-    private String secret;
+    @ApiModelProperty("授权小程序接口调用凭据")
+    private String authorizer_access_token;
 
     @NotBlank
     @ApiModelProperty("登录凭证")
@@ -61,5 +60,5 @@ public class UmsUserLoginDTO extends BaseDTO implements HandleParam {
             this.isLocalLogin = false;
         }
     }
-    
+
 }

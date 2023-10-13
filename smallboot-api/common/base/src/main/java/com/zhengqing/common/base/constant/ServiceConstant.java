@@ -42,5 +42,10 @@ public interface ServiceConstant {
      */
     String SERVICE_API_PREFIX_WX_MP = "/wx/mp/portal";
 
+    /**
+     * 抖音
+     */
+    String SERVICE_API_PREFIX_DOUYIN = "/api/douyin";
+
 
 }

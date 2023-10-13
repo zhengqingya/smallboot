@@ -20,7 +20,11 @@
     </modules>
 
     <dependencies>
-
+        <dependency>
+            <groupId>com.zhengqing</groupId>
+            <artifactId>base</artifactId>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
 
