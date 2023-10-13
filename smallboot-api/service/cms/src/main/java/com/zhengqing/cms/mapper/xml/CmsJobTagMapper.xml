@@ -4,18 +4,22 @@
 
     <select id="selectDataPage" resultType="com.zhengqing.cms.model.vo.CmsJobTagPageVO">
         SELECT
-        *
-        FROM cms_job_tag
+        *, tsm.name merchantName
+        FROM cms_job_tag cjt
+        LEFT JOIN t_sys_merchant tsm ON tsm.id = cjt.merchant_id
         <where>
-            is_deleted=0
+            cjt.is_deleted=0
+            <if test="filter.merchantId!=null">
+                AND cjt.merchant_id = #{filter.merchantId}
+            </if>
             <if test="filter.deptId!=null">
-                AND dept_id = #{filter.deptId}
+                AND cjt.dept_id = #{filter.deptId}
             </if>
             <if test="filter.name!=null and filter.name!=''">
-                AND name LIKE CONCAT( '%', #{filter.name} , '%' )
+                AND cjt.name LIKE CONCAT( '%', #{filter.name} , '%' )
             </if>
         </where>
-        ORDER BY sort ASC, create_time DESC
+        ORDER BY cjt.sort ASC, cjt.create_time DESC
     </select>
 
     <select id="selectDataList" resultType="com.zhengqing.cms.model.vo.CmsJobTagListVO">
@@ -24,6 +28,9 @@
         FROM cms_job_tag
         <where>
             is_deleted=0 AND status=1
+            <if test="filter.merchantId!=null">
+                AND merchant_id = #{filter.merchantId}
+            </if>
             <if test="filter.deptId!=null">
                 AND dept_id = #{filter.deptId}
             </if>

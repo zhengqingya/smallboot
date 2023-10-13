@@ -21,14 +21,17 @@ public interface BaseConstant {
      */
     Integer PARENT_ID = 0;
 
-    /**
-     * smallboot项目租户id
-     */
-    Integer SMALL_BOOT_TENANT_ID = 1;
 
     /**
-     * smallboot项目租户-超级套餐
+     * 系统超级管理员 -- 用户id、角色id
      */
+    Integer SYSTEM_SUPER_ADMIN_USER_ID = 1;
+    Integer SMALL_BOOT_SUPER_ADMIN_ROLE_ID = 1;
+
+    /**
+     * smallboot项目租户 -- id、超级套餐
+     */
+    Integer SMALL_BOOT_TENANT_ID = 1;
     Integer SMALL_BOOT_TENANT_ID_PACKAGE_ID = 1;
 
     /**

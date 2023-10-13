@@ -1,6 +1,8 @@
 package com.zhengqing.common.db.config.mybatis.data.permission.second;
 
 import cn.hutool.core.util.StrUtil;
+import com.zhengqing.common.base.constant.AppConstant;
+import com.zhengqing.common.base.context.JwtUserContext;
 import com.zhengqing.common.db.context.DataPermissionThreadLocal;
 import com.zhengqing.common.db.enums.DataPermissionTypeEnum;
 import lombok.SneakyThrows;
@@ -16,7 +18,6 @@ import net.sf.jsqlparser.schema.Table;
 import net.sf.jsqlparser.statement.select.PlainSelect;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -25,6 +26,7 @@ import java.util.stream.Collectors;
  *
  * @author zhengqingya
  * @description {@link MyDataPermissionInterceptor}
+ * 使用示例： 在需要的地方设置即可 DataPermissionThreadLocal.set(UserPermissionInfo.builder().dataPermissionTypeEnum(DataPermissionTypeEnum.SELF).build());
  * @date 2022/1/10 17:37
  */
 @Slf4j
@@ -43,6 +45,8 @@ public class MyDataPermissionHandler {
         Expression where = plainSelect.getWhere();
         // 获取权限过滤相关信息
         UserPermissionInfo userPermissionInfo = DataPermissionThreadLocal.get();
+        // 防止下次进来时非上次数据认证权限！！！
+        DataPermissionThreadLocal.remove();
         if (userPermissionInfo == null) {
             return where;
         }
@@ -68,43 +72,42 @@ public class MyDataPermissionHandler {
 
             // 根据不同类型进行权限处理
             switch (dataPermissionTypeEnum) {
-                // 查看全部
                 case ALL:
                     return where;
-                // 查看本人所在角色以及下属机构
-                case ROLE_AUTO:
-                    // 创建IN 表达式
-                    // 创建IN范围的元素集合
-                    Set<String> roleIdList = userPermissionInfo.getRoleIdList();
-                    // 把集合转变为JSQLParser需要的元素列表
-                    ItemsList itemsList = new ExpressionList(roleIdList.stream().map(LongValue::new).collect(Collectors.toList()));
-                    InExpression inExpression = new InExpression(new Column(mainTableName + ".create_role_id"), itemsList);
-                    AndExpression andExpression = new AndExpression(where, inExpression);
-                    log.info(" where {}", andExpression);
-                    return andExpression;
-                // 查看当前角色的数据
-                case ROLE:
+                case SELF:
+                    // create_by = userId
+                    EqualsTo selfEqualsTo = new EqualsTo();
+                    selfEqualsTo.setLeftExpression(new Column(mainTableName + ".create_by"));
+                    selfEqualsTo.setRightExpression(new LongValue(JwtUserContext.getUserId()));
+                    AndExpression selfAndExpression = new AndExpression(where, selfEqualsTo);
+                    log.info(" where {}", selfAndExpression);
+                    return selfAndExpression;
+                case AUTO:
+                    return new AndExpression(where, new StringValue(userPermissionInfo.getSql()));
+                case SELF_ROLE:
                     //  = 表达式
                     // role_id = roleId
                     EqualsTo equalsTo = new EqualsTo();
-                    equalsTo.setLeftExpression(new Column(mainTableName + ".create_role_id"));
+                    equalsTo.setLeftExpression(new Column(mainTableName + ".role_id"));
                     equalsTo.setRightExpression(new LongValue(userPermissionInfo.getRoleId()));
                     // 创建 AND 表达式 拼接Where 和 = 表达式
                     // WHERE xxx AND role_id = 3
                     AndExpression deptAndExpression = new AndExpression(where, equalsTo);
                     log.info(" where {}", deptAndExpression);
                     return deptAndExpression;
-                // 查看自己的数据
-                case SELF:
-                    // create_by = userId
-                    EqualsTo selfEqualsTo = new EqualsTo();
-                    selfEqualsTo.setLeftExpression(new Column(mainTableName + ".create_by"));
-                    selfEqualsTo.setRightExpression(new LongValue(userPermissionInfo.getUserId()));
-                    AndExpression selfAndExpression = new AndExpression(where, selfEqualsTo);
-                    log.info(" where {}", selfAndExpression);
-                    return selfAndExpression;
-                case AUTO:
-                    return new AndExpression(where, new StringValue(userPermissionInfo.getSql()));
+                case ROLE_AUTO:
+                    // 创建IN 表达式
+                    // 创建IN范围的元素集合
+                    List<Integer> roleIdList = JwtUserContext.get().getAllRoleIdList();
+                    if (roleIdList.contains(AppConstant.SMALL_BOOT_SUPER_ADMIN_ROLE_ID)) {
+                        return where;
+                    }
+                    // 把集合转变为JSQLParser需要的元素列表
+                    ItemsList itemsList = new ExpressionList(roleIdList.stream().map(LongValue::new).collect(Collectors.toList()));
+                    InExpression inExpression = new InExpression(new Column(mainTableName + ".role_id"), itemsList);
+                    AndExpression andExpression = new AndExpression(where, inExpression);
+                    log.info(" where {}", andExpression);
+                    return andExpression;
                 default:
                     break;
             }

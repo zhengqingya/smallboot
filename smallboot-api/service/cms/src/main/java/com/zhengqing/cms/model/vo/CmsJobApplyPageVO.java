@@ -30,6 +30,9 @@ public class CmsJobApplyPageVO extends BaseVO {
     @ApiModelProperty("主键ID")
     private Integer id;
 
+    @ApiModelProperty(value = "商户名")
+    private String merchantName;
+
     @ApiModelProperty("职位id")
     private Integer jobId;
 

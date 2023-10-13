@@ -1,13 +1,15 @@
 <template>
   <base-wrapper>
     <base-header>
-      <base-cascader
-        v-model="listQuery.deptId"
-        clearable
+      <base-select
+        v-model="listQuery.merchantId"
+        label="归属商户"
+        tag-type="success"
         style="margin-right: 10px"
-        label="归属部门"
-        :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true, emitPath: false }"
-        api="sys_dept.tree" />
+        clearable
+        :option-props="{ label: 'name', value: 'id' }"
+        api="sys_merchant.list"
+        @clear="refreshTableData" />
       <base-input v-model="listQuery.name" label="名称" @clear="refreshTableData" />
       <el-button type="primary" @click="refreshTableData">查询</el-button>
       <template #right>
@@ -16,7 +18,8 @@
     </base-header>
 
     <base-table-p ref="baseTableRef" api="cms_job_category.page" :params="listQuery">
-      <el-table-column label="归属部门" prop="deptName" align="center" />
+      <!-- <el-table-column label="ID" prop="id" align="center" /> -->
+      <el-table-column label="归属商户" prop="merchantName" align="center" />
       <el-table-column label="名称" prop="name" align="center" />
       <el-table-column label="排序" prop="sort" align="center" />
       <el-table-column label="状态" prop="status" align="center">
@@ -37,15 +40,8 @@
 
     <base-dialog v-model="dialogVisible" :title="dialogTitleObj[dialogStatus]" width="40%">
       <el-form ref="dataFormRef" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="归属部门:" style="width: 100%">
-          <base-cascader
-            v-if="dialogVisible"
-            v-model="form.deptId"
-            style="width: 100%"
-            clearable
-            placeholder="请选择"
-            :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true, emitPath: false }"
-            api="sys_dept.tree" />
+        <el-form-item label="归属商户:" style="width: 100%">
+          <base-select v-if="dialogVisible" v-model="form.merchantId" style="width: 100%" :option-props="{ label: 'name', value: 'id' }" api="sys_merchant.list" />
         </el-form-item>
         <el-form-item label="名称:">
           <el-input v-model="form.name" />

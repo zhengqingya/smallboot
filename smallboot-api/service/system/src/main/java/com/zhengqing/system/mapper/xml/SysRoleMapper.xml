@@ -3,13 +3,16 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhengqing.system.mapper.SysRoleMapper">
 
-    <select id="selectDataList" resultType="com.zhengqing.system.model.vo.SysRoleListVO">
+    <select id="selectDataList" resultType="com.zhengqing.system.model.vo.SysRoleBaseVO">
         SELECT
         *
         FROM t_sys_role
         <where>
             <if test="filter.name != null and filter.name != ''">
                 AND name LIKE CONCAT( '%', #{filter.name} , '%' )
+            </if>
+            <if test="filter.excludeRoleId!=null">
+                AND role_id != #{filter.excludeRoleId}
             </if>
         </where>
         ORDER BY is_fixed DESC, sort ASC, create_time DESC

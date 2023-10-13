@@ -20,7 +20,8 @@ public enum CmsJobApplyStatusEnum {
 
     待录取(1, "待录取"),
     录取(2, "录取"),
-    拒绝(3, "拒绝");
+    拒绝(3, "拒绝"),
+    已撤销(4, "已撤销");
 
     private final Integer status;
     private final String desc;

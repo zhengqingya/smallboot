@@ -10,6 +10,7 @@ import com.zhengqing.cms.entity.CmsJobApply;
 import com.zhengqing.cms.mapper.CmsJobApplyMapper;
 import com.zhengqing.cms.model.dto.CmsJobApplyPageDTO;
 import com.zhengqing.cms.model.dto.CmsJobApplySaveDTO;
+import com.zhengqing.cms.model.dto.CmsJobBaseDTO;
 import com.zhengqing.cms.model.vo.CmsJobApplyPageVO;
 import com.zhengqing.cms.model.vo.CmsJobBaseVO;
 import com.zhengqing.cms.service.ICmsJobApplyService;
@@ -72,8 +73,11 @@ public class CmsJobApplyServiceImpl extends ServiceImpl<CmsJobApplyMapper, CmsJo
             Assert.isNull(cmsJobApplyOld, "请不要重复申请报名！");
         }
 
+        CmsJobBaseVO cmsJobBaseVO = this.iCmsJobService.detail(CmsJobBaseDTO.builder().id(jobId).build());
+
         CmsJobApply.builder()
                 .id(id)
+                .merchantId(cmsJobBaseVO.getMerchantId())
                 .jobId(jobId)
                 .status(params.getStatus())
                 .contact(params.getContact())

@@ -32,8 +32,9 @@ public class CmsJobTagSaveDTO extends BaseDTO {
     @NotNull(groups = {UpdateGroup.class}, message = "主键ID不能为空!")
     private Integer id;
 
-    @ApiModelProperty("租户ID")
-    private Integer tenantId;
+    @NotNull(message = "请选择商户！")
+    @ApiModelProperty(value = "商户ID")
+    private Integer merchantId;
 
     @ApiModelProperty("部门id")
     private Integer deptId;

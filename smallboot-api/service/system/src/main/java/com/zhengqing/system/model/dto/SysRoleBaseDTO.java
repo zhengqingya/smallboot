@@ -21,9 +21,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel("角色管理查询参数")
-public class SysRoleListDTO {
+public class SysRoleBaseDTO {
 
     @ApiModelProperty(value = "角色名称")
     private String name;
+
+    @ApiModelProperty("排除指定角色id下级的数据")
+    private Integer excludeRoleId;
 
 }

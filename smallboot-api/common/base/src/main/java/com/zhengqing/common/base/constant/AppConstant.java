@@ -53,11 +53,6 @@ public interface AppConstant extends BaseConstant {
     String REQUEST_HEADERS_CONTENT_TYPE = "application/json";
 
     /**
-     * 系统超级管理员id
-     */
-    Integer SYSTEM_SUPER_ADMIN_USER_ID = 1;
-
-    /**
      * 登录者角色
      */
     String ROLE_LOGIN = "role_login";

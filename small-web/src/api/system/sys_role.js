@@ -3,14 +3,21 @@ import request from '@/utils/request';
 const BASE_API = '/web/api/system/role';
 
 export default {
-  listPage(query, headers) {
+  tree(query) {
     return request({
-      url: BASE_API + '/listPage',
+      url: BASE_API + '/tree',
       method: 'get',
       params: query,
-      headers,
     });
   },
+  // listPage(query, headers) {
+  //   return request({
+  //     url: BASE_API + '/listPage',
+  //     method: 'get',
+  //     params: query,
+  //     headers,
+  //   });
+  // },
   list(query) {
     return request({
       url: BASE_API + '/list',

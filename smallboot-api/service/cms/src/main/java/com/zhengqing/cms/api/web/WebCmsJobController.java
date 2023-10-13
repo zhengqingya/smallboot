@@ -15,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 /**
  * <p> 内容管理-招聘岗位 接口 </p>
@@ -35,6 +37,12 @@ public class WebCmsJobController extends BaseController {
     @ApiOperation("分页列表")
     public IPage<CmsJobBaseVO> page(@Validated @ModelAttribute CmsJobBaseDTO params) {
         return this.iCmsJobService.page(params);
+    }
+
+    @GetMapping("list")
+    @ApiOperation("列表")
+    public List<CmsJobBaseVO> list(@Validated @ModelAttribute CmsJobBaseDTO params) {
+        return this.iCmsJobService.list(params);
     }
 
     @NoRepeatSubmit

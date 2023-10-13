@@ -38,7 +38,7 @@
 
     <base-dialog v-model="dialogVisible" :title="dialogTitleObj[dialogStatus]" width="60%">
       <el-form ref="dataFormRef" :inline="true" :model="form" :rules="rules" label-width="100px">
-        <el-form-item v-if="form.parentId != 0" label="父部门:">
+        <el-form-item label="父部门:">
           <base-cascader
             v-if="dialogVisible"
             v-model="form.parentId"
@@ -130,6 +130,9 @@ function submitForm() {
           form.cityName = form.provinceCityAreaList[1];
           form.areaName = form.provinceCityAreaList[2];
         }
+      }
+      if (!form.parentId) {
+        form.parentId = 0;
       }
       let res = await proxy.$api.sys_dept[form.id ? 'update' : 'add'](form);
       proxy.submitOk(res.message);

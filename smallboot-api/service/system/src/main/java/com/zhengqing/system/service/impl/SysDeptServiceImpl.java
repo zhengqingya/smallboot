@@ -97,7 +97,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void addOrUpdateData(SysDeptSaveDTO params) {
+    public Integer addOrUpdateData(SysDeptSaveDTO params) {
         Integer id = params.getId();
         String name = params.getName();
         // 校验名称是否重复
@@ -105,7 +105,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
         Assert.isTrue(sysDeptOld == null || sysDeptOld.getId().equals(id), "名称重复，请重新输入！");
 
 
-        SysDept.builder()
+        SysDept sysDept = SysDept.builder()
                 .id(id)
                 .parentId(params.getParentId())
                 .name(name)
@@ -121,8 +121,9 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
                 .address(params.getAddress())
                 .remark(params.getRemark())
                 .userNum(params.getUserNum())
-                .build()
-                .insertOrUpdate();
+                .build();
+        sysDept.insertOrUpdate();
+        return sysDept.getId();
     }
 
     @Override

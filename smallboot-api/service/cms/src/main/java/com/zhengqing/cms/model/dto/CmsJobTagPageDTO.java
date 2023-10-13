@@ -24,6 +24,9 @@ import lombok.experimental.SuperBuilder;
 @ApiModel("内容管理-招聘岗位标签-分页列表-请求参数")
 public class CmsJobTagPageDTO extends BaseDTO {
 
+    @ApiModelProperty(value = "商户ID")
+    private Integer merchantId;
+
     @ApiModelProperty("部门id")
     private Integer deptId;
 

@@ -5,10 +5,13 @@ import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.common.core.custom.repeatsubmit.NoRepeatSubmit;
 import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
-import com.zhengqing.system.model.dto.SysRoleListDTO;
+import com.zhengqing.common.db.config.mybatis.data.permission.second.UserPermissionInfo;
+import com.zhengqing.common.db.context.DataPermissionThreadLocal;
+import com.zhengqing.common.db.enums.DataPermissionTypeEnum;
+import com.zhengqing.system.model.dto.SysRoleBaseDTO;
 import com.zhengqing.system.model.dto.SysRoleSaveDTO;
 import com.zhengqing.system.model.vo.SysRoleAllPermissionDetailVO;
-import com.zhengqing.system.model.vo.SysRoleListVO;
+import com.zhengqing.system.model.vo.SysRoleBaseVO;
 import com.zhengqing.system.service.ISysPermBusinessService;
 import com.zhengqing.system.service.ISysRolePermissionService;
 import com.zhengqing.system.service.ISysRoleService;
@@ -43,13 +46,20 @@ public class WebSysRoleController extends BaseController {
 
     @GetMapping("listPage")
     @ApiOperation("列表分页")
-    public IPage<SysRoleListVO> listPage(@ModelAttribute SysRoleListDTO params) {
+    public IPage<SysRoleBaseVO> listPage(@ModelAttribute SysRoleBaseDTO params) {
         return this.iSysRoleService.listPage(params);
+    }
+
+    @GetMapping("tree")
+    @ApiOperation("树")
+    public List<SysRoleBaseVO> tree(@Validated @ModelAttribute SysRoleBaseDTO params) {
+        return this.iSysRoleService.tree(params);
     }
 
     @GetMapping("list")
     @ApiOperation("列表")
-    public List<SysRoleListVO> list(@ModelAttribute SysRoleListDTO params) {
+    public List<SysRoleBaseVO> list(@ModelAttribute SysRoleBaseDTO params) {
+        DataPermissionThreadLocal.set(UserPermissionInfo.builder().dataPermissionTypeEnum(DataPermissionTypeEnum.ROLE_AUTO).build());
         return this.iSysRoleService.list(params);
     }
 

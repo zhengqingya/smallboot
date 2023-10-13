@@ -33,7 +33,7 @@ public class SysPermissionVO {
     private List<Integer> roleIdList;
 
     @ApiModelProperty(value = "角色")
-    private List<SysRoleListVO> roleList;
+    private List<SysRoleBaseVO> roleList;
 
     @ApiModelProperty(value = "角色可访问的菜单ID")
     private List<Integer> menuIdList;

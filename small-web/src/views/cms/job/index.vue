@@ -1,13 +1,15 @@
 <template>
   <base-wrapper>
     <base-header>
-      <base-cascader
-        v-model="listQuery.deptId"
-        clearable
+      <base-select
+        v-model="listQuery.merchantId"
+        label="归属商户"
+        tag-type="success"
         style="margin-right: 10px"
-        label="归属部门"
-        :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true, emitPath: false }"
-        api="sys_dept.tree" />
+        clearable
+        :option-props="{ label: 'name', value: 'id' }"
+        api="sys_merchant.list"
+        @clear="refreshTableData" />
       <base-select v-model="listQuery.categoryId" style="margin-right: 10px" clearable :option-props="{ label: 'name', value: 'id' }" api="cms_job_category.list" />
       <base-input v-model="listQuery.name" label="职位名称" @clear="refreshTableData" />
       <el-button type="primary" @click="refreshTableData">查询</el-button>
@@ -18,7 +20,7 @@
 
     <base-table-p ref="baseTableRef" api="cms_job.page" :params="listQuery">
       <el-table-column label="ID" prop="id" align="center" />
-      <el-table-column label="归属部门" prop="deptName" align="center" />
+      <el-table-column label="归属商户" prop="merchantName" align="center" />
       <el-table-column label="职位分类" prop="categoryName" align="center" />
       <el-table-column label="职位名称" prop="name" align="center" />
       <el-table-column label="状态" align="center">
@@ -45,16 +47,8 @@
 
     <base-dialog v-model="dialogVisible" :title="dialogTitleObj[dialogStatus]" width="60%">
       <el-form ref="dataFormRef" :inline="true" :model="form" :rules="rules" label-width="100px">
-        <el-form-item label="归属部门:" style="width: 100%">
-          <base-cascader
-            v-if="dialogVisible"
-            v-model="form.deptId"
-            :disabled="isDetail"
-            style="width: 100%"
-            clearable
-            placeholder="请选择"
-            :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true, emitPath: false }"
-            api="sys_dept.tree" />
+        <el-form-item label="归属商户:" style="width: 100%">
+          <base-select v-if="dialogVisible" v-model="form.merchantId" :disabled="isDetail" style="width: 100%" :option-props="{ label: 'name', value: 'id' }" api="sys_merchant.list" />
         </el-form-item>
         <el-form-item label="职位分类:" prop="categoryId">
           <base-select

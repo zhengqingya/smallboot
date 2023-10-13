@@ -4,11 +4,15 @@
 
     <select id="selectDataPage" resultType="com.zhengqing.cms.model.vo.CmsJobCategoryPageVO">
         SELECT
-        cjc.*, tsd.name deptName
+        cjc.*, tsm.name merchantName, tsd.name deptName
         FROM cms_job_category cjc
         LEFT JOIN t_sys_dept tsd ON tsd.id = cjc.dept_id
+        LEFT JOIN t_sys_merchant tsm ON tsm.id = cjc.merchant_id
         <where>
             cjc.is_deleted=0
+            <if test="filter.merchantId!=null">
+                AND cjc.merchant_id = #{filter.merchantId}
+            </if>
             <if test="filter.deptId!=null">
                 AND cjc.dept_id = #{filter.deptId}
             </if>
@@ -25,6 +29,9 @@
         FROM cms_job_category
         <where>
             is_deleted=0 AND status=1
+            <if test="filter.merchantId!=null">
+                AND merchant_id = #{filter.merchantId}
+            </if>
             <if test="filter.deptId!=null">
                 AND dept_id = #{filter.deptId}
             </if>

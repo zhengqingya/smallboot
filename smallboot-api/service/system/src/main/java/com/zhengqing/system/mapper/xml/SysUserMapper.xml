@@ -47,7 +47,9 @@
         <result column="post_id_list"
                 property="postIdList"
                 typeHandler="com.zhengqing.common.db.config.mybatis.handler.ListIntegerTypeHandler"></result>
-        <collection property="roleIdList" ofType="String" javaType="list">
+        <result property="merchantId" column="merchant_id"/>
+        <result property="isMerchantAdmin" column="is_merchant_admin"/>
+        <collection property="roleIdList" ofType="Integer" javaType="list">
             <result column="roleId"/>
         </collection>
         <collection property="roleCodeList" ofType="String" javaType="list">
@@ -68,6 +70,8 @@
         su.create_time,
         su.dept_id,
         su.post_id_list,
+        su.merchant_id,
+        su.is_merchant_admin,
         sr.role_id roleId,
         sr.code roleCode
         FROM t_sys_user su

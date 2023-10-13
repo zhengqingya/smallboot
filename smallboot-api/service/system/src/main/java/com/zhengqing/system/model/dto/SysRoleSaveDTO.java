@@ -32,6 +32,10 @@ public class SysRoleSaveDTO extends BaseDTO {
     @ApiModelProperty(value = "主键ID")
     private Integer roleId;
 
+    @NotNull(message = "父id不能为空")
+    @ApiModelProperty("父id")
+    private Integer parentId;
+
     @NotBlank(message = "角色名不能为空！")
     @ApiModelProperty(value = "角色名")
     private String name;

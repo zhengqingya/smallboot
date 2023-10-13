@@ -47,6 +47,7 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
     private final ISysPermBusinessService iSysPermBusinessService;
     private final ISysUserService iSysUserService;
     private final ISysRoleService iSysRoleService;
+    private final ISysDeptService iSysDeptService;
 
     @Override
     public SysTenant detail(Integer id) {
@@ -102,6 +103,7 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
                 // 创建角色
                 Integer roleId = this.iSysRoleService.addOrUpdateData(
                         SysRoleSaveDTO.builder()
+                                .parentId(AppConstant.PARENT_ID)
                                 .name(SysRoleCodeEnum.租户管理员.getName())
                                 .code(SysRoleCodeEnum.租户管理员.getCode())
                                 .isFixed(true)
@@ -111,10 +113,18 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
                 // 默认创建商户管理员，权限由租户自己单独分配
                 this.iSysRoleService.addOrUpdateData(
                         SysRoleSaveDTO.builder()
+                                .parentId(roleId)
                                 .name(SysRoleCodeEnum.商户管理员.getName())
                                 .code(SysRoleCodeEnum.商户管理员.getCode())
                                 .isFixed(true)
-                                .sort(3)
+                                .sort(1)
+                                .build()
+                );
+                // 默认创建一个部门
+                Integer deptId = this.iSysDeptService.addOrUpdateData(
+                        SysDeptSaveDTO.builder()
+                                .parentId(AppConstant.PARENT_ID)
+                                .name(name)
                                 .build()
                 );
 
@@ -133,6 +143,7 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
                         .password(params.getPassword())
                         .nickname(params.getAdminName())
                         .phone(params.getAdminPhone())
+                        .deptId(deptId)
                         .roleIdList(Lists.newArrayList(roleId))
                         .isFixed(true)
                         .build());

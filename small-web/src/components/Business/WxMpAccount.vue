@@ -19,7 +19,8 @@ let list = $ref([]);
 
 // 注册一个回调函数，在组件因为响应式状态变更而更新其 DOM 树之后调用。
 onUpdated(() => {
-  init();
+  // TODO 临时注释
+  // init();
 });
 
 const isShow = computed(() => {

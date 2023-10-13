@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 /**
@@ -34,9 +35,7 @@ public class UserPermissionInfo {
     @ApiModelProperty("自定义权限过滤sql")
     private String sql;
 
-    /**
-     * {@link DataPermissionTypeEnum}
-     */
+    @NotNull
     @ApiModelProperty("数据权限类型")
     private DataPermissionTypeEnum dataPermissionTypeEnum;
 

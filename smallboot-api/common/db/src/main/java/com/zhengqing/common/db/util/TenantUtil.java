@@ -16,7 +16,7 @@ import java.util.concurrent.Callable;
 public class TenantUtil {
 
     /**
-     * 执行业务逻辑，有租户的情况下，执行完业务返回之前租户信息
+     * 执行业务逻辑(忽略租户)，有租户的情况下，执行完业务返回之前租户信息
      *
      * @param runnable 业务逻辑
      * @return void
@@ -26,6 +26,7 @@ public class TenantUtil {
         Integer oldTenantId = TenantIdContext.getTenantId();
         Boolean isFlag = TenantIdContext.getFlag();
         try {
+            TenantIdContext.removeFlag();
             runnable.run();
         } finally {
             TenantIdContext.setTenantId(oldTenantId);

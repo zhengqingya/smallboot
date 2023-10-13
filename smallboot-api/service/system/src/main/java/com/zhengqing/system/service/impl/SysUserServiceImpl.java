@@ -93,7 +93,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         Integer userId = params.getUserId();
         String password = params.getPassword();
         Boolean isFixed = params.getIsFixed();
-        
+
         // 校验名称是否重复
         SysUser sysUserOld = this.sysUserMapper.selectOne(new LambdaQueryWrapper<SysUser>().eq(SysUser::getUsername, params.getUsername()).last(MybatisConstant.LIMIT_ONE));
         Assert.isTrue(sysUserOld == null || sysUserOld.getUserId().equals(params.getUserId()), "用户名重复，请重新输入！");
@@ -115,6 +115,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             sysUser.setUsername(params.getUsername());
             sysUser.setPassword(PasswordUtil.encodePassword(StrUtil.isBlank(password) ? AppConstant.DEFAULT_PASSWORD : password));
             sysUser.setMerchantId(params.getMerchantId());
+            sysUser.setIsMerchantAdmin(params.getIsMerchantAdmin());
             sysUser.insert();
             userId = sysUser.getUserId();
         } else {

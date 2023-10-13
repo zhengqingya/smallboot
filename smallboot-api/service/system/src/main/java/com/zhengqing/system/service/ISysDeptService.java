@@ -41,11 +41,11 @@ public interface ISysDeptService extends IService<SysDept> {
      * 新增或更新
      *
      * @param params 保存参数
-     * @return void
+     * @return 主键ID
      * @author zhengqingya
      * @date 2023/10/09 18:10
      */
-    void addOrUpdateData(SysDeptSaveDTO params);
+    Integer addOrUpdateData(SysDeptSaveDTO params);
 
     /**
      * 删除数据

@@ -33,12 +33,23 @@ public class JwtUserBO extends BaseBO {
     @ApiModelProperty("用户名")
     private String username;
 
+    @ApiModelProperty("角色ids")
+    private List<Integer> roleIdList;
+
     @ApiModelProperty("角色编码")
     private List<String> roleCodeList;
+
+    @ApiModelProperty("当前角色以及下级ids")
+    private List<Integer> allRoleIdList;
 
     @ApiModelProperty("小程序openid")
     private String openid;
 
+    @ApiModelProperty(value = "商户ID")
+    private Integer merchantId;
+
+    @ApiModelProperty(value = "是否为商户管理员(0->否 1->是)")
+    private Boolean isMerchantAdmin;
 
     /**
      * 获取B端用户ID

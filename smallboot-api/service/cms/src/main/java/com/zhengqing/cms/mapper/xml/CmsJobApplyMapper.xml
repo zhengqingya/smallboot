@@ -4,10 +4,14 @@
 
     <select id="selectDataPage" resultType="com.zhengqing.cms.model.vo.CmsJobApplyPageVO">
         SELECT
-        cja.*
+        cja.*, tsm.name merchantName
         FROM cms_job_apply cja
+        LEFT JOIN t_sys_merchant tsm ON tsm.id = cja.merchant_id
         <where>
             cja.is_deleted=0
+            <if test="filter.merchantId!=null">
+                AND cja.merchant_id = #{filter.merchantId}
+            </if>
             <if test="filter.jobId!=null">
                 AND cja.job_id = #{filter.jobId}
             </if>

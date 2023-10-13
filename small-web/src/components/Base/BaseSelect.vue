@@ -1,6 +1,6 @@
 <template>
   <span v-if="label" class="label">{{ label }} &nbsp;</span>
-  <el-select filterable v-bind="$attrs" :placeholder="label ? `请选择${label}` : '请选择'">
+  <el-select filterable v-bind="$attrs" :placeholder="label ? `请选择${label}` : '请选择'" @change="handleChange">
     <template #prefix> <slot name="prefix" /></template>
     <el-option v-for="item in list" :key="item[optionProps.value]" :label="item[optionProps.label]" :value="item[optionProps.value]" />
   </el-select>
@@ -15,6 +15,7 @@ const props = defineProps({
   optionProps: { type: Object, default: () => {} },
   dataList: { type: Array, default: () => [] },
   label: { type: String, default: '' },
+  isDefaultValue: { type: Boolean, default: false }, // true:默认选中第一个值
 });
 
 let list = $ref([]);
@@ -27,11 +28,18 @@ async function init() {
   if (props.api) {
     let res = await apiMethod(props.params);
     list = res.data;
+    if (list.length > 0 && props.isDefaultValue) {
+      proxy.$emit('update:modelValue', list[0][props.optionProps.value]);
+    }
     return;
   }
   if (props.dataList) {
     list = props.dataList;
   }
+}
+
+function handleChange(val) {
+  // console.log('111', val);
 }
 
 // 接口请求

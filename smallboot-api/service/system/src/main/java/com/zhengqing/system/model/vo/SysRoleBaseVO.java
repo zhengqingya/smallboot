@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * <p>
  * 系统管理-角色表 输出内容
@@ -15,7 +17,10 @@ import lombok.Data;
  */
 @Data
 @ApiModel("系统管理 - 角色表 输出内容")
-public class SysRoleListVO {
+public class SysRoleBaseVO {
+
+    @ApiModelProperty("父id")
+    private Integer parentId;
 
     @ApiModelProperty(value = "角色ID")
     private Integer roleId;
@@ -34,5 +39,12 @@ public class SysRoleListVO {
 
     @ApiModelProperty(value = "排序")
     private Integer sort;
+
+    @ApiModelProperty("子级")
+    private List<SysRoleBaseVO> children;
+
+    public void handleData() {
+
+    }
 
 }

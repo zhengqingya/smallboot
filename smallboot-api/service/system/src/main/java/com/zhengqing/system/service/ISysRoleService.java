@@ -4,9 +4,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhengqing.system.entity.SysRole;
 import com.zhengqing.system.enums.SysRoleCodeEnum;
-import com.zhengqing.system.model.dto.SysRoleListDTO;
+import com.zhengqing.system.model.dto.SysRoleBaseDTO;
 import com.zhengqing.system.model.dto.SysRoleSaveDTO;
-import com.zhengqing.system.model.vo.SysRoleListVO;
+import com.zhengqing.system.model.vo.SysRoleBaseVO;
 
 import java.util.List;
 
@@ -29,7 +29,7 @@ public interface ISysRoleService extends IService<SysRole> {
      * @author zhengqingya
      * @date 2020/9/10 14:44
      */
-    IPage<SysRoleListVO> listPage(SysRoleListDTO params);
+    IPage<SysRoleBaseVO> listPage(SysRoleBaseDTO params);
 
     /**
      * 列表
@@ -39,7 +39,28 @@ public interface ISysRoleService extends IService<SysRole> {
      * @author zhengqingya
      * @date 2020/9/10 14:45
      */
-    List<SysRoleListVO> list(SysRoleListDTO params);
+    List<SysRoleBaseVO> list(SysRoleBaseDTO params);
+
+
+    /**
+     * 树
+     *
+     * @param params 查询参数
+     * @return 查询结果
+     * @author zhengqingya
+     * @date 2020/9/10 14:44
+     */
+    List<SysRoleBaseVO> tree(SysRoleBaseDTO params);
+
+    /**
+     * 获取指定角色下的子级角色（包含当前角色）
+     *
+     * @param roleId 角色id
+     * @return 查询结果
+     * @author zhengqingya
+     * @date 2023/10/09 18:10
+     */
+    List<Integer> getChildRoleIdList(Integer roleId);
 
     /**
      * 新增或更新

@@ -5,15 +5,20 @@ import com.zhengqing.common.auth.model.dto.AuthLoginDTO;
 import com.zhengqing.common.auth.model.vo.AuthLoginVO;
 import com.zhengqing.common.auth.service.IAuthService;
 import com.zhengqing.common.auth.util.AuthUtil;
+import com.zhengqing.common.base.constant.AppConstant;
 import com.zhengqing.common.base.enums.AuthSourceEnum;
 import com.zhengqing.common.base.model.bo.JwtUserBO;
 import com.zhengqing.system.model.dto.SysUserPermDTO;
 import com.zhengqing.system.model.vo.SysUserPermVO;
 import com.zhengqing.system.service.ISysPermBusinessService;
+import com.zhengqing.system.service.ISysRoleService;
 import com.zhengqing.system.util.PasswordUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.compress.utils.Lists;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -30,6 +35,7 @@ import org.springframework.stereotype.Service;
 public class AuthServiceImpl implements IAuthService {
 
     private final ISysPermBusinessService iSysPermBusinessService;
+    private final ISysRoleService iSysRoleService;
 
     @Override
     public AuthLoginVO login(AuthLoginDTO params) {
@@ -42,13 +48,23 @@ public class AuthServiceImpl implements IAuthService {
         // 校验原始密码是否正确
         Assert.isTrue(isValid, "密码错误！");
 
+        // 拿到下级角色ids
+        List<Integer> allRoleIdList = Lists.newArrayList();
+        List<Integer> roleIdList = userPerm.getRoleIdList();
+        if (!roleIdList.contains(AppConstant.SMALL_BOOT_SUPER_ADMIN_ROLE_ID)) {
+            roleIdList.forEach(e -> allRoleIdList.addAll(this.iSysRoleService.getChildRoleIdList(e)));
+        }
+
         // 登录
         return AuthUtil.login(
                 JwtUserBO.builder()
                         .authSourceEnum(AuthSourceEnum.B)
                         .userId(String.valueOf(userPerm.getUserId()))
                         .username(userPerm.getUsername())
+                        .allRoleIdList(allRoleIdList)
                         .roleCodeList(userPerm.getRoleCodeList())
+                        .merchantId(userPerm.getMerchantId())
+                        .isMerchantAdmin(userPerm.getIsMerchantAdmin())
                         .build()
         );
     }

@@ -1,18 +1,19 @@
 <template>
   <base-wrapper>
     <base-header>
-      <el-input v-model="listQuery.name" clearable placeholder="角色名称" style="width: 200px" @clear="refreshTableData" />
+      <base-input v-model="listQuery.name" clearable label="角色名称" @clear="refreshTableData" />
       <el-button type="primary" @click="refreshTableData">查询</el-button>
       <template #right>
         <el-button type="primary" @click="add">添加</el-button>
       </template>
     </base-header>
 
-    <base-table-p ref="baseTableRef" api="sys_role.listPage" :params="listQuery">
+    <el-table row-key="roleId" :tree-props="{ children: 'children', hasChildren: 'hasChildren' }" :data="dataList" default-expand-all>
       <el-table-column prop="name" label="角色名" />
       <el-table-column prop="code" label="角色编码">
         <template #default="scope">
-          <el-tag v-if="scope.row.code" type="success"> {{ scope.row.code }}</el-tag>
+          <el-tag v-if="scope.row.isFixed" type="success"> {{ scope.row.code }}</el-tag>
+          <el-tag v-else type="info"> {{ scope.row.code }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="code" label="固定角色">
@@ -30,10 +31,20 @@
           <base-delete-btn v-if="!scope.row.isFixed" @ok="deleteData(scope.row.roleId)" />
         </template>
       </el-table-column>
-    </base-table-p>
+    </el-table>
 
-    <base-dialog v-model="dialogVisible" :title="textMap[dialogStatus]" width="50%">
+    <base-dialog v-model="dialogVisible" :title="dialogTitleObj[dialogStatus]" width="50%">
       <el-form ref="roleFormRef" :model="roleForm" :rules="rules" label-width="100px">
+        <el-form-item label="父角色:">
+          <base-cascader
+            v-if="dialogVisible"
+            v-model="roleForm.parentId"
+            clearable
+            :params="{ excludeRoleId: roleForm.roleId }"
+            placeholder="请选择(为空时标识顶级)"
+            :props="{ value: 'roleId', label: 'name', children: 'children', checkStrictly: true, emitPath: false }"
+            api="sys_role.tree" />
+        </el-form-item>
         <el-form-item label="角色名：" prop="name">
           <el-input v-model="roleForm.name" placeholder="请输入角色名" />
         </el-form-item>
@@ -61,14 +72,22 @@ let rules = {
   name: [{ required: true, message: '请输入角色名称', trigger: 'blur' }],
 };
 let dialogStatus = $ref('');
-let textMap = $ref({ update: '编辑', add: '添加' });
+let dataList = $ref([]);
+
+onMounted(() => {
+  refreshTableData();
+});
 
 async function refreshTableData() {
-  proxy.$refs.baseTableRef.refresh();
+  let res = await proxy.$api.sys_role.tree(listQuery);
+  dataList = res.data;
 }
 function saveForm() {
   proxy.$refs.roleFormRef.validate(async (valid) => {
     if (valid) {
+      if (!roleForm.parentId) {
+        roleForm.parentId = 0;
+      }
       let res = await proxy.$api.sys_role[roleForm.roleId ? 'update' : 'add'](roleForm);
       proxy.submitOk(res.msg);
       refreshTableData();

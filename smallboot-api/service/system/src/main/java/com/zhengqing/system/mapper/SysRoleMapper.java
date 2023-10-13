@@ -3,8 +3,8 @@ package com.zhengqing.system.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.system.entity.SysRole;
-import com.zhengqing.system.model.dto.SysRoleListDTO;
-import com.zhengqing.system.model.vo.SysRoleListVO;
+import com.zhengqing.system.model.dto.SysRoleBaseDTO;
+import com.zhengqing.system.model.vo.SysRoleBaseVO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -36,7 +36,7 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
     // "</if>",
     // "ORDER BY create_time DESC",
     // "</script>"})
-    IPage<SysRoleListVO> selectDataList(IPage<SysRoleListVO> page, @Param("filter") SysRoleListDTO filter);
+    IPage<SysRoleBaseVO> selectDataList(IPage<SysRoleBaseVO> page, @Param("filter") SysRoleBaseDTO filter);
 
     /**
      * 列表
@@ -46,7 +46,7 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
      * @author zhengqingya
      * @date 2020/9/10 18:08
      */
-    List<SysRoleListVO> selectDataList(@Param("filter") SysRoleListDTO filter);
+    List<SysRoleBaseVO> selectDataList(@Param("filter") SysRoleBaseDTO filter);
 
     /**
      * 根据角色编码查询角色ID

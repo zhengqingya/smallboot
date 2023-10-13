@@ -83,6 +83,9 @@ public class SysUserSaveDTO extends BaseDTO {
     @ApiModelProperty(value = "商户ID")
     private Integer merchantId;
 
+    @ApiModelProperty(value = "是否为商户管理员(0->否 1->是)")
+    private Boolean isMerchantAdmin;
+
     @ApiModelProperty(value = "是否固定(false->否 true->是)")
     private Boolean isFixed;
 

@@ -38,6 +38,9 @@ public class SysRole extends BaseEntity<SysRole> {
     @ApiModelProperty("租户ID")
     private Integer tenantId;
 
+    @ApiModelProperty("父id")
+    private Integer parentId;
+
     @ApiModelProperty(value = "角色名")
     private String name;
 

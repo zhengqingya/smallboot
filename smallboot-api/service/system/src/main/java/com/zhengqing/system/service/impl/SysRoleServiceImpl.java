@@ -1,17 +1,19 @@
 package com.zhengqing.system.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.google.common.collect.Lists;
 import com.zhengqing.common.db.constant.MybatisConstant;
 import com.zhengqing.system.entity.SysRole;
 import com.zhengqing.system.enums.SysRoleCodeEnum;
 import com.zhengqing.system.mapper.SysRoleMapper;
-import com.zhengqing.system.model.dto.SysRoleListDTO;
+import com.zhengqing.system.model.dto.SysRoleBaseDTO;
 import com.zhengqing.system.model.dto.SysRoleSaveDTO;
-import com.zhengqing.system.model.vo.SysRoleListVO;
+import com.zhengqing.system.model.vo.SysRoleBaseVO;
 import com.zhengqing.system.service.ISysRoleMenuService;
 import com.zhengqing.system.service.ISysRolePermissionService;
 import com.zhengqing.system.service.ISysRoleService;
@@ -21,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -41,13 +44,74 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     private final ISysRolePermissionService iSysRolePermissionService;
 
     @Override
-    public IPage<SysRoleListVO> listPage(SysRoleListDTO params) {
+    public IPage<SysRoleBaseVO> listPage(SysRoleBaseDTO params) {
         return this.sysRoleMapper.selectDataList(new Page<>(), params);
     }
 
     @Override
-    public List<SysRoleListVO> list(SysRoleListDTO params) {
+    public List<SysRoleBaseVO> list(SysRoleBaseDTO params) {
         return this.sysRoleMapper.selectDataList(params);
+    }
+
+    @Override
+    public List<SysRoleBaseVO> tree(SysRoleBaseDTO params) {
+        List<SysRoleBaseVO> list = this.list(params);
+        if (CollUtil.isEmpty(list)) {
+            return Lists.newArrayList();
+        }
+        Integer firstParentId = list.stream().map(SysRoleBaseVO::getParentId).min(Integer::compareTo).get();
+        return this.recurveRole(firstParentId, list, params.getExcludeRoleId());
+    }
+
+    /**
+     * 递归
+     *
+     * @param parentId      父id
+     * @param allList       所有数据
+     * @param excludeRoleId 排除指定角色id下级的数据
+     * @return 菜单树列表
+     * @author zhengqingya
+     * @date 2020/9/10 20:56
+     */
+    private List<SysRoleBaseVO> recurveRole(Integer parentId, List<SysRoleBaseVO> allList, Integer excludeRoleId) {
+        if (parentId.equals(excludeRoleId)) {
+            return Lists.newArrayList();
+        }
+        // 存放子集合
+        List<SysRoleBaseVO> childList = allList.stream().filter(e -> e.getParentId().equals(parentId)).collect(Collectors.toList());
+        // 递归
+        childList.forEach(item -> {
+            item.setChildren(this.recurveRole(item.getRoleId(), allList, excludeRoleId));
+            item.handleData();
+        });
+        return childList;
+    }
+
+    @Override
+    public List<Integer> getChildRoleIdList(Integer roleId) {
+        return this.recurveRoleId(roleId, this.list(), Lists.newArrayList());
+    }
+
+    /**
+     * 递归
+     *
+     * @param parentId   父id
+     * @param allList    所有数据
+     * @param roleIdList 最终结果
+     * @return 菜单树列表
+     * @author zhengqingya
+     * @date 2020/9/10 20:56
+     */
+    private List<Integer> recurveRoleId(Integer parentId, List<SysRole> allList, List<Integer> roleIdList) {
+        roleIdList.add(parentId);
+        List<SysRole> childList = allList.stream().filter(e -> e.getParentId().equals(parentId)).collect(Collectors.toList());
+        if (CollUtil.isEmpty(childList)) {
+            return roleIdList;
+        }
+        for (SysRole item : childList) {
+            this.recurveRoleId(item.getRoleId(), allList, roleIdList);
+        }
+        return roleIdList;
     }
 
     @Override
@@ -60,6 +124,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 
         SysRole sysRole = SysRole.builder()
                 .roleId(params.getRoleId())
+                .parentId(params.getParentId())
                 .name(params.getName())
                 .code(params.getCode())
                 .status(params.getStatus())

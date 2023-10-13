@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
 import com.zhengqing.common.db.constant.MybatisConstant;
+import com.zhengqing.common.db.util.TenantUtil;
 import com.zhengqing.system.entity.SysMerchant;
 import com.zhengqing.system.enums.SysRoleCodeEnum;
 import com.zhengqing.system.mapper.SysMerchantMapper;
@@ -84,6 +85,8 @@ public class SysMerchantServiceImpl extends ServiceImpl<SysMerchantMapper, SysMe
                 .build();
         if (isAdd && customId != null) {
             sysMerchant.setId(customId);
+            // 看下自定义商户id有没有重复的
+            TenantUtil.execute(() -> Assert.isNull(this.sysMerchantMapper.selectById(customId), "商户ID重复，请重新输入！"));
         }
         sysMerchant.insertOrUpdate();
 
@@ -101,6 +104,7 @@ public class SysMerchantServiceImpl extends ServiceImpl<SysMerchantMapper, SysMe
                     .roleIdList(Lists.newArrayList(roleId))
                     .isFixed(true)
                     .merchantId(sysMerchant.getId())
+                    .isMerchantAdmin(true)
                     .build());
             sysMerchant.setAdminUserId(userId);
             sysMerchant.updateById();

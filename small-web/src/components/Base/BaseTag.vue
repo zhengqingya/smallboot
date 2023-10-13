@@ -9,7 +9,7 @@
 <script setup>
 const { proxy } = getCurrentInstance();
 const props = defineProps({
-  modelValue: { type: Number, default: 1 },
+  modelValue: { type: null, default: null },
   dataType: { type: String, default: 'status' },
 });
 </script>

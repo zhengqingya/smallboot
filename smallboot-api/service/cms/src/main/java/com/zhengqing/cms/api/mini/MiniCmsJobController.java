@@ -16,6 +16,7 @@ import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.base.enums.CommonStatusEnum;
 import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.common.core.custom.repeatsubmit.NoRepeatSubmit;
+import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -77,6 +78,13 @@ public class MiniCmsJobController extends BaseController {
     public IPage<CmsJobApplyPageVO> applyPage(@Validated @ModelAttribute CmsJobApplyPageDTO params) {
         params.setCreateBy(params.getCurrentUserId());
         return this.iCmsJobApplyService.page(params);
+    }
+
+    @NoRepeatSubmit
+    @PutMapping("apply/update")
+    @ApiOperation("申请-更新")
+    public void applyUpdate(@Validated(UpdateGroup.class) @RequestBody CmsJobApplySaveDTO params) {
+        this.iCmsJobApplyService.addOrUpdateData(params);
     }
 
 }

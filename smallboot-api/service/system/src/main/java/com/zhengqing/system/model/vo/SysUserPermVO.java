@@ -72,6 +72,12 @@ public class SysUserPermVO extends BaseVO implements HandleParam {
     @ApiModelProperty(value = "岗位ids")
     private List<Integer> postIdList;
 
+    @ApiModelProperty(value = "商户ID")
+    private Integer merchantId;
+
+    @ApiModelProperty(value = "是否为商户管理员(0->否 1->是)")
+    private Boolean isMerchantAdmin;
+
 
     // ================= ↓↓↓↓↓↓ 角色信息 ↓↓↓↓↓↓ =================
 

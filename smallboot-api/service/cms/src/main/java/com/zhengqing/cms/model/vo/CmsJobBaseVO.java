@@ -30,20 +30,26 @@ public class CmsJobBaseVO extends BaseVO {
     @ApiModelProperty("主键ID")
     private Integer id;
 
-    @ApiModelProperty("部门id")
-    private Integer deptId;
+    @ApiModelProperty(value = "商户ID")
+    private Integer merchantId;
 
-    @ApiModelProperty("部门名称")
-    private String deptName;
+    @ApiModelProperty(value = "商户名")
+    private String merchantName;
+
+//    @ApiModelProperty("部门id")
+//    private Integer deptId;
+//
+//    @ApiModelProperty("部门名称")
+//    private String deptName;
 
     @ApiModelProperty("名称")
     private String name;
 
-    @ApiModelProperty("岗位id")
-    private Integer postId;
-
-    @ApiModelProperty("岗位名称")
-    private String postName;
+//    @ApiModelProperty("岗位id")
+//    private Integer postId;
+//
+//    @ApiModelProperty("岗位名称")
+//    private String postName;
 
     @ApiModelProperty("分类id")
     private Integer categoryId;

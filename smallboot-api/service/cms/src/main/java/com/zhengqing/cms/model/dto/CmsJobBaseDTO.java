@@ -32,6 +32,9 @@ public class CmsJobBaseDTO extends BasePageDTO {
     @ApiModelProperty("id")
     private List<Integer> idList;
 
+    @ApiModelProperty(value = "商户ID")
+    private Integer merchantId;
+
     @ApiModelProperty("部门id")
     private Integer deptId;
 

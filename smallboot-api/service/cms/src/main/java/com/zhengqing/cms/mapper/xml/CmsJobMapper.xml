@@ -10,10 +10,9 @@
 
     <select id="selectDataList" resultMap="pageMap">
         SELECT
-        cj.*, tsd.name deptName, tsp.name postName, cjc.name categoryName
+        cj.*, tsm.name merchantName, cjc.name categoryName
         FROM cms_job cj
-        LEFT JOIN t_sys_dept tsd ON tsd.id = cj.dept_id
-        LEFT JOIN t_sys_post tsp ON tsp.id = cj.post_id
+        LEFT JOIN t_sys_merchant tsm ON tsm.id = cj.merchant_id
         LEFT JOIN cms_job_category cjc ON cjc.id = cj.category_id
         <where>
             cj.is_deleted=0
@@ -25,6 +24,9 @@
                 <foreach collection="filter.idList" separator="," open="(" close=")" item="id">
                     #{id}
                 </foreach>
+            </if>
+            <if test="filter.merchantId!=null">
+                AND cj.merchant_id = #{filter.merchantId}
             </if>
             <if test="filter.deptId!=null">
                 AND cj.dept_id = #{filter.deptId}
