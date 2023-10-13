@@ -25,6 +25,16 @@
     ORDER BY ${tableNameAbbr}.create_time DESC
   </select>
 
+    <select id="selectDataList" resultType="${package.vo}.${entity}ListVO">
+        SELECT
+           id, name
+        FROM ${tableName} ${tableNameAbbr}
+        <where>
+            ${tableNameAbbr}.is_deleted=0
+        </where>
+            ORDER BY ${tableNameAbbr}.create_time DESC
+    </select>
+
     <select id="detail" resultType="${package.vo}.${entity}DetailVO">
         SELECT
         <#list columnInfoList as item>

@@ -1,17 +1,18 @@
-package ${ package.vo };
+package ${package.dto};
 
-import com.zhengqing.common.base.model.vo.BaseVO;
+import com.zhengqing.common.base.model.dto.BaseDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import java.util.Date;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.util.Date;
+
 /**
- * <p>${tableComment}-详情-响应参数</p>
+ * <p> ${tableComment}-列表-请求参数 </p>
  *
  * @author ${ author }
  * @description
@@ -22,19 +23,12 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@ApiModel("${tableComment}-详情-响应参数")
-public class ${entity}DetailVO extends BaseVO {
+@ApiModel("${tableComment}-列表-请求参数")
+public class ${entity}ListDTO extends BaseDTO {
 
-<#list columnInfoList as item>
-    <#if item.columnNameDb != "create_by" && item.columnNameDb != "create_time" && item.columnNameDb != "update_by" && item.columnNameDb != "update_time" && item.columnNameDb != "is_deleted">
+    <#list queryColumnInfoList as item>
     @ApiModelProperty("${item.columnComment}")
     private ${item.columnTypeJava} ${item.columnNameJavaLower};
 
-    </#if>
-</#list>
-
-    public void handleData() {
-
-    }
-
+    </#list>
 }

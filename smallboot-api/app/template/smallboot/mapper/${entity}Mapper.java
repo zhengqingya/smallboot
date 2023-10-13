@@ -8,7 +8,6 @@ import ${package.dto}.${entity}DetailDTO;
 import ${package.entity}.${entity};
 
 import org.apache.ibatis.annotations.Param;
-
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 
@@ -31,6 +30,16 @@ public interface ${entity}Mapper extends BaseMapper<${entity}> {
      * @date ${date}
      */
     IPage<${entity}PageVO> selectDataPage(IPage<${entity}PageVO> page, @Param("filter") ${entity}PageDTO filter);
+
+    /**
+     * 列表
+     *
+     * @param filter 查询过滤参数
+     * @return 查询结果
+     * @author ${author}
+     * @date ${date}
+     */
+    List<${entity}ListVO> selectDataList(@Param("filter") ${entity}ListDTO filter);
 
     /**
      * 详情

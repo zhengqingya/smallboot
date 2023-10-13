@@ -27,6 +27,7 @@ import ${package.service}.I${entity}Service;
 import lombok.RequiredArgsConstructor;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import com.zhengqing.common.base.constant.ServiceConstant;
 
 
 /**
@@ -38,7 +39,7 @@ import io.swagger.annotations.ApiOperation;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/${moduleName}/${entityNameLower}")
+@RequestMapping(ServiceConstant.SERVICE_API_PREFIX_WEB_SYSTEM + "/api/${moduleName}/${entityNameLower}")
 @Api(tags = {"${tableComment}"})
 public class ${entity}Controller extends BaseController {
 
@@ -48,6 +49,12 @@ public class ${entity}Controller extends BaseController {
     @ApiOperation("分页列表")
     public IPage<${entity}PageVO> page(@Validated @ModelAttribute ${entity}PageDTO params) {
         return this.${entityNameLower}Service.page(params);
+    }
+
+    @GetMapping("list")
+    @ApiOperation("列表")
+    public List<${entity}ListVO> list(@Validated @ModelAttribute ${entity}ListDTO params) {
+        return this.${entityNameLower}Service.list(params);
     }
 
     @GetMapping("detail")

@@ -30,6 +30,16 @@ public interface I${entity}Service extends IService<${entity}> {
     IPage<${entity}PageVO> page(${entity}PageDTO params);
 
     /**
+     * 列表
+     *
+     * @param params 查询参数
+     * @return 查询结果
+     * @author ${author}
+     * @date ${date}
+     */
+    List<${entity}ListVO> list(${entity}ListDTO params);
+
+    /**
      * 详情
      *
      * @param params 查询参数

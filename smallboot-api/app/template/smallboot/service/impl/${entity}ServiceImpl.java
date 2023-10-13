@@ -43,6 +43,11 @@ public class ${entity}ServiceImpl extends ServiceImpl<${entity}Mapper, ${entity}
     }
 
     @Override
+    public List<${entity}ListVO> list(${entity}ListDTO params) {
+        return this.${entityNameLower}Mapper.selectDataList(params);
+    }
+
+    @Override
     public ${entity}DetailVO detail(${entity}DetailDTO params){
         ${entity}DetailVO detailData = this.${entityNameLower}Mapper.detail(params);
         Assert.notNull(detailData, "该数据不存在！");
