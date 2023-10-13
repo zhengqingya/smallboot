@@ -1,6 +1,7 @@
 package com.zhengqing.system.aspect;
 
 import com.zhengqing.common.base.context.JwtUserContext;
+import com.zhengqing.common.base.model.bo.JwtUserBO;
 import com.zhengqing.system.service.ISysMerchantService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +34,11 @@ public class SystemControllerAspect {
 
     @Before("controllerPointCut()")
     public void controllerPointCut(JoinPoint joinPoint) {
-        Integer merchantId = JwtUserContext.get().getMerchantId();
+        JwtUserBO jwtUserBO = JwtUserContext.get();
+        if (jwtUserBO == null) {
+            return;
+        }
+        Integer merchantId = jwtUserBO.getMerchantId();
         if (merchantId == null) {
             return;
         }

@@ -100,7 +100,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         Integer userId = params.getUserId();
         boolean isAdd = userId == null;
         Integer merchantId = params.getMerchantId();
-        if (isAdd) {
+        if (merchantId != null) {
             // 校验商户最大用户数
             SysMerchant sysMerchant = this.iSysMerchantService.checkData(merchantId);
             Integer maxUserNum = sysMerchant.getUserNum();

@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
 import com.zhengqing.common.base.enums.CommonStatusEnum;
+import com.zhengqing.common.base.util.MyDateUtil;
 import com.zhengqing.common.db.constant.MybatisConstant;
 import com.zhengqing.common.db.util.TenantUtil;
 import com.zhengqing.system.entity.SysMerchant;
@@ -124,12 +125,14 @@ public class SysMerchantServiceImpl extends ServiceImpl<SysMerchantMapper, SysMe
     public SysMerchant checkData(Integer id) {
         SysMerchant sysMerchant = this.detail(id);
         Assert.isTrue(Objects.equals(CommonStatusEnum.ENABLE.getStatus(), sysMerchant.getStatus()), "商户已停用！");
-        Assert.isTrue(sysMerchant.getExpireTime().after(new Date()), "商户已过期！");
+        Date expireTime = sysMerchant.getExpireTime();
+        Assert.isTrue(expireTime.after(new Date()), "限制：商户服务已到期！过期时间：" + MyDateUtil.dateToStr(expireTime));
         return sysMerchant;
     }
 
     @Override
     public SysMerchant detail(Integer id) {
+        Assert.notNull(id, "该商户不存在！");
         SysMerchant sysMerchant = this.sysMerchantMapper.selectById(id);
         Assert.notNull(sysMerchant, "该商户不存在！");
         return sysMerchant;
