@@ -20,6 +20,9 @@
                     #{deptId}
                 </foreach>
             </if>
+            <if test="filter.merchantId!=null">
+                AND merchant_id = #{filter.merchantId}
+            </if>
             <if test="filter.username!=null and filter.username!=''">
                 AND username LIKE CONCAT( '%', #{filter.username} , '%' )
             </if>
@@ -27,7 +30,7 @@
                 AND nickname LIKE CONCAT( '%', #{filter.nickname} , '%' )
             </if>
         </where>
-        ORDER BY user_id DESC
+        ORDER BY is_fixed DESC, create_time DESC
     </select>
 
     <resultMap id="selectUserPerm" type="com.zhengqing.system.model.vo.SysUserPermVO">

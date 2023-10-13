@@ -15,7 +15,8 @@ import lombok.Getter;
 public enum SysRoleCodeEnum {
 
     超级管理员("super_admin", "超级管理员"),
-    租户管理员("tenant_admin", "租户管理员");
+    租户管理员("tenant_admin", "租户管理员"),
+    商户管理员("merchant_admin", "商户管理员");
 
     private final String code;
     private final String name;

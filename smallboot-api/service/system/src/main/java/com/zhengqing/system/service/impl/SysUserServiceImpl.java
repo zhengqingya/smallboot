@@ -92,7 +92,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     public Integer addOrUpdateData(SysUserSaveDTO params) {
         Integer userId = params.getUserId();
         String password = params.getPassword();
-
+        Boolean isFixed = params.getIsFixed();
+        
         // 校验名称是否重复
         SysUser sysUserOld = this.sysUserMapper.selectOne(new LambdaQueryWrapper<SysUser>().eq(SysUser::getUsername, params.getUsername()).last(MybatisConstant.LIMIT_ONE));
         Assert.isTrue(sysUserOld == null || sysUserOld.getUserId().equals(params.getUserId()), "用户名重复，请重新输入！");
@@ -100,7 +101,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         // 保存用户
         SysUser sysUser = new SysUser();
         sysUser.setUserId(userId);
-        sysUser.setUsername(params.getUsername());
         sysUser.setNickname(params.getNickname());
         sysUser.setSexEnum(UserSexEnum.getEnum(params.getSex()));
         sysUser.setPhone(params.getPhone());
@@ -108,17 +108,20 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         sysUser.setAvatarUrl(params.getAvatarUrl());
         sysUser.setDeptId(params.getDeptId());
         sysUser.setPostIdList(params.getPostIdList());
+        sysUser.setIsFixed(isFixed);
 
         boolean isUpdateRole = true;
         if (userId == null) {
+            sysUser.setUsername(params.getUsername());
             sysUser.setPassword(PasswordUtil.encodePassword(StrUtil.isBlank(password) ? AppConstant.DEFAULT_PASSWORD : password));
+            sysUser.setMerchantId(params.getMerchantId());
             sysUser.insert();
             userId = sysUser.getUserId();
         } else {
             if (StrUtil.isNotBlank(password)) {
                 sysUser.setPassword(PasswordUtil.encodePassword(password));
             }
-            isUpdateRole = !sysUserOld.getIsFixed();
+            isUpdateRole = !isFixed;
             sysUser.updateById();
         }
 

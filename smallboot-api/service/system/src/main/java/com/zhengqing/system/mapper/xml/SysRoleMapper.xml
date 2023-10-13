@@ -12,7 +12,7 @@
                 AND name LIKE CONCAT( '%', #{filter.name} , '%' )
             </if>
         </where>
-        ORDER BY sort ASC, create_time DESC
+        ORDER BY is_fixed DESC, sort ASC, create_time DESC
     </select>
 
     <select id="selectRoleIdByCode" resultType="java.lang.Integer">

@@ -11,8 +11,8 @@
     <base-table-p ref="baseTableRef" api="sys_tenant.page" :params="listQuery">
       <el-table-column label="ID" prop="id" align="center" />
       <el-table-column label="租户名" prop="name" align="center" />
-      <el-table-column label="联系人" prop="contactName" align="center" />
-      <el-table-column label="联系人手机号" prop="contactPhone" align="center" />
+      <el-table-column label="管理员" prop="adminName" align="center" />
+      <el-table-column label="管理员手机号" prop="adminPhone" align="center" />
       <el-table-column label="状态" prop="status" align="center">
         <template #default="scope">
           <base-tag v-model="scope.row.status" />
@@ -35,25 +35,24 @@
         <el-form-item label="租户名:">
           <el-input v-model="form.name" />
         </el-form-item>
-        <el-form-item label="联系人:">
-          <el-input v-model="form.contactName" />
-        </el-form-item>
-        <el-form-item label="联系人手机号:">
-          <el-input v-model="form.contactPhone" />
-        </el-form-item>
         <el-form-item label="租户状态:">
           <base-radio-group v-model="form.status" />
         </el-form-item>
         <el-form-item label="过期时间:">
           <el-date-picker v-model="form.expireTime" type="datetime" placeholder="请选择" format="YYYY-MM-DD hh:mm:ss" value-format="YYYY-MM-DD hh:mm:ss" />
         </el-form-item>
-        <el-form-item label="账号数量:">
+        <!-- <el-form-item label="账号数量:">
           <el-input v-model="form.accountCount" />
-        </el-form-item>
-        <el-form-item label="租户套餐ID:">
+        </el-form-item> -->
+        <el-form-item label="租户套餐:">
           <base-select v-if="dialogVisible" v-model="form.packageId" :option-props="{ label: 'name', value: 'id' }" api="sys_tenant_package.list" />
         </el-form-item>
-
+        <el-form-item label="管理员名称:">
+          <el-input v-model="form.adminName" />
+        </el-form-item>
+        <el-form-item label="管理员手机号:">
+          <el-input v-model="form.adminPhone" />
+        </el-form-item>
         <el-form-item v-if="dialogStatus == 'add'" label="账号:">
           <el-input v-model="form.username" />
         </el-form-item>

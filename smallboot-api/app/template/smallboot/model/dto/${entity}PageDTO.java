@@ -1,6 +1,6 @@
 package ${package.dto};
 
-import com.zhengqing.common.base.model.dto.BaseDTO;
+import com.zhengqing.common.base.model.dto.BasePageDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -24,7 +24,7 @@ import java.util.Date;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ApiModel("${tableComment}-分页列表-请求参数")
-public class ${entity}PageDTO extends BaseDTO {
+public class ${entity}PageDTO extends BasePageDTO {
 
     <#list queryColumnInfoList as item>
     @ApiModelProperty("${item.columnComment}")

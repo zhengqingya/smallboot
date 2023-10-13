@@ -36,6 +36,9 @@ public class SysUserListDTO extends BaseDTO {
     @ApiModelProperty(value = "部门ids")
     private List<Integer> deptIdList;
 
+    @ApiModelProperty(value = "商户ID")
+    private Integer merchantId;
+
     @ApiModelProperty(value = "账号")
     private String username;
 

@@ -20,6 +20,7 @@ public class SystemMybatisPlusConfig {
         MybatisPlusConfig.TENANT_ID_TABLE.add("t_sys_dept");
         MybatisPlusConfig.TENANT_ID_TABLE.add("t_sys_file");
         MybatisPlusConfig.TENANT_ID_TABLE.add("t_sys_post");
+        MybatisPlusConfig.TENANT_ID_TABLE.add("t_sys_merchant");
         MybatisPlusConfig.TENANT_ID_TABLE.add("t_sys_role");
         MybatisPlusConfig.TENANT_ID_TABLE.add("t_sys_role_menu");
         MybatisPlusConfig.TENANT_ID_TABLE.add("t_sys_role_permission");

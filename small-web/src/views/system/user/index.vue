@@ -15,7 +15,14 @@
 
     <base-card title="用户管理" class="flex-1">
       <base-header>
-        <base-cascader v-model="listQuery.deptId" clearable label="部门" :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true, emitPath: false }" api="sys_dept.tree" />
+        <base-cascader
+          v-model="listQuery.deptId"
+          style="margin-right: 10px"
+          clearable
+          label="部门"
+          :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true, emitPath: false }"
+          api="sys_dept.tree" />
+        <base-select v-model="listQuery.merchantId" label="商户" tag-type="success" style="margin-right: 10px" clearable :option-props="{ label: 'name', value: 'id' }" api="sys_merchant.list" />
         <base-input v-model="listQuery.username" label="账号" @clear="refreshTableData" />
         <base-input v-model="listQuery.nickname" label="名称" @clear="refreshTableData" />
         <el-button type="primary" @click="refreshTableData">查询</el-button>
@@ -57,7 +64,7 @@
     <base-dialog v-else v-model="dialogVisible" :title="titleMap[dialogStatus]" width="50%">
       <el-form ref="dataFormRef" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="账号:" prop="username">
-          <el-input v-model="form.username" />
+          <el-input v-model="form.username" disabled />
         </el-form-item>
         <el-form-item label="密码:" prop="password">
           <el-input v-model="form.password" placeholder="默认：123456" />

@@ -47,7 +47,6 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
     private final ISysPermBusinessService iSysPermBusinessService;
     private final ISysUserService iSysUserService;
     private final ISysRoleService iSysRoleService;
-    private final ISysUserRoleService iSysUserRoleService;
 
     @Override
     public SysTenant detail(Integer id) {
@@ -85,8 +84,8 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
         SysTenant sysTenant = SysTenant.builder()
                 .id(id)
                 .name(name)
-                .contactName(params.getContactName())
-                .contactPhone(params.getContactPhone())
+                .adminName(params.getAdminName())
+                .adminPhone(params.getAdminPhone())
                 .status(params.getStatus())
                 .expireTime(params.getExpireTime())
                 .accountCount(params.getAccountCount())
@@ -106,6 +105,16 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
                                 .name(SysRoleCodeEnum.租户管理员.getName())
                                 .code(SysRoleCodeEnum.租户管理员.getCode())
                                 .isFixed(true)
+                                .sort(2)
+                                .build()
+                );
+                // 默认创建商户管理员，权限由租户自己单独分配
+                this.iSysRoleService.addOrUpdateData(
+                        SysRoleSaveDTO.builder()
+                                .name(SysRoleCodeEnum.商户管理员.getName())
+                                .code(SysRoleCodeEnum.商户管理员.getCode())
+                                .isFixed(true)
+                                .sort(3)
                                 .build()
                 );
 
@@ -119,13 +128,16 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
                 );
 
                 // 创建用户
-                this.iSysUserService.addOrUpdateData(SysUserSaveDTO.builder()
+                Integer userId = this.iSysUserService.addOrUpdateData(SysUserSaveDTO.builder()
                         .username(params.getUsername())
-                        .nickname(params.getUsername())
                         .password(params.getPassword())
-                        .phone(params.getContactPhone())
+                        .nickname(params.getAdminName())
+                        .phone(params.getAdminPhone())
                         .roleIdList(Lists.newArrayList(roleId))
+                        .isFixed(true)
                         .build());
+                sysTenant.setAdminUserId(userId);
+                sysTenant.updateById();
             });
         } else {
             this.refreshTenantRePerm(sysTenant.getId());

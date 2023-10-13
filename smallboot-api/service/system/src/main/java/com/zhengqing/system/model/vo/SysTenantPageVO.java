@@ -32,11 +32,11 @@ public class SysTenantPageVO extends BaseVO {
     @ApiModelProperty("租户名")
     private String name;
 
-    @ApiModelProperty("联系人")
-    private String contactName;
+    @ApiModelProperty("管理员")
+    private String adminName;
 
-    @ApiModelProperty("联系人手机号")
-    private String contactPhone;
+    @ApiModelProperty("管理员手机号")
+    private String adminPhone;
 
     @ApiModelProperty("租户状态(0->停用 1->开启)")
     private Integer status;

@@ -23,13 +23,11 @@
       <el-table-column prop="sort" label="排序" />
       <el-table-column label="操作" align="center" width="250">
         <template #default="scope">
-          <div v-if="!scope.row.isFixed">
-            <el-button link @click="update(scope.row)">编辑</el-button>
-            <router-link :to="{ path: '/system/role-edit', query: { id: scope.row.roleId } }">
-              <el-button link>权限</el-button>
-            </router-link>
-            <base-delete-btn @ok="deleteData(scope.row.roleId)" />
-          </div>
+          <el-button v-if="!scope.row.isFixed" link @click="update(scope.row)">编辑</el-button>
+          <router-link v-if="!scope.row.isFixed || scope.row.code == 'merchant_admin'" :to="{ path: '/system/role-edit', query: { id: scope.row.roleId } }">
+            <el-button link>权限</el-button>
+          </router-link>
+          <base-delete-btn v-if="!scope.row.isFixed" @ok="deleteData(scope.row.roleId)" />
         </template>
       </el-table-column>
     </base-table-p>

@@ -1,13 +1,13 @@
 package com.zhengqing.system.model.dto;
 
 import com.zhengqing.common.base.model.dto.BaseDTO;
-import com.zhengqing.common.core.custom.fieldrepeat.FieldRepeatValidator;
 import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
 import com.zhengqing.common.core.enums.UserSexEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.validator.constraints.Length;
@@ -30,8 +30,8 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 @ApiModel("保存用户参数")
-@FieldRepeatValidator(tableName = "t_sys_user", idDbName = "user_id", fieldNames = "username", dbFieldNames = {"username"}, message = "账号重复，请重新输入账号！")
 public class SysUserSaveDTO extends BaseDTO {
 
     @ApiModelProperty(value = "主键ID groups:标识在更新的时候才能验证非空")
@@ -50,7 +50,6 @@ public class SysUserSaveDTO extends BaseDTO {
 
     @ApiModelProperty(value = "昵称")
     @NotBlank(message = "昵称不能为空")
-    @Pattern(regexp = "^[\\u4E00-\\u9FA5A-Za-z0-9\\*]*$", message = "账号限制：最多100字符，包含文字、字母和数字")
     private String nickname;
 
     /**
@@ -80,5 +79,11 @@ public class SysUserSaveDTO extends BaseDTO {
 
     @ApiModelProperty("角色ids")
     private List<Integer> roleIdList;
+
+    @ApiModelProperty(value = "商户ID")
+    private Integer merchantId;
+
+    @ApiModelProperty(value = "是否固定(false->否 true->是)")
+    private Boolean isFixed;
 
 }

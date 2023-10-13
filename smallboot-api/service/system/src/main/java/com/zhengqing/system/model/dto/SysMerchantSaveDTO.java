@@ -18,50 +18,64 @@ import javax.validation.constraints.Pattern;
 import java.util.Date;
 
 /**
- * <p> 系统管理-租户信息-保存-提交参数 </p>
+ * <p> 系统管理-商户管理-保存-提交参数 </p>
  *
  * @author zhengqingya
  * @description
- * @date 2023/10/08 15:40
+ * @date 2023/10/13 11:17
  */
 @Data
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@ApiModel("系统管理-租户信息-保存-提交参数")
-public class SysTenantSaveDTO extends BaseDTO {
+@ApiModel("系统管理-商户管理-保存-提交参数")
+public class SysMerchantSaveDTO extends BaseDTO {
 
     @ApiModelProperty("主键ID")
     @NotNull(groups = {UpdateGroup.class}, message = "主键ID不能为空!")
     private Integer id;
 
-    @NotBlank(message = "租户名不能为空！")
-    @ApiModelProperty("租户名")
+    @ApiModelProperty("自定义商户ID")
+    private Integer customId;
+
+    @NotBlank(message = "名称不能为空！")
+    @ApiModelProperty("名称")
     private String name;
 
-    @NotBlank(message = "管理员不能为空！")
-    @ApiModelProperty("管理员")
-    private String adminName;
+    @ApiModelProperty("排序")
+    private Integer sort;
 
-    @NotBlank(message = "管理员手机号不能为空！")
-    @ApiModelProperty("管理员手机号")
-    private String adminPhone;
+    @ApiModelProperty("联系电话")
+    private String phone;
 
-    @ApiModelProperty("租户状态(0->停用 1->开启)")
+    @ApiModelProperty("邮箱")
+    private String email;
+
+    @ApiModelProperty("状态(0:停用 1:正常)")
     private Integer status;
+
+    @ApiModelProperty("备注")
+    private String remark;
+
+    /**
+     * {@link com.zhengqing.system.enums.SysMerchantTypeEnum}
+     */
+    @NotNull(message = "商户类型不能为空！")
+    @ApiModelProperty("商户类型")
+    private Integer type;
 
     @NotNull(message = "过期时间不能为空！")
     @ApiModelProperty("过期时间")
     private Date expireTime;
 
-    //    @NotNull(message = "账号数量不能为空！")
-    @ApiModelProperty("账号数量")
-    private Integer accountCount;
+    @NotNull(message = "用户数不能为空！")
+    @ApiModelProperty("最大用户数")
+    private Integer userNum;
 
-    @NotNull(message = "租户套餐不能为空！")
-    @ApiModelProperty("租户套餐ID")
-    private Integer packageId;
+    @NotNull(message = "发布数不能为空！")
+    @ApiModelProperty("最大职位发布数")
+    private Integer jobNum;
 
     @ApiModelProperty(value = "账号")
     @NotBlank(groups = {CreateGroup.class}, message = "账号不能为空")

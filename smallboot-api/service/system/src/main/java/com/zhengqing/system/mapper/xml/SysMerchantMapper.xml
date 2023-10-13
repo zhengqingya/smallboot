@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhengqing.system.mapper.SysMerchantMapper">
+
+    <select id="selectDataPage" resultType="com.zhengqing.system.model.vo.SysMerchantPageVO">
+        SELECT *
+        FROM t_sys_merchant
+        <where>
+            is_deleted=0
+            <if test="filter.id!=null">
+                AND id = #{filter.id}
+            </if>
+            <if test="filter.name!=null and filter.name!=''">
+                AND name LIKE CONCAT( '%', #{filter.name} , '%' )
+            </if>
+            <if test="filter.type!=null">
+                AND type = #{filter.type}
+            </if>
+        </where>
+        ORDER BY sort ASC, create_time DESC
+    </select>
+
+    <select id="selectDataList" resultType="com.zhengqing.system.model.vo.SysMerchantListVO">
+        SELECT id, name
+        FROM t_sys_merchant
+        <where>
+            is_deleted=0
+            <if test="filter.id!=null">
+                AND id = #{filter.id}
+            </if>
+            <if test="filter.name!=null and filter.name!=''">
+                AND name LIKE CONCAT( '%', #{filter.name} , '%' )
+            </if>
+            <if test="filter.type!=null">
+                AND type = #{filter.type}
+            </if>
+        </where>
+        ORDER BY sort ASC, create_time DESC
+    </select>
+
+
+</mapper>
