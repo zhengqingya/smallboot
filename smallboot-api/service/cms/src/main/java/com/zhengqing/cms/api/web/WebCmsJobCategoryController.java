@@ -38,12 +38,18 @@ public class WebCmsJobCategoryController extends BaseController {
     @GetMapping("page")
     @ApiOperation("分页列表")
     public IPage<CmsJobCategoryPageVO> page(@Validated @ModelAttribute CmsJobCategoryPageDTO params) {
+        if (this.isFillMerchantId()) {
+            params.setMerchantId(this.getCurrentUserReMerchantId());
+        }
         return this.iCmsJobCategoryService.page(params);
     }
 
     @GetMapping("list")
     @ApiOperation("列表")
     public List<CmsJobCategoryListVO> list(@Validated @ModelAttribute CmsJobCategoryListDTO params) {
+        if (this.isFillMerchantId()) {
+            params.setMerchantId(this.getCurrentUserReMerchantId());
+        }
         return this.iCmsJobCategoryService.list(params);
     }
 

@@ -34,6 +34,9 @@ public class WebCmsJobApplyController extends BaseController {
     @GetMapping("page")
     @ApiOperation("分页列表")
     public IPage<CmsJobApplyPageVO> page(@Validated @ModelAttribute CmsJobApplyPageDTO params) {
+        if (this.isFillMerchantId()) {
+            params.setMerchantId(this.getCurrentUserReMerchantId());
+        }
         return this.iCmsJobApplyService.page(params);
     }
 

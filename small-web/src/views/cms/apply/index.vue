@@ -76,8 +76,8 @@
         </el-form-item>
       </el-form>
       <template v-if="dialogStatus !== 'detail'" #footer>
-        <!-- <el-button @click="dialogVisible = false">取 消</el-button> -->
-        <el-button type="error" @click="submitForm(3)">拒绝</el-button>
+        <el-button @click="dialogVisible = false">返回</el-button>
+        <el-button type="warning" @click="submitForm(3)">拒绝</el-button>
         <el-button type="primary" @click="submitForm(2)">录取</el-button>
       </template>
     </base-dialog>

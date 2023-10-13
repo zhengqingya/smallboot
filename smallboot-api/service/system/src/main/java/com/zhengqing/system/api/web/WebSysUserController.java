@@ -56,6 +56,9 @@ public class WebSysUserController extends BaseController {
     @PostMapping("")
     @ApiOperation("新增")
     public Integer add(@Validated @RequestBody SysUserSaveDTO params) {
+        if (this.isFillMerchantId()) {
+            params.setMerchantId(this.getCurrentUserReMerchantId());
+        }
         return this.iSysUserService.addOrUpdateData(params);
     }
 

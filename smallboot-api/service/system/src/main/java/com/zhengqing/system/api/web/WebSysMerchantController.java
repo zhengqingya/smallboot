@@ -33,18 +33,24 @@ import java.util.List;
 @Api(tags = {"web-系统管理-商户管理"})
 public class WebSysMerchantController extends BaseController {
 
-    private final ISysMerchantService sysMerchantService;
+    private final ISysMerchantService iSysMerchantService;
 
     @GetMapping("page")
     @ApiOperation("分页列表")
     public IPage<SysMerchantPageVO> page(@Validated @ModelAttribute SysMerchantPageDTO params) {
-        return this.sysMerchantService.page(params);
+        if (this.isFillMerchantId()) {
+            params.setId(this.getCurrentUserReMerchantId());
+        }
+        return this.iSysMerchantService.page(params);
     }
 
     @GetMapping("list")
     @ApiOperation("列表")
     public List<SysMerchantListVO> list(@Validated @ModelAttribute SysMerchantListDTO params) {
-        return this.sysMerchantService.list(params);
+        if (this.isFillMerchantId()) {
+            params.setId(this.getCurrentUserReMerchantId());
+        }
+        return this.iSysMerchantService.list(params);
     }
 
     @NoRepeatSubmit
@@ -52,20 +58,20 @@ public class WebSysMerchantController extends BaseController {
     @ApiOperation("新增")
     public void add(@Validated @RequestBody SysMerchantSaveDTO params) {
         params.setId(null);
-        this.sysMerchantService.addOrUpdateData(params);
+        this.iSysMerchantService.addOrUpdateData(params);
     }
 
     @NoRepeatSubmit
     @PutMapping("update")
     @ApiOperation("更新")
     public void update(@Validated(UpdateGroup.class) @RequestBody SysMerchantSaveDTO params) {
-        this.sysMerchantService.addOrUpdateData(params);
+        this.iSysMerchantService.addOrUpdateData(params);
     }
 
     @DeleteMapping("delete")
     @ApiOperation("删除")
     public void delete(@RequestParam Integer id) {
-        this.sysMerchantService.deleteData(id);
+        this.iSysMerchantService.deleteData(id);
     }
 
 }

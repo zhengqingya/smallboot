@@ -50,5 +50,12 @@
         ORDER BY cj.sort ASC, cj.create_time DESC
     </select>
 
+    <select id="selectJobNum" resultType="java.lang.Long">
+        select count(1)
+        from cms_job
+        where is_deleted = 0
+          and merchant_id = #{merchantId}
+    </select>
+
 
 </mapper>

@@ -93,4 +93,11 @@
         ORDER BY ${username} LIMIT 1
     </select>
 
+    <select id="selectUserNum" resultType="java.lang.Long">
+        select count(1)
+        from t_sys_user
+        where is_deleted = 0
+          and merchant_id = #{merchantId}
+    </select>
+
 </mapper>

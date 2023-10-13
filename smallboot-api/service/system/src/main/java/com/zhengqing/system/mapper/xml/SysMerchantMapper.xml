@@ -25,6 +25,7 @@
         FROM t_sys_merchant
         <where>
             is_deleted=0
+            AND status=1
             <if test="filter.id!=null">
                 AND id = #{filter.id}
             </if>

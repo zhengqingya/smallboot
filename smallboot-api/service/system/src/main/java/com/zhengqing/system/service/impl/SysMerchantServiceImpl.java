@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
+import com.zhengqing.common.base.enums.CommonStatusEnum;
 import com.zhengqing.common.db.constant.MybatisConstant;
 import com.zhengqing.common.db.util.TenantUtil;
 import com.zhengqing.system.entity.SysMerchant;
@@ -26,7 +27,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * <p> 系统管理-商户管理 服务实现类 </p>
@@ -117,4 +120,18 @@ public class SysMerchantServiceImpl extends ServiceImpl<SysMerchantMapper, SysMe
         this.sysMerchantMapper.deleteById(id);
     }
 
+    @Override
+    public SysMerchant checkData(Integer id) {
+        SysMerchant sysMerchant = this.detail(id);
+        Assert.isTrue(Objects.equals(CommonStatusEnum.ENABLE.getStatus(), sysMerchant.getStatus()), "商户已停用！");
+        Assert.isTrue(sysMerchant.getExpireTime().after(new Date()), "商户已过期！");
+        return sysMerchant;
+    }
+
+    @Override
+    public SysMerchant detail(Integer id) {
+        SysMerchant sysMerchant = this.sysMerchantMapper.selectById(id);
+        Assert.notNull(sysMerchant, "该商户不存在！");
+        return sysMerchant;
+    }
 }

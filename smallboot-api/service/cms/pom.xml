@@ -26,6 +26,11 @@
             <groupId>com.zhengqing</groupId>
             <artifactId>core</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.zhengqing</groupId>
+            <artifactId>system</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

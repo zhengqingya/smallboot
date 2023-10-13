@@ -1,5 +1,6 @@
 package com.zhengqing.common.core.api;
 
+import com.zhengqing.common.base.context.JwtUserContext;
 import com.zhengqing.common.base.context.SysUserContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,6 +28,28 @@ public class BaseController {
      */
     protected Integer appGetCurrentUserId() {
         return SysUserContext.getUserId();
+    }
+
+    /**
+     * 获取当前登录人关联的商户ID
+     *
+     * @return 商户ID
+     * @author zhengqingya
+     * @date 2020/8/30 15:41
+     */
+    protected Integer getCurrentUserReMerchantId() {
+        return JwtUserContext.get().getMerchantId();
+    }
+
+    /**
+     * 是否自动填充关联商户值 -- 用于过滤数据
+     *
+     * @return true:是 false:否
+     * @author zhengqingya
+     * @date 2020/8/30 15:41
+     */
+    protected boolean isFillMerchantId() {
+        return this.getCurrentUserReMerchantId() != null;
     }
 
 }

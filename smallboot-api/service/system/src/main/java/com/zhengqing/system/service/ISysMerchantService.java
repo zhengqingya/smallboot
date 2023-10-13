@@ -60,4 +60,24 @@ public interface ISysMerchantService extends IService<SysMerchant> {
      */
     void deleteData(Integer id);
 
+    /**
+     * 检查数据
+     *
+     * @param id 主键ID
+     * @return 数据
+     * @author zhengqingya
+     * @date 2023/10/13 11:17
+     */
+    SysMerchant checkData(Integer id);
+
+    /**
+     * 详情
+     *
+     * @param id 主键ID
+     * @return void
+     * @author zhengqingya
+     * @date 2023/10/13 11:17
+     */
+    SysMerchant detail(Integer id);
+
 }

@@ -14,6 +14,8 @@ import com.zhengqing.cms.model.vo.CmsJobBaseVO;
 import com.zhengqing.cms.service.ICmsJobService;
 import com.zhengqing.cms.service.ICmsJobTagService;
 import com.zhengqing.common.db.constant.MybatisConstant;
+import com.zhengqing.system.entity.SysMerchant;
+import com.zhengqing.system.service.ISysMerchantService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.compress.utils.Lists;
@@ -38,6 +40,7 @@ public class CmsJobServiceImpl extends ServiceImpl<CmsJobMapper, CmsJob> impleme
 
     private final CmsJobMapper cmsJobMapper;
     private final ICmsJobTagService iCmsJobTagService;
+    private final ISysMerchantService iSysMerchantService;
 
     @Override
     public IPage<CmsJobBaseVO> page(CmsJobBaseDTO params) {
@@ -83,13 +86,21 @@ public class CmsJobServiceImpl extends ServiceImpl<CmsJobMapper, CmsJob> impleme
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void addOrUpdateData(CmsJobSaveDTO params) {
+        Integer merchantId = params.getMerchantId();
+        // 校验商户的发布数
+        if (params.getId() == null) {
+            SysMerchant sysMerchant = this.iSysMerchantService.checkData(merchantId);
+            Integer maxJobNum = sysMerchant.getJobNum();
+            Assert.isTrue(maxJobNum > this.cmsJobMapper.selectJobNum(merchantId), "限制：商户最大职位发布数 " + maxJobNum);
+        }
+
         // 校验名称是否重复
         CmsJob oldData = this.cmsJobMapper.selectOne(new LambdaQueryWrapper<CmsJob>().eq(CmsJob::getName, params.getName()).last(MybatisConstant.LIMIT_ONE));
         Assert.isTrue(oldData == null || oldData.getId().equals(params.getId()), "名称重复，请重新输入！");
 
         CmsJob.builder()
                 .id(params.getId())
-                .merchantId(params.getMerchantId())
+                .merchantId(merchantId)
                 .deptId(params.getDeptId())
                 .name(params.getName())
                 .postId(params.getPostId())
