@@ -19,6 +19,16 @@ import lombok.experimental.SuperBuilder;
 public class DyServiceComponentAccessTokenVO {
 
     /**
+     * 错误码 {@link com.zhengqing.common.sdk.douyin.service.enums.DyServiceResultCodeEnum}
+     */
+    private Long errno;
+
+    /**
+     * 错误信息
+     */
+    private String message;
+
+    /**
      * 第三方小程序应用接口调用凭据
      */
     private String component_access_token;

@@ -13,9 +13,9 @@ import com.zhengqing.common.base.model.bo.JwtUserBO;
 import com.zhengqing.common.core.enums.UserSexEnum;
 import com.zhengqing.common.core.util.IdGeneratorUtil;
 import com.zhengqing.common.db.constant.MybatisConstant;
-import com.zhengqing.common.sdk.douyin.service.model.dto.DyServiceLoginDTO;
-import com.zhengqing.common.sdk.douyin.service.model.vo.DyServiceLoginVO;
-import com.zhengqing.common.sdk.douyin.service.util.DyServiceApiUtil;
+import com.zhengqing.common.sdk.douyin.mini.model.dto.DyMiniLoginDTO;
+import com.zhengqing.common.sdk.douyin.mini.model.vo.DyMiniLoginVO;
+import com.zhengqing.common.sdk.douyin.mini.util.DyMiniApiUtil;
 import com.zhengqing.ums.entity.UmsUser;
 import com.zhengqing.ums.enums.MiniTypeEnum;
 import com.zhengqing.ums.factory.WxMaFactory;
@@ -81,9 +81,7 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
         }
         String code = params.getCode();
         Integer type = params.getType();
-        String appid = params.getAppid();
-        String component_appid = params.getComponent_appid();
-        String component_appsecret = params.getComponent_appsecret();
+        String appid = params.getAppId();
         String openid = null;
         String unionid = null;
         switch (MiniTypeEnum.getEnum(type)) {
@@ -92,14 +90,22 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
                 openid = wxMaJscode2SessionResult.getOpenid();
                 break;
             case 抖音小程序:
-                String component_access_token = DyServiceApiUtil.component_access_token(component_appid, component_appsecret);
-                String authorizer_access_token = DyServiceApiUtil.authorizer_access_token(component_appid,
-                        component_access_token,
-                        DyServiceApiUtil.retrieve_authorization_code(component_appid, component_access_token, appid)
-                );
-                DyServiceLoginVO.Data dyData = DyServiceApiUtil.code2session(DyServiceLoginDTO.builder()
-                        .component_appid(component_appid)
-                        .authorizer_access_token(authorizer_access_token)
+//                String component_appid = params.getComponent_appid();
+//                String component_appsecret = params.getComponent_appsecret();
+//                String component_access_token = DyServiceApiUtil.component_access_token(component_appid, component_appsecret);
+//                String authorizer_access_token = DyServiceApiUtil.authorizer_access_token(component_appid,
+//                        component_access_token,
+//                        DyServiceApiUtil.retrieve_authorization_code(component_appid, component_access_token, appid)
+//                );
+//                DyServiceLoginVO.Data dyData = DyServiceApiUtil.code2session(DyServiceLoginDTO.builder()
+//                        .component_appid(component_appid)
+//                        .authorizer_access_token(authorizer_access_token)
+//                        .code(code)
+//                        .anonymous_code(params.getAnonymousCode())
+//                        .build());
+                DyMiniLoginVO.Data dyData = DyMiniApiUtil.jscode2session(DyMiniLoginDTO.builder()
+                        .appid(appid)
+                        .secret(params.getAppSecret())
                         .code(code)
                         .anonymous_code(params.getAnonymousCode())
                         .build());

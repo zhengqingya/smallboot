@@ -117,6 +117,10 @@ public class DyServiceApiUtil {
                     this.put("component_ticket", component_ticket);
                 }},
                 DyServiceComponentAccessTokenVO.class);
+        Long errno = dyServiceComponentAccessTokenVO.getErrno();
+        if (errno != null) {
+            Assert.isTrue(DyMiniResultCodeEnum.SUCCESS.getCode().equals(errno), dyServiceComponentAccessTokenVO.getMessage());
+        }
         component_access_token = dyServiceComponentAccessTokenVO.getComponent_access_token();
 
         // 3、存入缓存

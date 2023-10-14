@@ -33,7 +33,7 @@ import java.util.Map;
 public class DyCallbackController {
 
     /**
-     * /api/douyin/event/notice
+     * 域名/api/douyin/event/notice
      */
     @ApiOpen
     @NoReturnHandle
@@ -51,8 +51,8 @@ public class DyCallbackController {
         String msgSignature = String.valueOf(noticeMap.get("MsgSignature"));
 
         // FIXME
-        String tpToken = "";
-        String encodingAesKey = "";
+        String tpToken = "xxx";
+        String encodingAesKey = "xxx";
 
         // 验证消息签名
         DyServiceApiUtil.checkSign(msgSignature, tpToken, timeStamp, nonce, encrypt);
