@@ -92,12 +92,31 @@ public class DyServiceApiUtil {
         HashMap<String, String> map = DyBaseApiUtil.basePostParamsBody("https://open.microapp.bytedance.com/openapi/v2/microapp/package/audit",
                 new HashMap<String, String>(2) {{
                     this.put("component_appid", component_appid);
-                    this.put("component_appsecret", authorizer_access_token);
+                    this.put("authorizer_access_token", authorizer_access_token);
                 }},
                 new HashMap<String, Object>(3) {{
                     this.put("hostNames", Lists.newArrayList("douyin"));
 //                    this.put("auditNote", null);
 //                    this.put("auditWay", null);
+                }}, HashMap.class);
+        Assert.isTrue(DyMiniResultCodeEnum.SUCCESS.getCode().equals(map.get("errno")), map.get("message"));
+    }
+
+    /**
+     * 发布代码
+     * https://partner.open-douyin.com/docs/resource/zh-CN/thirdparty/API/smallprogram/auth-app-manage/develop/release
+     *
+     * @param component_appid         第三方小程序应用 appid
+     * @param authorizer_access_token 授权小程序接口调用凭据
+     * @return 结果
+     * @author zhengqingya
+     * @date 2022/7/28 15:40
+     */
+    public static void release(String component_appid, String authorizer_access_token) {
+        HashMap<String, String> map = DyBaseApiUtil.basePostParams("https://open.microapp.bytedance.com/openapi/v1/microapp/package/release",
+                new HashMap<String, String>(2) {{
+                    this.put("component_appid", component_appid);
+                    this.put("authorizer_access_token", authorizer_access_token);
                 }}, HashMap.class);
         Assert.isTrue(DyMiniResultCodeEnum.SUCCESS.getCode().equals(map.get("errno")), map.get("message"));
     }

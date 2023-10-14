@@ -152,15 +152,23 @@ public class SysMerchantServiceImpl extends ServiceImpl<SysMerchantMapper, SysMe
         } else {
             sysMerchantList = this.sysMerchantMapper.selectBatchIds(idList);
         }
-        String component_appid = "";
-        String component_appsecret = "";
+
+        // FIXME
+        String component_appid = "xxx";
+        String component_appsecret = "xx";
+
         String component_access_token = DyServiceApiUtil.component_access_token(component_appid, component_appsecret);
         sysMerchantList.forEach(item -> {
             String authorizer_access_token = DyServiceApiUtil.authorizer_access_token(component_appid, component_access_token, DyServiceApiUtil.retrieve_authorization_code(component_appid, component_access_token, item.getAppId()));
             if (params.getIsAudit()) {
                 // 提审代码
-                DyServiceApiUtil.audit("", authorizer_access_token);
+                DyServiceApiUtil.audit(component_appid, authorizer_access_token);
                 item.setAppStatus(SysMerchantAppStatusEnum.提审中.getType());
+            }
+            if (params.getIsRelease()) {
+                // 发布代码
+                DyServiceApiUtil.release(component_appid, authorizer_access_token);
+                item.setAppStatus(SysMerchantAppStatusEnum.发布中.getType());
             }
         });
         this.saveBatch(sysMerchantList);

@@ -23,7 +23,7 @@ public enum SysMerchantAppStatusEnum {
     撤回审核(21, "撤回审核"),
     审核通过(31, "审核通过"),
     审核不通过(32, "审核不通过"),
-    发布代码(50, "发布中"),
+    发布中(50, "发布中"),
     已发布(51, "已发布");
 
     private final Integer type;
