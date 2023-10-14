@@ -1,6 +1,7 @@
 package com.zhengqing.common.sdk.douyin.service.util;
 
-import org.apache.tomcat.util.codec.binary.Base64;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.binary.Base64;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
@@ -11,6 +12,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 
+@Slf4j
 public class MsgDecrypt {
 
     private Cipher cipher;
@@ -47,13 +49,13 @@ public class MsgDecrypt {
         return Arrays.copyOfRange(decrypted, 0, decrypted.length - pad);
     }
 
-    private void decrypt(String text) throws Exception {
+    public String decrypt(String text) throws Exception {
         byte[] original;
         try {
             byte[] encrypted = Base64.decodeBase64(text);
             original = this.cipher.doFinal(encrypted);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("抖音解码异常: " + e);
             throw new Exception("解码异常");
         }
 
@@ -73,14 +75,15 @@ public class MsgDecrypt {
 
             System.out.println("Content: " + Content);
             System.out.println("ThirdParty AppID: " + AppId);
+            return Content;
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new Exception("Buffer异常");
+            log.error("抖音解密异常: " + e);
+            throw new Exception("抖音解密异常！");
         }
     }
 
     public static void main(String[] args) throws Exception {
-        MsgDecrypt test = new MsgDecrypt("XXX");
-        test.decrypt("XXX");
+        MsgDecrypt test = new MsgDecrypt("服务商-开发配置中拿到 xx");
+        test.decrypt("Encrypt");
     }
 }

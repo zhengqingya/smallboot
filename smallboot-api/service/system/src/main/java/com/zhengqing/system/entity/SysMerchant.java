@@ -70,4 +70,10 @@ public class SysMerchant extends IsDeletedBaseEntity<SysMerchant> {
     @ApiModelProperty("最大职位发布数")
     private Integer jobNum;
 
+    @ApiModelProperty("AppID")
+    private String appId;
+
+    @ApiModelProperty("AppSecret")
+    private String appSecret;
+
 }

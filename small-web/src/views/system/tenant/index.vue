@@ -19,7 +19,7 @@
         </template>
       </el-table-column>
       <el-table-column label="过期时间" prop="expireTime" align="center" />
-      <el-table-column label="账号数量" prop="accountCount" align="center" />
+      <!-- <el-table-column label="账号数量" prop="accountCount" align="center" /> -->
       <el-table-column label="租户套餐" prop="packageName" align="center" />
       <el-table-column label="创建时间" prop="createTime" align="center" />
       <el-table-column align="center" label="操作">

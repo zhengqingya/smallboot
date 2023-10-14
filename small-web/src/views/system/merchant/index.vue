@@ -21,6 +21,8 @@
     <base-table-p ref="baseTableRef" api="sys_merchant.page" :params="listQuery">
       <el-table-column label="商户ID" prop="id" align="center" />
       <el-table-column label="名称" prop="name" align="center" />
+      <el-table-column label="抖音AppID" prop="appId" width="150px" align="center" />
+      <el-table-column label="抖音AppSecret" prop="appSecret" width="150px" align="center" />
       <el-table-column label="状态" prop="status" align="center">
         <template #default="scope">
           <base-tag v-model="scope.row.status" />
@@ -37,6 +39,7 @@
       <el-table-column label="发布数" prop="jobNum" align="center" />
       <el-table-column label="排序" prop="sort" align="center" />
       <el-table-column label="备注" prop="remark" align="center" />
+      <!-- <el-table-column label="AppSecret" prop="appSecret" align="center" /> -->
       <el-table-column align="center" label="操作">
         <template #default="scope">
           <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
@@ -53,6 +56,12 @@
         </el-form-item>
         <el-form-item label="名称:">
           <el-input v-model="form.name" />
+        </el-form-item>
+        <el-form-item label="抖音AppID:">
+          <el-input v-model="form.appId" placeholder="从抖音开放平台中获取" />
+        </el-form-item>
+        <el-form-item label="抖音AppSecret:">
+          <el-input v-model="form.appSecret" placeholder="从抖音开放平台中获取" />
         </el-form-item>
         <el-form-item label="状态:">
           <base-radio-group v-model="form.status" />
@@ -76,7 +85,7 @@
           <el-input-number v-model="form.jobNum" :min="1" controls-position="right" placeholder="请输入" />
         </el-form-item>
         <el-form-item label="排序:">
-          <el-input v-model="form.sort" />
+          <el-input-number v-model="form.sort" :min="1" controls-position="right" placeholder="请输入" />
         </el-form-item>
         <el-form-item label="备注:">
           <el-input v-model="form.remark" :row="2" type="textarea" />

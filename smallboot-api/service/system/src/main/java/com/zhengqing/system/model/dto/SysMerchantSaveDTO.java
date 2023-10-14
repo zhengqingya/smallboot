@@ -88,4 +88,10 @@ public class SysMerchantSaveDTO extends BaseDTO {
     @ApiModelProperty(value = "密码")
     private String password;
 
+    @ApiModelProperty("AppID")
+    private String appId;
+
+    @ApiModelProperty("AppSecret")
+    private String appSecret;
+
 }

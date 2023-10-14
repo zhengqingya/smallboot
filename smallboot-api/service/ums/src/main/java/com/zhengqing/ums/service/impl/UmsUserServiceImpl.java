@@ -81,7 +81,9 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
         }
         String code = params.getCode();
         Integer type = params.getType();
+        String appid = params.getAppid();
         String component_appid = params.getComponent_appid();
+        String component_appsecret = params.getComponent_appsecret();
         String openid = null;
         String unionid = null;
         switch (MiniTypeEnum.getEnum(type)) {
@@ -90,9 +92,14 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
                 openid = wxMaJscode2SessionResult.getOpenid();
                 break;
             case 抖音小程序:
+                String component_access_token = DyServiceApiUtil.component_access_token(component_appid, component_appsecret);
+                String authorizer_access_token = DyServiceApiUtil.authorizer_access_token(component_appid,
+                        component_access_token,
+                        DyServiceApiUtil.retrieve_authorization_code(component_appid, component_access_token, appid)
+                );
                 DyServiceLoginVO.Data dyData = DyServiceApiUtil.code2session(DyServiceLoginDTO.builder()
                         .component_appid(component_appid)
-                        .authorizer_access_token(params.getAuthorizer_access_token())
+                        .authorizer_access_token(authorizer_access_token)
                         .code(code)
                         .anonymous_code(params.getAnonymousCode())
                         .build());

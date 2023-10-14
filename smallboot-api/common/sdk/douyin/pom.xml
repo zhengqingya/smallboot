@@ -31,6 +31,13 @@
             <artifactId>redis</artifactId>
             <scope>provided</scope>
         </dependency>
+
+        <!-- 抖音解密需要 -->
+        <dependency>
+            <groupId>org.apache.directory.studio</groupId>
+            <artifactId>org.apache.commons.codec</artifactId>
+            <version>1.8</version>
+        </dependency>
     </dependencies>
 
 </project>

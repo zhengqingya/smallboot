@@ -4,7 +4,9 @@ package com.zhengqing.ums.api;
 import cn.hutool.json.JSONUtil;
 import com.zhengqing.common.auth.custom.open.ApiOpen;
 import com.zhengqing.common.base.constant.ServiceConstant;
-import com.zhengqing.common.base.util.MyBeanUtil;
+import com.zhengqing.common.base.context.TenantIdContext;
+import com.zhengqing.common.sdk.douyin.service.model.vo.DyServiceMsgVO;
+import com.zhengqing.common.sdk.douyin.service.util.DyServiceApiUtil;
 import com.zhengqing.common.web.custom.noreturnhandle.NoReturnHandle;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -37,11 +40,29 @@ public class DyCallbackController {
     @ApiOperation("事件通知")
     @PostMapping("/event/notice")
     public Object notice(@RequestBody(required = false) Object params) {
-        String noticeData = JSONUtil.toJsonStr(params);
-        System.out.println(noticeData);
-        Map<String, Object> noticeMap = MyBeanUtil.objToMap(params);
+        // 【推送 component_ticket】 https://partner.open-douyin.com/docs/resource/zh-CN/thirdparty/API/smallprogram/authorization/componentticket
+        // 开放平台服务器每隔 10 分钟推送过来
+        log.info("[抖音] 事件通知：{}", JSONUtil.toJsonStr(params));
+        TenantIdContext.setTenantId(10);
+        Map<String, Object> noticeMap = JSONUtil.toBean(JSONUtil.toJsonStr(params), HashMap.class);
+        String nonce = String.valueOf(noticeMap.get("Nonce"));
+        String timeStamp = String.valueOf(noticeMap.get("TimeStamp"));
         String encrypt = String.valueOf(noticeMap.get("Encrypt"));
+        String msgSignature = String.valueOf(noticeMap.get("MsgSignature"));
 
+        // FIXME
+        String tpToken = "";
+        String encodingAesKey = "";
+
+        // 验证消息签名
+        DyServiceApiUtil.checkSign(msgSignature, tpToken, timeStamp, nonce, encrypt);
+
+        // 解密消息
+        DyServiceMsgVO dyServiceMsgVO = DyServiceApiUtil.decryptMsg(encodingAesKey, encrypt);
+        if ("Ticket".equals(dyServiceMsgVO.getMsgType())) {
+            String component_ticket = dyServiceMsgVO.getTicket();
+            DyServiceApiUtil.saveComponentTicket(component_ticket);
+        }
         return "success";
     }
 

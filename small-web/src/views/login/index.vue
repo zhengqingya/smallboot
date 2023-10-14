@@ -5,7 +5,7 @@
       <div class="m-t-20">
         <el-form ref="loginFormRef" :model="loginForm" :rules="loginRules">
           <el-form-item prop="tenantId">
-            <base-select v-model="loginForm.tenantId" placeholder="请选择租户" :option-props="{ label: 'name', value: 'id' }" api="sys_tenant.list">
+            <base-select v-model="loginForm.tenantId" :filterable="false" placeholder="请选择租户" :option-props="{ label: 'name', value: 'id' }" api="sys_tenant.list">
               <template #prefix>
                 <el-icon> <OfficeBuilding /> </el-icon>
               </template>

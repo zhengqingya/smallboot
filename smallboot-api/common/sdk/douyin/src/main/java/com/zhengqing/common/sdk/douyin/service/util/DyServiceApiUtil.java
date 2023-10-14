@@ -3,17 +3,21 @@ package com.zhengqing.common.sdk.douyin.service.util;
 
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
+import com.zhengqing.common.base.context.TenantIdContext;
 import com.zhengqing.common.redis.util.RedisUtil;
 import com.zhengqing.common.sdk.douyin.config.DyProperty;
 import com.zhengqing.common.sdk.douyin.mini.enums.DyMiniResultCodeEnum;
-import com.zhengqing.common.sdk.douyin.mini.model.vo.DyMiniAccessTokenVO;
 import com.zhengqing.common.sdk.douyin.service.model.dto.DyServiceLoginDTO;
-import com.zhengqing.common.sdk.douyin.service.model.vo.DyServiceLoginVO;
+import com.zhengqing.common.sdk.douyin.service.model.vo.*;
 import com.zhengqing.common.sdk.douyin.util.DyBaseApiUtil;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.security.MessageDigest;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
@@ -22,6 +26,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author zhengqingya
  * @description 抖音服务商开发接口文档见 https://partner.open-douyin.com/docs/resource/zh-CN/thirdparty/API/smallprogram/format
+ * 授权环节说明： https://partner.open-douyin.com/docs/resource/zh-CN/thirdparty/overview-guide/smallprogram/authorization
  * @date 2022/7/28 15:40
  */
 @Slf4j
@@ -36,44 +41,26 @@ public class DyServiceApiUtil {
     }
 
     /**
-     * 接口调用凭证
+     * 推送 component_ticket
      */
-    private final static String ACCESS_TOKEN = "douyin:service:access_token:";
-
-
+    private final static String COMPONENT_TICKET = "douyin:service:component_ticket:";
     /**
-     * 获取 接口调用凭证
-     *
-     * @param appid  小程序 ID
-     * @param secret 小程序的 APP Secret，可以在开发者后台获取
-     * @return 接口调用凭证
-     * @author zhengqingya
-     * @date 2022/7/28 15:40
+     * 获取第三方小程序接口调用凭据
      */
-    public static String getAccessToken(String appid, String secret) {
-        // 1、缓存中拿到accessToken
-        String accessToken = RedisUtil.get(ACCESS_TOKEN);
-        if (StrUtil.isNotBlank(accessToken)) {
-            return accessToken;
-        }
+    private final static String COMPONENT_ACCESS_TOKEN = "douyin:service:component_access_token:";
+    /**
+     * 获取预授权码
+     */
+    private final static String PRE_AUTH_CODE = "douyin:service:pre_auth_code:";
+    /**
+     * 商家授权码
+     */
+    private final static String AUTHORIZATION_CODE = "douyin:service:authorization_code:";
+    /**
+     * 获取授权小程序接口调用凭据
+     */
+    private final static String AUTHORIZER_ACCESS_TOKEN = "douyin:service:authorizer_access_token:";
 
-        // 2、若缓存中无值，可通过请求获取accessToken
-        DyMiniAccessTokenVO dyMiniAccessTokenVO = DyBaseApiUtil.basePost(baseUrl() + "/api/apps/v2/token",
-                new HashMap<String, String>(3) {{
-                    this.put("appid", appid);
-                    this.put("secret", secret);
-                    // 获取 access_token 时值为 client_credential
-                    this.put("grant_type", "client_credential");
-                }},
-                DyMiniAccessTokenVO.class);
-        DyMiniAccessTokenVO.Data data = dyMiniAccessTokenVO.getData();
-        Assert.isTrue(DyMiniResultCodeEnum.SUCCESS.getCode().equals(dyMiniAccessTokenVO.getErrNo()), dyMiniAccessTokenVO.getErr_tips());
-        accessToken = data.getAccess_token();
-
-        // 3、存入缓存
-        RedisUtil.setEx(ACCESS_TOKEN, accessToken, data.getExpires_in() - 100, TimeUnit.SECONDS);
-        return accessToken;
-    }
 
     /**
      * 登录
@@ -85,15 +72,246 @@ public class DyServiceApiUtil {
      * @date 2022/7/28 15:40
      */
     public static DyServiceLoginVO.Data code2session(DyServiceLoginDTO params) {
-        DyServiceLoginVO dyServiceLoginVO = DyBaseApiUtil.basePost("https://open.microapp.bytedance.com/openapi/v1/microapp/code2session", params, DyServiceLoginVO.class);
+        DyServiceLoginVO dyServiceLoginVO = DyBaseApiUtil.baseGet("https://open.microapp.bytedance.com/openapi/v1/microapp/code2session", params, DyServiceLoginVO.class);
         Assert.isTrue(DyMiniResultCodeEnum.SUCCESS.getCode().equals(dyServiceLoginVO.getErrno()), dyServiceLoginVO.getMessage());
         return dyServiceLoginVO.getData();
     }
 
-    // *********************************** ↓↓↓↓↓↓ 下面为公共业务调用方法 ↓↓↓↓↓↓ **************************************
+    // *********************************** ↓↓↓↓↓↓ 下面为公共业务方法 ↓↓↓↓↓↓ **************************************
 
     private static String baseUrl() {
         return dyProperty.getIsOnLine() ? dyProperty.getMiniApp().getApiPrefix() : dyProperty.getMiniApp().getApiPrefixSandbox();
+    }
+
+    public static void saveComponentTicket(String component_ticket) {
+        // https://partner.open-douyin.com/docs/resource/zh-CN/thirdparty/API/smallprogram/authorization/componentticket
+        // 推送 component_ticket  有效期为 3 小时。
+        RedisUtil.setEx(COMPONENT_TICKET + TenantIdContext.getTenantId(), component_ticket, 60 * 2 + 50, TimeUnit.MINUTES);
+    }
+
+    /**
+     * 获取第三方小程序接口调用凭据
+     * https://partner.open-douyin.com/docs/resource/zh-CN/thirdparty/API/smallprogram/authorization/componentaccesstoken
+     *
+     * @param component_appid     第三方小程序应用 appid
+     * @param component_appsecret 第三方小程序应用 appsecret
+     * @return 结果
+     * @author zhengqingya
+     * @date 2022/7/28 15:40
+     */
+    public static String component_access_token(String component_appid, String component_appsecret) {
+        String key = COMPONENT_ACCESS_TOKEN + component_appid;
+        // 1、缓存中获取
+        String component_access_token = RedisUtil.get(key);
+        if (StrUtil.isNotBlank(component_access_token)) {
+            return component_access_token;
+        }
+
+        // 2、若缓存中无值，可通过请求获取
+        String component_ticket = RedisUtil.get(COMPONENT_TICKET + TenantIdContext.getTenantId());
+        Assert.notBlank(component_ticket, "component_ticket数据丢失！");
+        DyServiceComponentAccessTokenVO dyServiceComponentAccessTokenVO = DyBaseApiUtil.baseGet("https://open.microapp.bytedance.com/openapi/v1/auth/tp/token",
+                new HashMap<String, String>(3) {{
+                    this.put("component_appid", component_appid);
+                    this.put("component_appsecret", component_appsecret);
+                    this.put("component_ticket", component_ticket);
+                }},
+                DyServiceComponentAccessTokenVO.class);
+        component_access_token = dyServiceComponentAccessTokenVO.getComponent_access_token();
+
+        // 3、存入缓存
+        RedisUtil.setEx(key, component_access_token, dyServiceComponentAccessTokenVO.getExpires_in() - 10, TimeUnit.SECONDS);
+        return component_access_token;
+    }
+
+    /**
+     * 获取预授权码
+     * https://partner.open-douyin.com/docs/resource/zh-CN/thirdparty/API/smallprogram/authorization/preauthcode
+     *
+     * @param component_appid        第三方小程序应用 appid
+     * @param component_access_token 第三方小程序应用接口调用凭据
+     * @return 结果
+     * @author zhengqingya
+     * @date 2022/7/28 15:40
+     */
+    public static String pre_auth_code(String component_appid, String component_access_token) {
+        String key = PRE_AUTH_CODE + component_appid;
+        // 1、缓存中获取
+        String pre_auth_code = RedisUtil.get(key);
+        if (StrUtil.isNotBlank(pre_auth_code)) {
+            return pre_auth_code;
+        }
+
+        // 2、若缓存中无值，可通过请求获取
+        DyServicePreAuthCodeVO dyServicePreAuthCodeVO = DyBaseApiUtil.basePost("https://open.microapp.bytedance.com/openapi/v2/auth/pre_auth_code",
+                new HashMap<String, String>(3) {{
+                    this.put("component_appid", component_appid);
+                    this.put("component_access_token", component_access_token);
+                }},
+//                new HashMap<String, String>(3) {{
+//                    this.put("pre_auth_code_type", "2");
+//                    this.put("app_name", null);
+//                    this.put("app_icon", null);
+//                }},
+                DyServicePreAuthCodeVO.class);
+        pre_auth_code = dyServicePreAuthCodeVO.getPre_auth_code();
+
+        // 3、存入缓存
+        RedisUtil.setEx(key, pre_auth_code, dyServicePreAuthCodeVO.getExpires_in() - 10, TimeUnit.SECONDS);
+        return pre_auth_code;
+    }
+
+    /**
+     * 直接获取授权链接
+     * https://partner.open-douyin.com/docs/resource/zh-CN/thirdparty/API/smallprogram/authorization/genlink
+     *
+     * @param component_appid        第三方小程序应用 appid
+     * @param component_access_token 第三方小程序应用接口调用凭据
+     * @param redirect_uri           授权回调地址 授权成功后会跳转到该地址并给出授权码
+     * @return 结果
+     * @author zhengqingya
+     * @date 2022/7/28 15:40
+     */
+    public static String gen_link(String component_appid, String component_access_token, String redirect_uri) {
+        HashMap<String, String> map = DyBaseApiUtil.basePost("https://open.microapp.bytedance.com/openapi/v2/auth/gen_link",
+                new HashMap<String, String>(3) {{
+                    this.put("component_appid", component_appid);
+                    this.put("component_access_token", component_access_token);
+                }},
+                new HashMap<String, String>(4) {{
+//                    this.put("link_type", "2");
+//                    this.put("app_name", null);
+//                    this.put("app_icon", null);
+                    this.put("redirect_uri", redirect_uri);
+                }},
+                HashMap.class);
+        String link = map.get("link");
+        return link;
+    }
+
+
+    /**
+     * 找回授权码
+     * https://partner.open-douyin.com/docs/resource/zh-CN/thirdparty/API/smallprogram/authorization/findauthorizationcode
+     *
+     * @param component_appid        第三方小程序应用 appid
+     * @param component_access_token 第三方小程序应用接口调用凭据
+     * @param authorization_appid    授权小程序 appid
+     * @return 结果
+     * @author zhengqingya
+     * @date 2022/7/28 15:40
+     */
+    public static String retrieve_authorization_code(String component_appid, String component_access_token, String authorization_appid) {
+        String key = AUTHORIZATION_CODE + component_appid + ":" + authorization_appid;
+        // 1、缓存中获取
+        String authorization_code = RedisUtil.get(key);
+        if (StrUtil.isNotBlank(authorization_code)) {
+            return authorization_code;
+        }
+
+        // 2、若缓存中无值，可通过请求获取
+        HashMap<String, Object> map = DyBaseApiUtil.basePostParams("https://open.microapp.bytedance.com/openapi/v1/auth/retrieve",
+                new HashMap<String, String>(3) {{
+                    this.put("component_appid", component_appid);
+                    this.put("component_access_token", component_access_token);
+                    this.put("authorization_appid", authorization_appid);
+                }},
+                HashMap.class);
+        Object errno = map.get("errno");
+        if (errno != null) {
+            Assert.isTrue(DyMiniResultCodeEnum.SUCCESS.getCode().equals(errno), (String) map.get("message"));
+        }
+        authorization_code = String.valueOf(map.get("authorization_code"));
+        RedisUtil.setEx(key, authorization_code, Long.valueOf(map.get("expires_in").toString()) - 10, TimeUnit.SECONDS);
+        return authorization_code;
+    }
+
+    /**
+     * 获取授权小程序接口调用凭据
+     * https://partner.open-douyin.com/docs/resource/zh-CN/thirdparty/API/smallprogram/authorization/authorizeraccesstoken
+     *
+     * @param component_appid        第三方小程序应用 appid
+     * @param component_access_token 第三方小程序应用接口调用凭据
+     * @param authorization_code     授权码
+     * @return 结果
+     * @author zhengqingya
+     * @date 2022/7/28 15:40
+     */
+    public static String authorizer_access_token(String component_appid, String component_access_token, String authorization_code) {
+        String key = AUTHORIZER_ACCESS_TOKEN + component_appid;
+        // 1、缓存中获取
+        String authorizer_access_token = RedisUtil.get(key);
+        if (StrUtil.isNotBlank(authorizer_access_token)) {
+            return authorizer_access_token;
+        }
+
+        // 2、若缓存中无值，可通过请求获取
+        DyServiceAuthorizerAccessTokenVO dyServiceAuthorizerAccessTokenVO = DyBaseApiUtil.baseGet("https://open.microapp.bytedance.com/openapi/v1/oauth/token",
+                new HashMap<String, String>(3) {{
+                    this.put("component_appid", component_appid);
+                    this.put("component_access_token", component_access_token);
+                    this.put("authorization_code", authorization_code);
+                    this.put("grant_type", "app_to_tp_authorization_code");
+                }},
+                DyServiceAuthorizerAccessTokenVO.class);
+        authorizer_access_token = dyServiceAuthorizerAccessTokenVO.getAuthorizer_access_token();
+
+        // 3、存入缓存
+        RedisUtil.setEx(key, authorizer_access_token, dyServiceAuthorizerAccessTokenVO.getExpires_in() - 10, TimeUnit.SECONDS);
+        return authorizer_access_token;
+    }
+
+
+    // *********************************** ↓↓↓↓↓↓ 下面为抖音回调所需验证方法 ↓↓↓↓↓↓ **************************************
+    // https://partner.open-douyin.com/docs/resource/zh-CN/thirdparty/overview-guide/smallprogram/encryption
+
+    @SneakyThrows
+    public static void checkSign(String msgSignature, String tpToken, String timestamp, String nonce, String encrypt) {
+        String newMsgSignature = getMsgSignature(tpToken, timestamp, nonce, encrypt);
+        boolean res = msgSignature.equals(newMsgSignature);
+        Assert.isTrue(res, "抖音验证消息签名失败！");
+    }
+
+    private static String getMsgSignature(String tpToken, String timestamp, String nonce, String encrypt) throws Exception {
+        String[] values = new String[]{tpToken, timestamp, nonce, encrypt};
+        Arrays.sort(values);
+
+        StringBuilder sb = new StringBuilder();
+        for (String value : values) {
+            sb.append(value);
+        }
+
+        String str = sb.toString();
+
+        try {
+            //指定sha1算法
+            MessageDigest messageDigest = MessageDigest.getInstance("SHA-1");
+            messageDigest.update(str.getBytes());
+
+            //获取字节数组
+            byte[] messageDigestByte = messageDigest.digest();
+
+            StringBuilder hexStr = new StringBuilder();
+            // 字节数组转换为十六进制数
+            for (byte b : messageDigestByte) {
+                String shaHex = Integer.toHexString(b & 0xFF);
+                if (shaHex.length() < 2) {
+                    hexStr.append(0);
+                }
+                hexStr.append(shaHex);
+            }
+
+            return hexStr.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("不能生成签名");
+        }
+    }
+
+    @SneakyThrows
+    public static DyServiceMsgVO decryptMsg(String encodingAesKey, String encrypt) {
+        MsgDecrypt msgDecrypt = new MsgDecrypt(encodingAesKey);
+        return JSONUtil.toBean(msgDecrypt.decrypt(encrypt), DyServiceMsgVO.class);
     }
 
 }

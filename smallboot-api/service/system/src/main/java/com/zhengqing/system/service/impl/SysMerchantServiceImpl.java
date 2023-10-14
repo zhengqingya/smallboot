@@ -86,6 +86,8 @@ public class SysMerchantServiceImpl extends ServiceImpl<SysMerchantMapper, SysMe
                 .expireTime(params.getExpireTime())
                 .userNum(params.getUserNum())
                 .jobNum(params.getJobNum())
+                .appId(params.getAppId())
+                .appSecret(params.getAppSecret())
                 .build();
         if (isAdd && customId != null) {
             sysMerchant.setId(customId);
