@@ -23,6 +23,7 @@
     <select id="selectDataListByKey" resultType="com.zhengqing.system.model.vo.SysConfigVO">
         SELECT
         id,
+        tenant_id,
         `key`,
         `value`,
         remark,

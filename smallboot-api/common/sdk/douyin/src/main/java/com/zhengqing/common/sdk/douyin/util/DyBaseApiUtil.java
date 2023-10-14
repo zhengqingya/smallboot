@@ -79,6 +79,28 @@ public class DyBaseApiUtil {
     }
 
     /**
+     * post请求
+     *
+     * @param url           请求地址
+     * @param requestParams 请求参数
+     * @param requestBody   请求参数体
+     * @param clazz         响应类
+     * @return 响应数据
+     * @author zhengqingya
+     * @date 2022/7/28 15:40
+     */
+    public static <T> T basePostParamsBody(String url,
+                                           Object requestParams,
+                                           Object requestBody,
+                                           Class<T> clazz) {
+        String body = HttpUtil.createPost(url + "?" + HttpUtil.toParams(JSONUtil.toBean(JSONUtil.toJsonStr(requestParams), Map.class)))
+                .body(JSONUtil.toJsonStr(requestBody))
+                .execute().body();
+        log.debug("[抖音] \n 请求url: 【{}】 \n 请求form参数: 【{}】 \n 请求体: 【{}】 \n 响应数据：【{}】", url, JSONUtil.toJsonStr(requestParams), JSONUtil.toJsonStr(requestBody), body);
+        return JSONUtil.toBean(body, clazz);
+    }
+
+    /**
      * get请求
      *
      * @param url    请求地址

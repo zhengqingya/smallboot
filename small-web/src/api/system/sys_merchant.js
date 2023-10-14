@@ -39,4 +39,11 @@ export default {
       params: params,
     });
   },
+  appOperationBatch(data) {
+    return request({
+      url: BASE_API + '/appOperationBatch',
+      method: 'post',
+      data: data,
+    });
+  },
 };

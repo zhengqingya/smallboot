@@ -3,6 +3,7 @@ package com.zhengqing.system.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhengqing.system.entity.SysMerchant;
+import com.zhengqing.system.model.dto.SysMerchantAppOperationDTO;
 import com.zhengqing.system.model.dto.SysMerchantListDTO;
 import com.zhengqing.system.model.dto.SysMerchantPageDTO;
 import com.zhengqing.system.model.dto.SysMerchantSaveDTO;
@@ -79,5 +80,15 @@ public interface ISysMerchantService extends IService<SysMerchant> {
      * @date 2023/10/13 11:17
      */
     SysMerchant detail(Integer id);
+
+    /**
+     * 批量操作(小程序提审、发布)
+     *
+     * @param params 提交参数
+     * @return void
+     * @author zhengqingya
+     * @date 2023/10/13 11:17
+     */
+    void appOperationBatch(SysMerchantAppOperationDTO params);
 
 }

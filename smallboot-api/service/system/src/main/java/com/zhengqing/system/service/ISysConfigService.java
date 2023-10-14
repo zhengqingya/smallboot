@@ -63,26 +63,6 @@ public interface ISysConfigService extends IService<SysConfig> {
     List<SysConfigVO> listByKey(@NotEmpty(message = "属性key不能为空!") List<String> keyList);
 
     /**
-     * 通过属性key查询数据 - 数据库方式
-     *
-     * @param keyList 属性key
-     * @return 系统配置
-     * @author zhengqingya
-     * @date 2021/09/06 22:57
-     */
-    List<SysConfigVO> listFromDbByKey(@NotEmpty(message = "属性key不能为空!") List<String> keyList);
-
-    /**
-     * 通过属性key查询数据 - 缓存方式
-     *
-     * @param keyList 属性key
-     * @return 系统配置
-     * @author zhengqingya
-     * @date 2021/09/06 22:57
-     */
-    List<SysConfigVO> listFromCacheByKey(@NotEmpty(message = "属性key不能为空!") List<String> keyList);
-
-    /**
      * 详情
      *
      * @param id 主键ID

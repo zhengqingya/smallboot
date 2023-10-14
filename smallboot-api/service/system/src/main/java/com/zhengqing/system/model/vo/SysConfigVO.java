@@ -35,6 +35,9 @@ public class SysConfigVO extends BaseVO {
     @ApiModelProperty(value = "主键ID", hidden = true)
     private String id;
 
+    @ApiModelProperty("租户ID")
+    private Integer tenantId;
+
     @ApiModelProperty("属性key")
     private String key;
 

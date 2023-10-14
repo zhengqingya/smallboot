@@ -67,6 +67,12 @@ public class SysMerchantPageVO extends BaseVO {
     @ApiModelProperty("AppSecret")
     private String appSecret;
 
+    /**
+     * {@link com.zhengqing.system.enums.SysMerchantAppStatusEnum}
+     */
+    @ApiModelProperty("小程序状态")
+    private Integer appStatus;
+
     public void handleData() {
 
     }

@@ -76,4 +76,13 @@ public class SysMerchant extends IsDeletedBaseEntity<SysMerchant> {
     @ApiModelProperty("AppSecret")
     private String appSecret;
 
+    /**
+     * {@link com.zhengqing.system.enums.SysMerchantAppStatusEnum}
+     */
+    @ApiModelProperty("小程序状态")
+    private Integer appStatus;
+
+    @ApiModelProperty("小程序审核结果")
+    private String appAuditResultList;
+
 }

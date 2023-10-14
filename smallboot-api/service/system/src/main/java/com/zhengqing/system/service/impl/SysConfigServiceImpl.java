@@ -2,6 +2,7 @@ package com.zhengqing.system.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Assert;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -11,8 +12,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.zhengqing.common.base.context.SysUserContext;
+import com.zhengqing.common.base.context.TenantIdContext;
 import com.zhengqing.common.core.custom.validator.common.ValidList;
 import com.zhengqing.common.db.constant.MybatisConstant;
+import com.zhengqing.common.db.util.TenantUtil;
 import com.zhengqing.common.redis.util.RedisUtil;
 import com.zhengqing.system.constant.SystemConstant;
 import com.zhengqing.system.entity.SysConfig;
@@ -48,15 +51,20 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
 
     @Override
     public void initCache() {
-        List<SysConfig> list = this.sysConfigMapper.selectList(null);
-        if (CollUtil.isEmpty(list)) {
-            return;
-        }
-        list.forEach(item -> {
-            String key = SystemConstant.CACHE_SYS_CONFIG_PREFIX + item.getKey();
-            RedisUtil.set(key, JSON.toJSONString(item));
+        TenantUtil.executeRemoveFlag(() -> {
+            List<SysConfig> list = this.sysConfigMapper.selectList(null);
+            if (CollUtil.isEmpty(list)) {
+                return;
+            }
+            list.forEach(item -> {
+                String key = SystemConstant.CACHE_SYS_CONFIG_PREFIX + item.getTenantId() + ":" + item.getKey();
+                String val = RedisUtil.get(key);
+                if (StrUtil.isBlank(val)) {
+                    RedisUtil.set(key, JSON.toJSONString(item));
+                }
+            });
+            log.info("初始化系统配置缓存成功!");
         });
-        log.info("初始化系统配置缓存成功!");
     }
 
     /**
@@ -73,7 +81,7 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
             return;
         }
         dataList.forEach(item -> {
-            String key = SystemConstant.CACHE_SYS_CONFIG_PREFIX + item.getKey();
+            String key = SystemConstant.CACHE_SYS_CONFIG_PREFIX + item.getTenantId() + ":" + item.getKey();
             RedisUtil.set(key, JSON.toJSONString(item));
             log.info("[系统管理] 系统配置[{}] 加入缓存" + key);
         });
@@ -106,8 +114,15 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
         return dataList;
     }
 
-    @Override
-    public List<SysConfigVO> listFromDbByKey(List<String> keyList) {
+    /**
+     * 通过属性key查询数据 - 数据库方式
+     *
+     * @param keyList 属性key
+     * @return 系统配置
+     * @author zhengqingya
+     * @date 2021/09/06 22:57
+     */
+    private List<SysConfigVO> listFromDbByKey(List<String> keyList) {
         if (CollUtil.isEmpty(keyList)) {
             return Lists.newArrayList();
         }
@@ -117,12 +132,19 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
         return dataList;
     }
 
-    @Override
-    public List<SysConfigVO> listFromCacheByKey(List<String> keyList) {
+    /**
+     * 通过属性key查询数据 - 缓存方式
+     *
+     * @param keyList 属性key
+     * @return 系统配置
+     * @author zhengqingya
+     * @date 2021/09/06 22:57
+     */
+    private List<SysConfigVO> listFromCacheByKey(List<String> keyList) {
         this.checkKey(keyList);
         List<SysConfigVO> dataList = Lists.newLinkedList();
         keyList.forEach(keyItem -> {
-            String dataJsonStr = RedisUtil.get(SystemConstant.CACHE_SYS_CONFIG_PREFIX + keyItem);
+            String dataJsonStr = RedisUtil.get(SystemConstant.CACHE_SYS_CONFIG_PREFIX + TenantIdContext.getTenantId() + ":" + keyItem);
             if (StringUtils.isNotBlank(dataJsonStr)) {
                 dataList.add(JSONUtil.toBean(dataJsonStr, SysConfigVO.class));
             }
@@ -214,7 +236,7 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
     public void deleteByKey(String key) {
         Assert.notBlank(key, "属性不能为空!");
         this.sysConfigMapper.deleteByKeyList(Lists.newArrayList(key));
-        String redisKey = SystemConstant.CACHE_SYS_CONFIG_PREFIX + key;
+        String redisKey = SystemConstant.CACHE_SYS_CONFIG_PREFIX + TenantIdContext.getTenantId() + ":" + key;
         log.info("[系统管理] 删除系统配置缓存：[{}]", redisKey);
         RedisUtil.delete(redisKey);
     }

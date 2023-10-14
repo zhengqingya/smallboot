@@ -5,6 +5,7 @@ import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.common.core.custom.repeatsubmit.NoRepeatSubmit;
 import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
+import com.zhengqing.system.model.dto.SysMerchantAppOperationDTO;
 import com.zhengqing.system.model.dto.SysMerchantListDTO;
 import com.zhengqing.system.model.dto.SysMerchantPageDTO;
 import com.zhengqing.system.model.dto.SysMerchantSaveDTO;
@@ -72,6 +73,14 @@ public class WebSysMerchantController extends BaseController {
     @ApiOperation("删除")
     public void delete(@RequestParam Integer id) {
         this.iSysMerchantService.deleteData(id);
+    }
+
+
+    @PostMapping("appOperationBatch")
+    @ApiOperation("批量操作(小程序提审、发布)")
+    public Boolean appOperationBatch(@Validated @RequestBody SysMerchantAppOperationDTO params) {
+        this.iSysMerchantService.appOperationBatch(params);
+        return true;
     }
 
 }

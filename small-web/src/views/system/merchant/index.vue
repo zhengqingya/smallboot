@@ -15,6 +15,8 @@
       <el-button type="primary" @click="refreshTableData">查询</el-button>
       <template #right>
         <el-button type="primary" @click="handleAdd">添加</el-button>
+        <el-button type="warning" @click="appOperationBatchAudit">一键提审代码</el-button>
+        <el-button type="warning" @click="appOperationBatchRelease">一键发布代码</el-button>
       </template>
     </base-header>
 
@@ -39,7 +41,15 @@
       <el-table-column label="发布数" prop="jobNum" align="center" />
       <el-table-column label="排序" prop="sort" align="center" />
       <el-table-column label="备注" prop="remark" align="center" />
-      <!-- <el-table-column label="AppSecret" prop="appSecret" align="center" /> -->
+      <el-table-column label="小程序状态" prop="appStatus" align="center">
+        <template #default="scope">
+          <el-tag v-if="scope.row.appStatus == 20">提审中</el-tag>
+          <el-tag v-else-if="scope.row.appStatus == 31" type="warning">审核通过</el-tag>
+          <el-tag v-else-if="scope.row.appStatus == 32" type="danger">审核不通过</el-tag>
+          <el-tag v-else-if="scope.row.appStatus == 50" type="info">发布中</el-tag>
+          <el-tag v-else-if="scope.row.appStatus == 51" type="success">已发布</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column align="center" label="操作">
         <template #default="scope">
           <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
@@ -128,6 +138,16 @@ async function handleDelete(row) {
   let res = await proxy.$api.sys_merchant.delete({ id: row.id });
   refreshTableData();
   proxy.submitOk(res.message);
+}
+async function appOperationBatchAudit() {
+  let res = await proxy.$api.sys_merchant.appOperationBatch({ isAudit: true });
+  proxy.submitOk(res.message);
+  refreshTableData();
+}
+async function appOperationBatchRelease() {
+  let res = await proxy.$api.sys_merchant.appOperationBatch({ isRelease: true });
+  proxy.submitOk(res.message);
+  refreshTableData();
 }
 function submitForm() {
   proxy.$refs.dataFormRef.validate(async (valid) => {

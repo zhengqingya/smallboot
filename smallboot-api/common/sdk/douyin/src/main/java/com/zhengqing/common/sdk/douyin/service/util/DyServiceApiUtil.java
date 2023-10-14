@@ -4,6 +4,7 @@ package com.zhengqing.common.sdk.douyin.service.util;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
+import com.google.common.collect.Lists;
 import com.zhengqing.common.base.context.TenantIdContext;
 import com.zhengqing.common.redis.util.RedisUtil;
 import com.zhengqing.common.sdk.douyin.config.DyProperty;
@@ -75,6 +76,30 @@ public class DyServiceApiUtil {
         DyServiceLoginVO dyServiceLoginVO = DyBaseApiUtil.baseGet("https://open.microapp.bytedance.com/openapi/v1/microapp/code2session", params, DyServiceLoginVO.class);
         Assert.isTrue(DyMiniResultCodeEnum.SUCCESS.getCode().equals(dyServiceLoginVO.getErrno()), dyServiceLoginVO.getMessage());
         return dyServiceLoginVO.getData();
+    }
+
+    /**
+     * 提审代码
+     * https://partner.open-douyin.com/docs/resource/zh-CN/thirdparty/API/smallprogram/auth-app-manage/develop/audit-code
+     *
+     * @param component_appid         第三方小程序应用 appid
+     * @param authorizer_access_token 授权小程序接口调用凭据
+     * @return 结果
+     * @author zhengqingya
+     * @date 2022/7/28 15:40
+     */
+    public static void audit(String component_appid, String authorizer_access_token) {
+        HashMap<String, String> map = DyBaseApiUtil.basePostParamsBody("https://open.microapp.bytedance.com/openapi/v2/microapp/package/audit",
+                new HashMap<String, String>(2) {{
+                    this.put("component_appid", component_appid);
+                    this.put("component_appsecret", authorizer_access_token);
+                }},
+                new HashMap<String, Object>(3) {{
+                    this.put("hostNames", Lists.newArrayList("douyin"));
+//                    this.put("auditNote", null);
+//                    this.put("auditWay", null);
+                }}, HashMap.class);
+        Assert.isTrue(DyMiniResultCodeEnum.SUCCESS.getCode().equals(map.get("errno")), map.get("message"));
     }
 
     // *********************************** ↓↓↓↓↓↓ 下面为公共业务方法 ↓↓↓↓↓↓ **************************************

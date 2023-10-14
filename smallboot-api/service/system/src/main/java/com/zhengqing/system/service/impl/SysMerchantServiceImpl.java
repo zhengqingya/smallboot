@@ -1,6 +1,8 @@
 package com.zhengqing.system.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Assert;
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -10,13 +12,12 @@ import com.zhengqing.common.base.enums.CommonStatusEnum;
 import com.zhengqing.common.base.util.MyDateUtil;
 import com.zhengqing.common.db.constant.MybatisConstant;
 import com.zhengqing.common.db.util.TenantUtil;
+import com.zhengqing.common.sdk.douyin.service.util.DyServiceApiUtil;
 import com.zhengqing.system.entity.SysMerchant;
+import com.zhengqing.system.enums.SysMerchantAppStatusEnum;
 import com.zhengqing.system.enums.SysRoleCodeEnum;
 import com.zhengqing.system.mapper.SysMerchantMapper;
-import com.zhengqing.system.model.dto.SysMerchantListDTO;
-import com.zhengqing.system.model.dto.SysMerchantPageDTO;
-import com.zhengqing.system.model.dto.SysMerchantSaveDTO;
-import com.zhengqing.system.model.dto.SysUserSaveDTO;
+import com.zhengqing.system.model.dto.*;
 import com.zhengqing.system.model.vo.SysMerchantListVO;
 import com.zhengqing.system.model.vo.SysMerchantPageVO;
 import com.zhengqing.system.service.ISysMerchantService;
@@ -139,4 +140,30 @@ public class SysMerchantServiceImpl extends ServiceImpl<SysMerchantMapper, SysMe
         Assert.notNull(sysMerchant, "该商户不存在！");
         return sysMerchant;
     }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void appOperationBatch(SysMerchantAppOperationDTO params) {
+        log.info("[系统管理] 批量操作(小程序提审、发布)：{}", JSONUtil.toJsonStr(params));
+        List<Integer> idList = params.getIdList();
+        List<SysMerchant> sysMerchantList;
+        if (CollUtil.isEmpty(idList)) {
+            sysMerchantList = this.sysMerchantMapper.selectAppIdList();
+        } else {
+            sysMerchantList = this.sysMerchantMapper.selectBatchIds(idList);
+        }
+        String component_appid = "";
+        String component_appsecret = "";
+        String component_access_token = DyServiceApiUtil.component_access_token(component_appid, component_appsecret);
+        sysMerchantList.forEach(item -> {
+            String authorizer_access_token = DyServiceApiUtil.authorizer_access_token(component_appid, component_access_token, DyServiceApiUtil.retrieve_authorization_code(component_appid, component_access_token, item.getAppId()));
+            if (params.getIsAudit()) {
+                // 提审代码
+                DyServiceApiUtil.audit("", authorizer_access_token);
+                item.setAppStatus(SysMerchantAppStatusEnum.提审中.getType());
+            }
+        });
+        this.saveBatch(sysMerchantList);
+    }
+
 }

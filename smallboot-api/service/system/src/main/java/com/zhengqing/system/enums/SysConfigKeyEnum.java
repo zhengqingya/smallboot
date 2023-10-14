@@ -18,6 +18,11 @@ import java.util.List;
 @AllArgsConstructor
 public enum SysConfigKeyEnum {
 
+    // ====================================== ↓↓↓↓↓↓ 抖音小程序 ↓↓↓↓↓↓ ======================================
+
+    DOUYIN_TP_TOKEN("douyin_tp_token", null, "抖音服务商平台-消息验证TOKEN"),
+    DOUYIN_ENCODING_AES_KEY("douyin_encoding_aes_key", null, "抖音服务商平台-消息加密解密KEY"),
+
     // ====================================== ↓↓↓↓↓↓ 商城 ↓↓↓↓↓↓ ======================================
 
     LBS_QQ_KEY("lbs_qq_key", null, "腾讯地图key"),

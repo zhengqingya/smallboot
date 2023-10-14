@@ -26,6 +26,10 @@
             <groupId>com.zhengqing</groupId>
             <artifactId>core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.zhengqing</groupId>
+            <artifactId>system</artifactId>
+        </dependency>
 
         <!-- 微信小程序 -->
         <!-- https://mvnrepository.com/artifact/com.github.binarywang/weixin-java-pay -->

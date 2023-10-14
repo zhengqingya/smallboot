@@ -41,4 +41,13 @@ public interface SysMerchantMapper extends BaseMapper<SysMerchant> {
      */
     List<SysMerchantListVO> selectDataList(@Param("filter") SysMerchantListDTO filter);
 
+    /**
+     * 获取可以提审、发布的小程序appid
+     *
+     * @return 查询结果
+     * @author zhengqingya
+     * @date 2023/10/13 11:17
+     */
+    List<SysMerchant> selectAppIdList();
+
 }
