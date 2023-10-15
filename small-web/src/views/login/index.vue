@@ -1,11 +1,20 @@
 <template>
-  <base-wrapper class="bg-color-primary flex-center-center">
+  <base-wrapper
+    class="flex-center-center"
+    :style="{
+      'background-color': isAdmin ? '#304156' : '#00aaff',
+    }">
     <div class="flex-c-center-center bg-color-white" style="height: 400px; width: 500px; border-radius: 10px">
-      <h1 class="font-size-lg">SmallBoot多租户管理系统</h1>
+      <h1 v-if="isAdmin" class="font-size-lg">后台管理系统</h1>
+      <div v-else>
+        <h1 v-if="tenantId && tenantList && tenantList.length > 0" class="font-size-lg">{{ tenantList.find((e) => e.id == tenantId).name }}</h1>
+        <h1 v-else class="font-size-lg">SmallBoot多租户管理系统</h1>
+      </div>
+
       <div class="m-t-20">
         <el-form ref="loginFormRef" :model="loginForm" :rules="loginRules">
-          <el-form-item prop="tenantId">
-            <base-select v-model="loginForm.tenantId" :filterable="false" placeholder="请选择租户" :option-props="{ label: 'name', value: 'id' }" api="sys_tenant.list">
+          <el-form-item v-if="!tenantId">
+            <base-select v-model="loginForm.tenantId" :filterable="false" placeholder="请选择租户" :option-props="{ label: 'name', value: 'id' }" :data-list="tenantList">
               <template #prefix>
                 <el-icon> <OfficeBuilding /> </el-icon>
               </template>
@@ -19,10 +28,10 @@
             <el-input v-model="loginForm.password" prefix-icon="Lock" placeholder="请输入密码" show-password maxlength="30" />
           </el-form-item>
         </el-form>
-        <div class="tips">
+        <!-- <div class="tips">
           <span>用户名: admin</span>
           <span class="m-l-20"> 密码: 123456</span>
-        </div>
+        </div> -->
         <el-button type="primary" class="m-t-10 w-full" @click="handleLogin">登 录</el-button>
       </div>
     </div>
@@ -33,11 +42,14 @@
 </template>
 
 <script setup>
-import { getCurrentInstance } from 'vue';
+import { getCurrentInstance, onMounted } from 'vue';
 // 组件实例
 const { proxy } = getCurrentInstance();
 const { login } = proxy.$store.user.useUserStore();
 const loginForm = $ref({});
+let tenantId = $ref(null);
+let tenantList = $ref([]);
+let isAdmin = $ref(false);
 
 const loginRules = {
   tenantId: [{ required: true, trigger: 'change', message: '请选择租户' }],
@@ -53,6 +65,21 @@ function validatePassword(rule, value, callback) {
     callback();
   }
 }
+
+onMounted(async () => {
+  // 拿到租户数据
+  let res = await proxy.$api.sys_tenant.list();
+  tenantList = res.data;
+
+  var path = proxy.$route.path;
+  isAdmin = path.includes('admin');
+  let lastPath = path.substring(path.lastIndexOf('/') + 1);
+  if (!lastPath || lastPath == 'login') {
+    return;
+  }
+  tenantId = lastPath;
+  loginForm.tenantId = parseInt(tenantId);
+});
 
 function handleLogin() {
   proxy.$refs.loginFormRef.validate((valid) => {

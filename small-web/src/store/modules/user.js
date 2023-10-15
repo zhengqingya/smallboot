@@ -32,6 +32,8 @@ export const useUserStore = defineStore('user', () => {
 
   // 退出登录
   function logout() {
+    let localTenantId = tenantId.value;
+
     // 清空pinia存储的数据
     this.$reset();
 
@@ -44,9 +46,9 @@ export const useUserStore = defineStore('user', () => {
     window.sessionStorage.clear();
 
     // 跳转登录页
-    router.push(`/login?redirect=${route.fullPath}`);
+    router.push(`/login/${localTenantId}?redirect=${route.fullPath}`);
     // window.location.href = '/login';
-    location.reload(); // 强制刷新页面
+    // location.reload(); // 强制刷新页面
   }
 
   // 获取用户 & 权限数据

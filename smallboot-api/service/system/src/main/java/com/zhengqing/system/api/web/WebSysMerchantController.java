@@ -81,7 +81,7 @@ public class WebSysMerchantController extends BaseController {
         this.iSysMerchantService.deleteData(id);
     }
 
-
+    @NoRepeatSubmit
     @PostMapping("appOperationBatch")
     @ApiOperation("批量操作(小程序提审、发布)")
     public Boolean appOperationBatch(@Validated @RequestBody SysMerchantAppOperationDTO params) {

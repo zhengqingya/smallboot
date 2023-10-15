@@ -192,6 +192,7 @@ public class SysMerchantServiceImpl extends ServiceImpl<SysMerchantMapper, SysMe
 
         String component_access_token = DyServiceApiUtil.component_access_token(component_appid, component_appsecret);
         for (SysMerchant item : sysMerchantList) {
+            Integer merchantId = item.getId();
             String appId = item.getAppId();
             String appSecret = item.getAppSecret();
             String appIndexTitle = item.getAppIndexTitle();
@@ -212,7 +213,8 @@ public class SysMerchantServiceImpl extends ServiceImpl<SysMerchantMapper, SysMe
                                     }})
                                     .ext(
                                             SysExtJsonBO.Ext.builder()
-                                                    .tenant_id(String.valueOf(TenantIdContext.getTenantId()))
+                                                    .tenantId(String.valueOf(TenantIdContext.getTenantId()))
+                                                    .merchantId(String.valueOf(merchantId))
                                                     .appId(appId)
                                                     .appSecret(appSecret)
                                                     .baseUrl(this.systemProperty.getServiceApi())

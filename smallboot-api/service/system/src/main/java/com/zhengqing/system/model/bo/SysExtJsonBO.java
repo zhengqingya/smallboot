@@ -32,7 +32,8 @@ public class SysExtJsonBO {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Ext {
-        private String tenant_id;
+        private String tenantId;
+        private String merchantId;
         private String appId;
         private String appSecret;
         private String baseUrl;

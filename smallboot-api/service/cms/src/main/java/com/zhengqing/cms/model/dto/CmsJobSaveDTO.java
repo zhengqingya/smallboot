@@ -47,7 +47,7 @@ public class CmsJobSaveDTO extends BaseDTO {
     @ApiModelProperty("岗位id")
     private Integer postId;
 
-    @NotNull(message = "分类不能为空！")
+    //    @NotNull(message = "分类不能为空！")
     @ApiModelProperty("分类id")
     private Integer categoryId;
 

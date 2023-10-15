@@ -7,7 +7,7 @@ import 'nprogress/nprogress.css'; // 导入样式
 NProgress.configure({ showSpinner: true }); // 显示右上角螺旋加载提示
 
 // 白名单路由
-const whiteList = ['/login', '/test', '/test-layout'];
+const whiteList = ['/login', '/admin/login', '/test', '/test-layout'];
 // 是否存在路由
 let hasRouter = false;
 
@@ -50,11 +50,15 @@ router.beforeEach(async (to, from, next) => {
     }
   } else {
     // 未登录
-    if (whiteList.indexOf(to.path) !== -1) {
-      next(); // 放行 -- 可以访问白名单页面(eg: 登录页面)
-    } else {
-      next(`/login?redirect=${to.path}`); // 无权限 & 白名单页面未配置  =》 跳转到登录页面
-    }
+    // whiteList.indexOf(to.path) !== -1  // 完全等于才放行
+    whiteList.forEach((e) => {
+      // 以白名单开头的地址都放行
+      if (to.path.startsWith(e)) {
+        next(); // 放行 -- 可以访问白名单页面(eg: 登录页面)
+      }
+    });
+
+    next(`/login?redirect=${to.path}`); // 无权限 & 白名单页面未配置  =》 跳转到登录页面
   }
 });
 

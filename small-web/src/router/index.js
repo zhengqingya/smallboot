@@ -14,6 +14,27 @@ export const constantRoutes = [
     },
   },
   {
+    path: '/login/:tenantId(\\d+)',
+    component: () => import('@/views/login/index.vue'),
+    meta: {
+      isParentView: true,
+    },
+  },
+  {
+    path: '/admin/login',
+    component: () => import('@/views/login/index.vue'),
+    meta: {
+      isParentView: true,
+    },
+  },
+  {
+    path: '/admin/login/:tenantId(\\d+)',
+    component: () => import('@/views/login/index.vue'),
+    meta: {
+      isParentView: true,
+    },
+  },
+  {
     path: '/test',
     component: () => import('@/views/test/index.vue'),
   },

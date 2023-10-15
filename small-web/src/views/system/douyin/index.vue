@@ -21,7 +21,7 @@
       <base-card title="抖音服务商-授权链接" style="width: 660px; margin-top: 20px">
         <el-tag>{{ authLink }}</el-tag>
       </base-card>
-      <base-card title="抖音小程序一键操作" style="width: 660px; margin-top: 20px">
+      <base-card title="抖音小程序一键操作 (☆谨慎操作☆)" style="width: 660px; margin-top: 20px">
         <div class="flex-column">
           <div v-if="versionObj">
             <div>
