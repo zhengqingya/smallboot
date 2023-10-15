@@ -1,17 +1,17 @@
 package com.zhengqing.system.enums;
 
-import com.google.common.collect.Lists;
 import com.zhengqing.common.base.exception.MyException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
  * <p> 系统-系统配置key枚举 </p>
  *
  * @author zhengqingya
- * @description
+ * @description tips: 同步 t_sys_config 表数据
  * @date 2021/8/19 9:50
  */
 @Getter
@@ -19,7 +19,8 @@ import java.util.List;
 public enum SysConfigKeyEnum {
 
     // ====================================== ↓↓↓↓↓↓ 抖音小程序 ↓↓↓↓↓↓ ======================================
-
+    DOUYIN_COMPONENT_APPID("douyin_component_appid", null, "抖音服务商平台-第三方小程序应用appid"),
+    DOUYIN_COMPONENT_APPSECRET("douyin_component_appsecret", null, "抖音服务商平台-第三方小程序应用appsecret"),
     DOUYIN_TP_TOKEN("douyin_tp_token", null, "抖音服务商平台-消息验证TOKEN"),
     DOUYIN_ENCODING_AES_KEY("douyin_encoding_aes_key", null, "抖音服务商平台-消息加密解密KEY"),
 
@@ -39,10 +40,13 @@ public enum SysConfigKeyEnum {
     MALL_ORDER_SET_STOCK_CHECK_TYPE("mall_order_set_stock_check_type", "1", "减库存设置（1：提交订单减库存 2：付款减库存）");
 
     private final String key;
+    /**
+     * 初始化时默认值
+     */
     private final String value;
     private final String desc;
 
-    private static final List<SysConfigKeyEnum> LIST = Lists.newArrayList();
+    private static final List<SysConfigKeyEnum> LIST = Arrays.asList(SysConfigKeyEnum.values());
 
     /**
      * 根据指定的系统配置key查找相应枚举类

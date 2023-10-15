@@ -2,6 +2,7 @@
 # ================================== ↓↓↓↓↓↓ smallboot配置 ↓↓↓↓↓↓ ==================================
 smallboot:
   ip: 127.0.0.1
+  service-api: ${smallboot.ip}:${server.port}
   wx-mp-domain: http://sndhx2.natappfree.cc # 微信公众号域名 -- 用于认证授权等
   base-file-url: http://172.36.0.13:80       # 文件访问基础地址
   file-storage-type: local # local(本地nginx作为文件访问)、minio

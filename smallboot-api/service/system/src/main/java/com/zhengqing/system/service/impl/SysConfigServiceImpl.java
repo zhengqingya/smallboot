@@ -19,6 +19,7 @@ import com.zhengqing.common.db.util.TenantUtil;
 import com.zhengqing.common.redis.util.RedisUtil;
 import com.zhengqing.system.constant.SystemConstant;
 import com.zhengqing.system.entity.SysConfig;
+import com.zhengqing.system.enums.SysConfigKeyEnum;
 import com.zhengqing.system.mapper.SysConfigMapper;
 import com.zhengqing.system.model.dto.SysConfigPageDTO;
 import com.zhengqing.system.model.dto.SysConfigSaveDTO;
@@ -101,6 +102,15 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
             dataMap.put(item.getKey(), item);
         }
         return dataMap;
+    }
+
+    @Override
+    public Object getValue(SysConfigKeyEnum sysConfigKeyEnum) {
+        Map<String, SysConfigVO> configMap = this.mapByKey(Lists.newArrayList(sysConfigKeyEnum.getKey()));
+        Assert.notEmpty(configMap, sysConfigKeyEnum.getDesc() + "未配置！");
+        Object value = configMap.get(sysConfigKeyEnum.getKey()).getValue();
+        Assert.notNull(value, sysConfigKeyEnum.getDesc() + "未配置！");
+        return value;
     }
 
     @Override

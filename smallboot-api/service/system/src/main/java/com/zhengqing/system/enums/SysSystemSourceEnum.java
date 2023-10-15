@@ -1,6 +1,5 @@
 package com.zhengqing.system.enums;
 
-import com.google.common.collect.Lists;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -26,11 +25,7 @@ public enum SysSystemSourceEnum {
     private final Integer systemSource;
     private final String desc;
 
-    private static final List<SysSystemSourceEnum> LIST = Lists.newArrayList();
-
-    static {
-        LIST.addAll(Arrays.asList(SysSystemSourceEnum.values()));
-    }
+    private static final List<SysSystemSourceEnum> LIST = Arrays.asList(SysSystemSourceEnum.values());
 
     public static SysSystemSourceEnum getEnum(Integer systemSource) {
         for (SysSystemSourceEnum itemEnum : LIST) {

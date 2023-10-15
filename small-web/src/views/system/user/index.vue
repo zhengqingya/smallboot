@@ -55,7 +55,7 @@
       </base-table-p>
     </base-card>
     <base-dialog v-if="dialogStatus === 'updatePwd'" v-model="dialogVisible" :title="titleMap[dialogStatus]" width="30%">
-      <el-input v-model="newPassword" />
+      <el-input v-model="newPassword" placeholder="请输入密码" />
       <template #footer>
         <el-button @click="dialogVisible = false">取消</el-button>
         <el-button type="primary" @click="submitPwd()">确定</el-button>
@@ -132,7 +132,7 @@ let titleMap = ref({
 let newPassword = ref('123456');
 let rules = ref({
   username: [{ required: true, message: '请输入账号', trigger: 'blur' }],
-  pwd: [{ pattern: /^(\w){6,16}$/, message: '请设置6-16位字母、数字组合' }],
+  password: [{ pattern: /^(\w){6,16}$/, message: '请设置6-16位字母、数字组合' }],
   nickname: [{ required: true, message: '请输入你昵称', trigger: 'blur' }],
 });
 let deptTreeData = ref([]);
@@ -189,9 +189,6 @@ async function submitPwd() {
 function submitForm() {
   proxy.$refs.dataFormRef.validate(async (valid) => {
     if (valid) {
-      if (form.value.pwd) {
-        form.value.password = form.value.pwd;
-      }
       let res = await proxy.$api.sys_user[form.value.userId ? 'update' : 'add'](form.value);
       proxy.submitOk(res.msg);
       handelCurrentLoginUser();

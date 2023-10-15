@@ -1,10 +1,10 @@
 package com.zhengqing.system.enums;
 
-import com.google.common.collect.Lists;
 import com.zhengqing.common.base.exception.MyException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -24,7 +24,7 @@ public enum SysConfigTypeEnum {
     private final Integer type;
     private final String desc;
 
-    private static final List<SysConfigTypeEnum> LIST = Lists.newArrayList();
+    private static final List<SysConfigTypeEnum> LIST = Arrays.asList(SysConfigTypeEnum.values());
 
     public static SysConfigTypeEnum getEnum(Integer type) {
         for (SysConfigTypeEnum itemEnum : LIST) {

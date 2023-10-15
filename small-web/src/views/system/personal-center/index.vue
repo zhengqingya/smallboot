@@ -45,7 +45,10 @@
     <base-dialog v-model="dialogVisible" title="修改个人信息" width="50%">
       <el-form :model="form" label-width="80px">
         <el-form-item label="账号:" prop="username">
-          <el-input v-model="form.username" />
+          <el-input v-model="form.username" disabled />
+        </el-form-item>
+        <el-form-item label="密码:" prop="password">
+          <el-input v-model="form.password" placeholder="请输入密码" />
         </el-form-item>
         <el-form-item label="昵称:" prop="nickname">
           <el-input v-model="form.nickname" />

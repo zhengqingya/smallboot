@@ -1,6 +1,5 @@
 package com.zhengqing.system.enums;
 
-import com.google.common.collect.Lists;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -26,11 +25,8 @@ public enum SysRoleOperationTypeEnum {
     private final Integer type;
     private final String desc;
 
-    private static final List<SysRoleOperationTypeEnum> LIST = Lists.newArrayList();
+    private static final List<SysRoleOperationTypeEnum> LIST = Arrays.asList(SysRoleOperationTypeEnum.values());
 
-    static {
-        LIST.addAll(Arrays.asList(SysRoleOperationTypeEnum.values()));
-    }
 
     public static SysRoleOperationTypeEnum getEnum(Integer type) {
         for (SysRoleOperationTypeEnum itemEnum : LIST) {

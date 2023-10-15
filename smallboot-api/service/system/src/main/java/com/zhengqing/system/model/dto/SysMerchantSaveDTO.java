@@ -94,4 +94,7 @@ public class SysMerchantSaveDTO extends BaseDTO {
     @ApiModelProperty("AppSecret")
     private String appSecret;
 
+    @ApiModelProperty("小程序首页标题")
+    private String appIndexTitle;
+
 }

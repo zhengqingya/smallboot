@@ -18,6 +18,10 @@ public class CommonProperty {
      * ip
      */
     private String ip;
+    /**
+     * 后端服务地址
+     */
+    private String serviceApi;
 
     /**
      * 文件存储类型

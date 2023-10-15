@@ -2,34 +2,41 @@ package com.zhengqing.system.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Assert;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
+import com.zhengqing.common.base.context.TenantIdContext;
 import com.zhengqing.common.base.enums.CommonStatusEnum;
+import com.zhengqing.common.base.exception.MyException;
+import com.zhengqing.common.base.util.AutoUpgradeVersionUtil;
 import com.zhengqing.common.base.util.MyDateUtil;
 import com.zhengqing.common.db.constant.MybatisConstant;
 import com.zhengqing.common.db.util.TenantUtil;
 import com.zhengqing.common.sdk.douyin.service.util.DyServiceApiUtil;
+import com.zhengqing.system.config.SystemProperty;
 import com.zhengqing.system.entity.SysMerchant;
+import com.zhengqing.system.enums.SysConfigKeyEnum;
 import com.zhengqing.system.enums.SysMerchantAppStatusEnum;
 import com.zhengqing.system.enums.SysRoleCodeEnum;
+import com.zhengqing.system.enums.SysVersionTypeEnum;
 import com.zhengqing.system.mapper.SysMerchantMapper;
+import com.zhengqing.system.model.bo.SysExtJsonBO;
 import com.zhengqing.system.model.dto.*;
 import com.zhengqing.system.model.vo.SysMerchantListVO;
 import com.zhengqing.system.model.vo.SysMerchantPageVO;
-import com.zhengqing.system.service.ISysMerchantService;
-import com.zhengqing.system.service.ISysPermBusinessService;
-import com.zhengqing.system.service.ISysRoleService;
-import com.zhengqing.system.service.ISysUserService;
+import com.zhengqing.system.model.vo.SysVersionBaseVO;
+import com.zhengqing.system.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -49,6 +56,9 @@ public class SysMerchantServiceImpl extends ServiceImpl<SysMerchantMapper, SysMe
     private final ISysPermBusinessService iSysPermBusinessService;
     private final ISysUserService iSysUserService;
     private final ISysRoleService iSysRoleService;
+    private final ISysConfigService iSysConfigService;
+    private final ISysVersionService iSysVersionService;
+    private final SystemProperty systemProperty;
 
     @Override
     public IPage<SysMerchantPageVO> page(SysMerchantPageDTO params) {
@@ -89,6 +99,7 @@ public class SysMerchantServiceImpl extends ServiceImpl<SysMerchantMapper, SysMe
                 .jobNum(params.getJobNum())
                 .appId(params.getAppId())
                 .appSecret(params.getAppSecret())
+                .appIndexTitle(params.getAppIndexTitle())
                 .build();
         if (isAdd && customId != null) {
             sysMerchant.setId(customId);
@@ -146,6 +157,19 @@ public class SysMerchantServiceImpl extends ServiceImpl<SysMerchantMapper, SysMe
     public void appOperationBatch(SysMerchantAppOperationDTO params) {
         log.info("[系统管理] 批量操作(小程序提审、发布)：{}", JSONUtil.toJsonStr(params));
         List<Integer> idList = params.getIdList();
+        String uploadCodeDesc = params.getUploadCodeDesc();
+        String templateId = params.getTemplateId();
+        Integer appStatus = params.getAppStatus();
+        SysMerchantAppStatusEnum appStatusEnum = SysMerchantAppStatusEnum.getEnum(appStatus);
+
+        Integer latelyVersionId = null;
+        String versionNew = "0.0.1";
+        SysVersionBaseVO latelyVersion = this.iSysVersionService.lately();
+        if (SysMerchantAppStatusEnum.提交代码 != appStatusEnum) {
+            Assert.notNull(latelyVersion, "请先提交代码！");
+            latelyVersionId = latelyVersion.getId();
+        }
+
         List<SysMerchant> sysMerchantList;
         if (CollUtil.isEmpty(idList)) {
             sysMerchantList = this.sysMerchantMapper.selectAppIdList();
@@ -153,25 +177,60 @@ public class SysMerchantServiceImpl extends ServiceImpl<SysMerchantMapper, SysMe
             sysMerchantList = this.sysMerchantMapper.selectBatchIds(idList);
         }
 
-        // FIXME
-        String component_appid = "xxx";
-        String component_appsecret = "xx";
+        // 拿到小程序appid信息
+        String component_appid = String.valueOf(this.iSysConfigService.getValue(SysConfigKeyEnum.DOUYIN_COMPONENT_APPID));
+        String component_appsecret = String.valueOf(this.iSysConfigService.getValue(SysConfigKeyEnum.DOUYIN_COMPONENT_APPSECRET));
 
         String component_access_token = DyServiceApiUtil.component_access_token(component_appid, component_appsecret);
-        sysMerchantList.forEach(item -> {
-            String authorizer_access_token = DyServiceApiUtil.authorizer_access_token(component_appid, component_access_token, DyServiceApiUtil.retrieve_authorization_code(component_appid, component_access_token, item.getAppId()));
-            if (params.getIsAudit()) {
-                // 提审代码
-                DyServiceApiUtil.audit(component_appid, authorizer_access_token);
-                item.setAppStatus(SysMerchantAppStatusEnum.提审中.getType());
+        for (SysMerchant item : sysMerchantList) {
+            String appId = item.getAppId();
+            String appSecret = item.getAppSecret();
+            String appIndexTitle = item.getAppIndexTitle();
+            String authorizer_access_token = DyServiceApiUtil.authorizer_access_token(component_appid, component_access_token, DyServiceApiUtil.retrieve_authorization_code(component_appid, component_access_token, appId));
+            switch (appStatusEnum) {
+                case 提交代码:
+                    if (latelyVersion != null) {
+                        versionNew = AutoUpgradeVersionUtil.autoUpgradeVersion(latelyVersion.getVersion());
+                    }
+                    String ext_json = JSONUtil.toJsonStr(
+                            SysExtJsonBO.builder()
+                                    .extAppid(appId)
+                                    .extPages(new HashMap<String, Object>() {{
+                                        this.put("pages/index/index",
+                                                StrUtil.format("{\"navigationBarTitleText\": \"{}\"}",
+                                                        StrUtil.isBlank(appIndexTitle) ? "首页" : appIndexTitle)
+                                        );
+                                    }})
+                                    .ext(
+                                            SysExtJsonBO.Ext.builder()
+                                                    .tenant_id(String.valueOf(TenantIdContext.getTenantId()))
+                                                    .appId(appId)
+                                                    .appSecret(appSecret)
+                                                    .baseUrl(this.systemProperty.getServiceApi())
+                                                    .build()
+                                    )
+                                    .build()
+                    );
+                    DyServiceApiUtil.uploadCode(component_appid, authorizer_access_token, templateId, uploadCodeDesc, versionNew, ext_json);
+                    break;
+                case 提审代码:
+                    DyServiceApiUtil.audit(component_appid, authorizer_access_token);
+                    break;
+                case 发布代码:
+                    DyServiceApiUtil.release(component_appid, authorizer_access_token);
+                    break;
+                default:
+                    throw new MyException("不支持操作！");
             }
-            if (params.getIsRelease()) {
-                // 发布代码
-                DyServiceApiUtil.release(component_appid, authorizer_access_token);
-                item.setAppStatus(SysMerchantAppStatusEnum.发布中.getType());
-            }
-        });
-        this.saveBatch(sysMerchantList);
-    }
+        }
 
+        // 保存版本记录
+        this.iSysVersionService.addOrUpdateData(SysVersionSaveDTO.builder()
+                .id(latelyVersionId)
+                .status(appStatus)
+                .type(SysVersionTypeEnum.抖音代开发小程序.getType())
+                .name(appStatusEnum.getDesc())
+                .remark(uploadCodeDesc)
+                .build());
+    }
 }

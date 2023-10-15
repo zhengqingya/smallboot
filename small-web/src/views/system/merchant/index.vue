@@ -15,8 +15,6 @@
       <el-button type="primary" @click="refreshTableData">查询</el-button>
       <template #right>
         <el-button type="primary" @click="handleAdd">添加</el-button>
-        <el-button type="warning" @click="appOperationBatchAudit">一键提审代码</el-button>
-        <el-button type="warning" @click="appOperationBatchRelease">一键发布代码</el-button>
       </template>
     </base-header>
 
@@ -40,8 +38,9 @@
       <el-table-column label="用户数" prop="userNum" align="center" />
       <el-table-column label="发布数" prop="jobNum" align="center" />
       <el-table-column label="排序" prop="sort" align="center" />
+      <el-table-column label="小程序首页名称" prop="appIndexTitle" align="center" />
       <el-table-column label="备注" prop="remark" align="center" />
-      <el-table-column label="小程序状态" prop="appStatus" align="center">
+      <!-- <el-table-column label="小程序状态" prop="appStatus" align="center">
         <template #default="scope">
           <el-tag v-if="scope.row.appStatus == 20">提审中</el-tag>
           <el-tag v-else-if="scope.row.appStatus == 31" type="warning">审核通过</el-tag>
@@ -49,7 +48,7 @@
           <el-tag v-else-if="scope.row.appStatus == 50" type="info">发布中</el-tag>
           <el-tag v-else-if="scope.row.appStatus == 51" type="success">已发布</el-tag>
         </template>
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column align="center" label="操作">
         <template #default="scope">
           <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
@@ -58,8 +57,8 @@
       </el-table-column>
     </base-table-p>
 
-    <base-dialog v-model="dialogVisible" :title="dialogTitleObj[dialogStatus]" width="40%">
-      <el-form v-if="dialogStatus !== 'detail'" ref="dataFormRef" :model="form" :rules="rules" label-width="100px">
+    <base-dialog v-model="dialogVisible" :title="dialogTitleObj[dialogStatus]" width="50%">
+      <el-form v-if="dialogStatus !== 'detail'" ref="dataFormRef" :model="form" :rules="rules" label-width="150px">
         <el-form-item label="商户ID:">
           <el-input v-if="form.id" v-model="form.id" disabled />
           <el-input v-else v-model="form.customId" :disabled="form.id" placeholder="不填则由系统自动生成" />
@@ -72,6 +71,9 @@
         </el-form-item>
         <el-form-item label="抖音AppSecret:">
           <el-input v-model="form.appSecret" placeholder="从抖音开放平台中获取" />
+        </el-form-item>
+        <el-form-item label="小程序首页头部名称:">
+          <el-input v-model="form.appIndexTitle" placeholder="不填则默认为: 首页（只在发布小程序后才生效）" />
         </el-form-item>
         <el-form-item label="状态:">
           <base-radio-group v-model="form.status" />
@@ -138,16 +140,6 @@ async function handleDelete(row) {
   let res = await proxy.$api.sys_merchant.delete({ id: row.id });
   refreshTableData();
   proxy.submitOk(res.message);
-}
-async function appOperationBatchAudit() {
-  let res = await proxy.$api.sys_merchant.appOperationBatch({ isAudit: true });
-  proxy.submitOk(res.message);
-  refreshTableData();
-}
-async function appOperationBatchRelease() {
-  let res = await proxy.$api.sys_merchant.appOperationBatch({ isRelease: true });
-  proxy.submitOk(res.message);
-  refreshTableData();
 }
 function submitForm() {
   proxy.$refs.dataFormRef.validate(async (valid) => {

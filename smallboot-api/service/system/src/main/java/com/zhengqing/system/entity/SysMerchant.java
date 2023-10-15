@@ -82,7 +82,7 @@ public class SysMerchant extends IsDeletedBaseEntity<SysMerchant> {
     @ApiModelProperty("小程序状态")
     private Integer appStatus;
 
-    @ApiModelProperty("小程序审核结果")
-    private String appAuditResultList;
+    @ApiModelProperty("小程序首页标题")
+    private String appIndexTitle;
 
 }

@@ -138,7 +138,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             if (StrUtil.isNotBlank(password)) {
                 sysUser.setPassword(PasswordUtil.encodePassword(password));
             }
-            isUpdateRole = !isFixed;
+            SysUser sysUserOldData = this.sysUserMapper.selectById(userId);
+            isUpdateRole = !sysUserOldData.getIsFixed();
             sysUser.updateById();
         }
 

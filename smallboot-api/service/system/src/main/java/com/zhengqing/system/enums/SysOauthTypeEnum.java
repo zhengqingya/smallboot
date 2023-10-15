@@ -1,6 +1,5 @@
 package com.zhengqing.system.enums;
 
-import com.google.common.collect.Lists;
 import com.zhengqing.common.base.exception.MyException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,11 +30,7 @@ public enum SysOauthTypeEnum {
     private final String oauthTypeName;
     private final String desc;
 
-    private static final List<SysOauthTypeEnum> LIST = Lists.newArrayList();
-
-    static {
-        LIST.addAll(Arrays.asList(SysOauthTypeEnum.values()));
-    }
+    private static final List<SysOauthTypeEnum> LIST = Arrays.asList(SysOauthTypeEnum.values());
 
     public static SysOauthTypeEnum getEnum(String oauthTypeName) {
         for (SysOauthTypeEnum itemEnum : LIST) {

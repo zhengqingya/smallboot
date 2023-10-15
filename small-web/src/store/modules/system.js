@@ -20,6 +20,10 @@ export const useSystemStore = defineStore('system', () => {
 
   async function initLbs() {
     let res = await sys_config.listByKey({ keyList: 'lbs_qq_key' });
+    if (!res.data.lbs_qq_key) {
+      console.error('未配置腾讯地图key!');
+      return;
+    }
     lbs_qq_key.value = res.data.lbs_qq_key.value;
     // 加载地图数据
     loadScript();

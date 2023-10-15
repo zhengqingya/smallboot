@@ -1,6 +1,5 @@
 package com.zhengqing.system.enums;
 
-import com.google.common.collect.Lists;
 import com.zhengqing.common.base.exception.MyException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,11 +24,8 @@ public enum SysProvinceCityAreaTypeEnum {
 
     private final Integer type;
 
-    private static final List<SysProvinceCityAreaTypeEnum> LIST = Lists.newArrayList();
+    private static final List<SysProvinceCityAreaTypeEnum> LIST = Arrays.asList(SysProvinceCityAreaTypeEnum.values());
 
-    static {
-        LIST.addAll(Arrays.asList(SysProvinceCityAreaTypeEnum.values()));
-    }
 
     public static SysProvinceCityAreaTypeEnum getEnum(Integer type) {
         for (SysProvinceCityAreaTypeEnum itemEnum : LIST) {

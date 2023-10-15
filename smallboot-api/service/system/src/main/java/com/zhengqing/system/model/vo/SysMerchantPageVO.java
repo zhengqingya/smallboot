@@ -73,6 +73,9 @@ public class SysMerchantPageVO extends BaseVO {
     @ApiModelProperty("小程序状态")
     private Integer appStatus;
 
+    @ApiModelProperty("小程序首页标题")
+    private String appIndexTitle;
+
     public void handleData() {
 
     }

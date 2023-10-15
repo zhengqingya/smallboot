@@ -79,6 +79,35 @@ public class DyServiceApiUtil {
     }
 
     /**
+     * 提交代码
+     * https://partner.open-douyin.com/docs/resource/zh-CN/thirdparty/API/smallprogram/auth-app-manage/develop/upload-code
+     *
+     * @param component_appid         第三方小程序应用 appid
+     * @param authorizer_access_token 授权小程序接口调用凭据
+     * @param template_id             模板 id，取自第三方小程序应用【开发】-【模板库】
+     * @param user_desc               提交描述
+     * @param user_version            提交版本
+     * @param ext_json                ext.json 配置的字符串形式
+     * @return 结果
+     * @author zhengqingya
+     * @date 2022/7/28 15:40
+     */
+    public static void uploadCode(String component_appid, String authorizer_access_token, String template_id, String user_desc, String user_version, String ext_json) {
+        HashMap<String, String> map = DyBaseApiUtil.basePostParamsBody("https://open.microapp.bytedance.com/openapi/v1/microapp/package/upload",
+                new HashMap<String, String>(2) {{
+                    this.put("component_appid", component_appid);
+                    this.put("authorizer_access_token", authorizer_access_token);
+                }},
+                new HashMap<String, Object>(3) {{
+                    this.put("template_id", template_id);
+                    this.put("user_desc", user_desc);
+                    this.put("user_version", user_version);
+                    this.put("ext_json", ext_json);
+                }}, HashMap.class);
+        Assert.isTrue(DyMiniResultCodeEnum.SUCCESS.getCode().equals(map.get("errno")), map.get("message"));
+    }
+
+    /**
      * 提审代码
      * https://partner.open-douyin.com/docs/resource/zh-CN/thirdparty/API/smallprogram/auth-app-manage/develop/audit-code
      *

@@ -1,6 +1,5 @@
 package com.zhengqing.system.enums;
 
-import com.google.common.collect.Lists;
 import com.zhengqing.common.base.exception.MyException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -40,11 +39,7 @@ public enum SysDictTypeEnum {
     private final String code;
     private final String desc;
 
-    private static final List<SysDictTypeEnum> LIST = Lists.newArrayList();
-
-    static {
-        LIST.addAll(Arrays.asList(SysDictTypeEnum.values()));
-    }
+    private static final List<SysDictTypeEnum> LIST = Arrays.asList(SysDictTypeEnum.values());
 
     /**
      * 根据指定的数据字典编码查找相应枚举类

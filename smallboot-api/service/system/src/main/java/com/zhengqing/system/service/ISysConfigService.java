@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhengqing.common.core.custom.validator.common.ValidList;
 import com.zhengqing.system.entity.SysConfig;
+import com.zhengqing.system.enums.SysConfigKeyEnum;
 import com.zhengqing.system.model.dto.SysConfigPageDTO;
 import com.zhengqing.system.model.dto.SysConfigSaveDTO;
 import com.zhengqing.system.model.vo.SysConfigPageVO;
@@ -51,6 +52,16 @@ public interface ISysConfigService extends IService<SysConfig> {
      * @date 2021/09/06 22:57
      */
     Map<String, SysConfigVO> mapByKey(@NotEmpty(message = "属性key不能为空!") List<String> keyList);
+
+    /**
+     * 通过key查询数据 -- 业务方使用，会判断非空
+     *
+     * @param sysConfigKeyEnum 属性key
+     * @return value
+     * @author zhengqingya
+     * @date 2021/09/06 22:57
+     */
+    Object getValue(SysConfigKeyEnum sysConfigKeyEnum);
 
     /**
      * 列表
