@@ -39,6 +39,12 @@ export default {
       params: params,
     });
   },
+  genLink() {
+    return request({
+      url: BASE_API + '/genLink',
+      method: 'get',
+    });
+  },
   appOperationBatch(data) {
     return request({
       url: BASE_API + '/appOperationBatch',
