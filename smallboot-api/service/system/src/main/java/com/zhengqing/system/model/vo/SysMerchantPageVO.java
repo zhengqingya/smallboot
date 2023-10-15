@@ -1,6 +1,7 @@
 package com.zhengqing.system.model.vo;
 
 import com.zhengqing.common.base.model.vo.BaseVO;
+import com.zhengqing.system.enums.SysAppStatusEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -68,7 +69,7 @@ public class SysMerchantPageVO extends BaseVO {
     private String appSecret;
 
     /**
-     * {@link com.zhengqing.system.enums.SysMerchantAppStatusEnum}
+     * {@link SysAppStatusEnum}
      */
     @ApiModelProperty("小程序状态")
     private Integer appStatus;

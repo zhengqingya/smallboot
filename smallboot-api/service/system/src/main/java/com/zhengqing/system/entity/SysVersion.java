@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.zhengqing.common.db.entity.IsDeletedBaseEntity;
+import com.zhengqing.system.enums.SysAppStatusEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -33,10 +34,13 @@ public class SysVersion extends IsDeletedBaseEntity<SysVersion> {
 
     @ApiModelProperty("版本号")
     private String version;
-    
+
     @ApiModelProperty("名称")
     private String name;
 
+    /**
+     * {@link SysAppStatusEnum}
+     */
     @ApiModelProperty("状态")
     private Integer status;
 

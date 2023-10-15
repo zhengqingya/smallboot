@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.zhengqing.common.db.entity.IsDeletedBaseEntity;
+import com.zhengqing.system.enums.SysAppStatusEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -77,7 +78,7 @@ public class SysMerchant extends IsDeletedBaseEntity<SysMerchant> {
     private String appSecret;
 
     /**
-     * {@link com.zhengqing.system.enums.SysMerchantAppStatusEnum}
+     * {@link SysAppStatusEnum}
      */
     @ApiModelProperty("小程序状态")
     private Integer appStatus;

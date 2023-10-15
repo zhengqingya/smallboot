@@ -82,6 +82,15 @@ public interface ISysMerchantService extends IService<SysMerchant> {
     SysMerchant detail(Integer id);
 
     /**
+     * 生成授权链接
+     *
+     * @return 授权链接
+     * @author zhengqingya
+     * @date 2023/10/13 11:17
+     */
+    String genLink();
+
+    /**
      * 批量操作(小程序提审、发布)
      *
      * @param params 提交参数

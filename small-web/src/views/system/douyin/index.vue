@@ -1,5 +1,8 @@
 <template>
   <base-wrapper class="flex-cc-center-start">
+    <div class="flex-end-center">
+      <el-button type="primary" @click="init">刷新</el-button>
+    </div>
     <div class="flex-c-center-center">
       <base-card title="抖音服务商平台" style="width: 660px">
         <template #append>
@@ -15,19 +18,27 @@
           </base-cell>
         </div>
       </base-card>
+      <base-card title="抖音服务商-授权链接" style="width: 660px; margin-top: 20px">
+        <el-tag>{{ authLink }}</el-tag>
+      </base-card>
       <base-card title="抖音小程序一键操作" style="width: 660px; margin-top: 20px">
         <div class="flex-column">
           <div v-if="versionObj">
-            最新版本状态： <el-tag type="success">{{ versionObj.statusName }}</el-tag>
-          </div>
-          <div class="flex-around-center">
-            <div v-if="!versionObj" class="flex-column">
-              <base-input v-model="dataForm.uploadCodeDesc" style="width: 100%; margin-top: 10px" label="提交代码描述：" />
-              <el-button type="primary" style="margin-top: 10px" @click="appOperationBatch(10)">一键提交代码</el-button>
+            <div>
+              <span>最新提交：</span>
+              <el-tag>版本号：{{ versionObj.version }}</el-tag>
+              <el-tag type="success">状态：{{ versionObj.statusName }}</el-tag>
+              <el-tag type="info">描述：{{ versionObj.name }}</el-tag>
             </div>
-            <div v-else>
-              <el-button type="success" @click="appOperationBatch(20)">一键提审代码</el-button>
-              <el-button type="danger" @click="appOperationBatch(50)">一键发布代码</el-button>
+          </div>
+          <div class="flex-start-center m-t-10">
+            <div class="flex-column">
+              <base-input v-model="dataForm.uploadCodeDesc" style="width: 100%; margin-top: 10px" label="提交代码描述：" />
+              <el-button type="primary" style="margin-top: 10px" @click="appOperationBatch(10)">① 一键提交代码</el-button>
+            </div>
+            <div class="m-l-20">
+              <el-button type="success" @click="appOperationBatch(20)">② 一键提审代码</el-button>
+              <el-button type="danger" @click="appOperationBatch(50)">③ 一键发布代码</el-button>
             </div>
           </div>
         </div>
@@ -46,6 +57,7 @@ let mapObj = $ref({
 });
 let versionObj = $ref({});
 let dataForm = $ref({});
+let authLink = $ref('');
 
 onMounted(async () => {
   await init();
@@ -60,6 +72,9 @@ async function init() {
 
   let versionRes = await proxy.$api.sys_version.lately();
   versionObj = versionRes.data;
+
+  let linkRes = await proxy.$api.sys_merchant.genLink();
+  authLink = linkRes.data;
 }
 
 async function saveBatch() {
@@ -79,7 +94,7 @@ async function appOperationBatch(appStatus) {
   dataForm.templateId = mapObj.douyin_app_template_id.value;
   let res = await proxy.$api.sys_merchant.appOperationBatch(dataForm);
   proxy.submitOk(res.message);
-  refreshTableData();
+  init();
 }
 </script>
 <style lang="scss" scoped></style>

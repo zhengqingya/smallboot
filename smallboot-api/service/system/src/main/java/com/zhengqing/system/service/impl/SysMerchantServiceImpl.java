@@ -19,8 +19,8 @@ import com.zhengqing.common.db.util.TenantUtil;
 import com.zhengqing.common.sdk.douyin.service.util.DyServiceApiUtil;
 import com.zhengqing.system.config.SystemProperty;
 import com.zhengqing.system.entity.SysMerchant;
+import com.zhengqing.system.enums.SysAppStatusEnum;
 import com.zhengqing.system.enums.SysConfigKeyEnum;
-import com.zhengqing.system.enums.SysMerchantAppStatusEnum;
 import com.zhengqing.system.enums.SysRoleCodeEnum;
 import com.zhengqing.system.enums.SysVersionTypeEnum;
 import com.zhengqing.system.mapper.SysMerchantMapper;
@@ -153,19 +153,28 @@ public class SysMerchantServiceImpl extends ServiceImpl<SysMerchantMapper, SysMe
     }
 
     @Override
+    public String genLink() {
+        // 拿到小程序appid信息
+        String component_appid = String.valueOf(this.iSysConfigService.getValue(SysConfigKeyEnum.DOUYIN_COMPONENT_APPID));
+        String component_appsecret = String.valueOf(this.iSysConfigService.getValue(SysConfigKeyEnum.DOUYIN_COMPONENT_APPSECRET));
+        String component_access_token = DyServiceApiUtil.component_access_token(component_appid, component_appsecret);
+        return DyServiceApiUtil.gen_link(component_appid, component_access_token, null);
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public void appOperationBatch(SysMerchantAppOperationDTO params) {
         log.info("[系统管理] 批量操作(小程序提审、发布)：{}", JSONUtil.toJsonStr(params));
         List<Integer> idList = params.getIdList();
         String uploadCodeDesc = params.getUploadCodeDesc();
-        String templateId = params.getTemplateId();
+        Integer templateId = params.getTemplateId();
         Integer appStatus = params.getAppStatus();
-        SysMerchantAppStatusEnum appStatusEnum = SysMerchantAppStatusEnum.getEnum(appStatus);
+        SysAppStatusEnum appStatusEnum = SysAppStatusEnum.getEnum(appStatus);
 
         Integer latelyVersionId = null;
         String versionNew = "0.0.1";
         SysVersionBaseVO latelyVersion = this.iSysVersionService.lately();
-        if (SysMerchantAppStatusEnum.提交代码 != appStatusEnum) {
+        if (SysAppStatusEnum.提交代码 != appStatusEnum) {
             Assert.notNull(latelyVersion, "请先提交代码！");
             latelyVersionId = latelyVersion.getId();
         }
@@ -229,8 +238,8 @@ public class SysMerchantServiceImpl extends ServiceImpl<SysMerchantMapper, SysMe
                 .id(latelyVersionId)
                 .status(appStatus)
                 .type(SysVersionTypeEnum.抖音代开发小程序.getType())
-                .name(appStatusEnum.getDesc())
-                .remark(uploadCodeDesc)
+                .name(uploadCodeDesc)
+                .remark(appStatusEnum.getDesc())
                 .build());
     }
 }

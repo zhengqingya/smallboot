@@ -5,7 +5,7 @@ import com.zhengqing.common.base.exception.ParameterException;
 import com.zhengqing.common.base.model.dto.BaseDTO;
 import com.zhengqing.common.core.custom.parameter.CheckParam;
 import com.zhengqing.common.core.custom.parameter.HandleParam;
-import com.zhengqing.system.enums.SysMerchantAppStatusEnum;
+import com.zhengqing.system.enums.SysAppStatusEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -37,7 +37,7 @@ public class SysMerchantAppOperationDTO extends BaseDTO implements HandleParam, 
     private List<Integer> idList;
 
     /**
-     * {@link com.zhengqing.system.enums.SysMerchantAppStatusEnum}
+     * {@link SysAppStatusEnum}
      */
     @NotNull(message = "小程序状态类型不能为空")
     @ApiModelProperty("小程序状态")
@@ -47,7 +47,7 @@ public class SysMerchantAppOperationDTO extends BaseDTO implements HandleParam, 
     private String uploadCodeDesc;
 
     @ApiModelProperty("模板id")
-    private String templateId;
+    private Integer templateId;
 
     @Override
     public void handleParam() {
@@ -56,9 +56,9 @@ public class SysMerchantAppOperationDTO extends BaseDTO implements HandleParam, 
 
     @Override
     public void checkParam() throws ParameterException {
-        if (SysMerchantAppStatusEnum.提交代码.getStatus().equals(this.appStatus)) {
+        if (SysAppStatusEnum.提交代码.getStatus().equals(this.appStatus)) {
+            Assert.notNull(this.templateId, "模板id不能为空！");
             Assert.notBlank(this.uploadCodeDesc, "提交代码描述不能为空！");
-            Assert.notBlank(this.templateId, "模板id不能为空！");
         }
     }
 }

@@ -16,9 +16,9 @@ import java.util.List;
  */
 @Getter
 @AllArgsConstructor
-public enum SysMerchantAppStatusEnum {
+public enum SysAppStatusEnum {
 
-    提交代码(10, "提交代码"),
+    提交代码(10, "已提交代码"),
     提审代码(20, "提审代码"),
     提审中(21, "提审中"),
     撤回审核(22, "撤回审核"),
@@ -31,10 +31,10 @@ public enum SysMerchantAppStatusEnum {
     private final Integer status;
     private final String desc;
 
-    private static final List<SysMerchantAppStatusEnum> LIST = Arrays.asList(SysMerchantAppStatusEnum.values());
+    private static final List<SysAppStatusEnum> LIST = Arrays.asList(SysAppStatusEnum.values());
 
-    public static SysMerchantAppStatusEnum getEnum(Integer status) {
-        for (SysMerchantAppStatusEnum itemEnum : LIST) {
+    public static SysAppStatusEnum getEnum(Integer status) {
+        for (SysAppStatusEnum itemEnum : LIST) {
             if (itemEnum.getStatus().equals(status)) {
                 return itemEnum;
             }

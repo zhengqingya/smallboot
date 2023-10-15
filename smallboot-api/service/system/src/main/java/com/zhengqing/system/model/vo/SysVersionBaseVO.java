@@ -1,6 +1,7 @@
 package com.zhengqing.system.model.vo;
 
 import com.zhengqing.common.base.model.vo.BaseVO;
+import com.zhengqing.system.enums.SysAppStatusEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -29,11 +30,18 @@ public class SysVersionBaseVO extends BaseVO {
 
     @ApiModelProperty("版本号")
     private String version;
+
     @ApiModelProperty("名称")
     private String name;
 
+    /**
+     * {@link SysAppStatusEnum}
+     */
     @ApiModelProperty("状态")
     private Integer status;
+
+    @ApiModelProperty("状态")
+    private String statusName;
 
     @ApiModelProperty("小程序审核结果")
     private String appAuditResultList;
@@ -49,7 +57,7 @@ public class SysVersionBaseVO extends BaseVO {
 
 
     public void handleData() {
-
+        this.statusName = SysAppStatusEnum.getEnum(this.status).getDesc();
     }
 
 }

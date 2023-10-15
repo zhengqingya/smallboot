@@ -54,6 +54,12 @@ public class WebSysMerchantController extends BaseController {
         return this.iSysMerchantService.list(params);
     }
 
+    @GetMapping("genLink")
+    @ApiOperation("生成授权链接")
+    public String genLink() {
+        return this.iSysMerchantService.genLink();
+    }
+
     @NoRepeatSubmit
     @PostMapping("add")
     @ApiOperation("新增")

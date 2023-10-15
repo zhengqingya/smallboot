@@ -54,6 +54,10 @@ public class DyServiceApiUtil {
      */
     private final static String PRE_AUTH_CODE = "douyin:service:pre_auth_code:";
     /**
+     * 获取授权链接
+     */
+    private final static String GEN_LINK = "douyin:service:gen_link:";
+    /**
      * 商家授权码
      */
     private final static String AUTHORIZATION_CODE = "douyin:service:authorization_code:";
@@ -92,8 +96,8 @@ public class DyServiceApiUtil {
      * @author zhengqingya
      * @date 2022/7/28 15:40
      */
-    public static void uploadCode(String component_appid, String authorizer_access_token, String template_id, String user_desc, String user_version, String ext_json) {
-        HashMap<String, String> map = DyBaseApiUtil.basePostParamsBody("https://open.microapp.bytedance.com/openapi/v1/microapp/package/upload",
+    public static void uploadCode(String component_appid, String authorizer_access_token, Integer template_id, String user_desc, String user_version, String ext_json) {
+        HashMap<String, Object> map = DyBaseApiUtil.basePostParamsBody("https://open.microapp.bytedance.com/openapi/v1/microapp/package/upload",
                 new HashMap<String, String>(2) {{
                     this.put("component_appid", component_appid);
                     this.put("authorizer_access_token", authorizer_access_token);
@@ -104,7 +108,7 @@ public class DyServiceApiUtil {
                     this.put("user_version", user_version);
                     this.put("ext_json", ext_json);
                 }}, HashMap.class);
-        Assert.isTrue(DyMiniResultCodeEnum.SUCCESS.getCode().equals(map.get("errno")), map.get("message"));
+        Assert.isTrue(DyMiniResultCodeEnum.SUCCESS.getCode().equals(Long.valueOf(String.valueOf(map.get("errno")))), String.valueOf(map.get("message")));
     }
 
     /**
@@ -128,7 +132,7 @@ public class DyServiceApiUtil {
 //                    this.put("auditNote", null);
 //                    this.put("auditWay", null);
                 }}, HashMap.class);
-        Assert.isTrue(DyMiniResultCodeEnum.SUCCESS.getCode().equals(map.get("errno")), map.get("message"));
+        Assert.isTrue(DyMiniResultCodeEnum.SUCCESS.getCode().equals(Long.valueOf(String.valueOf(map.get("errno")))), map.get("message"));
     }
 
     /**
@@ -147,7 +151,7 @@ public class DyServiceApiUtil {
                     this.put("component_appid", component_appid);
                     this.put("authorizer_access_token", authorizer_access_token);
                 }}, HashMap.class);
-        Assert.isTrue(DyMiniResultCodeEnum.SUCCESS.getCode().equals(map.get("errno")), map.get("message"));
+        Assert.isTrue(DyMiniResultCodeEnum.SUCCESS.getCode().equals(Long.valueOf(String.valueOf(map.get("errno")))), map.get("message"));
     }
 
     // *********************************** ↓↓↓↓↓↓ 下面为公共业务方法 ↓↓↓↓↓↓ **************************************
@@ -250,7 +254,15 @@ public class DyServiceApiUtil {
      * @date 2022/7/28 15:40
      */
     public static String gen_link(String component_appid, String component_access_token, String redirect_uri) {
-        HashMap<String, String> map = DyBaseApiUtil.basePost("https://open.microapp.bytedance.com/openapi/v2/auth/gen_link",
+        String key = GEN_LINK + component_appid;
+        // 1、缓存中获取
+        String gen_link = RedisUtil.get(key);
+        if (StrUtil.isNotBlank(gen_link)) {
+            return gen_link;
+        }
+
+        // 2、若缓存中无值，可通过请求获取
+        HashMap<String, String> map = DyBaseApiUtil.basePostParamsBody("https://open.microapp.bytedance.com/openapi/v2/auth/gen_link",
                 new HashMap<String, String>(3) {{
                     this.put("component_appid", component_appid);
                     this.put("component_access_token", component_access_token);
@@ -262,7 +274,14 @@ public class DyServiceApiUtil {
                     this.put("redirect_uri", redirect_uri);
                 }},
                 HashMap.class);
+        String errno = map.get("errno");
+        if (StrUtil.isNotBlank(errno)) {
+            Assert.isTrue(DyMiniResultCodeEnum.SUCCESS.getCode().equals(Long.valueOf(String.valueOf(errno))), String.valueOf(map.get("message")));
+        }
         String link = map.get("link");
+
+        // 3、存入缓存
+        RedisUtil.setEx(key, gen_link, 23, TimeUnit.HOURS);
         return link;
     }
 

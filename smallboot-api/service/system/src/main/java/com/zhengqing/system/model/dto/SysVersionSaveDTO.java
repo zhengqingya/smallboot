@@ -2,6 +2,7 @@ package com.zhengqing.system.model.dto;
 
 import com.zhengqing.common.base.model.dto.BaseDTO;
 import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
+import com.zhengqing.system.enums.SysAppStatusEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -38,7 +39,7 @@ public class SysVersionSaveDTO extends BaseDTO {
     private String name;
 
     /**
-     * {@link com.zhengqing.system.enums.SysMerchantAppStatusEnum}
+     * {@link SysAppStatusEnum}
      */
     @ApiModelProperty("状态")
     private Integer status;
