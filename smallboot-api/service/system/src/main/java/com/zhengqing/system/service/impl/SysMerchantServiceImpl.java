@@ -183,6 +183,17 @@ public class SysMerchantServiceImpl extends ServiceImpl<SysMerchantMapper, SysMe
     }
 
     @Override
+    public byte[] qrcode(SysAppQrcodeDTO params) {
+        SysMerchant sysMerchant = this.detail(params.getId());
+        // 拿到小程序appid信息
+        String component_appid = String.valueOf(this.iSysConfigService.getValue(SysConfigKeyEnum.DOUYIN_COMPONENT_APPID));
+        String component_appsecret = String.valueOf(this.iSysConfigService.getValue(SysConfigKeyEnum.DOUYIN_COMPONENT_APPSECRET));
+        String component_access_token = DyServiceApiUtil.component_access_token(component_appid, component_appsecret);
+        String authorizer_access_token = DyServiceApiUtil.authorizer_access_token(component_appid, component_access_token, DyServiceApiUtil.retrieve_authorization_code(component_appid, component_access_token, sysMerchant.getAppId()));
+        return DyServiceApiUtil.qrcode(component_appid, authorizer_access_token, params.getVersion(), params.getPath());
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public void appOperationBatch(SysMerchantAppOperationDTO params) {
         log.info("[系统管理] 批量操作(小程序提审、发布)：{}", JSONUtil.toJsonStr(params));
@@ -258,7 +269,7 @@ public class SysMerchantServiceImpl extends ServiceImpl<SysMerchantMapper, SysMe
             }
             finallAppStatus = item.getAppStatus();
         }
-        this.saveBatch(sysMerchantList);
+        this.updateBatchById(sysMerchantList);
 
         // 保存版本记录
         this.iSysVersionService.addOrUpdateData(SysVersionSaveDTO.builder()

@@ -2,7 +2,9 @@ package com.zhengqing.common.sdk.douyin.service.util;
 
 
 import cn.hutool.core.lang.Assert;
+import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONUtil;
 import com.google.common.collect.Lists;
 import com.zhengqing.common.base.context.TenantIdContext;
@@ -283,6 +285,44 @@ public class DyServiceApiUtil {
         // 3、存入缓存
         RedisUtil.setEx(key, gen_link, 23, TimeUnit.HOURS);
         return gen_link;
+    }
+
+    /**
+     * 获取二维码
+     * https://partner.open-douyin.com/docs/resource/zh-CN/thirdparty/API/smallprogram/auth-app-manage/base-info/qrcode
+     *
+     * @param component_appid         第三方小程序应用 appid
+     * @param authorizer_access_token 授权小程序接口调用凭据
+     * @param version                 current（线上版） 或 audit（审核版） 或 latest（测试版）
+     * @param path                    小程序启动参数，包含两部分: 页面路径?页面参数
+     * @return 结果
+     * @author zhengqingya
+     * @date 2022/7/28 15:40
+     */
+    public static byte[] qrcode(String component_appid, String authorizer_access_token, String version, String path) {
+        byte[] result = HttpUtil.createPost("https://open.microapp.bytedance.com/openapi/v1/microapp/app/qrcode" + "?" + HttpUtil.toParams(
+                        new HashMap<String, String>(2) {{
+                            this.put("component_appid", component_appid);
+                            this.put("authorizer_access_token", authorizer_access_token);
+                        }}
+                ))
+                .body(JSONUtil.toJsonStr(
+                        new HashMap<String, String>(2) {{
+                            this.put("version", version);
+                            this.put("path", path);
+                        }}
+                ))
+                .execute().bodyBytes();
+//        File file = FileUtil.writeBytes(result, ProjectConstant.DEFAULT_FOLDER_TMP + "/test.png");
+        String body = StrUtil.str(result, CharsetUtil.UTF_8);
+        if (JSONUtil.isTypeJSON(body)) {
+            HashMap<String, Object> map = JSONUtil.toBean(body, HashMap.class);
+            Object errno = map.get("errno");
+            if (errno != null) {
+                Assert.isTrue(DyMiniResultCodeEnum.SUCCESS.getCode().equals(Long.valueOf(String.valueOf(errno))), String.valueOf(map.get("message")));
+            }
+        }
+        return result;
     }
 
 

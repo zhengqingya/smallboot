@@ -5,10 +5,8 @@ import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.common.core.custom.repeatsubmit.NoRepeatSubmit;
 import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
-import com.zhengqing.system.model.dto.SysMerchantAppOperationDTO;
-import com.zhengqing.system.model.dto.SysMerchantListDTO;
-import com.zhengqing.system.model.dto.SysMerchantPageDTO;
-import com.zhengqing.system.model.dto.SysMerchantSaveDTO;
+import com.zhengqing.common.web.custom.noreturnhandle.NoReturnHandle;
+import com.zhengqing.system.model.dto.*;
 import com.zhengqing.system.model.vo.SysMerchantListVO;
 import com.zhengqing.system.model.vo.SysMerchantPageVO;
 import com.zhengqing.system.service.ISysMerchantService;
@@ -58,6 +56,13 @@ public class WebSysMerchantController extends BaseController {
     @ApiOperation("生成授权链接")
     public String genLink() {
         return this.iSysMerchantService.genLink();
+    }
+
+    @NoReturnHandle
+    @GetMapping("qrcode")
+    @ApiOperation("获取二维码")
+    public byte[] qrcode(@Validated @ModelAttribute SysAppQrcodeDTO params) {
+        return this.iSysMerchantService.qrcode(params);
     }
 
     @NoRepeatSubmit
