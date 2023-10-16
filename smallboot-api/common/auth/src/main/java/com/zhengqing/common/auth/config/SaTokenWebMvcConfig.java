@@ -6,6 +6,7 @@ import com.google.common.collect.Lists;
 import com.zhengqing.common.auth.custom.open.ApiOpen;
 import com.zhengqing.common.auth.util.AnnotationUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -20,6 +21,7 @@ import java.util.Map;
  * @description
  * @date 2021/11/3 12:06
  */
+@Slf4j
 @Configuration
 @RequiredArgsConstructor
 public class SaTokenWebMvcConfig implements WebMvcConfigurer {
@@ -43,8 +45,11 @@ public class SaTokenWebMvcConfig implements WebMvcConfigurer {
      */
     private List<String> getApiOpenList() {
         List<String> apiOpenList = Lists.newArrayList();
-        Map<String, Map<String, Object>> annotationUrlMap = this.annotationUtil.getAnnotationUrlMap(this.saTokenProperty.getOpenUrlAnnotationClassPath(), ApiOpen.class);
-        annotationUrlMap.forEach((url, value) -> apiOpenList.add(url));
+        List<String> openUrlAnnotationClassPathList = this.saTokenProperty.getOpenUrlAnnotationClassPathList();
+        openUrlAnnotationClassPathList.forEach(classPath -> {
+            Map<String, Map<String, Object>> annotationUrlMap = this.annotationUtil.getAnnotationUrlMap(classPath, ApiOpen.class);
+            annotationUrlMap.forEach((url, value) -> apiOpenList.add(url));
+        });
         return apiOpenList;
     }
 

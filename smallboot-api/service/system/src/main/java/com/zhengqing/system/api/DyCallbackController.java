@@ -79,7 +79,7 @@ public class DyCallbackController {
     }
 
     /**
-     * 域名/api/event/notice/2/$APPID$/
+     * 域名/api/douyin/event/notice/2/$APPID$/
      */
     @ApiOpen
     @NoReturnHandle

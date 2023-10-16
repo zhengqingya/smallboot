@@ -92,6 +92,8 @@ public class HandlerInterceptorForToken implements HandlerInterceptor {
         List<String> openUrlList = this.saTokenProperty.getOpenUrlList();
         PathMatcher pathMatcher = new AntPathMatcher();
         for (String api : openUrlList) {
+            // 替换restful风格路径中的 {xxx} 为 *
+            api = api.replaceAll("\\{([a-zA-Z0-9_]+)}", "*");
             if (pathMatcher.match(api, restfulPath)) {
                 return true;
             }
@@ -105,6 +107,10 @@ public class HandlerInterceptorForToken implements HandlerInterceptor {
 //        }
 
         return false;
+    }
+
+    private String replaceUrl(String ulr) {
+        return "";
     }
 
     /**

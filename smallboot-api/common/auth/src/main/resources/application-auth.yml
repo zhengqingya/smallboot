@@ -31,7 +31,9 @@ sa-token:
   intercept-url-list:
     - /**
   # 开放url注解包
-  open-url-annotation-class-path: classpath*:com/zhengqing/**/api/**/*.class
+  open-url-annotation-class-path-list:
+    - classpath*:com/zhengqing/**/api/*.class
+    - classpath*:com/zhengqing/**/api/**/*.class
   # 开放url
   open-url-list:
     # Knife4j
