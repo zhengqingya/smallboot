@@ -8,8 +8,6 @@
 </template>
 
 <script setup>
-import { onUpdated } from 'vue';
-
 const { proxy } = getCurrentInstance();
 const props = defineProps({
   api: { type: String, required: false, default: '' },
@@ -27,12 +25,7 @@ onMounted(() => {
   init();
 });
 
-// onUpdated(() => {
-//   init();
-// });
-
 async function init() {
-  console.log('111', props.api);
   if (props.api) {
     let res = await apiMethod(props.params);
     list = res.data;

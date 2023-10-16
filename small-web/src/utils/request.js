@@ -39,6 +39,18 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   (response) => {
     const res = response.data;
+
+    // 请求时声明返回类型为blob & Blob类型  => 字节流转换处理
+    if (response.request.responseType == 'blob' && toString.call(res) === '[object Blob]') {
+      let blob = new Blob([res], { type: 'image/jpeg' });
+      const fileUrl = URL.createObjectURL(blob);
+      return {
+        code: 200,
+        data: fileUrl,
+        msg: '请求成功',
+      };
+    }
+
     const { code, msg } = res;
     if (code === 200) {
       return res;

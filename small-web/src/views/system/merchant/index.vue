@@ -52,9 +52,10 @@
           <el-tag v-else-if="scope.row.appStatus == 51" type="success">已发布</el-tag>
         </template>
       </el-table-column> -->
-      <el-table-column align="center" label="操作">
+      <el-table-column align="center" width="150px" label="操作">
         <template #default="scope">
           <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
+          <el-button type="primary" link @click="showQrcode(scope.row)">查看测试版二维码</el-button>
           <base-delete-btn v-if="!scope.row.isFixed" @ok="handleDelete(scope.row)"></base-delete-btn>
         </template>
       </el-table-column>
@@ -111,6 +112,10 @@
         <el-button type="primary" @click="submitForm">确 定</el-button>
       </template>
     </base-dialog>
+
+    <base-dialog v-model="qrcodeDialogVisible" class="" title="小程序测试版二维码" width="350px">
+      <el-image style="width: 300px; height: 300px" :src="qrcodeUrl" />
+    </base-dialog>
   </base-wrapper>
 </template>
 
@@ -126,6 +131,8 @@ let typeList = $ref([
   { id: 1, name: '共享小程序' },
   { id: 2, name: '独立小程序' },
 ]);
+let qrcodeDialogVisible = $ref(false);
+let qrcodeUrl = $ref('');
 
 function refreshTableData() {
   proxy.$refs.baseTableRef.refresh();
@@ -154,6 +161,12 @@ function submitForm() {
       dialogVisible = false;
     }
   });
+}
+
+async function showQrcode(row) {
+  let res = await proxy.$api.sys_merchant.qrcode({ id: row.id, version: 'latest' });
+  qrcodeUrl = res.data;
+  qrcodeDialogVisible = true;
 }
 </script>
 

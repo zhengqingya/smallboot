@@ -45,6 +45,14 @@ export default {
       method: 'get',
     });
   },
+  qrcode(params) {
+    return request({
+      url: BASE_API + '/qrcode',
+      method: 'get',
+      params: params,
+      responseType: 'blob',
+    });
+  },
   appOperationBatch(data) {
     return request({
       url: BASE_API + '/appOperationBatch',

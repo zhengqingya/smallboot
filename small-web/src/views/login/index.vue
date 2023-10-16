@@ -7,13 +7,13 @@
     <div class="flex-c-center-center bg-color-white" style="height: 400px; width: 500px; border-radius: 10px">
       <h1 v-if="isAdmin" class="font-size-lg">后台管理系统</h1>
       <div v-else>
-        <h1 v-if="tenantId && tenantList && tenantList.length > 0" class="font-size-lg">{{ tenantList.find((e) => e.id == tenantId).name }}</h1>
+        <h1 v-if="tenantId && tenantList && tenantList.length > 0" class="font-size-lg">{{ getTenantName() }}</h1>
         <h1 v-else class="font-size-lg">SmallBoot多租户管理系统</h1>
       </div>
 
       <div class="m-t-20">
         <el-form ref="loginFormRef" :model="loginForm" :rules="loginRules">
-          <el-form-item v-if="!tenantId">
+          <el-form-item v-if="!tenantId && tenantList && tenantList.length > 0">
             <base-select v-model="loginForm.tenantId" :filterable="false" placeholder="请选择租户" :option-props="{ label: 'name', value: 'id' }" :data-list="tenantList">
               <template #prefix>
                 <el-icon> <OfficeBuilding /> </el-icon>
@@ -66,19 +66,34 @@ function validatePassword(rule, value, callback) {
   }
 }
 
+onUpdated(async () => {});
+
+watch(
+  () => proxy.$router.currentRoute.value,
+  (newValue) => {
+    console.log('路由变化：', newValue.path);
+    // 初始化变量
+    tenantId = null;
+    loginForm.tenantId = null;
+    // 赋值
+    var path = newValue.path;
+    isAdmin = path.includes('admin');
+    let lastPath = path.substring(path.lastIndexOf('/') + 1);
+    if (!lastPath || lastPath == 'login') {
+      return;
+    }
+    tenantId = lastPath;
+    loginForm.tenantId = parseInt(tenantId);
+  },
+  {
+    immediate: true, // 初始化执行一次
+  },
+);
+
 onMounted(async () => {
   // 拿到租户数据
   let res = await proxy.$api.sys_tenant.list();
   tenantList = res.data;
-
-  var path = proxy.$route.path;
-  isAdmin = path.includes('admin');
-  let lastPath = path.substring(path.lastIndexOf('/') + 1);
-  if (!lastPath || lastPath == 'login') {
-    return;
-  }
-  tenantId = lastPath;
-  loginForm.tenantId = parseInt(tenantId);
 });
 
 function handleLogin() {
@@ -97,6 +112,14 @@ function handleLogin() {
       });
     }
   });
+}
+
+function getTenantName() {
+  let obj = tenantList.find((e) => e.id == tenantId);
+  if (!obj) {
+    return '';
+  }
+  return obj.name;
 }
 </script>
 
