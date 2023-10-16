@@ -51,3 +51,23 @@ nginx -s reload
 # 原生手动运行
 nohup java -jar -Xmx500M -Xms500M -XX:+UseG1GC -Dspring.profiles.active=prod -Dserver.port=20011   app.jar >> app.log 2>&1 &
 ```
+
+### web
+
+前端线上访问需要配置nginx
+
+```
+http {
+  underscores_in_headers on;     # 允许在HTTP请求头中使用下划线（underscore）字符
+  server {
+    proxy_set_header Host $host;  # 设置代理请求头中的主机名（Host）为客户端请求的主机名
+    proxy_set_header X-Real-IP $remote_addr; # 将客户端的真实 IP 地址作为 X-Real-IP 请求头发送给后端服务器
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; # 在请求头中添加 X-Forwarded-For 字段，用于追踪经过的代理服务器地址
+    proxy_set_header User-Agent $http_user_agent; # 将客户端的 User-Agent 请求头字段传递给后端服务器
+    
+    location ^~ /prod-api/ {
+        proxy_pass   http://ip:端口/;
+    }
+  }
+}
+```
