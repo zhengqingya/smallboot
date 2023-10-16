@@ -91,6 +91,9 @@ public class FilePrefixAop {
         Object value = field.get(data);
         if (value instanceof String) {
             String urlValue = (String) value;
+            if (urlValue.startsWith(this.baseFileUrl)) {
+                return;
+            }
             if (HttpUtil.isHttp(urlValue) || HttpUtil.isHttps(urlValue)) {
                 // http/https 开头的替换前缀
                 urlValue = URLUtil.getPath(urlValue);
