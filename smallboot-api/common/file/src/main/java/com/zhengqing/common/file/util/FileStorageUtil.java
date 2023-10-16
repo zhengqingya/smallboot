@@ -39,7 +39,10 @@ public class FileStorageUtil {
             case LOCAL:
                 // 写入文件到本地
                 String localFileDir = this.baseProperty.getLocalFileDir();
-                String absolutePath = FileUtil.writeBytes(file.getBytes(), BaseConstant.PROJECT_ROOT_DIRECTORY + "/" + localFileDir + MyDateUtil.nowStr(MyDateUtil.DATE_FORMAT) + "/" + IdUtil.getSnowflakeNextId() + "-" + originalFilename).getAbsolutePath();
+                if (!localFileDir.startsWith("/")) {
+                    localFileDir = BaseConstant.PROJECT_ROOT_DIRECTORY + "/" + localFileDir;
+                }
+                String absolutePath = FileUtil.writeBytes(file.getBytes(), localFileDir + MyDateUtil.nowStr(MyDateUtil.DATE_FORMAT) + "/" + IdUtil.getSnowflakeNextId() + "-" + originalFilename).getAbsolutePath();
                 absolutePath = absolutePath.replaceAll("\\\\", "/");
                 url = absolutePath.substring(absolutePath.indexOf(localFileDir) + localFileDir.length());
                 break;
