@@ -1,4 +1,4 @@
-package com.zhengqing.ums.api;
+package com.zhengqing.system.api;
 
 
 import cn.hutool.core.lang.Assert;
@@ -39,7 +39,7 @@ public class DyCallbackController {
     private final ISysConfigService iSysConfigService;
 
     /**
-     * 域名/api/douyin/event/notice
+     * 域名/api/douyin/event/notice/?
      */
     @ApiOpen
     @NoReturnHandle
@@ -48,7 +48,7 @@ public class DyCallbackController {
     public Object notice(@PathVariable Integer tenantId, @RequestBody(required = false) Object params) {
         // 【推送 component_ticket】 https://partner.open-douyin.com/docs/resource/zh-CN/thirdparty/API/smallprogram/authorization/componentticket
         // 开放平台服务器每隔 10 分钟推送过来
-        log.info("[抖音] 事件通知：{}", JSONUtil.toJsonStr(params));
+        log.info("[抖音] tenantId：{} 事件通知：{}", tenantId, JSONUtil.toJsonStr(params));
         TenantIdContext.setTenantId(tenantId);
         Map<String, Object> noticeMap = JSONUtil.toBean(JSONUtil.toJsonStr(params), HashMap.class);
         String nonce = String.valueOf(noticeMap.get("Nonce"));
@@ -75,6 +75,18 @@ public class DyCallbackController {
             String component_ticket = dyServiceMsgVO.getTicket();
             DyServiceApiUtil.saveComponentTicket(component_ticket);
         }
+        return "success";
+    }
+
+    /**
+     * 域名/api/event/notice/2/$APPID$/
+     */
+    @ApiOpen
+    @NoReturnHandle
+    @ApiOperation("授权通知")
+    @PostMapping("/event/notice/{tenantId}/{appid}")
+    public Object authCallback(@PathVariable Integer tenantId, @PathVariable Integer appid, @RequestBody(required = false) Object params) {
+        log.info("[抖音] tenantId:{} appid:{} 授权通知：{}", tenantId, appid, JSONUtil.toJsonStr(params));
         return "success";
     }
 

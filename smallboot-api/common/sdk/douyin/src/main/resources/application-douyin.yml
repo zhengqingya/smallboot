@@ -1,5 +1,5 @@
 douyin:
-  is-on-line: false # true:线上环境 false:沙盒环境
+  is-on-line: true # true:线上环境 false:沙盒环境
 
   # app应用
   app:

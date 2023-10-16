@@ -1,7 +1,5 @@
 package com.zhengqing.cms.service.impl;
 
-import cn.hutool.core.lang.Assert;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -13,7 +11,6 @@ import com.zhengqing.cms.model.dto.CmsJobCategorySaveDTO;
 import com.zhengqing.cms.model.vo.CmsJobCategoryListVO;
 import com.zhengqing.cms.model.vo.CmsJobCategoryPageVO;
 import com.zhengqing.cms.service.ICmsJobCategoryService;
-import com.zhengqing.common.db.constant.MybatisConstant;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -49,8 +46,8 @@ public class CmsJobCategoryServiceImpl extends ServiceImpl<CmsJobCategoryMapper,
     @Transactional(rollbackFor = Exception.class)
     public void addOrUpdateData(CmsJobCategorySaveDTO params) {
         // 校验名称是否重复
-        CmsJobCategory oldData = this.cmsJobCategoryMapper.selectOne(new LambdaQueryWrapper<CmsJobCategory>().eq(CmsJobCategory::getName, params.getName()).last(MybatisConstant.LIMIT_ONE));
-        Assert.isTrue(oldData == null || oldData.getId().equals(params.getId()), "名称重复，请重新输入！");
+//        CmsJobCategory oldData = this.cmsJobCategoryMapper.selectOne(new LambdaQueryWrapper<CmsJobCategory>().eq(CmsJobCategory::getName, params.getName()).last(MybatisConstant.LIMIT_ONE));
+//        Assert.isTrue(oldData == null || oldData.getId().equals(params.getId()), "名称重复，请重新输入！");
 
         CmsJobCategory.builder()
                 .id(params.getId())

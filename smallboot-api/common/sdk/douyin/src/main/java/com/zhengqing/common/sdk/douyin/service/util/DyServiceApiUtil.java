@@ -186,7 +186,7 @@ public class DyServiceApiUtil {
 
         // 2、若缓存中无值，可通过请求获取
         String component_ticket = RedisUtil.get(COMPONENT_TICKET + TenantIdContext.getTenantId());
-        Assert.notBlank(component_ticket, "component_ticket数据丢失！");
+        Assert.notBlank(component_ticket, "抖音回调component_ticket数据丢失！");
         DyServiceComponentAccessTokenVO dyServiceComponentAccessTokenVO = DyBaseApiUtil.baseGet("https://open.microapp.bytedance.com/openapi/v1/auth/tp/token",
                 new HashMap<String, String>(3) {{
                     this.put("component_appid", component_appid);

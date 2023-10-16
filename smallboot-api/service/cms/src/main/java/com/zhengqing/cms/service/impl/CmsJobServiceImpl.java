@@ -2,7 +2,6 @@ package com.zhengqing.cms.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Assert;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -13,7 +12,6 @@ import com.zhengqing.cms.model.dto.CmsJobSaveDTO;
 import com.zhengqing.cms.model.vo.CmsJobBaseVO;
 import com.zhengqing.cms.service.ICmsJobService;
 import com.zhengqing.cms.service.ICmsJobTagService;
-import com.zhengqing.common.db.constant.MybatisConstant;
 import com.zhengqing.system.entity.SysMerchant;
 import com.zhengqing.system.service.ISysMerchantService;
 import lombok.RequiredArgsConstructor;
@@ -95,8 +93,8 @@ public class CmsJobServiceImpl extends ServiceImpl<CmsJobMapper, CmsJob> impleme
         }
 
         // 校验名称是否重复
-        CmsJob oldData = this.cmsJobMapper.selectOne(new LambdaQueryWrapper<CmsJob>().eq(CmsJob::getName, params.getName()).last(MybatisConstant.LIMIT_ONE));
-        Assert.isTrue(oldData == null || oldData.getId().equals(params.getId()), "名称重复，请重新输入！");
+//        CmsJob oldData = this.cmsJobMapper.selectOne(new LambdaQueryWrapper<CmsJob>().eq(CmsJob::getName, params.getName()).last(MybatisConstant.LIMIT_ONE));
+//        Assert.isTrue(oldData == null || oldData.getId().equals(params.getId()), "名称重复，请重新输入！");
 
         CmsJob.builder()
                 .id(params.getId())

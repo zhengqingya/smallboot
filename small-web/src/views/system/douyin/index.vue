@@ -20,9 +20,9 @@
       <base-card title="抖音服务商-授权链接" style="width: 660px; margin-top: 20px">
         <el-tag>{{ authLink }}</el-tag>
       </base-card>
-      <base-card title="抖音小程序版本" style="width: 660px; margin-top: 20px">
+      <!-- <base-card title="抖音小程序版本" style="width: 660px; margin-top: 20px">
         <base-select v-model="merchantId" label="商户" tag-type="success" style="margin-right: 10px" clearable :option-props="{ label: 'name', value: 'id' }" api="sys_merchant.list" />
-      </base-card>
+      </base-card> -->
       <base-card title="抖音小程序一键操作 (☆谨慎操作☆)" style="width: 660px; margin-top: 20px">
         <div class="flex-column">
           <div v-if="versionObj">
@@ -77,8 +77,10 @@ async function init() {
   let versionRes = await proxy.$api.sys_version.lately();
   versionObj = versionRes.data;
 
-  let linkRes = await proxy.$api.sys_merchant.genLink();
-  authLink = linkRes.data;
+  if (mapObj.douyin_component_appid.value) {
+    let linkRes = await proxy.$api.sys_merchant.genLink();
+    authLink = linkRes.data;
+  }
 }
 
 async function saveBatch() {

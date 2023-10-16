@@ -49,5 +49,5 @@ nginx -s reload
 
 ```shell
 # 原生手动运行
-nohup java -jar -Xmx2000M -Xms2000M -XX:+UseG1GC -Dspring.profiles.active=prod    app.jar >> app.log 2>&1 &
+nohup java -jar -Xmx500M -Xms500M -XX:+UseG1GC -Dspring.profiles.active=prod -Dserver.port=20011   app.jar >> app.log 2>&1 &
 ```
