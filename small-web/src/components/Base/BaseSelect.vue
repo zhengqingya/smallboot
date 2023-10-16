@@ -20,7 +20,7 @@ const props = defineProps({
 
 let list = $ref([]);
 
-onUpdated(() => {
+onMounted(() => {
   init();
 });
 

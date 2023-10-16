@@ -1,2 +1,3 @@
+src/main/resources/application-prod.yml
 src/main/resources/generate-config.yml
 tmp

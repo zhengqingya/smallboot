@@ -44,3 +44,10 @@ docker exec -it redis redis-cli -a 123456
 # nginx修改配置后重载
 nginx -s reload
 ```
+
+### java
+
+```shell
+# 原生手动运行
+nohup java -jar -Xmx2000M -Xms2000M -XX:+UseG1GC -Dspring.profiles.active=prod    app.jar >> app.log 2>&1 &
+```

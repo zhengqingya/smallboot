@@ -13,7 +13,7 @@ mysql、redis、minio
 
 ---
 
-### 数据清理
+### 数据处理
 
 #### 清理所有逻辑删除的数据
 
@@ -29,6 +29,16 @@ WHERE t.table_schema = 'smallboot'
 
 ```sql
 SELECT CONCAT('DELETE FROM ', t.TABLE_NAME, ' where tenant_id in (xxx);')
+FROM information_schema.TABLES t
+         left join information_schema.COLUMNS c on t.TABLE_NAME = c.TABLE_NAME
+WHERE t.table_schema = 'smallboot'
+  and c.COLUMN_NAME = 'tenant_id';
+```
+
+#### 租户id统一变更 （谨慎使用！！！）
+
+```sql
+SELECT CONCAT('update ', t.TABLE_NAME, ' set tenant_id = 新租户id where tenant_id = 旧租户id;')
 FROM information_schema.TABLES t
          left join information_schema.COLUMNS c on t.TABLE_NAME = c.TABLE_NAME
 WHERE t.table_schema = 'smallboot'
