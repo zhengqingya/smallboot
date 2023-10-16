@@ -18,8 +18,8 @@ import java.util.List;
 @AllArgsConstructor
 public enum SysMerchantTypeEnum {
 
-    共享小程序(1, "配置"),
-    独立小程序(2, "属性");
+    共享小程序(1, "共享小程序"),
+    独立小程序(2, "独立小程序");
 
     private final Integer type;
     private final String desc;

@@ -35,8 +35,6 @@ public class SysExtJsonBO {
         private String tenantId;
         private String merchantId;
         private String appId;
-        private String appSecret;
-        private String baseUrl;
     }
 
 }

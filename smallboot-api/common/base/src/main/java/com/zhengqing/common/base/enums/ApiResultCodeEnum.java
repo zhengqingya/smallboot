@@ -42,6 +42,9 @@ public enum ApiResultCodeEnum {
     TOKEN_ACCESS_FORBIDDEN(-1, "token已被禁止访问"),
     // 服务器内部错误
     INTERNAL_SERVER_ERROR(500, "服务器内部错误"),
+
+    // 其它
+    MERCHANT_ERROR(1001, "商户异常"),
     ;
 
     private final int code;

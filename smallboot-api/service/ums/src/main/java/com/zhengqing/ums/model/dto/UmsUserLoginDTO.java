@@ -39,11 +39,14 @@ public class UmsUserLoginDTO extends BaseDTO implements HandleParam, CheckParam 
     @ApiModelProperty("小程序类型")
     private Integer type;
 
+    @ApiModelProperty("商户ID")
+    private Integer merchantId;
+
     @ApiModelProperty("小程序appid")
     private String appId;
 
-    @ApiModelProperty("小程序secret")
-    private String appSecret;
+//    @ApiModelProperty("小程序secret")
+//    private String appSecret;
 
 //    @ApiModelProperty("第三方小程序应用 appid")
 //    private String component_appid;
@@ -75,7 +78,6 @@ public class UmsUserLoginDTO extends BaseDTO implements HandleParam, CheckParam 
     public void checkParam() throws ParameterException {
         if (MiniTypeEnum.抖音小程序.getType().equals(this.type)) {
             Assert.notBlank(this.appId, "AppId不能为空！");
-            Assert.notBlank(this.appSecret, "AppSecret不能为空！");
         }
     }
 }

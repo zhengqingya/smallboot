@@ -46,6 +46,7 @@ public class MiniUmsUserController extends BaseController {
     @PostMapping("login")
     @ApiOperation("小程序登录")
     public UmsUserVO login(@RequestBody UmsUserLoginDTO params) {
+        params.setMerchantId(this.getMiniMerchantId());
         return this.sysUserService.login(params);
     }
 

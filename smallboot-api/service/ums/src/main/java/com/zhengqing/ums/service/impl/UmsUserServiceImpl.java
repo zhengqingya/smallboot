@@ -16,6 +16,8 @@ import com.zhengqing.common.db.constant.MybatisConstant;
 import com.zhengqing.common.sdk.douyin.mini.model.dto.DyMiniLoginDTO;
 import com.zhengqing.common.sdk.douyin.mini.model.vo.DyMiniLoginVO;
 import com.zhengqing.common.sdk.douyin.mini.util.DyMiniApiUtil;
+import com.zhengqing.system.model.vo.SysMerchantDetailVO;
+import com.zhengqing.system.service.ISysMerchantService;
 import com.zhengqing.ums.entity.UmsUser;
 import com.zhengqing.ums.enums.MiniTypeEnum;
 import com.zhengqing.ums.factory.WxMaFactory;
@@ -27,7 +29,7 @@ import com.zhengqing.ums.model.dto.WebUmsUserPageDTO;
 import com.zhengqing.ums.model.vo.UmsUserVO;
 import com.zhengqing.ums.model.vo.WebUmsUserPageVO;
 import com.zhengqing.ums.service.IUmsUserService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.compress.utils.Lists;
@@ -46,12 +48,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @Service
 @Transactional(rollbackFor = Exception.class)
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> implements IUmsUserService {
 
-    private UmsUserMapper umsUserMapper;
-
-    private WxMaFactory wxMaFactory;
+    private final UmsUserMapper umsUserMapper;
+    private final WxMaFactory wxMaFactory;
+    private final ISysMerchantService iSysMerchantService;
 
     @Override
     public UmsUser detail(Long id) {
@@ -103,9 +105,10 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
 //                        .code(code)
 //                        .anonymous_code(params.getAnonymousCode())
 //                        .build());
+                SysMerchantDetailVO sysMerchantDetailVO = this.iSysMerchantService.detailByBusiness(params.getMerchantId());
                 DyMiniLoginVO.Data dyData = DyMiniApiUtil.jscode2session(DyMiniLoginDTO.builder()
                         .appid(appid)
-                        .secret(params.getAppSecret())
+                        .secret(sysMerchantDetailVO.getAppSecret())
                         .code(code)
                         .anonymous_code(params.getAnonymousCode())
                         .build());

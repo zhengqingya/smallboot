@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -47,6 +48,7 @@ public class CmsJobApplySaveDTO extends BaseDTO {
     @ApiModelProperty("联系人")
     private String contact;
 
+    @Length(min = 11, max = 11, message = "联系电话需要11位！")
     @NotBlank(message = "联系电话不能为空！")
     @ApiModelProperty("联系电话")
     private String contactPhone;

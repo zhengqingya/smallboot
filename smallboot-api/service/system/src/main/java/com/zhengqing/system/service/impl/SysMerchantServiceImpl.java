@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
 import com.zhengqing.common.base.context.TenantIdContext;
+import com.zhengqing.common.base.enums.ApiResultCodeEnum;
 import com.zhengqing.common.base.enums.CommonStatusEnum;
 import com.zhengqing.common.base.exception.MyException;
 import com.zhengqing.common.base.util.AutoUpgradeVersionUtil;
@@ -26,6 +27,7 @@ import com.zhengqing.system.enums.SysVersionTypeEnum;
 import com.zhengqing.system.mapper.SysMerchantMapper;
 import com.zhengqing.system.model.bo.SysExtJsonBO;
 import com.zhengqing.system.model.dto.*;
+import com.zhengqing.system.model.vo.SysMerchantDetailVO;
 import com.zhengqing.system.model.vo.SysMerchantListVO;
 import com.zhengqing.system.model.vo.SysMerchantPageVO;
 import com.zhengqing.system.model.vo.SysVersionBaseVO;
@@ -153,6 +155,25 @@ public class SysMerchantServiceImpl extends ServiceImpl<SysMerchantMapper, SysMe
     }
 
     @Override
+    public SysMerchantDetailVO detailByBusiness(Integer id) {
+        SysMerchant sysMerchant = null;
+        try {
+            sysMerchant = this.checkData(id);
+        } catch (Exception e) {
+            throw new MyException(e.getMessage(), ApiResultCodeEnum.MERCHANT_ERROR.getCode());
+        }
+        return SysMerchantDetailVO.builder()
+                .id(id)
+                .name(sysMerchant.getName())
+                .type(sysMerchant.getType())
+                .expireTime(sysMerchant.getExpireTime())
+                .appId(sysMerchant.getAppId())
+                .appSecret(sysMerchant.getAppSecret())
+                .appIndexTitle(sysMerchant.getAppIndexTitle())
+                .build();
+    }
+
+    @Override
     public String genLink() {
         // 拿到小程序appid信息
         String component_appid = String.valueOf(this.iSysConfigService.getValue(SysConfigKeyEnum.DOUYIN_COMPONENT_APPID));
@@ -169,6 +190,7 @@ public class SysMerchantServiceImpl extends ServiceImpl<SysMerchantMapper, SysMe
         String uploadCodeDesc = params.getUploadCodeDesc();
         Integer templateId = params.getTemplateId();
         Integer appStatus = params.getAppStatus();
+        Integer finallAppStatus = null;
         SysAppStatusEnum appStatusEnum = SysAppStatusEnum.getEnum(appStatus);
 
         Integer latelyVersionId = null;
@@ -216,29 +238,32 @@ public class SysMerchantServiceImpl extends ServiceImpl<SysMerchantMapper, SysMe
                                                     .tenantId(String.valueOf(TenantIdContext.getTenantId()))
                                                     .merchantId(String.valueOf(merchantId))
                                                     .appId(appId)
-                                                    .appSecret(appSecret)
-                                                    .baseUrl(this.systemProperty.getServiceApi())
                                                     .build()
                                     )
                                     .build()
                     );
                     DyServiceApiUtil.uploadCode(component_appid, authorizer_access_token, templateId, uploadCodeDesc, versionNew, ext_json);
+                    item.setAppStatus(SysAppStatusEnum.提交代码.getStatus());
                     break;
                 case 提审代码:
                     DyServiceApiUtil.audit(component_appid, authorizer_access_token);
+                    item.setAppStatus(SysAppStatusEnum.提审中.getStatus());
                     break;
                 case 发布代码:
                     DyServiceApiUtil.release(component_appid, authorizer_access_token);
+                    item.setAppStatus(SysAppStatusEnum.发布中.getStatus());
                     break;
                 default:
                     throw new MyException("不支持操作！");
             }
+            finallAppStatus = item.getAppStatus();
         }
+        this.saveBatch(sysMerchantList);
 
         // 保存版本记录
         this.iSysVersionService.addOrUpdateData(SysVersionSaveDTO.builder()
                 .id(latelyVersionId)
-                .status(appStatus)
+                .status(finallAppStatus)
                 .type(SysVersionTypeEnum.抖音代开发小程序.getType())
                 .name(uploadCodeDesc)
                 .remark(appStatusEnum.getDesc())

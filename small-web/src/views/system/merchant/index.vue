@@ -1,5 +1,8 @@
 <template>
   <base-wrapper>
+    <a :href="loginUrl" target="_blank">
+      <el-tag>商户端访问地址：{{ loginUrl }}</el-tag>
+    </a>
     <base-header>
       <base-input v-model="listQuery.id" label="商户ID" @clear="refreshTableData" />
       <base-input v-model="listQuery.name" label="名称" @clear="refreshTableData" />
@@ -113,6 +116,7 @@
 
 <script setup>
 const { proxy } = getCurrentInstance();
+let loginUrl = window.location.protocol + '//' + window.location.host + '/#login/' + proxy.$store.user.useUserStore().tenantId;
 let listQuery = $ref({});
 let form = $ref({});
 let dialogVisible = $ref(false);
