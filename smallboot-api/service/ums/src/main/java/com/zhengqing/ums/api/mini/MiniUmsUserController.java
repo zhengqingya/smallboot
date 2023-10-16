@@ -11,11 +11,10 @@ import com.zhengqing.ums.model.vo.UmsUserVO;
 import com.zhengqing.ums.service.IUmsUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.Resource;
 
 /**
  * <p>
@@ -28,12 +27,12 @@ import javax.annotation.Resource;
  */
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(ServiceConstant.SERVICE_API_PREFIX_MINI_UMS + "/user")
 @Api(tags = "mini-用户")
 public class MiniUmsUserController extends BaseController {
 
-    @Resource
-    private IUmsUserService sysUserService;
+    private final IUmsUserService sysUserService;
 
     @ApiOpen
     @PostMapping("wxLogin")

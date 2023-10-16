@@ -32,8 +32,7 @@ sa-token:
     - /**
   # 开放url注解包
   open-url-annotation-class-path-list:
-    - classpath*:com/zhengqing/**/api/*.class
-    - classpath*:com/zhengqing/**/api/**/*.class
+    - classpath*:com/zhengqing/**/*.class
   # 开放url
   open-url-list:
     # Knife4j

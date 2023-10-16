@@ -54,6 +54,11 @@
             <artifactId>cms</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.zhengqing</groupId>
+            <artifactId>ums</artifactId>
+        </dependency>
+
         <!-- 解决mac启动项目时dns解析问题 -->
         <dependency>
             <groupId>io.netty</groupId>

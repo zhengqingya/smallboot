@@ -73,8 +73,8 @@ public class MsgDecrypt {
             //byte数组截去真实消息后，末尾剩下的字符就是appid
             AppId = new String(Arrays.copyOfRange(bytes, RANDOM_BYTES_POS + 4 + msgLength, bytes.length), StandardCharsets.UTF_8);
 
-            System.out.println("Content: " + Content);
-            System.out.println("ThirdParty AppID: " + AppId);
+            log.info("Content: " + Content);
+            log.info("ThirdParty AppID: " + AppId);
             return Content;
         } catch (Exception e) {
             log.error("抖音解密异常: " + e);

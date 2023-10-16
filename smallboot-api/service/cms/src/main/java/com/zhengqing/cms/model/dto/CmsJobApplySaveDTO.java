@@ -44,12 +44,11 @@ public class CmsJobApplySaveDTO extends BaseDTO {
     @ApiModelProperty("状态")
     private Integer status;
 
-    @NotBlank(message = "联系人不能为空！")
     @ApiModelProperty("联系人")
     private String contact;
 
     @Length(min = 11, max = 11, message = "联系电话需要11位！")
-    @NotBlank(message = "联系电话不能为空！")
+    @NotBlank(message = "联系电话不能为空，请完善个人简历！")
     @ApiModelProperty("联系电话")
     private String contactPhone;
 

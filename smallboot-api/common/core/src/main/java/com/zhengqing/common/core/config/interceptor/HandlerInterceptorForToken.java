@@ -86,6 +86,7 @@ public class HandlerInterceptorForToken implements HandlerInterceptor {
      * @date 2023/2/13 15:52
      */
     private boolean isOpenApi(HttpServletRequest request) {
+        boolean isOpen = false;
         String restfulPath = request.getServletPath();
 
         // yml配置中是否存在放行接口 -- 这里面已经包含了放行注解的接口数据
@@ -95,7 +96,8 @@ public class HandlerInterceptorForToken implements HandlerInterceptor {
             // 替换restful风格路径中的 {xxx} 为 *
             api = api.replaceAll("\\{([a-zA-Z0-9_]+)}", "*");
             if (pathMatcher.match(api, restfulPath)) {
-                return true;
+                isOpen = true;
+                break;
             }
         }
 
@@ -106,7 +108,7 @@ public class HandlerInterceptorForToken implements HandlerInterceptor {
 //            return true;
 //        }
 
-        return false;
+        return isOpen;
     }
 
     private String replaceUrl(String ulr) {

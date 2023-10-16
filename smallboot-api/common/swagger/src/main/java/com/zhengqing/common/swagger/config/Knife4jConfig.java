@@ -162,6 +162,18 @@ public class Knife4jConfig {
     }
 
     @Bean
+    public Docket umsApi() {
+        Docket docket = new Docket(DocumentationType.SWAGGER_2)
+                .apiInfo(this.apiInfo())
+                .groupName("小程序用户模块")
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.zhengqing.ums"))
+                .paths(PathSelectors.any())
+                .build();
+        return this.commonHandle(docket);
+    }
+
+    @Bean
     public Docket testApi() {
         Docket docket = new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(this.apiInfo())

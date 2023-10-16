@@ -278,11 +278,11 @@ public class DyServiceApiUtil {
         if (StrUtil.isNotBlank(errno)) {
             Assert.isTrue(DyMiniResultCodeEnum.SUCCESS.getCode().equals(Long.valueOf(String.valueOf(errno))), String.valueOf(map.get("message")));
         }
-        String link = map.get("link");
+        gen_link = map.get("link");
 
         // 3、存入缓存
         RedisUtil.setEx(key, gen_link, 23, TimeUnit.HOURS);
-        return link;
+        return gen_link;
     }
 
 
