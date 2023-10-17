@@ -202,7 +202,7 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
         params.setMenuIdList(sysTenantPackage.getMenuIdList());
 
         // 2、拿到所有菜单
-        List<SysMenuTree> allMenuList = this.iSysMenuService.selectMenuTree(params);
+        List<SysMenuTree> allMenuList = this.iSysMenuService.tree(params);
 
         // 3、遍历出父菜单对应的子菜单 -- 递归
         return this.recurveMenu(AppConstant.PARENT_ID, allMenuList);

@@ -31,6 +31,9 @@ public class CmsJobApply extends IsDeletedBaseEntity<CmsJobApply> {
     @ApiModelProperty("租户ID")
     private Integer tenantId;
 
+    @ApiModelProperty("部门id")
+    private Integer deptId;
+    
     @ApiModelProperty(value = "商户ID")
     private Integer merchantId;
 

@@ -1,8 +1,10 @@
 package com.zhengqing.system.aspect;
 
+import com.zhengqing.common.base.constant.AppConstant;
 import com.zhengqing.common.base.context.JwtUserContext;
+import com.zhengqing.common.base.context.TenantIdContext;
 import com.zhengqing.common.base.model.bo.JwtUserBO;
-import com.zhengqing.system.service.ISysMerchantService;
+import com.zhengqing.system.service.ISysDeptService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
@@ -26,7 +28,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class SystemControllerAspect {
 
-    private final ISysMerchantService iSysMerchantService;
+    private final ISysDeptService iSysDeptService;
 
     @Pointcut("execution(* com.zhengqing.*..*.*Controller.*(..))")
     public void controllerPointCut() {
@@ -38,11 +40,15 @@ public class SystemControllerAspect {
         if (jwtUserBO == null) {
             return;
         }
-        Integer merchantId = jwtUserBO.getMerchantId();
-        if (merchantId == null) {
+        Integer deptId = jwtUserBO.getDeptId();
+        if (deptId == null) {
             return;
         }
-        this.iSysMerchantService.checkData(merchantId);
+        Integer tenantId = TenantIdContext.getTenantId();
+        if (AppConstant.SMALL_BOOT_TENANT_ID.equals(tenantId)) {
+            return;
+        }
+        this.iSysDeptService.checkData(deptId);
     }
 
 

@@ -13,6 +13,9 @@
             <if test="filter.excludeDeptId!=null">
                 AND id != #{filter.excludeDeptId}
             </if>
+            <if test="filter.parentId!=null">
+                AND parent_id = #{filter.parentId}
+            </if>
         </where>
         ORDER BY sort ASC, create_time DESC
     </select>

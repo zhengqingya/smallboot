@@ -11,25 +11,22 @@ import com.zhengqing.common.base.exception.MyException;
 import com.zhengqing.common.core.enums.UserSexEnum;
 import com.zhengqing.common.core.util.DesUtil;
 import com.zhengqing.common.db.constant.MybatisConstant;
-import com.zhengqing.system.entity.SysMerchant;
 import com.zhengqing.system.entity.SysUser;
 import com.zhengqing.system.mapper.SysUserMapper;
 import com.zhengqing.system.model.dto.*;
+import com.zhengqing.system.model.vo.SysDeptCheckVO;
 import com.zhengqing.system.model.vo.SysUserListVO;
 import com.zhengqing.system.model.vo.SysUserPermVO;
 import com.zhengqing.system.service.ISysDeptService;
-import com.zhengqing.system.service.ISysMerchantService;
 import com.zhengqing.system.service.ISysUserRoleService;
 import com.zhengqing.system.service.ISysUserService;
 import com.zhengqing.system.util.PasswordUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -51,9 +48,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     private final SysUserMapper sysUserMapper;
     private final ISysUserRoleService iSysUserRoleService;
     private final ISysDeptService iSysDeptService;
-    @Lazy
-    @Resource
-    private ISysMerchantService iSysMerchantService;
 
     @Override
     public IPage<SysUserListVO> listPage(SysUserListDTO params) {
@@ -99,12 +93,12 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     public Integer addOrUpdateData(SysUserSaveDTO params) {
         Integer userId = params.getUserId();
         boolean isAdd = userId == null;
-        Integer merchantId = params.getMerchantId();
-        if (merchantId != null) {
-            // 校验商户最大用户数
-            SysMerchant sysMerchant = this.iSysMerchantService.checkData(merchantId);
-            Integer maxUserNum = sysMerchant.getUserNum();
-            Assert.isTrue(maxUserNum > this.sysUserMapper.selectUserNum(merchantId), "限制：商户最大用户数 " + maxUserNum);
+        Integer deptId = params.getDeptId();
+        if (deptId != null) {
+            // 校验部门最大用户数
+            SysDeptCheckVO sysDeptCheckVO = this.iSysDeptService.checkData(deptId);
+            Integer maxUserNum = sysDeptCheckVO.getUserNum();
+            Assert.isTrue(maxUserNum > this.sysUserMapper.selectUserNumByDeptId(deptId), "限制：商户最大用户数 " + maxUserNum);
         }
 
         String password = params.getPassword();
@@ -122,7 +116,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         sysUser.setPhone(params.getPhone());
         sysUser.setEmail(params.getEmail());
         sysUser.setAvatarUrl(params.getAvatarUrl());
-        sysUser.setDeptId(params.getDeptId());
+        sysUser.setDeptId(deptId);
         sysUser.setPostIdList(params.getPostIdList());
         sysUser.setIsFixed(isFixed);
 
@@ -130,8 +124,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         if (isAdd) {
             sysUser.setUsername(params.getUsername());
             sysUser.setPassword(PasswordUtil.encodePassword(StrUtil.isBlank(password) ? AppConstant.DEFAULT_PASSWORD : password));
-            sysUser.setMerchantId(merchantId);
-            sysUser.setIsMerchantAdmin(params.getIsMerchantAdmin());
             sysUser.insert();
             userId = sysUser.getUserId();
         } else {

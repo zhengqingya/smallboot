@@ -45,12 +45,11 @@ public class MiniUmsUserController extends BaseController {
     @PostMapping("login")
     @ApiOperation("小程序登录")
     public UmsUserVO login(@RequestBody UmsUserLoginDTO params) {
-        params.setMerchantId(this.getMiniMerchantId());
         return this.sysUserService.login(params);
     }
 
     @GetMapping("bindPhone")
-    @ApiOperation("绑定手机号 --- 需微信后台进行相关认证")
+    @ApiOperation("绑定手机号 --- 需微信小程序后台进行相关认证")
     public UmsUserVO bindPhone(@RequestParam String code) {
         return this.sysUserService.getPhone(code);
     }

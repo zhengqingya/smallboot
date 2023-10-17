@@ -22,9 +22,10 @@
           label="部门"
           :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true, emitPath: false }"
           api="sys_dept.tree" />
-        <base-select v-model="listQuery.merchantId" label="商户" tag-type="success" style="margin-right: 10px" clearable :option-props="{ label: 'name', value: 'id' }" api="sys_merchant.list" />
+        <!-- <base-select v-model="listQuery.merchantId" label="商户" tag-type="success" style="margin-right: 10px" clearable :option-props="{ label: 'name', value: 'id' }" api="sys_merchant.list" /> -->
+        <!-- <base-select v-model="listQuery.roleIdList" label="角色" tag-type="warning" multiple :option-props="{ label: 'name', value: 'roleId' }" api="sys_role.list" /> -->
         <base-input v-model="listQuery.username" label="账号" @clear="refreshTableData" />
-        <base-input v-model="listQuery.nickname" label="名称" @clear="refreshTableData" />
+        <base-input v-model="listQuery.phone" label="手机号" @clear="refreshTableData" />
         <el-button v-has-perm="'sys:user:page'" type="primary" @click="refreshTableData">查询</el-button>
         <template #right>
           <el-button v-has-perm="'sys:user:add'" type="primary" @click="handleCreate">添加</el-button>
@@ -86,7 +87,7 @@
         <el-form-item label="头像:" prop="avatarUrl">
           <base-upload-single v-model="form.avatarUrl" />
         </el-form-item>
-        <el-form-item label="归属部门:">
+        <el-form-item label="归属企业:">
           <base-cascader
             v-if="dialogVisible"
             v-model="form.deptId"
@@ -99,8 +100,11 @@
         <el-form-item label="岗位:" prop="postIdList">
           <base-select v-if="dialogVisible" v-model="form.postIdList" tag-type="success" style="width: 100%" multiple clearable :option-props="{ label: 'name', value: 'id' }" api="sys_post.list" />
         </el-form-item>
-        <el-form-item v-if="dialogStatus == 'add'" label="归属商户:" style="width: 100%">
+        <!-- <el-form-item v-if="dialogStatus == 'add'" label="归属商户:" style="width: 100%">
           <base-select v-if="dialogVisible" v-model="form.merchantId" clearable style="width: 100%" :option-props="{ label: 'name', value: 'id' }" api="sys_merchant.list" />
+        </el-form-item> -->
+        <el-form-item label="角色:">
+          <base-select v-if="dialogVisible" v-model="form.roleIdList" tag-type="warning" multiple style="width: 100%" :option-props="{ label: 'name', value: 'roleId' }" api="sys_role.list" />
         </el-form-item>
       </el-form>
       <template #footer>

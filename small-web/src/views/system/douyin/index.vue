@@ -10,8 +10,8 @@
         </template>
         <div class="flex-column">
           <base-cell label-width="200px">
-            <base-cell-item label="第三方小程序应用appid"><base-input v-model="mapObj.douyin_component_appid.value" style="width: 95%" /></base-cell-item>
-            <base-cell-item label="第三方小程序应用appsecret"><base-input v-model="mapObj.douyin_component_appsecret.value" style="width: 95%" /></base-cell-item>
+            <base-cell-item label="第三方小程序appid"><base-input v-model="mapObj.douyin_component_appid.value" style="width: 95%" /></base-cell-item>
+            <base-cell-item label="第三方小程序appsecret"><base-input v-model="mapObj.douyin_component_appsecret.value" style="width: 95%" /></base-cell-item>
             <base-cell-item label="消息验证TOKEN"><base-input v-model="mapObj.douyin_tp_token.value" style="width: 95%" /></base-cell-item>
             <base-cell-item label="消息加密解密KEY"><base-input v-model="mapObj.douyin_encoding_aes_key.value" style="width: 95%" /></base-cell-item>
           </base-cell>

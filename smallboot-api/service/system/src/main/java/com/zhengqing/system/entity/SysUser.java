@@ -28,9 +28,6 @@ import java.util.List;
 @NoArgsConstructor
 @ApiModel("系统管理-用户基础信息表")
 @TableName(value = "t_sys_user", autoResultMap = true)
-// 对注解分组的排序，可以通脱他判断先后顺序
-// @GroupSequence({FieldRepeatValidator.class,NotNull.class, Default.class})
-// @JsonIgnoreProperties(ignoreUnknown = true)
 public class SysUser extends IsDeletedBaseEntity<SysUser> {
 
     @ApiModelProperty(value = "主键ID")
@@ -68,12 +65,6 @@ public class SysUser extends IsDeletedBaseEntity<SysUser> {
     @ApiModelProperty(value = "岗位ids")
     @TableField(typeHandler = ListJsonIntegerTypeHandler.class)
     private List<Integer> postIdList;
-
-    @ApiModelProperty(value = "商户ID")
-    private Integer merchantId;
-
-    @ApiModelProperty(value = "是否为商户管理员(0->否 1->是)")
-    private Boolean isMerchantAdmin;
 
     @ApiModelProperty(value = "是否固定(false->否 true->是)")
     private Boolean isFixed;

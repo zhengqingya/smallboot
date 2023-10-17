@@ -64,13 +64,13 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
     SysUser testSqlmap(@Param("username") String username);
 
     /**
-     * 查询商户id关联的用户数
+     * 查询部门id关联的用户数
      *
-     * @param merchantId 商户id
+     * @param deptId 部门id
      * @return 查询结果
      * @author zhengqingya
      * @date 2023/10/10 15:08
      */
-    long selectUserNum(@Param("merchantId") Integer merchantId);
+    long selectUserNumByDeptId(@Param("deptId") Integer deptId);
 
 }

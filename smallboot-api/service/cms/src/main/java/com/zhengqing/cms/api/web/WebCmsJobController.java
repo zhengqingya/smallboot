@@ -36,18 +36,12 @@ public class WebCmsJobController extends BaseController {
     @GetMapping("page")
     @ApiOperation("分页列表")
     public IPage<CmsJobBaseVO> page(@Validated @ModelAttribute CmsJobBaseDTO params) {
-        if (this.isFillMerchantId()) {
-            params.setMerchantId(this.getCurrentUserReMerchantId());
-        }
         return this.iCmsJobService.page(params);
     }
 
     @GetMapping("list")
     @ApiOperation("列表")
     public List<CmsJobBaseVO> list(@Validated @ModelAttribute CmsJobBaseDTO params) {
-        if (this.isFillMerchantId()) {
-            params.setMerchantId(this.getCurrentUserReMerchantId());
-        }
         return this.iCmsJobService.list(params);
     }
 

@@ -3,8 +3,8 @@ package com.zhengqing.system.api.mini;
 import com.zhengqing.common.auth.custom.open.ApiOpen;
 import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.core.api.BaseController;
-import com.zhengqing.system.model.vo.SysMerchantDetailVO;
-import com.zhengqing.system.service.ISysMerchantService;
+import com.zhengqing.system.model.vo.SysDeptCheckVO;
+import com.zhengqing.system.service.ISysDeptService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 /**
- * <p> 系统管理-商户管理 接口 </p>
+ * <p> 系统管理-小程序配置 接口 </p>
  *
  * @author zhengqingya
  * @description
@@ -23,17 +23,17 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(ServiceConstant.SERVICE_API_PREFIX_MINI_SYSTEM + "/merchant")
-@Api(tags = {"mini-系统管理-商户管理"})
-public class MiniSysMerchantController extends BaseController {
+@RequestMapping(ServiceConstant.SERVICE_API_PREFIX_MINI_SYSTEM + "/app")
+@Api(tags = {"mini-系统管理-小程序配置"})
+public class MiniSysAppController extends BaseController {
 
-    private final ISysMerchantService iSysMerchantService;
+    private final ISysDeptService iSysDeptService;
 
     @ApiOpen
-    @GetMapping("detail")
-    @ApiOperation("详情")
-    public SysMerchantDetailVO detailByBusiness(@RequestParam Integer id) {
-        return this.iSysMerchantService.detailByBusiness(id);
+    @GetMapping("config")
+    @ApiOperation("小程序配置")
+    public SysDeptCheckVO config(@RequestParam Integer appId) {
+        return this.iSysDeptService.configByAppId(appId);
     }
 
 }

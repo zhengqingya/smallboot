@@ -20,14 +20,11 @@
                     #{deptId}
                 </foreach>
             </if>
-            <if test="filter.merchantId!=null">
-                AND merchant_id = #{filter.merchantId}
-            </if>
             <if test="filter.username!=null and filter.username!=''">
                 AND username LIKE CONCAT( '%', #{filter.username} , '%' )
             </if>
-            <if test="filter.nickname!=null and filter.nickname!=''">
-                AND nickname LIKE CONCAT( '%', #{filter.nickname} , '%' )
+            <if test="filter.phone!=null and filter.phone!=''">
+                AND phone LIKE CONCAT( '%', #{filter.phone} , '%' )
             </if>
         </where>
         ORDER BY is_fixed DESC, create_time DESC
@@ -47,8 +44,6 @@
         <result column="post_id_list"
                 property="postIdList"
                 typeHandler="com.zhengqing.common.db.config.mybatis.handler.ListJsonIntegerTypeHandler"></result>
-        <result property="merchantId" column="merchant_id"/>
-        <result property="isMerchantAdmin" column="is_merchant_admin"/>
         <collection property="roleIdList" ofType="Integer" javaType="list">
             <result column="roleId"/>
         </collection>
@@ -70,8 +65,6 @@
         su.create_time,
         su.dept_id,
         su.post_id_list,
-        su.merchant_id,
-        su.is_merchant_admin,
         sr.role_id roleId,
         sr.code roleCode
         FROM t_sys_user su
@@ -93,11 +86,11 @@
         ORDER BY ${username} LIMIT 1
     </select>
 
-    <select id="selectUserNum" resultType="java.lang.Long">
+    <select id="selectUserNumByDeptId" resultType="java.lang.Long">
         select count(1)
         from t_sys_user
         where is_deleted = 0
-          and merchant_id = #{merchantId}
+          and dept_id = #{deptId}
     </select>
 
 </mapper>

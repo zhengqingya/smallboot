@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.zhengqing.common.db.entity.BaseEntity;
+import com.zhengqing.system.enums.SysAppStatusEnum;
+import com.zhengqing.system.enums.SysAppTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -33,10 +35,10 @@ public class SysDept extends BaseEntity<SysDept> {
     @ApiModelProperty("租户ID")
     private Integer tenantId;
 
-    @ApiModelProperty("父部门ID")
+    @ApiModelProperty("父ID")
     private Integer parentId;
 
-    @ApiModelProperty("部门名称")
+    @ApiModelProperty("名称")
     private String name;
 
     @ApiModelProperty("排序")
@@ -54,9 +56,6 @@ public class SysDept extends BaseEntity<SysDept> {
     @ApiModelProperty("状态(0:停用 1:正常)")
     private Integer status;
 
-    @ApiModelProperty("过期时间")
-    private Date expireTime;
-
     @ApiModelProperty("省名称")
     private String provinceName;
 
@@ -72,7 +71,34 @@ public class SysDept extends BaseEntity<SysDept> {
     @ApiModelProperty("备注")
     private String remark;
 
+    @ApiModelProperty("过期时间")
+    private Date expireTime;
+
     @ApiModelProperty("最大员工数")
     private Integer userNum;
+
+    @ApiModelProperty("最大职位发布数")
+    private Integer jobNum;
+
+    /**
+     * {@link SysAppTypeEnum}
+     */
+    @ApiModelProperty("小程序类型")
+    private Integer appType;
+
+    @ApiModelProperty("AppID")
+    private String appId;
+
+    @ApiModelProperty("AppSecret")
+    private String appSecret;
+
+    /**
+     * {@link SysAppStatusEnum}
+     */
+    @ApiModelProperty("小程序状态")
+    private Integer appStatus;
+
+    @ApiModelProperty("小程序首页标题")
+    private String appIndexTitle;
 
 }

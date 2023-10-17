@@ -1,5 +1,7 @@
 package com.zhengqing.system.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhengqing.system.entity.SysMenu;
 import com.zhengqing.system.enums.SysMenuTypeEnum;
@@ -32,7 +34,10 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     private final SysMenuMapper sysMenuMapper;
 
     @Override
-    public List<SysMenuTree> selectMenuTree(SysMenuTreeDTO params) {
+    public List<SysMenuTree> tree(SysMenuTreeDTO params) {
+        if (params.getIsOnlyShowPerm() == null) {
+            params.setIsOnlyShowPerm(false);
+        }
         return this.sysMenuMapper.selectMenuTree(params);
     }
 
@@ -72,4 +77,11 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         return sysMenu.getId();
     }
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteData(Integer id) {
+        List<SysMenuTree> list = this.tree(SysMenuTreeDTO.builder().parentId(id).build());
+        Assert.isTrue(CollUtil.isEmpty(list), "请先删除子菜单后再删除当前菜单！");
+        this.sysMenuMapper.deleteById(id);
+    }
 }

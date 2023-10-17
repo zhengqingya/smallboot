@@ -42,7 +42,7 @@ public class SysUserListDTO extends BaseDTO {
     @ApiModelProperty(value = "账号")
     private String username;
 
-    @ApiModelProperty(value = "名称")
-    private String nickname;
+    @ApiModelProperty(value = "手机号")
+    private String phone;
 
 }

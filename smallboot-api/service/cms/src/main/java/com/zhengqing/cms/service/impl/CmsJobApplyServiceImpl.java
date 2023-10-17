@@ -77,8 +77,8 @@ public class CmsJobApplyServiceImpl extends ServiceImpl<CmsJobApplyMapper, CmsJo
 
         CmsJobApply.builder()
                 .id(id)
-                .merchantId(cmsJobBaseVO.getMerchantId())
                 .jobId(jobId)
+                .deptId(cmsJobBaseVO.getDeptId())
                 .status(params.getStatus())
                 .contact(params.getContact())
                 .contactPhone(params.getContactPhone())

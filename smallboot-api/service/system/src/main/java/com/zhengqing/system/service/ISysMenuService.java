@@ -27,7 +27,7 @@ public interface ISysMenuService extends IService<SysMenu> {
      * @author zhengqingya
      * @date 2020/9/10 20:30
      */
-    List<SysMenuTree> selectMenuTree(SysMenuTreeDTO params);
+    List<SysMenuTree> tree(SysMenuTreeDTO params);
 
     /**
      * 系统所有菜单ids
@@ -47,5 +47,15 @@ public interface ISysMenuService extends IService<SysMenu> {
      * @date 2021/1/13 20:46
      */
     Integer addOrUpdateData(SysMenuSaveDTO params);
+
+    /**
+     * 删除
+     *
+     * @param id 菜单id
+     * @return void
+     * @author zhengqingya
+     * @date 2021/1/13 20:46
+     */
+    void deleteData(Integer id);
 
 }

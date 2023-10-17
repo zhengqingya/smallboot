@@ -1,6 +1,7 @@
 package com.zhengqing.system.model.dto;
 
 import com.zhengqing.common.base.model.dto.BasePageDTO;
+import com.zhengqing.system.enums.SysAppTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -31,7 +32,7 @@ public class SysMerchantPageDTO extends BasePageDTO {
     private String name;
 
     /**
-     * {@link com.zhengqing.system.enums.SysMerchantTypeEnum}
+     * {@link SysAppTypeEnum}
      */
     @ApiModelProperty("商户类型")
     private Integer type;

@@ -16,7 +16,7 @@
         </choose>
         FROM t_sys_menu sm
         <if test="filter.roleIdList!=null and filter.roleIdList.size>0">
-            <if test="filter.isOnlyShowPerm==null and !filter.isOnlyShowPerm">
+            <if test="!filter.isOnlyShowPerm">
                 LEFT
             </if>
             JOIN t_sys_role_menu srm ON srm.menu_id = sm.id
@@ -26,6 +26,9 @@
             </foreach>
         </if>
         WHERE sm.is_deleted = 0
+        <if test="filter.parentId!=null">
+            AND sm.parent_id = #{filter.parentId}
+        </if>
         <if test="filter.excludeMenuId!=null">
             AND sm.id != #{filter.excludeMenuId}
         </if>

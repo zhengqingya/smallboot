@@ -33,8 +33,10 @@ public class SysMenuTreeDTO {
     @ApiModelProperty("菜单ids")
     private List<Integer> menuIdList;
 
-    @ApiModelProperty("是否仅显示带权限的数据  默认false/null:显示租户/角色下所有权限 true:只显示角色有的权限（适用于用户获取角色权限）")
+    @ApiModelProperty("是否仅显示带权限的数据  默认false:显示租户/角色下所有权限 true/null:只显示角色有的权限（适用于用户获取角色权限）")
     private Boolean isOnlyShowPerm;
 
+    @ApiModelProperty("父id")
+    private Integer parentId;
 
 }

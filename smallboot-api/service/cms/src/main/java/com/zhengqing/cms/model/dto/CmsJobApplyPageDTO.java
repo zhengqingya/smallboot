@@ -27,6 +27,9 @@ public class CmsJobApplyPageDTO extends BaseDTO {
     @ApiModelProperty(value = "商户ID")
     private Integer merchantId;
 
+    @ApiModelProperty(value = "部门ID")
+    private Integer deptId;
+
     @ApiModelProperty("创建人")
     private Long createBy;
 

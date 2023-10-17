@@ -16,8 +16,8 @@ import com.zhengqing.common.db.constant.MybatisConstant;
 import com.zhengqing.common.sdk.douyin.mini.model.dto.DyMiniLoginDTO;
 import com.zhengqing.common.sdk.douyin.mini.model.vo.DyMiniLoginVO;
 import com.zhengqing.common.sdk.douyin.mini.util.DyMiniApiUtil;
-import com.zhengqing.system.model.vo.SysMerchantDetailVO;
-import com.zhengqing.system.service.ISysMerchantService;
+import com.zhengqing.system.model.vo.SysDeptCheckVO;
+import com.zhengqing.system.service.ISysDeptService;
 import com.zhengqing.ums.entity.UmsUser;
 import com.zhengqing.ums.enums.MiniTypeEnum;
 import com.zhengqing.ums.factory.WxMaFactory;
@@ -53,7 +53,7 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
 
     private final UmsUserMapper umsUserMapper;
     private final WxMaFactory wxMaFactory;
-    private final ISysMerchantService iSysMerchantService;
+    private final ISysDeptService iSysDeptService;
 
     @Override
     public UmsUser detail(Long id) {
@@ -105,10 +105,10 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
 //                        .code(code)
 //                        .anonymous_code(params.getAnonymousCode())
 //                        .build());
-                SysMerchantDetailVO sysMerchantDetailVO = this.iSysMerchantService.detailByBusiness(params.getMerchantId());
+                SysDeptCheckVO sysDeptCheckVO = this.iSysDeptService.checkData(params.getDeptId());
                 DyMiniLoginVO.Data dyData = DyMiniApiUtil.jscode2session(DyMiniLoginDTO.builder()
                         .appid(appid)
-                        .secret(sysMerchantDetailVO.getAppSecret())
+                        .secret(sysDeptCheckVO.getAppSecret())
                         .code(code)
                         .anonymous_code(params.getAnonymousCode())
                         .build());

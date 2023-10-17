@@ -38,25 +38,25 @@ public class BaseController {
     }
 
     /**
-     * 获取当前登录人关联的商户ID
+     * 获取当前登录人关联的部门ID
      *
-     * @return 商户ID
+     * @return 部门ID
      * @author zhengqingya
      * @date 2020/8/30 15:41
      */
-    protected Integer getCurrentUserReMerchantId() {
-        return JwtUserContext.get().getMerchantId();
+    protected Integer getCurrentUserReDeptId() {
+        return JwtUserContext.get().getDeptId();
     }
 
     /**
-     * 是否自动填充关联商户值 -- 用于过滤数据
+     * 是否自动填充关联部门值 -- 用于过滤数据
      *
      * @return true:是 false:否
      * @author zhengqingya
      * @date 2020/8/30 15:41
      */
-    protected boolean isFillMerchantId() {
-        return this.getCurrentUserReMerchantId() != null;
+    protected boolean isFillDeptId() {
+        return this.getCurrentUserReDeptId() != null;
     }
 
 

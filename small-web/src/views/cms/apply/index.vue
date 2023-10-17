@@ -1,15 +1,13 @@
 <template>
   <base-wrapper>
     <base-header>
-      <base-select
-        v-model="listQuery.merchantId"
-        label="归属商户"
-        tag-type="success"
-        style="margin-right: 10px"
+      <base-cascader
+        v-model="listQuery.deptId"
         clearable
-        :option-props="{ label: 'name', value: 'id' }"
-        api="sys_merchant.list"
-        @clear="refreshTableData" />
+        label="归属企业"
+        style="margin-right: 10px"
+        :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true, emitPath: false }"
+        api="sys_dept.tree" />
       <!-- <base-input v-model="listQuery.jobId" label="职位id" @clear="refreshTableData" /> -->
       <base-select
         v-model="listQuery.status"
@@ -34,7 +32,8 @@
 
     <base-table-p ref="baseTableRef" api="cms_job_apply.page" :params="listQuery">
       <el-table-column label="ID" prop="id" align="center" />
-      <el-table-column label="归属商户" prop="merchantName" align="center" />
+      <!-- <el-table-column label="归属商户" prop="merchantName" align="center" /> -->
+      <el-table-column label="归属企业" prop="deptName" align="center" />
       <el-table-column label="职位名称" prop="jobObj.name" align="center" />
       <el-table-column label="状态" prop="statusName" align="center">
         <template #default="scope">

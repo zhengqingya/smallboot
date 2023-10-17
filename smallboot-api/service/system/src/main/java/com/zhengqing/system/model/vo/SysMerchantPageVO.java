@@ -2,6 +2,7 @@ package com.zhengqing.system.model.vo;
 
 import com.zhengqing.common.base.model.vo.BaseVO;
 import com.zhengqing.system.enums.SysAppStatusEnum;
+import com.zhengqing.system.enums.SysAppTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -49,7 +50,7 @@ public class SysMerchantPageVO extends BaseVO {
     private String remark;
 
     /**
-     * {@link com.zhengqing.system.enums.SysMerchantTypeEnum}
+     * {@link SysAppTypeEnum}
      */
     @ApiModelProperty("商户类型")
     private Integer type;

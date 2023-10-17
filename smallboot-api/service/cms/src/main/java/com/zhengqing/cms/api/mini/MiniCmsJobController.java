@@ -47,7 +47,6 @@ public class MiniCmsJobController extends BaseController {
     @GetMapping("category/list")
     @ApiOperation("分类列表")
     public List<CmsJobCategoryListVO> list(@Validated @ModelAttribute CmsJobCategoryListDTO params) {
-        params.setMerchantId(this.getMiniMerchantId());
         return this.iCmsJobCategoryService.list(params);
     }
 
@@ -55,7 +54,6 @@ public class MiniCmsJobController extends BaseController {
     @GetMapping("page")
     @ApiOperation("分页列表")
     public IPage<CmsJobBaseVO> page(@Validated @ModelAttribute CmsJobBaseDTO params) {
-        params.setMerchantId(this.getMiniMerchantId());
         params.setStatus(CommonStatusEnum.ENABLE.getStatus());
         return this.iCmsJobService.page(params);
     }
@@ -64,7 +62,6 @@ public class MiniCmsJobController extends BaseController {
     @GetMapping("detail")
     @ApiOperation("详情")
     public CmsJobBaseVO detail(@Validated @ModelAttribute CmsJobBaseDTO params) {
-        params.setMerchantId(this.getMiniMerchantId());
         params.setStatus(CommonStatusEnum.ENABLE.getStatus());
         return this.iCmsJobService.detail(params);
     }
@@ -79,7 +76,6 @@ public class MiniCmsJobController extends BaseController {
     @GetMapping("apply/page")
     @ApiOperation("申请-分页列表")
     public IPage<CmsJobApplyPageVO> applyPage(@Validated @ModelAttribute CmsJobApplyPageDTO params) {
-        params.setMerchantId(this.getMiniMerchantId());
         params.setCreateBy(params.getCurrentUserId());
         return this.iCmsJobApplyService.page(params);
     }

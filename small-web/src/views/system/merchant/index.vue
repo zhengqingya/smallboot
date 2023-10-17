@@ -83,7 +83,7 @@
           <base-radio-group v-model="form.status" />
         </el-form-item>
         <el-form-item label="商户类型:">
-          <base-select v-model="form.type" :data-list="typeList" style="margin-right: 10px" tag-type="success" clearable :option-props="{ label: 'name', value: 'id' }" @clear="refreshTableData" />
+          <base-select v-model="form.type" :data-list="typeList" style="margin-right: 10px" tag-type="success" clearable :option-props="{ label: 'name', value: 'id' }" />
         </el-form-item>
         <el-form-item label="过期时间:">
           <el-date-picker v-model="form.expireTime" type="datetime" placeholder="请选择" format="YYYY-MM-DD hh:mm:ss" value-format="YYYY-MM-DD hh:mm:ss" />

@@ -123,8 +123,6 @@ public class SysMerchantServiceImpl extends ServiceImpl<SysMerchantMapper, SysMe
                     .phone(params.getPhone())
                     .roleIdList(Lists.newArrayList(roleId))
                     .isFixed(true)
-                    .merchantId(sysMerchant.getId())
-                    .isMerchantAdmin(true)
                     .build());
             sysMerchant.setAdminUserId(userId);
             sysMerchant.updateById();
@@ -160,7 +158,7 @@ public class SysMerchantServiceImpl extends ServiceImpl<SysMerchantMapper, SysMe
         try {
             sysMerchant = this.checkData(id);
         } catch (Exception e) {
-            throw new MyException(e.getMessage(), ApiResultCodeEnum.MERCHANT_ERROR.getCode());
+            throw new MyException(e.getMessage(), ApiResultCodeEnum.APP_SERVICE_ERROR.getCode());
         }
         return SysMerchantDetailVO.builder()
                 .id(id)

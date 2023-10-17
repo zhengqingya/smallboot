@@ -3,6 +3,7 @@ package com.zhengqing.system.model.dto;
 import com.zhengqing.common.base.model.dto.BaseDTO;
 import com.zhengqing.common.core.custom.validator.common.CreateGroup;
 import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
+import com.zhengqing.system.enums.SysAppTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -59,7 +60,7 @@ public class SysMerchantSaveDTO extends BaseDTO {
     private String remark;
 
     /**
-     * {@link com.zhengqing.system.enums.SysMerchantTypeEnum}
+     * {@link SysAppTypeEnum}
      */
     @NotNull(message = "商户类型不能为空！")
     @ApiModelProperty("商户类型")

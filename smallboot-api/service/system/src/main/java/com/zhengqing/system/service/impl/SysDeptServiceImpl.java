@@ -5,11 +5,16 @@ import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
+import com.zhengqing.common.base.enums.ApiResultCodeEnum;
+import com.zhengqing.common.base.enums.CommonStatusEnum;
+import com.zhengqing.common.base.exception.MyException;
+import com.zhengqing.common.base.util.MyDateUtil;
 import com.zhengqing.common.db.constant.MybatisConstant;
 import com.zhengqing.system.entity.SysDept;
 import com.zhengqing.system.mapper.SysDeptMapper;
 import com.zhengqing.system.model.dto.SysDeptSaveDTO;
 import com.zhengqing.system.model.dto.SysDeptTreeDTO;
+import com.zhengqing.system.model.vo.SysDeptCheckVO;
 import com.zhengqing.system.model.vo.SysDeptTreeVO;
 import com.zhengqing.system.service.ISysDeptService;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +22,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -33,6 +40,14 @@ import java.util.stream.Collectors;
 public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> implements ISysDeptService {
 
     private final SysDeptMapper sysDeptMapper;
+
+    @Override
+    public SysDept detail(Integer id) {
+        Assert.notNull(id, "部门不存在！");
+        SysDept sysDept = this.sysDeptMapper.selectById(id);
+        Assert.notNull(sysDept, "部门不存在！");
+        return sysDept;
+    }
 
     @Override
     public List<SysDeptTreeVO> tree(SysDeptTreeDTO params) {
@@ -66,6 +81,35 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
             item.handleData();
         });
         return childList;
+    }
+
+    @Override
+    public SysDeptCheckVO checkData(Integer deptId) {
+        SysDept sysDept = null;
+        try {
+            sysDept = this.detail(deptId);
+            Assert.isTrue(Objects.equals(CommonStatusEnum.ENABLE.getStatus(), sysDept.getStatus()), "服务已停用！");
+            Date expireTime = sysDept.getExpireTime();
+            Assert.isTrue(expireTime.after(new Date()), "限制：服务已到期！过期时间：" + MyDateUtil.dateToStr(expireTime));
+        } catch (Exception e) {
+            throw new MyException(e.getMessage(), ApiResultCodeEnum.APP_SERVICE_ERROR.getCode());
+        }
+        return SysDeptCheckVO.builder()
+                .id(sysDept.getId())
+                .name(sysDept.getName())
+                .appType(sysDept.getAppType())
+                .status(sysDept.getStatus())
+                .expireTime(sysDept.getExpireTime())
+                .userNum(sysDept.getUserNum())
+                .appSecret(sysDept.getAppSecret())
+                .build();
+    }
+
+    @Override
+    public SysDeptCheckVO configByAppId(Integer appId) {
+        SysDept sysDept = this.sysDeptMapper.selectOne(new LambdaQueryWrapper<SysDept>().eq(SysDept::getAppId, appId).last(MybatisConstant.LIMIT_ONE));
+        Assert.notNull(sysDept, "小程序暂未配置，请联系系统管理员！");
+        return this.checkData(sysDept.getId());
     }
 
     @Override
@@ -114,13 +158,19 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
                 .phone(params.getPhone())
                 .email(params.getEmail())
                 .status(params.getStatus())
-                .expireTime(params.getExpireTime())
                 .provinceName(params.getProvinceName())
                 .cityName(params.getCityName())
                 .areaName(params.getAreaName())
                 .address(params.getAddress())
                 .remark(params.getRemark())
+                .expireTime(params.getExpireTime())
                 .userNum(params.getUserNum())
+                .jobNum(params.getJobNum())
+                .appType(params.getAppType())
+                .appId(params.getAppId())
+                .appSecret(params.getAppSecret())
+                .appStatus(params.getAppStatus())
+                .appIndexTitle(params.getAppIndexTitle())
                 .build();
         sysDept.insertOrUpdate();
         return sysDept.getId();
@@ -129,6 +179,8 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void deleteData(Integer id) {
+        List<SysDeptTreeVO> list = this.tree(SysDeptTreeDTO.builder().parentId(id).build());
+        Assert.isTrue(CollUtil.isEmpty(list), "请先删除子部门后再删除当前部门！");
         this.sysDeptMapper.deleteById(id);
     }
 

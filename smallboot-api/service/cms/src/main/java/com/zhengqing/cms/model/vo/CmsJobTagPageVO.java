@@ -29,14 +29,11 @@ public class CmsJobTagPageVO extends BaseVO {
     @ApiModelProperty("主键ID")
     private Integer id;
 
-    @ApiModelProperty(value = "商户ID")
-    private Integer merchantId;
-
-    @ApiModelProperty(value = "商户名")
-    private String merchantName;
-
     @ApiModelProperty("部门id")
     private Integer deptId;
+
+    @ApiModelProperty("部门名称")
+    private String deptName;
 
     @ApiModelProperty("名称")
     private String name;

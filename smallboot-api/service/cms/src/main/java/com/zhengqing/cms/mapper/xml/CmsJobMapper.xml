@@ -10,9 +10,9 @@
 
     <select id="selectDataList" resultMap="pageMap">
         SELECT
-        cj.*, tsm.name merchantName, cjc.name categoryName
+        cj.*, tsd.name deptName, cjc.name categoryName
         FROM cms_job cj
-        LEFT JOIN t_sys_merchant tsm ON tsm.id = cj.merchant_id
+        LEFT JOIN t_sys_dept tsd ON tsd.id = cj.dept_id
         LEFT JOIN cms_job_category cjc ON cjc.id = cj.category_id
         <where>
             cj.is_deleted=0

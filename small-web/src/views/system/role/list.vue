@@ -8,7 +8,7 @@
       </template>
     </base-header>
 
-    <el-table row-key="roleId" :tree-props="{ children: 'children', hasChildren: 'hasChildren' }" :data="dataList" default-expand-all>
+    <el-table border row-key="roleId" :tree-props="{ children: 'children', hasChildren: 'hasChildren' }" :data="dataList" default-expand-all>
       <el-table-column prop="name" label="角色名" />
       <el-table-column prop="code" label="角色编码">
         <template #default="scope">

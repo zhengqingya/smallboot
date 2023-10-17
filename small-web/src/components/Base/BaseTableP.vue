@@ -4,6 +4,7 @@
     <el-table
       ref="baseTableRef"
       v-loading="isLoading && (isPage ? pageRes.records == null || pageRes.records.length == 0 : tableDataList == null || tableDataList.length == 0)"
+      border
       v-bind="$attrs"
       :data="isPage ? pageRes.records : tableDataList"
       size="small"

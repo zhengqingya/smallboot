@@ -37,18 +37,12 @@ public class WebSysMerchantController extends BaseController {
     @GetMapping("page")
     @ApiOperation("分页列表")
     public IPage<SysMerchantPageVO> page(@Validated @ModelAttribute SysMerchantPageDTO params) {
-        if (this.isFillMerchantId()) {
-            params.setId(this.getCurrentUserReMerchantId());
-        }
         return this.iSysMerchantService.page(params);
     }
 
     @GetMapping("list")
     @ApiOperation("列表")
     public List<SysMerchantListVO> list(@Validated @ModelAttribute SysMerchantListDTO params) {
-        if (this.isFillMerchantId()) {
-            params.setId(this.getCurrentUserReMerchantId());
-        }
         return this.iSysMerchantService.list(params);
     }
 

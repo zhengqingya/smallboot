@@ -4,10 +4,9 @@
 
     <select id="selectDataPage" resultType="com.zhengqing.cms.model.vo.CmsJobCategoryPageVO">
         SELECT
-        cjc.*, tsm.name merchantName, tsd.name deptName
+        cjc.*, tsd.name deptName
         FROM cms_job_category cjc
         LEFT JOIN t_sys_dept tsd ON tsd.id = cjc.dept_id
-        LEFT JOIN t_sys_merchant tsm ON tsm.id = cjc.merchant_id
         <where>
             cjc.is_deleted=0
             <if test="filter.merchantId!=null">

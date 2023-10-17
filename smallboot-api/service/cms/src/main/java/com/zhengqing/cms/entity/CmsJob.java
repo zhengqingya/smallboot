@@ -1,9 +1,6 @@
 package com.zhengqing.cms.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import com.zhengqing.common.db.config.mybatis.handler.ListJsonIntegerTypeHandler;
 import com.zhengqing.common.db.entity.IsDeletedBaseEntity;
 import io.swagger.annotations.ApiModel;
@@ -47,6 +44,10 @@ public class CmsJob extends IsDeletedBaseEntity<CmsJob> {
     @ApiModelProperty("岗位id")
     private Integer postId;
 
+    /**
+     * 值为空时，MP更新数据库时不忽略此字段值
+     */
+    @TableField(updateStrategy = FieldStrategy.IGNORED)
     @ApiModelProperty("分类id")
     private Integer categoryId;
 

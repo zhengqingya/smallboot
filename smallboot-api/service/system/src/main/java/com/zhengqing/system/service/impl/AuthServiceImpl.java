@@ -15,7 +15,6 @@ import com.zhengqing.system.service.ISysRoleService;
 import com.zhengqing.system.util.PasswordUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.compress.utils.Lists;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -49,8 +48,8 @@ public class AuthServiceImpl implements IAuthService {
         Assert.isTrue(isValid, "密码错误！");
 
         // 拿到下级角色ids
-        List<Integer> allRoleIdList = Lists.newArrayList();
         List<Integer> roleIdList = userPerm.getRoleIdList();
+        List<Integer> allRoleIdList = roleIdList;
         if (!roleIdList.contains(AppConstant.SMALL_BOOT_SUPER_ADMIN_ROLE_ID)) {
             roleIdList.forEach(e -> allRoleIdList.addAll(this.iSysRoleService.getChildRoleIdList(e)));
         }
@@ -63,8 +62,7 @@ public class AuthServiceImpl implements IAuthService {
                         .username(userPerm.getUsername())
                         .allRoleIdList(allRoleIdList)
                         .roleCodeList(userPerm.getRoleCodeList())
-                        .merchantId(userPerm.getMerchantId())
-                        .isMerchantAdmin(userPerm.getIsMerchantAdmin())
+                        .deptId(userPerm.getDeptId())
                         .build()
         );
     }

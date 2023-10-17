@@ -43,9 +43,6 @@ public class WebSysUserController extends BaseController {
     @GetMapping("listPage")
     @ApiOperation("列表分页")
     public IPage<SysUserListVO> listPage(@ModelAttribute SysUserListDTO params) {
-        if (this.isFillMerchantId()) {
-            params.setMerchantId(this.getCurrentUserReMerchantId());
-        }
         return this.iSysUserService.listPage(params);
     }
 
@@ -59,9 +56,6 @@ public class WebSysUserController extends BaseController {
     @PostMapping("")
     @ApiOperation("新增")
     public Integer add(@Validated @RequestBody SysUserSaveDTO params) {
-        if (this.isFillMerchantId()) {
-            params.setMerchantId(this.getCurrentUserReMerchantId());
-        }
         return this.iSysUserService.addOrUpdateData(params);
     }
 

@@ -1,6 +1,8 @@
 package com.zhengqing.common.db.config.mybatis.data.permission.second;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
+import com.google.common.collect.Lists;
 import com.zhengqing.common.base.constant.AppConstant;
 import com.zhengqing.common.base.context.JwtUserContext;
 import com.zhengqing.common.db.context.DataPermissionThreadLocal;
@@ -101,6 +103,9 @@ public class MyDataPermissionHandler {
                     List<Integer> roleIdList = JwtUserContext.get().getAllRoleIdList();
                     if (roleIdList.contains(AppConstant.SMALL_BOOT_SUPER_ADMIN_ROLE_ID)) {
                         return where;
+                    }
+                    if (CollUtil.isEmpty(roleIdList)) {
+                        roleIdList = Lists.newArrayList(-1);
                     }
                     // 把集合转变为JSQLParser需要的元素列表
                     ItemsList itemsList = new ExpressionList(roleIdList.stream().map(LongValue::new).collect(Collectors.toList()));

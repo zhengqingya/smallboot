@@ -64,7 +64,7 @@ public class WebSysMenuController extends BaseController {
     @DeleteMapping("")
     @ApiOperation("删除")
     public void delete(@RequestParam Integer id) {
-        this.iSysMenuService.removeById(id);
+        this.iSysMenuService.deleteData(id);
         this.refreshPerm();
     }
 
