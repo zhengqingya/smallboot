@@ -6,7 +6,7 @@
     <resultMap id="listMap" type="com.zhengqing.system.model.vo.SysUserListVO">
         <result column="post_id_list"
                 property="postIdList"
-                typeHandler="com.zhengqing.common.db.config.mybatis.handler.ListIntegerTypeHandler"></result>
+                typeHandler="com.zhengqing.common.db.config.mybatis.handler.ListJsonIntegerTypeHandler"></result>
     </resultMap>
 
     <select id="selectDataList" resultMap="listMap">
@@ -46,7 +46,7 @@
         <result property="deptId" column="dept_id"/>
         <result column="post_id_list"
                 property="postIdList"
-                typeHandler="com.zhengqing.common.db.config.mybatis.handler.ListIntegerTypeHandler"></result>
+                typeHandler="com.zhengqing.common.db.config.mybatis.handler.ListJsonIntegerTypeHandler"></result>
         <result property="merchantId" column="merchant_id"/>
         <result property="isMerchantAdmin" column="is_merchant_admin"/>
         <collection property="roleIdList" ofType="Integer" javaType="list">

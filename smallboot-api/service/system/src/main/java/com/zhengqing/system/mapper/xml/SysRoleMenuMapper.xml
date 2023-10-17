@@ -4,15 +4,13 @@
 <mapper namespace="com.zhengqing.system.mapper.SysRoleMenuMapper">
 
     <insert id="batchInsertRoleMenuIds">
-        INSERT INTO t_sys_role_menu (role_id,menu_id) VALUES
+        INSERT INTO t_sys_role_menu (role_id, menu_id) VALUES
         <foreach collection="menuIdList" item="menuId" separator=",">
-            (#{roleId},#{menuId})
+            (#{roleId}, #{menuId})
         </foreach>
     </insert>
 
-    <select
-            id="selectMenuIdsByRoleIds"
-            resultType="java.lang.Integer">
+    <select id="selectMenuIdsByRoleIds" resultType="java.lang.Integer">
         SELECT DISTINCT(menu_id)
         FROM t_sys_role_menu
         WHERE role_id IN
@@ -20,6 +18,20 @@
             #{roleId}
         </foreach>
         ORDER BY menu_id
+    </select>
+
+    <resultMap id="map" type="com.zhengqing.system.model.vo.SysRoleReBtnPermListVO">
+        <result column="roleCodeList"
+                property="roleCodeList"
+                typeHandler="com.zhengqing.common.db.config.mybatis.handler.ListToStrTypeHandler"></result>
+    </resultMap>
+
+    <select id="selectBtnPerm" resultMap="map">
+        SELECT tsm.name, tsm.id menuId, tsm.path, tsm.btn_perm, GROUP_CONCAT(DISTINCT tsr.code) roleCodeList
+        FROM t_sys_role_menu tsrm
+                 left join t_sys_menu tsm on tsm.id = tsrm.menu_id
+                 left join t_sys_role tsr on tsr.role_id = tsrm.role_id
+        GROUP BY tsm.id
     </select>
 
 

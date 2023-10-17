@@ -13,7 +13,6 @@ import com.zhengqing.system.model.dto.SysRoleSaveDTO;
 import com.zhengqing.system.model.vo.SysRoleAllPermissionDetailVO;
 import com.zhengqing.system.model.vo.SysRoleBaseVO;
 import com.zhengqing.system.service.ISysPermBusinessService;
-import com.zhengqing.system.service.ISysRolePermissionService;
 import com.zhengqing.system.service.ISysRoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -42,7 +41,6 @@ public class WebSysRoleController extends BaseController {
 
     private final ISysRoleService iSysRoleService;
     private final ISysPermBusinessService iSysPermBusinessService;
-    private final ISysRolePermissionService iSysRolePermissionService;
 
     @GetMapping("listPage")
     @ApiOperation("列表分页")

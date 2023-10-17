@@ -36,9 +36,9 @@
           <router-link to="/system/personal-center">
             <el-dropdown-item>个人中心</el-dropdown-item>
           </router-link>
-          <a target="_blank" href="https://gitee.com/zhengqingya">
+          <!-- <a target="_blank" href="https://gitee.com/zhengqingya">
             <el-dropdown-item>Gitee</el-dropdown-item>
-          </a>
+          </a> -->
           <el-dropdown-item @click="handleSettings">系统设置</el-dropdown-item>
           <el-dropdown-item divided @click="logout">退出</el-dropdown-item>
         </el-dropdown-menu>

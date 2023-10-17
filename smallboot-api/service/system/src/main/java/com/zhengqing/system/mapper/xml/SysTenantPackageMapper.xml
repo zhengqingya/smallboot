@@ -5,10 +5,10 @@
     <resultMap id="pageMap" type="com.zhengqing.system.model.vo.SysTenantPackagePageVO">
         <result column="menu_id_list"
                 property="menuIdList"
-                typeHandler="com.zhengqing.common.db.config.mybatis.handler.ListIntegerTypeHandler"></result>
+                typeHandler="com.zhengqing.common.db.config.mybatis.handler.ListJsonIntegerTypeHandler"></result>
         <result column="permission_id_list"
                 property="permissionIdList"
-                typeHandler="com.zhengqing.common.db.config.mybatis.handler.ListIntegerTypeHandler"></result>
+                typeHandler="com.zhengqing.common.db.config.mybatis.handler.ListJsonIntegerTypeHandler"></result>
     </resultMap>
 
     <select id="selectDataPage" resultMap="pageMap">

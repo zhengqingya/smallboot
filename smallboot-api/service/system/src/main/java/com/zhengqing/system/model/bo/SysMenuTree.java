@@ -1,7 +1,6 @@
 package com.zhengqing.system.model.bo;
 
 import com.google.common.collect.Lists;
-import com.zhengqing.system.model.vo.SysRoleRePermVO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,23 +27,23 @@ public class SysMenuTree {
 
     // ==================== ↓↓↓↓↓↓ 菜单基础信息 ↓↓↓↓↓↓ ====================
 
-    @ApiModelProperty("菜单ID")
-    private Integer menuId;
+    @ApiModelProperty("ID")
+    private Integer id;
 
-    @ApiModelProperty("上级菜单ID")
+    @ApiModelProperty("父ID")
     private Integer parentId;
 
-    @ApiModelProperty("菜单名称")
-    private String title;
+    @ApiModelProperty("名称")
+    private String name;
 
-    @ApiModelProperty("菜单图标")
+    @ApiModelProperty("图标")
     private String icon;
 
-    @ApiModelProperty("菜单链接")
+    @ApiModelProperty("访问路径")
     private String path;
 
-    @ApiModelProperty("上级菜单名")
-    private String parentName;
+    @ApiModelProperty(value = "按钮权限标识")
+    private String btnPerm;
 
     @ApiModelProperty("显示顺序")
     private Integer sort;
@@ -67,13 +66,16 @@ public class SysMenuTree {
     @ApiModelProperty("路由元信息(前端用于菜单显示)")
     private Meta meta;
 
+    /**
+     * {@link com.zhengqing.system.enums.SysMenuTypeEnum}
+     */
+    @ApiModelProperty(value = "类型")
+    private Integer type;
+
     // ==================== ↓↓↓↓↓↓ 权限信息 ↓↓↓↓↓↓ ====================
 
     @ApiModelProperty("是否具有菜单权限")
     private Boolean isHasPerm;
-
-    @ApiModelProperty("按钮权限")
-    private List<SysRoleRePermVO> permList;
 
     @Data
     @SuperBuilder
@@ -97,13 +99,12 @@ public class SysMenuTree {
     }
 
     public void handleData() {
-        this.permList = CollectionUtils.isEmpty(this.permList) ? Lists.newArrayList() : this.permList;
         this.children = CollectionUtils.isEmpty(this.children) ? Lists.newArrayList() : this.children;
 
         this.meta = Meta.builder()
                 .isShow(this.isShow)
                 .sort(this.sort)
-                .title(this.title)
+                .title(this.name)
                 .icon(this.icon)
                 .isShowBreadcrumb(this.isShowBreadcrumb)
                 .build();

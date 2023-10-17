@@ -13,12 +13,14 @@ export const useUserStore = defineStore('user', () => {
   let tokenObj = ref({});
   let userObj = ref({});
   let routerMap = ref({}); // 全路径'/system/user' -> 路由信息
+  let loginBeforeUrl = ref(''); // 登录前的路径
 
   // 登录
   async function login(loginObj) {
     if (isLogin.value) {
       return;
     }
+    loginBeforeUrl.value = route.path;
     tenantId.value = loginObj.tenantId;
     let result = await sysUserApi.login({
       tenantId: loginObj.tenantId,
@@ -32,7 +34,9 @@ export const useUserStore = defineStore('user', () => {
 
   // 退出登录
   function logout() {
-    let localTenantId = tenantId.value;
+    let localLoginUrl = loginBeforeUrl.value; // 先存储下，防止下面清空掉
+
+    isLogin.value = false;
 
     // 清空pinia存储的数据
     this.$reset();
@@ -46,9 +50,8 @@ export const useUserStore = defineStore('user', () => {
     window.sessionStorage.clear();
 
     // 跳转登录页
-    router.push(`/login/${localTenantId}?redirect=${route.fullPath}`);
-    // window.location.href = '/login';
-    // location.reload(); // 强制刷新页面
+    router.push(`${localLoginUrl}?redirect=${route.fullPath}`);
+    location.reload(); // 强制刷新页面
   }
 
   // 获取用户 & 权限数据
@@ -121,5 +124,5 @@ export const useUserStore = defineStore('user', () => {
     return result;
   }
 
-  return { tenantId, isLogin, login, logout, tokenObj, userObj, getUserInfo, routerList, routerMap };
+  return { tenantId, isLogin, loginBeforeUrl, login, logout, tokenObj, userObj, getUserInfo, routerList, routerMap };
 });

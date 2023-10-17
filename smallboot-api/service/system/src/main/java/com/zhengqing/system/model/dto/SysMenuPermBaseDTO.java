@@ -40,29 +40,18 @@ public class SysMenuPermBaseDTO extends BaseDTO implements HandleParam {
     @ApiModelProperty(value = "有权限的菜单ids", hidden = true)
     private List<Integer> menuIdList;
 
-    @JsonIgnore
-    @ApiModelProperty(value = "btn/url 权限ids", hidden = true)
-    private List<Integer> permissionIdList;
-
 
     @Override
     public void handleParam() {
         this.menuIdList = Lists.newArrayList();
-        this.permissionIdList = Lists.newArrayList();
         this.recurveMenu(this.menuTree);
     }
 
     private void recurveMenu(List<SysMenuTree> menuList) {
         menuList.forEach(item -> {
             if (item.getIsHasPerm()) {
-                this.menuIdList.add(item.getMenuId());
+                this.menuIdList.add(item.getId());
             }
-            item.getPermList().forEach(perm -> {
-                if (perm.getIsHasPerm()) {
-                    this.permissionIdList.add(perm.getId());
-                }
-            });
-
             List<SysMenuTree> children = item.getChildren();
             if (!CollectionUtils.isEmpty(children)) {
                 this.recurveMenu(children);

@@ -8,7 +8,7 @@
       </template>
     </base-header>
 
-    <el-table row-key="id" :tree-props="{ children: 'children', hasChildren: 'hasChildren' }" :data="dataList" default-expand-all>
+    <el-table row-key="id" border :tree-props="{ children: 'children', hasChildren: 'hasChildren' }" :data="dataList" default-expand-all>
       <el-table-column label="ID" prop="id" align="center" />
       <el-table-column label="部门名称" prop="name" align="center" />
       <el-table-column label="状态" align="center">

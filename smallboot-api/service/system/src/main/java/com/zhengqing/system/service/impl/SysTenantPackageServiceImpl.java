@@ -66,12 +66,11 @@ public class SysTenantPackageServiceImpl extends ServiceImpl<SysTenantPackageMap
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void updateTenantIdRePerm(Integer tenantId, List<Integer> menuIdList, List<Integer> permissionIdList) {
+    public void updateTenantIdRePerm(Integer tenantId, List<Integer> menuIdList) {
         // 1、查询租户套餐
         SysTenantPackage sysTenantPackage = this.detailReTenantId(tenantId);
         // 2、更新权限
         sysTenantPackage.setMenuIdList(menuIdList);
-        sysTenantPackage.setPermissionIdList(permissionIdList);
         sysTenantPackage.updateById();
     }
 
@@ -92,20 +91,18 @@ public class SysTenantPackageServiceImpl extends ServiceImpl<SysTenantPackageMap
         Assert.isFalse(AppConstant.SMALL_BOOT_TENANT_ID_PACKAGE_ID.equals(id), "超级套餐无法操作！");
         boolean isAdd = id != null;
         List<Integer> menuIdList = params.getMenuIdList();
-        List<Integer> permissionIdList = params.getPermissionIdList();
 
         // 校验名称是否重复
         String name = params.getName();
         SysTenantPackage sysTenantPackageOld = this.sysTenantPackageMapper.selectOne(new LambdaQueryWrapper<SysTenantPackage>().eq(SysTenantPackage::getName, name).last(MybatisConstant.LIMIT_ONE));
         Assert.isTrue(sysTenantPackageOld == null || sysTenantPackageOld.getId().equals(id), "名称重复，请重新输入！");
-        
+
         // 1、保存套餐
         SysTenantPackage sysTenantPackage = SysTenantPackage.builder()
                 .id(id)
                 .name(name)
                 .status(params.getStatus())
                 .menuIdList(menuIdList)
-                .permissionIdList(permissionIdList)
                 .remark(params.getRemark())
                 .build();
         sysTenantPackage.insertOrUpdate();

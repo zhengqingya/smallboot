@@ -3,34 +3,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhengqing.system.mapper.SysMenuMapper">
 
-    <select id="selectMenus" resultType="com.zhengqing.system.entity.SysMenu">
-        SELECT
-        *
-        FROM t_sys_menu
-        WHERE
-        is_deleted = 0
-        <if test="filter.id!=null">
-            AND id = #{filter.id}
-        </if>
-        ORDER BY id DESC
-    </select>
-
     <select id="selectMenuTree" resultType="com.zhengqing.system.model.bo.SysMenuTree">
         SELECT
-        sm.menu_id,
-        sm.parent_id,
-        IF(sm.parent_id = 0, NULL,
-        (SELECT m.title FROM t_sys_menu m WHERE m.menu_id = sm.parent_id)) parentName,
-        sm.title,
-        sm.icon,
-        sm.path,
-        sm.sort,
-        sm.component,
-        sm.redirect,
-        sm.is_show,
-        sm.is_show_breadcrumb,
+        sm.*,
         <choose>
-            <when test="roleIdList!=null and roleIdList.size>0">
+            <when test="filter.roleIdList!=null and filter.roleIdList.size>0">
                 IF(srm.id IS NULL, 0, 1) isHasPerm
             </when>
             <otherwise>
@@ -38,25 +15,33 @@
             </otherwise>
         </choose>
         FROM t_sys_menu sm
-        <if test="roleIdList!=null and roleIdList.size>0">
-            <if test="!isOnlyShowPerm">
+        <if test="filter.roleIdList!=null and filter.roleIdList.size>0">
+            <if test="filter.isOnlyShowPerm==null and !filter.isOnlyShowPerm">
                 LEFT
             </if>
-            JOIN t_sys_role_menu srm ON srm.menu_id = sm.menu_id
+            JOIN t_sys_role_menu srm ON srm.menu_id = sm.id
             AND srm.role_id IN
-            <foreach collection="roleIdList" separator="," open="(" close=")" item="roleId">
+            <foreach collection="filter.roleIdList" separator="," open="(" close=")" item="roleId">
                 #{roleId}
             </foreach>
         </if>
         WHERE sm.is_deleted = 0
-        <if test="menuIdList!=null and menuIdList.size>0">
-            AND sm.menu_id IN
-            <foreach collection="menuIdList" separator="," open="(" close=")" item="menuId">
+        <if test="filter.excludeMenuId!=null">
+            AND sm.id != #{filter.excludeMenuId}
+        </if>
+        <if test="filter.menuIdList!=null and filter.menuIdList.size>0">
+            AND sm.id IN
+            <foreach collection="filter.menuIdList" separator="," open="(" close=")" item="menuId">
                 #{menuId}
             </foreach>
         </if>
-        GROUP BY sm.menu_id
+        GROUP BY sm.id
         ORDER BY sm.sort ASC
+    </select>
+
+    <select id="selectAllMenuId" resultType="java.lang.Integer">
+        SELECT id
+        FROM t_sys_menu
     </select>
 
 </mapper>

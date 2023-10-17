@@ -2,7 +2,7 @@ package com.zhengqing.system.service;
 
 import com.zhengqing.system.model.bo.SysMenuTree;
 import com.zhengqing.system.model.bo.SysRoleRePermSaveBO;
-import com.zhengqing.system.model.dto.SysRoleRePermIdsSaveDTO;
+import com.zhengqing.system.model.dto.SysMenuTreeDTO;
 import com.zhengqing.system.model.dto.SysUserPermDTO;
 import com.zhengqing.system.model.vo.SysRoleAllPermissionDetailVO;
 import com.zhengqing.system.model.vo.SysUserPermVO;
@@ -88,33 +88,13 @@ public interface ISysPermBusinessService {
     void saveRoleRePerm(SysRoleRePermSaveBO params);
 
     /**
-     * 保存角色关联菜单按钮权限ids
-     *
-     * @param params 提交参数
-     * @return void
-     * @author zhengqingya
-     * @date 2020/9/10 18:34
-     */
-    void saveRoleRePermIds(SysRoleRePermIdsSaveDTO params);
-
-    /**
      * 获取菜单树 -- 根据租户获取
      *
-     * @param roleIdList     角色ids tips:为空时拿到所有权限
-     * @param isOnlyShowPerm 是否仅显示带权限的数据  false:显示所有权限
+     * @param params 提交参数
      * @return 菜单树信息
      * @author zhengqingya
      * @date 2021/1/13 20:44
      */
-    List<SysMenuTree> tree(List<Integer> roleIdList, boolean isOnlyShowPerm);
-
-    /**
-     * 获取菜单树 -- 全部
-     *
-     * @return 菜单树信息
-     * @author zhengqingya
-     * @date 2021/1/13 20:44
-     */
-    List<SysMenuTree> treeAll();
+    List<SysMenuTree> tree(SysMenuTreeDTO params);
 
 }

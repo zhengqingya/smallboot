@@ -5,6 +5,7 @@
         <base-cell-item label="角色名：">{{ roleForm.name }}</base-cell-item>
         <base-cell-item label="角色编码：">{{ roleForm.code }}</base-cell-item>
       </base-cell>
+      <template #append> <el-button type="success" @click="initData">刷新</el-button> </template>
     </base-card>
 
     <base-card title="权限信息" class="m-t-10">

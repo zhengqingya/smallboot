@@ -20,23 +20,27 @@ import javax.validation.constraints.NotNull;
 @ApiModel
 public class SysMenuSaveDTO {
 
-    @NotNull(groups = {UpdateGroup.class}, message = "菜单ID不能为空!")
-    @ApiModelProperty(value = "菜单ID")
-    private Integer menuId;
+    @NotNull(groups = {UpdateGroup.class}, message = "ID不能为空!")
+    @ApiModelProperty(value = "主键ID")
+    private Integer id;
 
-    @ApiModelProperty(value = "父类菜单ID")
+    @NotNull(message = "父ID不能为空！")
+    @ApiModelProperty(value = "父ID")
     private Integer parentId;
 
-    @ApiModelProperty(value = "菜单名称")
-    private String title;
+    @ApiModelProperty(value = "名称")
+    private String name;
 
-    @ApiModelProperty(value = "菜单图标")
+    @ApiModelProperty(value = "图标")
     private String icon;
 
-    @ApiModelProperty(value = "菜单访问路径")
+    @ApiModelProperty(value = "访问路径")
     private String path;
 
-    @ApiModelProperty(value = "菜单排序")
+    @ApiModelProperty(value = "按钮权限标识")
+    private String btnPerm;
+
+    @ApiModelProperty(value = "排序")
     private Integer sort;
 
     @ApiModelProperty(value = "组件名")
@@ -50,5 +54,12 @@ public class SysMenuSaveDTO {
 
     @ApiModelProperty(value = "是否显示面包屑(1:显示 0:隐藏)")
     private Boolean isShowBreadcrumb;
+
+    /**
+     * {@link com.zhengqing.system.enums.SysMenuTypeEnum}
+     */
+    @NotNull(message = "类型不能为空！")
+    @ApiModelProperty(value = "类型")
+    private Integer type;
 
 }

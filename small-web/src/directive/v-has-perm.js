@@ -41,10 +41,9 @@ function getBtnPermList(currentRouteUrl, permissionTreeList, btnPermList) {
     return btnPermList;
   }
   permissionTreeList.forEach((e) => {
-    if (e.meta.fullPath === currentRouteUrl || e.meta.fullPath === currentRouteUrl + '/index') {
-      e.permList.forEach((item) => {
-        btnPermList.push(item.btnPerm);
-      });
+    // 只要有权限就拿到，暂时不判断当前路由下是否具有按钮权限  (e.meta.fullPath === currentRouteUrl || e.meta.fullPath === currentRouteUrl + '/index')
+    if (e.type == 2) {
+      btnPermList.push(e.btnPerm);
     }
     const childList = e.children;
     if (childList) {

@@ -24,7 +24,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel
-public class SysRoleRePermListVO extends BaseVO {
+public class SysRoleReBtnPermListVO extends BaseVO {
 
     @ApiModelProperty(value = "权限描述")
     private String name;
@@ -33,7 +33,7 @@ public class SysRoleRePermListVO extends BaseVO {
     private Integer menuId;
 
     @ApiModelProperty(value = "url权限标识")
-    private String urlPerm;
+    private String path;
 
     @ApiModelProperty(value = "按钮权限标识")
     private String btnPerm;

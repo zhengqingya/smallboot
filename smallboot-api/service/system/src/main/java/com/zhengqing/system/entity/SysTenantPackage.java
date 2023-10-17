@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.zhengqing.common.db.config.mybatis.handler.ListIntegerTypeHandler;
+import com.zhengqing.common.db.config.mybatis.handler.ListJsonIntegerTypeHandler;
 import com.zhengqing.common.db.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -39,12 +39,8 @@ public class SysTenantPackage extends BaseEntity<SysTenantPackage> {
     private Integer status;
 
     @ApiModelProperty("关联的菜单ids")
-    @TableField(typeHandler = ListIntegerTypeHandler.class)
+    @TableField(typeHandler = ListJsonIntegerTypeHandler.class)
     private List<Integer> menuIdList;
-
-    @ApiModelProperty("关联的按钮权限ids")
-    @TableField(typeHandler = ListIntegerTypeHandler.class)
-    private List<Integer> permissionIdList;
 
     @ApiModelProperty("备注")
     private String remark;

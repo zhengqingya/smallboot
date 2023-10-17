@@ -28,7 +28,4 @@ public class SysRoleRePermSaveBO extends BaseBO {
     @ApiModelProperty(value = "有权限的菜单ids")
     private List<Integer> menuIdList;
 
-    @ApiModelProperty(value = "btn/url 权限ids")
-    private List<Integer> permissionIdList;
-
 }

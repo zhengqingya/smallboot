@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.zhengqing.common.core.enums.UserSexEnum;
-import com.zhengqing.common.db.config.mybatis.handler.ListIntegerTypeHandler;
+import com.zhengqing.common.db.config.mybatis.handler.ListJsonIntegerTypeHandler;
 import com.zhengqing.common.db.entity.IsDeletedBaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -66,7 +66,7 @@ public class SysUser extends IsDeletedBaseEntity<SysUser> {
     private Integer deptId;
 
     @ApiModelProperty(value = "岗位ids")
-    @TableField(typeHandler = ListIntegerTypeHandler.class)
+    @TableField(typeHandler = ListJsonIntegerTypeHandler.class)
     private List<Integer> postIdList;
 
     @ApiModelProperty(value = "商户ID")

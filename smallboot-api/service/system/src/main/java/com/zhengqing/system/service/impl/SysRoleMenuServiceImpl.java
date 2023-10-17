@@ -8,6 +8,7 @@ import com.zhengqing.common.base.context.TenantIdContext;
 import com.zhengqing.system.entity.SysRoleMenu;
 import com.zhengqing.system.mapper.SysRoleMenuMapper;
 import com.zhengqing.system.model.dto.SysRoleReMenuSaveDTO;
+import com.zhengqing.system.model.vo.SysRoleReBtnPermListVO;
 import com.zhengqing.system.service.ISysRoleMenuService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -109,4 +110,9 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
         this.sysRoleMenuMapper.delete(new LambdaQueryWrapper<SysRoleMenu>().in(SysRoleMenu::getMenuId, delMenuIdList));
     }
 
+    @Override
+    public List<SysRoleReBtnPermListVO> listRoleReBtnPerm() {
+        return this.sysRoleMenuMapper.selectBtnPerm();
+    }
+    
 }

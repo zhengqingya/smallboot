@@ -133,7 +133,6 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
                         SysRoleRePermSaveBO.builder()
                                 .roleId(roleId)
                                 .menuIdList(sysTenantPackage.getMenuIdList())
-                                .permissionIdList(sysTenantPackage.getPermissionIdList())
                                 .build()
                 );
 

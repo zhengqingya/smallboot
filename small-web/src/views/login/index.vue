@@ -5,11 +5,13 @@
       'background-color': isAdmin ? '#304156' : '#00aaff',
     }">
     <div class="flex-c-center-center bg-color-white" style="height: 400px; width: 500px; border-radius: 10px">
-      <h1 v-if="isAdmin" class="font-size-lg">后台管理系统</h1>
+      <!-- <h1 v-if="isAdmin" class="font-size-lg">后台管理系统</h1>
       <div v-else>
         <h1 v-if="tenantId && tenantList && tenantList.length > 0" class="font-size-lg">{{ getTenantName() }}</h1>
         <h1 v-else class="font-size-lg">SmallBoot多租户管理系统</h1>
-      </div>
+      </div> -->
+
+      <h1 class="font-size-lg">SmallBoot多租户管理系统</h1>
 
       <div class="m-t-20">
         <el-form ref="loginFormRef" :model="loginForm" :rules="loginRules">
@@ -71,10 +73,10 @@ onUpdated(async () => {});
 watch(
   () => proxy.$router.currentRoute.value,
   (newValue) => {
-    console.log('路由变化：', newValue.path);
+    // console.log('路由变化：', newValue.path);
     // 初始化变量
-    tenantId = null;
-    loginForm.tenantId = null;
+    tenantId = 1;
+    loginForm.tenantId = tenantId;
     // 赋值
     var path = newValue.path;
     isAdmin = path.includes('admin');

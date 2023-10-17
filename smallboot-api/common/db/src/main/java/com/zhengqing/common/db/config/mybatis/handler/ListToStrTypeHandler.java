@@ -19,7 +19,8 @@ import java.util.List;
  *
  * @author zhengqingya
  * @description list类型转varchar（逗号分隔的字符串）的类型处理器
- * ex      list [1,2,3]  ==》 varchar 1,2,3
+ * eg: 入库 list ['1','2','3']  ==》 varchar 1,2,3
+ * 响应 逗号分隔的字符串 1,2,3 ==》 List<String> ['1','2','3']
  * @date 2022/6/6 11:25
  */
 @MappedJdbcTypes(JdbcType.VARCHAR)

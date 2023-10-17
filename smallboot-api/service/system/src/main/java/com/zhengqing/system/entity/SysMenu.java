@@ -26,23 +26,26 @@ import lombok.*;
 @TableName("t_sys_menu")
 public class SysMenu extends IsDeletedBaseEntity<SysMenu> {
 
-    @ApiModelProperty(value = "菜单ID")
+    @ApiModelProperty(value = "ID")
     @TableId(type = IdType.AUTO)
-    private Integer menuId;
+    private Integer id;
 
-    @ApiModelProperty(value = "父类菜单ID")
+    @ApiModelProperty(value = "父ID")
     private Integer parentId;
 
-    @ApiModelProperty(value = "菜单名称")
-    private String title;
+    @ApiModelProperty(value = "名称")
+    private String name;
 
-    @ApiModelProperty(value = "菜单图标")
+    @ApiModelProperty(value = "图标")
     private String icon;
 
-    @ApiModelProperty(value = "菜单访问路径")
+    @ApiModelProperty(value = "访问路径")
     private String path;
 
-    @ApiModelProperty(value = "菜单排序")
+    @ApiModelProperty(value = "按钮权限标识")
+    private String btnPerm;
+
+    @ApiModelProperty(value = "排序")
     private Integer sort;
 
     @ApiModelProperty(value = "组件")
@@ -56,5 +59,11 @@ public class SysMenu extends IsDeletedBaseEntity<SysMenu> {
 
     @ApiModelProperty(value = "是否显示面包屑(1:显示 0:隐藏)")
     private Boolean isShowBreadcrumb;
+
+    /**
+     * {@link com.zhengqing.system.enums.SysMenuTypeEnum}
+     */
+    @ApiModelProperty(value = "类型")
+    private Integer type;
 
 }

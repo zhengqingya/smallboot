@@ -68,7 +68,7 @@ function refreshTableData() {
 onMounted(() => {});
 
 async function getMenuTree() {
-  let res = await proxy.$api.sys_menu.menuTreeAll();
+  let res = await proxy.$api.sys_menu.tree();
   return res.data;
 }
 
@@ -83,27 +83,20 @@ async function handleUpdate(row) {
   form = Object.assign({}, row);
 
   let menuTree = await getMenuTree();
-  recurveMenu(menuTree, form.menuIdList, form.permissionIdList);
+  recurveMenu(menuTree, form.menuIdList);
   form.menuTree = menuTree;
   dialogStatus = 'update';
   dialogVisible = true;
 }
 
-function recurveMenu(list, menuIdList, permissionIdList) {
+function recurveMenu(list, menuIdList) {
   list.forEach((menuItem) => {
     menuItem.isHasPerm = false;
-    if (menuIdList.includes(menuItem.menuId)) {
+    if (menuIdList.includes(menuItem.id)) {
       menuItem.isHasPerm = true;
     }
-    if (menuItem.permList.length > 0) {
-      menuItem.permList.forEach((permItem) => {
-        if (permissionIdList.includes(permItem.id)) {
-          permItem.isHasPerm = true;
-        }
-      });
-    }
     if (menuItem.children.length > 0) {
-      recurveMenu(menuItem.children, menuIdList, permissionIdList);
+      recurveMenu(menuItem.children, menuIdList);
     }
   });
 }

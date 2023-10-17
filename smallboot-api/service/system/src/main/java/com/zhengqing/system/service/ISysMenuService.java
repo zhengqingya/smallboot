@@ -1,11 +1,10 @@
 package com.zhengqing.system.service;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhengqing.system.entity.SysMenu;
 import com.zhengqing.system.model.bo.SysMenuTree;
-import com.zhengqing.system.model.dto.SysMenuListDTO;
 import com.zhengqing.system.model.dto.SysMenuSaveDTO;
+import com.zhengqing.system.model.dto.SysMenuTreeDTO;
 
 import java.util.List;
 
@@ -21,37 +20,23 @@ import java.util.List;
 public interface ISysMenuService extends IService<SysMenu> {
 
     /**
-     * 列表分页
-     *
-     * @param params: 查询参数
-     * @return 菜单信息
-     * @author zhengqingya
-     * @date 2020/9/10 19:04
-     */
-    IPage<SysMenu> listPage(SysMenuListDTO params);
-
-    /**
-     * 列表
+     * 获取所有菜单 -- 菜单树使用
      *
      * @param params 查询参数
      * @return 菜单信息
      * @author zhengqingya
-     * @date 2020/9/10 19:18
-     */
-    List<SysMenu> list(SysMenuListDTO params);
-
-    /**
-     * 获取所有菜单 -- 菜单树使用
-     *
-     * @param roleIdList     角色ids
-     * @param isOnlyShowPerm 是否仅显示带权限的数据
-     * @param menuIdList     菜单ids（只返回包含的结果）
-     * @return 菜单信息
-     * @author zhengqingya
      * @date 2020/9/10 20:30
      */
-    List<SysMenuTree> selectMenuTree(List<Integer> roleIdList, boolean isOnlyShowPerm, List<Integer> menuIdList);
+    List<SysMenuTree> selectMenuTree(SysMenuTreeDTO params);
 
+    /**
+     * 系统所有菜单ids
+     *
+     * @return 菜单ids
+     * @author zhengqingya
+     * @date 2021/1/13 20:44
+     */
+    List<Integer> allMenuId();
 
     /**
      * 新增或更新

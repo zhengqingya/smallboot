@@ -16,8 +16,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum SysMenuTypeEnum {
 
-    菜单(0),
-    按钮(1);
+    菜单(1),
+    按钮(2);
 
     private final Integer type;
 

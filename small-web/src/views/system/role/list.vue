@@ -25,6 +25,7 @@
       <el-table-column label="操作" align="center" width="250">
         <template #default="scope">
           <el-button v-if="!scope.row.isFixed" link @click="update(scope.row)">编辑</el-button>
+          <el-button type="primary" link @click="add(scope.row.roleId)">新增子项</el-button>
           <router-link v-if="!scope.row.isFixed || scope.row.code == 'merchant_admin'" :to="{ path: '/system/role-edit', query: { id: scope.row.roleId } }">
             <el-button link>权限</el-button>
           </router-link>
@@ -100,8 +101,8 @@ function update(row) {
   dialogVisible = true;
   dialogStatus = 'update';
 }
-function add() {
-  roleForm = { isFixed: 0, sort: 100 };
+function add(parentId) {
+  roleForm = { parentId: parentId, isFixed: 0, sort: 100 };
   dialogVisible = true;
   dialogStatus = 'add';
 }

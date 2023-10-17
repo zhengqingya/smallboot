@@ -1,170 +1,164 @@
 <template>
-  <base-wrapper class="flex-start-start">
-    <base-card title="菜单" class="p-x-10" style="width: 200px">
-      <el-button type="warning" @click="handleAddMenu">新增一级菜单</el-button>
-      <!--菜单树-->
-      <el-tree
-        v-if="treeData.length > 0"
-        class="m-t-10"
-        :data="treeData"
-        :props="{
-          children: 'children',
-          label: 'title',
-        }"
-        highlight-current
-        default-expand-all
-        :expand-on-click-node="false"
-        @node-click="handleNodeClick" />
-    </base-card>
+  <base-wrapper>
+    <base-header>
+      <base-input v-model="listQuery.name" label="名称" @clear="refreshTableData" />
+      <el-button type="primary" @click="refreshTableData">查询</el-button>
+      <template #right>
+        <el-button type="primary" @click="handleAdd">添加</el-button>
+      </template>
+    </base-header>
 
-    <div class="flex-1 h-full">
-      <base-no-data v-if="!currentClickMenu">请先选择左侧菜单</base-no-data>
-
-      <div v-else class="flex h-full">
-        <base-card title="菜单详情" class="p-x-10" style="width: 400px">
-          <div>
-            <el-button type="danger" @click="handleDelete">删除</el-button>
-            <el-button type="primary" @click="handleEdit">编辑</el-button>
-            <el-button type="primary" @click="addNextMenu">添加下级菜单</el-button>
+    <el-table row-key="id" border :tree-props="{ children: 'children', hasChildren: 'hasChildren' }" :data="dataList" default-expand-all>
+      <el-table-column label="ID" prop="id" align="center" />
+      <el-table-column label="名称" align="left">
+        <template #default="scope">
+          <div class="flex-start-center">
+            <el-icon size="15">
+              <component :is="scope.row.icon" v-if="scope.row.icon" />
+            </el-icon>
+            <span style="margin-left: 10px">{{ scope.row.name }}</span>
           </div>
-          <base-cell label-width="100px">
-            <base-cell-item label="菜单ID">{{ currentClickMenu.menuId }}</base-cell-item>
-            <base-cell-item v-if="currentClickMenu.parentName" label="上级菜单">{{ currentClickMenu.parentName }}</base-cell-item>
-            <base-cell-item label="菜单标题">{{ currentClickMenu.title }}</base-cell-item>
-            <base-cell-item label="菜单路径">{{ currentClickMenu.path }}</base-cell-item>
-            <base-cell-item label="组件">
-              <span class="text-overflow-1">{{ currentClickMenu.component }}</span>
-            </base-cell-item>
-            <base-cell-item label="菜单图标">
-              <el-icon size="20">
-                <component :is="currentClickMenu.icon" v-if="currentClickMenu.icon" />
-              </el-icon>
-            </base-cell-item>
-            <base-cell-item label="显示顺序">{{ currentClickMenu.sort }}</base-cell-item>
-            <base-cell-item label="重定向路径">{{ currentClickMenu.redirect }}</base-cell-item>
-            <base-cell-item label="是否显示">{{ currentClickMenu.isShow ? '是' : '否' }}</base-cell-item>
-            <base-cell-item label="是否显示面包屑">{{ currentClickMenu.isShowBreadcrumb ? '显示' : '隐藏' }}</base-cell-item>
-          </base-cell>
-        </base-card>
+        </template>
+      </el-table-column>
+      <el-table-column label="访问路径" prop="path" align="left" />
+      <el-table-column label="组件名" prop="component" align="left" />
+      <el-table-column label="按钮权限" prop="btnPerm" align="left" />
+      <el-table-column label="排序" prop="sort" align="center" />
+      <el-table-column align="center" label="操作">
+        <template #default="scope">
+          <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
+          <el-button type="primary" link @click="handleAdd(scope.row.id)">新增子项</el-button>
+          <base-delete-btn @ok="handleDelete(scope.row)"></base-delete-btn>
+        </template>
+      </el-table-column>
+    </el-table>
 
-        <base-card class="flex-1 p-x-10" title="页面按钮权限">
-          <base-header>
-            <template #right>
-              <el-button type="primary" @click="refreshTableDataRePerm">刷新</el-button>
-              <el-button type="primary" @click="addForMenuRePerm">添加</el-button>
-            </template>
-          </base-header>
-          <base-table-p :data="permDataList" :is-page="false">
-            <el-table-column prop="id" label="ID" width="50" />
-            <el-table-column prop="name" label="权限名称" width="150" show-overflow-tooltip />
-            <el-table-column prop="btnPerm" label="按钮权限标识" show-overflow-tooltip />
-            <el-table-column prop="urlPerm" label="URL权限标识" show-overflow-tooltip />
-            <el-table-column label="操作" align="center" width="100">
-              <template #default="scope">
-                <el-button link @click="updateForMenuRePerm(scope.row)">编辑</el-button>
-                <base-delete-btn @ok="deleteMenuRePerm(scope.row.id)" />
-              </template>
-            </el-table-column>
-          </base-table-p>
-          <base-dialog v-model="dialogVisibleForMenuRePerm" :title="dialogTitleObj[dialogStatusForMenuRePerm]" width="50%">
-            <el-form ref="roleForm" :model="menuRePermForm" label-width="120px">
-              <el-form-item label="权限名称：" prop="name">
-                <el-input v-model="menuRePermForm.name" placeholder="添加按钮" />
-              </el-form-item>
-              <el-form-item label="按钮权限标识：" prop="btnPerm">
-                <el-input v-model="menuRePermForm.btnPerm" placeholder="sys:user:add" />
-              </el-form-item>
-              <el-form-item label="URL权限标识：" prop="urlPerm">
-                <el-input v-model="menuRePermForm.urlPerm" placeholder="POST:/web/api/user" />
-              </el-form-item>
-            </el-form>
-            <template #footer>
-              <el-button @click="dialogVisibleForMenuRePerm = false">取 消</el-button>
-              <el-button type="primary" @click="saveMenuRePermForm">确 定</el-button>
-            </template>
-          </base-dialog>
-        </base-card>
-      </div>
-    </div>
-
-    <edit-menu ref="editRef" @handle-succ="getMenuTree" />
+    <base-dialog v-model="dialogVisible" :title="dialogTitleObj[dialogStatus]" width="60%">
+      <el-form ref="dataFormRef" :model="form" :rules="rules" label-width="120px">
+        <el-form-item label="父菜单:">
+          <base-cascader
+            v-if="dialogVisible"
+            v-model="form.parentId"
+            clearable
+            :params="{ excludeMenuId: form.id }"
+            placeholder="请选择(为空时标识顶级)"
+            :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true, emitPath: false }"
+            api="sys_menu.tree" />
+        </el-form-item>
+        <el-form-item label="名称:" prop="name">
+          <el-input v-model="form.name" />
+        </el-form-item>
+        <el-form-item label="类型:">
+          <el-radio-group v-model="form.type">
+            <el-radio :label="1">菜单</el-radio>
+            <el-radio :label="2">按钮</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="访问路径:" prop="path">
+          <el-input v-model="form.path" placeholder="请输入" />
+        </el-form-item>
+        <el-form-item v-if="form.type == 1" label="组件:" prop="component">
+          <el-input v-model="form.component" placeholder="请输入菜单对应的文件路径" />
+        </el-form-item>
+        <el-form-item v-if="form.type == 2" label="按钮权限标识：">
+          <el-input v-model="form.btnPerm" placeholder="sys:user:add" />
+        </el-form-item>
+        <el-form-item v-if="form.type == 1" label="图标:">
+          <el-select v-model="form.icon" placeholder="请选择图标" style="width: 200px" filterable clearable allow-create>
+            <el-option v-for="item in elIconList" :key="item.name" :value="item.name" :label="item.name">
+              <span style="float: left; color: #8492a6; font-size: 12px">{{ item.name }}</span>
+              <div style="float: right">
+                <el-icon size="16">
+                  <component :is="item.name" />
+                </el-icon>
+              </div>
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item v-if="form.type == 1" label="重定向路径:">
+          <el-input v-model="form.redirect" placeholder="输入重定向路径" />
+        </el-form-item>
+        <el-form-item v-if="form.type == 1" label="是否显示:">
+          <base-radio-group v-model="form.isShow" data-type="yes" />
+        </el-form-item>
+        <el-form-item v-if="form.type == 1" label="是否显示面包屑:">
+          <base-radio-group v-model="form.isShowBreadcrumb" data-type="yes" />
+        </el-form-item>
+        <el-form-item label="排序:">
+          <el-input-number v-model="form.sort" :min="1" controls-position="right" placeholder="请输入排序" />
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="submitForm">确 定</el-button>
+      </template>
+    </base-dialog>
   </base-wrapper>
 </template>
-<script setup>
-import EditMenu from './edit.vue';
-const { proxy } = getCurrentInstance();
 
-let currentClickMenu = $ref(null);
-let treeData = $ref([]);
-let permDataList = $ref([]);
-let dialogVisibleForMenuRePerm = $ref(false);
-let dialogStatusForMenuRePerm = $ref(null);
-let menuRePermForm = $ref({});
+<script setup>
+const { proxy } = getCurrentInstance();
+let listQuery = $ref({});
+let form = $ref({});
+let dialogVisible = $ref(false);
+let dialogStatus = $ref('');
+let rules = {
+  name: [{ required: true, message: '名称不得为空', trigger: 'blur' }],
+  path: [{ required: true, message: '访问路径不得为空', trigger: 'blur' }],
+  // component: [{ required: true, message: '菜单文件路径不得为空', trigger: 'blur' }],
+};
+let dataList = $ref([]);
+let elIconList = $ref([]);
 
 onMounted(() => {
-  getMenuTree();
+  refreshTableData();
+  getIconList();
 });
 
-async function getMenuTree() {
-  let res = await proxy.$api.sys_menu.menuTree();
-  treeData = res.data;
-  currentClickMenu = null;
+async function refreshTableData() {
+  let res = await proxy.$api.sys_menu.tree(listQuery);
+  dataList = res.data;
 }
-function handleAddMenu() {
-  proxy.$refs.editRef.open(1);
+async function getIconList() {
+  let res = await proxy.$api.sys_dict.listFromCacheByCode('element_icon');
+  elIconList = res.data;
 }
-function handleNodeClick(data) {
-  currentClickMenu = data;
-  refreshTableDataRePerm();
+function handleAdd(parentId) {
+  form = {
+    parentId: parentId,
+    status: 1,
+    type: 1,
+    sort: 100,
+    isShow: true, // 是否显示
+    isShowBreadcrumb: true, // 面包屑是否显示
+  };
+  dialogStatus = 'add';
+  dialogVisible = true;
 }
-function addNextMenu() {
-  if (!currentClickMenu) {
-    proxy.submitFail('请先选择你需要添加下级菜单的父级');
-    return;
-  }
-  proxy.$refs.editRef.open(2, currentClickMenu);
+
+function handleUpdate(row) {
+  form = Object.assign({}, row);
+  dialogStatus = 'update';
+  dialogVisible = true;
 }
-function handleEdit() {
-  if (!currentClickMenu) {
-    proxy.submitFail('请先选择你需要添加下级菜单的父级');
-    return;
-  }
-  proxy.$refs.editRef.open(3, currentClickMenu);
+async function handleDelete(row) {
+  let res = await proxy.$api.sys_menu.delete({ id: row.id });
+  refreshTableData();
+  proxy.submitOk(res.message);
 }
-async function handleDelete() {
-  if (!currentClickMenu) {
-    proxy.submitFail('请先选择你需要删除的菜单');
-    return;
-  }
-  let res = await proxy.$api.sys_menu.delete(currentClickMenu.menuId);
-  proxy.submitOk(res.msg);
-  getMenuTree();
-}
-async function refreshTableDataRePerm() {
-  let res = await proxy.$api.sys_menu.getPermListByMenuId(currentClickMenu.menuId);
-  permDataList = res.data;
-}
-async function deleteMenuRePerm(id) {
-  let res = await proxy.$api.sys_menu.deleteMenuReBtnPerm(id);
-  proxy.submitOk(res.msg);
-  refreshTableDataRePerm();
-}
-async function saveMenuRePermForm() {
-  menuRePermForm.menuId = currentClickMenu.menuId;
-  let res = await proxy.$api.sys_menu[menuRePermForm.id ? 'updateMenuReBtnPerm' : 'addMenuReBtnPerm'](menuRePermForm);
-  proxy.submitOk(res.msg);
-  refreshTableDataRePerm();
-  dialogVisibleForMenuRePerm = false;
-}
-function updateForMenuRePerm(row) {
-  menuRePermForm = Object.assign({}, row);
-  dialogVisibleForMenuRePerm = true;
-  dialogStatusForMenuRePerm = 'update';
-}
-function addForMenuRePerm() {
-  dialogVisibleForMenuRePerm = true;
-  dialogStatusForMenuRePerm = 'add';
-  menuRePermForm = {};
+function submitForm() {
+  proxy.$refs.dataFormRef.validate(async (valid) => {
+    if (valid) {
+      if (!form.parentId) {
+        form.parentId = 0;
+      }
+      let res = await proxy.$api.sys_menu[form.id ? 'update' : 'add'](form);
+      proxy.submitOk(res.message);
+      refreshTableData();
+      dialogVisible = false;
+    }
+  });
 }
 </script>
+
 <style lang="scss" scoped></style>

@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.zhengqing.common.db.config.mybatis.handler.ListIntegerTypeHandler;
+import com.zhengqing.common.db.config.mybatis.handler.ListJsonIntegerTypeHandler;
 import com.zhengqing.common.db.entity.IsDeletedBaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -75,7 +75,7 @@ public class CmsJob extends IsDeletedBaseEntity<CmsJob> {
     private String address;
 
     @ApiModelProperty("福利标签")
-    @TableField(typeHandler = ListIntegerTypeHandler.class)
+    @TableField(typeHandler = ListJsonIntegerTypeHandler.class)
     private List<Integer> tagList;
 
     @ApiModelProperty("简介")

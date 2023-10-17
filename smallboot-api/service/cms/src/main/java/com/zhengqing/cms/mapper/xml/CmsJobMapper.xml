@@ -5,7 +5,7 @@
     <resultMap id="pageMap" type="com.zhengqing.cms.model.vo.CmsJobBaseVO">
         <result column="tag_list"
                 property="tagList"
-                typeHandler="com.zhengqing.common.db.config.mybatis.handler.ListIntegerTypeHandler"></result>
+                typeHandler="com.zhengqing.common.db.config.mybatis.handler.ListJsonIntegerTypeHandler"></result>
     </resultMap>
 
     <select id="selectDataList" resultMap="pageMap">

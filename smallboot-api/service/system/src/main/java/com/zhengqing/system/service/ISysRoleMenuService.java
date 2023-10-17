@@ -3,6 +3,7 @@ package com.zhengqing.system.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhengqing.system.entity.SysRoleMenu;
 import com.zhengqing.system.model.dto.SysRoleReMenuSaveDTO;
+import com.zhengqing.system.model.vo.SysRoleReBtnPermListVO;
 
 import java.util.List;
 
@@ -77,5 +78,14 @@ public interface ISysRoleMenuService extends IService<SysRoleMenu> {
      * @date 2023/10/8 19:18
      */
     void delReMenuId(Integer tenantId, List<Integer> delMenuIdList);
+
+    /**
+     * 查询按钮权限
+     *
+     * @return 按钮权限
+     * @author zhengqingya
+     * @date 2023/10/8 19:18
+     */
+    List<SysRoleReBtnPermListVO> listRoleReBtnPerm();
 
 }

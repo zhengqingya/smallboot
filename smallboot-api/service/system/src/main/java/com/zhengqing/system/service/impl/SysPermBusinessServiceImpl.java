@@ -16,10 +16,12 @@ import com.zhengqing.system.entity.SysTenantPackage;
 import com.zhengqing.system.enums.SysRoleCodeEnum;
 import com.zhengqing.system.model.bo.SysMenuTree;
 import com.zhengqing.system.model.bo.SysRoleRePermSaveBO;
-import com.zhengqing.system.model.dto.*;
+import com.zhengqing.system.model.dto.SysMenuTreeDTO;
+import com.zhengqing.system.model.dto.SysRoleReMenuSaveDTO;
+import com.zhengqing.system.model.dto.SysUserPermDTO;
+import com.zhengqing.system.model.dto.SysUserRoleSaveDTO;
 import com.zhengqing.system.model.vo.SysRoleAllPermissionDetailVO;
-import com.zhengqing.system.model.vo.SysRoleRePermListVO;
-import com.zhengqing.system.model.vo.SysRoleRePermVO;
+import com.zhengqing.system.model.vo.SysRoleReBtnPermListVO;
 import com.zhengqing.system.model.vo.SysUserPermVO;
 import com.zhengqing.system.service.*;
 import lombok.RequiredArgsConstructor;
@@ -48,13 +50,11 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
 
-    private final ISysPermissionService iSysPermissionService;
     private final ISysUserService iSysUserService;
     private final ISysMenuService iSysMenuService;
     private final ISysRoleService iSysRoleService;
     private final ISysRoleMenuService iSysRoleMenuService;
     private final ISysUserRoleService iSysUserRoleService;
-    private final ISysRolePermissionService iSysRolePermissionService;
     @Lazy
     @Resource
     private ISysTenantService iSysTenantService;
@@ -76,16 +76,10 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
         );
 
         // 2、先查询所有菜单和按钮数据
-        List<SysMenuTree> menuTree = this.treeAll();
+        List<Integer> menuIdList = this.iSysMenuService.allMenuId();
 
         // 3、保存角色关联的菜单和按钮权限
-        SysMenuPermBaseDTO permBO = SysMenuPermBaseDTO.builder().menuTree(menuTree).build();
-        permBO.handleParam();
-        this.saveRoleRePerm(SysRoleRePermSaveBO.builder()
-                .roleId(roleId)
-                .menuIdList(permBO.getMenuIdList())
-                .permissionIdList(permBO.getPermissionIdList())
-                .build());
+        this.saveRoleRePerm(SysRoleRePermSaveBO.builder().roleId(roleId).menuIdList(menuIdList).build());
         log.info("刷新超级管理员权限成功!");
     }
 
@@ -93,11 +87,9 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
     @Transactional(rollbackFor = Exception.class)
     public void refreshSysTenantRePerm() {
         // 1、先查询所有菜单和按钮数据
-        List<SysMenuTree> menuTree = this.treeAll();
-        SysMenuPermBaseDTO sysMenuPermBaseDTO = SysMenuPermBaseDTO.builder().menuTree(menuTree).build();
-        sysMenuPermBaseDTO.handleParam();
+        List<Integer> menuIdList = this.iSysMenuService.allMenuId();
         // 2、更新权限
-        this.iSysTenantPackageService.updateTenantIdRePerm(AppConstant.SMALL_BOOT_TENANT_ID, sysMenuPermBaseDTO.getMenuIdList(), sysMenuPermBaseDTO.getPermissionIdList());
+        this.iSysTenantPackageService.updateTenantIdRePerm(AppConstant.SMALL_BOOT_TENANT_ID, menuIdList);
         log.info("刷新系统租户权限成功!");
     }
 
@@ -107,7 +99,7 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
         SysUserPermVO userPerm = this.iSysUserService.getUserPerm(params);
 
         // 2、权限树
-        userPerm.setPermissionTreeList(this.tree(userPerm.getRoleIdList(), true));
+        userPerm.setPermissionTreeList(this.tree(SysMenuTreeDTO.builder().roleIdList(userPerm.getRoleIdList()).isOnlyShowPerm(true).build()));
 
         userPerm.handleData();
         return userPerm;
@@ -120,7 +112,7 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
         Assert.notNull(sysRole, "角色不存在！");
 
         // 2、菜单权限树
-        List<SysMenuTree> menuTree = this.baseTree(TenantIdContext.getTenantId(), Lists.newArrayList(roleId), false);
+        List<SysMenuTree> menuTree = this.tree(SysMenuTreeDTO.builder().roleIdList(Lists.newArrayList(roleId)).build());
 
         return SysRoleAllPermissionDetailVO.builder()
                 .roleId(sysRole.getRoleId())
@@ -146,17 +138,17 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
             RedisUtil.delete(redisKey);
 
             // 2、查询角色关联权限数据
-            List<SysRoleRePermListVO> roleRePermList = this.iSysPermissionService.listRoleRePerm();
+            List<SysRoleReBtnPermListVO> roleRePermList = this.iSysRoleMenuService.listRoleReBtnPerm();
             if (CollectionUtils.isEmpty(roleRePermList)) {
                 return;
             }
             Map<String, String> roleReUrlPermMap = Maps.newHashMap();
-            roleRePermList.forEach(item -> roleReUrlPermMap.put(item.getUrlPerm(), JSON.toJSONString(item.getRoleCodeList())));
+            roleRePermList.forEach(item -> roleReUrlPermMap.put(item.getPath(), JSON.toJSONString(item.getRoleCodeList())));
 
             // 3、加入缓存中
             RedisUtil.hPutAll(redisKey, roleReUrlPermMap);
         }));
-        
+
         log.info("初始化URL权限缓存成功!");
     }
 
@@ -170,25 +162,21 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
 
         // 1、查询旧菜单权限
         List<Integer> menuIdListOld = this.iSysRoleMenuService.getMenuIdList(tenantId);
-        List<Integer> permIdListOld = this.iSysRolePermissionService.getPermIdList(tenantId);
 
         // 2、查询新租户套餐权限
         SysTenantPackage sysTenantPackage = this.iSysTenantPackageService.detailReTenantId(tenantId);
 
         // 3、拿到要删除的旧权限id
         List<Integer> delMenuIdList = CollUtil.subtractToList(menuIdListOld, sysTenantPackage.getMenuIdList());
-        List<Integer> delPermIdList = CollUtil.subtractToList(permIdListOld, sysTenantPackage.getPermissionIdList());
 
         // 4、删除权限
         this.iSysRoleMenuService.delReMenuId(tenantId, delMenuIdList);
-        this.iSysRolePermissionService.delByPermId(tenantId, delPermIdList);
 
         // 5、给租户管理员默认加上最新的权限
         this.saveRoleRePerm(
                 SysRoleRePermSaveBO.builder()
                         .roleId(this.iSysRoleService.getRoleIdByCode(SysRoleCodeEnum.租户管理员))
                         .menuIdList(sysTenantPackage.getMenuIdList())
-                        .permissionIdList(sysTenantPackage.getPermissionIdList())
                         .build()
         );
         this.refreshRedisPerm();
@@ -198,93 +186,46 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
     @Transactional(rollbackFor = Exception.class)
     public void saveRoleRePerm(SysRoleRePermSaveBO params) {
         Integer roleId = params.getRoleId();
-
-        // 1、先保存角色关联的菜单权限
         this.iSysRoleMenuService.saveRoleMenuIds(
                 SysRoleReMenuSaveDTO.builder()
                         .roleId(roleId)
                         .menuIdList(params.getMenuIdList())
                         .build()
         );
-
-
-        // 2、再保存角色关联的按钮权限
-        this.saveRoleRePermIds(
-                SysRoleRePermIdsSaveDTO.builder()
-                        .roleId(roleId)
-                        .permissionIdList(params.getPermissionIdList())
-                        .build()
-        );
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void saveRoleRePermIds(SysRoleRePermIdsSaveDTO params) {
-        this.iSysRolePermissionService.savePerm(params);
     }
 
 
     @Override
-    public List<SysMenuTree> tree(List<Integer> roleIdList, boolean isOnlyShowPerm) {
-        return this.baseTree(TenantIdContext.getTenantId(), roleIdList, isOnlyShowPerm);
-    }
-
-    @Override
-    public List<SysMenuTree> treeAll() {
-        return this.baseTree(null, null, false);
-    }
-
-    /**
-     * 获取菜单树
-     *
-     * @param tenantId       角色ids tips:为空时拿到所有权限
-     * @param roleIdList     角色ids tips:为空时拿到所有权限
-     * @param isOnlyShowPerm 是否仅显示带权限的数据  false:显示租户下所有权限 true:只显示角色有的权限（适用于用户获取角色权限）
-     * @return 菜单树信息
-     * @author zhengqingya
-     * @date 2021/1/13 20:44
-     */
-    public List<SysMenuTree> baseTree(Integer tenantId, List<Integer> roleIdList, boolean isOnlyShowPerm) {
+    public List<SysMenuTree> tree(SysMenuTreeDTO params) {
         // 1、查询租户权限
-        List<Integer> menuIdList = Lists.newArrayList();
-        List<Integer> permIdList = Lists.newArrayList();
-        if (tenantId != null) {
-            SysTenantPackage sysTenantPackage = this.iSysTenantPackageService.detailReTenantId(tenantId);
-            menuIdList = sysTenantPackage.getMenuIdList();
-            permIdList = sysTenantPackage.getPermissionIdList();
-        }
+        SysTenantPackage sysTenantPackage = this.iSysTenantPackageService.detailReTenantId(TenantIdContext.getTenantId());
+        params.setMenuIdList(sysTenantPackage.getMenuIdList());
 
         // 2、拿到所有菜单
-        List<SysMenuTree> allMenuList = this.iSysMenuService.selectMenuTree(roleIdList, isOnlyShowPerm, menuIdList);
+        List<SysMenuTree> allMenuList = this.iSysMenuService.selectMenuTree(params);
 
-        // 3、全部url/btn权限
-        Map<Integer, List<SysRoleRePermVO>> mapPerm = this.iSysPermissionService.mapPermByRole(roleIdList, isOnlyShowPerm, permIdList);
-
-        // 4、遍历出父菜单对应的子菜单 -- 递归
-        return this.recurveMenu(AppConstant.PARENT_ID, allMenuList, mapPerm);
+        // 3、遍历出父菜单对应的子菜单 -- 递归
+        return this.recurveMenu(AppConstant.PARENT_ID, allMenuList);
     }
+
 
     /**
      * 递归菜单
      *
      * @param parentMenuId 父菜单id
      * @param allMenuList  所有菜单
-     * @param mapPerm      全部url/btn权限
      * @return 菜单树列表
      * @author zhengqingya
      * @date 2020/9/10 20:56
      */
-    private List<SysMenuTree> recurveMenu(Integer parentMenuId, List<SysMenuTree> allMenuList, Map<Integer, List<SysRoleRePermVO>> mapPerm) {
+    private List<SysMenuTree> recurveMenu(Integer parentMenuId, List<SysMenuTree> allMenuList) {
         // 存放子菜单的集合
         List<SysMenuTree> childMenuList = allMenuList.stream().filter(e -> e.getParentId().equals(parentMenuId)).collect(Collectors.toList());
-
         // 递归
         childMenuList.forEach(item -> {
-            Integer menuId = item.getMenuId();
-            // 权限
-            item.setPermList(mapPerm.get(menuId));
+            Integer menuId = item.getId();
             // 子菜单
-            item.setChildren(this.recurveMenu(menuId, allMenuList, mapPerm));
+            item.setChildren(this.recurveMenu(menuId, allMenuList));
             item.handleData();
         });
         return childMenuList;

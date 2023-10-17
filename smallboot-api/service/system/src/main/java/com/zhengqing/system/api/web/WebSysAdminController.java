@@ -3,10 +3,10 @@ package com.zhengqing.system.api.web;
 import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.common.db.mapper.MyBaseMapper;
-import com.zhengqing.system.model.vo.SysRoleRePermListVO;
+import com.zhengqing.system.model.vo.SysRoleReBtnPermListVO;
 import com.zhengqing.system.service.ISysDictService;
 import com.zhengqing.system.service.ISysPermBusinessService;
-import com.zhengqing.system.service.ISysPermissionService;
+import com.zhengqing.system.service.ISysRoleMenuService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -31,15 +31,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WebSysAdminController extends BaseController {
 
-    private final ISysPermissionService iSysPermissionService;
     private final ISysPermBusinessService iSysPermBusinessService;
     private final MyBaseMapper myBaseMapper;
     private final ISysDictService iSysDictService;
+    private final ISysRoleMenuService iSysRoleMenuService;
 
     @ApiOperation("获取角色权限映射数据")
-    @GetMapping("listRoleRePerm")
-    public List<SysRoleRePermListVO> listRoleRePerm() {
-        return this.iSysPermissionService.listRoleRePerm();
+    @GetMapping("listRoleReBtnPerm")
+    public List<SysRoleReBtnPermListVO> listRoleReBtnPerm() {
+        return this.iSysRoleMenuService.listRoleReBtnPerm();
     }
 
     @ApiOperation("刷新Redis缓存中的角色菜单权限")

@@ -25,7 +25,7 @@
         <base-select v-model="listQuery.merchantId" label="商户" tag-type="success" style="margin-right: 10px" clearable :option-props="{ label: 'name', value: 'id' }" api="sys_merchant.list" />
         <base-input v-model="listQuery.username" label="账号" @clear="refreshTableData" />
         <base-input v-model="listQuery.nickname" label="名称" @clear="refreshTableData" />
-        <el-button type="primary" @click="refreshTableData">查询</el-button>
+        <el-button v-has-perm="'sys:user:page'" type="primary" @click="refreshTableData">查询</el-button>
         <template #right>
           <el-button v-has-perm="'sys:user:add'" type="primary" @click="handleCreate">添加</el-button>
         </template>
