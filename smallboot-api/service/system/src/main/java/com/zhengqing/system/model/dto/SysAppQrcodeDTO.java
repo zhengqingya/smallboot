@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 /**
  * <p> 小程序二维码-请求参数 </p>
@@ -27,7 +26,7 @@ import javax.validation.constraints.NotNull;
 @ApiModel("小程序二维码-请求参数")
 public class SysAppQrcodeDTO extends BaseDTO {
 
-    @NotNull(message = "小程序appid未配置！")
+    @NotBlank(message = "小程序appid未配置！")
     @ApiModelProperty("appid")
     private String appId;
 

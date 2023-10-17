@@ -13,6 +13,7 @@
         @clear="refreshTableData" />
       <el-button type="primary" @click="refreshTableData">查询</el-button>
       <template #right>
+        <el-button type="warning" @click="showApp()">小程序批量操作</el-button>
         <el-button type="primary" @click="handleAdd">添加</el-button>
       </template>
     </base-header>
@@ -57,14 +58,16 @@
         <template #default="scope">
           <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
           <el-button link type="primary" @click="showDetail(scope.row)">详情</el-button>
-          <el-button type="primary" link @click="showQrcode(scope.row)">查看测试版二维码</el-button>
+          <el-button type="primary" link @click="showQrcode(scope.row, 'latest')">查看测试版二维码</el-button>
+          <el-button type="primary" link @click="showQrcode(scope.row, 'current')">查看线上版二维码</el-button>
+          <el-button type="warning" link @click="showApp(scope.row)">小程序操作</el-button>
           <base-delete-btn @ok="handleDelete(scope.row)"></base-delete-btn>
         </template>
       </el-table-column>
     </el-table>
 
     <base-dialog v-model="dialogVisible" :title="dialogTitleObj[dialogStatus]" width="60%" top="0px">
-      <el-form ref="dataFormRef" :inline="!true" :model="form" :rules="rules" label-width="150px">
+      <el-form ref="appDataFormRef" :inline="!true" :model="form" :rules="rules" label-width="150px">
         <base-card title="企业信息">
           <!-- <el-form-item label="父部门:">
           <base-cascader
@@ -140,8 +143,32 @@
       </template>
     </base-dialog>
 
-    <base-dialog v-model="qrcodeDialogVisible" class="" title="小程序测试版二维码" width="350px">
+    <base-dialog v-model="qrcodeDialogVisible" title="小程序测试版二维码" width="350px">
       <el-image style="width: 300px; height: 300px" :src="qrcodeUrl" />
+    </base-dialog>
+    <base-dialog v-model="appDialogVisible" title="抖音小程序一键操作（☆谨慎操作☆）" width="60%">
+      <span v-if="appDataForm.name" style="color: red">操作企业： {{ appDataForm.name }}</span>
+      <div class="flex-column">
+        <!-- <div v-if="versionObj">
+          <div>
+            <span>最新提交：</span>
+            <el-tag>版本号：{{ versionObj.version }}</el-tag>
+            <el-tag type="success">状态：{{ versionObj.statusName }}</el-tag>
+            <el-tag type="info">描述：{{ versionObj.name }}</el-tag>
+          </div>
+        </div> -->
+        <div class="flex-start-center m-t-10">
+          <div class="flex-column">
+            <base-input v-model="appDataForm.templateId" style="width: 100%; margin-top: 10px" label="小程序模板ID：" />
+            <base-input v-model="appDataForm.uploadCodeDesc" style="width: 100%; margin-top: 10px" label="提交代码描述：" />
+            <el-button type="primary" style="margin-top: 10px" @click="appOperationBatch(10)">① 一键提交代码</el-button>
+          </div>
+          <div class="m-l-20" style="margin-top: 150px">
+            <el-button type="success" @click="appOperationBatch(20)">② 一键提审代码</el-button>
+            <el-button type="danger" @click="appOperationBatch(50)">③ 一键发布代码</el-button>
+          </div>
+        </div>
+      </div>
     </base-dialog>
   </base-wrapper>
 </template>
@@ -194,7 +221,7 @@ async function handleDelete(row) {
   proxy.submitOk(res.message);
 }
 function submitForm() {
-  proxy.$refs.dataFormRef.validate(async (valid) => {
+  proxy.$refs.appDataFormRef.validate(async (valid) => {
     if (valid) {
       // 省市区
       if (form.provinceCityAreaList) {
@@ -218,10 +245,26 @@ function submitForm() {
 // 小程序 ---------------------------------
 let qrcodeDialogVisible = $ref(false);
 let qrcodeUrl = $ref('');
-async function showQrcode(row) {
-  let res = await proxy.$api.sys_app_config.qrcode({ appId: row.appConfigObj.appId, version: 'latest' });
+async function showQrcode(row, version) {
+  let res = await proxy.$api.sys_app_config.qrcode({ appId: row.appConfigObj.appId, version: version });
   qrcodeUrl = res.data;
   qrcodeDialogVisible = true;
+}
+let appDialogVisible = $ref(false);
+let appDataForm = $ref({});
+async function showApp(row) {
+  appDataForm = {};
+  if (row) {
+    console.log('111', row.appConfigObj);
+    appDataForm = row.appConfigObj;
+  }
+  appDialogVisible = true;
+}
+async function appOperationBatch(appStatus) {
+  appDataForm.appStatus = appStatus;
+  let res = await proxy.$api.sys_app_config.appOperationBatch(appDataForm);
+  proxy.submitOk(res.message);
+  init();
 }
 </script>
 
