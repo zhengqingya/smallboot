@@ -88,5 +88,4 @@ public interface ISysDeptService extends IService<SysDept> {
      */
     void deleteData(Integer id);
 
-
 }

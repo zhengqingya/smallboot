@@ -33,7 +33,7 @@ public class SysExtJsonBO {
     @AllArgsConstructor
     public static class Ext {
         private String tenantId;
-        private String merchantId;
+        private String deptId;
         private String appId;
     }
 

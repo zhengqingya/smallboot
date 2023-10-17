@@ -10,9 +10,10 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
- * <p> 系统管理-商户管理-小程序二维码-请求参数 </p>
+ * <p> 小程序二维码-请求参数 </p>
  *
  * @author zhengqingya
  * @description
@@ -23,11 +24,12 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@ApiModel("系统管理-商户管理-小程序二维码-请求参数")
+@ApiModel("小程序二维码-请求参数")
 public class SysAppQrcodeDTO extends BaseDTO {
 
-    @ApiModelProperty("主键ID")
-    private Integer id;
+    @NotNull(message = "小程序appid未配置！")
+    @ApiModelProperty("appid")
+    private String appId;
 
     @NotBlank(message = "版本类型不能为空！")
     @ApiModelProperty("current（线上版） 或 audit（审核版） 或 latest（测试版）")

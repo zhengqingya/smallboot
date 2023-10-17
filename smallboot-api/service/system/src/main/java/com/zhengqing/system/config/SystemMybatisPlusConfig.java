@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Configuration;
 public class SystemMybatisPlusConfig {
 
     static {
+        MybatisPlusConfig.TENANT_ID_TABLE.add("t_sys_app_config");
         MybatisPlusConfig.TENANT_ID_TABLE.add("t_sys_config");
         MybatisPlusConfig.TENANT_ID_TABLE.add("t_sys_dept");
         MybatisPlusConfig.TENANT_ID_TABLE.add("t_sys_file");

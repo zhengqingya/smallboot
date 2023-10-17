@@ -25,12 +25,6 @@
           <base-tag v-model="scope.row.status" />
         </template>
       </el-table-column>
-      <el-table-column label="小程序类型" prop="appType" align="center">
-        <template #default="scope">
-          <el-tag v-if="scope.row.appType == 1" type="success"> {{ appTypeList.find((e) => e.id == scope.row.appType).name }}</el-tag>
-          <el-tag v-if="scope.row.appType === 2"> {{ appTypeList.find((e) => e.id == scope.row.appType).name }}</el-tag>
-        </template>
-      </el-table-column>
       <el-table-column label="过期时间" prop="expireTime" align="center">
         <template #default="scope">
           <el-tag v-if="scope.row.expireTime" type="warning"> {{ scope.row.expireTime }}</el-tag>
@@ -42,11 +36,28 @@
         </template>
       </el-table-column>
       <el-table-column label="排序" prop="sort" align="center" />
+      <el-table-column label="小程序类型" prop="appType" align="center">
+        <template #default="scope">
+          <el-tag v-if="scope.row.appType == 1" type="success"> {{ appTypeList.find((e) => e.id == scope.row.appType).name }}</el-tag>
+          <el-tag v-if="scope.row.appType === 2"> {{ appTypeList.find((e) => e.id == scope.row.appType).name }}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column label="小程序状态" align="center">
+        <template #default="scope">
+          <el-tag v-if="scope.row.appConfigObj.appStatus == 1">未发版</el-tag>
+          <el-tag v-else-if="scope.row.appConfigObj.appStatus == 10">已提交代码</el-tag>
+          <el-tag v-else-if="scope.row.appConfigObj.appStatus == 21">提审中</el-tag>
+          <el-tag v-else-if="scope.row.appConfigObj.appStatus == 31" type="warning">审核通过</el-tag>
+          <el-tag v-else-if="scope.row.appConfigObj.appStatus == 32" type="danger">审核不通过</el-tag>
+          <el-tag v-else-if="scope.row.appConfigObj.appStatus == 51" type="success">已发布</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column label="创建时间" prop="createTime" align="center" />
-      <el-table-column align="center" label="操作">
+      <el-table-column align="center" width="150px" label="操作">
         <template #default="scope">
           <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
           <el-button link type="primary" @click="showDetail(scope.row)">详情</el-button>
+          <el-button type="primary" link @click="showQrcode(scope.row)">查看测试版二维码</el-button>
           <base-delete-btn @ok="handleDelete(scope.row)"></base-delete-btn>
         </template>
       </el-table-column>
@@ -54,7 +65,8 @@
 
     <base-dialog v-model="dialogVisible" :title="dialogTitleObj[dialogStatus]" width="60%" top="0px">
       <el-form ref="dataFormRef" :inline="!true" :model="form" :rules="rules" label-width="150px">
-        <!-- <el-form-item label="父部门:">
+        <base-card title="企业信息">
+          <!-- <el-form-item label="父部门:">
           <base-cascader
             v-if="dialogVisible"
             v-model="form.parentId"
@@ -64,56 +76,72 @@
             :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true, emitPath: false }"
             api="sys_dept.tree" />
         </el-form-item> -->
-        <el-form-item label="名称:">
-          <el-input v-model="form.name" :disabled="isDetail" />
-        </el-form-item>
-        <el-form-item label="负责人:">
-          <base-select v-model="form.leaderUserId" :disabled="isDetail" clearable :option-props="{ label: 'nickname', value: 'userId' }" api="sys_user.list" />
-        </el-form-item>
-        <el-form-item label="状态:">
-          <base-radio-group v-model="form.status" :disabled="isDetail" />
-        </el-form-item>
+          <el-form-item label="名称:">
+            <el-input v-model="form.name" :disabled="isDetail" />
+          </el-form-item>
+          <el-form-item label="负责人:">
+            <base-select v-model="form.leaderUserId" :disabled="isDetail" clearable :option-props="{ label: 'nickname', value: 'userId' }" api="sys_user.list" />
+          </el-form-item>
+          <el-form-item label="状态:">
+            <base-radio-group v-model="form.status" :disabled="isDetail" />
+          </el-form-item>
 
-        <div v-if="form.parentId == 0">
-          <el-form-item label="所属地区:">
-            <province-city-area v-model="form.provinceCityAreaList" :disabled="isDetail" />
+          <div v-if="form.parentId == 0">
+            <el-form-item label="所属地区:">
+              <province-city-area v-model="form.provinceCityAreaList" :disabled="isDetail" />
+            </el-form-item>
+            <el-form-item label="详细地址:">
+              <el-input v-model="form.address" :disabled="isDetail" />
+            </el-form-item>
+
+            <el-form-item label="过期时间:">
+              <el-date-picker v-model="form.expireTime" :disabled="isDetail" type="datetime" placeholder="请选择" format="YYYY-MM-DD hh:mm:ss" value-format="YYYY-MM-DD hh:mm:ss" />
+            </el-form-item>
+            <el-form-item label="最大员工数:">
+              <el-input-number v-model="form.userNum" :disabled="isDetail" :min="1" controls-position="right" placeholder="请输入" />
+            </el-form-item>
+            <el-form-item label="最大发布数:">
+              <el-input-number v-model="form.jobNum" :disabled="isDetail" :min="1" controls-position="right" placeholder="请输入" />
+            </el-form-item>
+          </div>
+          <el-form-item label="排序:">
+            <el-input-number v-model="form.sort" :min="1" :disabled="isDetail" controls-position="right" placeholder="请输入排序" />
           </el-form-item>
-          <el-form-item label="详细地址:">
-            <el-input v-model="form.address" :disabled="isDetail" />
+
+          <el-form-item label="备注:">
+            <el-input v-model="form.remark" :row="2" :disabled="isDetail" type="textarea" />
           </el-form-item>
+        </base-card>
+        <base-card v-if="form.parentId == 0" title="小程序配置">
           <el-form-item label="小程序类型:">
-            <base-select v-model="form.appType" :disabled="isDetail" :data-list="appTypeList" style="margin-right: 10px" tag-type="success" clearable :option-props="{ label: 'name', value: 'id' }" />
-          </el-form-item>
-          <el-form-item label="过期时间:">
-            <el-date-picker v-model="form.expireTime" :disabled="isDetail" type="datetime" placeholder="请选择" format="YYYY-MM-DD hh:mm:ss" value-format="YYYY-MM-DD hh:mm:ss" />
-          </el-form-item>
-          <el-form-item label="最大员工数:">
-            <el-input-number v-model="form.userNum" :disabled="isDetail" :min="1" controls-position="right" placeholder="请输入" />
-          </el-form-item>
-          <el-form-item label="最大发布数:">
-            <el-input-number v-model="form.jobNum" :disabled="isDetail" :min="1" controls-position="right" placeholder="请输入" />
+            <base-select
+              v-model="form.appConfigObj.appType"
+              :disabled="isDetail"
+              :data-list="appTypeList"
+              style="margin-right: 10px"
+              tag-type="success"
+              clearable
+              :option-props="{ label: 'name', value: 'id' }" />
           </el-form-item>
           <el-form-item label="抖音AppID:">
-            <el-input v-model="form.appId" :disabled="isDetail" placeholder="从抖音开放平台中获取" />
+            <el-input v-model="form.appConfigObj.appId" :disabled="isDetail" placeholder="从抖音开放平台中获取" />
           </el-form-item>
           <el-form-item label="抖音AppSecret:">
-            <el-input v-model="form.appSecret" :disabled="isDetail" placeholder="从抖音开放平台中获取" />
+            <el-input v-model="form.appConfigObj.appSecret" :disabled="isDetail" placeholder="从抖音开放平台中获取" />
           </el-form-item>
           <el-form-item label="小程序首页头部名称:">
-            <el-input v-model="form.appIndexTitle" :disabled="isDetail" placeholder="不填则默认为: 首页（只在发布小程序后才生效）" />
+            <el-input v-model="form.appConfigObj.appIndexTitle" :disabled="isDetail" placeholder="不填则默认为: 首页（只在发布小程序后才生效）" />
           </el-form-item>
-        </div>
-        <el-form-item label="排序:">
-          <el-input-number v-model="form.sort" :min="1" :disabled="isDetail" controls-position="right" placeholder="请输入排序" />
-        </el-form-item>
+        </base-card>
       </el-form>
-      <el-form-item label="备注:">
-        <el-input v-model="form.remark" :row="2" :disabled="isDetail" type="textarea" />
-      </el-form-item>
       <template #footer>
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="submitForm">确 定</el-button>
       </template>
+    </base-dialog>
+
+    <base-dialog v-model="qrcodeDialogVisible" class="" title="小程序测试版二维码" width="350px">
+      <el-image style="width: 300px; height: 300px" :src="qrcodeUrl" />
     </base-dialog>
   </base-wrapper>
 </template>
@@ -141,7 +169,7 @@ async function refreshTableData() {
   dataList = res.data;
 }
 function handleAdd() {
-  form = { status: 1, sort: 100, parentId: 0, appType: 2 };
+  form = { status: 1, sort: 100, parentId: 0, appType: 2, appConfigObj: {} };
   dialogStatus = 'add';
   dialogVisible = true;
   isDetail = false;
@@ -185,6 +213,15 @@ function submitForm() {
       dialogVisible = false;
     }
   });
+}
+
+// 小程序 ---------------------------------
+let qrcodeDialogVisible = $ref(false);
+let qrcodeUrl = $ref('');
+async function showQrcode(row) {
+  let res = await proxy.$api.sys_app_config.qrcode({ appId: row.appConfigObj.appId, version: 'latest' });
+  qrcodeUrl = res.data;
+  qrcodeDialogVisible = true;
 }
 </script>
 

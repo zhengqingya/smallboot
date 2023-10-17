@@ -18,7 +18,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * <p> 系统管理-商户管理-小程序批量操作-提交参数 </p>
+ * <p> 小程序批量操作-提交参数 </p>
  *
  * @author zhengqingya
  * @description
@@ -29,12 +29,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@ApiModel("系统管理-商户管理-小程序批量操作-提交参数")
-public class SysMerchantAppOperationDTO extends BaseDTO implements HandleParam, CheckParam {
+@ApiModel("小程序批量操作-提交参数")
+public class SysAppOperationDTO extends BaseDTO implements HandleParam, CheckParam {
 
-    //    @NotEmpty(message = "主键id不能为空")
-    @ApiModelProperty(value = "主键id", example = "[1]")
-    private List<Integer> idList;
+    @ApiModelProperty(value = "appId", example = "[xx]")
+    private List<String> appIdList;
 
     /**
      * {@link SysAppStatusEnum}
@@ -49,6 +48,9 @@ public class SysMerchantAppOperationDTO extends BaseDTO implements HandleParam, 
     @ApiModelProperty("模板id")
     private Integer templateId;
 
+    @ApiModelProperty("版本号")
+    private String version;
+
     @Override
     public void handleParam() {
 
@@ -59,6 +61,7 @@ public class SysMerchantAppOperationDTO extends BaseDTO implements HandleParam, 
         if (SysAppStatusEnum.提交代码.getStatus().equals(this.appStatus)) {
             Assert.notNull(this.templateId, "模板id不能为空！");
             Assert.notBlank(this.uploadCodeDesc, "提交代码描述不能为空！");
+            Assert.notBlank(this.version, "版本号不能为空！");
         }
     }
 }

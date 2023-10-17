@@ -2,8 +2,7 @@ package com.zhengqing.system.model.dto;
 
 import com.zhengqing.common.base.model.dto.BaseDTO;
 import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
-import com.zhengqing.system.enums.SysAppStatusEnum;
-import com.zhengqing.system.enums.SysAppTypeEnum;
+import com.zhengqing.system.model.bo.SysAppConfigBO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -81,25 +80,7 @@ public class SysDeptSaveDTO extends BaseDTO {
     @ApiModelProperty("最大职位发布数")
     private Integer jobNum;
 
-    /**
-     * {@link SysAppTypeEnum}
-     */
-    @ApiModelProperty("小程序类型")
-    private Integer appType;
-
-    @ApiModelProperty("AppID")
-    private String appId;
-
-    @ApiModelProperty("AppSecret")
-    private String appSecret;
-
-    /**
-     * {@link SysAppStatusEnum}
-     */
-    @ApiModelProperty("小程序状态")
-    private Integer appStatus;
-
-    @ApiModelProperty("小程序首页标题")
-    private String appIndexTitle;
+    @ApiModelProperty("小程序配置")
+    private SysAppConfigBO appConfigObj;
 
 }

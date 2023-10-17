@@ -1,5 +1,6 @@
 package com.zhengqing.common.auth.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Assert;
 import com.zhengqing.common.auth.model.dto.AuthLoginDTO;
 import com.zhengqing.common.auth.model.vo.AuthLoginVO;
@@ -15,9 +16,11 @@ import com.zhengqing.system.service.ISysRoleService;
 import com.zhengqing.system.util.PasswordUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.compress.utils.Lists;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -49,18 +52,21 @@ public class AuthServiceImpl implements IAuthService {
 
         // 拿到下级角色ids
         List<Integer> roleIdList = userPerm.getRoleIdList();
-        List<Integer> allRoleIdList = roleIdList;
+        Assert.isTrue(CollUtil.isNotEmpty(roleIdList), "无权限，请先分配权限！");
+        List<Integer> allRoleIdList = Lists.newArrayList();
+        allRoleIdList.addAll(roleIdList);
         if (!roleIdList.contains(AppConstant.SMALL_BOOT_SUPER_ADMIN_ROLE_ID)) {
-            roleIdList.forEach(e -> allRoleIdList.addAll(this.iSysRoleService.getChildRoleIdList(e)));
+            roleIdList.forEach(roleIdItem -> allRoleIdList.addAll(this.iSysRoleService.getChildRoleIdList(roleIdItem)));
         }
-
+        // 去重
+        List<Integer> allRoleIdListFinal = allRoleIdList.stream().distinct().collect(Collectors.toList());
         // 登录
         return AuthUtil.login(
                 JwtUserBO.builder()
                         .authSourceEnum(AuthSourceEnum.B)
                         .userId(String.valueOf(userPerm.getUserId()))
                         .username(userPerm.getUsername())
-                        .allRoleIdList(allRoleIdList)
+                        .allRoleIdList(allRoleIdListFinal)
                         .roleCodeList(userPerm.getRoleCodeList())
                         .deptId(userPerm.getDeptId())
                         .build()

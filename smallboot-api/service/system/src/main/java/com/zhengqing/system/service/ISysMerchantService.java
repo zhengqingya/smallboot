@@ -3,8 +3,9 @@ package com.zhengqing.system.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhengqing.system.entity.SysMerchant;
-import com.zhengqing.system.model.dto.*;
-import com.zhengqing.system.model.vo.SysMerchantDetailVO;
+import com.zhengqing.system.model.dto.SysMerchantListDTO;
+import com.zhengqing.system.model.dto.SysMerchantPageDTO;
+import com.zhengqing.system.model.dto.SysMerchantSaveDTO;
 import com.zhengqing.system.model.vo.SysMerchantListVO;
 import com.zhengqing.system.model.vo.SysMerchantPageVO;
 
@@ -79,43 +80,5 @@ public interface ISysMerchantService extends IService<SysMerchant> {
      */
     SysMerchant detail(Integer id);
 
-    /**
-     * 详情 -- 业务方使用 eg: 小程序
-     *
-     * @param id 主键ID
-     * @return void
-     * @author zhengqingya
-     * @date 2023/10/13 11:17
-     */
-    SysMerchantDetailVO detailByBusiness(Integer id);
-
-    /**
-     * 生成授权链接
-     *
-     * @return 授权链接
-     * @author zhengqingya
-     * @date 2023/10/13 11:17
-     */
-    String genLink();
-
-    /**
-     * 二维码
-     *
-     * @param params 提交参数
-     * @return 二维码
-     * @author zhengqingya
-     * @date 2023/10/13 11:17
-     */
-    byte[] qrcode(SysAppQrcodeDTO params);
-
-    /**
-     * 批量操作(小程序提审、发布)
-     *
-     * @param params 提交参数
-     * @return void
-     * @author zhengqingya
-     * @date 2023/10/13 11:17
-     */
-    void appOperationBatch(SysMerchantAppOperationDTO params);
 
 }

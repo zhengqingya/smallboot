@@ -18,6 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 public enum SysAppStatusEnum {
 
+    未发版(1, "未发版"),
     提交代码(10, "已提交代码"),
     提审代码(20, "提审代码"),
     提审中(21, "提审中"),

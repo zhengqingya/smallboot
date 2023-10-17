@@ -59,4 +59,5 @@ public class WebSysDeptController extends BaseController {
         this.iSysDeptService.deleteData(id);
     }
 
+
 }

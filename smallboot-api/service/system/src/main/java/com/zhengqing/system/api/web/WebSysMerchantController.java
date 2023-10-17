@@ -5,8 +5,9 @@ import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.common.core.custom.repeatsubmit.NoRepeatSubmit;
 import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
-import com.zhengqing.common.web.custom.noreturnhandle.NoReturnHandle;
-import com.zhengqing.system.model.dto.*;
+import com.zhengqing.system.model.dto.SysMerchantListDTO;
+import com.zhengqing.system.model.dto.SysMerchantPageDTO;
+import com.zhengqing.system.model.dto.SysMerchantSaveDTO;
 import com.zhengqing.system.model.vo.SysMerchantListVO;
 import com.zhengqing.system.model.vo.SysMerchantPageVO;
 import com.zhengqing.system.service.ISysMerchantService;
@@ -46,19 +47,6 @@ public class WebSysMerchantController extends BaseController {
         return this.iSysMerchantService.list(params);
     }
 
-    @GetMapping("genLink")
-    @ApiOperation("生成授权链接")
-    public String genLink() {
-        return this.iSysMerchantService.genLink();
-    }
-
-    @NoReturnHandle
-    @GetMapping("qrcode")
-    @ApiOperation("获取二维码")
-    public byte[] qrcode(@Validated @ModelAttribute SysAppQrcodeDTO params) {
-        return this.iSysMerchantService.qrcode(params);
-    }
-
     @NoRepeatSubmit
     @PostMapping("add")
     @ApiOperation("新增")
@@ -80,12 +68,5 @@ public class WebSysMerchantController extends BaseController {
         this.iSysMerchantService.deleteData(id);
     }
 
-    @NoRepeatSubmit
-    @PostMapping("appOperationBatch")
-    @ApiOperation("批量操作(小程序提审、发布)")
-    public Boolean appOperationBatch(@Validated @RequestBody SysMerchantAppOperationDTO params) {
-        this.iSysMerchantService.appOperationBatch(params);
-        return true;
-    }
 
 }

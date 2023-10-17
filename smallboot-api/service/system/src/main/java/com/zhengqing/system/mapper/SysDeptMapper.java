@@ -27,4 +27,13 @@ public interface SysDeptMapper extends BaseMapper<SysDept> {
      */
     List<SysDeptTreeVO> selectDataList(@Param("filter") SysDeptTreeDTO filter);
 
+    /**
+     * 获取小程序可以提审、发布的部门数据
+     *
+     * @return 查询结果
+     * @author zhengqingya
+     * @date 2023/10/13 11:17
+     */
+    List<SysDept> selectAppIdList();
+
 }

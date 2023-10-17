@@ -11,7 +11,7 @@
  Target Server Version : 50726 (5.7.26-log)
  File Encoding         : 65001
 
- Date: 17/10/2023 19:51:57
+ Date: 17/10/2023 22:25:22
 */
 
 SET NAMES utf8mb4;
@@ -54,13 +54,12 @@ CREATE TABLE `cms_job`  (
 -- Records of cms_job
 -- ----------------------------
 INSERT INTO `cms_job` VALUES (1, 1, 100, 1, '成都java开发工程师', NULL, 1, 100, 1, '小郑', '15183306666', '四川省', '成都市', '武侯区', '天府五街', '[1, 2, 3, 5, 4]', '<p><span style=\"color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); font-size: 15px;\">公司成立于15年，保证精准资源！经验不限 现招几位小伙伴~~欢迎大家的加入哟~~<br>工作时间：<br>朝九晚六 周末双休 保证周末双休哦~~<br>午休一个半小时，下午半小时下午茶时间 &nbsp; </span><span style=\"color: rgb(231, 95, 51); background-color: rgb(255, 255, 255); font-size: 15px;\">法定节假日正常休</span><span style=\"color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); font-size: 15px;\"><br><br>工作内容：<br>1、公司提供精准客户资源（注意：实时），解决客户目前问题，了解客户目前资质匹配合适贷款渠道即可。 <br>2、邀约客户到公司，面谈进件签约即可！！ ！<br>3、公司有专业谈判组，可谈判组帮谈；如个人能力OK，也可自己面谈。<br>任职要求：<br>有无经验均可（带薪培训）<br>口齿清，晰，普通话标准<br>性格开朗，具有亲和力</span></p><p><br></p><p><span style=\"color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); font-size: 15px;\">--</span></p><p><br></p><p><span style=\"color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); font-size: 15px;\">公司成立于15年，保证精准资源！经验不限 现招几位小伙伴~~欢迎大家的加入哟~~<br>工作时间：<br>朝九晚六 周末双休 保证周末双休哦~~<br>午休一个半小时，下午半小时下午茶时间 &nbsp; </span><span style=\"color: rgb(231, 95, 51); background-color: rgb(255, 255, 255); font-size: 15px;\">法定节假日正常休</span><span style=\"color: rgb(51, 51, 51); background-color: rgb(255, 255, 255); font-size: 15px;\"><br><br>工作内容：<br>1、公司提供精准客户资源（注意：实时），解决客户目前问题，了解客户目前资质匹配合适贷款渠道即可。 <br>2、邀约客户到公司，面谈进件签约即可！！ ！<br>3、公司有专业谈判组，可谈判组帮谈；如个人能力OK，也可自己面谈。<br>任职要求：<br>有无经验均可（带薪培训）<br>口齿清，晰，普通话标准<br>性格开朗，具有亲和力</span></p>', 10, 8000, 10000, '2023-10-10 17:37:18', '2023-10-17 19:48:47', 1, 1, 0);
-INSERT INTO `cms_job` VALUES (2, 10, NULL, 5, '全栈工程师', NULL, 3, 100, 1, '小郑', '15183338888', '四川省', '成都市', '武侯区', '天府五街', '[9, 8, 7]', '<ol><li><span style=\"font-size: 22px;\">会后端</span></li><li><span style=\"font-size: 22px;\">会前端</span></li><li><span style=\"font-size: 22px;\">能加班</span></li></ol>', 10, 8000, 20000, '2023-10-10 18:52:48', '2023-10-13 20:18:36', 5, 5, 0);
+INSERT INTO `cms_job` VALUES (2, 2, NULL, 5, '全栈工程师', NULL, 3, 100, 1, '小郑', '15183338888', '四川省', '成都市', '武侯区', '天府五街', '[9, 8, 7]', '<ol><li><span style=\"font-size: 22px;\">会后端</span></li><li><span style=\"font-size: 22px;\">会前端</span></li><li><span style=\"font-size: 22px;\">能加班</span></li></ol>', 10, 8000, 20000, '2023-10-10 18:52:48', '2023-10-17 19:55:21', 5, 5, 0);
 INSERT INTO `cms_job` VALUES (3, 1, 100, 1, '成都web前端开发工程师', NULL, NULL, 100, 1, '', '', '四川省', '成都市', '武侯区', '天府三街', '[1, 2]', '<p>1. <span style=\"color: rgb(135, 56, 0);\">会吃饭</span></p><p>2. 会玩</p><p><br></p>', 2, 8000, 20000, '2023-10-11 15:52:13', '2023-10-17 19:48:32', 1, 1, 0);
 INSERT INTO `cms_job` VALUES (4, 1, 100, 1, 'go开发工程师', NULL, 1, 100, 1, '小郑', '15183306666', '四川省', '成都市', '武侯区', '天府五街', '[1, 2, 3, 5, 4]', '<p>1. 全栈</p><p>2. <span style=\"background-color: rgb(8, 151, 156);\">能干事</span></p>', 10, 8000, 10000, '2023-10-10 17:37:18', '2023-10-13 20:18:32', 1, 1, 0);
 INSERT INTO `cms_job` VALUES (5, 1, 100, 1, 'python开发工程师', NULL, 1, 100, 1, '小郑', '15183306666', '四川省', '成都市', '武侯区', '天府五街', '[1, 2, 3, 5, 4]', '<p>1. 全栈</p><p>2. <span style=\"background-color: rgb(8, 151, 156);\">能干事</span></p>', 10, 8000, 10000, '2023-10-10 17:37:18', '2023-10-13 20:18:32', 1, 1, 0);
 INSERT INTO `cms_job` VALUES (6, 1, 100, 1, '人工智能开发工程师', NULL, 1, 100, 1, '小郑', '15183306666', '四川省', '成都市', '武侯区', '天府五街', '[1, 2, 3, 5, 4]', '<p>1. 全栈</p><p>2. <span style=\"background-color: rgb(8, 151, 156);\">能干事</span></p>', 10, 8000, 10000, '2023-10-10 17:37:18', '2023-10-13 20:18:32', 1, 1, 0);
 INSERT INTO `cms_job` VALUES (7, 1, 3, 1, 'ai开发工程师', NULL, 1, 100, 1, '小郑', '15183306666', '四川省', '成都市', '武侯区', '天府五街', '[1, 2, 3, 5, 4]', '<p>1. 全栈</p><p>2. <span style=\"background-color: rgb(8, 151, 156);\">能干事</span></p>', 10, 8000, 10000, '2023-10-10 17:37:18', '2023-10-13 20:18:51', 1, 1, 0);
-INSERT INTO `cms_job` VALUES (8, 12, 2001, NULL, 'java开发工程师', NULL, NULL, 100, 1, '小郑', '15183304008', '山西省', '太原市', '小店区', '天府三级', '[]', '<p>hello</p>', 1, 800, 1000, '2023-10-15 18:05:44', '2023-10-15 18:05:44', 20, 20, 0);
 
 -- ----------------------------
 -- Table structure for cms_job_apply
@@ -88,7 +87,7 @@ CREATE TABLE `cms_job_apply`  (
 -- Records of cms_job_apply
 -- ----------------------------
 INSERT INTO `cms_job_apply` VALUES (7, 1, 1, 100, 1, 4, '小郑', '15183308888', '', '2023-10-10 18:30:09', '2023-10-17 19:51:17', 1, 1, 0);
-INSERT INTO `cms_job_apply` VALUES (8, 10, NULL, NULL, 2, 1, '小郑', '15183308888', NULL, '2023-10-10 18:30:09', '2023-10-17 19:51:25', 1, 1, 0);
+INSERT INTO `cms_job_apply` VALUES (8, 2, NULL, NULL, 2, 1, '小郑', '15183308888', NULL, '2023-10-10 18:30:09', '2023-10-17 19:55:21', 1, 1, 0);
 INSERT INTO `cms_job_apply` VALUES (9, 1, 1, 100, 1, 2, '郑清', '15183388888', '', '2023-10-12 16:57:19', '2023-10-17 19:51:17', 1, 1, 0);
 INSERT INTO `cms_job_apply` VALUES (10, 1, 1, 100, 1, 4, '郑清', '15183388888', '', '2023-10-12 16:57:44', '2023-10-17 19:51:17', 1, 1, 0);
 INSERT INTO `cms_job_apply` VALUES (11, 1, 1, 100, 3, 1, '郑清', '555', NULL, '2023-10-12 17:07:34', '2023-10-17 19:51:17', 1712387814436040704, 1712387814436040704, 0);
@@ -122,7 +121,7 @@ CREATE TABLE `cms_job_category`  (
 -- ----------------------------
 INSERT INTO `cms_job_category` VALUES (1, 1, 100, 1, '正式工', 1, 1, '正式员工', '2023-10-11 11:27:20', '2023-10-13 19:59:52', 1, 1, 0);
 INSERT INTO `cms_job_category` VALUES (2, 1, 100, 1, '临时工', 2, 0, NULL, '2023-10-11 11:27:40', '2023-10-13 19:50:50', 1, 1, 0);
-INSERT INTO `cms_job_category` VALUES (3, 10, 1001, 5, '正式工', 100, 1, '', '2023-10-11 11:37:56', '2023-10-13 21:07:25', 5, 5, 0);
+INSERT INTO `cms_job_category` VALUES (3, 2, 1001, 5, '正式工', 100, 1, '', '2023-10-11 11:37:56', '2023-10-17 19:55:21', 5, 5, 0);
 INSERT INTO `cms_job_category` VALUES (4, 1, 4, 9, '假期工', 100, 1, '', '2023-10-13 20:00:08', '2023-10-17 19:48:57', 1, 1, 0);
 
 -- ----------------------------
@@ -155,9 +154,9 @@ INSERT INTO `cms_job_tag` VALUES (3, 1, 100, 1, '加班补贴', 3, 1, '', '2023-
 INSERT INTO `cms_job_tag` VALUES (4, 1, 100, 1, '周末双休', 100, 1, '', '2023-10-10 17:15:46', '2023-10-17 19:45:14', 1, 1, 0);
 INSERT INTO `cms_job_tag` VALUES (5, 1, 100, 1, '加班费', 5, 1, '', '2023-10-10 17:15:54', '2023-10-17 19:44:38', 1, 1, 0);
 INSERT INTO `cms_job_tag` VALUES (6, 1, 100, 1, '年假', 100, 0, '', '2023-10-10 17:16:13', '2023-10-17 19:45:08', 1, 1, 0);
-INSERT INTO `cms_job_tag` VALUES (7, 10, NULL, NULL, '五险一金', 100, 1, NULL, '2023-10-10 18:50:53', '2023-10-10 18:50:53', 5, 5, 0);
-INSERT INTO `cms_job_tag` VALUES (8, 10, NULL, NULL, '8小时工作制', 100, 1, NULL, '2023-10-10 18:51:03', '2023-10-10 18:51:03', 5, 5, 0);
-INSERT INTO `cms_job_tag` VALUES (9, 10, NULL, NULL, '周末双休', 100, 1, NULL, '2023-10-10 18:51:09', '2023-10-10 18:51:09', 5, 5, 0);
+INSERT INTO `cms_job_tag` VALUES (7, 2, NULL, NULL, '五险一金', 100, 1, NULL, '2023-10-10 18:50:53', '2023-10-17 19:55:21', 5, 5, 0);
+INSERT INTO `cms_job_tag` VALUES (8, 2, NULL, NULL, '8小时工作制', 100, 1, NULL, '2023-10-10 18:51:03', '2023-10-17 19:55:21', 5, 5, 0);
+INSERT INTO `cms_job_tag` VALUES (9, 2, NULL, NULL, '周末双休', 100, 1, NULL, '2023-10-10 18:51:09', '2023-10-17 19:55:21', 5, 5, 0);
 
 -- ----------------------------
 -- Table structure for oms_logistic
@@ -739,6 +738,35 @@ INSERT INTO `sms_shop` VALUES (2, 1, '高新区天府五街分店', '[{\"url\": 
 INSERT INTO `sms_shop` VALUES (4, 1, '四川大学测试店', '[{\"url\": \"http://127.0.0.1:886/2023-09-28/1707280259789041664-美图28.jpg\", \"name\": \"美图28.jpg\"}]', '四川省', '成都市', '双流区', '四川省成都市双流区明远路', 103.999260, 30.557481, 1, '小郑', '15183008888', 1, 0, 0, 0, '[{\"endTime\": \"18:00\", \"weekList\": [1, 2, 3, 4, 5, 6, 7], \"startTime\": \"09:00\"}]', 3, NULL, NULL, '2023-09-26 14:54:42', '2023-09-28 14:34:38', 1, 1, 0);
 
 -- ----------------------------
+-- Table structure for t_sys_app_config
+-- ----------------------------
+DROP TABLE IF EXISTS `t_sys_app_config`;
+CREATE TABLE `t_sys_app_config`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `tenant_id` int(11) UNSIGNED NOT NULL COMMENT '租户ID',
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '名称',
+  `app_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'AppID',
+  `app_secret` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'AppSecret',
+  `app_version` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '小程序版本',
+  `app_status` int(11) NULL DEFAULT NULL COMMENT '小程序状态',
+  `app_index_title` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '小程序首页标题',
+  `app_type` tinyint(4) NULL DEFAULT NULL COMMENT '小程序类型（1：共享版  2：独立版）',
+  `create_by` bigint(20) NOT NULL COMMENT '创建人',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_by` bigint(20) NOT NULL COMMENT '修改人',
+  `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `is_deleted` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否删除(1->是，0->否)',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-小程序配置' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of t_sys_app_config
+-- ----------------------------
+INSERT INTO `t_sys_app_config` VALUES (1, 1, '我的科技公司', '', '', NULL, 1, NULL, NULL, 1, '2023-10-09 19:16:37', 1, '2023-10-17 21:02:09', 0);
+INSERT INTO `t_sys_app_config` VALUES (5, 2, '人力资源招聘有限公司', '', '', '', 1, '首页', 2, 5, '2023-10-10 18:49:29', 5, '2023-10-17 22:20:59', 0);
+INSERT INTO `t_sys_app_config` VALUES (9, 1, '测试部门', '', '', NULL, 1, NULL, NULL, 1, '2023-10-17 18:46:48', 1, '2023-10-17 21:02:23', 0);
+
+-- ----------------------------
 -- Table structure for t_sys_config
 -- ----------------------------
 DROP TABLE IF EXISTS `t_sys_config`;
@@ -772,11 +800,6 @@ INSERT INTO `t_sys_config` VALUES (67, 1, 'douyin_app_id', NULL, '抖音小程�
 INSERT INTO `t_sys_config` VALUES (68, 1, 'douyin_app_secret', NULL, '抖音小程序secret', 1, 0, '2023-10-11 19:15:27', NULL, '2023-10-11 19:15:39', 0);
 INSERT INTO `t_sys_config` VALUES (71, 1, 'mall_index_slide_img_list', '[{\"name\":\"美图13.png\",\"url\":\"http://127.0.0.1:886/2023-09-28/1707240834895855616-美图13.png\",\"uid\":\"1695893530664\",\"status\":\"success\"},{\"name\":\"美图35.jpg\",\"url\":\"http://127.0.0.1:886/2023-09-28/1707276699923857408-美图35.jpg\",\"uid\":\"1695893530665\",\"status\":\"success\"},{\"name\":\"美图28.jpg\",\"url\":\"http://127.0.0.1:886/2023-09-28/1707280259789041664-美图28.jpg\",\"uid\":\"1695893737396\",\"status\":\"success\"}]', '商城首页轮播图', 1, 1, '2023-10-14 21:10:33', 1, '2023-10-14 21:10:33', 0);
 INSERT INTO `t_sys_config` VALUES (72, 1, 'lbs_qq_key', '666', '腾讯地图key', 1, 1, '2023-10-14 21:10:33', 1, '2023-10-14 21:10:33', 0);
-INSERT INTO `t_sys_config` VALUES (89, 12, 'douyin_component_appid', NULL, '抖音服务商平台-第三方小程序应用appid', 1, 20, '2023-10-15 16:09:04', 20, '2023-10-15 16:09:26', 0);
-INSERT INTO `t_sys_config` VALUES (90, 12, 'douyin_component_appsecret', NULL, '抖音服务商平台-第三方小程序应用appsecret', 1, 20, '2023-10-15 16:09:04', 20, '2023-10-15 16:09:26', 0);
-INSERT INTO `t_sys_config` VALUES (91, 12, 'douyin_tp_token', NULL, '抖音服务商平台-消息验证TOKEN', 1, 20, '2023-10-15 16:09:04', 20, '2023-10-15 16:09:26', 0);
-INSERT INTO `t_sys_config` VALUES (92, 12, 'douyin_encoding_aes_key', NULL, '抖音服务商平台-消息加密解密KEY', 1, 20, '2023-10-15 16:09:04', 20, '2023-10-15 16:09:26', 0);
-INSERT INTO `t_sys_config` VALUES (93, 12, 'douyin_app_template_id', NULL, '抖音服务商平台-小程序模板ID', 1, 20, '2023-10-15 16:09:04', 20, '2023-10-15 16:09:26', 0);
 
 -- ----------------------------
 -- Table structure for t_sys_dept
@@ -800,25 +823,21 @@ CREATE TABLE `t_sys_dept`  (
   `expire_time` datetime NULL DEFAULT NULL COMMENT '过期时间',
   `user_num` int(11) NULL DEFAULT NULL COMMENT '最大员工数',
   `job_num` int(11) NULL DEFAULT NULL COMMENT '最大职位发布数',
-  `app_type` tinyint(4) NULL DEFAULT NULL COMMENT '小程序类型（1：共享版  2：独立版）',
-  `app_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'AppID',
-  `app_secret` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'AppSecret',
-  `app_status` int(11) NULL DEFAULT NULL COMMENT '小程序状态',
-  `app_index_title` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '小程序首页标题',
+  `app_config_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '小程序配置ID',
   `create_by` bigint(20) NOT NULL COMMENT '创建人',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_by` bigint(20) NOT NULL COMMENT '修改人',
   `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `is_deleted` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否删除(1->是，0->否)',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-部门' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_sys_dept
 -- ----------------------------
-INSERT INTO `t_sys_dept` VALUES (1, 1, 0, '我的科技公司', 1, 1, '', '', 1, '四川省', '成都市', '武侯区', '天府五街', '我的第一个公司', '2023-10-09 07:38:00', 100, NULL, 2, '', '', NULL, '', 1, '2023-10-09 19:16:37', 1, '2023-10-17 18:52:16');
-INSERT INTO `t_sys_dept` VALUES (5, 10, 0, '人力资源招聘有限公司', 100, 5, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 5, '2023-10-10 18:49:29', 5, '2023-10-10 18:49:29');
-INSERT INTO `t_sys_dept` VALUES (8, 12, 0, '郑清的测试租户', 1, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '2023-10-14 15:31:49', 1, '2023-10-14 15:31:49');
-INSERT INTO `t_sys_dept` VALUES (9, 1, 0, '测试部门', 100, NULL, '', '', 1, '四川省', '成都市', '武侯区', '天府五街', '测试使用', '2023-10-18 12:00:00', 10, 2, 1, '', '', NULL, '首页', 1, '2023-10-17 18:46:48', 1, '2023-10-17 18:52:07');
+INSERT INTO `t_sys_dept` VALUES (1, 1, 0, '我的科技公司', 1, 1, '', '', 1, '四川省', '成都市', '武侯区', '天府五街', '我的第一个公司', '2023-10-18 12:00:00', 100, NULL, '1', 1, '2023-10-09 19:16:37', 1, '2023-10-17 22:15:13', 0);
+INSERT INTO `t_sys_dept` VALUES (5, 2, 0, '人力资源招聘有限公司', 100, 5, '', '', 1, '四川省', '成都市', '武侯区', '天府五街', '我的第一个公司', '2023-10-18 12:00:00', 10, 2, '5', 5, '2023-10-10 18:49:29', 5, '2023-10-17 22:20:59', 0);
+INSERT INTO `t_sys_dept` VALUES (9, 1, 0, '测试部门', 100, NULL, '', '', 1, '四川省', '成都市', '武侯区', '天府五街', '测试使用', '2023-10-18 12:00:00', 10, 2, '9', 1, '2023-10-17 18:46:48', 1, '2023-10-17 22:15:13', 0);
 
 -- ----------------------------
 -- Table structure for t_sys_dict
@@ -1199,8 +1218,8 @@ INSERT INTO `t_sys_file` VALUES (22, 1, '美图14.jpg', '/2023-09-28/17072764941
 INSERT INTO `t_sys_file` VALUES (23, 1, '美图35.jpg', '/2023-09-28/1707276699923857408-美图35.jpg', 'image/jpeg', 'bafca25d99f49411f09c76985654f78c', 115888, '2023-09-28 14:11:00', '2023-10-08 18:25:02', 1, 1, 0);
 INSERT INTO `t_sys_file` VALUES (24, 1, '美图28.jpg', '/2023-09-28/1707280259789041664-美图28.jpg', 'image/jpeg', '4336d41fcd5a3076e54ed6f9d39e82d5', 874939, '2023-09-28 14:25:08', '2023-10-08 18:25:02', 1, 1, 0);
 INSERT INTO `t_sys_file` VALUES (25, 1, '小知识.jpg', '/2023-10-08/1710975930417258496-小知识.jpg', 'image/jpeg', '5d57274ba11b7a30b2716d2149a27fc9', 11619, '2023-10-08 19:10:25', '2023-10-08 19:10:25', 1, 1, 0);
-INSERT INTO `t_sys_file` VALUES (27, 10, '小知识.jpg', '/2023-10-10/1711694989127454720-小知识.jpg', 'image/jpeg', '5d57274ba11b7a30b2716d2149a27fc9', 11619, '2023-10-10 18:47:42', '2023-10-10 18:47:42', 5, 5, 0);
-INSERT INTO `t_sys_file` VALUES (29, 10, '美图84.png', '/2023-10-11/1711915190762745856-美图84.png', 'image/png', '90de8e6c02c629dc935c1866ac5ef3b8', 210539, '2023-10-11 09:22:42', '2023-10-11 09:22:42', 5, 5, 0);
+INSERT INTO `t_sys_file` VALUES (27, 2, '小知识.jpg', '/2023-10-10/1711694989127454720-小知识.jpg', 'image/jpeg', '5d57274ba11b7a30b2716d2149a27fc9', 11619, '2023-10-10 18:47:42', '2023-10-17 19:55:21', 5, 5, 0);
+INSERT INTO `t_sys_file` VALUES (29, 2, '美图84.png', '/2023-10-11/1711915190762745856-美图84.png', 'image/png', '90de8e6c02c629dc935c1866ac5ef3b8', 210539, '2023-10-11 09:22:42', '2023-10-17 19:55:21', 5, 5, 0);
 
 -- ----------------------------
 -- Table structure for t_sys_menu
@@ -1340,8 +1359,8 @@ INSERT INTO `t_sys_post` VALUES (4, 1, NULL, '人力资源', 'hr', 1, 4, NULL, 1
 INSERT INTO `t_sys_post` VALUES (5, 1, NULL, '普通员工', 'user', 1, 5, NULL, 1, '2023-10-09 18:55:50', 1, '2023-10-09 18:55:50');
 INSERT INTO `t_sys_post` VALUES (6, 1, 2, 'Java开发工程师', 'java', 1, 100, '', 1, '2023-10-10 10:47:14', 1, '2023-10-17 18:22:21');
 INSERT INTO `t_sys_post` VALUES (7, 1, 2, '前端开发工程师', 'web', 1, 100, NULL, 1, '2023-10-10 10:47:30', 1, '2023-10-10 10:47:30');
-INSERT INTO `t_sys_post` VALUES (8, 10, 5, '总经理', 'zjl', 1, 1, '', 5, '2023-10-10 18:50:04', 5, '2023-10-10 18:50:33');
-INSERT INTO `t_sys_post` VALUES (9, 10, 5, '前端开发工程师', 'web', 1, 100, NULL, 5, '2023-10-10 18:50:24', 5, '2023-10-10 18:50:24');
+INSERT INTO `t_sys_post` VALUES (8, 2, 5, '总经理', 'zjl', 1, 1, '', 5, '2023-10-10 18:50:04', 5, '2023-10-17 19:55:21');
+INSERT INTO `t_sys_post` VALUES (9, 2, 5, '前端开发工程师', 'web', 1, 100, NULL, 5, '2023-10-10 18:50:24', 5, '2023-10-17 19:55:21');
 
 -- ----------------------------
 -- Table structure for t_sys_province_city_area
@@ -4600,14 +4619,12 @@ CREATE TABLE `t_sys_role`  (
 -- ----------------------------
 INSERT INTO `t_sys_role` VALUES (1, 1, 0, '超级管理员', 'super_admin', 1, 1, 1, 1, '2020-08-22 15:01:51', 1, '2023-10-13 18:39:46');
 INSERT INTO `t_sys_role` VALUES (2, 1, 11, '凡人', 'everyman', 1, 0, 5, 1, '2022-08-05 20:00:36', 1, '2023-10-13 19:21:52');
-INSERT INTO `t_sys_role` VALUES (8, 10, 0, '租户管理员', 'tenant_admin', 1, 1, 1, 1, '2023-10-10 18:42:22', 1, '2023-10-13 19:24:10');
-INSERT INTO `t_sys_role` VALUES (9, 10, 0, '测试员', 'test', 1, 0, 100, 5, '2023-10-10 18:48:22', 5, '2023-10-13 18:39:46');
+INSERT INTO `t_sys_role` VALUES (8, 2, 0, '租户管理员', 'tenant_admin', 1, 1, 1, 1, '2023-10-10 18:42:22', 1, '2023-10-17 19:55:21');
+INSERT INTO `t_sys_role` VALUES (9, 2, 0, '测试员', 'test', 1, 0, 100, 5, '2023-10-10 18:48:22', 5, '2023-10-17 19:55:21');
 INSERT INTO `t_sys_role` VALUES (10, 1, 11, '商户管理员', 'merchant_admin', 1, 1, 3, 1, '2023-10-13 15:07:54', 1, '2023-10-13 19:20:19');
 INSERT INTO `t_sys_role` VALUES (11, 1, 0, '租户管理员', 'tenant_admin', 1, 1, 2, 1, '2023-10-13 15:09:04', 1, '2023-10-13 19:24:30');
-INSERT INTO `t_sys_role` VALUES (14, 10, 8, '商户管理员', 'merchant_admin', 1, 1, 3, 5, '2023-10-13 17:34:32', 5, '2023-10-13 19:21:16');
+INSERT INTO `t_sys_role` VALUES (14, 2, 8, '商户管理员', 'merchant_admin', 1, 1, 3, 5, '2023-10-13 17:34:32', 5, '2023-10-17 19:55:21');
 INSERT INTO `t_sys_role` VALUES (15, 1, 11, '主播', 'anchor', 1, 0, 100, 1, '2023-10-13 19:10:00', 1, '2023-10-17 18:50:25');
-INSERT INTO `t_sys_role` VALUES (17, 12, 0, '租户管理员', 'tenant_admin', 1, 1, 2, 1, '2023-10-14 15:31:49', 1, '2023-10-14 15:31:49');
-INSERT INTO `t_sys_role` VALUES (18, 12, 17, '商户管理员', 'merchant_admin', 1, 1, 1, 1, '2023-10-14 15:31:49', 1, '2023-10-14 15:31:49');
 
 -- ----------------------------
 -- Table structure for t_sys_role_menu
@@ -4623,70 +4640,68 @@ CREATE TABLE `t_sys_role_menu`  (
   `update_by` bigint(20) NOT NULL COMMENT '修改人',
   `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 153 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-角色菜单关联表' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 155 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-角色菜单关联表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_sys_role_menu
 -- ----------------------------
-INSERT INTO `t_sys_role_menu` VALUES (1, 1, 1, 1, 1, '2023-08-31 16:36:56', 0, '2023-10-17 19:50:58');
-INSERT INTO `t_sys_role_menu` VALUES (2, 1, 1, 3, 1, '2023-08-31 16:36:56', 0, '2023-10-17 19:50:58');
-INSERT INTO `t_sys_role_menu` VALUES (3, 1, 1, 4, 1, '2023-08-31 16:36:56', 0, '2023-10-17 19:50:58');
-INSERT INTO `t_sys_role_menu` VALUES (4, 1, 1, 5, 1, '2023-08-31 16:36:56', 0, '2023-10-17 19:50:58');
-INSERT INTO `t_sys_role_menu` VALUES (5, 1, 1, 6, 1, '2023-08-31 16:36:56', 0, '2023-10-17 19:50:58');
-INSERT INTO `t_sys_role_menu` VALUES (6, 1, 1, 7, 1, '2023-08-31 16:36:56', 0, '2023-10-17 19:50:58');
-INSERT INTO `t_sys_role_menu` VALUES (7, 1, 1, 9, 1, '2023-08-31 16:36:56', 0, '2023-10-17 19:50:58');
-INSERT INTO `t_sys_role_menu` VALUES (8, 1, 1, 10, 1, '2023-08-31 16:36:56', 0, '2023-10-17 19:50:58');
-INSERT INTO `t_sys_role_menu` VALUES (9, 1, 1, 11, 1, '2023-08-31 16:36:56', 0, '2023-10-17 19:50:58');
-INSERT INTO `t_sys_role_menu` VALUES (10, 1, 1, 12, 1, '2023-08-31 16:36:56', 0, '2023-10-17 19:50:58');
-INSERT INTO `t_sys_role_menu` VALUES (11, 1, 1, 13, 1, '2023-08-31 16:36:56', 0, '2023-10-17 19:50:58');
-INSERT INTO `t_sys_role_menu` VALUES (12, 1, 1, 14, 1, '2023-08-31 16:36:56', 0, '2023-10-17 19:50:58');
-INSERT INTO `t_sys_role_menu` VALUES (13, 1, 1, 15, 1, '2023-08-31 16:36:56', 0, '2023-10-17 19:50:58');
-INSERT INTO `t_sys_role_menu` VALUES (14, 1, 1, 16, 1, '2023-08-31 16:36:56', 0, '2023-10-17 19:50:58');
-INSERT INTO `t_sys_role_menu` VALUES (15, 1, 1, 17, 1, '2023-08-31 16:36:56', 0, '2023-10-17 19:50:58');
-INSERT INTO `t_sys_role_menu` VALUES (16, 1, 1, 18, 1, '2023-08-31 16:36:56', 0, '2023-10-17 19:50:58');
-INSERT INTO `t_sys_role_menu` VALUES (17, 1, 1, 19, 1, '2023-08-31 16:36:56', 0, '2023-10-17 19:50:58');
-INSERT INTO `t_sys_role_menu` VALUES (18, 1, 1, 25, 1, '2023-08-31 16:36:56', 0, '2023-10-17 19:50:58');
-INSERT INTO `t_sys_role_menu` VALUES (19, 1, 1, 20, 1, '2023-08-31 16:36:56', 0, '2023-10-17 19:50:58');
-INSERT INTO `t_sys_role_menu` VALUES (20, 1, 1, 22, 1, '2023-08-31 16:36:56', 0, '2023-10-17 19:50:58');
-INSERT INTO `t_sys_role_menu` VALUES (21, 1, 1, 21, 1, '2023-08-31 16:36:56', 0, '2023-10-17 19:50:58');
-INSERT INTO `t_sys_role_menu` VALUES (22, 1, 1, 23, 1, '2023-08-31 16:36:56', 0, '2023-10-17 19:50:58');
-INSERT INTO `t_sys_role_menu` VALUES (23, 1, 1, 24, 1, '2023-08-31 16:36:56', 0, '2023-10-17 19:50:58');
+INSERT INTO `t_sys_role_menu` VALUES (1, 1, 1, 1, 1, '2023-08-31 16:36:56', 0, '2023-10-17 22:13:53');
+INSERT INTO `t_sys_role_menu` VALUES (2, 1, 1, 3, 1, '2023-08-31 16:36:56', 0, '2023-10-17 22:13:53');
+INSERT INTO `t_sys_role_menu` VALUES (3, 1, 1, 4, 1, '2023-08-31 16:36:56', 0, '2023-10-17 22:13:53');
+INSERT INTO `t_sys_role_menu` VALUES (4, 1, 1, 5, 1, '2023-08-31 16:36:56', 0, '2023-10-17 22:13:53');
+INSERT INTO `t_sys_role_menu` VALUES (5, 1, 1, 6, 1, '2023-08-31 16:36:56', 0, '2023-10-17 22:13:53');
+INSERT INTO `t_sys_role_menu` VALUES (6, 1, 1, 7, 1, '2023-08-31 16:36:56', 0, '2023-10-17 22:13:53');
+INSERT INTO `t_sys_role_menu` VALUES (7, 1, 1, 9, 1, '2023-08-31 16:36:56', 0, '2023-10-17 22:13:53');
+INSERT INTO `t_sys_role_menu` VALUES (8, 1, 1, 10, 1, '2023-08-31 16:36:56', 0, '2023-10-17 22:13:53');
+INSERT INTO `t_sys_role_menu` VALUES (9, 1, 1, 11, 1, '2023-08-31 16:36:56', 0, '2023-10-17 22:13:54');
+INSERT INTO `t_sys_role_menu` VALUES (10, 1, 1, 12, 1, '2023-08-31 16:36:56', 0, '2023-10-17 22:13:54');
+INSERT INTO `t_sys_role_menu` VALUES (11, 1, 1, 13, 1, '2023-08-31 16:36:56', 0, '2023-10-17 22:13:54');
+INSERT INTO `t_sys_role_menu` VALUES (12, 1, 1, 14, 1, '2023-08-31 16:36:56', 0, '2023-10-17 22:13:54');
+INSERT INTO `t_sys_role_menu` VALUES (13, 1, 1, 15, 1, '2023-08-31 16:36:56', 0, '2023-10-17 22:13:54');
+INSERT INTO `t_sys_role_menu` VALUES (14, 1, 1, 16, 1, '2023-08-31 16:36:56', 0, '2023-10-17 22:13:54');
+INSERT INTO `t_sys_role_menu` VALUES (15, 1, 1, 17, 1, '2023-08-31 16:36:56', 0, '2023-10-17 22:13:54');
+INSERT INTO `t_sys_role_menu` VALUES (16, 1, 1, 18, 1, '2023-08-31 16:36:56', 0, '2023-10-17 22:13:54');
+INSERT INTO `t_sys_role_menu` VALUES (17, 1, 1, 19, 1, '2023-08-31 16:36:56', 0, '2023-10-17 22:13:54');
+INSERT INTO `t_sys_role_menu` VALUES (18, 1, 1, 25, 1, '2023-08-31 16:36:56', 0, '2023-10-17 22:13:54');
+INSERT INTO `t_sys_role_menu` VALUES (19, 1, 1, 20, 1, '2023-08-31 16:36:56', 0, '2023-10-17 22:13:54');
+INSERT INTO `t_sys_role_menu` VALUES (20, 1, 1, 22, 1, '2023-08-31 16:36:56', 0, '2023-10-17 22:13:54');
+INSERT INTO `t_sys_role_menu` VALUES (21, 1, 1, 21, 1, '2023-08-31 16:36:56', 0, '2023-10-17 22:13:54');
+INSERT INTO `t_sys_role_menu` VALUES (22, 1, 1, 23, 1, '2023-08-31 16:36:56', 0, '2023-10-17 22:13:54');
+INSERT INTO `t_sys_role_menu` VALUES (23, 1, 1, 24, 1, '2023-08-31 16:36:56', 0, '2023-10-17 22:13:54');
 INSERT INTO `t_sys_role_menu` VALUES (24, 1, 2, 1, 1, '2023-08-31 16:38:01', 1, '2023-10-08 18:25:29');
-INSERT INTO `t_sys_role_menu` VALUES (25, 1, 1, 27, 1, '2023-09-13 11:16:00', 0, '2023-10-17 19:50:58');
-INSERT INTO `t_sys_role_menu` VALUES (26, 1, 1, 28, 1, '2023-09-13 17:55:38', 0, '2023-10-17 19:50:58');
-INSERT INTO `t_sys_role_menu` VALUES (27, 1, 1, 29, 1, '2023-09-15 16:45:04', 0, '2023-10-17 19:50:58');
-INSERT INTO `t_sys_role_menu` VALUES (28, 1, 1, 30, 1, '2023-09-28 11:50:35', 0, '2023-10-17 19:50:58');
-INSERT INTO `t_sys_role_menu` VALUES (29, 1, 1, 31, 1, '2023-10-08 11:00:53', 0, '2023-10-17 19:50:58');
-INSERT INTO `t_sys_role_menu` VALUES (34, 1, 1, 32, 0, '2023-10-08 15:48:05', 0, '2023-10-17 19:50:58');
-INSERT INTO `t_sys_role_menu` VALUES (50, 1, 1, 33, 1, '2023-10-09 18:39:53', 0, '2023-10-17 19:50:58');
-INSERT INTO `t_sys_role_menu` VALUES (51, 1, 1, 34, 1, '2023-10-09 18:39:53', 0, '2023-10-17 19:50:58');
-INSERT INTO `t_sys_role_menu` VALUES (52, 1, 1, 2, 1, '2023-10-10 09:57:50', 0, '2023-10-17 19:50:58');
-INSERT INTO `t_sys_role_menu` VALUES (55, 1, 1, 35, 1, '2023-10-10 16:48:38', 0, '2023-10-17 19:50:58');
-INSERT INTO `t_sys_role_menu` VALUES (56, 1, 1, 36, 1, '2023-10-10 16:48:38', 0, '2023-10-17 19:50:58');
-INSERT INTO `t_sys_role_menu` VALUES (57, 1, 1, 37, 1, '2023-10-10 16:48:38', 0, '2023-10-17 19:50:58');
-INSERT INTO `t_sys_role_menu` VALUES (58, 1, 1, 38, 1, '2023-10-10 16:48:38', 0, '2023-10-17 19:50:58');
-INSERT INTO `t_sys_role_menu` VALUES (59, 1, 1, 39, 1, '2023-10-10 18:24:07', 0, '2023-10-17 19:50:58');
-INSERT INTO `t_sys_role_menu` VALUES (60, 10, 8, 5, 1, '2023-10-10 18:42:22', 1, '2023-10-17 17:03:34');
-INSERT INTO `t_sys_role_menu` VALUES (61, 10, 8, 6, 1, '2023-10-10 18:42:22', 1, '2023-10-17 17:03:34');
-INSERT INTO `t_sys_role_menu` VALUES (62, 10, 8, 7, 1, '2023-10-10 18:42:22', 1, '2023-10-17 17:03:34');
-INSERT INTO `t_sys_role_menu` VALUES (65, 10, 8, 35, 1, '2023-10-10 18:42:22', 1, '2023-10-17 17:03:34');
-INSERT INTO `t_sys_role_menu` VALUES (66, 10, 8, 36, 1, '2023-10-10 18:42:22', 1, '2023-10-17 17:03:34');
-INSERT INTO `t_sys_role_menu` VALUES (67, 10, 8, 37, 1, '2023-10-10 18:42:22', 1, '2023-10-17 17:03:34');
-INSERT INTO `t_sys_role_menu` VALUES (68, 10, 8, 38, 1, '2023-10-10 18:42:22', 1, '2023-10-17 17:03:34');
-INSERT INTO `t_sys_role_menu` VALUES (69, 10, 8, 39, 1, '2023-10-10 18:42:22', 1, '2023-10-17 17:03:34');
-INSERT INTO `t_sys_role_menu` VALUES (70, 10, 8, 1, 1, '2023-10-10 18:42:55', 1, '2023-10-17 17:03:34');
-INSERT INTO `t_sys_role_menu` VALUES (71, 10, 8, 3, 1, '2023-10-10 18:47:25', 1, '2023-10-17 17:03:34');
-INSERT INTO `t_sys_role_menu` VALUES (72, 10, 8, 4, 1, '2023-10-10 18:47:25', 1, '2023-10-17 17:03:34');
-INSERT INTO `t_sys_role_menu` VALUES (73, 10, 9, 35, 5, '2023-10-10 18:48:30', 5, '2023-10-10 19:49:39');
-INSERT INTO `t_sys_role_menu` VALUES (74, 10, 9, 36, 5, '2023-10-10 18:48:30', 5, '2023-10-10 19:49:39');
-INSERT INTO `t_sys_role_menu` VALUES (75, 10, 9, 37, 5, '2023-10-10 18:48:30', 5, '2023-10-10 19:49:39');
-INSERT INTO `t_sys_role_menu` VALUES (76, 10, 9, 38, 5, '2023-10-10 18:48:30', 5, '2023-10-10 19:49:39');
-INSERT INTO `t_sys_role_menu` VALUES (77, 10, 9, 39, 5, '2023-10-10 18:48:30', 5, '2023-10-10 19:49:39');
-INSERT INTO `t_sys_role_menu` VALUES (78, 10, 9, 1, 5, '2023-10-10 19:49:39', 5, '2023-10-10 19:49:39');
-INSERT INTO `t_sys_role_menu` VALUES (79, 10, 8, 30, 1, '2023-10-11 09:23:15', 1, '2023-10-17 17:03:34');
-INSERT INTO `t_sys_role_menu` VALUES (80, 1, 1, 40, 1, '2023-10-13 14:25:49', 0, '2023-10-17 19:50:58');
+INSERT INTO `t_sys_role_menu` VALUES (25, 1, 1, 27, 1, '2023-09-13 11:16:00', 0, '2023-10-17 22:13:54');
+INSERT INTO `t_sys_role_menu` VALUES (26, 1, 1, 28, 1, '2023-09-13 17:55:38', 0, '2023-10-17 22:13:54');
+INSERT INTO `t_sys_role_menu` VALUES (27, 1, 1, 29, 1, '2023-09-15 16:45:04', 0, '2023-10-17 22:13:54');
+INSERT INTO `t_sys_role_menu` VALUES (28, 1, 1, 30, 1, '2023-09-28 11:50:35', 0, '2023-10-17 22:13:54');
+INSERT INTO `t_sys_role_menu` VALUES (29, 1, 1, 31, 1, '2023-10-08 11:00:53', 0, '2023-10-17 22:13:54');
+INSERT INTO `t_sys_role_menu` VALUES (34, 1, 1, 32, 0, '2023-10-08 15:48:05', 0, '2023-10-17 22:13:54');
+INSERT INTO `t_sys_role_menu` VALUES (50, 1, 1, 33, 1, '2023-10-09 18:39:53', 0, '2023-10-17 22:13:54');
+INSERT INTO `t_sys_role_menu` VALUES (51, 1, 1, 34, 1, '2023-10-09 18:39:53', 0, '2023-10-17 22:13:54');
+INSERT INTO `t_sys_role_menu` VALUES (52, 1, 1, 2, 1, '2023-10-10 09:57:50', 0, '2023-10-17 22:13:53');
+INSERT INTO `t_sys_role_menu` VALUES (55, 1, 1, 35, 1, '2023-10-10 16:48:38', 0, '2023-10-17 22:13:54');
+INSERT INTO `t_sys_role_menu` VALUES (56, 1, 1, 36, 1, '2023-10-10 16:48:38', 0, '2023-10-17 22:13:54');
+INSERT INTO `t_sys_role_menu` VALUES (57, 1, 1, 37, 1, '2023-10-10 16:48:38', 0, '2023-10-17 22:13:54');
+INSERT INTO `t_sys_role_menu` VALUES (58, 1, 1, 38, 1, '2023-10-10 16:48:38', 0, '2023-10-17 22:13:54');
+INSERT INTO `t_sys_role_menu` VALUES (59, 1, 1, 39, 1, '2023-10-10 18:24:07', 0, '2023-10-17 22:13:54');
+INSERT INTO `t_sys_role_menu` VALUES (60, 2, 8, 5, 1, '2023-10-10 18:42:22', 1, '2023-10-17 19:55:21');
+INSERT INTO `t_sys_role_menu` VALUES (61, 2, 8, 6, 1, '2023-10-10 18:42:22', 1, '2023-10-17 19:55:21');
+INSERT INTO `t_sys_role_menu` VALUES (62, 2, 8, 7, 1, '2023-10-10 18:42:22', 1, '2023-10-17 19:55:21');
+INSERT INTO `t_sys_role_menu` VALUES (65, 2, 8, 35, 1, '2023-10-10 18:42:22', 1, '2023-10-17 19:55:21');
+INSERT INTO `t_sys_role_menu` VALUES (66, 2, 8, 36, 1, '2023-10-10 18:42:22', 1, '2023-10-17 19:55:21');
+INSERT INTO `t_sys_role_menu` VALUES (67, 2, 8, 37, 1, '2023-10-10 18:42:22', 1, '2023-10-17 19:55:21');
+INSERT INTO `t_sys_role_menu` VALUES (68, 2, 8, 38, 1, '2023-10-10 18:42:22', 1, '2023-10-17 19:55:21');
+INSERT INTO `t_sys_role_menu` VALUES (69, 2, 8, 39, 1, '2023-10-10 18:42:22', 1, '2023-10-17 19:55:21');
+INSERT INTO `t_sys_role_menu` VALUES (70, 2, 8, 1, 1, '2023-10-10 18:42:55', 1, '2023-10-17 19:55:21');
+INSERT INTO `t_sys_role_menu` VALUES (71, 2, 8, 3, 1, '2023-10-10 18:47:25', 1, '2023-10-17 19:55:21');
+INSERT INTO `t_sys_role_menu` VALUES (73, 2, 9, 35, 5, '2023-10-10 18:48:30', 5, '2023-10-17 19:55:21');
+INSERT INTO `t_sys_role_menu` VALUES (74, 2, 9, 36, 5, '2023-10-10 18:48:30', 5, '2023-10-17 19:55:21');
+INSERT INTO `t_sys_role_menu` VALUES (75, 2, 9, 37, 5, '2023-10-10 18:48:30', 5, '2023-10-17 19:55:21');
+INSERT INTO `t_sys_role_menu` VALUES (76, 2, 9, 38, 5, '2023-10-10 18:48:30', 5, '2023-10-17 19:55:21');
+INSERT INTO `t_sys_role_menu` VALUES (77, 2, 9, 39, 5, '2023-10-10 18:48:30', 5, '2023-10-17 19:55:21');
+INSERT INTO `t_sys_role_menu` VALUES (78, 2, 9, 1, 5, '2023-10-10 19:49:39', 5, '2023-10-17 19:55:21');
+INSERT INTO `t_sys_role_menu` VALUES (79, 2, 8, 30, 1, '2023-10-11 09:23:15', 1, '2023-10-17 19:55:21');
+INSERT INTO `t_sys_role_menu` VALUES (80, 1, 1, 40, 1, '2023-10-13 14:25:49', 0, '2023-10-17 22:13:54');
 INSERT INTO `t_sys_role_menu` VALUES (81, 1, 10, 1, 1, '2023-10-13 15:14:50', 1, '2023-10-17 17:00:44');
-INSERT INTO `t_sys_role_menu` VALUES (82, 10, 8, 40, 1, '2023-10-13 16:01:54', 1, '2023-10-17 17:03:34');
 INSERT INTO `t_sys_role_menu` VALUES (96, 1, 10, 35, 1, '2023-10-13 16:51:46', 1, '2023-10-17 17:00:44');
 INSERT INTO `t_sys_role_menu` VALUES (97, 1, 10, 36, 1, '2023-10-13 16:51:46', 1, '2023-10-17 17:00:44');
 INSERT INTO `t_sys_role_menu` VALUES (98, 1, 10, 37, 1, '2023-10-13 16:51:46', 1, '2023-10-17 17:00:44');
@@ -4697,48 +4712,27 @@ INSERT INTO `t_sys_role_menu` VALUES (102, 1, 10, 4, 1, '2023-10-13 16:53:09', 1
 INSERT INTO `t_sys_role_menu` VALUES (103, 1, 10, 5, 1, '2023-10-13 16:53:09', 1, '2023-10-17 17:00:44');
 INSERT INTO `t_sys_role_menu` VALUES (104, 1, 10, 6, 1, '2023-10-13 16:53:09', 1, '2023-10-17 17:00:44');
 INSERT INTO `t_sys_role_menu` VALUES (105, 1, 10, 7, 1, '2023-10-13 16:53:09', 1, '2023-10-17 17:00:44');
-INSERT INTO `t_sys_role_menu` VALUES (106, 10, 14, 1, 5, '2023-10-13 17:36:52', 5, '2023-10-13 17:38:54');
-INSERT INTO `t_sys_role_menu` VALUES (107, 10, 14, 3, 5, '2023-10-13 17:36:52', 5, '2023-10-13 17:38:54');
-INSERT INTO `t_sys_role_menu` VALUES (108, 10, 14, 4, 5, '2023-10-13 17:36:52', 5, '2023-10-13 17:38:54');
-INSERT INTO `t_sys_role_menu` VALUES (109, 10, 14, 5, 5, '2023-10-13 17:36:52', 5, '2023-10-13 17:38:54');
-INSERT INTO `t_sys_role_menu` VALUES (110, 10, 14, 6, 5, '2023-10-13 17:36:52', 5, '2023-10-13 17:38:54');
-INSERT INTO `t_sys_role_menu` VALUES (111, 10, 14, 7, 5, '2023-10-13 17:36:52', 5, '2023-10-13 17:38:54');
-INSERT INTO `t_sys_role_menu` VALUES (112, 10, 14, 35, 5, '2023-10-13 17:36:52', 5, '2023-10-13 17:38:54');
-INSERT INTO `t_sys_role_menu` VALUES (113, 10, 14, 36, 5, '2023-10-13 17:36:52', 5, '2023-10-13 17:38:54');
-INSERT INTO `t_sys_role_menu` VALUES (114, 10, 14, 37, 5, '2023-10-13 17:36:52', 5, '2023-10-13 17:38:54');
-INSERT INTO `t_sys_role_menu` VALUES (115, 10, 14, 38, 5, '2023-10-13 17:36:52', 5, '2023-10-13 17:38:54');
-INSERT INTO `t_sys_role_menu` VALUES (116, 10, 14, 39, 5, '2023-10-13 17:36:52', 5, '2023-10-13 17:38:54');
-INSERT INTO `t_sys_role_menu` VALUES (117, 12, 17, 1, 1, '2023-10-14 15:31:49', 1, '2023-10-17 17:03:34');
-INSERT INTO `t_sys_role_menu` VALUES (118, 12, 17, 3, 1, '2023-10-14 15:31:49', 1, '2023-10-17 17:03:34');
-INSERT INTO `t_sys_role_menu` VALUES (119, 12, 17, 4, 1, '2023-10-14 15:31:49', 1, '2023-10-17 17:03:34');
-INSERT INTO `t_sys_role_menu` VALUES (120, 12, 17, 5, 1, '2023-10-14 15:31:49', 1, '2023-10-17 17:03:35');
-INSERT INTO `t_sys_role_menu` VALUES (121, 12, 17, 6, 1, '2023-10-14 15:31:49', 1, '2023-10-17 17:03:35');
-INSERT INTO `t_sys_role_menu` VALUES (122, 12, 17, 7, 1, '2023-10-14 15:31:49', 1, '2023-10-17 17:03:35');
-INSERT INTO `t_sys_role_menu` VALUES (123, 12, 17, 40, 1, '2023-10-14 15:31:49', 1, '2023-10-17 17:03:35');
-INSERT INTO `t_sys_role_menu` VALUES (124, 12, 17, 30, 1, '2023-10-14 15:31:49', 1, '2023-10-17 17:03:35');
-INSERT INTO `t_sys_role_menu` VALUES (125, 12, 17, 35, 1, '2023-10-14 15:31:49', 1, '2023-10-17 17:03:35');
-INSERT INTO `t_sys_role_menu` VALUES (126, 12, 17, 36, 1, '2023-10-14 15:31:49', 1, '2023-10-17 17:03:35');
-INSERT INTO `t_sys_role_menu` VALUES (127, 12, 17, 37, 1, '2023-10-14 15:31:49', 1, '2023-10-17 17:03:35');
-INSERT INTO `t_sys_role_menu` VALUES (128, 12, 17, 38, 1, '2023-10-14 15:31:49', 1, '2023-10-17 17:03:35');
-INSERT INTO `t_sys_role_menu` VALUES (129, 12, 17, 39, 1, '2023-10-14 15:31:49', 1, '2023-10-17 17:03:35');
-INSERT INTO `t_sys_role_menu` VALUES (132, 1, 1, 41, 1, '2023-10-15 14:05:10', 0, '2023-10-17 19:50:58');
-INSERT INTO `t_sys_role_menu` VALUES (133, 10, 8, 41, 1, '2023-10-15 14:06:07', 1, '2023-10-17 17:03:34');
-INSERT INTO `t_sys_role_menu` VALUES (134, 12, 17, 41, 1, '2023-10-15 14:06:08', 1, '2023-10-17 17:03:35');
-INSERT INTO `t_sys_role_menu` VALUES (135, 12, 18, 1, 20, '2023-10-15 14:26:32', 20, '2023-10-15 14:28:47');
-INSERT INTO `t_sys_role_menu` VALUES (136, 12, 18, 4, 20, '2023-10-15 14:28:36', 20, '2023-10-15 14:28:47');
-INSERT INTO `t_sys_role_menu` VALUES (137, 12, 18, 3, 20, '2023-10-15 14:28:47', 20, '2023-10-15 14:28:47');
-INSERT INTO `t_sys_role_menu` VALUES (141, 1, 1, 45, 1, '2023-10-17 16:01:23', 0, '2023-10-17 19:50:58');
-INSERT INTO `t_sys_role_menu` VALUES (142, 1, 1, 46, 1, '2023-10-17 16:01:50', 0, '2023-10-17 19:50:58');
-INSERT INTO `t_sys_role_menu` VALUES (143, 1, 1, 47, 1, '2023-10-17 16:02:10', 0, '2023-10-17 19:50:58');
-INSERT INTO `t_sys_role_menu` VALUES (144, 1, 1, 44, 1, '2023-10-17 16:22:04', 0, '2023-10-17 19:50:58');
-INSERT INTO `t_sys_role_menu` VALUES (145, 10, 8, 44, 1, '2023-10-17 17:03:16', 1, '2023-10-17 17:03:34');
-INSERT INTO `t_sys_role_menu` VALUES (146, 10, 8, 45, 1, '2023-10-17 17:03:16', 1, '2023-10-17 17:03:34');
-INSERT INTO `t_sys_role_menu` VALUES (147, 10, 8, 46, 1, '2023-10-17 17:03:16', 1, '2023-10-17 17:03:34');
-INSERT INTO `t_sys_role_menu` VALUES (148, 10, 8, 47, 1, '2023-10-17 17:03:16', 1, '2023-10-17 17:03:34');
-INSERT INTO `t_sys_role_menu` VALUES (149, 12, 17, 44, 1, '2023-10-17 17:03:17', 1, '2023-10-17 17:03:35');
-INSERT INTO `t_sys_role_menu` VALUES (150, 12, 17, 45, 1, '2023-10-17 17:03:17', 1, '2023-10-17 17:03:35');
-INSERT INTO `t_sys_role_menu` VALUES (151, 12, 17, 46, 1, '2023-10-17 17:03:17', 1, '2023-10-17 17:03:35');
-INSERT INTO `t_sys_role_menu` VALUES (152, 12, 17, 47, 1, '2023-10-17 17:03:17', 1, '2023-10-17 17:03:35');
+INSERT INTO `t_sys_role_menu` VALUES (106, 2, 14, 1, 5, '2023-10-13 17:36:52', 5, '2023-10-17 19:55:21');
+INSERT INTO `t_sys_role_menu` VALUES (107, 2, 14, 3, 5, '2023-10-13 17:36:52', 5, '2023-10-17 19:55:21');
+INSERT INTO `t_sys_role_menu` VALUES (109, 2, 14, 5, 5, '2023-10-13 17:36:52', 5, '2023-10-17 19:55:21');
+INSERT INTO `t_sys_role_menu` VALUES (110, 2, 14, 6, 5, '2023-10-13 17:36:52', 5, '2023-10-17 19:55:21');
+INSERT INTO `t_sys_role_menu` VALUES (111, 2, 14, 7, 5, '2023-10-13 17:36:52', 5, '2023-10-17 19:55:21');
+INSERT INTO `t_sys_role_menu` VALUES (112, 2, 14, 35, 5, '2023-10-13 17:36:52', 5, '2023-10-17 19:55:21');
+INSERT INTO `t_sys_role_menu` VALUES (113, 2, 14, 36, 5, '2023-10-13 17:36:52', 5, '2023-10-17 19:55:21');
+INSERT INTO `t_sys_role_menu` VALUES (114, 2, 14, 37, 5, '2023-10-13 17:36:52', 5, '2023-10-17 19:55:21');
+INSERT INTO `t_sys_role_menu` VALUES (115, 2, 14, 38, 5, '2023-10-13 17:36:52', 5, '2023-10-17 19:55:21');
+INSERT INTO `t_sys_role_menu` VALUES (116, 2, 14, 39, 5, '2023-10-13 17:36:52', 5, '2023-10-17 19:55:21');
+INSERT INTO `t_sys_role_menu` VALUES (132, 1, 1, 41, 1, '2023-10-15 14:05:10', 0, '2023-10-17 22:13:54');
+INSERT INTO `t_sys_role_menu` VALUES (133, 2, 8, 41, 1, '2023-10-15 14:06:07', 1, '2023-10-17 19:55:21');
+INSERT INTO `t_sys_role_menu` VALUES (141, 1, 1, 45, 1, '2023-10-17 16:01:23', 0, '2023-10-17 22:13:54');
+INSERT INTO `t_sys_role_menu` VALUES (142, 1, 1, 46, 1, '2023-10-17 16:01:50', 0, '2023-10-17 22:13:54');
+INSERT INTO `t_sys_role_menu` VALUES (143, 1, 1, 47, 1, '2023-10-17 16:02:10', 0, '2023-10-17 22:13:54');
+INSERT INTO `t_sys_role_menu` VALUES (144, 1, 1, 44, 1, '2023-10-17 16:22:04', 0, '2023-10-17 22:13:54');
+INSERT INTO `t_sys_role_menu` VALUES (145, 2, 8, 44, 1, '2023-10-17 17:03:16', 1, '2023-10-17 19:55:21');
+INSERT INTO `t_sys_role_menu` VALUES (146, 2, 8, 45, 1, '2023-10-17 17:03:16', 1, '2023-10-17 19:55:21');
+INSERT INTO `t_sys_role_menu` VALUES (147, 2, 8, 46, 1, '2023-10-17 17:03:16', 1, '2023-10-17 19:55:21');
+INSERT INTO `t_sys_role_menu` VALUES (148, 2, 8, 47, 1, '2023-10-17 17:03:16', 1, '2023-10-17 19:55:21');
+INSERT INTO `t_sys_role_menu` VALUES (153, 2, 8, 33, 1, '2023-10-17 19:53:53', 1, '2023-10-17 19:55:21');
 
 -- ----------------------------
 -- Table structure for t_sys_tenant
@@ -4766,8 +4760,7 @@ CREATE TABLE `t_sys_tenant`  (
 -- Records of t_sys_tenant
 -- ----------------------------
 INSERT INTO `t_sys_tenant` VALUES (1, 'SmallBoot', 1, '郑清', '15183308888', 1, '2023-10-08 05:02:06', 9999, 1, 1, '2023-10-08 17:02:17', 1, '2023-10-13 14:36:33', b'0');
-INSERT INTO `t_sys_tenant` VALUES (10, '人力资源招聘', 5, '小郑', '15188888888', 1, '2023-10-10 06:40:12', 100, 6, 1, '2023-10-10 18:42:22', 1, '2023-10-13 14:36:59', b'0');
-INSERT INTO `t_sys_tenant` VALUES (12, '郑清的测试租户', 20, 'admin', '15186366666', 1, '2023-10-14 03:31:26', NULL, 6, 1, '2023-10-14 15:31:49', 1, '2023-10-14 15:31:49', b'0');
+INSERT INTO `t_sys_tenant` VALUES (2, '人力资源招聘', 5, '小郑', '15188888888', 1, '2023-10-10 06:40:12', 100, 6, 1, '2023-10-10 18:42:22', 1, '2023-10-17 19:55:39', b'0');
 
 -- ----------------------------
 -- Table structure for t_sys_tenant_package
@@ -4790,9 +4783,9 @@ CREATE TABLE `t_sys_tenant_package`  (
 -- ----------------------------
 -- Records of t_sys_tenant_package
 -- ----------------------------
-INSERT INTO `t_sys_tenant_package` VALUES (1, '超级套餐', 1, '[1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 44, 45, 46, 47]', '包含系统所有操作权限', 1, '2023-10-08 14:45:41', 0, '2023-10-17 19:50:59', b'0');
+INSERT INTO `t_sys_tenant_package` VALUES (1, '超级套餐', 1, '[1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 44, 45, 46, 47]', '包含系统所有操作权限', 1, '2023-10-08 14:45:41', 0, '2023-10-17 22:13:54', b'0');
 INSERT INTO `t_sys_tenant_package` VALUES (4, '普通套餐', 0, '[1, 3, 4, 5, 44, 45, 46, 47, 6, 7, 33, 34]', '普通套餐', 1, '2023-10-08 15:33:45', 1, '2023-10-17 17:03:43', b'0');
-INSERT INTO `t_sys_tenant_package` VALUES (6, 'saas招聘管理套餐', 1, '[1, 3, 4, 5, 44, 45, 46, 47, 6, 7, 40, 30, 41, 35, 36, 37, 38, 39]', '招聘使用', 1, '2023-10-10 18:37:20', 1, '2023-10-17 17:03:34', b'0');
+INSERT INTO `t_sys_tenant_package` VALUES (6, 'saas招聘管理套餐', 1, '[1, 3, 5, 44, 45, 46, 47, 6, 7, 33, 30, 41, 35, 36, 37, 38, 39]', '招聘使用', 1, '2023-10-10 18:37:20', 1, '2023-10-17 19:53:53', b'0');
 
 -- ----------------------------
 -- Table structure for t_sys_user
@@ -4824,8 +4817,8 @@ CREATE TABLE `t_sys_user`  (
 -- ----------------------------
 INSERT INTO `t_sys_user` VALUES (1, 1, 'admin', '3014dcb9ee3639535d5d9301b32c840c', '郑清', 1, '15188888888', 'zhengqingya@it.com', 'http://127.0.0.1:886/2023-09-28/1707280259789041664-美图28.jpg', 1, '[1, 2, 3]', 1, 1, '2020-08-22 15:01:51', 1, '2023-10-12 13:54:07', 0);
 INSERT INTO `t_sys_user` VALUES (2, 1, 'test', '3014dcb9ee3639535d5d9301b32c840c', '测试号', 1, '', '', 'http://127.0.0.1:886/2023-10-08/1710975930417258496-小知识.jpg', 2, '[]', 0, 1, '2020-08-22 15:01:51', 1, '2023-10-17 18:21:07', 0);
-INSERT INTO `t_sys_user` VALUES (5, 10, 'admin', '3014dcb9ee3639535d5d9301b32c840c', 'admin', 0, '15188888888', '', 'http://127.0.0.1:886/2023-10-11/1711915190762745856-美图84.png', 5, '[8]', 1, 1, '2023-10-10 18:42:24', 5, '2023-10-13 21:50:13', 0);
-INSERT INTO `t_sys_user` VALUES (6, 10, 'test', '3014dcb9ee3639535d5d9301b32c840c', '测试人员', 0, '', '', 'http://127.0.0.1:886/2023-10-10/1711694989127454720-小知识.jpg', 5, '[9]', 0, 5, '2023-10-10 19:47:22', 5, '2023-10-13 21:48:44', 0);
+INSERT INTO `t_sys_user` VALUES (5, 2, 'admin', '3014dcb9ee3639535d5d9301b32c840c', 'admin', 0, '15188888888', '', 'http://127.0.0.1:886/2023-10-11/1711915190762745856-美图84.png', 5, '[8]', 1, 1, '2023-10-10 18:42:24', 5, '2023-10-13 21:50:13', 0);
+INSERT INTO `t_sys_user` VALUES (6, 2, 'test', '3014dcb9ee3639535d5d9301b32c840c', '测试人员', 0, '', '', 'http://127.0.0.1:886/2023-10-10/1711694989127454720-小知识.jpg', 5, '[9]', 0, 5, '2023-10-10 19:47:22', 5, '2023-10-13 21:48:44', 0);
 
 -- ----------------------------
 -- Table structure for t_sys_user_re_oauth
@@ -4867,18 +4860,16 @@ CREATE TABLE `t_sys_user_role`  (
 -- ----------------------------
 -- Records of t_sys_user_role
 -- ----------------------------
-INSERT INTO `t_sys_user_role` VALUES (1, 1, 1, 1, 0, '2023-08-31 15:54:57', 0, '2023-10-17 19:50:58');
-INSERT INTO `t_sys_user_role` VALUES (7, 10, 5, 8, 1, '2023-10-10 18:42:24', 1, '2023-10-10 18:42:24');
-INSERT INTO `t_sys_user_role` VALUES (8, 10, 6, 9, 5, '2023-10-10 19:47:41', 5, '2023-10-13 21:48:44');
+INSERT INTO `t_sys_user_role` VALUES (1, 1, 1, 1, 0, '2023-08-31 15:54:57', 0, '2023-10-17 22:13:53');
+INSERT INTO `t_sys_user_role` VALUES (7, 2, 5, 8, 1, '2023-10-10 18:42:24', 1, '2023-10-10 18:42:24');
+INSERT INTO `t_sys_user_role` VALUES (8, 2, 6, 9, 5, '2023-10-10 19:47:41', 5, '2023-10-13 21:48:44');
 INSERT INTO `t_sys_user_role` VALUES (9, 1, 2, 2, 1, '2023-10-11 09:35:18', 1, '2023-10-17 18:21:07');
 INSERT INTO `t_sys_user_role` VALUES (10, 1, 8, 10, 1, '2023-10-13 15:16:12', 1, '2023-10-13 15:16:12');
 INSERT INTO `t_sys_user_role` VALUES (11, 1, 9, 10, 1, '2023-10-13 15:20:22', 1, '2023-10-13 15:20:22');
 INSERT INTO `t_sys_user_role` VALUES (12, 1, 10, 10, 1, '2023-10-13 15:37:31', 1, '2023-10-13 15:37:31');
 INSERT INTO `t_sys_user_role` VALUES (13, 1, 11, 10, 1, '2023-10-13 15:54:44', 1, '2023-10-13 15:54:44');
-INSERT INTO `t_sys_user_role` VALUES (15, 10, 14, 14, 5, '2023-10-13 17:37:12', 5, '2023-10-13 17:37:12');
-INSERT INTO `t_sys_user_role` VALUES (16, 10, 15, 14, 5, '2023-10-13 21:03:53', 5, '2023-10-13 21:03:53');
-INSERT INTO `t_sys_user_role` VALUES (17, 12, 20, 17, 1, '2023-10-14 15:31:49', 1, '2023-10-14 15:31:49');
-INSERT INTO `t_sys_user_role` VALUES (18, 12, 21, 18, 20, '2023-10-14 15:34:07', 20, '2023-10-14 15:34:07');
+INSERT INTO `t_sys_user_role` VALUES (15, 2, 14, 14, 5, '2023-10-13 17:37:12', 5, '2023-10-13 17:37:12');
+INSERT INTO `t_sys_user_role` VALUES (16, 2, 15, 14, 5, '2023-10-13 21:03:53', 5, '2023-10-13 21:03:53');
 INSERT INTO `t_sys_user_role` VALUES (19, 1, 2, 15, 1, '2023-10-17 18:16:29', 1, '2023-10-17 18:21:07');
 
 -- ----------------------------
@@ -4905,11 +4896,6 @@ CREATE TABLE `t_sys_version`  (
 -- ----------------------------
 -- Records of t_sys_version
 -- ----------------------------
-INSERT INTO `t_sys_version` VALUES (30, 12, '0.0.1', '提交代码', 10, NULL, '初版', 1, '2023-10-15 16:56:24', '2023-10-15 16:56:24', 20, 20, 0);
-INSERT INTO `t_sys_version` VALUES (31, 12, '0.0.2', '初版', 10, NULL, '已提交代码', 1, '2023-10-15 17:07:11', '2023-10-15 17:07:11', 20, 20, 0);
-INSERT INTO `t_sys_version` VALUES (32, 12, '0.0.3', '初版', 10, NULL, '已提交代码', 1, '2023-10-15 17:07:35', '2023-10-15 17:07:35', 20, 20, 0);
-INSERT INTO `t_sys_version` VALUES (33, 12, '0.0.4', '初版测试', 10, NULL, '已提交代码', 1, '2023-10-15 17:07:41', '2023-10-15 17:07:41', 20, 20, 0);
-INSERT INTO `t_sys_version` VALUES (34, 12, '0.0.5', '初版测试', 10, NULL, '已提交代码', 1, '2023-10-15 17:09:02', '2023-10-15 17:09:02', 20, 20, 0);
 
 -- ----------------------------
 -- Table structure for t_wx_mp_account
@@ -5049,7 +5035,6 @@ CREATE TABLE `ums_user`  (
 INSERT INTO `ums_user` VALUES (1, 1, 'oT_ym5AicCHtMBq_yeo0JLZ8GDEY', NULL, '郑清', '15183388881', 0, '2003-12-16', 'http://127.0.0.1:886/2023-08-18/1692481377867599872-tmp_675425ab88aba1d66daefbd93061e999.jpg', 1, '2023-04-10 15:13:33', '2023-10-16 11:25:28', 0, 0, 0);
 INSERT INTO `ums_user` VALUES (1645325190512640001, 1, '666', NULL, '郑清', '15183388888', 1, '2022-06-10', 'http://127.0.0.1:886/2023-08-18/1692453663244705792-img.png', 1, '2022-06-10 16:10:24', '2023-10-12 11:21:22', 1, 1, 0);
 INSERT INTO `ums_user` VALUES (1712387814436040704, 1, '_000DQ4VopX4JhVwS44qxF9rSafvhRGMYeWD', '8d22308f-bde1-4e6f-a21d-d56a1fbe6880', '郑清', '555', 1, NULL, 'https://p3.douyinpic.com/aweme/100x100/aweme-avatar/tos-cn-avt-0015_e482b3e53cb55e3524bcbecfe0778bb1.jpeg?from=3782654143', 2, '2023-10-12 16:40:44', '2023-10-12 16:43:58', 0, 0, 0);
-INSERT INTO `ums_user` VALUES (1713151625736556544, 10, '_000gzpQZzl6-qGmlqLtkS0OyQDrz9Oh4zuz', '0366f482-94c4-4f20-aa71-dc70bc18126e', 'Jinsen', NULL, 0, NULL, 'https://p9-passport.byteacctimg.com/img/mosaic-legacy/3795/3044413937~300x300.image', 2, '2023-10-14 19:15:51', '2023-10-14 19:15:51', 0, 0, 0);
-INSERT INTO `ums_user` VALUES (1713794074604281856, 12, '_000gzpQZzl6-qGmlqLtkS0OyQDrz9Oh4zuz', '0366f482-94c4-4f20-aa71-dc70bc18126e', 'Jinsen', NULL, 0, NULL, 'https://p9-passport.byteacctimg.com/img/mosaic-legacy/3795/3044413937~300x300.image', 2, '2023-10-16 13:48:43', '2023-10-16 13:48:43', 0, 0, 0);
+INSERT INTO `ums_user` VALUES (1713151625736556544, 2, '_000gzpQZzl6-qGmlqLtkS0OyQDrz9Oh4zuz', '0366f482-94c4-4f20-aa71-dc70bc18126e', 'Jinsen', NULL, 0, NULL, 'https://p9-passport.byteacctimg.com/img/mosaic-legacy/3795/3044413937~300x300.image', 2, '2023-10-14 19:15:51', '2023-10-17 19:55:21', 0, 0, 0);
 
 SET FOREIGN_KEY_CHECKS = 1;

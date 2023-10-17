@@ -338,6 +338,7 @@ public class DyServiceApiUtil {
      * @date 2022/7/28 15:40
      */
     public static String retrieve_authorization_code(String component_appid, String component_access_token, String authorization_appid) {
+        Assert.notBlank(authorization_appid, "授权小程序 appid 不能为空！");
         String key = AUTHORIZATION_CODE + component_appid + ":" + authorization_appid;
         // 1、缓存中获取
         String authorization_code = RedisUtil.get(key);
