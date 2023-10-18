@@ -7,7 +7,6 @@
         tsrs.*
         FROM t_sys_role_scope tsrs
         <where>
-            tsrs.is_deleted=0
             <if test="filter.roleId!=null">
                 AND tsrs.role_id = #{filter.roleId}
             </if>

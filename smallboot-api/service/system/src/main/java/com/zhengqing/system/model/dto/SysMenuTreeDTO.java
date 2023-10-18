@@ -39,4 +39,10 @@ public class SysMenuTreeDTO {
     @ApiModelProperty("父id")
     private Integer parentId;
 
+    /**
+     * {@link com.zhengqing.system.enums.SysMenuTypeEnum}
+     */
+    @ApiModelProperty(value = "类型")
+    private Integer type;
+
 }

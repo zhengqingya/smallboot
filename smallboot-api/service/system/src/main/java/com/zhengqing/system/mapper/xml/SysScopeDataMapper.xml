@@ -17,6 +17,14 @@
             <if test="filter.scopeType!=null">
                 AND tssd.scope_type = #{filter.scopeType}
             </if>
+            <if test="filter.tenantReMenuIdList != null and filter.tenantReMenuIdList.size() > 0">
+                AND tssd.menu_id IN
+                <foreach item="tenantReMenuId" index="index" collection="filter.tenantReMenuIdList" open="("
+                         separator=","
+                         close=")">
+                    #{tenantReMenuId}
+                </foreach>
+            </if>
         </where>
         ORDER BY tssd.create_time DESC
     </select>

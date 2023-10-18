@@ -1,9 +1,8 @@
 package com.zhengqing.system.service;
 
 import com.zhengqing.system.model.bo.SysMenuTree;
-import com.zhengqing.system.model.bo.SysRoleRePermSaveBO;
 import com.zhengqing.system.model.dto.SysMenuTreeDTO;
-import com.zhengqing.system.model.dto.SysRoleReScopeSaveDTO;
+import com.zhengqing.system.model.dto.SysRoleRePermSaveDTO;
 import com.zhengqing.system.model.dto.SysUserPermDTO;
 import com.zhengqing.system.model.vo.SysRoleAllPermissionDetailVO;
 import com.zhengqing.system.model.vo.SysUserPermVO;
@@ -79,24 +78,24 @@ public interface ISysPermBusinessService {
     void refreshTenantRePerm(Integer tenantId);
 
     /**
-     * 保存角色权限（菜单权限+按钮权限）
+     * 保存角色权限（菜单权限+按钮权限+数据权限）
      *
      * @param params 提交参数
      * @return void
      * @author zhengqingya
      * @date 2020/9/10 15:01
      */
-    void saveRoleRePerm(SysRoleRePermSaveBO params);
+    void saveRoleRePerm(SysRoleRePermSaveDTO params);
 
     /**
-     * 保存角色权限（数据权限）
+     * 根据角色id拿到关联的数据权限
      *
-     * @param params 提交参数
-     * @return void
+     * @param roleId 角色ID
+     * @return 数据权限ids
      * @author zhengqingya
      * @date 2020/9/10 15:01
      */
-    void saveRoleReScope(SysRoleReScopeSaveDTO params);
+    List<Integer> getScopeIdListByRoleId(Integer roleId);
 
     /**
      * 获取菜单树 -- 根据租户获取

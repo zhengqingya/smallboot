@@ -4,13 +4,16 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
+import com.zhengqing.common.base.context.TenantIdContext;
 import com.zhengqing.system.entity.SysScopeData;
+import com.zhengqing.system.entity.SysTenantPackage;
 import com.zhengqing.system.mapper.SysScopeDataMapper;
 import com.zhengqing.system.model.dto.SysScopeDataBaseDTO;
 import com.zhengqing.system.model.dto.SysScopeDataSaveDTO;
 import com.zhengqing.system.model.vo.SysScopeDataBaseVO;
 import com.zhengqing.system.service.ISysRoleScopeService;
 import com.zhengqing.system.service.ISysScopeDataService;
+import com.zhengqing.system.service.ISysTenantPackageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -32,9 +35,19 @@ public class SysScopeDataServiceImpl extends ServiceImpl<SysScopeDataMapper, Sys
 
     private final SysScopeDataMapper sysScopeDataMapper;
     private final ISysRoleScopeService iSysRoleScopeService;
+    private final ISysTenantPackageService iSysTenantPackageService;
+
+    /**
+     * 查询租户关联权限
+     */
+    private List<Integer> getTenantReMenuIdList() {
+        SysTenantPackage sysTenantPackage = this.iSysTenantPackageService.detailReTenantId(TenantIdContext.getTenantId());
+        return sysTenantPackage.getMenuIdList();
+    }
 
     @Override
     public IPage<SysScopeDataBaseVO> page(SysScopeDataBaseDTO params) {
+        params.setTenantReMenuIdList(this.getTenantReMenuIdList());
         IPage<SysScopeDataBaseVO> result = this.sysScopeDataMapper.selectDataList(new Page<>(), params);
         List<SysScopeDataBaseVO> list = result.getRecords();
         list.forEach(SysScopeDataBaseVO::handleData);
@@ -43,8 +56,10 @@ public class SysScopeDataServiceImpl extends ServiceImpl<SysScopeDataMapper, Sys
 
     @Override
     public List<SysScopeDataBaseVO> list(SysScopeDataBaseDTO params) {
+        params.setTenantReMenuIdList(this.getTenantReMenuIdList());
         return this.sysScopeDataMapper.selectDataList(params);
     }
+
 
     @Override
     @Transactional(rollbackFor = Exception.class)

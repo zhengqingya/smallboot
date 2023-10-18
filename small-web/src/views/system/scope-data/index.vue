@@ -32,15 +32,15 @@
       </el-table-column>
       <el-table-column label="权限名称" prop="scopeName" align="center" />
       <el-table-column label="权限字段" prop="scopeColumn" align="center" />
-      <el-table-column label="可见字段" prop="scopeVisibleField" align="center" />
-      <el-table-column label="权限类名" prop="scopeClass" align="center" />
+      <!-- <el-table-column label="可见字段" prop="scopeVisibleField" align="center" /> -->
+      <!-- <el-table-column label="权限类名" prop="scopeClass" align="center" /> -->
       <el-table-column label="规则类型" align="center">
         <template #default="scope">
           <el-tag>{{ typeList.find((e) => e.value == scope.row.scopeType).label }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="规则值" prop="scopeValue" align="center" />
-      <el-table-column label="备注" prop="remark" align="center" />
+      <!-- <el-table-column label="规则值" prop="scopeValue" align="center" /> -->
+      <!-- <el-table-column label="备注" prop="remark" align="center" /> -->
       <el-table-column label="创建时间" prop="createTime" align="center" />
       <el-table-column align="center" label="操作">
         <template #default="scope">
@@ -108,7 +108,7 @@ function refreshTableData() {
   proxy.$refs.baseTableRef.refresh();
 }
 async function menuTree() {
-  let res = await proxy.$api.sys_menu.tree();
+  let res = await proxy.$api.sys_menu.tree({ type: 1 });
   menuList = res.data;
 }
 function handleAdd() {

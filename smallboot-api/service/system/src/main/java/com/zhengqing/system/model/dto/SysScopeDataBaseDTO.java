@@ -1,5 +1,6 @@
 package com.zhengqing.system.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zhengqing.common.base.model.dto.BasePageDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -8,6 +9,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+
+import java.util.List;
 
 /**
  * <p> 系统管理-数据权限-base-请求参数 </p>
@@ -26,7 +29,7 @@ public class SysScopeDataBaseDTO extends BasePageDTO {
 
     @ApiModelProperty("菜单ID")
     private Integer menuId;
-    
+
     @ApiModelProperty("权限名称")
     private String scopeName;
 
@@ -35,5 +38,9 @@ public class SysScopeDataBaseDTO extends BasePageDTO {
      */
     @ApiModelProperty("规则类型")
     private Integer scopeType;
+
+    @JsonIgnore
+    @ApiModelProperty("租户关联的菜单ids")
+    private List<Integer> tenantReMenuIdList;
 
 }

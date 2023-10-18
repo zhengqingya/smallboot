@@ -15,10 +15,10 @@ import com.zhengqing.system.entity.SysTenant;
 import com.zhengqing.system.entity.SysTenantPackage;
 import com.zhengqing.system.enums.SysRoleCodeEnum;
 import com.zhengqing.system.model.bo.SysMenuTree;
-import com.zhengqing.system.model.bo.SysRoleRePermSaveBO;
 import com.zhengqing.system.model.dto.*;
 import com.zhengqing.system.model.vo.SysRoleAllPermissionDetailVO;
 import com.zhengqing.system.model.vo.SysRoleReBtnPermListVO;
+import com.zhengqing.system.model.vo.SysRoleScopeListVO;
 import com.zhengqing.system.model.vo.SysUserPermVO;
 import com.zhengqing.system.service.*;
 import lombok.RequiredArgsConstructor;
@@ -77,7 +77,7 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
         List<Integer> menuIdList = this.iSysMenuService.allMenuId();
 
         // 3、保存角色关联的菜单和按钮权限
-        this.saveRoleRePerm(SysRoleRePermSaveBO.builder().roleId(roleId).menuIdList(menuIdList).build());
+        this.saveRoleRePerm(SysRoleRePermSaveDTO.builder().roleId(roleId).menuIdList(menuIdList).build());
         log.info("刷新超级管理员权限成功!");
     }
 
@@ -173,7 +173,7 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
 
         // 5、给租户管理员默认加上最新的权限
         this.saveRoleRePerm(
-                SysRoleRePermSaveBO.builder()
+                SysRoleRePermSaveDTO.builder()
                         .roleId(this.iSysRoleService.getRoleIdByCode(SysRoleCodeEnum.租户管理员))
                         .menuIdList(sysTenantPackage.getMenuIdList())
                         .build()
@@ -183,7 +183,7 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void saveRoleRePerm(SysRoleRePermSaveBO params) {
+    public void saveRoleRePerm(SysRoleRePermSaveDTO params) {
         Integer roleId = params.getRoleId();
         this.iSysRoleMenuService.saveRoleMenuIds(
                 SysRoleReMenuSaveDTO.builder()
@@ -191,12 +191,16 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
                         .menuIdList(params.getMenuIdList())
                         .build()
         );
+        this.iSysRoleScopeService.saveScopeData(SysRoleReScopeSaveDTO.builder()
+                .roleId(roleId)
+                .scopeIdList(params.getScopeIdList())
+                .build());
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void saveRoleReScope(SysRoleReScopeSaveDTO params) {
-        this.iSysRoleScopeService.saveScopeData(params);
+    public List<Integer> getScopeIdListByRoleId(Integer roleId) {
+        List<SysRoleScopeListVO> list = this.iSysRoleScopeService.list(SysRoleScopeListDTO.builder().roleId(roleId).build());
+        return list.stream().map(SysRoleScopeListVO::getScopeId).collect(Collectors.toList());
     }
 
     @Override

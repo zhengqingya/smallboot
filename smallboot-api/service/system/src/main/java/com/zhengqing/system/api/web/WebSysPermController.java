@@ -4,9 +4,7 @@ import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.base.context.SysUserContext;
 import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.common.core.custom.repeatsubmit.NoRepeatSubmit;
-import com.zhengqing.system.model.bo.SysRoleRePermSaveBO;
 import com.zhengqing.system.model.dto.SysRoleRePermSaveDTO;
-import com.zhengqing.system.model.dto.SysRoleReScopeSaveDTO;
 import com.zhengqing.system.model.dto.SysUserPermDTO;
 import com.zhengqing.system.model.vo.SysUserPermVO;
 import com.zhengqing.system.service.ISysPermBusinessService;
@@ -16,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * <p>
@@ -48,20 +48,16 @@ public class WebSysPermController extends BaseController {
     }
 
     @NoRepeatSubmit
-    @PostMapping("saveRoleReMenu")
-    @ApiOperation("保存角色权限（菜单权限+按钮权限）")
-    public void saveRoleReMenu(@Validated @RequestBody SysRoleRePermSaveDTO params) {
-        this.iSysPermBusinessService.saveRoleRePerm(SysRoleRePermSaveBO.builder()
-                .roleId(params.getRoleId())
-                .menuIdList(params.getMenuIdList())
-                .build());
+    @PostMapping("saveRoleRePerm")
+    @ApiOperation("保存角色权限（菜单权限+按钮权限+数据权限）")
+    public void saveRoleRePerm(@Validated @RequestBody SysRoleRePermSaveDTO params) {
+        this.iSysPermBusinessService.saveRoleRePerm(params);
     }
 
-    @NoRepeatSubmit
-    @PostMapping("saveRoleReScope")
-    @ApiOperation("保存角色权限（数据权限）")
-    public void saveRoleReScope(@Validated @RequestBody SysRoleReScopeSaveDTO params) {
-        this.iSysPermBusinessService.saveRoleReScope(params);
+    @GetMapping("getScopeIdListByRoleId")
+    @ApiOperation("根据角色id拿到关联的数据权限")
+    public List<Integer> getScopeIdListByRoleId(@RequestParam Integer roleId) {
+        return this.iSysPermBusinessService.getScopeIdListByRoleId(roleId);
     }
 
 }

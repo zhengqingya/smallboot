@@ -22,7 +22,6 @@
 const { proxy } = getCurrentInstance();
 let menuTree = $ref([]); // 菜单树
 let defaultCheckedKeys = $ref([]); //  树菜单默认选中的数据
-let currentSelectedMenu = $ref(null); // 当前选中的菜单
 let isInitCount = $ref(0);
 
 const props = defineProps({
@@ -50,7 +49,14 @@ watch(
   },
 );
 
-// 拿到选中的菜单ids
+defineExpose({ getSelectKeyList });
+
+// 拿到选中的菜单ids -- 用于提交数据
+function getSelectKeyList() {
+  return proxy.$refs.menuTreeRef.getCheckedKeys();
+}
+
+// 拿到选中的菜单ids -- 回显
 function getCheckedKeys(checkedKeys, menuTree) {
   menuTree.forEach((item) => {
     if (item.isHasPerm) {
@@ -66,9 +72,6 @@ function getCheckedKeys(checkedKeys, menuTree) {
 // 点击菜单
 function menuNodeClick(data) {
   currentSelectedMenu = data;
-  let selectedPerm = currentSelectedMenu.permList.filter((e) => e.isHasPerm);
-  isCheckAllPerm = currentSelectedMenu.permList.length === selectedPerm.length;
-  currentSelectedPermIdList = selectedPerm.map((item) => item.id);
 }
 
 /**

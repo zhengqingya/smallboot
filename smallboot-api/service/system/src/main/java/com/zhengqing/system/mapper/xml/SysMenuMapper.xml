@@ -32,6 +32,9 @@
         <if test="filter.excludeMenuId!=null">
             AND sm.id != #{filter.excludeMenuId}
         </if>
+        <if test="filter.type!=null">
+            AND sm.type = #{filter.type}
+        </if>
         <if test="filter.menuIdList!=null and filter.menuIdList.size>0">
             AND sm.id IN
             <foreach collection="filter.menuIdList" separator="," open="(" close=")" item="menuId">

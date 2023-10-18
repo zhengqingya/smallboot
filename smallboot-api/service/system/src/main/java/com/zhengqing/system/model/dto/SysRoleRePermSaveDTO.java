@@ -1,19 +1,18 @@
 package com.zhengqing.system.model.dto;
 
-import com.zhengqing.common.core.custom.parameter.HandleParam;
+import com.zhengqing.common.base.model.dto.BaseDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
- * <p>
- * 保存角色权限信息参数
- * </p>
+ * <p> 系统管理-角色关联所有权限-保存参数 </p>
  *
  * @author zhengqingya
  * @description
@@ -23,16 +22,17 @@ import javax.validation.constraints.NotNull;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel("保存角色权限信息参数")
-public class SysRoleRePermSaveDTO extends SysMenuPermBaseDTO implements HandleParam {
+@EqualsAndHashCode(callSuper = true)
+@ApiModel("系统管理-角色关联所有权限-保存参数")
+public class SysRoleRePermSaveDTO extends BaseDTO {
 
-    @NotNull(message = "角色id不能为空！")
     @ApiModelProperty(value = "角色ID")
     private Integer roleId;
 
-    @Override
-    public void handleParam() {
-        super.handleParam();
-    }
+    @ApiModelProperty(value = "有权限的菜单ids")
+    private List<Integer> menuIdList;
+
+    @ApiModelProperty(value = "数据权限ids")
+    private List<Integer> scopeIdList;
 
 }

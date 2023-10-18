@@ -3,18 +3,18 @@ import request from '@/utils/request';
 const BASE_API = '/web/api/system/perm';
 
 export default {
-  // 保存角色关联的菜单&按钮权限数据
-  saveRoleReMenu(data) {
+  // 根据角色id拿到关联的数据权限
+  getScopeIdListByRoleId(params) {
     return request({
-      url: BASE_API + '/saveRoleReMenu',
-      method: 'post',
-      data,
+      url: BASE_API + '/getScopeIdListByRoleId',
+      method: 'get',
+      params,
     });
   },
-  // 保存角色关联的数据权限数据
-  saveRoleReScope(data) {
+  // 保存角色权限（菜单权限+按钮权限+数据权限）
+  saveRoleRePerm(data) {
     return request({
-      url: BASE_API + '/saveRoleReScope',
+      url: BASE_API + '/saveRoleRePerm',
       method: 'post',
       data,
     });

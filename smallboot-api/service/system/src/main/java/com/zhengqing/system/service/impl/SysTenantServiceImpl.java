@@ -14,7 +14,6 @@ import com.zhengqing.system.entity.SysTenant;
 import com.zhengqing.system.entity.SysTenantPackage;
 import com.zhengqing.system.enums.SysRoleCodeEnum;
 import com.zhengqing.system.mapper.SysTenantMapper;
-import com.zhengqing.system.model.bo.SysRoleRePermSaveBO;
 import com.zhengqing.system.model.dto.*;
 import com.zhengqing.system.model.vo.SysTenantListVO;
 import com.zhengqing.system.model.vo.SysTenantPageVO;
@@ -130,7 +129,7 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
 
                 // 给角色绑定权限
                 this.iSysPermBusinessService.saveRoleRePerm(
-                        SysRoleRePermSaveBO.builder()
+                        SysRoleRePermSaveDTO.builder()
                                 .roleId(roleId)
                                 .menuIdList(sysTenantPackage.getMenuIdList())
                                 .build()

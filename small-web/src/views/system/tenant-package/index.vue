@@ -39,7 +39,7 @@
         </el-form-item>
         <el-form-item label="菜单权限:">
           <div style="height: 400px; width: 100%" class="overflow-y-auto">
-            <menu-perm-tree v-if="dialogVisible && form.menuTree && form.menuTree.length > 0" v-model="form.menuTree" />
+            <menu-perm-tree v-if="dialogVisible && form.menuTree && form.menuTree.length > 0" ref="menuTreeRef" v-model="form.menuTree" />
           </div>
         </el-form-item>
         <el-form-item label="备注:">
@@ -109,6 +109,8 @@ async function handleDelete(row) {
 function submitForm() {
   proxy.$refs.dataFormRef.validate(async (valid) => {
     if (valid) {
+      let selectMenuIdList = proxy.$refs.menuTreeRef.getSelectKeyList();
+      form.menuIdList = selectMenuIdList;
       let res = await proxy.$api.sys_tenant_package[form.id ? 'update' : 'add'](form);
       proxy.submitOk(res.message);
       refreshTableData();
