@@ -4,7 +4,7 @@
       <el-button type="primary" @click="init">刷新</el-button>
     </div>
     <div class="flex-c-center-center">
-      <base-card title="抖音服务商平台" style="width: 660px">
+      <base-card title="抖音服务商平台" style="width: 888px">
         <template #append>
           <el-button type="warning" @click="saveBatch">保 存</el-button>
         </template>
@@ -17,7 +17,7 @@
           </base-cell>
         </div>
       </base-card>
-      <base-card title="抖音服务商-授权链接" style="width: 660px; margin-top: 20px">
+      <base-card title="抖音服务商-授权链接" style="width: 888px; margin-top: 20px">
         <el-tag>{{ authLink }}</el-tag>
       </base-card>
     </div>
@@ -45,11 +45,8 @@ async function init() {
     mapObj[key].value = data[key].value;
   }
 
-  let versionRes = await proxy.$api.sys_version.lately();
-  versionObj = versionRes.data;
-
   if (mapObj.douyin_component_appid.value) {
-    let linkRes = await proxy.$api.sys_merchant.genLink();
+    let linkRes = await proxy.$api.sys_app_config.genLink();
     authLink = linkRes.data;
   }
 }

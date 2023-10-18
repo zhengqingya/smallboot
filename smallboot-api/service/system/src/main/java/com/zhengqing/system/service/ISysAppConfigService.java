@@ -40,6 +40,15 @@ public interface ISysAppConfigService extends IService<SysAppConfig> {
     List<SysAppConfigBO> list(SysAppConfigDTO params);
 
     /**
+     * 拿到所有可用的小程序配置
+     *
+     * @return 小程序配置
+     * @author zhengqingya
+     * @date 2023/10/18 10:23
+     */
+    List<SysAppConfigBO> getAllUsableAppConfig();
+
+    /**
      * 查询小程序配置
      *
      * @param idList 主键ids
@@ -86,7 +95,15 @@ public interface ISysAppConfigService extends IService<SysAppConfig> {
      * @author zhengqingya
      * @date 2023/10/13 11:17
      */
-    void appOperationBatch(SysAppOperationDTO params);
+    void operationBatch(SysAppOperationDTO params);
 
+    /**
+     * 同步小程序最新状态
+     *
+     * @return void
+     * @author zhengqingya
+     * @date 2023/10/13 11:17
+     */
+    void syncStatus();
 
 }

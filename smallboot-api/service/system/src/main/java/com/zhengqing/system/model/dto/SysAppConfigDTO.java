@@ -30,4 +30,7 @@ public class SysAppConfigDTO extends BaseDTO {
     @ApiModelProperty("AppID")
     private List<String> appIdList;
 
+    @ApiModelProperty("关联的部门是否没有限制，可以正常使用小程序配置")
+    private Boolean isUsable;
+
 }

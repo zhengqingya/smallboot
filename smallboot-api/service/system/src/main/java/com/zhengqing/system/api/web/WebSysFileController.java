@@ -43,4 +43,10 @@ public class WebSysFileController {
         return this.iSysFileService.page(params);
     }
 
+    @DeleteMapping("delete")
+    @ApiOperation("删除")
+    public void delete(@RequestParam Long id) {
+        this.iSysFileService.removeById(id);
+    }
+
 }

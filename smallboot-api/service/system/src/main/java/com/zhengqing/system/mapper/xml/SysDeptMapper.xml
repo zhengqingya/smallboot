@@ -21,7 +21,7 @@
         ORDER BY sort ASC, create_time DESC
     </select>
 
-    <select id="selectAppIdList" resultType="com.zhengqing.system.entity.SysDept">
+    <select id="selectAllUsableList" resultType="com.zhengqing.system.entity.SysDept">
         select *
         from t_sys_dept
         where is_deleted = 0

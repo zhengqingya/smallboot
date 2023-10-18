@@ -325,6 +325,27 @@ public class DyServiceApiUtil {
         return result;
     }
 
+    /**
+     * 获取小程序版本列表信息
+     * https://partner.open-douyin.com/docs/resource/zh-CN/thirdparty/API/smallprogram/auth-app-manage/develop/versions
+     *
+     * @param component_appid         第三方小程序应用 appid
+     * @param authorizer_access_token 授权小程序接口调用凭据
+     * @return 结果
+     * @author zhengqingya
+     * @date 2022/7/28 15:40
+     */
+    public static DyServiceVersionVO.Data versions(String component_appid, String authorizer_access_token) {
+        DyServiceVersionVO dyServiceVersionVO = DyBaseApiUtil.baseGet("https://open.microapp.bytedance.com/openapi/v1/microapp/package/versions",
+                new HashMap<String, String>(2) {{
+                    this.put("component_appid", component_appid);
+                    this.put("authorizer_access_token", authorizer_access_token);
+                }}, DyServiceVersionVO.class);
+
+        Assert.isTrue(DyMiniResultCodeEnum.SUCCESS.getCode().equals(dyServiceVersionVO.getErrno()), String.valueOf(dyServiceVersionVO.getMessage()));
+        return dyServiceVersionVO.getData();
+    }
+
 
     /**
      * 找回授权码

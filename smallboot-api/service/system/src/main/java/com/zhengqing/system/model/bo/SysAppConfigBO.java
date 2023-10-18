@@ -1,6 +1,7 @@
 package com.zhengqing.system.model.bo;
 
 import com.zhengqing.common.base.model.bo.BaseBO;
+import com.zhengqing.common.sdk.douyin.service.model.vo.DyServiceVersionVO;
 import com.zhengqing.system.enums.SysAppStatusEnum;
 import com.zhengqing.system.enums.SysAppTypeEnum;
 import io.swagger.annotations.ApiModel;
@@ -40,6 +41,9 @@ public class SysAppConfigBO extends BaseBO {
 
     @ApiModelProperty("小程序版本")
     private String appVersion;
+
+    @ApiModelProperty("小程序版本详情信息")
+    private DyServiceVersionVO.Data appVersionObj;
 
     /**
      * {@link SysAppStatusEnum}

@@ -1,9 +1,12 @@
 package com.zhengqing.system.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.zhengqing.common.db.entity.IsDeletedBaseEntity;
+import com.zhengqing.common.sdk.douyin.service.model.vo.DyServiceVersionVO;
+import com.zhengqing.system.config.mybatis.handler.SystemJsonAppVersionHandler;
 import com.zhengqing.system.enums.SysAppStatusEnum;
 import com.zhengqing.system.enums.SysAppTypeEnum;
 import io.swagger.annotations.ApiModel;
@@ -22,7 +25,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("t_sys_app_config")
+@TableName(value = "t_sys_app_config", autoResultMap = true)
 @ApiModel("系统管理-小程序配置")
 public class SysAppConfig extends IsDeletedBaseEntity<SysAppConfig> {
 
@@ -44,6 +47,10 @@ public class SysAppConfig extends IsDeletedBaseEntity<SysAppConfig> {
 
     @ApiModelProperty("小程序版本")
     private String appVersion;
+
+    @ApiModelProperty("小程序版本详情信息")
+    @TableField(typeHandler = SystemJsonAppVersionHandler.class)
+    private DyServiceVersionVO.Data appVersionObj;
 
     /**
      * {@link SysAppStatusEnum}

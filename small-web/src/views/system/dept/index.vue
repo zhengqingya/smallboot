@@ -2,17 +2,9 @@
   <base-wrapper>
     <base-header>
       <base-input v-model="listQuery.name" label="名称" @clear="refreshTableData" />
-      <base-select
-        v-model="listQuery.appType"
-        :data-list="appTypeList"
-        style="margin-right: 10px"
-        label="小程序类型"
-        tag-type="success"
-        clearable
-        :option-props="{ label: 'name', value: 'id' }"
-        @clear="refreshTableData" />
       <el-button type="primary" @click="refreshTableData">查询</el-button>
       <template #right>
+        <el-button type="success" @click="syncAppStatus()">一键同步小程序最新状态</el-button>
         <el-button type="warning" @click="showApp()">小程序批量操作</el-button>
         <el-button type="primary" @click="handleAdd">添加</el-button>
       </template>
@@ -39,18 +31,30 @@
       <el-table-column label="排序" prop="sort" align="center" />
       <el-table-column label="小程序类型" prop="appType" align="center">
         <template #default="scope">
-          <el-tag v-if="scope.row.appType == 1" type="success"> {{ appTypeList.find((e) => e.id == scope.row.appType).name }}</el-tag>
-          <el-tag v-if="scope.row.appType === 2"> {{ appTypeList.find((e) => e.id == scope.row.appType).name }}</el-tag>
+          <el-tag v-if="scope.row.appConfigObj.appType == 1" type="success"> {{ appTypeList.find((e) => e.id == scope.row.appConfigObj.appType).name }}</el-tag>
+          <el-tag v-if="scope.row.appConfigObj.appType === 2"> {{ appTypeList.find((e) => e.id == scope.row.appConfigObj.appType).name }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="小程序状态" align="center">
+      <el-table-column label="小程序状态" align="center" width="230px">
         <template #default="scope">
-          <el-tag v-if="scope.row.appConfigObj.appStatus == 1">未发版</el-tag>
-          <el-tag v-else-if="scope.row.appConfigObj.appStatus == 10">已提交代码</el-tag>
-          <el-tag v-else-if="scope.row.appConfigObj.appStatus == 21">提审中</el-tag>
-          <el-tag v-else-if="scope.row.appConfigObj.appStatus == 31" type="warning">审核通过</el-tag>
-          <el-tag v-else-if="scope.row.appConfigObj.appStatus == 32" type="danger">审核不通过</el-tag>
-          <el-tag v-else-if="scope.row.appConfigObj.appStatus == 51" type="success">已发布</el-tag>
+          <!-- <el-tag v-if="scope.row.appConfigObj.appStatus == 1">未发版</el-tag>
+          <div v-else>
+            <el-tag>版本：{{ scope.row.appConfigObj.appVersion }}</el-tag>
+            <el-tag v-if="scope.row.appConfigObj.appStatus == 10">已提交代码</el-tag>
+            <el-tag v-else-if="scope.row.appConfigObj.appStatus == 21">提审中</el-tag>
+            <el-tag v-else-if="scope.row.appConfigObj.appStatus == 31" type="warning">审核通过</el-tag>
+            <el-tag v-else-if="scope.row.appConfigObj.appStatus == 32" type="danger">审核不通过</el-tag>
+            <el-tag v-else-if="scope.row.appConfigObj.appStatus == 51" type="success">已发布</el-tag>
+          </div> -->
+          <div v-if="scope.row.appConfigObj.appVersionObj">
+            <el-tag type="success"
+              >线上版本：{{ scope.row.appConfigObj.appVersionObj.current.version }}（{{
+                scope.row.appConfigObj.appVersionObj.current.version == scope.row.appConfigObj.appVersionObj.audit.version ? '已发布最新版' : '未发布最新版'
+              }}）</el-tag
+            >
+            <el-tag>审核版本：{{ scope.row.appConfigObj.appVersionObj.audit.version }}（{{ getAppAuditStatusDesc(scope.row.appConfigObj.appVersionObj.audit.status) }}）</el-tag>
+            <el-tag type="info">测试版本号：{{ scope.row.appConfigObj.appVersionObj.latest.version }}（{{ scope.row.appConfigObj.appVersionObj.latest.has_audit ? '已提审' : '未提审' }}）</el-tag>
+          </div>
         </template>
       </el-table-column>
       <el-table-column label="创建时间" prop="createTime" align="center" />
@@ -58,9 +62,9 @@
         <template #default="scope">
           <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
           <el-button link type="primary" @click="showDetail(scope.row)">详情</el-button>
+          <el-button type="warning" link @click="showApp(scope.row)">小程序操作</el-button>
           <el-button type="primary" link @click="showQrcode(scope.row, 'latest')">查看测试版二维码</el-button>
           <el-button type="primary" link @click="showQrcode(scope.row, 'current')">查看线上版二维码</el-button>
-          <el-button type="warning" link @click="showApp(scope.row)">小程序操作</el-button>
           <base-delete-btn @ok="handleDelete(scope.row)"></base-delete-btn>
         </template>
       </el-table-column>
@@ -143,27 +147,21 @@
       </template>
     </base-dialog>
 
-    <base-dialog v-model="qrcodeDialogVisible" title="小程序测试版二维码" width="350px">
+    <base-dialog v-model="qrcodeDialogVisible" :title="qrcodeDialogTitle" width="350px">
       <el-image style="width: 300px; height: 300px" :src="qrcodeUrl" />
     </base-dialog>
     <base-dialog v-model="appDialogVisible" title="抖音小程序一键操作（☆谨慎操作☆）" width="60%">
       <span v-if="appDataForm.name" style="color: red">操作企业： {{ appDataForm.name }}</span>
+      <span v-else style="color: red">操作企业： 所有企业（☆☆☆）</span>
       <div class="flex-column">
-        <!-- <div v-if="versionObj">
-          <div>
-            <span>最新提交：</span>
-            <el-tag>版本号：{{ versionObj.version }}</el-tag>
-            <el-tag type="success">状态：{{ versionObj.statusName }}</el-tag>
-            <el-tag type="info">描述：{{ versionObj.name }}</el-tag>
-          </div>
-        </div> -->
-        <div class="flex-start-center m-t-10">
+        <div class="flex m-t-10">
           <div class="flex-column">
             <base-input v-model="appDataForm.templateId" style="width: 100%; margin-top: 10px" label="小程序模板ID：" />
+            <base-input v-model="appDataForm.version" style="width: 100%; margin-top: 10px" label="提交代码版本：" />
             <base-input v-model="appDataForm.uploadCodeDesc" style="width: 100%; margin-top: 10px" label="提交代码描述：" />
             <el-button type="primary" style="margin-top: 10px" @click="appOperationBatch(10)">① 一键提交代码</el-button>
           </div>
-          <div class="m-l-20" style="margin-top: 150px">
+          <div class="flex-center-end m-l-20">
             <el-button type="success" @click="appOperationBatch(20)">② 一键提审代码</el-button>
             <el-button type="danger" @click="appOperationBatch(50)">③ 一键发布代码</el-button>
           </div>
@@ -244,27 +242,54 @@ function submitForm() {
 
 // 小程序 ---------------------------------
 let qrcodeDialogVisible = $ref(false);
+let qrcodeDialogTitle = $ref('');
 let qrcodeUrl = $ref('');
 async function showQrcode(row, version) {
   let res = await proxy.$api.sys_app_config.qrcode({ appId: row.appConfigObj.appId, version: version });
   qrcodeUrl = res.data;
   qrcodeDialogVisible = true;
+
+  if (version == 'latest') {
+    qrcodeDialogTitle = '小程序测试版二维码';
+  } else if (version == 'current') {
+    qrcodeDialogTitle = '小程序线上版二维码';
+  }
 }
 let appDialogVisible = $ref(false);
 let appDataForm = $ref({});
 async function showApp(row) {
   appDataForm = {};
   if (row) {
-    console.log('111', row.appConfigObj);
     appDataForm = row.appConfigObj;
+    appDataForm.appIdList = [row.appConfigObj.appId];
+    appDataForm.version = row.appConfigObj.appVersion;
   }
   appDialogVisible = true;
 }
 async function appOperationBatch(appStatus) {
   appDataForm.appStatus = appStatus;
-  let res = await proxy.$api.sys_app_config.appOperationBatch(appDataForm);
+  let res = await proxy.$api.sys_app_config.operationBatch(appDataForm);
   proxy.submitOk(res.message);
-  init();
+}
+async function syncAppStatus() {
+  let res = await proxy.$api.sys_app_config.syncStatus();
+  proxy.submitOk(res.message);
+  refreshTableData();
+}
+
+function getAppAuditStatusDesc(status) {
+  switch (status) {
+    case 0:
+      return '审核中';
+    case 1:
+      return '通过';
+    case 2:
+      return '不通过';
+    case 3:
+      return '撤回审核';
+    default:
+      return '未知';
+  }
 }
 </script>
 

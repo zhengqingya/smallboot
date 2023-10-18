@@ -1,19 +1,19 @@
 package com.zhengqing.system.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhengqing.common.base.context.TenantIdContext;
 import com.zhengqing.common.base.exception.MyException;
+import com.zhengqing.common.sdk.douyin.service.model.vo.DyServiceVersionVO;
 import com.zhengqing.common.sdk.douyin.service.util.DyServiceApiUtil;
 import com.zhengqing.system.entity.SysAppConfig;
-import com.zhengqing.system.entity.SysDept;
 import com.zhengqing.system.enums.SysAppStatusEnum;
 import com.zhengqing.system.enums.SysConfigKeyEnum;
 import com.zhengqing.system.mapper.SysAppConfigMapper;
-import com.zhengqing.system.mapper.SysDeptMapper;
 import com.zhengqing.system.model.bo.SysAppConfigBO;
 import com.zhengqing.system.model.bo.SysExtJsonBO;
 import com.zhengqing.system.model.dto.SysAppConfigDTO;
@@ -44,7 +44,6 @@ import java.util.stream.Collectors;
 public class SysAppConfigServiceImpl extends ServiceImpl<SysAppConfigMapper, SysAppConfig> implements ISysAppConfigService {
 
     private final SysAppConfigMapper sysAppConfigMapper;
-    private final SysDeptMapper sysDeptMapper;
     private final ISysConfigService iSysConfigService;
 
     @Override
@@ -64,6 +63,7 @@ public class SysAppConfigServiceImpl extends ServiceImpl<SysAppConfigMapper, Sys
                 .appId(appId)
                 .appSecret(params.getAppSecret())
                 .appVersion(params.getAppVersion())
+                .appVersionObj(params.getAppVersionObj())
                 .appStatus(params.getAppStatus())
                 .appIndexTitle(params.getAppIndexTitle())
                 .appType(params.getAppType())
@@ -76,6 +76,11 @@ public class SysAppConfigServiceImpl extends ServiceImpl<SysAppConfigMapper, Sys
     @Override
     public List<SysAppConfigBO> list(SysAppConfigDTO params) {
         return this.sysAppConfigMapper.selectDataList(params);
+    }
+
+    @Override
+    public List<SysAppConfigBO> getAllUsableAppConfig() {
+        return this.list(SysAppConfigDTO.builder().isUsable(true).build());
     }
 
     @Override
@@ -111,7 +116,7 @@ public class SysAppConfigServiceImpl extends ServiceImpl<SysAppConfigMapper, Sys
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void appOperationBatch(SysAppOperationDTO params) {
+    public void operationBatch(SysAppOperationDTO params) {
         log.info("[系统管理] 批量操作(小程序提审、发布)：{}", JSONUtil.toJsonStr(params));
         List<String> appIdList = params.getAppIdList();
         String uploadCodeDesc = params.getUploadCodeDesc();
@@ -131,9 +136,7 @@ public class SysAppConfigServiceImpl extends ServiceImpl<SysAppConfigMapper, Sys
 
         List<SysAppConfigBO> appConfigList;
         if (CollUtil.isEmpty(appIdList)) {
-            List<SysDept> sysDeptList = this.sysDeptMapper.selectAppIdList();
-            List<Integer> appConfigIdList = sysDeptList.stream().map(SysDept::getAppConfigId).collect(Collectors.toList());
-            appConfigList = this.list(SysAppConfigDTO.builder().idList(appConfigIdList).build());
+            appConfigList = this.getAllUsableAppConfig();
         } else {
             appConfigList = this.list(SysAppConfigDTO.builder().appIdList(appIdList).build());
         }
@@ -188,6 +191,27 @@ public class SysAppConfigServiceImpl extends ServiceImpl<SysAppConfigMapper, Sys
             }
             this.addOrUpdateData(appConfigItem);
         }
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void syncStatus() {
+        // 拿到小程序appid信息
+        String component_appid = String.valueOf(this.iSysConfigService.getValue(SysConfigKeyEnum.DOUYIN_COMPONENT_APPID));
+        String component_appsecret = String.valueOf(this.iSysConfigService.getValue(SysConfigKeyEnum.DOUYIN_COMPONENT_APPSECRET));
+        String component_access_token = DyServiceApiUtil.component_access_token(component_appid, component_appsecret);
+
+        List<SysAppConfigBO> appConfigList = this.getAllUsableAppConfig();
+        Assert.notEmpty(appConfigList, "暂无可用的小程序配置！");
+
+        appConfigList.forEach(item -> {
+            String appId = item.getAppId();
+            String authorizer_access_token = DyServiceApiUtil.authorizer_access_token(component_appid, component_access_token, DyServiceApiUtil.retrieve_authorization_code(component_appid, component_access_token, appId));
+            DyServiceVersionVO.Data versionObj = DyServiceApiUtil.versions(component_appid, authorizer_access_token);
+            item.setAppVersionObj(versionObj);
+            // 保存
+            this.addOrUpdateData(item);
+        });
     }
 
 }

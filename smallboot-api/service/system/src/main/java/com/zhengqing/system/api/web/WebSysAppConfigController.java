@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping(ServiceConstant.SERVICE_API_PREFIX_WEB_SYSTEM + "/app")
 @Api(tags = {"web-系统管理-小程序管理"})
-public class WebSysAppController extends BaseController {
+public class WebSysAppConfigController extends BaseController {
 
     private final ISysAppConfigService iSysAppConfigService;
 
@@ -43,10 +43,18 @@ public class WebSysAppController extends BaseController {
     }
 
     @NoRepeatSubmit
-    @PostMapping("appOperationBatch")
+    @PostMapping("operationBatch")
     @ApiOperation("批量操作(小程序提审、发布)")
-    public Boolean appOperationBatch(@Validated @RequestBody SysAppOperationDTO params) {
-        this.iSysAppConfigService.appOperationBatch(params);
+    public Boolean operationBatch(@Validated @RequestBody SysAppOperationDTO params) {
+        this.iSysAppConfigService.operationBatch(params);
+        return true;
+    }
+
+    @NoRepeatSubmit
+    @PostMapping("syncStatus")
+    @ApiOperation("同步小程序最新状态")
+    public Boolean syncStatus() {
+        this.iSysAppConfigService.syncStatus();
         return true;
     }
 

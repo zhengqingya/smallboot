@@ -17,9 +17,16 @@ export default {
       responseType: 'blob',
     });
   },
-  appOperationBatch(data) {
+  operationBatch(data) {
     return request({
-      url: BASE_API + '/appOperationBatch',
+      url: BASE_API + '/operationBatch',
+      method: 'post',
+      data: data,
+    });
+  },
+  syncStatus(data) {
+    return request({
+      url: BASE_API + '/syncStatus',
       method: 'post',
       data: data,
     });
