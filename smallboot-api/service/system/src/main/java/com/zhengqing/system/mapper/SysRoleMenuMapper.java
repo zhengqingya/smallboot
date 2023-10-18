@@ -3,7 +3,6 @@ package com.zhengqing.system.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.zhengqing.system.entity.SysRoleMenu;
 import com.zhengqing.system.model.vo.SysRoleReBtnPermListVO;
-import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
@@ -30,17 +29,6 @@ public interface SysRoleMenuMapper extends BaseMapper<SysRoleMenu> {
      * @date 2020/9/10 18:08
      */
     void batchInsertRoleMenuIds(@Param("roleId") Integer roleId, @Param("menuIdList") List<Integer> menuIdList);
-
-    /**
-     * 根据角色id删除角色对应的所有关联菜单
-     *
-     * @param roleId 角色id
-     * @return void
-     * @author zhengqingya
-     * @date 2020/9/10 18:08
-     */
-    @Delete("DELETE FROM t_sys_role_menu WHERE role_id = #{roleId}")
-    void deleteAllMenusByRoleId(@Param("roleId") Integer roleId);
 
     /**
      * 获取角色id可访问的菜单ids

@@ -43,12 +43,9 @@ async function initData() {
   menuTree = res.data.menuTree;
 }
 
-// 保存角色关联的所有权限数据
+// 保存角色关联的菜单权限数据
 async function savePerm() {
-  let res = await proxy.$api.sys_perm.saveRoleRePerm({
-    roleId: roleId,
-    menuTree: menuTree,
-  });
+  let res = await proxy.$api.sys_perm.saveRoleReMenu({ roleId: roleId, menuTree: menuTree });
   proxy.submitOk(res.msg);
   proxy.$router.push('/system/role');
 }

@@ -15,6 +15,7 @@ import com.zhengqing.system.model.dto.SysRoleBaseDTO;
 import com.zhengqing.system.model.dto.SysRoleSaveDTO;
 import com.zhengqing.system.model.vo.SysRoleBaseVO;
 import com.zhengqing.system.service.ISysRoleMenuService;
+import com.zhengqing.system.service.ISysRoleScopeService;
 import com.zhengqing.system.service.ISysRoleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +41,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 
     private final SysRoleMapper sysRoleMapper;
     private final ISysRoleMenuService iSysRoleMenuService;
+    private final ISysRoleScopeService iSysRoleScopeService;
 
     @Override
     public IPage<SysRoleBaseVO> listPage(SysRoleBaseDTO params) {
@@ -138,8 +140,9 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     public void deleteRoleAndRoleMenu(Integer roleId) {
         SysRole sysRole = this.sysRoleMapper.selectById(roleId);
         Assert.isFalse(sysRole.getIsFixed(), "您没有权限删除固定角色！");
-        // 1、删除该角色下关联的菜单
-        this.iSysRoleMenuService.deleteAllMenusByRoleId(roleId);
+        // 1、删除该角色下关联的权限
+        this.iSysRoleMenuService.delByRoleId(roleId);
+        this.iSysRoleScopeService.delByRoleId(roleId);
         // 2、删除角色
         this.removeById(roleId);
     }

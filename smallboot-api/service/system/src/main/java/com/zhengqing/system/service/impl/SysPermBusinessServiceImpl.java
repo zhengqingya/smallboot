@@ -16,10 +16,7 @@ import com.zhengqing.system.entity.SysTenantPackage;
 import com.zhengqing.system.enums.SysRoleCodeEnum;
 import com.zhengqing.system.model.bo.SysMenuTree;
 import com.zhengqing.system.model.bo.SysRoleRePermSaveBO;
-import com.zhengqing.system.model.dto.SysMenuTreeDTO;
-import com.zhengqing.system.model.dto.SysRoleReMenuSaveDTO;
-import com.zhengqing.system.model.dto.SysUserPermDTO;
-import com.zhengqing.system.model.dto.SysUserRoleSaveDTO;
+import com.zhengqing.system.model.dto.*;
 import com.zhengqing.system.model.vo.SysRoleAllPermissionDetailVO;
 import com.zhengqing.system.model.vo.SysRoleReBtnPermListVO;
 import com.zhengqing.system.model.vo.SysUserPermVO;
@@ -54,6 +51,7 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
     private final ISysMenuService iSysMenuService;
     private final ISysRoleService iSysRoleService;
     private final ISysRoleMenuService iSysRoleMenuService;
+    private final ISysRoleScopeService iSysRoleScopeService;
     private final ISysUserRoleService iSysUserRoleService;
     @Lazy
     @Resource
@@ -170,7 +168,8 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
         List<Integer> delMenuIdList = CollUtil.subtractToList(menuIdListOld, sysTenantPackage.getMenuIdList());
 
         // 4、删除权限
-        this.iSysRoleMenuService.delReMenuId(tenantId, delMenuIdList);
+        this.iSysRoleMenuService.delReMenuIdList(delMenuIdList);
+        this.iSysRoleScopeService.delReMenuIdList(delMenuIdList);
 
         // 5、给租户管理员默认加上最新的权限
         this.saveRoleRePerm(
@@ -194,6 +193,11 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
         );
     }
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void saveRoleReScope(SysRoleReScopeSaveDTO params) {
+        this.iSysRoleScopeService.saveScopeData(params);
+    }
 
     @Override
     public List<SysMenuTree> tree(SysMenuTreeDTO params) {

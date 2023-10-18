@@ -74,9 +74,9 @@ public class MyDataPermissionHandler {
 
             // 根据不同类型进行权限处理
             switch (dataPermissionTypeEnum) {
-                case ALL:
+                case 全部可见:
                     return where;
-                case SELF:
+                case 本人可见:
                     // create_by = userId
                     EqualsTo selfEqualsTo = new EqualsTo();
                     selfEqualsTo.setLeftExpression(new Column(mainTableName + ".create_by"));
@@ -84,9 +84,9 @@ public class MyDataPermissionHandler {
                     AndExpression selfAndExpression = new AndExpression(where, selfEqualsTo);
                     log.info(" where {}", selfAndExpression);
                     return selfAndExpression;
-                case AUTO:
+                case 自定义sql过滤:
                     return new AndExpression(where, new StringValue(userPermissionInfo.getSql()));
-                case SELF_ROLE:
+                case 本人所属角色:
                     //  = 表达式
                     // role_id = roleId
                     EqualsTo equalsTo = new EqualsTo();
@@ -97,7 +97,7 @@ public class MyDataPermissionHandler {
                     AndExpression deptAndExpression = new AndExpression(where, equalsTo);
                     log.info(" where {}", deptAndExpression);
                     return deptAndExpression;
-                case ROLE_AUTO:
+                case 自定义角色:
                     // 创建IN 表达式
                     // 创建IN范围的元素集合
                     List<Integer> roleIdList = JwtUserContext.get().getAllRoleIdList();

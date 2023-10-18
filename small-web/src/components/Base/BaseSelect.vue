@@ -21,6 +21,15 @@ const props = defineProps({
 
 let list = $ref([]);
 
+watch(
+  () => props.dataList,
+  (newValue) => {
+    // console.log('监听器执行了... ', newValue);
+    list = newValue;
+  },
+  { deep: true },
+);
+
 onMounted(() => {
   init();
 });

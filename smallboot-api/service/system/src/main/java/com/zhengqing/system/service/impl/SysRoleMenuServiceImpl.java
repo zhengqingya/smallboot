@@ -4,7 +4,6 @@ import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
-import com.zhengqing.common.base.context.TenantIdContext;
 import com.zhengqing.system.entity.SysRoleMenu;
 import com.zhengqing.system.mapper.SysRoleMenuMapper;
 import com.zhengqing.system.model.dto.SysRoleReMenuSaveDTO;
@@ -53,7 +52,7 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
 
         if (CollUtil.isEmpty(menuIdList)) {
             // 直接删除角色关联的所有菜单权限
-            this.sysRoleMenuMapper.deleteAllMenusByRoleId(roleId);
+            this.delByRoleId(roleId);
             return;
         }
 
@@ -90,8 +89,8 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void deleteAllMenusByRoleId(Integer roleId) {
-        this.sysRoleMenuMapper.deleteAllMenusByRoleId(roleId);
+    public void delByRoleId(Integer roleId) {
+        this.sysRoleMenuMapper.delete(new LambdaQueryWrapper<SysRoleMenu>().eq(SysRoleMenu::getRoleId, roleId));
     }
 
     @Override
@@ -101,12 +100,10 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void delReMenuId(Integer tenantId, List<Integer> delMenuIdList) {
-        TenantIdContext.setTenantId(tenantId);
+    public void delReMenuIdList(List<Integer> delMenuIdList) {
         if (CollUtil.isEmpty(delMenuIdList)) {
             return;
         }
-        TenantIdContext.setTenantId(tenantId);
         this.sysRoleMenuMapper.delete(new LambdaQueryWrapper<SysRoleMenu>().in(SysRoleMenu::getMenuId, delMenuIdList));
     }
 
@@ -114,5 +111,5 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
     public List<SysRoleReBtnPermListVO> listRoleReBtnPerm() {
         return this.sysRoleMenuMapper.selectBtnPerm();
     }
-    
+
 }

@@ -3,6 +3,7 @@ package com.zhengqing.system.service;
 import com.zhengqing.system.model.bo.SysMenuTree;
 import com.zhengqing.system.model.bo.SysRoleRePermSaveBO;
 import com.zhengqing.system.model.dto.SysMenuTreeDTO;
+import com.zhengqing.system.model.dto.SysRoleReScopeSaveDTO;
 import com.zhengqing.system.model.dto.SysUserPermDTO;
 import com.zhengqing.system.model.vo.SysRoleAllPermissionDetailVO;
 import com.zhengqing.system.model.vo.SysUserPermVO;
@@ -86,6 +87,16 @@ public interface ISysPermBusinessService {
      * @date 2020/9/10 15:01
      */
     void saveRoleRePerm(SysRoleRePermSaveBO params);
+
+    /**
+     * 保存角色权限（数据权限）
+     *
+     * @param params 提交参数
+     * @return void
+     * @author zhengqingya
+     * @date 2020/9/10 15:01
+     */
+    void saveRoleReScope(SysRoleReScopeSaveDTO params);
 
     /**
      * 获取菜单树 -- 根据租户获取

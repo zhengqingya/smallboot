@@ -6,6 +6,7 @@ import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.common.core.custom.repeatsubmit.NoRepeatSubmit;
 import com.zhengqing.system.model.bo.SysRoleRePermSaveBO;
 import com.zhengqing.system.model.dto.SysRoleRePermSaveDTO;
+import com.zhengqing.system.model.dto.SysRoleReScopeSaveDTO;
 import com.zhengqing.system.model.dto.SysUserPermDTO;
 import com.zhengqing.system.model.vo.SysUserPermVO;
 import com.zhengqing.system.service.ISysPermBusinessService;
@@ -47,13 +48,20 @@ public class WebSysPermController extends BaseController {
     }
 
     @NoRepeatSubmit
-    @PostMapping("saveRoleRePerm")
+    @PostMapping("saveRoleReMenu")
     @ApiOperation("保存角色权限（菜单权限+按钮权限）")
-    public void saveRoleRePerm(@Validated @RequestBody SysRoleRePermSaveDTO params) {
+    public void saveRoleReMenu(@Validated @RequestBody SysRoleRePermSaveDTO params) {
         this.iSysPermBusinessService.saveRoleRePerm(SysRoleRePermSaveBO.builder()
                 .roleId(params.getRoleId())
                 .menuIdList(params.getMenuIdList())
                 .build());
+    }
+
+    @NoRepeatSubmit
+    @PostMapping("saveRoleReScope")
+    @ApiOperation("保存角色权限（数据权限）")
+    public void saveRoleReScope(@Validated @RequestBody SysRoleReScopeSaveDTO params) {
+        this.iSysPermBusinessService.saveRoleReScope(params);
     }
 
 }

@@ -57,7 +57,7 @@ public interface ISysRoleMenuService extends IService<SysRoleMenu> {
      * @author zhengqingya
      * @date 2020/9/10 18:08
      */
-    void deleteAllMenusByRoleId(Integer roleId);
+    void delByRoleId(Integer roleId);
 
     /**
      * 获取租户可访问的菜单ids
@@ -69,15 +69,14 @@ public interface ISysRoleMenuService extends IService<SysRoleMenu> {
     List<Integer> getMenuIdList(Integer tenantId);
 
     /**
-     * 删除租户关联权限
+     * 根据菜单id删除关联权限
      *
-     * @param tenantId      租户id
      * @param delMenuIdList 菜单id
      * @return void
      * @author zhengqingya
      * @date 2023/10/8 19:18
      */
-    void delReMenuId(Integer tenantId, List<Integer> delMenuIdList);
+    void delReMenuIdList(List<Integer> delMenuIdList);
 
     /**
      * 查询按钮权限

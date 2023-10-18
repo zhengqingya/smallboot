@@ -1,0 +1,141 @@
+<template>
+  <base-wrapper>
+    <base-header>
+      <base-cascader
+        v-model="listQuery.menuId"
+        style="margin-right: 10px"
+        clearable
+        label="菜单"
+        :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true, emitPath: false }"
+        :data-list="menuList" />
+      <base-input v-model="listQuery.scopeName" label="权限名称" @clear="refreshTableData" />
+      <base-select
+        v-model="listQuery.scopeType"
+        style="margin-right: 10px"
+        clearable
+        label="规则类型"
+        :option-props="{ label: 'label', value: 'value' }"
+        :data-list="typeList"
+        @clear="refreshTableData" />
+      <el-button type="primary" @click="refreshTableData">查询</el-button>
+      <template #right>
+        <el-button type="primary" @click="handleAdd">添加</el-button>
+      </template>
+    </base-header>
+
+    <base-table-p ref="baseTableRef" api="sys_scope_data.page" :params="listQuery">
+      <el-table-column label="ID" prop="id" align="center" />
+      <el-table-column label="菜单" align="center" width="300px">
+        <template #default="scope">
+          <base-cascader v-model="scope.row.menuId" disabled :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true, emitPath: false }" :data-list="menuList" />
+        </template>
+      </el-table-column>
+      <el-table-column label="权限名称" prop="scopeName" align="center" />
+      <el-table-column label="权限字段" prop="scopeColumn" align="center" />
+      <el-table-column label="可见字段" prop="scopeVisibleField" align="center" />
+      <el-table-column label="权限类名" prop="scopeClass" align="center" />
+      <el-table-column label="规则类型" align="center">
+        <template #default="scope">
+          <el-tag>{{ typeList.find((e) => e.value == scope.row.scopeType).label }}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column label="规则值" prop="scopeValue" align="center" />
+      <el-table-column label="备注" prop="remark" align="center" />
+      <el-table-column label="创建时间" prop="createTime" align="center" />
+      <el-table-column align="center" label="操作">
+        <template #default="scope">
+          <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
+          <base-delete-btn @ok="handleDelete(scope.row)"></base-delete-btn>
+        </template>
+      </el-table-column>
+    </base-table-p>
+
+    <base-dialog v-model="dialogVisible" :title="dialogTitleObj[dialogStatus]" width="50%">
+      <el-form v-if="dialogStatus !== 'detail'" ref="dataFormRef" :model="form" label-width="80px">
+        <el-form-item label="菜单:">
+          <base-cascader v-model="form.menuId" style="width: 100%" clearable :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true, emitPath: false }" api="sys_menu.tree" />
+        </el-form-item>
+        <el-form-item label="名称:">
+          <el-input v-model="form.scopeName" />
+        </el-form-item>
+        <el-form-item label="规则类型:">
+          <base-select v-model="form.scopeType" style="width: 100%" clearable :option-props="{ label: 'label', value: 'value' }" :data-list="typeList" />
+        </el-form-item>
+        <el-form-item label="权限字段:">
+          <el-input v-model="form.scopeColumn" placeholder="eg: dept_id" />
+        </el-form-item>
+        <el-form-item label="可见字段:">
+          <el-input v-model="form.scopeVisibleField" placeholder="* 标识所有" />
+        </el-form-item>
+        <el-form-item label="权限类名:">
+          <el-input v-model="form.scopeClass" placeholder="mapper class 全限定类名" />
+        </el-form-item>
+        <el-form-item v-if="form.scopeType == 5" label="规则值:">
+          <el-input v-model="form.scopeValue" :row="2" type="textarea" />
+        </el-form-item>
+        <el-form-item label="备注:">
+          <el-input v-model="form.remark" :row="2" type="textarea" />
+        </el-form-item>
+      </el-form>
+      <template v-if="dialogStatus !== 'detail'" #footer>
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="submitForm">确 定</el-button>
+      </template>
+    </base-dialog>
+  </base-wrapper>
+</template>
+
+<script setup>
+const { proxy } = getCurrentInstance();
+let listQuery = $ref({});
+let form = $ref({});
+let dialogVisible = $ref(false);
+let dialogStatus = $ref('');
+let typeList = $ref([
+  { label: '全部可见', value: 1 },
+  { label: '本人可见', value: 2 },
+  { label: '所在机构可见', value: 3 },
+  { label: '所在机构及子级可见', value: 4 },
+  { label: '自定义', value: 5 },
+]);
+let menuList = $ref([]);
+
+onMounted(() => {
+  menuTree();
+});
+
+function refreshTableData() {
+  proxy.$refs.baseTableRef.refresh();
+}
+async function menuTree() {
+  let res = await proxy.$api.sys_menu.tree();
+  menuList = res.data;
+}
+function handleAdd() {
+  form = { scopeType: 1, scopeVisibleField: '*' };
+  dialogStatus = 'add';
+  dialogVisible = true;
+}
+function handleUpdate(row) {
+  form = Object.assign({}, row);
+  dialogStatus = 'update';
+  dialogVisible = true;
+}
+async function handleDelete(row) {
+  let res = await proxy.$api.sys_scope_data.delete({ id: row.id });
+  refreshTableData();
+  proxy.submitOk(res.message);
+}
+function submitForm() {
+  proxy.$refs.dataFormRef.validate(async (valid) => {
+    if (valid) {
+      let res = await proxy.$api.sys_scope_data[form.id ? 'update' : 'add'](form);
+      proxy.submitOk(res.message);
+      refreshTableData();
+      dialogVisible = false;
+    }
+  });
+}
+</script>
+
+<style lang="scss" scoped></style>

@@ -57,7 +57,7 @@ public class WebSysRoleController extends BaseController {
     @GetMapping("list")
     @ApiOperation("列表")
     public List<SysRoleBaseVO> list(@ModelAttribute SysRoleBaseDTO params) {
-        DataPermissionThreadLocal.set(UserPermissionInfo.builder().dataPermissionTypeEnum(DataPermissionTypeEnum.ROLE_AUTO).build());
+        DataPermissionThreadLocal.set(UserPermissionInfo.builder().dataPermissionTypeEnum(DataPermissionTypeEnum.自定义角色).build());
         return this.iSysRoleService.list(params);
     }
 

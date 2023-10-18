@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhengqing.system.mapper.SysRoleScopeMapper">
+
+    <select id="selectDataList" resultType="com.zhengqing.system.model.vo.SysRoleScopeListVO">
+        SELECT
+        tsrs.*
+        FROM t_sys_role_scope tsrs
+        <where>
+            tsrs.is_deleted=0
+            <if test="filter.roleId!=null">
+                AND tsrs.role_id = #{filter.roleId}
+            </if>
+        </where>
+        ORDER BY tsrs.create_time DESC
+    </select>
+
+    <delete id="delReMenuIdList">
+        <if test="delMenuIdList != null and delMenuIdList.size() > 0">
+            delete
+            from t_sys_role_scope
+            where scope_id in
+            (
+            select id from t_sys_scope_data tssd
+            where tssd.menu_id in
+            <foreach item="delMenuId" index="index" collection="delMenuIdList" open="(" separator="," close=")">
+                #{delMenuId}
+            </foreach>
+            )
+        </if>
+    </delete>
+
+</mapper>

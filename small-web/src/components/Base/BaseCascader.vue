@@ -10,9 +10,19 @@ const props = defineProps({
   api: { type: String, required: false, default: '' },
   params: { type: Object, required: false, default: () => {} },
   label: { type: String, default: '' },
+  dataList: { type: Array, default: () => [] },
 });
 
 let list = $ref([]);
+
+watch(
+  () => props.dataList,
+  (newValue) => {
+    // console.log('监听器执行了... ', newValue);
+    list = newValue;
+  },
+  { deep: true },
+);
 
 onMounted(() => {
   init();
@@ -22,6 +32,10 @@ async function init() {
   if (props.api) {
     let res = await apiMethod(props.params);
     list = res.data;
+    return;
+  }
+  if (props.dataList) {
+    list = props.dataList;
   }
 }
 

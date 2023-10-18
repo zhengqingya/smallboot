@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhengqing.system.mapper.SysScopeDataMapper">
+
+    <select id="selectDataList" resultType="com.zhengqing.system.model.vo.SysScopeDataBaseVO">
+        SELECT
+        tssd.*
+        FROM t_sys_scope_data tssd
+        <where>
+            tssd.is_deleted=0
+            <if test="filter.menuId!=null">
+                AND tssd.menu_id = #{filter.menuId}
+            </if>
+            <if test="filter.scopeName!=null and filter.scopeName!=''">
+                AND tssd.scope_name LIKE CONCAT( '%', #{filter.scopeName} , '%' )
+            </if>
+            <if test="filter.scopeType!=null">
+                AND tssd.scope_type = #{filter.scopeType}
+            </if>
+        </where>
+        ORDER BY tssd.create_time DESC
+    </select>
+
+
+</mapper>
