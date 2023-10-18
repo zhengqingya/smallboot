@@ -3,6 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhengqing.system.mapper.SysRoleMapper">
 
+    <!-- 超管 不让其它用户看到 -->
     <select id="selectDataList" resultType="com.zhengqing.system.model.vo.SysRoleBaseVO">
         SELECT
         *
@@ -13,6 +14,9 @@
             </if>
             <if test="filter.excludeRoleId!=null">
                 AND role_id != #{filter.excludeRoleId}
+            </if>
+            <if test="filter.currentUserId!=1">
+                AND role_id != 1
             </if>
         </where>
         ORDER BY is_fixed DESC, sort ASC, create_time DESC

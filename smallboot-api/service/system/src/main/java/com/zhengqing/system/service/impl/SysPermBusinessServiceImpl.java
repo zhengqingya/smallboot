@@ -18,7 +18,6 @@ import com.zhengqing.system.model.bo.SysMenuTree;
 import com.zhengqing.system.model.dto.*;
 import com.zhengqing.system.model.vo.SysRoleAllPermissionDetailVO;
 import com.zhengqing.system.model.vo.SysRoleReBtnPermListVO;
-import com.zhengqing.system.model.vo.SysRoleScopeListVO;
 import com.zhengqing.system.model.vo.SysUserPermVO;
 import com.zhengqing.system.service.*;
 import lombok.RequiredArgsConstructor;
@@ -199,8 +198,7 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
 
     @Override
     public List<Integer> getScopeIdListByRoleId(Integer roleId) {
-        List<SysRoleScopeListVO> list = this.iSysRoleScopeService.list(SysRoleScopeListDTO.builder().roleId(roleId).build());
-        return list.stream().map(SysRoleScopeListVO::getScopeId).collect(Collectors.toList());
+        return this.iSysRoleScopeService.getScopeIdListByRoleId(roleId);
     }
 
     @Override

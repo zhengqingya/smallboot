@@ -80,7 +80,8 @@ watch(
     isAdmin = path.includes('admin');
 
     // 初始化变量
-    tenantId = isAdmin ? null : 2;
+    // tenantId = isAdmin ? null : 2;
+    tenantId = null;
     loginForm.tenantId = tenantId;
 
     let lastPath = path.substring(path.lastIndexOf('/') + 1);

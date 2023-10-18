@@ -59,7 +59,7 @@
           <base-radio-group v-model="form.status" />
         </el-form-item>
         <el-form-item label="备注:">
-          <el-input v-model="form.remark" :row="2" type="textarea" />
+          <el-input v-model="form.remark" :rows="2" type="textarea" />
         </el-form-item>
       </el-form>
       <template #footer>

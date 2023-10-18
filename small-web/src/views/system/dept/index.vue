@@ -116,7 +116,7 @@
           </el-form-item>
 
           <el-form-item label="备注:">
-            <el-input v-model="form.remark" :row="2" :disabled="isDetail" type="textarea" />
+            <el-input v-model="form.remark" :rows="2" :disabled="isDetail" type="textarea" />
           </el-form-item>
         </base-card>
         <base-card v-if="form.parentId == 0" title="小程序配置">

@@ -1,6 +1,7 @@
 package com.zhengqing.system.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.zhengqing.common.base.model.bo.ScopeDataBO;
 import com.zhengqing.system.entity.SysRoleScope;
 import com.zhengqing.system.model.dto.SysRoleReScopeSaveDTO;
 import com.zhengqing.system.model.dto.SysRoleScopeListDTO;
@@ -26,6 +27,26 @@ public interface ISysRoleScopeService extends IService<SysRoleScope> {
      * @date 2023/10/18 14:03
      */
     List<SysRoleScopeListVO> list(SysRoleScopeListDTO params);
+
+    /**
+     * 根据角色id拿到关联的数据权限
+     *
+     * @param roleId 角色ID
+     * @return 数据权限ids
+     * @author zhengqingya
+     * @date 2020/9/10 15:01
+     */
+    List<Integer> getScopeIdListByRoleId(Integer roleId);
+
+    /**
+     * 根据角色拿到关联的数据权限
+     *
+     * @param roleIdList 角色ids
+     * @return 查询结果
+     * @author zhengqingya
+     * @date 2023/10/18 14:03
+     */
+    List<ScopeDataBO> getScopeListReRoleIdList(List<Integer> roleIdList);
 
     /**
      * 保存

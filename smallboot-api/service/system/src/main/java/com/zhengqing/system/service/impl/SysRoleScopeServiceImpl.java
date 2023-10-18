@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
+import com.zhengqing.common.base.model.bo.ScopeDataBO;
 import com.zhengqing.system.entity.SysRoleScope;
 import com.zhengqing.system.mapper.SysRoleScopeMapper;
 import com.zhengqing.system.model.dto.SysRoleReScopeSaveDTO;
@@ -36,6 +37,17 @@ public class SysRoleScopeServiceImpl extends ServiceImpl<SysRoleScopeMapper, Sys
     @Override
     public List<SysRoleScopeListVO> list(SysRoleScopeListDTO params) {
         return this.sysRoleScopeMapper.selectDataList(params);
+    }
+
+    @Override
+    public List<Integer> getScopeIdListByRoleId(Integer roleId) {
+        List<SysRoleScopeListVO> list = this.list(SysRoleScopeListDTO.builder().roleId(roleId).build());
+        return list.stream().map(SysRoleScopeListVO::getScopeId).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ScopeDataBO> getScopeListReRoleIdList(List<Integer> roleIdList) {
+        return this.sysRoleScopeMapper.selectScopeListReRoleIdList(roleIdList);
     }
 
     @Override
@@ -96,5 +108,6 @@ public class SysRoleScopeServiceImpl extends ServiceImpl<SysRoleScopeMapper, Sys
     public void delByScopeIdList(List<Integer> scopeIdList) {
         this.sysRoleScopeMapper.delete(new LambdaQueryWrapper<SysRoleScope>().in(SysRoleScope::getScopeId, scopeIdList));
     }
+
 
 }

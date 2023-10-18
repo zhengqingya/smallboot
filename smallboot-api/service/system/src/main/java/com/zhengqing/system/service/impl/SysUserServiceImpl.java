@@ -136,7 +136,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         }
 
         // 给用户绑定角色信息
-        if (isUpdateRole) {
+        if (!AppConstant.SYSTEM_SUPER_ADMIN_USER_ID.equals(userId) && isUpdateRole) {
             this.iSysUserRoleService.addOrUpdateData(SysUserRoleSaveDTO.builder().userId(userId).roleIdList(params.getRoleIdList()).build());
         }
 

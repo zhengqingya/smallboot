@@ -41,7 +41,7 @@ public class SysScopeDataBaseVO extends BaseVO {
     @ApiModelProperty("可见字段")
     private String scopeVisibleField;
 
-    @ApiModelProperty("权限类名")
+    @ApiModelProperty("全权限类名")
     private String scopeClass;
 
     /**

@@ -14,6 +14,19 @@
         ORDER BY tsrs.create_time DESC
     </select>
 
+    <select id="selectScopeListReRoleIdList" resultType="com.zhengqing.common.base.model.bo.ScopeDataBO">
+        SELECT
+        tssd.*
+        FROM t_sys_role_scope tsrs
+        join t_sys_scope_data tssd on tssd.id = tsrs.scope_id
+        <where>
+            tsrs.role_id in
+            <foreach item="roleId" index="index" collection="roleIdList" open="(" separator="," close=")">
+                #{roleId}
+            </foreach>
+        </where>
+    </select>
+
     <delete id="delReMenuIdList">
         <if test="delMenuIdList != null and delMenuIdList.size() > 0">
             delete

@@ -26,7 +26,7 @@
                 </foreach>
             </if>
         </where>
-        ORDER BY tssd.create_time DESC
+        ORDER BY tssd.menu_id ASC, tssd.create_time ASC
     </select>
 
 

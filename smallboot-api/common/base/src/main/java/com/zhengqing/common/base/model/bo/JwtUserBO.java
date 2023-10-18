@@ -48,6 +48,9 @@ public class JwtUserBO extends BaseBO {
     @ApiModelProperty(value = "部门ID")
     private Integer deptId;
 
+    @ApiModelProperty(value = "数据权限")
+    private List<ScopeDataBO> scopeDataList;
+
     /**
      * 获取B端用户ID
      */

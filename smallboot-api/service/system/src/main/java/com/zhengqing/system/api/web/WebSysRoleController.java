@@ -5,9 +5,6 @@ import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.common.core.custom.repeatsubmit.NoRepeatSubmit;
 import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
-import com.zhengqing.common.db.config.mybatis.data.permission.second.UserPermissionInfo;
-import com.zhengqing.common.db.context.DataPermissionThreadLocal;
-import com.zhengqing.common.db.enums.DataPermissionTypeEnum;
 import com.zhengqing.system.model.dto.SysRoleBaseDTO;
 import com.zhengqing.system.model.dto.SysRoleSaveDTO;
 import com.zhengqing.system.model.vo.SysRoleAllPermissionDetailVO;
@@ -57,7 +54,6 @@ public class WebSysRoleController extends BaseController {
     @GetMapping("list")
     @ApiOperation("列表")
     public List<SysRoleBaseVO> list(@ModelAttribute SysRoleBaseDTO params) {
-        DataPermissionThreadLocal.set(UserPermissionInfo.builder().dataPermissionTypeEnum(DataPermissionTypeEnum.自定义角色).build());
         return this.iSysRoleService.list(params);
     }
 

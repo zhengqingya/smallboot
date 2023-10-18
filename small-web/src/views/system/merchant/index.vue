@@ -104,7 +104,7 @@
           <el-input-number v-model="form.sort" :min="1" controls-position="right" placeholder="请输入" />
         </el-form-item>
         <el-form-item label="备注:">
-          <el-input v-model="form.remark" :row="2" type="textarea" />
+          <el-input v-model="form.remark" :rows="2" type="textarea" />
         </el-form-item>
       </el-form>
       <template v-if="dialogStatus !== 'detail'" #footer>

@@ -1,3 +1,8 @@
+# el-table表格合并行
+
+![](./images/02-el-table表格合并行-1697628654496.png)
+
+```
 <template>
   <div>
     <el-table :header-cell-style="{ background: '#13C3C3', color: '#fff' }" :data="tableData" :span-method="objectSpanMethod" border style="width: 100%; margin-top: 20px">
@@ -65,3 +70,4 @@ const tableData = [
   },
 ];
 </script>
+```
