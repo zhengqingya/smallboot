@@ -5,6 +5,7 @@ import cn.hutool.core.lang.Assert;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.zhengqing.common.auth.util.AuthUtil;
 import com.zhengqing.common.base.constant.AppConstant;
 import com.zhengqing.common.base.constant.SecurityConstant;
 import com.zhengqing.common.base.context.TenantIdContext;
@@ -30,7 +31,6 @@ import org.springframework.util.CollectionUtils;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -96,7 +96,7 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
         SysUserPermVO userPerm = this.iSysUserService.getUserPerm(params);
 
         // 2、权限树
-        userPerm.setPermissionTreeList(this.tree(SysMenuTreeDTO.builder().roleIdList(userPerm.getRoleIdList()).isOnlyShowPerm(true).build()));
+        userPerm.setPermissionTreeList(this.iSysMenuService.tree(SysMenuTreeDTO.builder().roleIdList(userPerm.getRoleIdList()).isOnlyShowPerm(true).build()));
 
         userPerm.handleData();
         return userPerm;
@@ -109,7 +109,7 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
         Assert.notNull(sysRole, "角色不存在！");
 
         // 2、菜单权限树
-        List<SysMenuTree> menuTree = this.tree(SysMenuTreeDTO.builder().roleIdList(Lists.newArrayList(roleId)).build());
+        List<SysMenuTree> menuTree = this.iSysMenuService.tree(SysMenuTreeDTO.builder().roleIdList(Lists.newArrayList(roleId)).build());
 
         return SysRoleAllPermissionDetailVO.builder()
                 .roleId(sysRole.getRoleId())
@@ -201,40 +201,11 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
         return this.iSysRoleScopeService.getScopeIdListByRoleId(roleId);
     }
 
+
     @Override
-    public List<SysMenuTree> tree(SysMenuTreeDTO params) {
-        // 1、查询租户权限
-        SysTenantPackage sysTenantPackage = this.iSysTenantPackageService.detailReTenantId(TenantIdContext.getTenantId());
-        params.setMenuIdList(sysTenantPackage.getMenuIdList());
-
-        // 2、拿到所有菜单
-        List<SysMenuTree> allMenuList = this.iSysMenuService.tree(params);
-
-        // 3、遍历出父菜单对应的子菜单 -- 递归
-        return this.recurveMenu(AppConstant.PARENT_ID, allMenuList);
-    }
-
-
-    /**
-     * 递归菜单
-     *
-     * @param parentMenuId 父菜单id
-     * @param allMenuList  所有菜单
-     * @return 菜单树列表
-     * @author zhengqingya
-     * @date 2020/9/10 20:56
-     */
-    private List<SysMenuTree> recurveMenu(Integer parentMenuId, List<SysMenuTree> allMenuList) {
-        // 存放子菜单的集合
-        List<SysMenuTree> childMenuList = allMenuList.stream().filter(e -> e.getParentId().equals(parentMenuId)).collect(Collectors.toList());
-        // 递归
-        childMenuList.forEach(item -> {
-            Integer menuId = item.getId();
-            // 子菜单
-            item.setChildren(this.recurveMenu(menuId, allMenuList));
-            item.handleData();
-        });
-        return childMenuList;
+    public void logoutUserByRole(Integer roleId) {
+        List<Integer> userIdList = this.iSysUserRoleService.listUserId(roleId);
+        userIdList.forEach(AuthUtil::logout);
     }
 
 }

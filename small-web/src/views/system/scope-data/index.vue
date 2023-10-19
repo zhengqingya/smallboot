@@ -23,20 +23,24 @@
       </template>
     </base-header>
 
-    <el-table ref="baseTableRef" border :header-cell-style="{ background: '#13C3C3', color: '#fff' }" :span-method="objectSpanMethod" :data="tableDataList">
-      <el-table-column label="ID" prop="id" align="center" />
-      <el-table-column label="菜单" align="center" width="300px">
-        <template #default="scope">
-          <base-cascader v-model="scope.row.menuId" disabled :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true, emitPath: false }" :data-list="menuList" />
-        </template>
-      </el-table-column>
+    <el-table
+      ref="baseTableRef"
+      border
+      :header-cell-style="{ background: '#13C3C3', color: '#fff' }"
+      row-key="customId"
+      :row-class-name="tableRowClassName"
+      :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
+      :data="tableDataList"
+      default-expand-all>
+      <!-- <el-table-column label="ID" prop="id" align="center" /> -->
+      <el-table-column label="菜单" align="left" prop="menuFullName" width="300px" />
       <el-table-column label="权限名称" prop="scopeName" align="center" />
       <el-table-column label="权限字段" prop="scopeColumn" align="center" />
       <!-- <el-table-column label="可见字段" prop="scopeVisibleField" align="center" /> -->
       <!-- <el-table-column label="全权限类名" prop="scopeClass" align="center" /> -->
       <el-table-column label="规则类型" align="center">
         <template #default="scope">
-          <el-tag>{{ typeList.find((e) => e.value == scope.row.scopeType).label }}</el-tag>
+          <el-tag v-if="scope.row.scopeType">{{ typeList.find((e) => e.value == scope.row.scopeType).label }}</el-tag>
         </template>
       </el-table-column>
       <!-- <el-table-column label="规则值" prop="scopeValue" align="center" /> -->
@@ -44,8 +48,10 @@
       <el-table-column label="创建时间" prop="createTime" align="center" />
       <el-table-column align="center" label="操作">
         <template #default="scope">
-          <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
-          <base-delete-btn @ok="handleDelete(scope.row)"></base-delete-btn>
+          <div v-if="scope.row.children.length == 0">
+            <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
+            <base-delete-btn @ok="handleDelete(scope.row)"></base-delete-btn>
+          </div>
         </template>
       </el-table-column>
     </el-table>
@@ -86,6 +92,8 @@
 </template>
 
 <script setup>
+import { nextTick } from 'vue';
+
 const { proxy } = getCurrentInstance();
 let listQuery = $ref({});
 let form = $ref({});
@@ -107,43 +115,14 @@ onMounted(() => {
 });
 
 async function refreshTableData() {
-  let res = await proxy.$api.sys_scope_data.list(listQuery);
+  let res = await proxy.$api.sys_scope_data.tree(listQuery);
   tableDataList = res.data;
 }
 async function menuTree() {
   let res = await proxy.$api.sys_menu.tree({ type: 1 });
   menuList = res.data;
 }
-// 合并行数据
-const objectSpanMethod = ({ row, column, rowIndex, columnIndex }) => {
-  // 前提数据先要根据 menuId 排序
-  // 需要合并哪一列，0=第一列，1=第二列，……
-  if (columnIndex === 1) {
-    // 获取当前行的 menuId，这里看自己的需要，改成根据哪个去判断
-    let currentGoodId = row.menuId;
-    // 获取当前 menuId 相同的有多少行
-    let rowCount = tableDataList.filter((item) => item.menuId === currentGoodId).length;
-    // 获取当前 menuId 在表格数据中的第一条数据索引
-    let currentRowIndex = tableDataList.findIndex((item) => item.menuId === currentGoodId);
-    // 判断当前行是否第一行
-    let isFirstCell = rowIndex === currentRowIndex;
-    // 判断当前行是否最后一行
-    let isLastCell = rowIndex === currentRowIndex + rowCount;
-    // 如果是第一行，则显示这一行
-    if (isFirstCell) {
-      return {
-        rowspan: rowCount,
-        colspan: 1,
-      };
-      // 否则隐藏这一行
-    } else if (!isFirstCell && !isLastCell) {
-      return {
-        rowspan: 0,
-        colspan: 0,
-      };
-    }
-  }
-};
+
 function handleAdd() {
   form = { scopeType: 1, scopeVisibleField: '*' };
   dialogStatus = 'add';
@@ -169,6 +148,21 @@ function submitForm() {
     }
   });
 }
+
+function tableRowClassName({ row, rowIndex }) {
+  if (row.children.length === 0) {
+    return 'success-row';
+  }
+  return '';
+}
 </script>
 
-<style lang="scss" scoped></style>
+<!-- 不要加 scoped 否则表格行样式会失效 -->
+<style lang="scss">
+.el-table .warning-row {
+  --el-table-tr-bg-color: var(--el-color-warning-light-9);
+}
+.el-table .success-row {
+  --el-table-tr-bg-color: var(--el-color-success-light-9);
+}
+</style>

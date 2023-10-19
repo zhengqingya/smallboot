@@ -1,7 +1,5 @@
 package com.zhengqing.system.service;
 
-import com.zhengqing.system.model.bo.SysMenuTree;
-import com.zhengqing.system.model.dto.SysMenuTreeDTO;
 import com.zhengqing.system.model.dto.SysRoleRePermSaveDTO;
 import com.zhengqing.system.model.dto.SysUserPermDTO;
 import com.zhengqing.system.model.vo.SysRoleAllPermissionDetailVO;
@@ -98,13 +96,12 @@ public interface ISysPermBusinessService {
     List<Integer> getScopeIdListByRoleId(Integer roleId);
 
     /**
-     * 获取菜单树 -- 根据租户获取
+     * 注销角色id绑定的用户登录信息
      *
-     * @param params 提交参数
-     * @return 菜单树信息
+     * @param roleId 角色id
+     * @return void
      * @author zhengqingya
      * @date 2021/1/13 20:44
      */
-    List<SysMenuTree> tree(SysMenuTreeDTO params);
-
+    void logoutUserByRole(Integer roleId);
 }

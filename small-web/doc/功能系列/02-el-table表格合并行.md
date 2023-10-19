@@ -21,11 +21,11 @@ const objectSpanMethod = ({ row, column, rowIndex, columnIndex }) => {
   // 需要合并哪一列，0=第一列，1=第二列，……
   if (columnIndex === 1) {
     // 获取当前行的 name ，这里看自己的需要，改成根据哪个去判断
-    let currentGoodId = row.name;
+    let currentName = row.name;
     // 获取当前 name 相同的有多少行
-    let rowCount = tableData.filter((item) => item.name === currentGoodId).length;
+    let rowCount = tableData.filter((item) => item.name === currentName).length;
     // 获取当前 name 在表格数据中的第一条数据索引
-    let currentRowIndex = tableData.findIndex((item) => item.name === currentGoodId);
+    let currentRowIndex = tableData.findIndex((item) => item.name === currentName);
     // 判断当前行是否第一行
     let isFirstCell = rowIndex === currentRowIndex;
     // 判断当前行是否最后一行

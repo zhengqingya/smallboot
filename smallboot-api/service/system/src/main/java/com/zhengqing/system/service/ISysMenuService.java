@@ -20,10 +20,20 @@ import java.util.List;
 public interface ISysMenuService extends IService<SysMenu> {
 
     /**
-     * 获取所有菜单 -- 菜单树使用
+     * 列表
      *
      * @param params 查询参数
      * @return 菜单信息
+     * @author zhengqingya
+     * @date 2020/9/10 20:30
+     */
+    List<SysMenuTree> list(SysMenuTreeDTO params);
+
+    /**
+     * 菜单树
+     *
+     * @param params 查询参数
+     * @return 树
      * @author zhengqingya
      * @date 2020/9/10 20:30
      */

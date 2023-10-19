@@ -41,7 +41,7 @@ watch(
     isInitCount++;
     // console.log('监听器执行了... ', newValue[0]);
     menuTree = newValue;
-    defaultCheckedKeys = getCheckedKeys([], menuTree);
+    defaultCheckedKeys = recurveGetCheckedKeys([], menuTree);
   },
   {
     immediate: true,
@@ -49,30 +49,28 @@ watch(
   },
 );
 
-defineExpose({ getSelectKeyList });
+defineExpose({ getCheckedKeys });
 
 // 拿到选中的菜单ids -- 用于提交数据
-function getSelectKeyList() {
+function getCheckedKeys() {
   return proxy.$refs.menuTreeRef.getCheckedKeys();
 }
 
 // 拿到选中的菜单ids -- 回显
-function getCheckedKeys(checkedKeys, menuTree) {
+function recurveGetCheckedKeys(checkedKeys, menuTree) {
   menuTree.forEach((item) => {
     if (item.isHasPerm) {
       checkedKeys.push(item.id);
     }
     if (item.children.length > 0) {
-      getCheckedKeys(checkedKeys, item.children);
+      recurveGetCheckedKeys(checkedKeys, item.children);
     }
   });
   return checkedKeys;
 }
 
 // 点击菜单
-function menuNodeClick(data) {
-  currentSelectedMenu = data;
-}
+function menuNodeClick(data) {}
 
 /**
  * 监听菜单选中

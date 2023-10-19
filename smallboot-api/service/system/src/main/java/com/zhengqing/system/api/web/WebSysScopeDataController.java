@@ -45,6 +45,12 @@ public class WebSysScopeDataController extends BaseController {
         return this.sysScopeDataService.list(params);
     }
 
+    @GetMapping("tree")
+    @ApiOperation("树")
+    public List<SysScopeDataBaseVO> tree(@Validated @ModelAttribute SysScopeDataBaseDTO params) {
+        return this.sysScopeDataService.tree(params);
+    }
+
     @NoRepeatSubmit
     @PostMapping("add")
     @ApiOperation("新增")

@@ -83,6 +83,11 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
     }
 
     @Override
+    public List<Integer> listUserId(Integer roleId) {
+        return this.sysUserRoleMapper.listUserId(roleId);
+    }
+
+    @Override
     public List<Integer> listRoleId(Integer userId) {
         return this.mapRoleId(Lists.newArrayList(userId)).get(userId);
     }

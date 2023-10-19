@@ -229,7 +229,7 @@ function submitForm() {
           form.areaName = form.provinceCityAreaList[2];
         }
       }
-      if (!form.parentId) {
+      if (!form.parentId || !isFinite(form.parentId)) {
         form.parentId = 0;
       }
       let res = await proxy.$api.sys_dept[form.id ? 'update' : 'add'](form);

@@ -2,11 +2,13 @@ package com.zhengqing.system.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Assert;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
+import com.zhengqing.common.base.constant.AppConstant;
 import com.zhengqing.common.db.constant.MybatisConstant;
 import com.zhengqing.system.entity.SysRole;
 import com.zhengqing.system.enums.SysRoleCodeEnum;
@@ -59,8 +61,10 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         if (CollUtil.isEmpty(list)) {
             return Lists.newArrayList();
         }
-        Integer firstParentId = list.stream().map(SysRoleBaseVO::getParentId).min(Integer::compareTo).get();
-        return this.recurveRole(firstParentId, list, params.getExcludeRoleId());
+        if (StrUtil.isNotBlank(params.getName())) {
+            return list;
+        }
+        return this.recurveRole(AppConstant.PARENT_ID, list, params.getExcludeRoleId());
     }
 
     /**

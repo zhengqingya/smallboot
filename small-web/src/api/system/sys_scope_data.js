@@ -3,17 +3,24 @@ import request from '@/utils/request';
 const BASE_API = '/web/api/system/scope/data';
 
 export default {
-  page(query, headers) {
+  // page(query, headers) {
+  //   return request({
+  //     url: BASE_API + '/page',
+  //     method: 'get',
+  //     params: query,
+  //     headers,
+  //   });
+  // },
+  // list(query) {
+  //   return request({
+  //     url: BASE_API + '/list',
+  //     method: 'get',
+  //     params: query,
+  //   });
+  // },
+  tree(query) {
     return request({
-      url: BASE_API + '/page',
-      method: 'get',
-      params: query,
-      headers,
-    });
-  },
-  list(query) {
-    return request({
-      url: BASE_API + '/list',
+      url: BASE_API + '/tree',
       method: 'get',
       params: query,
     });

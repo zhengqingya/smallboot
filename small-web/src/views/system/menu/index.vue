@@ -149,7 +149,7 @@ async function handleDelete(row) {
 function submitForm() {
   proxy.$refs.dataFormRef.validate(async (valid) => {
     if (valid) {
-      if (!form.parentId) {
+      if (!form.parentId || !isFinite(form.parentId)) {
         form.parentId = 0;
       }
       let res = await proxy.$api.sys_menu[form.id ? 'update' : 'add'](form);

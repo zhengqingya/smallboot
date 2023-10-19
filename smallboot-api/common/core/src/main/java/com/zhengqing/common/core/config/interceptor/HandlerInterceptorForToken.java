@@ -1,11 +1,11 @@
 package com.zhengqing.common.core.config.interceptor;
 
-import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.google.common.collect.Lists;
 import com.zhengqing.common.auth.config.SaTokenProperty;
+import com.zhengqing.common.auth.util.AuthUtil;
 import com.zhengqing.common.base.constant.SecurityConstant;
 import com.zhengqing.common.base.context.JwtUserContext;
 import com.zhengqing.common.base.context.SysUserContext;
@@ -130,7 +130,7 @@ public class HandlerInterceptorForToken implements HandlerInterceptor {
         }
 
         // 获取登录用户信息
-        JwtUserBO jwtUserBO = JSONUtil.toBean(StpUtil.getLoginId().toString(), JwtUserBO.class);
+        JwtUserBO jwtUserBO = AuthUtil.getLoginUser();
 
         String method = request.getMethod();
         String path = request.getRequestURI();

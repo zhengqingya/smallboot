@@ -41,7 +41,7 @@ public class WebSysMenuController extends BaseController {
     @GetMapping("tree")
     @ApiOperation("菜单树")
     public List<SysMenuTree> tree(@Validated @ModelAttribute SysMenuTreeDTO params) {
-        return this.iSysPermBusinessService.tree(params);
+        return this.iSysMenuService.tree(params);
     }
 
     @NoRepeatSubmit

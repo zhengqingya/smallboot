@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>系统管理-数据权限-base-响应参数</p>
@@ -26,11 +27,20 @@ import java.util.Date;
 @ApiModel("系统管理-数据权限-base-响应参数")
 public class SysScopeDataBaseVO extends BaseVO {
 
+    @ApiModelProperty("自定义ID（前端表格树使用）")
+    private String customId;
+
+    @ApiModelProperty("自定义名称（前端表格树使用）")
+    private String customName;
+
     @ApiModelProperty("主键ID")
     private Integer id;
 
     @ApiModelProperty("菜单ID")
     private Integer menuId;
+
+    @ApiModelProperty("菜单全路径名称( eg: /系统管理/用户管理 )")
+    private String menuFullName;
 
     @ApiModelProperty("权限名称")
     private String scopeName;
@@ -58,6 +68,9 @@ public class SysScopeDataBaseVO extends BaseVO {
 
     @ApiModelProperty("创建时间")
     private Date createTime;
+
+    @ApiModelProperty("子级")
+    private List<SysScopeDataBaseVO> children;
 
     public void handleData() {
 

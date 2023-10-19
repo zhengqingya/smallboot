@@ -36,6 +36,9 @@ public class SysMenuTree {
     @ApiModelProperty("名称")
     private String name;
 
+    @ApiModelProperty("全路径名称( eg: /系统管理/用户管理 )")
+    private String fullName;
+
     @ApiModelProperty("图标")
     private String icon;
 

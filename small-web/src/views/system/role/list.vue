@@ -86,7 +86,7 @@ async function refreshTableData() {
 function saveForm() {
   proxy.$refs.roleFormRef.validate(async (valid) => {
     if (valid) {
-      if (!roleForm.parentId) {
+      if (!roleForm.parentId || !isFinite(roleForm.parentId)) {
         roleForm.parentId = 0;
       }
       let res = await proxy.$api.sys_role[roleForm.roleId ? 'update' : 'add'](roleForm);

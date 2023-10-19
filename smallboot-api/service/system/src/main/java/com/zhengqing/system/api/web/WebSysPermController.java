@@ -52,6 +52,7 @@ public class WebSysPermController extends BaseController {
     @ApiOperation("保存角色权限（菜单权限+按钮权限+数据权限）")
     public void saveRoleRePerm(@Validated @RequestBody SysRoleRePermSaveDTO params) {
         this.iSysPermBusinessService.saveRoleRePerm(params);
+        this.iSysPermBusinessService.logoutUserByRole(params.getRoleId());
     }
 
     @GetMapping("getScopeIdListByRoleId")

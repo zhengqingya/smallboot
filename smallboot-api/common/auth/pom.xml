@@ -23,6 +23,13 @@
         <dependency>
             <groupId>com.zhengqing</groupId>
             <artifactId>base</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.zhengqing</groupId>
+            <artifactId>redis</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <!-- Sa-Token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->

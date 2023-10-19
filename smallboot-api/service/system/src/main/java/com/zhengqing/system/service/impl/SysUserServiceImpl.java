@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.zhengqing.common.auth.util.AuthUtil;
 import com.zhengqing.common.base.constant.AppConstant;
 import com.zhengqing.common.base.exception.MyException;
 import com.zhengqing.common.core.enums.UserSexEnum;
@@ -138,6 +139,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         // 给用户绑定角色信息
         if (!AppConstant.SYSTEM_SUPER_ADMIN_USER_ID.equals(userId) && isUpdateRole) {
             this.iSysUserRoleService.addOrUpdateData(SysUserRoleSaveDTO.builder().userId(userId).roleIdList(params.getRoleIdList()).build());
+
+            AuthUtil.logout(userId);
         }
 
         return userId;

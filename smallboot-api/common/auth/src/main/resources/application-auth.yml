@@ -6,7 +6,7 @@ sa-token:
   jwt-secret-key: smallboot
   # token值前缀
   token-prefix: Bearer
-  # token有效期，单位s 这里设置1天, -1代表永不过期
+  # token有效期，单位s 这里设置1天, -1代表永不过期  -- tips:一定不要设置为-1
   timeout: 86400
   # token临时有效期 (指定时间内无操作就视为token过期) 单位: 秒
   activity-timeout: -1

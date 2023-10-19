@@ -38,6 +38,16 @@ public interface ISysScopeDataService extends IService<SysScopeData> {
      */
     List<SysScopeDataBaseVO> list(SysScopeDataBaseDTO params);
 
+    /**
+     * 树
+     *
+     * @param params 查询参数
+     * @return 查询结果
+     * @author zhengqingya
+     * @date 2023/10/18 14:00
+     */
+    List<SysScopeDataBaseVO> tree(SysScopeDataBaseDTO params);
+
 
     /**
      * 新增或更新
@@ -58,5 +68,6 @@ public interface ISysScopeDataService extends IService<SysScopeData> {
      * @date 2023/10/18 14:00
      */
     void deleteData(Integer id);
+
 
 }

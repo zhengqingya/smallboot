@@ -84,7 +84,7 @@ public class DyCallbackController {
     @ApiOpen
     @NoReturnHandle
     @ApiOperation("授权通知")
-    @PostMapping("/event/notice/{tenantId}/{appid}")
+    @PostMapping("/event/notice/{tenantId}/{appid}/")
     public Object authCallback(@PathVariable Integer tenantId, @PathVariable Integer appid, @RequestBody(required = false) Object params) {
         log.info("[抖音] tenantId:{} appid:{} 授权通知：{}", tenantId, appid, JSONUtil.toJsonStr(params));
         return "success";

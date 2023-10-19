@@ -2,9 +2,11 @@ package com.zhengqing.system.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Assert;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
+import com.zhengqing.common.base.constant.AppConstant;
 import com.zhengqing.common.base.enums.ApiResultCodeEnum;
 import com.zhengqing.common.base.enums.CommonStatusEnum;
 import com.zhengqing.common.base.exception.MyException;
@@ -63,8 +65,10 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
         List<Integer> appConfigIdList = list.stream().map(SysDeptTreeVO::getAppConfigId).collect(Collectors.toList());
         Map<Integer, SysAppConfigBO> appConfigMap = this.iSysAppConfigService.mapByIdList(appConfigIdList);
         list.forEach(e -> e.setAppConfigObj(appConfigMap.get(e.getAppConfigId())));
-        Integer firstParentId = list.stream().map(SysDeptTreeVO::getParentId).min(Integer::compareTo).get();
-        return this.recurveDept(firstParentId, list, params.getExcludeDeptId());
+        if (StrUtil.isNotBlank(params.getName())) {
+            return list;
+        }
+        return this.recurveDept(AppConstant.PARENT_ID, list, params.getExcludeDeptId());
     }
 
     /**

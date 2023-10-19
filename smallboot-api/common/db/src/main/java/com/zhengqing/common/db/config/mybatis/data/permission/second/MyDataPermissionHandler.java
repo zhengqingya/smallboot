@@ -103,6 +103,7 @@ public class MyDataPermissionHandler {
                     case 全部可见:
                         return where;
                     case 本人可见:
+                        // create_by = ?
                         EqualsTo userSelfEqualsTo = new EqualsTo();
                         userSelfEqualsTo.setLeftExpression(new Column(mainTableName + ".create_by"));
                         userSelfEqualsTo.setRightExpression(new LongValue(userId));

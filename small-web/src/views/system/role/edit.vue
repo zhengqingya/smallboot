@@ -13,16 +13,19 @@
         <menu-perm-tree v-show="menuTree.length > 0" ref="menuTreeRef" v-model="menuTree" :role-id="roleId" />
       </base-card>
 
-      <base-card title="数据权限">
-        <el-table ref="baseScopeTableRef" row-key="id" border :selection="true" :reserve-selection="true" :data="scopeList">
-          <el-table-column type="selection" width="55"></el-table-column>
-          <el-table-column label="菜单" align="center" width="300px">
-            <template #default="scope">
-              <base-cascader v-model="scope.row.menuId" disabled :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true, emitPath: false }" :data-list="menuTree" />
-            </template>
-          </el-table-column>
-          <el-table-column label="权限名称" width="300px" prop="scopeName" align="center" />
-        </el-table>
+      <base-card title="数据权限" class="flex-1">
+        <el-tree
+          ref="scopeTreeRef"
+          :data="scopeTree"
+          :props="{
+            children: 'children',
+            label: 'customName',
+          }"
+          show-checkbox
+          default-expand-all
+          :default-checked-keys="defaultSelectScopeIdList"
+          node-key="customId"
+          highlight-current />
       </base-card>
     </div>
 
@@ -41,7 +44,8 @@ const { proxy } = getCurrentInstance();
 let roleId = $ref(null);
 let roleForm = $ref({}); // 角色基本信息
 let menuTree = $ref([]); // 菜单树
-let scopeList = $ref([]); // 数据权限
+let scopeTree = $ref([]); // 数据权限
+let defaultSelectScopeIdList = $ref([]); //  数据权限树默认选中的数据
 
 onMounted(() => {
   roleId = proxy.$route.query.id;
@@ -62,25 +66,17 @@ async function initData() {
 
 async function initScope() {
   let scopeRes = await proxy.$api.sys_perm.getScopeIdListByRoleId({ roleId: roleId });
-  let selectScopeIdList = scopeRes.data;
+  defaultSelectScopeIdList = scopeRes.data;
 
-  let res = await proxy.$api.sys_scope_data.list();
-  scopeList = res.data;
-  // 回显选中行
-  nextTick(() => {
-    scopeList.forEach((item) => {
-      if (selectScopeIdList.includes(item.id)) {
-        proxy.$refs.baseScopeTableRef.toggleRowSelection(item, true);
-      }
-    });
-  });
+  let res = await proxy.$api.sys_scope_data.tree();
+  scopeTree = res.data;
 }
 
 // 保存角色关联的菜单权限数据
 async function savePerm() {
   // 拿到选中的权限id
-  let selectScopeIdList = proxy.$refs.baseScopeTableRef.getSelectionRows().map((e) => e.id);
-  let selectMenuIdList = proxy.$refs.menuTreeRef.getSelectKeyList();
+  let selectScopeIdList = proxy.$refs.scopeTreeRef.getCheckedKeys().filter((e) => isFinite(e));
+  let selectMenuIdList = proxy.$refs.menuTreeRef.getCheckedKeys();
   let res = await proxy.$api.sys_perm.saveRoleRePerm({ roleId: roleId, menuIdList: selectMenuIdList, scopeIdList: selectScopeIdList });
   proxy.submitOk(res.msg);
   proxy.$router.push('/system/role');

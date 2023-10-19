@@ -4,7 +4,7 @@
 
     <select id="selectDataList" resultType="com.zhengqing.system.model.vo.SysScopeDataBaseVO">
         SELECT
-        tssd.*
+        tssd.*, tssd.id customId, tssd.scope_name customName
         FROM t_sys_scope_data tssd
         <where>
             tssd.is_deleted=0

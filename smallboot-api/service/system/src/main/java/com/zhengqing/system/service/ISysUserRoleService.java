@@ -28,6 +28,15 @@ public interface ISysUserRoleService extends IService<SysUserRole> {
      */
     void addOrUpdateData(SysUserRoleSaveDTO params);
 
+    /**
+     * 根据角色id查询关联用户ids
+     *
+     * @param roleId 角色id
+     * @return 用户ids
+     * @author zhengqingya
+     * @date 2022/6/14 12:39
+     */
+    List<Integer> listUserId(Integer roleId);
 
     /**
      * 根据用户id查询关联角色ids
