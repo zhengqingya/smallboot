@@ -59,7 +59,12 @@
     <base-dialog v-model="dialogVisible" :title="dialogTitleObj[dialogStatus]" width="50%">
       <el-form v-if="dialogStatus !== 'detail'" ref="dataFormRef" :model="form" label-width="90px">
         <el-form-item label="菜单:">
-          <base-cascader v-model="form.menuId" style="width: 100%" clearable :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true, emitPath: false }" api="sys_menu.tree" />
+          <base-cascader
+            v-model="form.menuId"
+            style="width: 100%"
+            clearable
+            :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true, emitPath: false }"
+            :data-list="menuList" />
         </el-form-item>
         <el-form-item label="名称:">
           <el-input v-model="form.scopeName" />
@@ -76,7 +81,7 @@
         <el-form-item label="全权限类名:">
           <el-input v-model="form.scopeClass" :rows="5" type="textarea" placeholder="mapper class 全限定类名 （多个用英文逗号分隔）" />
         </el-form-item>
-        <el-form-item v-if="form.scopeType == 5" label="规则值:">
+        <el-form-item v-if="form.scopeType == 10" label="规则值:">
           <el-input v-model="form.scopeValue" :rows="2" type="textarea" />
         </el-form-item>
         <el-form-item label="备注:">
@@ -104,7 +109,9 @@ let typeList = $ref([
   { label: '本人可见', value: 2 },
   { label: '所在部门可见', value: 3 },
   { label: '所在部门及子级可见', value: 4 },
-  { label: '自定义', value: 5 },
+  { label: '所在角色', value: 5 },
+  { label: '所在角色以及下级角色', value: 6 },
+  { label: '自定义', value: 10 },
 ]);
 let tableDataList = $ref([]);
 let menuList = $ref([]);

@@ -86,9 +86,9 @@
           <el-form-item label="名称:">
             <el-input v-model="form.name" :disabled="isDetail" />
           </el-form-item>
-          <el-form-item label="负责人:">
+          <!-- <el-form-item label="负责人:">
             <base-select v-model="form.leaderUserId" :disabled="isDetail" clearable :option-props="{ label: 'nickname', value: 'userId' }" api="sys_user.list" />
-          </el-form-item>
+          </el-form-item> -->
           <el-form-item label="状态:">
             <base-radio-group v-model="form.status" :disabled="isDetail" />
           </el-form-item>
