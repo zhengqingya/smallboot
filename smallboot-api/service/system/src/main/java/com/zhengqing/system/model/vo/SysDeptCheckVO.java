@@ -45,6 +45,9 @@ public class SysDeptCheckVO extends BaseVO {
     @ApiModelProperty("最大员工数")
     private Integer userNum;
 
+    @ApiModelProperty("最大职位发布数")
+    private Integer jobNum;
+
     @JsonIgnore
     @ApiModelProperty("AppSecret")
     private String appSecret;

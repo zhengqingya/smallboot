@@ -61,6 +61,7 @@ public class WebSysRoleController extends BaseController {
     @PostMapping("")
     @ApiOperation("新增")
     public Integer add(@Validated @RequestBody SysRoleSaveDTO params) {
+        params.setRoleId(null);
         return this.iSysRoleService.addOrUpdateData(params);
     }
 
@@ -68,7 +69,9 @@ public class WebSysRoleController extends BaseController {
     @PutMapping("")
     @ApiOperation("更新")
     public Integer update(@Validated(UpdateGroup.class) @RequestBody SysRoleSaveDTO params) {
-        return this.iSysRoleService.addOrUpdateData(params);
+        Integer roleId = this.iSysRoleService.addOrUpdateData(params);
+        this.iSysPermBusinessService.logoutUserByRole(roleId);
+        return roleId;
     }
 
     @GetMapping("detail")
@@ -81,6 +84,7 @@ public class WebSysRoleController extends BaseController {
     @ApiOperation("删除")
     public void delete(@RequestParam Integer roleId) {
         this.iSysRoleService.deleteRoleAndRoleMenu(roleId);
+        this.iSysPermBusinessService.logoutUserByRole(roleId);
     }
 
 }

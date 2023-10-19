@@ -65,6 +65,9 @@ public class SysUserListVO {
     @ApiModelProperty(value = "部门id")
     private Integer deptId;
 
+    @ApiModelProperty(value = "部门名称")
+    private String deptName;
+
     @ApiModelProperty(value = "岗位ids")
     private List<Integer> postIdList;
 

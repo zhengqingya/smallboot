@@ -116,6 +116,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
                 .status(sysDept.getStatus())
                 .expireTime(sysDept.getExpireTime())
                 .userNum(sysDept.getUserNum())
+                .jobNum(sysDept.getJobNum())
                 .build();
         Integer appConfigId = sysDept.getAppConfigId();
         if (appConfigId != null) {
@@ -194,6 +195,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
                 .build();
 
         // 保存小程序配置
+        appConfigObj.setName(name);
         Integer appConfigId = this.iSysAppConfigService.addOrUpdateData(appConfigObj);
         sysDept.setAppConfigId(appConfigId);
         sysDept.insertOrUpdate();

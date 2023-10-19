@@ -40,13 +40,13 @@ public interface CmsJobMapper extends BaseMapper<CmsJob> {
     List<CmsJobBaseVO> selectDataList(@Param("filter") CmsJobBaseDTO filter);
 
     /**
-     * 查询商户id关联的发布职位数
+     * 查询部门id关联的发布职位数
      *
-     * @param merchantId 商户id
+     * @param deptId 部门id
      * @return 查询结果
      * @author zhengqingya
      * @date 2023/10/10 15:08
      */
-    long selectJobNum(@Param("merchantId") Integer merchantId);
+    long selectJobNumByDeptId(@Param("deptId") Integer deptId);
 
 }

@@ -41,7 +41,7 @@ public class UmsUserInfoDTO extends BaseDTO {
     @ApiModelProperty("头像")
     private String avatarUrl;
 
-    @Length(max = 11, message = "手机号最多11位！")
+    @Length(min = 11, max = 11, message = "手机号需要11位！")
     @ApiModelProperty("手机号码")
     private String phone;
 

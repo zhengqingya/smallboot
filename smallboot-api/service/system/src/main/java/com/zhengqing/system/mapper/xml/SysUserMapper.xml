@@ -11,23 +11,24 @@
 
     <select id="selectDataList" resultMap="listMap">
         SELECT
-        *
-        FROM t_sys_user
+        tsu.*, tsd.name deptName
+        FROM t_sys_user tsu
+        left join t_sys_dept tsd on tsd.id = tsu.dept_id
         <where>
             <if test="filter.deptIdList != null and filter.deptIdList.size() > 0">
-                AND dept_id IN
+                AND tsu.dept_id IN
                 <foreach item="deptId" index="index" collection="filter.deptIdList" open="(" separator="," close=")">
                     #{deptId}
                 </foreach>
             </if>
             <if test="filter.username!=null and filter.username!=''">
-                AND username LIKE CONCAT( '%', #{filter.username} , '%' )
+                AND tsu.username LIKE CONCAT( '%', #{filter.username} , '%' )
             </if>
             <if test="filter.phone!=null and filter.phone!=''">
-                AND phone LIKE CONCAT( '%', #{filter.phone} , '%' )
+                AND tsu.phone LIKE CONCAT( '%', #{filter.phone} , '%' )
             </if>
         </where>
-        ORDER BY is_fixed DESC, create_time DESC
+        ORDER BY tsu.is_fixed DESC, tsu.create_time DESC
     </select>
 
     <resultMap id="selectUserPerm" type="com.zhengqing.system.model.vo.SysUserPermVO">

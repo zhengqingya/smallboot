@@ -12,8 +12,8 @@ import com.zhengqing.cms.model.dto.CmsJobSaveDTO;
 import com.zhengqing.cms.model.vo.CmsJobBaseVO;
 import com.zhengqing.cms.service.ICmsJobService;
 import com.zhengqing.cms.service.ICmsJobTagService;
-import com.zhengqing.system.entity.SysMerchant;
-import com.zhengqing.system.service.ISysMerchantService;
+import com.zhengqing.system.model.vo.SysDeptCheckVO;
+import com.zhengqing.system.service.ISysDeptService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.compress.utils.Lists;
@@ -38,7 +38,7 @@ public class CmsJobServiceImpl extends ServiceImpl<CmsJobMapper, CmsJob> impleme
 
     private final CmsJobMapper cmsJobMapper;
     private final ICmsJobTagService iCmsJobTagService;
-    private final ISysMerchantService iSysMerchantService;
+    private final ISysDeptService iSysDeptService;
 
     @Override
     public IPage<CmsJobBaseVO> page(CmsJobBaseDTO params) {
@@ -84,12 +84,12 @@ public class CmsJobServiceImpl extends ServiceImpl<CmsJobMapper, CmsJob> impleme
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void addOrUpdateData(CmsJobSaveDTO params) {
-        Integer merchantId = params.getMerchantId();
+        Integer deptId = params.getDeptId();
         // 校验商户的发布数
         if (params.getId() == null) {
-            SysMerchant sysMerchant = this.iSysMerchantService.checkData(merchantId);
-            Integer maxJobNum = sysMerchant.getJobNum();
-            Assert.isTrue(maxJobNum > this.cmsJobMapper.selectJobNum(merchantId), "限制：商户最大职位发布数 " + maxJobNum);
+            SysDeptCheckVO sysDeptCheckVO = this.iSysDeptService.checkData(deptId);
+            Integer maxJobNum = sysDeptCheckVO.getJobNum();
+            Assert.isTrue(maxJobNum > this.cmsJobMapper.selectJobNumByDeptId(deptId), "限制：企业最大职位发布数 " + maxJobNum);
         }
 
         // 校验名称是否重复
@@ -98,7 +98,7 @@ public class CmsJobServiceImpl extends ServiceImpl<CmsJobMapper, CmsJob> impleme
 
         CmsJob.builder()
                 .id(params.getId())
-                .merchantId(merchantId)
+                .merchantId(deptId)
                 .deptId(params.getDeptId())
                 .name(params.getName())
                 .postId(params.getPostId())

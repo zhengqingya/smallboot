@@ -110,15 +110,15 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
                                 .build()
                 );
                 // 默认创建商户管理员，权限由租户自己单独分配
-                this.iSysRoleService.addOrUpdateData(
-                        SysRoleSaveDTO.builder()
-                                .parentId(roleId)
-                                .name(SysRoleCodeEnum.商户管理员.getName())
-                                .code(SysRoleCodeEnum.商户管理员.getCode())
-                                .isFixed(true)
-                                .sort(1)
-                                .build()
-                );
+//                this.iSysRoleService.addOrUpdateData(
+//                        SysRoleSaveDTO.builder()
+//                                .parentId(roleId)
+//                                .name(SysRoleCodeEnum.商户管理员.getName())
+//                                .code(SysRoleCodeEnum.商户管理员.getCode())
+//                                .isFixed(true)
+//                                .sort(1)
+//                                .build()
+//                );
                 // 默认创建一个部门
                 Integer deptId = this.iSysDeptService.addOrUpdateData(
                         SysDeptSaveDTO.builder()

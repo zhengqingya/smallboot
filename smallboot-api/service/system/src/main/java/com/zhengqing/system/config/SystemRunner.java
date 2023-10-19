@@ -1,5 +1,7 @@
 package com.zhengqing.system.config;
 
+import com.zhengqing.common.base.constant.AppConstant;
+import com.zhengqing.common.base.context.TenantIdContext;
 import com.zhengqing.common.core.config.AppCommonRunner;
 import com.zhengqing.system.service.ISysConfigService;
 import com.zhengqing.system.service.ISysDictService;
@@ -34,6 +36,8 @@ public class SystemRunner extends AppCommonRunner {
 
         // 拉取 el-icon 图标数据
 //        this.dictService.initElIconData();
+
+        TenantIdContext.setTenantId(AppConstant.SMALL_BOOT_TENANT_ID);
 
         // 数据字典
         this.iSysDictService.initCache();

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhengqing.system.mapper.SysLogMapper">
+
+    <select id="selectDataPage" resultType="com.zhengqing.system.model.vo.SysLogPageVO">
+        SELECT
+        tsl.*
+        FROM t_sys_log tsl
+        <where>
+            <if test="filter.type!=null">
+                AND tsl.type = #{filter.type}
+            </if>
+            <if test="filter.apiMethod!=null and filter.apiMethod!=''">
+                AND tsl.api_method = #{filter.apiMethod}
+            </if>
+            <if test="filter.apiMethodName!=null and filter.apiMethodName!=''">
+                AND tsl.api_method_name LIKE CONCAT( '%', #{filter.apiMethodName} , '%' )
+            </if>
+            <if test="filter.operationName!=null and filter.operationName!=''">
+                AND tsl.operation_name LIKE CONCAT( '%', #{filter.operationName} , '%' )
+            </if>
+            <if test="filter.requestUrl!=null and filter.requestUrl!=''">
+                AND tsl.request_url LIKE CONCAT( '%', #{filter.requestUrl} , '%' )
+            </if>
+        </where>
+        ORDER BY tsl.create_time DESC
+    </select>
+
+</mapper>

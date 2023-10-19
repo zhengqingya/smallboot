@@ -26,6 +26,9 @@
             </foreach>
         </if>
         WHERE sm.is_deleted = 0
+        <if test="filter.name!=null and filter.name!=''">
+            AND sm.name = #{filter.name}
+        </if>
         <if test="filter.parentId!=null">
             AND sm.parent_id = #{filter.parentId}
         </if>

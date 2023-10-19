@@ -64,6 +64,7 @@ public class MyDataPermissionHandler {
         scopeDataList = scopeDataList.stream().filter(e -> {
             String scopeClass = e.getScopeClass();
             List<String> scopeClassList = Arrays.asList(scopeClass.replaceAll("\n", "").replaceAll("#", ".").split(","));
+            scopeClassList.forEach(String::trim);
             return scopeClassList.contains(mapperClassName);
         }).collect(Collectors.toList());
         if (CollUtil.isEmpty(scopeDataList)) {
@@ -132,7 +133,7 @@ public class MyDataPermissionHandler {
 //                        AndExpression deptAndExpression = new AndExpression(where, equalsTo);
 //                        log.info(" where {}", deptAndExpression);
 //                        return deptAndExpression;
-                    case 本人角色以及下级角色:
+                    case 所在角色以及下级角色:
                         // 创建IN 表达式
                         // 创建IN范围的元素集合
                         if (userReAllRoleIdList.contains(AppConstant.SMALL_BOOT_SUPER_ADMIN_ROLE_ID)) {

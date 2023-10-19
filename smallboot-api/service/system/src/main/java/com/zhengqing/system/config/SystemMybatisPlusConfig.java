@@ -29,6 +29,7 @@ public class SystemMybatisPlusConfig {
         MybatisPlusConfig.TENANT_ID_TABLE.add("t_sys_user_re_oauth");
         MybatisPlusConfig.TENANT_ID_TABLE.add("t_sys_user_role");
         MybatisPlusConfig.TENANT_ID_TABLE.add("t_sys_version");
+        MybatisPlusConfig.TENANT_ID_TABLE.add("t_sys_log");
     }
 
 }

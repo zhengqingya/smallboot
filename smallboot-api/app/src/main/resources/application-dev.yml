@@ -32,7 +32,7 @@ smallboot:
       password: root
       url-params: ${smallboot.mysql.url-params}
   # sql日志，默认关闭  true:开启  false:关闭
-  mybatis-plus-sql-log: true
+  mybatis-plus-sql-log: false
   # api日志，默认关闭 true:开启  false:关闭
   api-log: true
   # mq

@@ -1,9 +1,6 @@
 package com.zhengqing.system.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import com.zhengqing.common.core.enums.UserSexEnum;
 import com.zhengqing.common.db.config.mybatis.handler.ListJsonIntegerTypeHandler;
 import com.zhengqing.common.db.entity.IsDeletedBaseEntity;
@@ -59,11 +56,15 @@ public class SysUser extends IsDeletedBaseEntity<SysUser> {
     @ApiModelProperty(value = "头像")
     private String avatarUrl;
 
+    /**
+     * 值为空时，MP更新数据库时不忽略此字段值
+     */
+    @TableField(updateStrategy = FieldStrategy.IGNORED)
     @ApiModelProperty(value = "部门id")
     private Integer deptId;
 
     @ApiModelProperty(value = "岗位ids")
-    @TableField(typeHandler = ListJsonIntegerTypeHandler.class)
+    @TableField(typeHandler = ListJsonIntegerTypeHandler.class, updateStrategy = FieldStrategy.IGNORED)
     private List<Integer> postIdList;
 
     @ApiModelProperty(value = "是否固定(false->否 true->是)")
