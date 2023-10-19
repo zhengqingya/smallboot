@@ -27,6 +27,8 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class AuthUtil {
 
+    private final static String JWT_USER_KEY = "smallboot:login:";
+
     private static String tokenPrefix;
 
     @Autowired
@@ -51,7 +53,7 @@ public class AuthUtil {
         StpUtil.login(userId);
 
         // 将登录信息存储到redis
-        RedisUtil.setEx(userId, JSONUtil.toJsonStr(jwtUserBO), StpUtil.getTokenTimeout(), TimeUnit.SECONDS);
+        RedisUtil.setEx(JWT_USER_KEY + userId, JSONUtil.toJsonStr(jwtUserBO), StpUtil.getTokenTimeout(), TimeUnit.SECONDS);
 
         String tokenValue = StpUtil.getTokenValue();
         return AuthLoginVO.builder()
@@ -81,7 +83,7 @@ public class AuthUtil {
      */
     public static JwtUserBO getLoginUser() {
         String userId = StpUtil.getLoginId().toString();
-        String userObj = RedisUtil.get(userId);
+        String userObj = RedisUtil.get(JWT_USER_KEY + userId);
         if (StrUtil.isBlank(userObj)) {
             throw NotLoginException.newInstance(StpUtil.getLoginType(), NotLoginException.NOT_TOKEN).setCode(SaErrorCode.CODE_11011);
         }

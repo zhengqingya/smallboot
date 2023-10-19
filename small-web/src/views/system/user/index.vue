@@ -1,6 +1,6 @@
 <template>
   <base-wrapper class="flex">
-    <base-card title="组织架构" style="width: 200px">
+    <base-card title="企业" style="width: 200px">
       <el-tree
         :data="deptTreeData"
         :props="{
@@ -19,7 +19,7 @@
           v-model="listQuery.deptId"
           style="margin-right: 10px"
           clearable
-          label="部门"
+          label="企业"
           :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true, emitPath: false }"
           api="sys_dept.tree" />
         <!-- <base-select v-model="listQuery.merchantId" label="商户" tag-type="success" style="margin-right: 10px" clearable :option-props="{ label: 'name', value: 'id' }" api="sys_merchant.list" /> -->

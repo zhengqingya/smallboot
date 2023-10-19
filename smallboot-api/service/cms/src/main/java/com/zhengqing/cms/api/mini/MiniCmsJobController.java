@@ -4,10 +4,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.cms.model.dto.CmsJobApplyPageDTO;
 import com.zhengqing.cms.model.dto.CmsJobApplySaveDTO;
 import com.zhengqing.cms.model.dto.CmsJobBaseDTO;
-import com.zhengqing.cms.model.dto.CmsJobCategoryListDTO;
 import com.zhengqing.cms.model.vo.CmsJobApplyPageVO;
 import com.zhengqing.cms.model.vo.CmsJobBaseVO;
-import com.zhengqing.cms.model.vo.CmsJobCategoryListVO;
 import com.zhengqing.cms.service.ICmsJobApplyService;
 import com.zhengqing.cms.service.ICmsJobCategoryService;
 import com.zhengqing.cms.service.ICmsJobService;
@@ -22,8 +20,6 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 
 /**
@@ -43,17 +39,18 @@ public class MiniCmsJobController extends BaseController {
     private final ICmsJobCategoryService iCmsJobCategoryService;
     private final ICmsJobApplyService iCmsJobApplyService;
 
-    @ApiOpen
-    @GetMapping("category/list")
-    @ApiOperation("分类列表")
-    public List<CmsJobCategoryListVO> list(@Validated @ModelAttribute CmsJobCategoryListDTO params) {
-        return this.iCmsJobCategoryService.list(params);
-    }
+//    @ApiOpen
+//    @GetMapping("category/list")
+//    @ApiOperation("分类列表")
+//    public List<CmsJobCategoryListVO> list(@Validated @ModelAttribute CmsJobCategoryListDTO params) {
+//        return this.iCmsJobCategoryService.list(params);
+//    }
 
     @ApiOpen
     @GetMapping("page")
     @ApiOperation("分页列表")
     public IPage<CmsJobBaseVO> page(@Validated @ModelAttribute CmsJobBaseDTO params) {
+        params.setDeptId(this.getMiniAppIdReDeptId());
         params.setStatus(CommonStatusEnum.ENABLE.getStatus());
         return this.iCmsJobService.page(params);
     }
@@ -76,6 +73,7 @@ public class MiniCmsJobController extends BaseController {
     @GetMapping("apply/page")
     @ApiOperation("申请-分页列表")
     public IPage<CmsJobApplyPageVO> applyPage(@Validated @ModelAttribute CmsJobApplyPageDTO params) {
+        params.setDeptId(this.getMiniAppIdReDeptId());
         params.setCreateBy(params.getCurrentUserId());
         return this.iCmsJobApplyService.page(params);
     }

@@ -2,9 +2,12 @@ package com.zhengqing.common.core.api;
 
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.CharsetUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.servlet.ServletUtil;
 import com.zhengqing.common.base.context.JwtUserContext;
 import com.zhengqing.common.base.context.SysUserContext;
+import com.zhengqing.common.base.context.TenantIdContext;
+import com.zhengqing.common.redis.util.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -61,18 +64,31 @@ public class BaseController {
 
 
     /**
-     * 获取小程序商户id
+     * 获取小程序appId
      *
      * @return 商户id
      * @author zhengqingya
      * @date 2020/8/30 15:41
      */
-    protected Integer getMiniMerchantId() {
+    protected String getMiniAppId() {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
-        String merchantId = ServletUtil.getHeader(request, "MERCHANT_ID", CharsetUtil.UTF_8);
-        Assert.notBlank(merchantId, "小程序商户ID丢失！");
-        return Integer.valueOf(merchantId);
+        String appId = ServletUtil.getHeader(request, "APP_ID", CharsetUtil.UTF_8);
+        Assert.notBlank(appId, "小程序AppID丢失！");
+        return appId;
+    }
+
+    /**
+     * 获取小程序appId关联的部门id
+     *
+     * @return 商户id
+     * @author zhengqingya
+     * @date 2020/8/30 15:41
+     */
+    protected Integer getMiniAppIdReDeptId() {
+        String deptId = RedisUtil.get(StrUtil.format("smallboot:appid_dept_id:{}:{}", TenantIdContext.getTenantId(), this.getMiniAppId()));
+        Assert.notBlank(deptId, "小程序归属企业数据丢失！");
+        return Integer.valueOf(deptId);
     }
 
 }

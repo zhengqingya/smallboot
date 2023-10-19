@@ -56,7 +56,7 @@ public interface ISysDeptService extends IService<SysDept> {
      * @author zhengqingya
      * @date 2023/10/09 18:10
      */
-    SysDeptCheckVO configByAppId(Integer appId);
+    SysDeptCheckVO configByAppId(String appId);
 
     /**
      * 获取指定部门下的子级部门（包含当前部门）

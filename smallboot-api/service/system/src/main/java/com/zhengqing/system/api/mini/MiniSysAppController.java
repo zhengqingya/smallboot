@@ -32,7 +32,7 @@ public class MiniSysAppController extends BaseController {
     @ApiOpen
     @GetMapping("config")
     @ApiOperation("小程序配置")
-    public SysDeptCheckVO config(@RequestParam Integer appId) {
+    public SysDeptCheckVO config(@RequestParam String appId) {
         return this.iSysDeptService.configByAppId(appId);
     }
 

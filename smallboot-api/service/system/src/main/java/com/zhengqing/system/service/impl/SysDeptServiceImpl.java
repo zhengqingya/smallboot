@@ -7,11 +7,13 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
 import com.zhengqing.common.base.constant.AppConstant;
+import com.zhengqing.common.base.context.TenantIdContext;
 import com.zhengqing.common.base.enums.ApiResultCodeEnum;
 import com.zhengqing.common.base.enums.CommonStatusEnum;
 import com.zhengqing.common.base.exception.MyException;
 import com.zhengqing.common.base.util.MyDateUtil;
 import com.zhengqing.common.db.constant.MybatisConstant;
+import com.zhengqing.common.redis.util.RedisUtil;
 import com.zhengqing.system.entity.SysAppConfig;
 import com.zhengqing.system.entity.SysDept;
 import com.zhengqing.system.mapper.SysDeptMapper;
@@ -125,10 +127,11 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
     }
 
     @Override
-    public SysDeptCheckVO configByAppId(Integer appId) {
-        SysAppConfig sysAppConfig = this.iSysAppConfigService.getById(appId);
-        Assert.notNull(sysAppConfig, "小程序暂未配置，请联系系统管理员！");
-        SysDept sysDept = this.sysDeptMapper.selectOne(new LambdaQueryWrapper<SysDept>().eq(SysDept::getAppConfigId, sysAppConfig.getId()).last(MybatisConstant.LIMIT_ONE));
+    public SysDeptCheckVO configByAppId(String appId) {
+        Map<String, SysAppConfigBO> appConfigMap = this.iSysAppConfigService.mapByAppIdList(Lists.newArrayList(appId));
+        SysAppConfigBO sysAppConfigBO = appConfigMap.get(appId);
+        Assert.notNull(sysAppConfigBO, "小程序暂未配置，请联系系统管理员！");
+        SysDept sysDept = this.sysDeptMapper.selectOne(new LambdaQueryWrapper<SysDept>().eq(SysDept::getAppConfigId, sysAppConfigBO.getId()).last(MybatisConstant.LIMIT_ONE));
         Assert.notNull(sysDept, "企业数据丢失，请联系系统管理员！");
         return this.checkData(sysDept.getId());
     }
@@ -165,6 +168,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
     public Integer addOrUpdateData(SysDeptSaveDTO params) {
         Integer id = params.getId();
         String name = params.getName();
+        SysAppConfigBO appConfigObj = params.getAppConfigObj();
         // 校验名称是否重复
         SysDept sysDeptOld = this.sysDeptMapper.selectOne(new LambdaQueryWrapper<SysDept>().eq(SysDept::getName, name).last(MybatisConstant.LIMIT_ONE));
         Assert.isTrue(sysDeptOld == null || sysDeptOld.getId().equals(id), "名称重复，请重新输入！");
@@ -190,10 +194,14 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
                 .build();
 
         // 保存小程序配置
-        Integer appConfigId = this.iSysAppConfigService.addOrUpdateData(params.getAppConfigObj());
+        Integer appConfigId = this.iSysAppConfigService.addOrUpdateData(appConfigObj);
         sysDept.setAppConfigId(appConfigId);
         sysDept.insertOrUpdate();
-        return sysDept.getId();
+        Integer deptId = sysDept.getId();
+
+        // redis存储 appId -> 部门id
+        RedisUtil.set(StrUtil.format("smallboot:appid_dept_id:{}:{}", TenantIdContext.getTenantId(), appConfigObj.getAppId()), String.valueOf(deptId));
+        return deptId;
     }
 
     @Override
