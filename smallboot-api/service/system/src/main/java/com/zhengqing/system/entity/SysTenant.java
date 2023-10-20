@@ -54,4 +54,10 @@ public class SysTenant extends BaseEntity<SysTenant> {
     @ApiModelProperty("租户套餐ID")
     private Integer packageId;
 
+    @ApiModelProperty("最大职位发布数")
+    private Integer jobNum;
+
+    @ApiModelProperty("排序")
+    private Integer sort;
+
 }

@@ -1,7 +1,6 @@
 package com.zhengqing.system.model.vo;
 
 import com.zhengqing.common.base.model.vo.BaseVO;
-import com.zhengqing.system.model.bo.SysAppConfigBO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -70,23 +69,8 @@ public class SysDeptTreeVO extends BaseVO {
     @ApiModelProperty("备注")
     private String remark;
 
-    @ApiModelProperty("过期时间")
-    private Date expireTime;
-
-    @ApiModelProperty("最大员工数")
-    private Integer userNum;
-
-    @ApiModelProperty("最大职位发布数")
-    private Integer jobNum;
-
     @ApiModelProperty("创建时间")
     private Date createTime;
-
-    @ApiModelProperty("小程序配置ID")
-    private Integer appConfigId;
-
-    @ApiModelProperty("小程序配置")
-    private SysAppConfigBO appConfigObj;
 
     @ApiModelProperty("子级")
     private List<SysDeptTreeVO> children;

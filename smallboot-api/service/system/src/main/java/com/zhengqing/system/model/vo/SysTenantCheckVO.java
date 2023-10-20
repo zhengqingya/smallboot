@@ -22,7 +22,7 @@ import java.util.Date;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SysDeptCheckVO extends BaseVO {
+public class SysTenantCheckVO extends BaseVO {
 
     @ApiModelProperty("主键ID")
     private Integer id;

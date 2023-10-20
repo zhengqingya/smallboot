@@ -1,5 +1,6 @@
 package com.zhengqing.system.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhengqing.system.entity.SysAppConfig;
 import com.zhengqing.system.model.bo.SysAppConfigBO;
@@ -20,14 +21,14 @@ import java.util.Map;
 public interface ISysAppConfigService extends IService<SysAppConfig> {
 
     /**
-     * 新增或更新
+     * 列表
      *
-     * @param params 保存参数
-     * @return 主键ID
+     * @param params 查询参数
+     * @return 查询结果
      * @author zhengqingya
      * @date 2023/10/09 18:10
      */
-    Integer addOrUpdateData(SysAppConfigBO params);
+    IPage<SysAppConfigBO> page(SysAppConfigDTO params);
 
     /**
      * 列表
@@ -38,6 +39,16 @@ public interface ISysAppConfigService extends IService<SysAppConfig> {
      * @date 2023/10/09 18:10
      */
     List<SysAppConfigBO> list(SysAppConfigDTO params);
+
+    /**
+     * 新增或更新
+     *
+     * @param params 保存参数
+     * @return 主键ID
+     * @author zhengqingya
+     * @date 2023/10/09 18:10
+     */
+    Integer addOrUpdateData(SysAppConfigBO params);
 
     /**
      * 拿到所有可用的小程序配置
@@ -51,12 +62,12 @@ public interface ISysAppConfigService extends IService<SysAppConfig> {
     /**
      * 查询小程序配置
      *
-     * @param idList 主键ids
-     * @return 主键ID -> 小程序配置
+     * @param tenantIdList 租户ids
+     * @return 租户id -> 小程序配置
      * @author zhengqingya
      * @date 2023/10/09 18:10
      */
-    Map<Integer, SysAppConfigBO> mapByIdList(List<Integer> idList);
+    Map<Integer, SysAppConfigBO> mapByTenantIdList(List<Integer> tenantIdList);
 
     /**
      * 查询小程序配置
@@ -67,6 +78,16 @@ public interface ISysAppConfigService extends IService<SysAppConfig> {
      * @date 2023/10/09 18:10
      */
     Map<String, SysAppConfigBO> mapByAppIdList(List<String> appIdList);
+
+    /**
+     * 查询小程序配置
+     *
+     * @param appId appId
+     * @return 小程序配置
+     * @author zhengqingya
+     * @date 2023/10/09 18:10
+     */
+    SysAppConfigBO detailByAppId(String appId);
 
     /**
      * 生成授权链接

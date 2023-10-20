@@ -1,9 +1,13 @@
 package com.zhengqing.system.api.web;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.common.core.custom.repeatsubmit.NoRepeatSubmit;
+import com.zhengqing.common.db.util.TenantUtil;
 import com.zhengqing.common.web.custom.noreturnhandle.NoReturnHandle;
+import com.zhengqing.system.model.bo.SysAppConfigBO;
+import com.zhengqing.system.model.dto.SysAppConfigDTO;
 import com.zhengqing.system.model.dto.SysAppOperationDTO;
 import com.zhengqing.system.model.dto.SysAppQrcodeDTO;
 import com.zhengqing.system.service.ISysAppConfigService;
@@ -28,6 +32,12 @@ import org.springframework.web.bind.annotation.*;
 public class WebSysAppConfigController extends BaseController {
 
     private final ISysAppConfigService iSysAppConfigService;
+
+    @GetMapping("page")
+    @ApiOperation("列表分页")
+    public IPage<SysAppConfigBO> page(@ModelAttribute SysAppConfigDTO params) {
+        return TenantUtil.executeRemoveFlag(() -> this.iSysAppConfigService.page(params));
+    }
 
     @GetMapping("genLink")
     @ApiOperation("生成授权链接")

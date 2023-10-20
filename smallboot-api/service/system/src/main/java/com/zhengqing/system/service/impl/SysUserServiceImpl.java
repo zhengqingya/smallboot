@@ -8,26 +8,30 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhengqing.common.auth.util.AuthUtil;
 import com.zhengqing.common.base.constant.AppConstant;
+import com.zhengqing.common.base.context.TenantIdContext;
 import com.zhengqing.common.base.exception.MyException;
 import com.zhengqing.common.core.enums.UserSexEnum;
 import com.zhengqing.common.core.util.DesUtil;
 import com.zhengqing.common.db.constant.MybatisConstant;
+import com.zhengqing.system.entity.SysTenant;
 import com.zhengqing.system.entity.SysUser;
 import com.zhengqing.system.mapper.SysUserMapper;
 import com.zhengqing.system.model.dto.*;
-import com.zhengqing.system.model.vo.SysDeptCheckVO;
 import com.zhengqing.system.model.vo.SysUserListVO;
 import com.zhengqing.system.model.vo.SysUserPermVO;
 import com.zhengqing.system.service.ISysDeptService;
+import com.zhengqing.system.service.ISysTenantService;
 import com.zhengqing.system.service.ISysUserRoleService;
 import com.zhengqing.system.service.ISysUserService;
 import com.zhengqing.system.util.PasswordUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -49,6 +53,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     private final SysUserMapper sysUserMapper;
     private final ISysUserRoleService iSysUserRoleService;
     private final ISysDeptService iSysDeptService;
+    @Lazy
+    @Resource
+    private ISysTenantService iSysTenantService;
 
     @Override
     public IPage<SysUserListVO> listPage(SysUserListDTO params) {
@@ -96,10 +103,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         boolean isAdd = userId == null;
         Integer deptId = params.getDeptId();
         if (deptId != null) {
-            // 校验部门最大用户数
-            SysDeptCheckVO sysDeptCheckVO = this.iSysDeptService.checkData(deptId);
-            Integer maxUserNum = sysDeptCheckVO.getUserNum();
-            Assert.isTrue(maxUserNum > this.sysUserMapper.selectUserNumByDeptId(deptId), "限制：商户最大用户数 " + maxUserNum);
+            // 校验最大用户数
+            SysTenant sysTenant = this.iSysTenantService.checkData(TenantIdContext.getTenantId());
+            Integer accountCount = sysTenant.getAccountCount();
+            Assert.isTrue(accountCount > this.sysUserMapper.selectUserNumByDeptId(deptId), "限制：该租户最大用户数 " + accountCount);
         }
 
         String password = params.getPassword();

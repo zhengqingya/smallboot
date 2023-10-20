@@ -12,8 +12,8 @@ import com.zhengqing.cms.model.dto.CmsJobSaveDTO;
 import com.zhengqing.cms.model.vo.CmsJobBaseVO;
 import com.zhengqing.cms.service.ICmsJobService;
 import com.zhengqing.cms.service.ICmsJobTagService;
-import com.zhengqing.system.model.vo.SysDeptCheckVO;
-import com.zhengqing.system.service.ISysDeptService;
+import com.zhengqing.system.entity.SysTenant;
+import com.zhengqing.system.service.ISysTenantService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.compress.utils.Lists;
@@ -38,7 +38,7 @@ public class CmsJobServiceImpl extends ServiceImpl<CmsJobMapper, CmsJob> impleme
 
     private final CmsJobMapper cmsJobMapper;
     private final ICmsJobTagService iCmsJobTagService;
-    private final ISysDeptService iSysDeptService;
+    private final ISysTenantService iSysTenantService;
 
     @Override
     public IPage<CmsJobBaseVO> page(CmsJobBaseDTO params) {
@@ -87,9 +87,9 @@ public class CmsJobServiceImpl extends ServiceImpl<CmsJobMapper, CmsJob> impleme
         Integer deptId = params.getDeptId();
         // 校验商户的发布数
         if (params.getId() == null) {
-            SysDeptCheckVO sysDeptCheckVO = this.iSysDeptService.checkData(deptId);
-            Integer maxJobNum = sysDeptCheckVO.getJobNum();
-            Assert.isTrue(maxJobNum > this.cmsJobMapper.selectJobNumByDeptId(deptId), "限制：企业最大职位发布数 " + maxJobNum);
+            SysTenant sysTenant = this.iSysTenantService.checkData(deptId);
+            Integer maxJobNum = sysTenant.getJobNum();
+            Assert.isTrue(maxJobNum > this.cmsJobMapper.selectJobNumByDeptId(deptId), "限制：租户最大职位发布数：" + maxJobNum);
         }
 
         // 校验名称是否重复

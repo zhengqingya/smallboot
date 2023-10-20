@@ -70,4 +70,14 @@ public interface ISysTenantService extends IService<SysTenant> {
      */
     void deleteData(Integer id);
 
+    /**
+     * 校验数据
+     *
+     * @param tenantId 租户ID
+     * @return 查询结果
+     * @author zhengqingya
+     * @date 2023/10/09 18:10
+     */
+    SysTenant checkData(Integer tenantId);
+
 }

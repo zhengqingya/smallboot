@@ -2,7 +2,6 @@ package com.zhengqing.system.model.dto;
 
 import com.zhengqing.common.base.model.dto.BaseDTO;
 import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
-import com.zhengqing.system.model.bo.SysAppConfigBO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -13,7 +12,6 @@ import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
 
 /**
  * <p> 系统管理-部门-保存-提交参数 </p>
@@ -71,16 +69,5 @@ public class SysDeptSaveDTO extends BaseDTO {
     @ApiModelProperty("备注")
     private String remark;
 
-    @ApiModelProperty("过期时间")
-    private Date expireTime;
-
-    @ApiModelProperty("最大员工数")
-    private Integer userNum;
-
-    @ApiModelProperty("最大职位发布数")
-    private Integer jobNum;
-
-    @ApiModelProperty("小程序配置")
-    private SysAppConfigBO appConfigObj;
 
 }

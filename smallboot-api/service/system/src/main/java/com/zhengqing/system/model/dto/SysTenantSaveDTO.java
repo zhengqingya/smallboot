@@ -3,6 +3,7 @@ package com.zhengqing.system.model.dto;
 import com.zhengqing.common.base.model.dto.BaseDTO;
 import com.zhengqing.common.core.custom.validator.common.CreateGroup;
 import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
+import com.zhengqing.system.model.bo.SysAppConfigBO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -36,6 +37,9 @@ public class SysTenantSaveDTO extends BaseDTO {
     @NotNull(groups = {UpdateGroup.class}, message = "主键ID不能为空!")
     private Integer id;
 
+    @ApiModelProperty("自定义租户ID")
+    private Integer customTenantId;
+
     @NotBlank(message = "租户名不能为空！")
     @ApiModelProperty("租户名")
     private String name;
@@ -55,9 +59,13 @@ public class SysTenantSaveDTO extends BaseDTO {
     @ApiModelProperty("过期时间")
     private Date expireTime;
 
-    //    @NotNull(message = "账号数量不能为空！")
+    @NotNull(message = "账号数量不能为空！")
     @ApiModelProperty("账号数量")
     private Integer accountCount;
+
+    @NotNull(message = "最大职位发布数不能为空！")
+    @ApiModelProperty("最大职位发布数")
+    private Integer jobNum;
 
     @NotNull(message = "租户套餐不能为空！")
     @ApiModelProperty("租户套餐ID")
@@ -73,5 +81,11 @@ public class SysTenantSaveDTO extends BaseDTO {
     @NotBlank(groups = {CreateGroup.class}, message = "密码不能为空！")
     @ApiModelProperty(value = "密码")
     private String password;
+
+    @ApiModelProperty("小程序配置")
+    private SysAppConfigBO appConfigObj;
+
+    @ApiModelProperty("排序")
+    private Integer sort;
 
 }

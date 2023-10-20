@@ -129,7 +129,7 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
             return;
         }
 
-        TenantUtil.execute(() -> tenantList.forEach(e -> {
+        TenantUtil.executeRemoveFlag(() -> tenantList.forEach(e -> {
             String redisKey = SecurityConstant.URL_PERM_RE_ROLES + e.getId();
             // 1、先删除缓存
             RedisUtil.delete(redisKey);

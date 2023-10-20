@@ -5,9 +5,13 @@ import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.google.common.collect.Lists;
 import com.zhengqing.common.base.context.TenantIdContext;
 import com.zhengqing.common.base.exception.MyException;
+import com.zhengqing.common.db.util.TenantUtil;
 import com.zhengqing.common.sdk.douyin.service.model.vo.DyServiceVersionVO;
 import com.zhengqing.common.sdk.douyin.service.util.DyServiceApiUtil;
 import com.zhengqing.system.entity.SysAppConfig;
@@ -47,18 +51,32 @@ public class SysAppConfigServiceImpl extends ServiceImpl<SysAppConfigMapper, Sys
     private final ISysConfigService iSysConfigService;
 
     @Override
+    public IPage<SysAppConfigBO> page(SysAppConfigDTO params) {
+        return this.sysAppConfigMapper.selectDataList(new Page<>(), params);
+    }
+
+    @Override
+    public List<SysAppConfigBO> list(SysAppConfigDTO params) {
+        return this.sysAppConfigMapper.selectDataList(params);
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public Integer addOrUpdateData(SysAppConfigBO params) {
+        Integer tenantId = params.getTenantId();
         String appId = params.getAppId();
         Integer id = params.getId();
 
-        SysAppConfig sysAppConfigOld = this.sysAppConfigMapper.selectOne(new LambdaQueryWrapper<SysAppConfig>().eq(SysAppConfig::getAppId, appId));
-        if (sysAppConfigOld != null) {
-            id = sysAppConfigOld.getId();
+        if (id == null) {
+            SysAppConfig sysAppConfigOld = this.sysAppConfigMapper.selectOne(new LambdaQueryWrapper<SysAppConfig>().eq(SysAppConfig::getTenantId, tenantId));
+            if (sysAppConfigOld != null) {
+                id = sysAppConfigOld.getId();
+            }
         }
 
         SysAppConfig sysAppConfig = SysAppConfig.builder()
                 .id(id)
+                .tenantId(tenantId)
                 .name(params.getName())
                 .appId(appId)
                 .appSecret(params.getAppSecret())
@@ -69,13 +87,8 @@ public class SysAppConfigServiceImpl extends ServiceImpl<SysAppConfigMapper, Sys
                 .appType(params.getAppType())
                 .build();
 
-        sysAppConfig.insertOrUpdate();
+        TenantUtil.executeRemoveFlag(sysAppConfig::insertOrUpdate);
         return sysAppConfig.getId();
-    }
-
-    @Override
-    public List<SysAppConfigBO> list(SysAppConfigDTO params) {
-        return this.sysAppConfigMapper.selectDataList(params);
     }
 
     @Override
@@ -84,15 +97,20 @@ public class SysAppConfigServiceImpl extends ServiceImpl<SysAppConfigMapper, Sys
     }
 
     @Override
-    public Map<Integer, SysAppConfigBO> mapByIdList(List<Integer> idList) {
-        List<SysAppConfigBO> list = this.list(SysAppConfigDTO.builder().idList(idList).build());
-        return list.stream().collect(Collectors.toMap(SysAppConfigBO::getId, t -> t, (oldData, newData) -> newData));
+    public Map<Integer, SysAppConfigBO> mapByTenantIdList(List<Integer> tenantIdList) {
+        List<SysAppConfigBO> list = this.list(SysAppConfigDTO.builder().tenantIdList(tenantIdList).build());
+        return list.stream().collect(Collectors.toMap(SysAppConfigBO::getTenantId, t -> t, (oldData, newData) -> newData));
     }
 
     @Override
     public Map<String, SysAppConfigBO> mapByAppIdList(List<String> appIdList) {
         List<SysAppConfigBO> list = this.list(SysAppConfigDTO.builder().appIdList(appIdList).build());
         return list.stream().collect(Collectors.toMap(SysAppConfigBO::getAppId, t -> t, (oldData, newData) -> newData));
+    }
+
+    @Override
+    public SysAppConfigBO detailByAppId(String appId) {
+        return this.mapByAppIdList(Lists.newArrayList(appId)).get(appId);
     }
 
     @Override
@@ -140,6 +158,8 @@ public class SysAppConfigServiceImpl extends ServiceImpl<SysAppConfigMapper, Sys
         } else {
             appConfigList = this.list(SysAppConfigDTO.builder().appIdList(appIdList).build());
         }
+        appConfigList = appConfigList.stream().filter(e -> StrUtil.isNotBlank(e.getAppId())).collect(Collectors.toList());
+        Assert.notEmpty(appConfigList, "暂无可用的小程序配置！");
 
         // 拿到小程序appid信息
         String component_appid = String.valueOf(this.iSysConfigService.getValue(SysConfigKeyEnum.DOUYIN_COMPONENT_APPID));
@@ -196,18 +216,22 @@ public class SysAppConfigServiceImpl extends ServiceImpl<SysAppConfigMapper, Sys
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void syncStatus() {
+        List<SysAppConfigBO> appConfigList = this.getAllUsableAppConfig();
+        Assert.notEmpty(appConfigList, "暂无可用的小程序配置！");
+
         // 拿到小程序appid信息
         String component_appid = String.valueOf(this.iSysConfigService.getValue(SysConfigKeyEnum.DOUYIN_COMPONENT_APPID));
         String component_appsecret = String.valueOf(this.iSysConfigService.getValue(SysConfigKeyEnum.DOUYIN_COMPONENT_APPSECRET));
         String component_access_token = DyServiceApiUtil.component_access_token(component_appid, component_appsecret);
 
-        List<SysAppConfigBO> appConfigList = this.getAllUsableAppConfig();
-        Assert.notEmpty(appConfigList, "暂无可用的小程序配置！");
-
         appConfigList.forEach(item -> {
             String appId = item.getAppId();
             String authorizer_access_token = DyServiceApiUtil.authorizer_access_token(component_appid, component_access_token, DyServiceApiUtil.retrieve_authorization_code(component_appid, component_access_token, appId));
             DyServiceVersionVO.Data versionObj = DyServiceApiUtil.versions(component_appid, authorizer_access_token);
+            DyServiceVersionVO.CurrentVersion current = versionObj.getCurrent();
+            if (current != null) {
+                item.setAppVersion(current.getVersion());
+            }
             item.setAppVersionObj(versionObj);
             // 保存
             this.addOrUpdateData(item);

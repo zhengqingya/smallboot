@@ -5,19 +5,16 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.google.common.collect.Lists;
 import com.zhengqing.common.base.enums.CommonStatusEnum;
 import com.zhengqing.common.base.util.MyDateUtil;
 import com.zhengqing.common.db.constant.MybatisConstant;
 import com.zhengqing.common.db.util.TenantUtil;
 import com.zhengqing.system.config.SystemProperty;
 import com.zhengqing.system.entity.SysMerchant;
-import com.zhengqing.system.enums.SysRoleCodeEnum;
 import com.zhengqing.system.mapper.SysMerchantMapper;
 import com.zhengqing.system.model.dto.SysMerchantListDTO;
 import com.zhengqing.system.model.dto.SysMerchantPageDTO;
 import com.zhengqing.system.model.dto.SysMerchantSaveDTO;
-import com.zhengqing.system.model.dto.SysUserSaveDTO;
 import com.zhengqing.system.model.vo.SysMerchantListVO;
 import com.zhengqing.system.model.vo.SysMerchantPageVO;
 import com.zhengqing.system.service.*;
@@ -94,26 +91,26 @@ public class SysMerchantServiceImpl extends ServiceImpl<SysMerchantMapper, SysMe
         if (isAdd && customId != null) {
             sysMerchant.setId(customId);
             // 看下自定义商户id有没有重复的
-            TenantUtil.execute(() -> Assert.isNull(this.sysMerchantMapper.selectById(customId), "商户ID重复，请重新输入！"));
+            TenantUtil.executeRemoveFlag(() -> Assert.isNull(this.sysMerchantMapper.selectById(customId), "商户ID重复，请重新输入！"));
         }
         sysMerchant.insertOrUpdate();
 
         if (isAdd) {
             // 创建商户关联的用户 & 分配角色权限
             // 查询商户管理员角色id
-            Integer roleId = this.iSysRoleService.getRoleIdByCode(SysRoleCodeEnum.商户管理员);
-
-            // 创建用户
-            Integer userId = this.iSysUserService.addOrUpdateData(SysUserSaveDTO.builder()
-                    .username(params.getUsername())
-                    .nickname(params.getName())
-                    .password(params.getPassword())
-                    .phone(params.getPhone())
-                    .roleIdList(Lists.newArrayList(roleId))
-                    .isFixed(true)
-                    .build());
-            sysMerchant.setAdminUserId(userId);
-            sysMerchant.updateById();
+//            Integer roleId = this.iSysRoleService.getRoleIdByCode(SysRoleCodeEnum.商户管理员);
+//
+//            // 创建用户
+//            Integer userId = this.iSysUserService.addOrUpdateData(SysUserSaveDTO.builder()
+//                    .username(params.getUsername())
+//                    .nickname(params.getName())
+//                    .password(params.getPassword())
+//                    .phone(params.getPhone())
+//                    .roleIdList(Lists.newArrayList(roleId))
+//                    .isFixed(true)
+//                    .build());
+//            sysMerchant.setAdminUserId(userId);
+//            sysMerchant.updateById();
         }
     }
 

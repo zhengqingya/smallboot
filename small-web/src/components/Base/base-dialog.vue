@@ -1,4 +1,5 @@
 <template>
+  <!--  top="0px" -->
   <el-dialog :close-on-click-modal="false" v-bind="$attrs">
     <slot />
 

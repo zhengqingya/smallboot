@@ -13,7 +13,7 @@
                 AND tst.name LIKE CONCAT( '%', #{filter.name} , '%' )
             </if>
         </where>
-        ORDER BY tst.create_time DESC
+        ORDER BY tst.sort ASC, tst.create_time DESC
     </select>
 
     <select id="selectDataList" resultType="com.zhengqing.system.model.vo.SysTenantListVO">

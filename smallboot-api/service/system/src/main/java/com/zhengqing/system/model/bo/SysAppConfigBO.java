@@ -30,6 +30,9 @@ public class SysAppConfigBO extends BaseBO {
     @ApiModelProperty("主键ID")
     private Integer id;
 
+    @ApiModelProperty("租户ID")
+    private Integer tenantId;
+
     @ApiModelProperty("名称")
     private String name;
 

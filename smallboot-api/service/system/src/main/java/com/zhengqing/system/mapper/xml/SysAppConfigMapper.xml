@@ -12,16 +12,23 @@
         select tsac.*
         from t_sys_app_config tsac
         <if test="filter.isUsable != null and filter.isUsable">
-            join t_sys_dept tsd on tsd.app_config_id = tsac.id
-            and tsd.is_deleted = 0
-            and tsd.status = 1
-            and tsd.expire_time > now()
+            join t_sys_tenant tst on tst.id = tsac.tenant_id
+            and tst.is_deleted = 0
+            and tst.status = 1
+            and tst.expire_time > now()
         </if>
         <where>
-            <if test="filter.idList != null and filter.idList.size() > 0">
-                AND tsac.id IN
-                <foreach item="id" index="index" collection="filter.idList" open="(" separator="," close=")">
-                    #{id}
+            <if test="filter.isUsable != null and filter.isUsable">
+                AND tsac.app_id is not null and LENGTH(app_id) != 0
+            </if>
+            <if test="filter.name!=null and filter.name!=''">
+                AND tsac.name LIKE CONCAT( '%', #{filter.name} , '%' )
+            </if>
+            <if test="filter.tenantIdList != null and filter.tenantIdList.size() > 0">
+                AND tsac.tenant_id IN
+                <foreach item="tenantId" index="index" collection="filter.tenantIdList" open="(" separator=","
+                         close=")">
+                    #{tenantId}
                 </foreach>
             </if>
             <if test="filter.appIdList != null and filter.appIdList.size() > 0">

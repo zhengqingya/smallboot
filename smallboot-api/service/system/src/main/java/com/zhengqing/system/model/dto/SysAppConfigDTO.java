@@ -1,6 +1,6 @@
 package com.zhengqing.system.model.dto;
 
-import com.zhengqing.common.base.model.dto.BaseDTO;
+import com.zhengqing.common.base.model.dto.BasePageDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,15 +22,18 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class SysAppConfigDTO extends BaseDTO {
+public class SysAppConfigDTO extends BasePageDTO {
 
-    @ApiModelProperty("主键ids")
-    private List<Integer> idList;
+    @ApiModelProperty("名称")
+    private String name;
+
+    @ApiModelProperty("租户ids")
+    private List<Integer> tenantIdList;
 
     @ApiModelProperty("AppID")
     private List<String> appIdList;
 
-    @ApiModelProperty("关联的部门是否没有限制，可以正常使用小程序配置")
+    @ApiModelProperty("关联的租户是否没有限制，可以正常使用小程序配置(AppId不为空！)")
     private Boolean isUsable;
 
 }

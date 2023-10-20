@@ -16,8 +16,8 @@ import com.zhengqing.common.db.constant.MybatisConstant;
 import com.zhengqing.common.sdk.douyin.mini.model.dto.DyMiniLoginDTO;
 import com.zhengqing.common.sdk.douyin.mini.model.vo.DyMiniLoginVO;
 import com.zhengqing.common.sdk.douyin.mini.util.DyMiniApiUtil;
-import com.zhengqing.system.model.vo.SysDeptCheckVO;
-import com.zhengqing.system.service.ISysDeptService;
+import com.zhengqing.system.model.bo.SysAppConfigBO;
+import com.zhengqing.system.service.ISysAppConfigService;
 import com.zhengqing.ums.entity.UmsUser;
 import com.zhengqing.ums.enums.MiniTypeEnum;
 import com.zhengqing.ums.factory.WxMaFactory;
@@ -53,7 +53,7 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
 
     private final UmsUserMapper umsUserMapper;
     private final WxMaFactory wxMaFactory;
-    private final ISysDeptService iSysDeptService;
+    private final ISysAppConfigService iSysAppConfigService;
 
     @Override
     public UmsUser detail(Long id) {
@@ -105,10 +105,10 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
 //                        .code(code)
 //                        .anonymous_code(params.getAnonymousCode())
 //                        .build());
-                SysDeptCheckVO sysDeptCheckVO = this.iSysDeptService.checkData(params.getDeptId());
+                SysAppConfigBO sysAppConfigBO = this.iSysAppConfigService.detailByAppId(appid);
                 DyMiniLoginVO.Data dyData = DyMiniApiUtil.jscode2session(DyMiniLoginDTO.builder()
                         .appid(appid)
-                        .secret(sysDeptCheckVO.getAppSecret())
+                        .secret(sysAppConfigBO.getAppSecret())
                         .code(code)
                         .anonymous_code(params.getAnonymousCode())
                         .build());

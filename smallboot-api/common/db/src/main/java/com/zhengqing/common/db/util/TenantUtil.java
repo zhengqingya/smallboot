@@ -16,25 +16,6 @@ import java.util.concurrent.Callable;
 public class TenantUtil {
 
     /**
-     * 执行业务逻辑(忽略租户)，有租户的情况下，执行完业务返回之前租户信息
-     *
-     * @param runnable 业务逻辑
-     * @return void
-     * @author zhengqingya
-     */
-    public static void execute(Runnable runnable) {
-        Integer oldTenantId = TenantIdContext.getTenantId();
-        Boolean isFlag = TenantIdContext.getFlag();
-        try {
-            TenantIdContext.removeFlag();
-            runnable.run();
-        } finally {
-            TenantIdContext.setTenantId(oldTenantId);
-            TenantIdContext.setFlag(isFlag);
-        }
-    }
-
-    /**
      * 指定租户执行业务逻辑
      *
      * @param tenantId 租户ID
@@ -42,7 +23,7 @@ public class TenantUtil {
      * @return void
      * @author zhengqingya
      */
-    public static void execute(Integer tenantId, Runnable runnable) {
+    public static void executeByTenantId(Integer tenantId, Runnable runnable) {
         Integer oldTenantId = TenantIdContext.getTenantId();
         Boolean isFlag = TenantIdContext.getFlag();
         try {
@@ -63,7 +44,7 @@ public class TenantUtil {
      * @author zhengqingya
      * @date 2023/10/9 13:58
      */
-    public static <V> V execute(Integer tenantId, Callable<V> callable) {
+    public static <V> V executeByTenantId(Integer tenantId, Callable<V> callable) {
         Integer oldTenantId = TenantIdContext.getTenantId();
         Boolean isFlag = TenantIdContext.getFlag();
         try {
@@ -78,16 +59,44 @@ public class TenantUtil {
     }
 
     /**
-     * 忽略租户执行业务逻辑
+     * 执行业务逻辑(忽略租户)，有租户的情况下，执行完业务返回之前租户信息
      *
      * @param runnable 业务逻辑
      * @return void
      * @author zhengqingya
      */
     public static void executeRemoveFlag(Runnable runnable) {
-        TenantIdContext.removeFlag();
-        // 执行逻辑
-        runnable.run();
+        Integer oldTenantId = TenantIdContext.getTenantId();
+        Boolean isFlag = TenantIdContext.getFlag();
+        try {
+            TenantIdContext.removeFlag();
+            runnable.run();
+        } finally {
+            TenantIdContext.setTenantId(oldTenantId);
+            TenantIdContext.setFlag(isFlag);
+        }
+    }
+
+    /**
+     * 执行业务逻辑(忽略租户)，有租户的情况下，执行完业务返回之前租户信息
+     *
+     * @param callable 业务逻辑
+     * @return 执行结果
+     * @return void
+     * @author zhengqingya
+     */
+    public static <V> V executeRemoveFlag(Callable<V> callable) {
+        Integer oldTenantId = TenantIdContext.getTenantId();
+        Boolean isFlag = TenantIdContext.getFlag();
+        try {
+            TenantIdContext.removeFlag();
+            return callable.call();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            TenantIdContext.setTenantId(oldTenantId);
+            TenantIdContext.setFlag(isFlag);
+        }
     }
 
 }

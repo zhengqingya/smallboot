@@ -44,7 +44,7 @@ public enum ApiResultCodeEnum {
     INTERNAL_SERVER_ERROR(500, "服务器内部错误"),
 
     // 其它
-    APP_SERVICE_ERROR(1001, "服务异常"),
+    APP_SERVICE_ERROR(1001, "租户服务异常"),
     ;
 
     private final int code;

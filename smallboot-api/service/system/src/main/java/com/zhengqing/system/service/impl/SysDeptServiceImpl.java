@@ -7,32 +7,19 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
 import com.zhengqing.common.base.constant.AppConstant;
-import com.zhengqing.common.base.context.TenantIdContext;
-import com.zhengqing.common.base.enums.ApiResultCodeEnum;
-import com.zhengqing.common.base.enums.CommonStatusEnum;
-import com.zhengqing.common.base.exception.MyException;
-import com.zhengqing.common.base.util.MyDateUtil;
 import com.zhengqing.common.db.constant.MybatisConstant;
-import com.zhengqing.common.redis.util.RedisUtil;
-import com.zhengqing.system.entity.SysAppConfig;
 import com.zhengqing.system.entity.SysDept;
 import com.zhengqing.system.mapper.SysDeptMapper;
-import com.zhengqing.system.model.bo.SysAppConfigBO;
 import com.zhengqing.system.model.dto.SysDeptSaveDTO;
 import com.zhengqing.system.model.dto.SysDeptTreeDTO;
-import com.zhengqing.system.model.vo.SysDeptCheckVO;
 import com.zhengqing.system.model.vo.SysDeptTreeVO;
-import com.zhengqing.system.service.ISysAppConfigService;
 import com.zhengqing.system.service.ISysDeptService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -48,7 +35,6 @@ import java.util.stream.Collectors;
 public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> implements ISysDeptService {
 
     private final SysDeptMapper sysDeptMapper;
-    private final ISysAppConfigService iSysAppConfigService;
 
     @Override
     public SysDept detail(Integer id) {
@@ -64,9 +50,6 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
         if (CollUtil.isEmpty(list)) {
             return Lists.newArrayList();
         }
-        List<Integer> appConfigIdList = list.stream().map(SysDeptTreeVO::getAppConfigId).collect(Collectors.toList());
-        Map<Integer, SysAppConfigBO> appConfigMap = this.iSysAppConfigService.mapByIdList(appConfigIdList);
-        list.forEach(e -> e.setAppConfigObj(appConfigMap.get(e.getAppConfigId())));
         if (StrUtil.isNotBlank(params.getName())) {
             return list;
         }
@@ -97,45 +80,6 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
         return childList;
     }
 
-    @Override
-    public SysDeptCheckVO checkData(Integer deptId) {
-        SysDept sysDept = null;
-        try {
-            sysDept = this.detail(deptId);
-            Assert.isTrue(Objects.equals(CommonStatusEnum.ENABLE.getStatus(), sysDept.getStatus()), "服务已停用！");
-            Date expireTime = sysDept.getExpireTime();
-            if (expireTime != null) {
-                Assert.isTrue(expireTime.after(new Date()), "限制：服务已到期！过期时间：" + MyDateUtil.dateToStr(expireTime));
-            }
-        } catch (Exception e) {
-            throw new MyException(e.getMessage(), ApiResultCodeEnum.APP_SERVICE_ERROR.getCode());
-        }
-        SysDeptCheckVO result = SysDeptCheckVO.builder()
-                .id(sysDept.getId())
-                .name(sysDept.getName())
-                .status(sysDept.getStatus())
-                .expireTime(sysDept.getExpireTime())
-                .userNum(sysDept.getUserNum())
-                .jobNum(sysDept.getJobNum())
-                .build();
-        Integer appConfigId = sysDept.getAppConfigId();
-        if (appConfigId != null) {
-            SysAppConfig sysAppConfig = this.iSysAppConfigService.getById(appConfigId);
-            result.setAppType(sysAppConfig.getAppType());
-            result.setAppSecret(sysAppConfig.getAppSecret());
-        }
-        return result;
-    }
-
-    @Override
-    public SysDeptCheckVO configByAppId(String appId) {
-        Map<String, SysAppConfigBO> appConfigMap = this.iSysAppConfigService.mapByAppIdList(Lists.newArrayList(appId));
-        SysAppConfigBO sysAppConfigBO = appConfigMap.get(appId);
-        Assert.notNull(sysAppConfigBO, "小程序暂未配置，请联系系统管理员！");
-        SysDept sysDept = this.sysDeptMapper.selectOne(new LambdaQueryWrapper<SysDept>().eq(SysDept::getAppConfigId, sysAppConfigBO.getId()).last(MybatisConstant.LIMIT_ONE));
-        Assert.notNull(sysDept, "企业数据丢失，请联系系统管理员！");
-        return this.checkData(sysDept.getId());
-    }
 
     @Override
     public List<Integer> getChildDeptIdList(Integer deptId) {
@@ -169,7 +113,6 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
     public Integer addOrUpdateData(SysDeptSaveDTO params) {
         Integer id = params.getId();
         String name = params.getName();
-        SysAppConfigBO appConfigObj = params.getAppConfigObj();
         // 校验名称是否重复
         SysDept sysDeptOld = this.sysDeptMapper.selectOne(new LambdaQueryWrapper<SysDept>().eq(SysDept::getName, name).last(MybatisConstant.LIMIT_ONE));
         Assert.isTrue(sysDeptOld == null || sysDeptOld.getId().equals(id), "名称重复，请重新输入！");
@@ -189,21 +132,9 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
                 .areaName(params.getAreaName())
                 .address(params.getAddress())
                 .remark(params.getRemark())
-                .expireTime(params.getExpireTime())
-                .userNum(params.getUserNum())
-                .jobNum(params.getJobNum())
                 .build();
-
-        // 保存小程序配置
-        appConfigObj.setName(name);
-        Integer appConfigId = this.iSysAppConfigService.addOrUpdateData(appConfigObj);
-        sysDept.setAppConfigId(appConfigId);
         sysDept.insertOrUpdate();
-        Integer deptId = sysDept.getId();
-
-        // redis存储 appId -> 部门id
-        RedisUtil.set(StrUtil.format("smallboot:appid_dept_id:{}:{}", TenantIdContext.getTenantId(), appConfigObj.getAppId()), String.valueOf(deptId));
-        return deptId;
+        return sysDept.getId();
     }
 
     @Override

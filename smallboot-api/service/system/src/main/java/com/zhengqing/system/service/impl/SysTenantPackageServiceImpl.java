@@ -128,7 +128,7 @@ public class SysTenantPackageServiceImpl extends ServiceImpl<SysTenantPackageMap
         }
 
         // 2、更新权限
-        TenantUtil.execute(() -> tenantList.forEach(e -> this.iSysPermBusinessService.refreshTenantRePerm(e.getId())));
+        TenantUtil.executeRemoveFlag(() -> tenantList.forEach(e -> this.iSysPermBusinessService.refreshTenantRePerm(e.getId())));
     }
 
     @Override

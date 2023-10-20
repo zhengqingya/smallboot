@@ -8,8 +8,6 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
-import java.util.Date;
-
 /**
  * <p>  系统管理-部门 </p>
  *
@@ -68,17 +66,5 @@ public class SysDept extends IsDeletedBaseEntity<SysDept> {
 
     @ApiModelProperty("备注")
     private String remark;
-
-    @ApiModelProperty("过期时间")
-    private Date expireTime;
-
-    @ApiModelProperty("最大员工数")
-    private Integer userNum;
-
-    @ApiModelProperty("最大职位发布数")
-    private Integer jobNum;
-
-    @ApiModelProperty("小程序配置ID")
-    private Integer appConfigId;
 
 }

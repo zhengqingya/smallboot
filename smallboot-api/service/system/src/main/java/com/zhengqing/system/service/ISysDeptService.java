@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhengqing.system.entity.SysDept;
 import com.zhengqing.system.model.dto.SysDeptSaveDTO;
 import com.zhengqing.system.model.dto.SysDeptTreeDTO;
-import com.zhengqing.system.model.vo.SysDeptCheckVO;
 import com.zhengqing.system.model.vo.SysDeptTreeVO;
 
 import java.util.List;
@@ -38,26 +37,7 @@ public interface ISysDeptService extends IService<SysDept> {
      */
     List<SysDeptTreeVO> tree(SysDeptTreeDTO params);
 
-    /**
-     * 获取指定部门的顶级部门关联的 用户数 过期时间等等
-     *
-     * @param deptId 部门id
-     * @return 查询结果
-     * @author zhengqingya
-     * @date 2023/10/09 18:10
-     */
-    SysDeptCheckVO checkData(Integer deptId);
-
-    /**
-     * 获取小程序配置
-     *
-     * @param appId appId
-     * @return 查询结果
-     * @author zhengqingya
-     * @date 2023/10/09 18:10
-     */
-    SysDeptCheckVO configByAppId(String appId);
-
+  
     /**
      * 获取指定部门下的子级部门（包含当前部门）
      *

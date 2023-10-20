@@ -1,6 +1,6 @@
 <template>
   <base-wrapper class="flex">
-    <base-card title="企业" style="width: 200px">
+    <base-card title="组织架构" style="width: 200px">
       <el-tree
         :data="deptTreeData"
         :props="{
