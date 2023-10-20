@@ -9,12 +9,12 @@ import com.google.common.collect.Lists;
 import com.zhengqing.common.base.constant.AppConstant;
 import com.zhengqing.common.base.context.TenantIdContext;
 import com.zhengqing.common.base.enums.CommonStatusEnum;
+import com.zhengqing.common.base.enums.SysRoleCodeEnum;
 import com.zhengqing.common.base.util.MyDateUtil;
 import com.zhengqing.common.db.constant.MybatisConstant;
 import com.zhengqing.common.db.util.TenantUtil;
 import com.zhengqing.system.entity.SysTenant;
 import com.zhengqing.system.entity.SysTenantPackage;
-import com.zhengqing.system.enums.SysRoleCodeEnum;
 import com.zhengqing.system.mapper.SysTenantMapper;
 import com.zhengqing.system.model.bo.SysAppConfigBO;
 import com.zhengqing.system.model.dto.*;
@@ -86,7 +86,6 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
     @Transactional(rollbackFor = Exception.class)
     public void addOrUpdateData(SysTenantSaveDTO params) {
         Integer id = params.getId();
-        Assert.isFalse(AppConstant.SMALL_BOOT_TENANT_ID.equals(id), "系统租户不支持操作！");
         boolean isAdd = id == null;
         String name = params.getName();
         Integer customTenantId = params.getCustomTenantId();
@@ -189,9 +188,9 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void deleteData(Integer id) {
-        Assert.isFalse(AppConstant.SMALL_BOOT_TENANT_ID.equals(id), "系统租户不支持操作！");
         this.refreshTenantRePerm(id);
         this.sysTenantMapper.deleteById(id);
+        // TODO 逻辑删除整个租户下的所有数据...
     }
 
     /**

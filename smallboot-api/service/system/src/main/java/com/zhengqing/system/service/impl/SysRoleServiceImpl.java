@@ -9,9 +9,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
 import com.zhengqing.common.base.constant.AppConstant;
+import com.zhengqing.common.base.context.JwtUserContext;
+import com.zhengqing.common.base.enums.SysRoleCodeEnum;
 import com.zhengqing.common.db.constant.MybatisConstant;
 import com.zhengqing.system.entity.SysRole;
-import com.zhengqing.system.enums.SysRoleCodeEnum;
 import com.zhengqing.system.mapper.SysRoleMapper;
 import com.zhengqing.system.model.dto.SysRoleBaseDTO;
 import com.zhengqing.system.model.dto.SysRoleSaveDTO;
@@ -25,6 +26,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -53,6 +55,12 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     @Override
     public List<SysRoleBaseVO> list(SysRoleBaseDTO params) {
         return this.sysRoleMapper.selectDataList(params);
+    }
+
+    @Override
+    public Map<Integer, String> mapByRoleIdList(List<Integer> roleIdList) {
+        List<SysRole> list = this.sysRoleMapper.selectList(new LambdaQueryWrapper<SysRole>().in(SysRole::getRoleId, roleIdList));
+        return list.stream().collect(Collectors.toMap(SysRole::getRoleId, SysRole::getName, (oldData, newData) -> newData));
     }
 
     @Override
@@ -121,16 +129,21 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Integer addOrUpdateData(SysRoleSaveDTO params) {
+        String code = params.getCode();
+        Assert.isFalse(SysRoleCodeEnum.LIST.contains(SysRoleCodeEnum.getEnum(code)) && !JwtUserContext.hasSuperAdmin(), "只有超管才有权限操作特殊角色！");
+
         // 校验名称是否重复
         SysRole sysRoleOld = this.sysRoleMapper.selectOne(new LambdaQueryWrapper<SysRole>().eq(SysRole::getName, params.getName()).last(MybatisConstant.LIMIT_ONE));
-        Assert.isTrue(sysRoleOld == null || !sysRoleOld.getIsFixed(), "您没有权限操作固定角色！");
+        if (!JwtUserContext.hasSuperAdmin()) {
+            Assert.isTrue(sysRoleOld == null || !sysRoleOld.getIsFixed(), "您没有权限操作固定角色！");
+        }
         Assert.isTrue(sysRoleOld == null || sysRoleOld.getRoleId().equals(params.getRoleId()), "名称重复，请重新输入！");
 
         SysRole sysRole = SysRole.builder()
                 .roleId(params.getRoleId())
                 .parentId(params.getParentId())
                 .name(params.getName())
-                .code(params.getCode())
+                .code(code)
                 .status(params.getStatus())
                 .isFixed(params.getIsFixed())
                 .sort(params.getSort())
@@ -143,7 +156,10 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     @Transactional(rollbackFor = Exception.class)
     public void deleteRoleAndRoleMenu(Integer roleId) {
         SysRole sysRole = this.sysRoleMapper.selectById(roleId);
-        Assert.isFalse(sysRole.getIsFixed(), "您没有权限删除固定角色！");
+        if (!JwtUserContext.hasSuperAdmin()) {
+            Assert.isFalse(sysRole.getIsFixed(), "您没有权限删除固定角色！");
+        }
+        Assert.isFalse(SysRoleCodeEnum.LIST.contains(SysRoleCodeEnum.getEnum(sysRole.getCode())) && !JwtUserContext.hasSuperAdmin(), "只有超管才有权限操作特殊角色！");
         // 1、删除该角色下关联的权限
         this.iSysRoleMenuService.delByRoleId(roleId);
         this.iSysRoleScopeService.delByRoleId(roleId);

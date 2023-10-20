@@ -27,7 +27,7 @@
                 AND status = #{filter.status}
             </if>
         </where>
-        ORDER BY create_time DESC
+        ORDER BY sort ASC, create_time DESC
     </select>
 
     <select id="selectDataList" resultType="com.zhengqing.system.model.vo.SysTenantPackageListVO">
@@ -40,7 +40,7 @@
                 AND name LIKE CONCAT( '%', #{filter.name} , '%' )
             </if>
         </where>
-        ORDER BY create_time DESC
+        ORDER BY sort ASC, create_time DESC
     </select>
 
 </mapper>

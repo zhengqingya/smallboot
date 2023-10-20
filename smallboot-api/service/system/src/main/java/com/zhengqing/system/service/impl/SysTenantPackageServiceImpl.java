@@ -65,16 +65,6 @@ public class SysTenantPackageServiceImpl extends ServiceImpl<SysTenantPackageMap
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void updateTenantIdRePerm(Integer tenantId, List<Integer> menuIdList) {
-        // 1、查询租户套餐
-        SysTenantPackage sysTenantPackage = this.detailReTenantId(tenantId);
-        // 2、更新权限
-        sysTenantPackage.setMenuIdList(menuIdList);
-        sysTenantPackage.updateById();
-    }
-
-    @Override
     public IPage<SysTenantPackagePageVO> page(SysTenantPackagePageDTO params) {
         return this.sysTenantPackageMapper.selectDataPage(new Page<>(), params);
     }
@@ -104,10 +94,11 @@ public class SysTenantPackageServiceImpl extends ServiceImpl<SysTenantPackageMap
                 .status(params.getStatus())
                 .menuIdList(menuIdList)
                 .remark(params.getRemark())
+                .sort(params.getSort())
                 .build();
         sysTenantPackage.insertOrUpdate();
 
-        // 2、刷新租户关联权限
+        // 2、刷新关联租户权限
         this.refreshAllTenantPermByPackageId(sysTenantPackage.getId());
     }
 

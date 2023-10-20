@@ -2,13 +2,14 @@ package com.zhengqing.system.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.zhengqing.common.base.enums.SysRoleCodeEnum;
 import com.zhengqing.system.entity.SysRole;
-import com.zhengqing.system.enums.SysRoleCodeEnum;
 import com.zhengqing.system.model.dto.SysRoleBaseDTO;
 import com.zhengqing.system.model.dto.SysRoleSaveDTO;
 import com.zhengqing.system.model.vo.SysRoleBaseVO;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -40,6 +41,16 @@ public interface ISysRoleService extends IService<SysRole> {
      * @date 2020/9/10 14:45
      */
     List<SysRoleBaseVO> list(SysRoleBaseDTO params);
+
+    /**
+     * 角色id -> 角色名
+     *
+     * @param roleIdList 角色ids
+     * @return 角色id -> 角色名
+     * @author zhengqingya
+     * @date 2020/9/10 14:44
+     */
+    Map<Integer, String> mapByRoleIdList(List<Integer> roleIdList);
 
 
     /**

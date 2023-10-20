@@ -40,6 +40,11 @@
           <el-table-column prop="sexName" label="性别" align="center" />
           <el-table-column prop="phone" label="手机号码" align="center" />
           <el-table-column prop="email" label="邮箱" align="center" />
+          <el-table-column label="角色" :show-overflow-tooltip="true" align="center">
+            <template #default="scope">
+              <el-tag> {{ scope.row.roLeNames }}</el-tag>
+            </template>
+          </el-table-column>
           <el-table-column label="头像" prop="avatarUrl" align="center">
             <template #default="scope">
               <span>

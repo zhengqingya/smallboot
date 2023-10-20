@@ -17,6 +17,7 @@
             <base-tag v-model="scope.row.status" />
           </template>
         </el-table-column>
+        <el-table-column label="排序" prop="sort" align="center" />
         <el-table-column label="备注" prop="remark" align="center" />
         <el-table-column label="创建时间" prop="createTime" align="center" />
         <el-table-column align="center" label="操作">
@@ -44,6 +45,9 @@
             <menu-perm-tree v-if="dialogVisible && form.menuTree && form.menuTree.length > 0" ref="menuTreeRef" v-model="form.menuTree" />
           </div>
         </el-form-item>
+        <el-form-item label="排序:">
+          <el-input-number v-model="form.sort" :min="1" controls-position="right" placeholder="请输入" />
+        </el-form-item>
         <el-form-item label="备注:">
           <el-input v-model="form.remark" :rows="2" type="textarea" />
         </el-form-item>
@@ -70,14 +74,14 @@ function refreshTableData() {
 onMounted(() => {});
 
 async function getMenuTree() {
-  let res = await proxy.$api.sys_menu.tree();
+  let res = await proxy.$api.sys_menu.tree({ isOnlySystemAdminRePerm: true });
   return res.data;
 }
 
 async function handleAdd() {
   let menuTree = await getMenuTree();
   recurveMenu(menuTree, [], []);
-  form = { status: 1, menuTree: menuTree };
+  form = { sort: 100, status: 1, menuTree: menuTree };
   dialogStatus = 'add';
   dialogVisible = true;
 }
@@ -111,7 +115,7 @@ async function handleDelete(row) {
 function submitForm() {
   proxy.$refs.dataFormRef.validate(async (valid) => {
     if (valid) {
-      let selectMenuIdList = proxy.$refs.menuTreeRef.getSelectKeyList();
+      let selectMenuIdList = proxy.$refs.menuTreeRef.getCheckedKeys();
       form.menuIdList = selectMenuIdList;
       let res = await proxy.$api.sys_tenant_package[form.id ? 'update' : 'add'](form);
       proxy.submitOk(res.message);

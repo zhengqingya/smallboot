@@ -48,6 +48,9 @@ public class SysTenantPackagePageVO extends BaseVO {
     @ApiModelProperty(value = "创建时间")
     private Date createTime;
 
+    @ApiModelProperty("排序")
+    private Integer sort;
+
     public void handleData() {
 
     }

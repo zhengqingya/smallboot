@@ -72,7 +72,6 @@ public class WebSysMenuController extends BaseController {
      * 刷新系统管理员权限 & 系统租户权限
      */
     private void refreshPerm() {
-        this.iSysPermBusinessService.refreshSysTenantRePerm();
         this.iSysPermBusinessService.refreshSuperAdminPerm();
     }
 

@@ -15,6 +15,9 @@
         FROM t_sys_user tsu
         left join t_sys_dept tsd on tsd.id = tsu.dept_id
         <where>
+            <if test="filter.currentUserId!=1">
+                AND tsu.user_id != 1
+            </if>
             <if test="filter.deptIdList != null and filter.deptIdList.size() > 0">
                 AND tsu.dept_id IN
                 <foreach item="deptId" index="index" collection="filter.deptIdList" open="(" separator="," close=")">

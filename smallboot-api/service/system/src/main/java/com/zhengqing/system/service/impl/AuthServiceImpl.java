@@ -6,8 +6,8 @@ import com.zhengqing.common.auth.model.dto.AuthLoginDTO;
 import com.zhengqing.common.auth.model.vo.AuthLoginVO;
 import com.zhengqing.common.auth.service.IAuthService;
 import com.zhengqing.common.auth.util.AuthUtil;
-import com.zhengqing.common.base.constant.AppConstant;
 import com.zhengqing.common.base.enums.AuthSourceEnum;
+import com.zhengqing.common.base.enums.SysRoleCodeEnum;
 import com.zhengqing.common.base.model.bo.JwtUserBO;
 import com.zhengqing.common.base.model.bo.ScopeDataBO;
 import com.zhengqing.system.model.dto.SysUserPermDTO;
@@ -56,9 +56,10 @@ public class AuthServiceImpl implements IAuthService {
         // 拿到下级角色ids
         List<Integer> roleIdList = userPerm.getRoleIdList();
         Assert.isTrue(CollUtil.isNotEmpty(roleIdList), "无权限，请先分配权限！");
+        List<String> roleCodeList = userPerm.getRoleCodeList();
         List<Integer> allRoleIdList = Lists.newArrayList();
         allRoleIdList.addAll(roleIdList);
-        if (!roleIdList.contains(AppConstant.SMALL_BOOT_SUPER_ADMIN_ROLE_ID)) {
+        if (!roleCodeList.contains(SysRoleCodeEnum.超级管理员.getCode())) {
             roleIdList.forEach(roleIdItem -> allRoleIdList.addAll(this.iSysRoleService.getChildRoleIdList(roleIdItem)));
         }
         // 去重
@@ -74,7 +75,7 @@ public class AuthServiceImpl implements IAuthService {
                         .userId(String.valueOf(userPerm.getUserId()))
                         .username(userPerm.getUsername())
                         .allRoleIdList(allRoleIdListFinal)
-                        .roleCodeList(userPerm.getRoleCodeList())
+                        .roleCodeList(roleCodeList)
                         .deptId(userPerm.getDeptId())
                         .scopeDataList(scopeDataList)
                         .build()

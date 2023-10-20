@@ -23,10 +23,15 @@ public interface BaseConstant {
 
 
     /**
-     * 系统超级管理员 -- 用户id、角色id
+     * 超级管理员 -- 用户id、角色id
      */
     Integer SYSTEM_SUPER_ADMIN_USER_ID = 1;
     Integer SMALL_BOOT_SUPER_ADMIN_ROLE_ID = 1;
+    // 系统管理员 -- 用户id、角色id
+    Integer SMALL_BOOT_SYSTEM_ADMIN_USER_ID = 2;
+    Integer SMALL_BOOT_SYSTEM_ADMIN_ROLE_ID = 2;
+    // 租户套餐 变更时  不清除的角色关联菜单数据
+    List<Integer> NOT_DEL_MENU_EXCLUDE_ROLE_ID_LIST = Lists.newArrayList(1, 2);
 
     /**
      * smallboot项目租户 -- id、超级套餐

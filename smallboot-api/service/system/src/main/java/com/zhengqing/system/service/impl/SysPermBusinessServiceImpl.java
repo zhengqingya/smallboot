@@ -9,12 +9,12 @@ import com.zhengqing.common.auth.util.AuthUtil;
 import com.zhengqing.common.base.constant.AppConstant;
 import com.zhengqing.common.base.constant.SecurityConstant;
 import com.zhengqing.common.base.context.TenantIdContext;
+import com.zhengqing.common.base.enums.SysRoleCodeEnum;
 import com.zhengqing.common.db.util.TenantUtil;
 import com.zhengqing.common.redis.util.RedisUtil;
 import com.zhengqing.system.entity.SysRole;
 import com.zhengqing.system.entity.SysTenant;
 import com.zhengqing.system.entity.SysTenantPackage;
-import com.zhengqing.system.enums.SysRoleCodeEnum;
 import com.zhengqing.system.model.bo.SysMenuTree;
 import com.zhengqing.system.model.dto.*;
 import com.zhengqing.system.model.vo.SysRoleAllPermissionDetailVO;
@@ -81,16 +81,6 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void refreshSysTenantRePerm() {
-        // 1、先查询所有菜单和按钮数据
-        List<Integer> menuIdList = this.iSysMenuService.allMenuId();
-        // 2、更新权限
-        this.iSysTenantPackageService.updateTenantIdRePerm(AppConstant.SMALL_BOOT_TENANT_ID, menuIdList);
-        log.info("刷新系统租户权限成功!");
-    }
-
-    @Override
     public SysUserPermVO getUserPerm(SysUserPermDTO params) {
         // 1、拿到用户基础信息
         SysUserPermVO userPerm = this.iSysUserService.getUserPerm(params);
@@ -151,8 +141,7 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
 
     @Override
     public void refreshTenantRePerm(Integer tenantId) {
-        // 只更新非系统租户数据
-        if (AppConstant.SMALL_BOOT_TENANT_ID.equals(tenantId) || tenantId == null) {
+        if (tenantId == null) {
             return;
         }
         TenantIdContext.setTenantId(tenantId);

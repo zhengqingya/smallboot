@@ -65,4 +65,5 @@ public class JwtUserBO extends BaseBO {
         return Long.valueOf(this.userId);
     }
 
+
 }

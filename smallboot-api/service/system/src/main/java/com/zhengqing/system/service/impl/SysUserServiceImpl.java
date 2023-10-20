@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhengqing.common.auth.util.AuthUtil;
 import com.zhengqing.common.base.constant.AppConstant;
+import com.zhengqing.common.base.context.JwtUserContext;
 import com.zhengqing.common.base.context.TenantIdContext;
 import com.zhengqing.common.base.exception.MyException;
 import com.zhengqing.common.core.enums.UserSexEnum;
@@ -19,13 +20,11 @@ import com.zhengqing.system.mapper.SysUserMapper;
 import com.zhengqing.system.model.dto.*;
 import com.zhengqing.system.model.vo.SysUserListVO;
 import com.zhengqing.system.model.vo.SysUserPermVO;
-import com.zhengqing.system.service.ISysDeptService;
-import com.zhengqing.system.service.ISysTenantService;
-import com.zhengqing.system.service.ISysUserRoleService;
-import com.zhengqing.system.service.ISysUserService;
+import com.zhengqing.system.service.*;
 import com.zhengqing.system.util.PasswordUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.compress.utils.Lists;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +33,7 @@ import org.springframework.util.CollectionUtils;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
+import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 /**
@@ -52,6 +52,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     private final SysUserMapper sysUserMapper;
     private final ISysUserRoleService iSysUserRoleService;
+    private final ISysRoleService iSysRoleService;
     private final ISysDeptService iSysDeptService;
     @Lazy
     @Resource
@@ -83,9 +84,18 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         // 用户ids
         List<Integer> userIdList = userList.stream().map(SysUserListVO::getUserId).collect(Collectors.toList());
         Map<Integer, List<Integer>> mapRoleInfo = this.iSysUserRoleService.mapRoleId(userIdList);
-        userList.forEach(userInfo -> {
-            userInfo.setRoleIdList(mapRoleInfo.get(userInfo.getUserId()));
-            userInfo.handleData();
+        // 角色ids
+        List<Integer> roleIdList = Lists.newArrayList();
+        mapRoleInfo.forEach((key, value) -> roleIdList.addAll(value));
+        List<Integer> disRoleIdList = roleIdList.stream().distinct().collect(Collectors.toList());
+        Map<Integer, String> roleNameMap = this.iSysRoleService.mapByRoleIdList(disRoleIdList);
+        userList.forEach(item -> {
+            List<Integer> itemRoleIdList = mapRoleInfo.get(item.getUserId());
+            item.setRoleIdList(itemRoleIdList);
+            StringJoiner sj = new StringJoiner(",");
+            itemRoleIdList.forEach(roleIdItem -> sj.add(roleNameMap.get(roleIdItem)));
+            item.setRoLeNames(sj.toString());
+            item.handleData();
         });
     }
 
@@ -128,7 +138,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         sysUser.setPostIdList(params.getPostIdList());
         sysUser.setIsFixed(isFixed);
 
-        boolean isUpdateRole = true;
+        boolean isFixedRole = false;
+        // 是否超管在操作修改
+        boolean isSuperAdminOperate = JwtUserContext.hasSuperAdmin();
+
         if (isAdd) {
             sysUser.setUsername(params.getUsername());
             sysUser.setPassword(PasswordUtil.encodePassword(StrUtil.isBlank(password) ? AppConstant.DEFAULT_PASSWORD : password));
@@ -136,15 +149,24 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             userId = sysUser.getUserId();
         } else {
             if (StrUtil.isNotBlank(password)) {
+                if (AppConstant.SYSTEM_SUPER_ADMIN_USER_ID.equals(userId) && !isSuperAdminOperate) {
+                    throw new MyException("超管的密码你别搞！！！");
+                }
                 sysUser.setPassword(PasswordUtil.encodePassword(password));
             }
             SysUser sysUserOldData = this.sysUserMapper.selectById(userId);
-            isUpdateRole = !sysUserOldData.getIsFixed();
+            isFixedRole = sysUserOldData.getIsFixed();
             sysUser.updateById();
         }
 
-        // 给用户绑定角色信息
-        if (!AppConstant.SYSTEM_SUPER_ADMIN_USER_ID.equals(userId) && isUpdateRole) {
+        // ---------------------- 下面修改用户角色 ----------------------------
+
+        if (AppConstant.SYSTEM_SUPER_ADMIN_USER_ID.equals(userId)) {
+            // 超管的角色信息不能修改
+            return userId;
+        }
+        // 给用户绑定角色信息  超管可以操作固定用户角色的修改
+        if (!isFixedRole || (isFixedRole && isSuperAdminOperate)) {
             this.iSysUserRoleService.addOrUpdateData(SysUserRoleSaveDTO.builder().userId(userId).roleIdList(params.getRoleIdList()).build());
 
             AuthUtil.logout(userId);

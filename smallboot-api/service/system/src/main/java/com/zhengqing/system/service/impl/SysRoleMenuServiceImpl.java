@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
+import com.zhengqing.common.base.constant.AppConstant;
 import com.zhengqing.system.entity.SysRoleMenu;
 import com.zhengqing.system.mapper.SysRoleMenuMapper;
 import com.zhengqing.system.model.dto.SysRoleReMenuSaveDTO;
@@ -104,7 +105,11 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
         if (CollUtil.isEmpty(delMenuIdList)) {
             return;
         }
-        this.sysRoleMenuMapper.delete(new LambdaQueryWrapper<SysRoleMenu>().in(SysRoleMenu::getMenuId, delMenuIdList));
+        this.sysRoleMenuMapper.delete(
+                new LambdaQueryWrapper<SysRoleMenu>()
+                        .in(SysRoleMenu::getMenuId, delMenuIdList)
+                        .notIn(SysRoleMenu::getRoleId, AppConstant.NOT_DEL_MENU_EXCLUDE_ROLE_ID_LIST)
+        );
     }
 
     @Override

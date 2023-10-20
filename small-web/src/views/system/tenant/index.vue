@@ -38,10 +38,8 @@
         <el-table-column label="创建时间" prop="createTime" align="center" />
         <el-table-column align="center" width="150px" label="操作">
           <template #default="scope">
-            <div v-if="scope.row.id !== 1">
-              <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
-              <base-delete-btn @ok="handleDelete(scope.row)"></base-delete-btn>
-            </div>
+            <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
+            <!-- <base-delete-btn @ok="handleDelete(scope.row)"></base-delete-btn> -->
           </template>
         </el-table-column>
       </base-table-p>

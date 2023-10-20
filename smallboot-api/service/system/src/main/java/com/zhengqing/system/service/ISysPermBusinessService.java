@@ -28,15 +28,6 @@ public interface ISysPermBusinessService {
     void refreshSuperAdminPerm();
 
     /**
-     * 刷新系统租户权限
-     *
-     * @return void
-     * @author zhengqingya
-     * @date 2023/3/28 11:24
-     */
-    void refreshSysTenantRePerm();
-
-    /**
      * 获取用户的基本信息+角色+权限...
      *
      * @param params 查询参数

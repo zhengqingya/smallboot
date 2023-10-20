@@ -41,17 +41,6 @@ public interface ISysTenantPackageService extends IService<SysTenantPackage> {
     SysTenantPackage detailReTenantId(Integer tenantId);
 
     /**
-     * 根据租户id更新关联套餐详情
-     *
-     * @param tenantId   租户id
-     * @param menuIdList 关联的菜单ids
-     * @return 查询结果
-     * @author zhengqingya
-     * @date 2023/10/08 10:34
-     */
-    void updateTenantIdRePerm(Integer tenantId, List<Integer> menuIdList);
-
-    /**
      * 分页列表
      *
      * @param params 查询参数

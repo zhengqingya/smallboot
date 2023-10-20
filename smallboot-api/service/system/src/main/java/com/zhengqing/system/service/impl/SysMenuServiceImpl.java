@@ -5,6 +5,7 @@ import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhengqing.common.base.constant.AppConstant;
+import com.zhengqing.common.base.context.JwtUserContext;
 import com.zhengqing.common.base.context.TenantIdContext;
 import com.zhengqing.system.entity.SysMenu;
 import com.zhengqing.system.entity.SysTenantPackage;
@@ -14,6 +15,8 @@ import com.zhengqing.system.model.bo.SysMenuTree;
 import com.zhengqing.system.model.dto.SysMenuSaveDTO;
 import com.zhengqing.system.model.dto.SysMenuTreeDTO;
 import com.zhengqing.system.service.ISysMenuService;
+import com.zhengqing.system.service.ISysRoleMenuService;
+import com.zhengqing.system.service.ISysRoleService;
 import com.zhengqing.system.service.ISysTenantPackageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +43,8 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
     private final SysMenuMapper sysMenuMapper;
     private final ISysTenantPackageService iSysTenantPackageService;
+    private final ISysRoleService iSysRoleService;
+    private final ISysRoleMenuService iSysRoleMenuService;
 
     @Override
     public List<SysMenuTree> list(SysMenuTreeDTO params) {
@@ -51,9 +56,18 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
     @Override
     public List<SysMenuTree> tree(SysMenuTreeDTO params) {
-        // 1、查询租户权限
-        SysTenantPackage sysTenantPackage = this.iSysTenantPackageService.detailReTenantId(TenantIdContext.getTenantId());
-        params.setMenuIdList(sysTenantPackage.getMenuIdList());
+        // 1、查询租户权限 （排除超管）
+        if (!JwtUserContext.hasSuperAdmin()) {
+            SysTenantPackage sysTenantPackage = this.iSysTenantPackageService.detailReTenantId(TenantIdContext.getTenantId());
+            params.setMenuIdList(sysTenantPackage.getMenuIdList());
+        }
+
+        Boolean isOnlySystemAdminRePerm = params.getIsOnlySystemAdminRePerm();
+        if ((isOnlySystemAdminRePerm != null && isOnlySystemAdminRePerm) || JwtUserContext.hasSystemAdmin()) {
+            // 查询系统管理员有的权限
+            params.setMenuIdList(this.iSysRoleMenuService.getMenuIdsByRoleId(AppConstant.SMALL_BOOT_SYSTEM_ADMIN_ROLE_ID));
+        }
+
 
         // 2、拿到所有菜单
         List<SysMenuTree> allMenuList = this.list(params);

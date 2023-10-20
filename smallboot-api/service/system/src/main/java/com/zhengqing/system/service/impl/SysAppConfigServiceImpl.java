@@ -16,14 +16,15 @@ import com.zhengqing.common.sdk.douyin.service.model.vo.DyServiceVersionVO;
 import com.zhengqing.common.sdk.douyin.service.util.DyServiceApiUtil;
 import com.zhengqing.system.entity.SysAppConfig;
 import com.zhengqing.system.enums.SysAppStatusEnum;
-import com.zhengqing.system.enums.SysConfigKeyEnum;
 import com.zhengqing.system.mapper.SysAppConfigMapper;
 import com.zhengqing.system.model.bo.SysAppConfigBO;
 import com.zhengqing.system.model.bo.SysExtJsonBO;
 import com.zhengqing.system.model.dto.SysAppConfigDTO;
 import com.zhengqing.system.model.dto.SysAppOperationDTO;
 import com.zhengqing.system.model.dto.SysAppQrcodeDTO;
+import com.zhengqing.system.model.vo.SysAppServiceConfigDetailVO;
 import com.zhengqing.system.service.ISysAppConfigService;
+import com.zhengqing.system.service.ISysAppServiceConfigService;
 import com.zhengqing.system.service.ISysConfigService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -49,6 +50,7 @@ public class SysAppConfigServiceImpl extends ServiceImpl<SysAppConfigMapper, Sys
 
     private final SysAppConfigMapper sysAppConfigMapper;
     private final ISysConfigService iSysConfigService;
+    private final ISysAppServiceConfigService iSysAppServiceConfigService;
 
     @Override
     public IPage<SysAppConfigBO> page(SysAppConfigDTO params) {
@@ -116,18 +118,20 @@ public class SysAppConfigServiceImpl extends ServiceImpl<SysAppConfigMapper, Sys
     @Override
     public String genLink() {
         // 拿到小程序appid信息
-        String component_appid = String.valueOf(this.iSysConfigService.getValue(SysConfigKeyEnum.DOUYIN_COMPONENT_APPID));
-        String component_appsecret = String.valueOf(this.iSysConfigService.getValue(SysConfigKeyEnum.DOUYIN_COMPONENT_APPSECRET));
-        String component_access_token = DyServiceApiUtil.component_access_token(component_appid, component_appsecret);
+        SysAppServiceConfigDetailVO sysAppServiceConfigDetailVO = this.iSysAppServiceConfigService.detail();
+        String component_appid = sysAppServiceConfigDetailVO.getComponentAppId();
+        String component_appsecret = sysAppServiceConfigDetailVO.getComponentAppSecret();
+        String component_access_token = DyServiceApiUtil.component_access_token(sysAppServiceConfigDetailVO.getId(), component_appid, component_appsecret);
         return DyServiceApiUtil.gen_link(component_appid, component_access_token, null);
     }
 
     @Override
     public byte[] qrcode(SysAppQrcodeDTO params) {
         // 拿到小程序appid信息
-        String component_appid = String.valueOf(this.iSysConfigService.getValue(SysConfigKeyEnum.DOUYIN_COMPONENT_APPID));
-        String component_appsecret = String.valueOf(this.iSysConfigService.getValue(SysConfigKeyEnum.DOUYIN_COMPONENT_APPSECRET));
-        String component_access_token = DyServiceApiUtil.component_access_token(component_appid, component_appsecret);
+        SysAppServiceConfigDetailVO sysAppServiceConfigDetailVO = this.iSysAppServiceConfigService.detail();
+        String component_appid = sysAppServiceConfigDetailVO.getComponentAppId();
+        String component_appsecret = sysAppServiceConfigDetailVO.getComponentAppSecret();
+        String component_access_token = DyServiceApiUtil.component_access_token(sysAppServiceConfigDetailVO.getId(), component_appid, component_appsecret);
         String authorizer_access_token = DyServiceApiUtil.authorizer_access_token(component_appid, component_access_token, DyServiceApiUtil.retrieve_authorization_code(component_appid, component_access_token, params.getAppId()));
         return DyServiceApiUtil.qrcode(component_appid, authorizer_access_token, params.getVersion(), params.getPath());
     }
@@ -162,10 +166,10 @@ public class SysAppConfigServiceImpl extends ServiceImpl<SysAppConfigMapper, Sys
         Assert.notEmpty(appConfigList, "暂无可用的小程序配置！");
 
         // 拿到小程序appid信息
-        String component_appid = String.valueOf(this.iSysConfigService.getValue(SysConfigKeyEnum.DOUYIN_COMPONENT_APPID));
-        String component_appsecret = String.valueOf(this.iSysConfigService.getValue(SysConfigKeyEnum.DOUYIN_COMPONENT_APPSECRET));
-
-        String component_access_token = DyServiceApiUtil.component_access_token(component_appid, component_appsecret);
+        SysAppServiceConfigDetailVO sysAppServiceConfigDetailVO = this.iSysAppServiceConfigService.detail();
+        String component_appid = sysAppServiceConfigDetailVO.getComponentAppId();
+        String component_appsecret = sysAppServiceConfigDetailVO.getComponentAppSecret();
+        String component_access_token = DyServiceApiUtil.component_access_token(sysAppServiceConfigDetailVO.getId(), component_appid, component_appsecret);
         for (SysAppConfigBO appConfigItem : appConfigList) {
             Integer deptId = appConfigItem.getId();
             String appId = appConfigItem.getAppId();
@@ -220,9 +224,10 @@ public class SysAppConfigServiceImpl extends ServiceImpl<SysAppConfigMapper, Sys
         Assert.notEmpty(appConfigList, "暂无可用的小程序配置！");
 
         // 拿到小程序appid信息
-        String component_appid = String.valueOf(this.iSysConfigService.getValue(SysConfigKeyEnum.DOUYIN_COMPONENT_APPID));
-        String component_appsecret = String.valueOf(this.iSysConfigService.getValue(SysConfigKeyEnum.DOUYIN_COMPONENT_APPSECRET));
-        String component_access_token = DyServiceApiUtil.component_access_token(component_appid, component_appsecret);
+        SysAppServiceConfigDetailVO sysAppServiceConfigDetailVO = this.iSysAppServiceConfigService.detail();
+        String component_appid = sysAppServiceConfigDetailVO.getComponentAppId();
+        String component_appsecret = sysAppServiceConfigDetailVO.getComponentAppSecret();
+        String component_access_token = DyServiceApiUtil.component_access_token(sysAppServiceConfigDetailVO.getId(), component_appid, component_appsecret);
 
         appConfigList.forEach(item -> {
             String appId = item.getAppId();

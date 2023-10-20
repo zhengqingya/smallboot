@@ -45,4 +45,7 @@ public class SysTenantPackage extends BaseEntity<SysTenantPackage> {
     @ApiModelProperty("备注")
     private String remark;
 
+    @ApiModelProperty("排序")
+    private Integer sort;
+
 }

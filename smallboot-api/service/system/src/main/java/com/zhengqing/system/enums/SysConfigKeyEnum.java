@@ -19,10 +19,10 @@ import java.util.List;
 public enum SysConfigKeyEnum {
 
     // ====================================== ↓↓↓↓↓↓ 抖音小程序 ↓↓↓↓↓↓ ======================================
-    DOUYIN_COMPONENT_APPID("douyin_component_appid", null, "抖音服务商平台-第三方小程序应用appid"),
-    DOUYIN_COMPONENT_APPSECRET("douyin_component_appsecret", null, "抖音服务商平台-第三方小程序应用appsecret"),
-    DOUYIN_TP_TOKEN("douyin_tp_token", null, "抖音服务商平台-消息验证TOKEN"),
-    DOUYIN_ENCODING_AES_KEY("douyin_encoding_aes_key", null, "抖音服务商平台-消息加密解密KEY"),
+//    DOUYIN_COMPONENT_APPID("douyin_component_appid", null, "抖音服务商平台-第三方小程序应用appid"),
+//    DOUYIN_COMPONENT_APPSECRET("douyin_component_appsecret", null, "抖音服务商平台-第三方小程序应用appsecret"),
+//    DOUYIN_TP_TOKEN("douyin_tp_token", null, "抖音服务商平台-消息验证TOKEN"),
+//    DOUYIN_ENCODING_AES_KEY("douyin_encoding_aes_key", null, "抖音服务商平台-消息加密解密KEY"),
 
     // ====================================== ↓↓↓↓↓↓ 商城 ↓↓↓↓↓↓ ======================================
 

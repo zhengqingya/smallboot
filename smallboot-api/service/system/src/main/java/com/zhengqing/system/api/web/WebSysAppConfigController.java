@@ -42,21 +42,21 @@ public class WebSysAppConfigController extends BaseController {
     @GetMapping("genLink")
     @ApiOperation("生成授权链接")
     public String genLink() {
-        return this.iSysAppConfigService.genLink();
+        return TenantUtil.executeRemoveFlag(this.iSysAppConfigService::genLink);
     }
 
     @NoReturnHandle
     @GetMapping("qrcode")
     @ApiOperation("获取二维码")
     public byte[] qrcode(@Validated @ModelAttribute SysAppQrcodeDTO params) {
-        return this.iSysAppConfigService.qrcode(params);
+        return TenantUtil.executeRemoveFlag(() -> this.iSysAppConfigService.qrcode(params));
     }
 
     @NoRepeatSubmit
     @PostMapping("operationBatch")
     @ApiOperation("批量操作(小程序提审、发布)")
     public Boolean operationBatch(@Validated @RequestBody SysAppOperationDTO params) {
-        this.iSysAppConfigService.operationBatch(params);
+        TenantUtil.executeRemoveFlag(() -> this.iSysAppConfigService.operationBatch(params));
         return true;
     }
 
@@ -64,7 +64,7 @@ public class WebSysAppConfigController extends BaseController {
     @PostMapping("syncStatus")
     @ApiOperation("同步小程序最新状态")
     public Boolean syncStatus() {
-        this.iSysAppConfigService.syncStatus();
+        TenantUtil.executeRemoveFlag(this.iSysAppConfigService::syncStatus);
         return true;
     }
 

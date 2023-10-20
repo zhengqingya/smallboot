@@ -25,9 +25,12 @@
         <el-table-column prop="sort" label="排序" />
         <el-table-column label="操作" align="center" width="250">
           <template #default="scope">
-            <el-button v-if="!scope.row.isFixed" link @click="update(scope.row)">编辑</el-button>
+            <!--  固定角色=系统管理员 时 只有超级管机员才能编辑 -->
+            <el-button v-if="!scope.row.isFixed || (scope.row.isFixed && scope.row.code == 'system_admin' && userObj.userId == 1)" link @click="update(scope.row)">编辑</el-button>
             <el-button type="primary" link @click="add(scope.row.roleId)">新增子项</el-button>
-            <router-link v-if="!scope.row.isFixed || scope.row.code == 'merchant_admin'" :to="{ path: '/system/role-edit', query: { id: scope.row.roleId } }">
+            <router-link
+              v-if="!scope.row.isFixed || (scope.row.isFixed && scope.row.code == 'system_admin' && userObj.userId == 1)"
+              :to="{ path: '/system/role-edit', query: { id: scope.row.roleId } }">
               <el-button link>权限</el-button>
             </router-link>
             <base-delete-btn v-if="!scope.row.isFixed" @ok="deleteData(scope.row.roleId)" />
@@ -67,6 +70,7 @@
 </template>
 <script setup>
 const { proxy } = getCurrentInstance();
+let { userObj } = toRefs(proxy.$store.user.useUserStore());
 let roleForm = $ref({});
 let dialogVisible = $ref(false);
 let listQuery = $ref({});

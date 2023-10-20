@@ -7,7 +7,6 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONUtil;
 import com.google.common.collect.Lists;
-import com.zhengqing.common.base.context.TenantIdContext;
 import com.zhengqing.common.redis.util.RedisUtil;
 import com.zhengqing.common.sdk.douyin.config.DyProperty;
 import com.zhengqing.common.sdk.douyin.mini.enums.DyMiniResultCodeEnum;
@@ -162,23 +161,24 @@ public class DyServiceApiUtil {
         return dyProperty.getIsOnLine() ? dyProperty.getMiniApp().getApiPrefix() : dyProperty.getMiniApp().getApiPrefixSandbox();
     }
 
-    public static void saveComponentTicket(String component_ticket) {
+    public static void saveComponentTicket(Integer configId, String component_ticket) {
         // https://partner.open-douyin.com/docs/resource/zh-CN/thirdparty/API/smallprogram/authorization/componentticket
         // 推送 component_ticket  有效期为 3 小时。
-        RedisUtil.setEx(COMPONENT_TICKET + TenantIdContext.getTenantId(), component_ticket, 60 * 2 + 50, TimeUnit.MINUTES);
+        RedisUtil.setEx(COMPONENT_TICKET + configId, component_ticket, 60 * 2 + 50, TimeUnit.MINUTES);
     }
 
     /**
      * 获取第三方小程序接口调用凭据
      * https://partner.open-douyin.com/docs/resource/zh-CN/thirdparty/API/smallprogram/authorization/componentaccesstoken
      *
+     * @param configId            第三方小程序应用 db中的配置id
      * @param component_appid     第三方小程序应用 appid
      * @param component_appsecret 第三方小程序应用 appsecret
      * @return 结果
      * @author zhengqingya
      * @date 2022/7/28 15:40
      */
-    public static String component_access_token(String component_appid, String component_appsecret) {
+    public static String component_access_token(Integer configId, String component_appid, String component_appsecret) {
         String key = COMPONENT_ACCESS_TOKEN + component_appid;
         // 1、缓存中获取
         String component_access_token = RedisUtil.get(key);
@@ -187,7 +187,7 @@ public class DyServiceApiUtil {
         }
 
         // 2、若缓存中无值，可通过请求获取
-        String component_ticket = RedisUtil.get(COMPONENT_TICKET + TenantIdContext.getTenantId());
+        String component_ticket = RedisUtil.get(COMPONENT_TICKET + configId);
         Assert.notBlank(component_ticket, "抖音回调component_ticket数据丢失！");
         DyServiceComponentAccessTokenVO dyServiceComponentAccessTokenVO = DyBaseApiUtil.baseGet("https://open.microapp.bytedance.com/openapi/v1/auth/tp/token",
                 new HashMap<String, String>(3) {{

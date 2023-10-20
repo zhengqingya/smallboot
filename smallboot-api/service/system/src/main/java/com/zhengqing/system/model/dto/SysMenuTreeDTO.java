@@ -48,4 +48,7 @@ public class SysMenuTreeDTO {
     @ApiModelProperty(value = "类型")
     private Integer type;
 
+    @ApiModelProperty(value = "是否只要系统管理员有的权限(租户套餐查询菜单 | 系统管理员获取他自己的权限 时 使用)")
+    private Boolean isOnlySystemAdminRePerm;
+
 }
