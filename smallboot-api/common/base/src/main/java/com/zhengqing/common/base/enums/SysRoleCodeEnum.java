@@ -6,6 +6,7 @@ import lombok.Getter;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p> 角色枚举类 </p>
@@ -27,6 +28,7 @@ public enum SysRoleCodeEnum {
     private final String name;
 
     public static final List<SysRoleCodeEnum> LIST = Arrays.asList(SysRoleCodeEnum.values());
+    public static final List<String> CODE_LIST = Arrays.asList(SysRoleCodeEnum.values()).stream().map(SysRoleCodeEnum::getCode).collect(Collectors.toList());
 
 
     public static SysRoleCodeEnum getEnum(String type) {

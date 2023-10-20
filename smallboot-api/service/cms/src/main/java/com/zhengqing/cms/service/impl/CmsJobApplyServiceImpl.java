@@ -10,13 +10,14 @@ import com.zhengqing.cms.entity.CmsJobApply;
 import com.zhengqing.cms.mapper.CmsJobApplyMapper;
 import com.zhengqing.cms.model.dto.CmsJobApplyPageDTO;
 import com.zhengqing.cms.model.dto.CmsJobApplySaveDTO;
-import com.zhengqing.cms.model.dto.CmsJobBaseDTO;
 import com.zhengqing.cms.model.vo.CmsJobApplyPageVO;
 import com.zhengqing.cms.model.vo.CmsJobBaseVO;
 import com.zhengqing.cms.service.ICmsJobApplyService;
 import com.zhengqing.cms.service.ICmsJobService;
 import com.zhengqing.common.db.constant.MybatisConstant;
 import com.zhengqing.common.db.entity.BaseEntity;
+import com.zhengqing.ums.model.vo.UmsUserVO;
+import com.zhengqing.ums.service.IUmsUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -40,6 +41,7 @@ public class CmsJobApplyServiceImpl extends ServiceImpl<CmsJobApplyMapper, CmsJo
 
     private final CmsJobApplyMapper cmsJobApplyMapper;
     private final ICmsJobService iCmsJobService;
+    private final IUmsUserService iUmsUserService;
 
     @Override
     public IPage<CmsJobApplyPageVO> page(CmsJobApplyPageDTO params) {
@@ -63,28 +65,37 @@ public class CmsJobApplyServiceImpl extends ServiceImpl<CmsJobApplyMapper, CmsJo
         Integer id = params.getId();
         boolean isAdd = id == null;
         Integer jobId = params.getJobId();
+        Long currentUserId = params.getCurrentUserId();
+
+        CmsJobApply cmsJobApply = CmsJobApply.builder()
+                .id(id)
+                .jobId(jobId)
+                .status(params.getStatus())
+                .remark(params.getRemark())
+                .build();
+
         if (isAdd) {
+            UmsUserVO umsUserVO = this.iUmsUserService.getUser(currentUserId);
+            String phone = umsUserVO.getPhone();
+            String birthday = umsUserVO.getBirthday();
+            String nickname = umsUserVO.getNickname();
+            Assert.notBlank(phone, "联系电话不能为空，请完善个人简历！");
+            Assert.notBlank(birthday, "年龄不能为空，请完善个人简历！");
+
+            cmsJobApply.setContact(nickname);
+            cmsJobApply.setContactPhone(phone);
+            cmsJobApply.setContactBirthday(birthday);
+
             CmsJobApply cmsJobApplyOld = this.cmsJobApplyMapper.selectOne(
                     new LambdaQueryWrapper<CmsJobApply>()
                             .eq(CmsJobApply::getJobId, jobId)
-                            .eq(BaseEntity::getCreateBy, params.getCurrentUserId())
+                            .eq(BaseEntity::getCreateBy, currentUserId)
                             .last(MybatisConstant.LIMIT_ONE)
             );
             Assert.isNull(cmsJobApplyOld, "请不要重复申请报名！");
         }
 
-        CmsJobBaseVO cmsJobBaseVO = this.iCmsJobService.detail(CmsJobBaseDTO.builder().id(jobId).build());
-
-        CmsJobApply.builder()
-                .id(id)
-                .jobId(jobId)
-                .deptId(cmsJobBaseVO.getDeptId())
-                .status(params.getStatus())
-                .contact(params.getContact())
-                .contactPhone(params.getContactPhone())
-                .remark(params.getRemark())
-                .build()
-                .insertOrUpdate();
+        cmsJobApply.insertOrUpdate();
     }
 
     @Override

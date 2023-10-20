@@ -6,6 +6,7 @@ import com.zhengqing.system.entity.SysTenant;
 import com.zhengqing.system.model.dto.SysTenantListDTO;
 import com.zhengqing.system.model.dto.SysTenantPageDTO;
 import com.zhengqing.system.model.dto.SysTenantSaveDTO;
+import com.zhengqing.system.model.vo.SysTenantConfigVO;
 import com.zhengqing.system.model.vo.SysTenantListVO;
 import com.zhengqing.system.model.vo.SysTenantPageVO;
 
@@ -29,6 +30,16 @@ public interface ISysTenantService extends IService<SysTenant> {
      * @date 2023/10/08 15:40
      */
     SysTenant detail(Integer id);
+
+    /**
+     * 小程序查看配置使用
+     *
+     * @param id 租户id
+     * @return 查询结果
+     * @author zhengqingya
+     * @date 2023/10/08 15:40
+     */
+    SysTenantConfigVO configForApp(Integer id);
 
     /**
      * 分页列表

@@ -2,8 +2,9 @@ package com.zhengqing.system.api.mini;
 
 import com.zhengqing.common.auth.custom.open.ApiOpen;
 import com.zhengqing.common.base.constant.ServiceConstant;
+import com.zhengqing.common.base.context.TenantIdContext;
 import com.zhengqing.common.core.api.BaseController;
-import com.zhengqing.system.service.ISysAppConfigService;
+import com.zhengqing.system.service.ISysTenantService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -26,13 +27,13 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(tags = {"mini-系统管理-小程序配置"})
 public class MiniSysAppController extends BaseController {
 
-    private final ISysAppConfigService iSysAppConfigService;
+    private final ISysTenantService iSysTenantService;
 
     @ApiOpen
     @GetMapping("config")
     @ApiOperation("小程序配置")
     public Object config(@RequestParam String appId) {
-        return null;
+        return this.iSysTenantService.configForApp(TenantIdContext.getTenantId());
     }
 
 }

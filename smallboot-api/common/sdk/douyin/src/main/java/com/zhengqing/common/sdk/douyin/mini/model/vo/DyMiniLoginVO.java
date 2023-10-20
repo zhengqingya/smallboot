@@ -39,6 +39,7 @@ public class DyMiniLoginVO implements Serializable {
     public static class Data {
         /**
          * 会话密钥，如果请求时有 code 参数才会返回
+         * session_key 会随着login接口的调用被刷新。可以通过checkSession方法验证当前 session 是否有效，从而避免频繁登录。
          */
         private String session_key;
         /**

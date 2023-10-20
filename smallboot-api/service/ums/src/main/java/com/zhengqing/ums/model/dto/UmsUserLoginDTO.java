@@ -17,9 +17,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 /**
- * <p>
- * 用户信息-微信小程序登录参数
- * </p>
+ * <p> 小程序登录参数 </p>
  *
  * @author zhengqingya
  * @description

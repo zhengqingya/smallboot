@@ -33,7 +33,7 @@ public class CmsJobApply extends IsDeletedBaseEntity<CmsJobApply> {
 
     @ApiModelProperty("部门id")
     private Integer deptId;
-    
+
     @ApiModelProperty(value = "商户ID")
     private Integer merchantId;
 
@@ -48,6 +48,9 @@ public class CmsJobApply extends IsDeletedBaseEntity<CmsJobApply> {
 
     @ApiModelProperty("联系人")
     private String contact;
+
+    @ApiModelProperty("联系人生日")
+    private String contactBirthday;
 
     @ApiModelProperty("联系电话")
     private String contactPhone;

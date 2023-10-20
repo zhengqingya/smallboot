@@ -130,7 +130,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     @Transactional(rollbackFor = Exception.class)
     public Integer addOrUpdateData(SysRoleSaveDTO params) {
         String code = params.getCode();
-        Assert.isFalse(SysRoleCodeEnum.LIST.contains(SysRoleCodeEnum.getEnum(code)) && !JwtUserContext.hasSuperAdmin(), "只有超管才有权限操作特殊角色！");
+        Assert.isFalse(SysRoleCodeEnum.CODE_LIST.contains(code) && !JwtUserContext.hasSuperAdmin(), "只有超管才有权限操作特殊角色！");
 
         // 校验名称是否重复
         SysRole sysRoleOld = this.sysRoleMapper.selectOne(new LambdaQueryWrapper<SysRole>().eq(SysRole::getName, params.getName()).last(MybatisConstant.LIMIT_ONE));
@@ -159,7 +159,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         if (!JwtUserContext.hasSuperAdmin()) {
             Assert.isFalse(sysRole.getIsFixed(), "您没有权限删除固定角色！");
         }
-        Assert.isFalse(SysRoleCodeEnum.LIST.contains(SysRoleCodeEnum.getEnum(sysRole.getCode())) && !JwtUserContext.hasSuperAdmin(), "只有超管才有权限操作特殊角色！");
+        Assert.isFalse(SysRoleCodeEnum.CODE_LIST.contains(sysRole.getCode()) && !JwtUserContext.hasSuperAdmin(), "只有超管才有权限操作特殊角色！");
         // 1、删除该角色下关联的权限
         this.iSysRoleMenuService.delByRoleId(roleId);
         this.iSysRoleScopeService.delByRoleId(roleId);

@@ -30,6 +30,13 @@
         <dependency>
             <groupId>com.zhengqing</groupId>
             <artifactId>system</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.zhengqing</groupId>
+            <artifactId>ums</artifactId>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

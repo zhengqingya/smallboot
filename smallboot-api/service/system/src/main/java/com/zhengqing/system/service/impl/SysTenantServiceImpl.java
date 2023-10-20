@@ -8,8 +8,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
 import com.zhengqing.common.base.constant.AppConstant;
 import com.zhengqing.common.base.context.TenantIdContext;
+import com.zhengqing.common.base.enums.ApiResultCodeEnum;
 import com.zhengqing.common.base.enums.CommonStatusEnum;
 import com.zhengqing.common.base.enums.SysRoleCodeEnum;
+import com.zhengqing.common.base.exception.MyException;
 import com.zhengqing.common.base.util.MyDateUtil;
 import com.zhengqing.common.db.constant.MybatisConstant;
 import com.zhengqing.common.db.util.TenantUtil;
@@ -18,6 +20,7 @@ import com.zhengqing.system.entity.SysTenantPackage;
 import com.zhengqing.system.mapper.SysTenantMapper;
 import com.zhengqing.system.model.bo.SysAppConfigBO;
 import com.zhengqing.system.model.dto.*;
+import com.zhengqing.system.model.vo.SysTenantConfigVO;
 import com.zhengqing.system.model.vo.SysTenantListVO;
 import com.zhengqing.system.model.vo.SysTenantPageVO;
 import com.zhengqing.system.service.*;
@@ -61,6 +64,17 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
         SysTenant sysTenant = this.sysTenantMapper.selectById(id);
         Assert.notNull(sysTenant, "该租户不存在");
         return sysTenant;
+    }
+
+    @Override
+    public SysTenantConfigVO configForApp(Integer id) {
+        // 暂时主要是校验，不返回给小程序任何信息...
+        try {
+            SysTenant sysTenant = this.checkData(id);
+        } catch (Exception e) {
+            throw new MyException(ApiResultCodeEnum.APP_SERVICE_ERROR.getCode(), e.getMessage());
+        }
+        return SysTenantConfigVO.builder().build();
     }
 
     @Override
@@ -212,7 +226,7 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
         Assert.isTrue(Objects.equals(CommonStatusEnum.ENABLE.getStatus(), sysTenant.getStatus()), "服务已停用！");
         Date expireTime = sysTenant.getExpireTime();
         if (expireTime != null) {
-            Assert.isTrue(expireTime.after(new Date()), "限制：租户服务已到期！过期时间：" + MyDateUtil.dateToStr(expireTime));
+            Assert.isTrue(expireTime.after(new Date()), "限制：租户服务已到期！\n过期时间：" + MyDateUtil.dateToStr(expireTime));
         }
         return sysTenant;
     }

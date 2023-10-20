@@ -4,6 +4,7 @@ import com.zhengqing.common.auth.custom.open.ApiOpen;
 import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.base.context.UmsUserContext;
 import com.zhengqing.common.core.api.BaseController;
+import com.zhengqing.ums.model.dto.UmsUserBindPhoneDTO;
 import com.zhengqing.ums.model.dto.UmsUserDTO;
 import com.zhengqing.ums.model.dto.UmsUserInfoDTO;
 import com.zhengqing.ums.model.dto.UmsUserLoginDTO;
@@ -48,10 +49,10 @@ public class MiniUmsUserController extends BaseController {
         return this.sysUserService.login(params);
     }
 
-    @GetMapping("bindPhone")
-    @ApiOperation("绑定手机号 --- 需微信小程序后台进行相关认证")
-    public UmsUserVO bindPhone(@RequestParam String code) {
-        return this.sysUserService.getPhone(code);
+    @PostMapping("bindPhone")
+    @ApiOperation("绑定手机号(需小程序后台进行相关认证)")
+    public String bindPhone(@Validated @RequestBody UmsUserBindPhoneDTO params) {
+        return this.sysUserService.bindPhone(params);
     }
 
     @GetMapping("getUserInfo")

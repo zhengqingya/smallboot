@@ -2,6 +2,7 @@ package com.zhengqing.ums.service.impl;
 
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import cn.hutool.core.lang.Assert;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -13,6 +14,8 @@ import com.zhengqing.common.base.model.bo.JwtUserBO;
 import com.zhengqing.common.core.enums.UserSexEnum;
 import com.zhengqing.common.core.util.IdGeneratorUtil;
 import com.zhengqing.common.db.constant.MybatisConstant;
+import com.zhengqing.common.db.util.TenantUtil;
+import com.zhengqing.common.redis.util.RedisUtil;
 import com.zhengqing.common.sdk.douyin.mini.model.dto.DyMiniLoginDTO;
 import com.zhengqing.common.sdk.douyin.mini.model.vo.DyMiniLoginVO;
 import com.zhengqing.common.sdk.douyin.mini.util.DyMiniApiUtil;
@@ -22,10 +25,7 @@ import com.zhengqing.ums.entity.UmsUser;
 import com.zhengqing.ums.enums.MiniTypeEnum;
 import com.zhengqing.ums.factory.WxMaFactory;
 import com.zhengqing.ums.mapper.UmsUserMapper;
-import com.zhengqing.ums.model.dto.UmsUserDTO;
-import com.zhengqing.ums.model.dto.UmsUserInfoDTO;
-import com.zhengqing.ums.model.dto.UmsUserLoginDTO;
-import com.zhengqing.ums.model.dto.WebUmsUserPageDTO;
+import com.zhengqing.ums.model.dto.*;
 import com.zhengqing.ums.model.vo.UmsUserVO;
 import com.zhengqing.ums.model.vo.WebUmsUserPageVO;
 import com.zhengqing.ums.service.IUmsUserService;
@@ -86,6 +86,7 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
         String appid = params.getAppId();
         String openid = null;
         String unionid = null;
+        String sessionKey = null;
         switch (MiniTypeEnum.getEnum(type)) {
             case 微信小程序:
                 WxMaJscode2SessionResult wxMaJscode2SessionResult = this.wxMaFactory.wxMaService().jsCode2SessionInfo(code);
@@ -114,6 +115,7 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
                         .build());
                 openid = dyData.getOpenid();
                 unionid = dyData.getUnionid();
+                sessionKey = dyData.getSession_key();
                 break;
             default:
                 break;
@@ -141,13 +143,18 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
             umsUser.insert();
         }
 
-        UmsUserVO result = this.getUser(umsUser.getId());
+        Long userId = umsUser.getId();
+        UmsUserVO result = this.getUser(userId);
+
+        if (StrUtil.isNotBlank(sessionKey)) {
+            RedisUtil.set("smallboot:mini:user:sessionkey:" + userId, sessionKey);
+        }
 
         // 登录认证
         AuthLoginVO authLoginVO = AuthUtil.login(
                 JwtUserBO.builder()
                         .authSourceEnum(AuthSourceEnum.C)
-                        .userId(String.valueOf(umsUser.getId()))
+                        .userId(String.valueOf(userId))
                         .openid(openid)
                         .username(umsUser.getNickname())
                         .roleCodeList(Lists.newArrayList())
@@ -159,7 +166,7 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
     }
 
     private UmsUserVO getLocalLogin() {
-        UmsUserVO result = this.getUser(1L);
+        UmsUserVO result = TenantUtil.executeRemoveFlag(() -> this.getUser(1L));
         // 登录认证
         AuthLoginVO authLoginVO = AuthUtil.login(
                 JwtUserBO.builder()
@@ -177,10 +184,19 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
 
     @Override
     @SneakyThrows(Exception.class)
-    public UmsUserVO getPhone(String code) {
+    public String bindPhone(UmsUserBindPhoneDTO params) {
+        // 微信
 //        WxMaPhoneNumberInfo phoneNoInfo = this.wxMaService.getUserService().getPhoneNoInfo(sessionKey, encryptedData, iv);
 //        WxMaPhoneNumberInfo newPhoneNoInfo = this.wxMaService.getUserService().getNewPhoneNoInfo(code);
-        return null;
+
+        // 抖音
+        Long currentUserId = params.getCurrentUserId();
+        String decryptStr = DyMiniApiUtil.decrypt(params.getEncryptedData(), params.getIv(), RedisUtil.get("smallboot:mini:user:sessionkey:" + currentUserId));
+        String phone = DyMiniApiUtil.getPhone(decryptStr);
+        UmsUser umsUser = this.detail(currentUserId);
+        umsUser.setPhone(phone);
+        umsUser.updateById();
+        return phone;
     }
 
     @Override
