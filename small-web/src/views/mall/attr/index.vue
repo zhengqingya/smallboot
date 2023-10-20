@@ -10,16 +10,18 @@
           </template>
         </base-header>
 
-        <base-table-p ref="baseTableRef" api="pms_attr.listKey" :params="listQuery" :is-page="false" @cell-click="tableNodeclick">
-          <el-table-column label="规格名称" prop="attrKeyName" align="center"></el-table-column>
-          <el-table-column label="排序" prop="sort" align="center"></el-table-column>
-          <el-table-column align="center" label="操作">
-            <template #default="scope">
-              <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
-              <base-delete-btn @ok="handleDelete(scope.row)"></base-delete-btn>
-            </template>
-          </el-table-column>
-        </base-table-p>
+        <base-content>
+          <base-table-p ref="baseTableRef" api="pms_attr.listKey" :params="listQuery" :is-page="false" @cell-click="tableNodeclick">
+            <el-table-column label="规格名称" prop="attrKeyName" align="center"></el-table-column>
+            <el-table-column label="排序" prop="sort" align="center"></el-table-column>
+            <el-table-column align="center" label="操作">
+              <template #default="scope">
+                <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
+                <base-delete-btn @ok="handleDelete(scope.row)"></base-delete-btn>
+              </template>
+            </el-table-column>
+          </base-table-p>
+        </base-content>
 
         <base-dialog v-model="dialogVisible" :title="dialogTitleObj[dialogStatus]" width="30%">
           <el-form v-if="dialogStatus !== 'detail'" ref="dataFormRef" :model="form" label-width="100px">

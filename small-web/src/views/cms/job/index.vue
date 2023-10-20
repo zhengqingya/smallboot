@@ -8,7 +8,7 @@
         style="margin-right: 10px"
         :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true, emitPath: false }"
         api="sys_dept.tree" />
-      <base-select v-model="listQuery.categoryId" style="margin-right: 10px" clearable :option-props="{ label: 'name', value: 'id' }" api="cms_job_category.list" />
+      <base-select v-model="listQuery.categoryId" label="职位分类" style="margin-right: 10px" clearable :option-props="{ label: 'name', value: 'id' }" api="cms_job_category.list" />
       <base-input v-model="listQuery.name" label="职位名称" @clear="refreshTableData" />
       <el-button type="primary" @click="refreshTableData">查询</el-button>
       <template #right>
@@ -16,33 +16,35 @@
       </template>
     </base-header>
 
-    <base-table-p ref="baseTableRef" api="cms_job.page" :params="listQuery">
-      <el-table-column label="ID" prop="id" align="center" />
-      <!-- <el-table-column label="归属商户" prop="merchantName" align="center" /> -->
-      <el-table-column label="归属企业" prop="deptName" align="center" />
-      <el-table-column label="职位分类" prop="categoryName" align="center" />
-      <el-table-column label="职位名称" prop="name" align="center" />
-      <el-table-column label="状态" align="center">
-        <template #default="scope">
-          <base-tag v-model="scope.row.status" />
-        </template>
-      </el-table-column>
-      <el-table-column label="招聘人数" prop="userNum" align="center" />
-      <el-table-column label="薪资范围" align="center">
-        <template #default="scope">
-          <span>{{ scope.row.wageStart }}-{{ scope.row.wageEnd }} 元/月</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="排序" prop="sort" align="center" />
-      <el-table-column label="创建时间" prop="createTime" align="center" />
-      <el-table-column align="center" label="操作">
-        <template #default="scope">
-          <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
-          <el-button link @click="handleDetail(scope.row)">详情</el-button>
-          <base-delete-btn @ok="handleDelete(scope.row)"></base-delete-btn>
-        </template>
-      </el-table-column>
-    </base-table-p>
+    <base-content>
+      <base-table-p ref="baseTableRef" api="cms_job.page" :params="listQuery">
+        <el-table-column label="ID" prop="id" align="center" />
+        <!-- <el-table-column label="归属商户" prop="merchantName" align="center" /> -->
+        <el-table-column label="归属企业" prop="deptName" align="center" />
+        <el-table-column label="职位分类" prop="categoryName" align="center" />
+        <el-table-column label="职位名称" prop="name" align="center" />
+        <el-table-column label="状态" align="center">
+          <template #default="scope">
+            <base-tag v-model="scope.row.status" />
+          </template>
+        </el-table-column>
+        <el-table-column label="招聘人数" prop="userNum" align="center" />
+        <el-table-column label="薪资范围" align="center">
+          <template #default="scope">
+            <span>{{ scope.row.wageStart }}-{{ scope.row.wageEnd }} 元/月</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="排序" prop="sort" align="center" />
+        <el-table-column label="创建时间" prop="createTime" align="center" />
+        <el-table-column align="center" label="操作">
+          <template #default="scope">
+            <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
+            <el-button link @click="handleDetail(scope.row)">详情</el-button>
+            <base-delete-btn @ok="handleDelete(scope.row)"></base-delete-btn>
+          </template>
+        </el-table-column>
+      </base-table-p>
+    </base-content>
 
     <base-dialog v-model="dialogVisible" :title="dialogTitleObj[dialogStatus]" width="60%">
       <el-form ref="dataFormRef" :inline="true" :model="form" :rules="rules" label-width="100px">

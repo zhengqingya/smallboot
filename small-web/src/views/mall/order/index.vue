@@ -12,53 +12,55 @@
       </template>
     </base-header>
 
-    <base-table-p ref="baseTableRef" api="oms_order.page" :params="listQuery">
-      <el-table-column label="订单编号" prop="orderNo" align="center"></el-table-column>
-      <el-table-column label="商品" align="center" width="230px">
-        <template #default="scope">
-          <!-- {{ scope.row.skuList }} -->
-          <div v-for="item in scope.row.spuList" :key="item.id" class="flex-between-center p-y-3">
-            <el-image :src="item.coverImg" class="img-sm" />
-            <div class="flex-1 m-l-10">
-              <div class="flex-between-center">
-                <span class=""> {{ item.name }} </span>
+    <base-content>
+      <base-table-p ref="baseTableRef" api="oms_order.page" :params="listQuery">
+        <el-table-column label="订单编号" prop="orderNo" align="center"></el-table-column>
+        <el-table-column label="商品" align="center" width="230px">
+          <template #default="scope">
+            <!-- {{ scope.row.skuList }} -->
+            <div v-for="item in scope.row.spuList" :key="item.id" class="flex-between-center p-y-3">
+              <el-image :src="item.coverImg" class="img-sm" />
+              <div class="flex-1 m-l-10">
+                <div class="flex-between-center">
+                  <span class=""> {{ item.name }} </span>
 
-                <span class="">￥{{ item.price / 100 }}</span>
-              </div>
-              <div class="flex-between-center">
-                <span class="text-color-grey"> {{ item.specList.map((obj) => obj.attrValueName).join(',') }} </span>
-                <span>x{{ item.num }}</span>
+                  <span class="">￥{{ item.price / 100 }}</span>
+                </div>
+                <div class="flex-between-center">
+                  <span class="text-color-grey"> {{ item.specList.map((obj) => obj.attrValueName).join(',') }} </span>
+                  <span>x{{ item.num }}</span>
+                </div>
               </div>
             </div>
-          </div>
-        </template>
-      </el-table-column>
+          </template>
+        </el-table-column>
 
-      <!-- <el-table-column label="支付流水号" prop="payNo" align="center"></el-table-column> -->
-      <!-- <el-table-column label="支付时间" prop="payTime" align="center"> </el-table-column> -->
-      <!-- <el-table-column label="未支付结束时间" prop="unPayEndTime" align="center"> </el-table-column> -->
+        <!-- <el-table-column label="支付流水号" prop="payNo" align="center"></el-table-column> -->
+        <!-- <el-table-column label="支付时间" prop="payTime" align="center"> </el-table-column> -->
+        <!-- <el-table-column label="未支付结束时间" prop="unPayEndTime" align="center"> </el-table-column> -->
 
-      <!-- <el-table-column label="运费" prop="freight" align="center"></el-table-column> -->
-      <el-table-column label="总金额" prop="totalPrice" align="center">
-        <template #default="scope">
-          <span class="">￥{{ scope.row.totalPrice / 100 }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="实付金额" prop="payPrice" align="center">
-        <template #default="scope">
-          <span class="text-color-red font-bold">￥{{ scope.row.payPrice / 100 }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="订单状态" prop="orderStatusName" align="center"></el-table-column>
-      <el-table-column label="用户名称" prop="username" align="center"></el-table-column>
-      <el-table-column label="用户电话" prop="userPhone" align="center"></el-table-column>
-      <el-table-column label="创建时间" prop="createTime" align="center"></el-table-column>
-      <!-- <el-table-column align="center" label="操作">
+        <!-- <el-table-column label="运费" prop="freight" align="center"></el-table-column> -->
+        <el-table-column label="总金额" prop="totalPrice" align="center">
+          <template #default="scope">
+            <span class="">￥{{ scope.row.totalPrice / 100 }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="实付金额" prop="payPrice" align="center">
+          <template #default="scope">
+            <span class="text-color-red font-bold">￥{{ scope.row.payPrice / 100 }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="订单状态" prop="orderStatusName" align="center"></el-table-column>
+        <el-table-column label="用户名称" prop="username" align="center"></el-table-column>
+        <el-table-column label="用户电话" prop="userPhone" align="center"></el-table-column>
+        <el-table-column label="创建时间" prop="createTime" align="center"></el-table-column>
+        <!-- <el-table-column align="center" label="操作">
         <template v-slot="scope">
           <el-button link @click="handleDetail(scope.row)">详情</el-button>
         </template>
       </el-table-column> -->
-    </base-table-p>
+      </base-table-p>
+    </base-content>
   </base-wrapper>
 </template>
 

@@ -8,23 +8,25 @@
       </template>
     </base-header>
 
-    <base-table-p ref="baseTableRef" api="sys_tenant_package.page" :params="listQuery">
-      <el-table-column label="ID" prop="id" align="center" />
-      <el-table-column label="套餐名" prop="name" align="center" />
-      <el-table-column label="状态" prop="status" align="center">
-        <template #default="scope">
-          <base-tag v-model="scope.row.status" />
-        </template>
-      </el-table-column>
-      <el-table-column label="备注" prop="remark" align="center" />
-      <el-table-column label="创建时间" prop="createTime" align="center" />
-      <el-table-column align="center" label="操作">
-        <template #default="scope">
-          <el-button v-if="scope.row.id !== 1" link @click="handleUpdate(scope.row)">编辑</el-button>
-          <base-delete-btn v-if="scope.row.id !== 1" @ok="handleDelete(scope.row)"></base-delete-btn>
-        </template>
-      </el-table-column>
-    </base-table-p>
+    <base-content>
+      <base-table-p ref="baseTableRef" api="sys_tenant_package.page" :params="listQuery">
+        <el-table-column label="ID" prop="id" align="center" />
+        <el-table-column label="套餐名" prop="name" align="center" />
+        <el-table-column label="状态" prop="status" align="center">
+          <template #default="scope">
+            <base-tag v-model="scope.row.status" />
+          </template>
+        </el-table-column>
+        <el-table-column label="备注" prop="remark" align="center" />
+        <el-table-column label="创建时间" prop="createTime" align="center" />
+        <el-table-column align="center" label="操作">
+          <template #default="scope">
+            <el-button v-if="scope.row.id !== 1" link @click="handleUpdate(scope.row)">编辑</el-button>
+            <base-delete-btn v-if="scope.row.id !== 1" @ok="handleDelete(scope.row)"></base-delete-btn>
+          </template>
+        </el-table-column>
+      </base-table-p>
+    </base-content>
 
     <base-dialog v-model="dialogVisible" :title="dialogTitleObj[dialogStatus]" width="60%">
       <el-form ref="dataFormRef" :model="form" label-width="100px">

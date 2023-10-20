@@ -10,16 +10,18 @@
       </template>
     </base-header>
 
-    <base-table-p ref="baseTableRef" api="wx_mp_material.page" :params="listQuery">
-      <el-table-column label="mediaId" prop="mediaId" width="500px" align="center"></el-table-column>
-      <el-table-column label="名称" prop="name" align="center"></el-table-column>
-      <el-table-column label="更新时间" prop="updateTime" align="center"></el-table-column>
-      <el-table-column label="url" prop="url" align="center">
-        <template #default="scope">
-          <el-image style="width: 50px; height: 50px" :src="scope.row.url" />
-        </template>
-      </el-table-column>
-    </base-table-p>
+    <base-content>
+      <base-table-p ref="baseTableRef" api="wx_mp_material.page" :params="listQuery">
+        <el-table-column label="mediaId" prop="mediaId" width="500px" align="center"></el-table-column>
+        <el-table-column label="名称" prop="name" align="center"></el-table-column>
+        <el-table-column label="更新时间" prop="updateTime" align="center"></el-table-column>
+        <el-table-column label="url" prop="url" align="center">
+          <template #default="scope">
+            <el-image style="width: 50px; height: 50px" :src="scope.row.url" />
+          </template>
+        </el-table-column>
+      </base-table-p>
+    </base-content>
 
     <base-dialog v-model="dialogVisible" :title="dialogTitleObj[dialogStatus]" width="30%">
       <el-form ref="dataForm" :model="form" label-width="100px">

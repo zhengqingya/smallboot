@@ -23,38 +23,40 @@
       </template>
     </base-header>
 
-    <el-table
-      ref="baseTableRef"
-      border
-      :header-cell-style="{ background: '#13C3C3', color: '#fff' }"
-      row-key="customId"
-      :row-class-name="tableRowClassName"
-      :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
-      :data="tableDataList"
-      default-expand-all>
-      <!-- <el-table-column label="ID" prop="id" align="center" /> -->
-      <el-table-column label="菜单" align="left" prop="menuFullName" width="300px" />
-      <el-table-column label="权限名称" prop="scopeName" align="center" />
-      <el-table-column label="权限字段" prop="scopeColumn" align="center" />
-      <!-- <el-table-column label="可见字段" prop="scopeVisibleField" align="center" /> -->
-      <!-- <el-table-column label="全权限类名" prop="scopeClass" align="center" /> -->
-      <el-table-column label="规则类型" align="center">
-        <template #default="scope">
-          <el-tag v-if="scope.row.scopeType">{{ typeList.find((e) => e.value == scope.row.scopeType).label }}</el-tag>
-        </template>
-      </el-table-column>
-      <!-- <el-table-column label="规则值" prop="scopeValue" align="center" /> -->
-      <!-- <el-table-column label="备注" prop="remark" align="center" /> -->
-      <el-table-column label="创建时间" prop="createTime" align="center" />
-      <el-table-column align="center" label="操作">
-        <template #default="scope">
-          <div v-if="scope.row.children.length == 0">
-            <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
-            <base-delete-btn @ok="handleDelete(scope.row)"></base-delete-btn>
-          </div>
-        </template>
-      </el-table-column>
-    </el-table>
+    <base-content>
+      <el-table
+        ref="baseTableRef"
+        border
+        :header-cell-style="{ background: '#13C3C3', color: '#fff' }"
+        row-key="customId"
+        :row-class-name="tableRowClassName"
+        :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
+        :data="tableDataList"
+        default-expand-all>
+        <!-- <el-table-column label="ID" prop="id" align="center" /> -->
+        <el-table-column label="菜单" align="left" prop="menuFullName" width="300px" />
+        <el-table-column label="权限名称" prop="scopeName" align="center" />
+        <el-table-column label="权限字段" prop="scopeColumn" align="center" />
+        <!-- <el-table-column label="可见字段" prop="scopeVisibleField" align="center" /> -->
+        <!-- <el-table-column label="全权限类名" prop="scopeClass" align="center" /> -->
+        <el-table-column label="规则类型" align="center">
+          <template #default="scope">
+            <el-tag v-if="scope.row.scopeType">{{ typeList.find((e) => e.value == scope.row.scopeType).label }}</el-tag>
+          </template>
+        </el-table-column>
+        <!-- <el-table-column label="规则值" prop="scopeValue" align="center" /> -->
+        <!-- <el-table-column label="备注" prop="remark" align="center" /> -->
+        <el-table-column label="创建时间" prop="createTime" align="center" />
+        <el-table-column align="center" label="操作">
+          <template #default="scope">
+            <div v-if="scope.row.children.length == 0">
+              <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
+              <base-delete-btn @ok="handleDelete(scope.row)"></base-delete-btn>
+            </div>
+          </template>
+        </el-table-column>
+      </el-table>
+    </base-content>
 
     <base-dialog v-model="dialogVisible" :title="dialogTitleObj[dialogStatus]" width="50%">
       <el-form v-if="dialogStatus !== 'detail'" ref="dataFormRef" :model="form" label-width="90px">

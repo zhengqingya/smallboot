@@ -21,29 +21,30 @@
       </template>
     </base-header>
 
-    <base-table-p ref="baseTableRef" api="sys_merchant.page" :params="listQuery">
-      <el-table-column label="商户ID" prop="id" align="center" />
-      <el-table-column label="名称" prop="name" align="center" />
-      <el-table-column label="抖音AppID" prop="appId" width="150px" align="center" />
-      <el-table-column label="抖音AppSecret" prop="appSecret" width="150px" align="center" />
-      <el-table-column label="状态" prop="status" align="center">
-        <template #default="scope">
-          <base-tag v-model="scope.row.status" />
-        </template>
-      </el-table-column>
-      <el-table-column label="过期时间" prop="expireTime" align="center" />
-      <el-table-column label="商户类型" prop="type" align="center">
-        <template #default="scope">
-          <el-tag v-if="scope.row.type == 1" type="success">共享小程序</el-tag>
-          <el-tag v-else-if="scope.row.type == 2" type="info">独立小程序</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column label="用户数" prop="userNum" align="center" />
-      <el-table-column label="发布数" prop="jobNum" align="center" />
-      <el-table-column label="排序" prop="sort" align="center" />
-      <el-table-column label="小程序首页名称" prop="appIndexTitle" align="center" />
-      <el-table-column label="备注" prop="remark" align="center" />
-      <!-- <el-table-column label="小程序状态" prop="appStatus" align="center">
+    <base-content>
+      <base-table-p ref="baseTableRef" api="sys_merchant.page" :params="listQuery">
+        <el-table-column label="商户ID" prop="id" align="center" />
+        <el-table-column label="名称" prop="name" align="center" />
+        <el-table-column label="抖音AppID" prop="appId" width="150px" align="center" />
+        <el-table-column label="抖音AppSecret" prop="appSecret" width="150px" align="center" />
+        <el-table-column label="状态" prop="status" align="center">
+          <template #default="scope">
+            <base-tag v-model="scope.row.status" />
+          </template>
+        </el-table-column>
+        <el-table-column label="过期时间" prop="expireTime" align="center" />
+        <el-table-column label="商户类型" prop="type" align="center">
+          <template #default="scope">
+            <el-tag v-if="scope.row.type == 1" type="success">共享小程序</el-tag>
+            <el-tag v-else-if="scope.row.type == 2" type="info">独立小程序</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column label="用户数" prop="userNum" align="center" />
+        <el-table-column label="发布数" prop="jobNum" align="center" />
+        <el-table-column label="排序" prop="sort" align="center" />
+        <el-table-column label="小程序首页名称" prop="appIndexTitle" align="center" />
+        <el-table-column label="备注" prop="remark" align="center" />
+        <!-- <el-table-column label="小程序状态" prop="appStatus" align="center">
         <template #default="scope">
           <el-tag v-if="scope.row.appStatus == 20">提审中</el-tag>
           <el-tag v-else-if="scope.row.appStatus == 31" type="warning">审核通过</el-tag>
@@ -52,14 +53,15 @@
           <el-tag v-else-if="scope.row.appStatus == 51" type="success">已发布</el-tag>
         </template>
       </el-table-column> -->
-      <el-table-column align="center" width="150px" label="操作">
-        <template #default="scope">
-          <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
-          <el-button type="primary" link @click="showQrcode(scope.row)">查看测试版二维码</el-button>
-          <base-delete-btn v-if="!scope.row.isFixed" @ok="handleDelete(scope.row)"></base-delete-btn>
-        </template>
-      </el-table-column>
-    </base-table-p>
+        <el-table-column align="center" width="150px" label="操作">
+          <template #default="scope">
+            <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
+            <el-button type="primary" link @click="showQrcode(scope.row)">查看测试版二维码</el-button>
+            <base-delete-btn v-if="!scope.row.isFixed" @ok="handleDelete(scope.row)"></base-delete-btn>
+          </template>
+        </el-table-column>
+      </base-table-p>
+    </base-content>
 
     <base-dialog v-model="dialogVisible" :title="dialogTitleObj[dialogStatus]" width="50%">
       <el-form v-if="dialogStatus !== 'detail'" ref="dataFormRef" :model="form" :rules="rules" label-width="150px">

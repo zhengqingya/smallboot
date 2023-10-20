@@ -8,17 +8,19 @@
       </template>
     </base-header>
 
-    <base-table-p ref="baseTableRef" api="sys_config.listPage" :params="listQuery">
-      <el-table-column prop="key" label="属性key" />
-      <el-table-column prop="value" label="属性value" />
-      <el-table-column prop="remark" label="备注" />
-      <el-table-column label="操作" align="center" width="250">
-        <template #default="scope">
-          <el-button link @click="update(scope.row)">编辑</el-button>
-          <base-delete-btn @ok="deleteData(scope.row.id)" />
-        </template>
-      </el-table-column>
-    </base-table-p>
+    <base-content>
+      <base-table-p ref="baseTableRef" api="sys_config.listPage" :params="listQuery">
+        <el-table-column prop="key" label="属性key" />
+        <el-table-column prop="value" label="属性value" />
+        <el-table-column prop="remark" label="备注" />
+        <el-table-column label="操作" align="center" width="250">
+          <template #default="scope">
+            <el-button link @click="update(scope.row)">编辑</el-button>
+            <base-delete-btn @ok="deleteData(scope.row.id)" />
+          </template>
+        </el-table-column>
+      </base-table-p>
+    </base-content>
 
     <base-dialog v-model="dialogVisible" :title="dialogTitleObj[dialogStatus]" width="50%">
       <el-form ref="formRef" :model="form" label-width="100px">

@@ -35,7 +35,7 @@
           <template #append>
             <el-button v-if="isShowAddDictButton" type="primary" @click="addDict">添加</el-button>
           </template>
-          <el-table v-loading.body="listLoading" :data="dicList" border :height="calcTableHeight">
+          <base-table v-loading.body="listLoading" :data="dicList" :height="calcTableHeight">
             <el-table-column type="index" label="序号" width="60px" align="center" />
             <el-table-column prop="name" label="字典名称" align="center" />
             <el-table-column prop="value" label="字典值" align="center" />
@@ -47,7 +47,7 @@
                 <base-delete-btn @ok="deleteDict(scope.row)" />
               </template>
             </el-table-column>
-          </el-table>
+          </base-table>
         </base-card>
       </div>
     </div>

@@ -8,18 +8,20 @@
       </template>
     </base-header>
 
-    <base-table-p ref="baseTableRef" api="wx_mp_user.page" :params="listQuery">
-      <el-table-column label="微信openid" prop="openid" align="center" width="220px"></el-table-column>
-      <el-table-column label="昵称" prop="nickname" align="center"></el-table-column>
-      <el-table-column label="头像" prop="headImgUrl" align="center"></el-table-column>
-      <el-table-column label="关注来源" prop="subscribeSceneName" align="center"></el-table-column>
-      <el-table-column label="关注时间" prop="subscribeTime" align="center"></el-table-column>
-      <el-table-column align="center" label="操作">
-        <template #default="scope">
-          <el-button link @click="handleDetail(scope.row)">详情</el-button>
-        </template>
-      </el-table-column>
-    </base-table-p>
+    <base-content>
+      <base-table-p ref="baseTableRef" api="wx_mp_user.page" :params="listQuery">
+        <el-table-column label="微信openid" prop="openid" align="center" width="220px"></el-table-column>
+        <el-table-column label="昵称" prop="nickname" align="center"></el-table-column>
+        <el-table-column label="头像" prop="headImgUrl" align="center"></el-table-column>
+        <el-table-column label="关注来源" prop="subscribeSceneName" align="center"></el-table-column>
+        <el-table-column label="关注时间" prop="subscribeTime" align="center"></el-table-column>
+        <el-table-column align="center" label="操作">
+          <template #default="scope">
+            <el-button link @click="handleDetail(scope.row)">详情</el-button>
+          </template>
+        </el-table-column>
+      </base-table-p>
+    </base-content>
 
     <base-dialog v-model="dialogVisible" :title="dialogTitleObj[dialogStatus]" width="30%">
       <base-cell label-width="100px">

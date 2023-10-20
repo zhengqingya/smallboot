@@ -32,29 +32,31 @@
         </template>
       </base-header>
 
-      <base-table-p ref="baseTableRef" api="sys_user.listPage" :params="listQuery">
-        <el-table-column :show-overflow-tooltip="true" prop="deptName" align="center" label="归属企业" />
-        <el-table-column :show-overflow-tooltip="true" prop="username" align="center" label="用户账号" />
-        <el-table-column prop="nickname" label="用户名称" align="center" />
-        <el-table-column prop="sexName" label="性别" align="center" />
-        <el-table-column prop="phone" label="手机号码" align="center" />
-        <el-table-column prop="email" label="邮箱" align="center" />
-        <el-table-column label="头像" prop="avatarUrl" align="center">
-          <template #default="scope">
-            <span>
-              <img :src="scope.row.avatarUrl" alt="" class="img-sm" />
-            </span>
-          </template>
-        </el-table-column>
-        <el-table-column label="操作" align="center" width="230">
-          <template #default="scope">
-            <el-button link @click="handleUpdate(scope.row, 'update')">编辑</el-button>
-            <el-button v-if="!scope.row.isFixed" link @click="handleUpdate(scope.row, 'role')">角色权限</el-button>
-            <base-delete-btn v-if="!scope.row.isFixed" @ok="deleteData(scope.row.userId)" />
-            <el-button link @click="updatePwd(scope.row)">更新密码</el-button>
-          </template>
-        </el-table-column>
-      </base-table-p>
+      <base-content>
+        <base-table-p ref="baseTableRef" api="sys_user.listPage" :params="listQuery">
+          <el-table-column :show-overflow-tooltip="true" prop="deptName" align="center" label="归属企业" />
+          <el-table-column :show-overflow-tooltip="true" prop="username" align="center" label="用户账号" />
+          <el-table-column prop="nickname" label="用户名称" align="center" />
+          <el-table-column prop="sexName" label="性别" align="center" />
+          <el-table-column prop="phone" label="手机号码" align="center" />
+          <el-table-column prop="email" label="邮箱" align="center" />
+          <el-table-column label="头像" prop="avatarUrl" align="center">
+            <template #default="scope">
+              <span>
+                <img :src="scope.row.avatarUrl" alt="" class="img-sm" />
+              </span>
+            </template>
+          </el-table-column>
+          <el-table-column label="操作" align="center" width="230">
+            <template #default="scope">
+              <el-button link @click="handleUpdate(scope.row, 'update')">编辑</el-button>
+              <el-button v-if="!scope.row.isFixed" link @click="handleUpdate(scope.row, 'role')">角色权限</el-button>
+              <base-delete-btn v-if="!scope.row.isFixed" @ok="deleteData(scope.row.userId)" />
+              <el-button link @click="updatePwd(scope.row)">更新密码</el-button>
+            </template>
+          </el-table-column>
+        </base-table-p>
+      </base-content>
     </base-card>
     <base-dialog v-if="dialogStatus === 'updatePwd'" v-model="dialogVisible" :title="titleMap[dialogStatus]" width="30%">
       <el-input v-model="newPassword" placeholder="请输入密码" />

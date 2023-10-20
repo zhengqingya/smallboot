@@ -8,30 +8,32 @@
       </template>
     </base-header>
 
-    <el-table row-key="id" border :tree-props="{ children: 'children', hasChildren: 'hasChildren' }" :data="dataList" default-expand-all>
-      <el-table-column label="ID" prop="id" align="center" />
-      <el-table-column label="名称" align="left">
-        <template #default="scope">
-          <div class="flex-start-center">
-            <el-icon size="15">
-              <component :is="scope.row.icon" v-if="scope.row.icon" />
-            </el-icon>
-            <span style="margin-left: 10px">{{ scope.row.name }}</span>
-          </div>
-        </template>
-      </el-table-column>
-      <el-table-column label="访问路径" prop="path" align="left" />
-      <el-table-column label="组件名" prop="component" align="left" />
-      <el-table-column label="按钮权限" prop="btnPerm" align="left" />
-      <el-table-column label="排序" prop="sort" align="center" />
-      <el-table-column align="center" label="操作">
-        <template #default="scope">
-          <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
-          <el-button type="primary" link @click="handleAdd(scope.row.id)">新增子项</el-button>
-          <base-delete-btn @ok="handleDelete(scope.row)"></base-delete-btn>
-        </template>
-      </el-table-column>
-    </el-table>
+    <base-content>
+      <base-table row-key="id" :tree-props="{ children: 'children', hasChildren: 'hasChildren' }" :data="dataList" default-expand-all>
+        <el-table-column label="ID" prop="id" align="center" />
+        <el-table-column label="名称" align="left">
+          <template #default="scope">
+            <div class="flex-start-center">
+              <el-icon size="15">
+                <component :is="scope.row.icon" v-if="scope.row.icon" />
+              </el-icon>
+              <span style="margin-left: 10px">{{ scope.row.name }}</span>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="访问路径" prop="path" align="left" />
+        <el-table-column label="组件名" prop="component" align="left" />
+        <el-table-column label="按钮权限" prop="btnPerm" align="left" />
+        <el-table-column label="排序" prop="sort" align="center" />
+        <el-table-column align="center" label="操作">
+          <template #default="scope">
+            <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
+            <el-button type="primary" link @click="handleAdd(scope.row.id)">新增子项</el-button>
+            <base-delete-btn @ok="handleDelete(scope.row)"></base-delete-btn>
+          </template>
+        </el-table-column>
+      </base-table>
+    </base-content>
 
     <base-dialog v-model="dialogVisible" :title="dialogTitleObj[dialogStatus]" width="60%">
       <el-form ref="dataFormRef" :model="form" :rules="rules" label-width="120px">

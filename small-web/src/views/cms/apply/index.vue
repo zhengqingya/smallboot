@@ -30,31 +30,33 @@
       </template>
     </base-header>
 
-    <base-table-p ref="baseTableRef" api="cms_job_apply.page" :params="listQuery">
-      <el-table-column label="ID" prop="id" align="center" />
-      <!-- <el-table-column label="归属商户" prop="merchantName" align="center" /> -->
-      <el-table-column label="归属企业" prop="deptName" align="center" />
-      <el-table-column label="职位名称" prop="jobObj.name" align="center" />
-      <el-table-column label="状态" prop="statusName" align="center">
-        <template #default="scope">
-          <el-tag v-if="scope.row.status == 1" type="success"> {{ scope.row.statusName }}</el-tag>
-          <el-tag v-else-if="scope.row.status == 2" type="warning"> {{ scope.row.statusName }}</el-tag>
-          <el-tag v-else type="info"> {{ scope.row.statusName }}</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column label="联系人" prop="contact" align="center" />
-      <el-table-column label="联系电话" prop="contactPhone" align="center" />
-      <el-table-column label="备注" prop="remark" align="center" />
-      <el-table-column label="创建时间" prop="createTime" align="center" />
-      <el-table-column align="center" label="操作">
-        <template #default="scope">
-          <!-- <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
+    <base-content>
+      <base-table-p ref="baseTableRef" api="cms_job_apply.page" :params="listQuery">
+        <el-table-column label="ID" prop="id" align="center" />
+        <!-- <el-table-column label="归属商户" prop="merchantName" align="center" /> -->
+        <el-table-column label="归属企业" prop="deptName" align="center" />
+        <el-table-column label="职位名称" prop="jobObj.name" align="center" />
+        <el-table-column label="状态" prop="statusName" align="center">
+          <template #default="scope">
+            <el-tag v-if="scope.row.status == 1" type="success"> {{ scope.row.statusName }}</el-tag>
+            <el-tag v-else-if="scope.row.status == 2" type="warning"> {{ scope.row.statusName }}</el-tag>
+            <el-tag v-else type="info"> {{ scope.row.statusName }}</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column label="联系人" prop="contact" align="center" />
+        <el-table-column label="联系电话" prop="contactPhone" align="center" />
+        <el-table-column label="备注" prop="remark" align="center" />
+        <el-table-column label="创建时间" prop="createTime" align="center" />
+        <el-table-column align="center" label="操作">
+          <template #default="scope">
+            <!-- <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
           <el-button link @click="handleDetail(scope.row)">详情</el-button>
           <base-delete-btn @ok="handleDelete(scope.row)"></base-delete-btn> -->
-          <el-button v-if="scope.row.status == 1" link @click="handleUpdate(scope.row)">操作</el-button>
-        </template>
-      </el-table-column>
-    </base-table-p>
+            <el-button v-if="scope.row.status == 1" link @click="handleUpdate(scope.row)">操作</el-button>
+          </template>
+        </el-table-column>
+      </base-table-p>
+    </base-content>
 
     <base-dialog v-model="dialogVisible" :title="dialogTitleObj[dialogStatus]" width="40%">
       <el-form v-if="dialogStatus !== 'detail'" ref="dataFormRef" :model="form" :rules="rules" label-width="80px">

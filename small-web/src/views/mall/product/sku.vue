@@ -24,7 +24,7 @@
     </div>
 
     <base-card title="sku列表" class="">
-      <el-table :data="skuList" border height="350px" table-layout="auto">
+      <base-table :data="skuList" height="350px" table-layout="auto">
         <!-- 额外添加的编号项（可删除） -->
         <el-table-column type="index" :label="'编号'" :width="55"></el-table-column>
 
@@ -51,7 +51,7 @@
             </div>
           </template>
         </el-table-column>
-      </el-table>
+      </base-table>
     </base-card>
   </div>
 </template>

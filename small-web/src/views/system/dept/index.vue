@@ -10,34 +10,35 @@
       </template>
     </base-header>
 
-    <el-table row-key="id" border :tree-props="{ children: 'children', hasChildren: 'hasChildren' }" :data="dataList" default-expand-all>
-      <el-table-column label="ID" prop="id" align="center" />
-      <el-table-column label="名称" prop="name" align="center" />
-      <el-table-column label="状态" align="center">
-        <template #default="scope">
-          <base-tag v-model="scope.row.status" />
-        </template>
-      </el-table-column>
-      <el-table-column label="过期时间" prop="expireTime" align="center">
-        <template #default="scope">
-          <el-tag v-if="scope.row.expireTime" type="warning"> {{ scope.row.expireTime }}</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column label="最大用户数" prop="userNum" align="center">
-        <template #default="scope">
-          <el-tag v-if="scope.row.userNum" type="success"> {{ scope.row.userNum }}</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column label="排序" prop="sort" align="center" />
-      <el-table-column label="小程序类型" prop="appType" align="center">
-        <template #default="scope">
-          <el-tag v-if="scope.row.appConfigObj.appType == 1" type="success"> {{ appTypeList.find((e) => e.id == scope.row.appConfigObj.appType).name }}</el-tag>
-          <el-tag v-if="scope.row.appConfigObj.appType === 2"> {{ appTypeList.find((e) => e.id == scope.row.appConfigObj.appType).name }}</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column label="小程序状态" align="center" width="230px">
-        <template #default="scope">
-          <!-- <el-tag v-if="scope.row.appConfigObj.appStatus == 1">未发版</el-tag>
+    <base-content>
+      <base-table row-key="id" :tree-props="{ children: 'children', hasChildren: 'hasChildren' }" :data="dataList" default-expand-all>
+        <el-table-column label="ID" prop="id" align="center" />
+        <el-table-column label="名称" prop="name" align="center" />
+        <el-table-column label="状态" align="center">
+          <template #default="scope">
+            <base-tag v-model="scope.row.status" />
+          </template>
+        </el-table-column>
+        <el-table-column label="过期时间" prop="expireTime" align="center">
+          <template #default="scope">
+            <el-tag v-if="scope.row.expireTime" type="warning"> {{ scope.row.expireTime }}</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column label="最大用户数" prop="userNum" align="center">
+          <template #default="scope">
+            <el-tag v-if="scope.row.userNum" type="success"> {{ scope.row.userNum }}</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column label="排序" prop="sort" align="center" />
+        <el-table-column label="小程序类型" prop="appType" align="center">
+          <template #default="scope">
+            <el-tag v-if="scope.row.appConfigObj.appType == 1" type="success"> {{ appTypeList.find((e) => e.id == scope.row.appConfigObj.appType).name }}</el-tag>
+            <el-tag v-if="scope.row.appConfigObj.appType === 2"> {{ appTypeList.find((e) => e.id == scope.row.appConfigObj.appType).name }}</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column label="小程序状态" align="center" width="230px">
+          <template #default="scope">
+            <!-- <el-tag v-if="scope.row.appConfigObj.appStatus == 1">未发版</el-tag>
           <div v-else>
             <el-tag>版本：{{ scope.row.appConfigObj.appVersion }}</el-tag>
             <el-tag v-if="scope.row.appConfigObj.appStatus == 10">已提交代码</el-tag>
@@ -46,29 +47,30 @@
             <el-tag v-else-if="scope.row.appConfigObj.appStatus == 32" type="danger">审核不通过</el-tag>
             <el-tag v-else-if="scope.row.appConfigObj.appStatus == 51" type="success">已发布</el-tag>
           </div> -->
-          <div v-if="scope.row.appConfigObj.appVersionObj">
-            <el-tag type="success"
-              >线上版本：{{ scope.row.appConfigObj.appVersionObj.current.version }}（{{
-                scope.row.appConfigObj.appVersionObj.current.version == scope.row.appConfigObj.appVersionObj.audit.version ? '已发布最新版' : '未发布最新版'
-              }}）</el-tag
-            >
-            <el-tag>审核版本：{{ scope.row.appConfigObj.appVersionObj.audit.version }}（{{ getAppAuditStatusDesc(scope.row.appConfigObj.appVersionObj.audit.status) }}）</el-tag>
-            <el-tag type="info">测试版本号：{{ scope.row.appConfigObj.appVersionObj.latest.version }}（{{ scope.row.appConfigObj.appVersionObj.latest.has_audit ? '已提审' : '未提审' }}）</el-tag>
-          </div>
-        </template>
-      </el-table-column>
-      <el-table-column label="创建时间" prop="createTime" align="center" />
-      <el-table-column align="center" width="150px" label="操作">
-        <template #default="scope">
-          <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
-          <el-button link type="primary" @click="showDetail(scope.row)">详情</el-button>
-          <el-button type="warning" link @click="showApp(scope.row)">小程序操作</el-button>
-          <el-button type="primary" link @click="showQrcode(scope.row, 'latest')">查看测试版二维码</el-button>
-          <el-button type="primary" link @click="showQrcode(scope.row, 'current')">查看线上版二维码</el-button>
-          <base-delete-btn @ok="handleDelete(scope.row)"></base-delete-btn>
-        </template>
-      </el-table-column>
-    </el-table>
+            <div v-if="scope.row.appConfigObj.appVersionObj">
+              <el-tag type="success"
+                >线上版本：{{ scope.row.appConfigObj.appVersionObj.current.version }}（{{
+                  scope.row.appConfigObj.appVersionObj.current.version == scope.row.appConfigObj.appVersionObj.audit.version ? '已发布最新版' : '未发布最新版'
+                }}）</el-tag
+              >
+              <el-tag>审核版本：{{ scope.row.appConfigObj.appVersionObj.audit.version }}（{{ getAppAuditStatusDesc(scope.row.appConfigObj.appVersionObj.audit.status) }}）</el-tag>
+              <el-tag type="info">测试版本号：{{ scope.row.appConfigObj.appVersionObj.latest.version }}（{{ scope.row.appConfigObj.appVersionObj.latest.has_audit ? '已提审' : '未提审' }}）</el-tag>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="创建时间" prop="createTime" align="center" />
+        <el-table-column align="center" width="150px" label="操作">
+          <template #default="scope">
+            <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
+            <el-button link type="primary" @click="showDetail(scope.row)">详情</el-button>
+            <el-button type="warning" link @click="showApp(scope.row)">小程序操作</el-button>
+            <el-button type="primary" link @click="showQrcode(scope.row, 'latest')">查看测试版二维码</el-button>
+            <el-button type="primary" link @click="showQrcode(scope.row, 'current')">查看线上版二维码</el-button>
+            <base-delete-btn @ok="handleDelete(scope.row)"></base-delete-btn>
+          </template>
+        </el-table-column>
+      </base-table>
+    </base-content>
 
     <base-dialog v-model="dialogVisible" :title="dialogTitleObj[dialogStatus]" width="60%" top="0px">
       <el-form ref="appDataFormRef" :inline="!true" :model="form" :rules="rules" label-width="150px">

@@ -10,27 +10,29 @@
       </template>
     </base-header>
 
-    <base-table-p ref="baseTableRef" api="wx_mp_account.page" :params="listQuery">
-      <el-table-column label="名称" prop="name" align="center"></el-table-column>
-      <el-table-column label="账号类型" prop="typeName" align="center"></el-table-column>
-      <el-table-column label="公众号ID" prop="account" align="center"></el-table-column>
-      <el-table-column label="AppID" prop="appId" align="center"></el-table-column>
-      <!-- <el-table-column label="AppSecret" prop="appSecret" align="center"></el-table-column> -->
-      <!-- <el-table-column label="Token" prop="token" align="center"></el-table-column> -->
-      <!-- <el-table-column label="AESKey" prop="aesKey" align="center"></el-table-column> -->
-      <el-table-column label="公众号二维码" prop="qrCodeUrl" align="center">
-        <template #default="scope">
-          <el-image style="width: 100px; height: 100px" :src="scope.row.qrCodeUrl" />
-        </template>
-      </el-table-column>
-      <el-table-column align="center" label="操作">
-        <template #default="scope">
-          <el-button link @click="showApiUrl(scope.row)">接入地址</el-button>
-          <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
-          <base-delete-btn @ok="handleDelete(scope.row)"></base-delete-btn>
-        </template>
-      </el-table-column>
-    </base-table-p>
+    <base-content>
+      <base-table-p ref="baseTableRef" api="wx_mp_account.page" :params="listQuery">
+        <el-table-column label="名称" prop="name" align="center"></el-table-column>
+        <el-table-column label="账号类型" prop="typeName" align="center"></el-table-column>
+        <el-table-column label="公众号ID" prop="account" align="center"></el-table-column>
+        <el-table-column label="AppID" prop="appId" align="center"></el-table-column>
+        <!-- <el-table-column label="AppSecret" prop="appSecret" align="center"></el-table-column> -->
+        <!-- <el-table-column label="Token" prop="token" align="center"></el-table-column> -->
+        <!-- <el-table-column label="AESKey" prop="aesKey" align="center"></el-table-column> -->
+        <el-table-column label="公众号二维码" prop="qrCodeUrl" align="center">
+          <template #default="scope">
+            <el-image style="width: 100px; height: 100px" :src="scope.row.qrCodeUrl" />
+          </template>
+        </el-table-column>
+        <el-table-column align="center" label="操作">
+          <template #default="scope">
+            <el-button link @click="showApiUrl(scope.row)">接入地址</el-button>
+            <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
+            <base-delete-btn @ok="handleDelete(scope.row)"></base-delete-btn>
+          </template>
+        </el-table-column>
+      </base-table-p>
+    </base-content>
 
     <base-dialog v-model="dialogVisible" :title="dialogTitleObj[dialogStatus]" width="30%">
       <el-form ref="dataFormRef" :model="form" label-width="100px">

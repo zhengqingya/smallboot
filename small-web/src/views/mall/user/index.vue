@@ -10,20 +10,22 @@
       </template>
     </base-header>
 
-    <base-table-p ref="baseTableRef" api="ums_user.page" :params="listQuery">
-      <el-table-column label="ID" prop="id" align="center"></el-table-column>
-      <el-table-column label="openid" prop="openid" align="center"></el-table-column>
-      <el-table-column label="昵称" prop="nickname" align="center"></el-table-column>
-      <el-table-column label="手机号码" prop="phone" align="center"></el-table-column>
-      <el-table-column label="头像" prop="avatarUrl" align="center">
-        <template #default="scope">
-          <span>
-            <img :src="scope.row.avatarUrl" alt="" style="width: 50px; height: 50px" />
-          </span>
-        </template>
-      </el-table-column>
-      <el-table-column label="创建时间" prop="createTime" align="center"> </el-table-column>
-    </base-table-p>
+    <base-content>
+      <base-table-p ref="baseTableRef" api="ums_user.page" :params="listQuery">
+        <el-table-column label="ID" prop="id" align="center"></el-table-column>
+        <el-table-column label="openid" prop="openid" align="center"></el-table-column>
+        <el-table-column label="昵称" prop="nickname" align="center"></el-table-column>
+        <el-table-column label="手机号码" prop="phone" align="center"></el-table-column>
+        <el-table-column label="头像" prop="avatarUrl" align="center">
+          <template #default="scope">
+            <span>
+              <img :src="scope.row.avatarUrl" alt="" style="width: 50px; height: 50px" />
+            </span>
+          </template>
+        </el-table-column>
+        <el-table-column label="创建时间" prop="createTime" align="center"> </el-table-column>
+      </base-table-p>
+    </base-content>
   </base-wrapper>
 </template>
 

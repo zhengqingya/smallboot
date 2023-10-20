@@ -1,6 +1,6 @@
 <template>
   <div style="display: inline">
-    <span class="label">{{ label }} &nbsp;</span>
+    <span class="label font-bold">{{ label }} &nbsp;</span>
     <el-input :placeholder="`请输入${label}`" style="width: 200px; margin-right: 10px" clearable v-bind="$attrs" />
   </div>
 </template>

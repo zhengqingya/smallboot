@@ -1,6 +1,8 @@
 <template>
   <base-wrapper>
-    <base-no-data />
+    <base-content class="h-full">
+      <base-no-data />
+    </base-content>
   </base-wrapper>
 </template>
 

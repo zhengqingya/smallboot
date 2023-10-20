@@ -5,9 +5,11 @@
       ref="baseTableRef"
       v-loading="isLoading && (isPage ? pageRes.records == null || pageRes.records.length == 0 : tableDataList == null || tableDataList.length == 0)"
       border
+      stripe
       v-bind="$attrs"
       :data="isPage ? pageRes.records : tableDataList"
       size="small"
+      :header-cell-style="{ background: 'rgba(243, 242, 242, 0.555)', color: '#000' }"
       highlight-current-row>
       <el-table-column v-if="selection" type="selection" :width="55"></el-table-column>
       <template v-if="indexCode">

@@ -9,21 +9,23 @@
       </template>
     </base-header>
 
-    <base-table-p ref="baseTableRef" api="wx_mp_msg_auto_reply.page" :params="listQuery">
-      <el-table-column label="名称" prop="name" align="center"></el-table-column>
-      <el-table-column label="类型" prop="typeName" align="center"></el-table-column>
-      <el-table-column label="关键词" prop="matchValue" align="center"></el-table-column>
-      <el-table-column label="是否精确匹配" prop="isExactMatch" align="center"></el-table-column>
-      <el-table-column label="回复消息类型" prop="replyTypeName" align="center"></el-table-column>
-      <el-table-column label="回复消息内容" prop="replyContent" align="left" width="500px" show-overflow-tooltip></el-table-column>
-      <el-table-column align="center" label="操作">
-        <template #default="scope">
-          <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
-          <el-button link @click="handleDetail(scope.row)">详情</el-button>
-          <base-delete-btn @ok="handleDelete(scope.row)"></base-delete-btn>
-        </template>
-      </el-table-column>
-    </base-table-p>
+    <base-content>
+      <base-table-p ref="baseTableRef" api="wx_mp_msg_auto_reply.page" :params="listQuery">
+        <el-table-column label="名称" prop="name" align="center"></el-table-column>
+        <el-table-column label="类型" prop="typeName" align="center"></el-table-column>
+        <el-table-column label="关键词" prop="matchValue" align="center"></el-table-column>
+        <el-table-column label="是否精确匹配" prop="isExactMatch" align="center"></el-table-column>
+        <el-table-column label="回复消息类型" prop="replyTypeName" align="center"></el-table-column>
+        <el-table-column label="回复消息内容" prop="replyContent" align="left" width="500px" show-overflow-tooltip></el-table-column>
+        <el-table-column align="center" label="操作">
+          <template #default="scope">
+            <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
+            <el-button link @click="handleDetail(scope.row)">详情</el-button>
+            <base-delete-btn @ok="handleDelete(scope.row)"></base-delete-btn>
+          </template>
+        </el-table-column>
+      </base-table-p>
+    </base-content>
 
     <base-dialog v-model="dialogVisible" :title="dialogTitleObj[dialogStatus]" width="30%">
       <el-form v-if="dialogStatus !== 'detail'" ref="dataFormRef" :model="form" label-width="120px">

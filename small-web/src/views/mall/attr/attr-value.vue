@@ -10,16 +10,18 @@
       </template>
     </base-header>
 
-    <base-table-p ref="baseTableRef" api="pms_attr.listValue" :params="listQuery" :is-page="false">
-      <el-table-column label="属性名称" prop="attrValueName" align="center"></el-table-column>
-      <el-table-column label="排序" prop="sort" align="center"></el-table-column>
-      <el-table-column align="center" label="操作">
-        <template #default="scope">
-          <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
-          <base-delete-btn @ok="handleDelete(scope.row)"></base-delete-btn>
-        </template>
-      </el-table-column>
-    </base-table-p>
+    <base-content>
+      <base-table-p ref="baseTableRef" api="pms_attr.listValue" :params="listQuery" :is-page="false">
+        <el-table-column label="属性名称" prop="attrValueName" align="center"></el-table-column>
+        <el-table-column label="排序" prop="sort" align="center"></el-table-column>
+        <el-table-column align="center" label="操作">
+          <template #default="scope">
+            <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
+            <base-delete-btn @ok="handleDelete(scope.row)"></base-delete-btn>
+          </template>
+        </el-table-column>
+      </base-table-p>
+    </base-content>
 
     <base-dialog v-model="dialogVisible" :title="dialogTitleObj[dialogStatus]" width="30%">
       <el-form ref="dataFormRef" :model="form" label-width="100px">

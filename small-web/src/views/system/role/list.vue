@@ -8,31 +8,33 @@
       </template>
     </base-header>
 
-    <el-table border row-key="roleId" :tree-props="{ children: 'children', hasChildren: 'hasChildren' }" :data="dataList" default-expand-all>
-      <el-table-column prop="name" label="角色名" />
-      <el-table-column prop="code" label="角色编码">
-        <template #default="scope">
-          <el-tag v-if="scope.row.isFixed" type="success"> {{ scope.row.code }}</el-tag>
-          <el-tag v-else type="info"> {{ scope.row.code }}</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column prop="code" label="固定角色">
-        <template #default="scope">
-          <base-tag v-model="scope.row.isFixed" data-type="yes" />
-        </template>
-      </el-table-column>
-      <el-table-column prop="sort" label="排序" />
-      <el-table-column label="操作" align="center" width="250">
-        <template #default="scope">
-          <el-button v-if="!scope.row.isFixed" link @click="update(scope.row)">编辑</el-button>
-          <el-button type="primary" link @click="add(scope.row.roleId)">新增子项</el-button>
-          <router-link v-if="!scope.row.isFixed || scope.row.code == 'merchant_admin'" :to="{ path: '/system/role-edit', query: { id: scope.row.roleId } }">
-            <el-button link>权限</el-button>
-          </router-link>
-          <base-delete-btn v-if="!scope.row.isFixed" @ok="deleteData(scope.row.roleId)" />
-        </template>
-      </el-table-column>
-    </el-table>
+    <base-content>
+      <base-table row-key="roleId" :tree-props="{ children: 'children', hasChildren: 'hasChildren' }" :data="dataList" default-expand-all>
+        <el-table-column prop="name" label="角色名" />
+        <el-table-column prop="code" label="角色编码">
+          <template #default="scope">
+            <el-tag v-if="scope.row.isFixed" type="success"> {{ scope.row.code }}</el-tag>
+            <el-tag v-else type="info"> {{ scope.row.code }}</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column prop="code" label="固定角色">
+          <template #default="scope">
+            <base-tag v-model="scope.row.isFixed" data-type="yes" />
+          </template>
+        </el-table-column>
+        <el-table-column prop="sort" label="排序" />
+        <el-table-column label="操作" align="center" width="250">
+          <template #default="scope">
+            <el-button v-if="!scope.row.isFixed" link @click="update(scope.row)">编辑</el-button>
+            <el-button type="primary" link @click="add(scope.row.roleId)">新增子项</el-button>
+            <router-link v-if="!scope.row.isFixed || scope.row.code == 'merchant_admin'" :to="{ path: '/system/role-edit', query: { id: scope.row.roleId } }">
+              <el-button link>权限</el-button>
+            </router-link>
+            <base-delete-btn v-if="!scope.row.isFixed" @ok="deleteData(scope.row.roleId)" />
+          </template>
+        </el-table-column>
+      </base-table>
+    </base-content>
 
     <base-dialog v-model="dialogVisible" :title="dialogTitleObj[dialogStatus]" width="50%">
       <el-form ref="roleFormRef" :model="roleForm" :rules="rules" label-width="100px">

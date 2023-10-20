@@ -1,6 +1,6 @@
 <template>
   <!-- {{ list[0] }} -->
-  <span v-if="label" class="label">{{ label }} &nbsp;</span>
+  <span v-if="label" class="label font-bold">{{ label }} &nbsp;</span>
   <el-select filterable v-bind="$attrs" :placeholder="label ? `请选择${label}` : '请选择'" @change="handleChange">
     <template #prefix> <slot name="prefix" /></template>
     <el-option v-for="item in list" :key="item[optionProps.value]" :label="item[optionProps.label]" :value="item[optionProps.value]" />

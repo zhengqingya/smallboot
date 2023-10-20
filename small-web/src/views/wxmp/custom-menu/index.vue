@@ -1,79 +1,81 @@
 <template>
   <base-wrapper>
-    <div v-if="menu != null" class="flex">
-      <!-- 左边配置 -->
-      <div class="flex-c-start-center" style="width: 400px">
-        <div class="menu">
-          <div v-for="(item, index) of menu.buttons" :key="index" class="content">
-            <!-- 一级菜单 -->
-            <div class="item" :class="{ active: selectedMenuIndex == index && selectedMenuLevel == 1 }" @click="selectMenu(1, index)">
-              {{ item.name }}
-            </div>
-            <!--二级菜单-->
-            <div v-if="selectedMenuIndex == index" class="sub-menu">
-              <div v-for="(subItem, subIndex) in item.subButtons" :key="subIndex" class="sub-title">
-                <div class="sub-item" :class="{ active: selectedMenuIndex == index && selectedSubMenuIndex == subIndex && selectedMenuLevel == 2 }" @click="selectMenu(2, subIndex)">
-                  {{ subItem.name }}
+    <base-content>
+      <div v-if="menu != null" class="flex">
+        <!-- 左边配置 -->
+        <div class="flex-c-start-center" style="width: 400px">
+          <div class="menu">
+            <div v-for="(item, index) of menu.buttons" :key="index" class="content">
+              <!-- 一级菜单 -->
+              <div class="item" :class="{ active: selectedMenuIndex == index && selectedMenuLevel == 1 }" @click="selectMenu(1, index)">
+                {{ item.name }}
+              </div>
+              <!--二级菜单-->
+              <div v-if="selectedMenuIndex == index" class="sub-menu">
+                <div v-for="(subItem, subIndex) in item.subButtons" :key="subIndex" class="sub-title">
+                  <div class="sub-item" :class="{ active: selectedMenuIndex == index && selectedSubMenuIndex == subIndex && selectedMenuLevel == 2 }" @click="selectMenu(2, subIndex)">
+                    {{ subItem.name }}
+                  </div>
+                </div>
+                <!-- 二级菜单加号 -->
+                <div v-if="item.subButtons.length < 5" class="add-icon" @click="addMenu(2, index)">
+                  <el-icon><Plus /></el-icon>
                 </div>
               </div>
-              <!-- 二级菜单加号 -->
-              <div v-if="item.subButtons.length < 5" class="add-icon" @click="addMenu(2, index)">
-                <el-icon><Plus /></el-icon>
-              </div>
+            </div>
+            <!-- 一级菜单加号 -->
+            <div v-if="menu.buttons.length < 3" class="add-icon" @click="addMenu(1)">
+              <el-icon><Plus /></el-icon>
             </div>
           </div>
-          <!-- 一级菜单加号 -->
-          <div v-if="menu.buttons.length < 3" class="add-icon" @click="addMenu(1)">
-            <el-icon><Plus /></el-icon>
-          </div>
+          <el-button class="m-t-20" type="success" @click="save">保存并发布</el-button>
         </div>
-        <el-button class="m-t-20" type="success" @click="save">保存并发布</el-button>
-      </div>
-      <!-- 右边配置 -->
-      <base-no-data v-if="!selectedMenu" class="right m-l-20">tips:选择菜单可查看菜单详情哦</base-no-data>
-      <div v-else class="flex-1 m-l-20 p-10">
-        <div class="content">
-          <base-card title="菜单详情">
-            <template #append>
-              <el-button type="danger" @click="deleteMenu(selectedMenu)">删除当前菜单</el-button>
-            </template>
-            <base-cell label-width="100px">
-              <base-cell-item label="菜单名称：">
-                <div>
-                  <el-input v-model="selectedMenu.name" placeholder="请输入菜单名称" maxlength="8" clearable></el-input>
-                  <p class="text-color-warning">tips：仅支持中英文和数字，字数不超过4个汉字或8个字母。</p>
-                </div>
-              </base-cell-item>
-              <base-cell-item label="消息类型：">
-                <el-radio-group v-model="selectedMenu.type">
-                  <el-radio :label="'media_id'">发送素材</el-radio>
-                  <el-radio :label="'view'">跳转网页</el-radio>
-                  <el-radio :label="'miniprogram'">跳转小程序</el-radio>
-                </el-radio-group>
-              </base-cell-item>
-              <base-cell-item v-if="selectedMenu.type == 'media_id'" label="素材内容：">
-                <el-input v-model="selectedMenu.mediaId" placeholder="请输入mediaId" clearable></el-input>
-              </base-cell-item>
-              <base-cell-item v-if="selectedMenu.type == 'view'" label="网页链接：">
-                <el-input v-model="selectedMenu.url" placeholder="请输入网页链接" clearable></el-input>
-              </base-cell-item>
-              <div v-if="selectedMenu.type == 'miniprogram'">
-                <base-cell-item label="小程序appId：">
-                  <el-input v-model="selectedMenu.appid" placeholder="请输入小程序的appId" clearable></el-input>
-                </base-cell-item>
-                <base-cell-item label="页面路径：">
+        <!-- 右边配置 -->
+        <base-no-data v-if="!selectedMenu" class="right m-l-20">tips:选择菜单可查看菜单详情哦</base-no-data>
+        <div v-else class="flex-1 m-l-20 p-10">
+          <div class="content">
+            <base-card title="菜单详情">
+              <template #append>
+                <el-button type="danger" @click="deleteMenu(selectedMenu)">删除当前菜单</el-button>
+              </template>
+              <base-cell label-width="100px">
+                <base-cell-item label="菜单名称：">
                   <div>
-                    <el-input v-model="selectedMenu.pagePath" placeholder="eg：pages/index/index" clearable></el-input>
-                    <p class="text-color-warning">tips:需要和公众号进行关联才可以把小程序绑定在微信菜单上！</p>
+                    <el-input v-model="selectedMenu.name" placeholder="请输入菜单名称" maxlength="8" clearable></el-input>
+                    <p class="text-color-warning">tips：仅支持中英文和数字，字数不超过4个汉字或8个字母。</p>
                   </div>
                 </base-cell-item>
-              </div>
-            </base-cell>
-          </base-card>
+                <base-cell-item label="消息类型：">
+                  <el-radio-group v-model="selectedMenu.type">
+                    <el-radio :label="'media_id'">发送素材</el-radio>
+                    <el-radio :label="'view'">跳转网页</el-radio>
+                    <el-radio :label="'miniprogram'">跳转小程序</el-radio>
+                  </el-radio-group>
+                </base-cell-item>
+                <base-cell-item v-if="selectedMenu.type == 'media_id'" label="素材内容：">
+                  <el-input v-model="selectedMenu.mediaId" placeholder="请输入mediaId" clearable></el-input>
+                </base-cell-item>
+                <base-cell-item v-if="selectedMenu.type == 'view'" label="网页链接：">
+                  <el-input v-model="selectedMenu.url" placeholder="请输入网页链接" clearable></el-input>
+                </base-cell-item>
+                <div v-if="selectedMenu.type == 'miniprogram'">
+                  <base-cell-item label="小程序appId：">
+                    <el-input v-model="selectedMenu.appid" placeholder="请输入小程序的appId" clearable></el-input>
+                  </base-cell-item>
+                  <base-cell-item label="页面路径：">
+                    <div>
+                      <el-input v-model="selectedMenu.pagePath" placeholder="eg：pages/index/index" clearable></el-input>
+                      <p class="text-color-warning">tips:需要和公众号进行关联才可以把小程序绑定在微信菜单上！</p>
+                    </div>
+                  </base-cell-item>
+                </div>
+              </base-cell>
+            </base-card>
+          </div>
+          <!-- <div>{{ menu }}</div> -->
         </div>
-        <!-- <div>{{ menu }}</div> -->
       </div>
-    </div>
+    </base-content>
   </base-wrapper>
 </template>
 <script setup>

@@ -1,7 +1,7 @@
 <template>
-  <div class="app p-10">
+  <el-card class="app">
     <div class="header">
-      <div class="title flex-between-center">
+      <div class="flex-between-center">
         <span class="font-bold font-size-base">{{ title }}</span>
         <div><slot name="append" /></div>
       </div>
@@ -10,7 +10,7 @@
     <div class="content">
       <slot />
     </div>
-  </div>
+  </el-card>
 </template>
 <script setup>
 defineProps({
@@ -21,6 +21,9 @@ defineProps({
 });
 </script>
 <style lang="scss" scoped>
+.app {
+  margin: 10px;
+}
 .line {
   border-bottom: 1px solid #e5e7ee;
 }

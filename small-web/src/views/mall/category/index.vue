@@ -9,23 +9,25 @@
         </template>
       </base-header>
 
-      <base-table-p ref="baseTableRef" api="pms_category.list" :params="listQuery" :is-page="false" @cell-click="tableNodeclick">
-        <!-- <el-table-column label="ID" prop="id" align="center" width="160px"></el-table-column> -->
-        <!-- <el-table-column label="父分类id" prop="parentId" align="center" width="160px"></el-table-column> -->
-        <el-table-column label="分类名称" prop="name" align="center"></el-table-column>
-        <el-table-column label="排序" prop="sort" align="center"></el-table-column>
-        <el-table-column label="是否显示" prop="isShow" align="center">
-          <template #default="scope">
-            {{ scope.row.isShow ? '是' : '否' }}
-          </template>
-        </el-table-column>
-        <el-table-column align="center" label="操作">
-          <template #default="scope">
-            <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
-            <base-delete-btn @ok="handleDelete(scope.row)"></base-delete-btn>
-          </template>
-        </el-table-column>
-      </base-table-p>
+      <base-content>
+        <base-table-p ref="baseTableRef" api="pms_category.list" :params="listQuery" :is-page="false" @cell-click="tableNodeclick">
+          <!-- <el-table-column label="ID" prop="id" align="center" width="160px"></el-table-column> -->
+          <!-- <el-table-column label="父分类id" prop="parentId" align="center" width="160px"></el-table-column> -->
+          <el-table-column label="分类名称" prop="name" align="center"></el-table-column>
+          <el-table-column label="排序" prop="sort" align="center"></el-table-column>
+          <el-table-column label="是否显示" prop="isShow" align="center">
+            <template #default="scope">
+              {{ scope.row.isShow ? '是' : '否' }}
+            </template>
+          </el-table-column>
+          <el-table-column align="center" label="操作">
+            <template #default="scope">
+              <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
+              <base-delete-btn @ok="handleDelete(scope.row)"></base-delete-btn>
+            </template>
+          </el-table-column>
+        </base-table-p>
+      </base-content>
 
       <base-dialog v-model="dialogVisible" :title="dialogTitleObj[dialogStatus]" width="30%">
         <el-form v-if="dialogStatus !== 'detail'" ref="dataFormRef" :model="form" label-width="100px">

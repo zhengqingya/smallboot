@@ -11,32 +11,34 @@
       </template>
     </base-header>
 
-    <base-table-p ref="baseTableRef" api="sys_log.page" :params="listQuery">
-      <el-table-column label="ID" prop="id" align="center" />
-      <!-- <el-table-column label="类型(1:操作日志 2:登录日志)" prop="type" align="center" /> -->
-      <!-- <el-table-column label="请求方法" prop="apiMethod" width="500px" align="center" /> -->
-      <el-table-column label="请求方法名" prop="apiMethodName" width="300px" align="left" />
-      <!-- <el-table-column label="请求头参数" prop="apiHeader" align="center" /> -->
-      <el-table-column label="操作人名称" prop="operationName" align="center" />
-      <el-table-column label="请求IP" prop="requestIp" align="center" />
-      <el-table-column label="请求url" prop="requestUrl" width="350px" align="left" />
-      <!-- <el-table-column label="请求方式" prop="requestHttpMethod" align="center" /> -->
-      <!-- <el-table-column label="请求参数" prop="requestParams" align="center" /> -->
-      <!-- <el-table-column label="服务器环境" prop="env" align="center" /> -->
-      <el-table-column label="执行时间" prop="time" align="center">
-        <template #default="scope">
-          <span>{{ scope.row.time }}毫秒</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="操作时间" prop="createTime" align="center" />
-      <el-table-column align="center" label="操作">
-        <template #default="scope">
-          <!-- <el-button link @click="handleUpdate(scope.row)">编辑</el-button> -->
-          <el-button link @click="handleDetail(scope.row)">详情</el-button>
-          <!-- <base-delete-btn @ok="handleDelete(scope.row)"></base-delete-btn> -->
-        </template>
-      </el-table-column>
-    </base-table-p>
+    <base-content>
+      <base-table-p ref="baseTableRef" api="sys_log.page" :params="listQuery">
+        <el-table-column label="ID" prop="id" align="center" />
+        <!-- <el-table-column label="类型(1:操作日志 2:登录日志)" prop="type" align="center" /> -->
+        <!-- <el-table-column label="请求方法" prop="apiMethod" width="500px" align="center" /> -->
+        <el-table-column label="请求方法名" prop="apiMethodName" width="300px" align="left" />
+        <!-- <el-table-column label="请求头参数" prop="apiHeader" align="center" /> -->
+        <el-table-column label="操作人名称" prop="operationName" align="center" />
+        <el-table-column label="请求IP" prop="requestIp" align="center" />
+        <el-table-column label="请求url" prop="requestUrl" width="350px" align="left" />
+        <!-- <el-table-column label="请求方式" prop="requestHttpMethod" align="center" /> -->
+        <!-- <el-table-column label="请求参数" prop="requestParams" align="center" /> -->
+        <!-- <el-table-column label="服务器环境" prop="env" align="center" /> -->
+        <el-table-column label="执行时间" prop="time" align="center">
+          <template #default="scope">
+            <span>{{ scope.row.time }}毫秒</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作时间" prop="createTime" align="center" />
+        <el-table-column align="center" label="操作">
+          <template #default="scope">
+            <!-- <el-button link @click="handleUpdate(scope.row)">编辑</el-button> -->
+            <el-button link @click="handleDetail(scope.row)">详情</el-button>
+            <!-- <base-delete-btn @ok="handleDelete(scope.row)"></base-delete-btn> -->
+          </template>
+        </el-table-column>
+      </base-table-p>
+    </base-content>
 
     <base-dialog v-model="dialogVisible" :title="dialogTitleObj[dialogStatus]" width="50%">
       <base-cell label-width="150px">

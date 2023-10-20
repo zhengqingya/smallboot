@@ -10,32 +10,34 @@
       </template>
     </base-header>
 
-    <base-table-p ref="baseTableRef" api="pms_category_spu_relation.page" :params="listQuery">
-      <el-table-column label="商品ID" prop="spuId" align="center"></el-table-column>
-      <el-table-column label="名称" prop="spuName" align="center"></el-table-column>
-      <el-table-column label="封面图" prop="spuCoverImg" align="center">
-        <template #default="scope">
-          <el-image :src="scope.row.spuCoverImg" style="width: 50px; height: 50px" />
-        </template>
-      </el-table-column>
-      <el-table-column label="是否上架" prop="isPut" align="center">
-        <template #default="scope">
-          {{ scope.row.isPut ? '上架' : '下架' }}
-        </template>
-      </el-table-column>
-      <el-table-column label="是否显示" prop="isShow" align="center">
-        <template #default="scope">
-          {{ scope.row.isShow ? '显示' : '隐藏' }}
-        </template>
-      </el-table-column>
-      <el-table-column label="排序" prop="sort" align="center"></el-table-column>
-      <el-table-column align="center" label="操作">
-        <template #default="scope">
-          <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
-          <base-delete-btn @ok="handleDelete(scope.row)"></base-delete-btn>
-        </template>
-      </el-table-column>
-    </base-table-p>
+    <base-content>
+      <base-table-p ref="baseTableRef" api="pms_category_spu_relation.page" :params="listQuery">
+        <el-table-column label="商品ID" prop="spuId" align="center"></el-table-column>
+        <el-table-column label="名称" prop="spuName" align="center"></el-table-column>
+        <el-table-column label="封面图" prop="spuCoverImg" align="center">
+          <template #default="scope">
+            <el-image :src="scope.row.spuCoverImg" style="width: 50px; height: 50px" />
+          </template>
+        </el-table-column>
+        <el-table-column label="是否上架" prop="isPut" align="center">
+          <template #default="scope">
+            {{ scope.row.isPut ? '上架' : '下架' }}
+          </template>
+        </el-table-column>
+        <el-table-column label="是否显示" prop="isShow" align="center">
+          <template #default="scope">
+            {{ scope.row.isShow ? '显示' : '隐藏' }}
+          </template>
+        </el-table-column>
+        <el-table-column label="排序" prop="sort" align="center"></el-table-column>
+        <el-table-column align="center" label="操作">
+          <template #default="scope">
+            <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
+            <base-delete-btn @ok="handleDelete(scope.row)"></base-delete-btn>
+          </template>
+        </el-table-column>
+      </base-table-p>
+    </base-content>
 
     <base-dialog v-model="dialogVisible" :title="dialogTitleObj[dialogStatus]" width="30%">
       <el-form ref="dataFormRef" :model="form" label-width="100px">
