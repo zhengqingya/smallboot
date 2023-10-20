@@ -11,7 +11,7 @@
  Target Server Version : 50726 (5.7.26-log)
  File Encoding         : 65001
 
- Date: 20/10/2023 21:46:21
+ Date: 20/10/2023 22:06:08
 */
 
 SET NAMES utf8mb4;
@@ -1263,145 +1263,11 @@ CREATE TABLE `t_sys_log`  (
   `update_by` bigint(20) NOT NULL COMMENT '修改人',
   `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 342 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-操作日志' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 344 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-操作日志' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_sys_log
 -- ----------------------------
-INSERT INTO `t_sys_log` VALUES (208, 1, 1, 'com.zhengqing.system.api.web.WebAuthController.login', '授权认证api@登录', '', '未知', '127.0.0.1', '/web/api/auth/login', 'POST', '{}', 'dev', 1184, 0, '2023-10-20 09:30:25', 0, '2023-10-20 09:30:25');
-INSERT INTO `t_sys_log` VALUES (209, 1, 1, 'com.zhengqing.system.api.web.WebSysTenantController.update', 'web-系统管理-租户信息@更新', '', 'admin', '127.0.0.1', '/web/api/system/tenant/update', 'PUT', '{}', 'dev', 430, 1, '2023-10-20 14:02:36', 1, '2023-10-20 14:02:36');
-INSERT INTO `t_sys_log` VALUES (210, 1, 1, 'com.zhengqing.system.api.web.WebSysTenantController.update', 'web-系统管理-租户信息@更新', '', 'admin', '127.0.0.1', '/web/api/system/tenant/update', 'PUT', '{}', 'dev', 9363, 1, '2023-10-20 14:39:39', 1, '2023-10-20 14:39:39');
-INSERT INTO `t_sys_log` VALUES (211, 1, 1, 'com.zhengqing.system.api.web.WebSysTenantController.update', 'web-系统管理-租户信息@更新', '', 'admin', '127.0.0.1', '/web/api/system/tenant/update', 'PUT', '{}', 'dev', 6263, 1, '2023-10-20 14:40:26', 1, '2023-10-20 14:40:26');
-INSERT INTO `t_sys_log` VALUES (212, 1, 1, 'com.zhengqing.system.api.web.WebSysDeptController.add', 'web-系统管理-部门@新增', '', 'admin', '127.0.0.1', '/web/api/system/dept/add', 'POST', '{}', 'dev', 87, 1, '2023-10-20 14:50:42', 1, '2023-10-20 14:50:42');
-INSERT INTO `t_sys_log` VALUES (213, 1, 1, 'com.zhengqing.system.api.web.WebSysDeptController.add', 'web-系统管理-部门@新增', '', 'admin', '127.0.0.1', '/web/api/system/dept/add', 'POST', '{}', 'dev', 33, 1, '2023-10-20 14:50:57', 1, '2023-10-20 14:50:57');
-INSERT INTO `t_sys_log` VALUES (214, 1, 1, 'com.zhengqing.system.api.web.WebSysMenuController.update', 'web-系统管理-菜单&按钮接口@更新', '', 'admin', '127.0.0.1', '/web/api/system/menu', 'PUT', '{}', 'dev', 746, 1, '2023-10-20 14:53:42', 1, '2023-10-20 14:53:42');
-INSERT INTO `t_sys_log` VALUES (215, 1, 1, 'com.zhengqing.system.api.web.WebSysTenantController.update', 'web-系统管理-租户信息@更新', '', 'admin', '127.0.0.1', '/web/api/system/tenant/update', 'PUT', '{}', 'dev', 586, 1, '2023-10-20 15:28:23', 1, '2023-10-20 15:28:23');
-INSERT INTO `t_sys_log` VALUES (216, 1, 1, 'com.zhengqing.system.api.web.WebSysTenantController.update', 'web-系统管理-租户信息@更新', '', 'admin', '127.0.0.1', '/web/api/system/tenant/update', 'PUT', '{}', 'dev', 401, 1, '2023-10-20 15:28:36', 1, '2023-10-20 15:28:36');
-INSERT INTO `t_sys_log` VALUES (217, 1, 1, 'com.zhengqing.system.api.web.WebSysTenantController.update', 'web-系统管理-租户信息@更新', '', 'admin', '127.0.0.1', '/web/api/system/tenant/update', 'PUT', '{}', 'dev', 451, 1, '2023-10-20 15:28:41', 1, '2023-10-20 15:28:41');
-INSERT INTO `t_sys_log` VALUES (218, 1, 1, 'com.zhengqing.system.api.web.WebSysTenantController.update', 'web-系统管理-租户信息@更新', '', 'admin', '127.0.0.1', '/web/api/system/tenant/update', 'PUT', '{}', 'dev', 467, 1, '2023-10-20 15:44:51', 1, '2023-10-20 15:44:51');
-INSERT INTO `t_sys_log` VALUES (219, 1, 1, 'com.zhengqing.system.api.web.WebSysAppServiceConfigController.update', 'web-系统管理-小程序服务商平台配置@更新', '', 'admin', '127.0.0.1', '/web/api/system/app/service/config/update', 'PUT', '{}', 'dev', 19, 1, '2023-10-20 16:18:16', 1, '2023-10-20 16:18:16');
-INSERT INTO `t_sys_log` VALUES (220, 1, 1, 'com.zhengqing.system.api.web.WebSysAppServiceConfigController.update', 'web-系统管理-小程序服务商平台配置@更新', '', 'admin', '127.0.0.1', '/web/api/system/app/service/config/update', 'PUT', '{}', 'dev', 17, 1, '2023-10-20 16:19:02', 1, '2023-10-20 16:19:02');
-INSERT INTO `t_sys_log` VALUES (221, 0, 1, 'com.zhengqing.system.api.DyCallbackController.notice', '抖音-事件回调通知@事件通知', '', '未知', '127.0.0.1', '/api/douyin/event/notice/2', 'POST', '{}', 'dev', 16, 0, '2023-10-20 16:38:28', 0, '2023-10-20 16:38:28');
-INSERT INTO `t_sys_log` VALUES (222, 1, 1, 'com.zhengqing.system.api.web.WebSysAppConfigController.syncStatus', 'web-系统管理-小程序管理@同步小程序最新状态', '', 'admin', '127.0.0.1', '/web/api/system/app/syncStatus', 'POST', '{}', 'dev', 2196, 1, '2023-10-20 16:38:36', 1, '2023-10-20 16:38:36');
-INSERT INTO `t_sys_log` VALUES (223, 1, 1, 'com.zhengqing.system.api.web.WebSysAppConfigController.syncStatus', 'web-系统管理-小程序管理@同步小程序最新状态', '', 'admin', '127.0.0.1', '/web/api/system/app/syncStatus', 'POST', '{}', 'dev', 363, 1, '2023-10-20 16:49:47', 1, '2023-10-20 16:49:47');
-INSERT INTO `t_sys_log` VALUES (224, 1, 1, 'com.zhengqing.system.api.web.WebSysRoleController.delete', 'web-系统管理-角色管理接口@删除', '', 'admin', '127.0.0.1', '/web/api/system/role', 'DELETE', '{\"roleId\":[\"20\"]}', 'dev', 50, 1, '2023-10-20 16:53:34', 1, '2023-10-20 16:53:34');
-INSERT INTO `t_sys_log` VALUES (225, 1, 1, 'com.zhengqing.system.api.web.WebSysRoleController.delete', 'web-系统管理-角色管理接口@删除', '', 'admin', '127.0.0.1', '/web/api/system/role', 'DELETE', '{\"roleId\":[\"21\"]}', 'dev', 40, 1, '2023-10-20 16:53:35', 1, '2023-10-20 16:53:35');
-INSERT INTO `t_sys_log` VALUES (226, 1, 1, 'com.zhengqing.system.api.web.WebSysRoleController.delete', 'web-系统管理-角色管理接口@删除', '', 'admin', '127.0.0.1', '/web/api/system/role', 'DELETE', '{\"roleId\":[\"2\"]}', 'dev', 152, 1, '2023-10-20 16:53:39', 1, '2023-10-20 16:53:39');
-INSERT INTO `t_sys_log` VALUES (227, 1, 1, 'com.zhengqing.system.api.web.WebSysFileController.upload', 'web-系统管理-文件上传@上传文件', '', 'admin', '127.0.0.1', '/web/api/system/file/upload', 'POST', '{}', 'dev', 519, 1, '2023-10-20 16:54:12', 1, '2023-10-20 16:54:12');
-INSERT INTO `t_sys_log` VALUES (228, 1, 1, 'com.zhengqing.system.api.web.WebSysUserController.update', 'web-系统管理-用户管理接口@更新', '', 'admin', '127.0.0.1', '/web/api/system/user', 'PUT', '{}', 'dev', 92, 1, '2023-10-20 16:54:13', 1, '2023-10-20 16:54:13');
-INSERT INTO `t_sys_log` VALUES (229, 1, 1, 'com.zhengqing.system.api.web.WebSysDeptController.update', 'web-系统管理-部门@更新', '', 'admin', '127.0.0.1', '/web/api/system/dept/update', 'PUT', '{}', 'dev', 62, 1, '2023-10-20 16:55:31', 1, '2023-10-20 16:55:31');
-INSERT INTO `t_sys_log` VALUES (230, 1, 1, 'com.zhengqing.system.api.web.WebSysUserController.update', 'web-系统管理-用户管理接口@更新', '', 'admin', '127.0.0.1', '/web/api/system/user', 'PUT', '{}', 'dev', 135, 1, '2023-10-20 17:01:45', 1, '2023-10-20 17:01:45');
-INSERT INTO `t_sys_log` VALUES (231, 1, 1, 'com.zhengqing.system.api.web.WebSysUserController.update', 'web-系统管理-用户管理接口@更新', '', 'admin', '127.0.0.1', '/web/api/system/user', 'PUT', '{}', 'dev', 175, 1, '2023-10-20 17:04:47', 1, '2023-10-20 17:04:47');
-INSERT INTO `t_sys_log` VALUES (232, 1, 1, 'com.zhengqing.system.api.web.WebSysUserController.update', 'web-系统管理-用户管理接口@更新', '', 'admin', '127.0.0.1', '/web/api/system/user', 'PUT', '{}', 'dev', 179, 1, '2023-10-20 17:22:00', 1, '2023-10-20 17:22:00');
-INSERT INTO `t_sys_log` VALUES (233, 1, 1, 'com.zhengqing.system.api.web.WebAuthController.login', '授权认证api@登录', '', '未知', '127.0.0.1', '/web/api/auth/login', 'POST', '{}', 'dev', 1169, 0, '2023-10-20 17:22:23', 0, '2023-10-20 17:22:23');
-INSERT INTO `t_sys_log` VALUES (234, 1, 1, 'com.zhengqing.system.api.web.WebSysUserController.update', 'web-系统管理-用户管理接口@更新', '', 'admin', '127.0.0.1', '/web/api/system/user', 'PUT', '{}', 'dev', 162, 1, '2023-10-20 17:22:41', 1, '2023-10-20 17:22:41');
-INSERT INTO `t_sys_log` VALUES (235, 1, 1, 'com.zhengqing.system.api.web.WebAuthController.login', '授权认证api@登录', '', '未知', '127.0.0.1', '/web/api/auth/login', 'POST', '{}', 'dev', 129, 0, '2023-10-20 17:22:46', 0, '2023-10-20 17:22:46');
-INSERT INTO `t_sys_log` VALUES (236, 1, 1, 'com.zhengqing.system.api.web.WebSysTenantPackageController.update', 'web-系统管理-租户套餐@更新', '', 'admin', '127.0.0.1', '/web/api/system/tenant/package/update', 'PUT', '{}', 'dev', 439, 1, '2023-10-20 17:27:02', 1, '2023-10-20 17:27:02');
-INSERT INTO `t_sys_log` VALUES (237, 1, 1, 'com.zhengqing.system.api.web.WebSysTenantPackageController.update', 'web-系统管理-租户套餐@更新', '', 'admin', '127.0.0.1', '/web/api/system/tenant/package/update', 'PUT', '{}', 'dev', 59, 1, '2023-10-20 17:27:07', 1, '2023-10-20 17:27:07');
-INSERT INTO `t_sys_log` VALUES (238, 1, 1, 'com.zhengqing.system.api.web.WebSysTenantController.update', 'web-系统管理-租户信息@更新', '', 'admin', '127.0.0.1', '/web/api/system/tenant/update', 'PUT', '{}', 'dev', 428, 1, '2023-10-20 17:28:19', 1, '2023-10-20 17:28:19');
-INSERT INTO `t_sys_log` VALUES (239, 1, 1, 'com.zhengqing.system.api.web.WebSysTenantPackageController.update', 'web-系统管理-租户套餐@更新', '', 'admin', '127.0.0.1', '/web/api/system/tenant/package/update', 'PUT', '{}', 'dev', 450, 1, '2023-10-20 17:31:01', 1, '2023-10-20 17:31:01');
-INSERT INTO `t_sys_log` VALUES (240, 1, 1, 'com.zhengqing.system.api.web.WebAuthController.login', '授权认证api@登录', '', '未知', '127.0.0.1', '/web/api/auth/login', 'POST', '{}', 'dev', 1161, 0, '2023-10-20 17:31:22', 0, '2023-10-20 17:31:22');
-INSERT INTO `t_sys_log` VALUES (241, 1, 1, 'com.zhengqing.system.api.web.WebSysTenantPackageController.update', 'web-系统管理-租户套餐@更新', '', 'admin', '127.0.0.1', '/web/api/system/tenant/package/update', 'PUT', '{}', 'dev', 5058, 1, '2023-10-20 17:31:55', 1, '2023-10-20 17:31:55');
-INSERT INTO `t_sys_log` VALUES (242, 1, 1, 'com.zhengqing.system.api.web.WebSysTenantController.update', 'web-系统管理-租户信息@更新', '', 'admin', '127.0.0.1', '/web/api/system/tenant/update', 'PUT', '{}', 'dev', 271, 1, '2023-10-20 17:49:44', 1, '2023-10-20 17:49:44');
-INSERT INTO `t_sys_log` VALUES (243, 1, 1, 'com.zhengqing.system.api.web.WebSysTenantController.update', 'web-系统管理-租户信息@更新', '', 'admin', '127.0.0.1', '/web/api/system/tenant/update', 'PUT', '{}', 'dev', 517, 1, '2023-10-20 17:57:19', 1, '2023-10-20 17:57:19');
-INSERT INTO `t_sys_log` VALUES (244, 1, 1, 'com.zhengqing.system.api.web.WebSysRoleController.add', 'web-系统管理-角色管理接口@新增', '', 'admin', '127.0.0.1', '/web/api/system/role', 'POST', '{}', 'dev', 44, 1, '2023-10-20 18:03:26', 1, '2023-10-20 18:03:26');
-INSERT INTO `t_sys_log` VALUES (245, 1, 1, 'com.zhengqing.system.api.web.WebSysRoleController.update', 'web-系统管理-角色管理接口@更新', '', 'admin', '127.0.0.1', '/web/api/system/role', 'PUT', '{}', 'dev', 54, 1, '2023-10-20 18:03:35', 1, '2023-10-20 18:03:35');
-INSERT INTO `t_sys_log` VALUES (246, 1, 1, 'com.zhengqing.system.api.web.WebSysRoleController.update', 'web-系统管理-角色管理接口@更新', '', 'admin', '127.0.0.1', '/web/api/system/role', 'PUT', '{}', 'dev', 86, 1, '2023-10-20 18:12:01', 1, '2023-10-20 18:12:01');
-INSERT INTO `t_sys_log` VALUES (247, 1, 1, 'com.zhengqing.system.api.web.WebSysRoleController.update', 'web-系统管理-角色管理接口@更新', '', 'admin', '127.0.0.1', '/web/api/system/role', 'PUT', '{}', 'dev', 63, 1, '2023-10-20 18:12:05', 1, '2023-10-20 18:12:05');
-INSERT INTO `t_sys_log` VALUES (248, 1, 1, 'com.zhengqing.system.api.web.WebSysPermController.saveRoleRePerm', 'web-系统管理-权限接口@保存角色权限（菜单权限+按钮权限+数据权限）', '', 'admin', '127.0.0.1', '/web/api/system/perm/saveRoleRePerm', 'POST', '{}', 'dev', 33, 1, '2023-10-20 18:12:51', 1, '2023-10-20 18:12:51');
-INSERT INTO `t_sys_log` VALUES (249, 1, 1, 'com.zhengqing.system.api.web.WebSysRoleController.update', 'web-系统管理-角色管理接口@更新', '', 'admin', '127.0.0.1', '/web/api/system/role', 'PUT', '{}', 'dev', 67, 1, '2023-10-20 18:29:24', 1, '2023-10-20 18:29:24');
-INSERT INTO `t_sys_log` VALUES (250, 1, 1, 'com.zhengqing.system.api.web.WebSysRoleController.update', 'web-系统管理-角色管理接口@更新', '', 'admin', '127.0.0.1', '/web/api/system/role', 'PUT', '{}', 'dev', 77, 1, '2023-10-20 18:29:27', 1, '2023-10-20 18:29:27');
-INSERT INTO `t_sys_log` VALUES (251, 1, 1, 'com.zhengqing.system.api.web.WebSysRoleController.update', 'web-系统管理-角色管理接口@更新', '', 'admin', '127.0.0.1', '/web/api/system/role', 'PUT', '{}', 'dev', 59, 1, '2023-10-20 18:33:02', 1, '2023-10-20 18:33:02');
-INSERT INTO `t_sys_log` VALUES (252, 1, 1, 'com.zhengqing.system.api.web.WebSysUserController.update', 'web-系统管理-用户管理接口@更新', '', 'admin', '127.0.0.1', '/web/api/system/user', 'PUT', '{}', 'dev', 75, 1, '2023-10-20 18:34:32', 1, '2023-10-20 18:34:32');
-INSERT INTO `t_sys_log` VALUES (253, 1, 1, 'com.zhengqing.system.api.web.WebSysUserController.update', 'web-系统管理-用户管理接口@更新', '', 'admin', '127.0.0.1', '/web/api/system/user', 'PUT', '{}', 'dev', 78, 1, '2023-10-20 18:37:24', 1, '2023-10-20 18:37:24');
-INSERT INTO `t_sys_log` VALUES (254, 1, 1, 'com.zhengqing.system.api.web.WebSysUserController.update', 'web-系统管理-用户管理接口@更新', '', 'admin', '127.0.0.1', '/web/api/system/user', 'PUT', '{}', 'dev', 67, 1, '2023-10-20 18:38:11', 1, '2023-10-20 18:38:11');
-INSERT INTO `t_sys_log` VALUES (255, 1, 1, 'com.zhengqing.system.api.web.WebSysUserController.update', 'web-系统管理-用户管理接口@更新', '', 'admin', '127.0.0.1', '/web/api/system/user', 'PUT', '{}', 'dev', 52245, 1, '2023-10-20 18:39:07', 1, '2023-10-20 18:39:07');
-INSERT INTO `t_sys_log` VALUES (256, 1, 1, 'com.zhengqing.system.api.web.WebSysUserController.update', 'web-系统管理-用户管理接口@更新', '', 'admin', '127.0.0.1', '/web/api/system/user', 'PUT', '{}', 'dev', 126, 1, '2023-10-20 18:45:11', 1, '2023-10-20 18:45:11');
-INSERT INTO `t_sys_log` VALUES (257, 1, 1, 'com.zhengqing.system.api.web.WebSysUserController.update', 'web-系统管理-用户管理接口@更新', '', 'admin', '127.0.0.1', '/web/api/system/user', 'PUT', '{}', 'dev', 12387, 1, '2023-10-20 18:45:39', 1, '2023-10-20 18:45:39');
-INSERT INTO `t_sys_log` VALUES (258, 1, 1, 'com.zhengqing.system.api.web.WebSysUserController.update', 'web-系统管理-用户管理接口@更新', '', 'admin', '127.0.0.1', '/web/api/system/user', 'PUT', '{}', 'dev', 20046, 1, '2023-10-20 18:46:04', 1, '2023-10-20 18:46:04');
-INSERT INTO `t_sys_log` VALUES (259, 1, 1, 'com.zhengqing.system.api.web.WebSysUserController.update', 'web-系统管理-用户管理接口@更新', '', 'admin', '127.0.0.1', '/web/api/system/user', 'PUT', '{}', 'dev', 3072, 1, '2023-10-20 18:52:56', 1, '2023-10-20 18:52:56');
-INSERT INTO `t_sys_log` VALUES (260, 1, 1, 'com.zhengqing.system.api.web.WebAuthController.login', '授权认证api@登录', '', '未知', '127.0.0.1', '/web/api/auth/login', 'POST', '{}', 'dev', 1128, 0, '2023-10-20 18:53:07', 0, '2023-10-20 18:53:07');
-INSERT INTO `t_sys_log` VALUES (261, 1, 1, 'com.zhengqing.system.api.web.WebSysUserController.update', 'web-系统管理-用户管理接口@更新', '', 'admin', '127.0.0.1', '/web/api/system/user', 'PUT', '{}', 'dev', 2344, 2, '2023-10-20 18:53:16', 2, '2023-10-20 18:53:16');
-INSERT INTO `t_sys_log` VALUES (262, 1, 1, 'com.zhengqing.system.api.web.WebSysUserController.update', 'web-系统管理-用户管理接口@更新', '', 'admin', '127.0.0.1', '/web/api/system/user', 'PUT', '{}', 'dev', 2840, 1, '2023-10-20 18:53:26', 1, '2023-10-20 18:53:26');
-INSERT INTO `t_sys_log` VALUES (263, 1, 1, 'com.zhengqing.system.api.web.WebAuthController.login', '授权认证api@登录', '', '未知', '127.0.0.1', '/web/api/auth/login', 'POST', '{}', 'dev', 102, 0, '2023-10-20 18:53:37', 0, '2023-10-20 18:53:37');
-INSERT INTO `t_sys_log` VALUES (264, 1, 1, 'com.zhengqing.system.api.web.WebSysUserController.update', 'web-系统管理-用户管理接口@更新', '', 'admin', '127.0.0.1', '/web/api/system/user', 'PUT', '{}', 'dev', 3459, 2, '2023-10-20 18:53:45', 2, '2023-10-20 18:53:45');
-INSERT INTO `t_sys_log` VALUES (265, 1, 1, 'com.zhengqing.system.api.web.WebSysUserController.update', 'web-系统管理-用户管理接口@更新', '', 'admin', '127.0.0.1', '/web/api/system/user', 'PUT', '{}', 'dev', 1228, 2, '2023-10-20 18:53:49', 2, '2023-10-20 18:53:49');
-INSERT INTO `t_sys_log` VALUES (266, 1, 1, 'com.zhengqing.system.api.web.WebSysUserController.update', 'web-系统管理-用户管理接口@更新', '', 'admin', '127.0.0.1', '/web/api/system/user', 'PUT', '{}', 'dev', 55, 1, '2023-10-20 18:56:12', 1, '2023-10-20 18:56:12');
-INSERT INTO `t_sys_log` VALUES (267, 1, 1, 'com.zhengqing.system.api.web.WebSysUserController.update', 'web-系统管理-用户管理接口@更新', '', 'admin', '127.0.0.1', '/web/api/system/user', 'PUT', '{}', 'dev', 54, 1, '2023-10-20 18:56:21', 1, '2023-10-20 18:56:21');
-INSERT INTO `t_sys_log` VALUES (268, 1, 1, 'com.zhengqing.system.api.web.WebSysUserController.update', 'web-系统管理-用户管理接口@更新', '', 'admin', '127.0.0.1', '/web/api/system/user', 'PUT', '{}', 'dev', 68, 2, '2023-10-20 18:56:59', 2, '2023-10-20 18:56:59');
-INSERT INTO `t_sys_log` VALUES (269, 1, 1, 'com.zhengqing.system.api.web.WebSysUserController.update', 'web-系统管理-用户管理接口@更新', '', 'admin', '127.0.0.1', '/web/api/system/user', 'PUT', '{}', 'dev', 67, 2, '2023-10-20 18:57:10', 2, '2023-10-20 18:57:10');
-INSERT INTO `t_sys_log` VALUES (270, 1, 1, 'com.zhengqing.system.api.web.WebSysUserController.update', 'web-系统管理-用户管理接口@更新', '', 'admin', '127.0.0.1', '/web/api/system/user', 'PUT', '{}', 'dev', 122, 1, '2023-10-20 18:57:19', 1, '2023-10-20 18:57:19');
-INSERT INTO `t_sys_log` VALUES (271, 1, 1, 'com.zhengqing.system.api.web.WebAuthController.login', '授权认证api@登录', '', '未知', '127.0.0.1', '/web/api/auth/login', 'POST', '{}', 'dev', 1014, 0, '2023-10-20 18:58:24', 0, '2023-10-20 18:58:24');
-INSERT INTO `t_sys_log` VALUES (272, 1, 1, 'com.zhengqing.system.api.web.WebSysTenantPackageController.update', 'web-系统管理-租户套餐@更新', '', 'admin', '127.0.0.1', '/web/api/system/tenant/package/update', 'PUT', '{}', 'dev', 799, 1, '2023-10-20 18:59:16', 1, '2023-10-20 18:59:16');
-INSERT INTO `t_sys_log` VALUES (273, 1, 1, 'com.zhengqing.system.api.web.WebSysTenantPackageController.update', 'web-系统管理-租户套餐@更新', '', 'admin', '127.0.0.1', '/web/api/system/tenant/package/update', 'PUT', '{}', 'dev', 734, 1, '2023-10-20 18:59:24', 1, '2023-10-20 18:59:24');
-INSERT INTO `t_sys_log` VALUES (274, 1, 1, 'com.zhengqing.system.api.web.WebSysPermController.saveRoleRePerm', 'web-系统管理-权限接口@保存角色权限（菜单权限+按钮权限+数据权限）', '', 'admin', '127.0.0.1', '/web/api/system/perm/saveRoleRePerm', 'POST', '{}', 'dev', 293, 1, '2023-10-20 19:00:10', 1, '2023-10-20 19:00:10');
-INSERT INTO `t_sys_log` VALUES (275, 1, 1, 'com.zhengqing.system.api.web.WebSysTenantPackageController.update', 'web-系统管理-租户套餐@更新', '', 'admin', '127.0.0.1', '/web/api/system/tenant/package/update', 'PUT', '{}', 'dev', 34, 1, '2023-10-20 19:00:50', 1, '2023-10-20 19:00:50');
-INSERT INTO `t_sys_log` VALUES (276, 1, 1, 'com.zhengqing.system.api.web.WebSysTenantPackageController.update', 'web-系统管理-租户套餐@更新', '', 'admin', '127.0.0.1', '/web/api/system/tenant/package/update', 'PUT', '{}', 'dev', 36, 1, '2023-10-20 19:00:54', 1, '2023-10-20 19:00:54');
-INSERT INTO `t_sys_log` VALUES (277, 1, 1, 'com.zhengqing.system.api.web.WebSysTenantPackageController.update', 'web-系统管理-租户套餐@更新', '', 'admin', '127.0.0.1', '/web/api/system/tenant/package/update', 'PUT', '{}', 'dev', 746, 1, '2023-10-20 19:01:12', 1, '2023-10-20 19:01:12');
-INSERT INTO `t_sys_log` VALUES (278, 1, 1, 'com.zhengqing.system.api.web.WebSysTenantPackageController.update', 'web-系统管理-租户套餐@更新', '', 'admin', '127.0.0.1', '/web/api/system/tenant/package/update', 'PUT', '{}', 'dev', 711, 1, '2023-10-20 19:01:31', 1, '2023-10-20 19:01:31');
-INSERT INTO `t_sys_log` VALUES (279, 1, 1, 'com.zhengqing.system.api.web.WebAuthController.login', '授权认证api@登录', '', '未知', '127.0.0.1', '/web/api/auth/login', 'POST', '{}', 'dev', 119, 0, '2023-10-20 19:01:41', 0, '2023-10-20 19:01:41');
-INSERT INTO `t_sys_log` VALUES (280, 1, 1, 'com.zhengqing.system.api.web.WebSysPermController.saveRoleRePerm', 'web-系统管理-权限接口@保存角色权限（菜单权限+按钮权限+数据权限）', '', 'admin', '127.0.0.1', '/web/api/system/perm/saveRoleRePerm', 'POST', '{}', 'dev', 342, 1, '2023-10-20 19:08:21', 1, '2023-10-20 19:08:21');
-INSERT INTO `t_sys_log` VALUES (281, 1, 1, 'com.zhengqing.system.api.web.WebAuthController.login', '授权认证api@登录', '', '未知', '127.0.0.1', '/web/api/auth/login', 'POST', '{}', 'dev', 3531, 0, '2023-10-20 19:08:30', 0, '2023-10-20 19:08:30');
-INSERT INTO `t_sys_log` VALUES (282, 1, 1, 'com.zhengqing.system.api.web.WebSysTenantPackageController.update', 'web-系统管理-租户套餐@更新', '', 'admin', '127.0.0.1', '/web/api/system/tenant/package/update', 'PUT', '{}', 'dev', 799, 1, '2023-10-20 19:08:55', 1, '2023-10-20 19:08:55');
-INSERT INTO `t_sys_log` VALUES (283, 1, 1, 'com.zhengqing.system.api.web.WebSysTenantPackageController.update', 'web-系统管理-租户套餐@更新', '', 'admin', '127.0.0.1', '/web/api/system/tenant/package/update', 'PUT', '{}', 'dev', 705, 1, '2023-10-20 19:09:07', 1, '2023-10-20 19:09:07');
-INSERT INTO `t_sys_log` VALUES (284, 1, 1, 'com.zhengqing.system.api.web.WebSysTenantPackageController.update', 'web-系统管理-租户套餐@更新', '', 'admin', '127.0.0.1', '/web/api/system/tenant/package/update', 'PUT', '{}', 'dev', 713, 1, '2023-10-20 19:09:20', 1, '2023-10-20 19:09:20');
-INSERT INTO `t_sys_log` VALUES (285, 1, 1, 'com.zhengqing.system.api.web.WebSysTenantPackageController.update', 'web-系统管理-租户套餐@更新', '', 'admin', '127.0.0.1', '/web/api/system/tenant/package/update', 'PUT', '{}', 'dev', 748, 1, '2023-10-20 19:14:13', 1, '2023-10-20 19:14:13');
-INSERT INTO `t_sys_log` VALUES (286, 1, 1, 'com.zhengqing.system.api.web.WebSysTenantPackageController.update', 'web-系统管理-租户套餐@更新', '', 'admin', '127.0.0.1', '/web/api/system/tenant/package/update', 'PUT', '{}', 'dev', 728, 2, '2023-10-20 19:14:27', 2, '2023-10-20 19:14:27');
-INSERT INTO `t_sys_log` VALUES (287, 1, 1, 'com.zhengqing.system.api.web.WebSysUserController.update', 'web-系统管理-用户管理接口@更新', '', 'admin', '127.0.0.1', '/web/api/system/user', 'PUT', '{}', 'dev', 78, 1, '2023-10-20 19:25:28', 1, '2023-10-20 19:25:28');
-INSERT INTO `t_sys_log` VALUES (288, 1, 1, 'com.zhengqing.system.api.web.WebSysUserController.update', 'web-系统管理-用户管理接口@更新', '', 'admin', '127.0.0.1', '/web/api/system/user', 'PUT', '{}', 'dev', 120, 1, '2023-10-20 19:25:33', 1, '2023-10-20 19:25:33');
-INSERT INTO `t_sys_log` VALUES (289, 1, 1, 'com.zhengqing.system.api.web.WebAuthController.login', '授权认证api@登录', '', '未知', '127.0.0.1', '/web/api/auth/login', 'POST', '{}', 'dev', 21827, 0, '2023-10-20 19:34:03', 0, '2023-10-20 19:34:03');
-INSERT INTO `t_sys_log` VALUES (290, 1, 1, 'com.zhengqing.system.api.web.WebAuthController.login', '授权认证api@登录', '', '未知', '127.0.0.1', '/web/api/auth/login', 'POST', '{}', 'dev', 3610, 0, '2023-10-20 19:34:57', 0, '2023-10-20 19:34:57');
-INSERT INTO `t_sys_log` VALUES (291, 1, 1, 'com.zhengqing.system.api.web.WebSysUserController.update', 'web-系统管理-用户管理接口@更新', '', 'admin', '127.0.0.1', '/web/api/system/user', 'PUT', '{}', 'dev', 2432, 2, '2023-10-20 19:35:49', 2, '2023-10-20 19:35:49');
-INSERT INTO `t_sys_log` VALUES (292, 1, 1, 'com.zhengqing.system.api.web.WebAuthController.login', '授权认证api@登录', '', '未知', '127.0.0.1', '/web/api/auth/login', 'POST', '{}', 'dev', 105, 0, '2023-10-20 19:35:53', 0, '2023-10-20 19:35:53');
-INSERT INTO `t_sys_log` VALUES (293, 1, 1, 'com.zhengqing.system.api.web.WebSysUserController.update', 'web-系统管理-用户管理接口@更新', '', 'admin', '127.0.0.1', '/web/api/system/user', 'PUT', '{}', 'dev', 94, 1, '2023-10-20 19:36:06', 1, '2023-10-20 19:36:06');
-INSERT INTO `t_sys_log` VALUES (294, 1, 1, 'com.zhengqing.system.api.web.WebSysUserController.update', 'web-系统管理-用户管理接口@更新', '', 'admin', '127.0.0.1', '/web/api/system/user', 'PUT', '{}', 'dev', 78, 1, '2023-10-20 19:36:13', 1, '2023-10-20 19:36:13');
-INSERT INTO `t_sys_log` VALUES (295, 1, 1, 'com.zhengqing.system.api.web.WebSysUserController.update', 'web-系统管理-用户管理接口@更新', '', 'admin', '127.0.0.1', '/web/api/system/user', 'PUT', '{}', 'dev', 64, 1, '2023-10-20 19:36:21', 1, '2023-10-20 19:36:21');
-INSERT INTO `t_sys_log` VALUES (296, 1, 1, 'com.zhengqing.system.api.web.WebSysUserController.update', 'web-系统管理-用户管理接口@更新', '', 'admin', '127.0.0.1', '/web/api/system/user', 'PUT', '{}', 'dev', 101, 1, '2023-10-20 19:36:26', 1, '2023-10-20 19:36:26');
-INSERT INTO `t_sys_log` VALUES (297, 1, 1, 'com.zhengqing.system.api.web.WebAuthController.login', '授权认证api@登录', '', '未知', '127.0.0.1', '/web/api/auth/login', 'POST', '{}', 'dev', 110, 0, '2023-10-20 19:36:33', 0, '2023-10-20 19:36:33');
-INSERT INTO `t_sys_log` VALUES (298, 1, 1, 'com.zhengqing.system.api.web.WebSysUserController.update', 'web-系统管理-用户管理接口@更新', '', 'admin', '127.0.0.1', '/web/api/system/user', 'PUT', '{}', 'dev', 46, 2, '2023-10-20 19:36:39', 2, '2023-10-20 19:36:39');
-INSERT INTO `t_sys_log` VALUES (299, 1, 1, 'com.zhengqing.system.api.web.WebSysUserController.update', 'web-系统管理-用户管理接口@更新', '', 'admin', '127.0.0.1', '/web/api/system/user', 'PUT', '{}', 'dev', 43, 2, '2023-10-20 19:36:43', 2, '2023-10-20 19:36:43');
-INSERT INTO `t_sys_log` VALUES (300, 1, 1, 'com.zhengqing.system.api.web.WebAuthController.login', '授权认证api@登录', '', '未知', '127.0.0.1', '/web/api/auth/login', 'POST', '{}', 'dev', 91, 0, '2023-10-20 19:37:13', 0, '2023-10-20 19:37:13');
-INSERT INTO `t_sys_log` VALUES (301, 1, 1, 'com.zhengqing.system.api.web.WebSysUserController.update', 'web-系统管理-用户管理接口@更新', '', 'superadmin', '127.0.0.1', '/web/api/system/user', 'PUT', '{}', 'dev', 79, 1, '2023-10-20 19:37:26', 1, '2023-10-20 19:37:26');
-INSERT INTO `t_sys_log` VALUES (302, 1, 1, 'com.zhengqing.system.api.web.WebAuthController.login', '授权认证api@登录', '', '未知', '127.0.0.1', '/web/api/auth/login', 'POST', '{}', 'dev', 140, 0, '2023-10-20 19:37:31', 0, '2023-10-20 19:37:31');
-INSERT INTO `t_sys_log` VALUES (303, 1, 1, 'com.zhengqing.system.api.web.WebSysUserController.update', 'web-系统管理-用户管理接口@更新', '', 'superadmin', '127.0.0.1', '/web/api/system/user', 'PUT', '{}', 'dev', 94, 1, '2023-10-20 19:37:39', 1, '2023-10-20 19:37:39');
-INSERT INTO `t_sys_log` VALUES (304, 1, 1, 'com.zhengqing.system.api.web.WebAuthController.login', '授权认证api@登录', '', '未知', '127.0.0.1', '/web/api/auth/login', 'POST', '{}', 'dev', 107, 0, '2023-10-20 19:37:45', 0, '2023-10-20 19:37:45');
-INSERT INTO `t_sys_log` VALUES (305, 1, 1, 'com.zhengqing.system.api.web.WebSysTenantPackageController.update', 'web-系统管理-租户套餐@更新', '', 'admin', '127.0.0.1', '/web/api/system/tenant/package/update', 'PUT', '{}', 'dev', 701, 2, '2023-10-20 19:37:55', 2, '2023-10-20 19:37:55');
-INSERT INTO `t_sys_log` VALUES (306, 0, 1, 'com.zhengqing.system.api.DyCallbackController.notice', '抖音-事件回调通知@事件通知', '', '未知', '127.0.0.1', '/api/douyin/event/notice/2', 'POST', '{}', 'dev', 82, 0, '2023-10-20 19:40:55', 0, '2023-10-20 19:40:55');
-INSERT INTO `t_sys_log` VALUES (307, 1, 1, 'com.zhengqing.system.api.web.WebSysAppConfigController.syncStatus', 'web-系统管理-小程序管理@同步小程序最新状态', '', 'superadmin', '127.0.0.1', '/web/api/system/app/syncStatus', 'POST', '{}', 'dev', 1092, 1, '2023-10-20 19:41:05', 1, '2023-10-20 19:41:05');
-INSERT INTO `t_sys_log` VALUES (308, 1, 1, 'com.zhengqing.system.api.web.WebSysTenantController.update', 'web-系统管理-租户信息@更新', '', 'superadmin', '127.0.0.1', '/web/api/system/tenant/update', 'PUT', '{}', 'dev', 389, 1, '2023-10-20 19:42:25', 1, '2023-10-20 19:42:25');
-INSERT INTO `t_sys_log` VALUES (309, 1, 1, 'com.zhengqing.system.api.web.WebSysTenantController.update', 'web-系统管理-租户信息@更新', '', 'superadmin', '127.0.0.1', '/web/api/system/tenant/update', 'PUT', '{}', 'dev', 364, 1, '2023-10-20 19:42:31', 1, '2023-10-20 19:42:31');
-INSERT INTO `t_sys_log` VALUES (310, 2, 1, 'com.zhengqing.system.api.web.WebAuthController.login', '授权认证api@登录', '', '未知', '127.0.0.1', '/web/api/auth/login', 'POST', '{}', 'dev', 99, 0, '2023-10-20 19:43:22', 0, '2023-10-20 19:43:22');
-INSERT INTO `t_sys_log` VALUES (311, 2, 1, 'com.zhengqing.system.api.web.WebSysRoleController.update', 'web-系统管理-角色管理接口@更新', '', 'admin', '127.0.0.1', '/web/api/system/role', 'PUT', '{}', 'dev', 14854, 5, '2023-10-20 19:46:47', 5, '2023-10-20 19:46:47');
-INSERT INTO `t_sys_log` VALUES (312, 2, 1, 'com.zhengqing.system.api.web.WebSysRoleController.delete', 'web-系统管理-角色管理接口@删除', '', 'admin', '127.0.0.1', '/web/api/system/role', 'DELETE', '{\"roleId\":[\"22\"]}', 'dev', 85, 5, '2023-10-20 19:46:51', 5, '2023-10-20 19:46:51');
-INSERT INTO `t_sys_log` VALUES (313, 2, 1, 'com.zhengqing.system.api.web.WebSysDeptController.add', 'web-系统管理-部门@新增', '', 'admin', '127.0.0.1', '/web/api/system/dept/add', 'POST', '{}', 'dev', 48, 5, '2023-10-20 19:47:12', 5, '2023-10-20 19:47:12');
-INSERT INTO `t_sys_log` VALUES (314, 2, 1, 'com.zhengqing.ums.api.mini.MiniUmsUserController.login', 'mini-用户@小程序登录', '', '未知', '127.0.0.1', '/mini/api/ums/user/login', 'POST', '{}', 'dev', 1422, 0, '2023-10-20 20:11:46', 0, '2023-10-20 20:11:46');
-INSERT INTO `t_sys_log` VALUES (315, 2, 1, 'com.zhengqing.ums.api.mini.MiniUmsUserController.login', 'mini-用户@小程序登录', '', '未知', '127.0.0.1', '/mini/api/ums/user/login', 'POST', '{}', 'dev', 31, 0, '2023-10-20 20:13:28', 0, '2023-10-20 20:13:28');
-INSERT INTO `t_sys_log` VALUES (316, 2, 1, 'com.zhengqing.ums.api.mini.MiniUmsUserController.login', 'mini-用户@小程序登录', '', '未知', '127.0.0.1', '/mini/api/ums/user/login', 'POST', '{}', 'dev', 282, 0, '2023-10-20 20:15:55', 0, '2023-10-20 20:15:55');
-INSERT INTO `t_sys_log` VALUES (317, 2, 1, 'com.zhengqing.ums.api.mini.MiniUmsUserController.login', 'mini-用户@小程序登录', '', '未知', '127.0.0.1', '/mini/api/ums/user/login', 'POST', '{}', 'dev', 698, 0, '2023-10-20 20:18:26', 0, '2023-10-20 20:18:26');
-INSERT INTO `t_sys_log` VALUES (318, 2, 1, 'com.zhengqing.ums.api.mini.MiniUmsUserController.login', 'mini-用户@小程序登录', '', '未知', '127.0.0.1', '/mini/api/ums/user/login', 'POST', '{}', 'dev', 1514, 0, '2023-10-20 20:33:38', 0, '2023-10-20 20:33:38');
-INSERT INTO `t_sys_log` VALUES (319, 2, 1, 'com.zhengqing.ums.api.mini.MiniUmsUserController.login', 'mini-用户@小程序登录', '', '未知', '127.0.0.1', '/mini/api/ums/user/login', 'POST', '{}', 'dev', 1606, 0, '2023-10-20 20:36:59', 0, '2023-10-20 20:36:59');
-INSERT INTO `t_sys_log` VALUES (320, 2, 1, 'com.zhengqing.ums.api.mini.MiniUmsUserController.updateUserInfo', 'mini-用户@更新用户信息', '', '新未来宝宝教育', '127.0.0.1', '/mini/api/ums/user/updateUserInfo', 'PUT', '{}', 'dev', 22, 1715340020191019008, '2023-10-20 20:40:49', 1715340020191019008, '2023-10-20 20:40:49');
-INSERT INTO `t_sys_log` VALUES (321, 2, 1, 'com.zhengqing.ums.api.mini.MiniUmsUserController.updateUserInfo', 'mini-用户@更新用户信息', '', '新未来宝宝教育', '127.0.0.1', '/mini/api/ums/user/updateUserInfo', 'PUT', '{}', 'dev', 10, 1715340020191019008, '2023-10-20 20:40:53', 1715340020191019008, '2023-10-20 20:40:53');
-INSERT INTO `t_sys_log` VALUES (322, 2, 1, 'com.zhengqing.ums.api.mini.MiniUmsUserController.updateUserInfo', 'mini-用户@更新用户信息', '', '新未来宝宝教育', '127.0.0.1', '/mini/api/ums/user/updateUserInfo', 'PUT', '{}', 'dev', 7, 1715340020191019008, '2023-10-20 20:40:56', 1715340020191019008, '2023-10-20 20:40:56');
-INSERT INTO `t_sys_log` VALUES (323, 2, 1, 'com.zhengqing.ums.api.mini.MiniUmsUserController.updateUserInfo', 'mini-用户@更新用户信息', '', '新未来宝宝教育', '127.0.0.1', '/mini/api/ums/user/updateUserInfo', 'PUT', '{}', 'dev', 17, 1715340020191019008, '2023-10-20 20:42:32', 1715340020191019008, '2023-10-20 20:42:32');
-INSERT INTO `t_sys_log` VALUES (324, 2, 1, 'com.zhengqing.ums.api.mini.MiniUmsUserController.updateUserInfo', 'mini-用户@更新用户信息', '', '新未来宝宝教育', '127.0.0.1', '/mini/api/ums/user/updateUserInfo', 'PUT', '{}', 'dev', 15, 1715340020191019008, '2023-10-20 20:43:01', 1715340020191019008, '2023-10-20 20:43:01');
-INSERT INTO `t_sys_log` VALUES (325, 2, 1, 'com.zhengqing.ums.api.mini.MiniUmsUserController.login', 'mini-用户@小程序登录', '', '未知', '127.0.0.1', '/mini/api/ums/user/login', 'POST', '{}', 'dev', 1634, 0, '2023-10-20 20:43:15', 0, '2023-10-20 20:43:15');
-INSERT INTO `t_sys_log` VALUES (326, 2, 1, 'com.zhengqing.cms.api.mini.MiniCmsJobController.apply', 'mini-内容管理-招聘岗位@申请', '', '新未来宝宝教育', '127.0.0.1', '/mini/api/cms/job/apply', 'POST', '{}', 'dev', 82, 1715340020191019008, '2023-10-20 20:43:22', 1715340020191019008, '2023-10-20 20:43:22');
-INSERT INTO `t_sys_log` VALUES (327, 2, 1, 'com.zhengqing.ums.api.mini.MiniUmsUserController.updateUserInfo', 'mini-用户@更新用户信息', '', '新未来宝宝教育', '127.0.0.1', '/mini/api/ums/user/updateUserInfo', 'PUT', '{}', 'dev', 43, 1715340020191019008, '2023-10-20 20:45:29', 1715340020191019008, '2023-10-20 20:45:29');
-INSERT INTO `t_sys_log` VALUES (328, 2, 1, 'com.zhengqing.ums.api.mini.MiniUmsUserController.login', 'mini-用户@小程序登录', '', '未知', '127.0.0.1', '/mini/api/ums/user/login', 'POST', '{}', 'dev', 1552, 0, '2023-10-20 20:57:29', 0, '2023-10-20 20:57:29');
-INSERT INTO `t_sys_log` VALUES (329, 2, 1, 'com.zhengqing.ums.api.mini.MiniUmsUserController.login', 'mini-用户@小程序登录', '', '未知', '127.0.0.1', '/mini/api/ums/user/login', 'POST', '{}', 'dev', 212, 0, '2023-10-20 21:00:25', 0, '2023-10-20 21:00:25');
-INSERT INTO `t_sys_log` VALUES (330, 2, 1, 'com.zhengqing.ums.api.mini.MiniUmsUserController.login', 'mini-用户@小程序登录', '', '未知', '127.0.0.1', '/mini/api/ums/user/login', 'POST', '{}', 'dev', 315, 0, '2023-10-20 21:01:43', 0, '2023-10-20 21:01:43');
-INSERT INTO `t_sys_log` VALUES (331, 2, 1, 'com.zhengqing.ums.api.mini.MiniUmsUserController.login', 'mini-用户@小程序登录', '', '未知', '127.0.0.1', '/mini/api/ums/user/login', 'POST', '{}', 'dev', 1884, 0, '2023-10-20 21:23:49', 0, '2023-10-20 21:23:49');
-INSERT INTO `t_sys_log` VALUES (332, 2, 1, 'com.zhengqing.ums.api.mini.MiniUmsUserController.bindPhone', 'mini-用户@绑定手机号(需小程序后台进行相关认证)', '', '新未来宝宝教育', '127.0.0.1', '/mini/api/ums/user/bindPhone', 'POST', '{}', 'dev', 3632, 1715340020191019008, '2023-10-20 21:30:54', 1715340020191019008, '2023-10-20 21:30:54');
-INSERT INTO `t_sys_log` VALUES (333, 2, 1, 'com.zhengqing.ums.api.mini.MiniUmsUserController.login', 'mini-用户@小程序登录', '', '未知', '127.0.0.1', '/mini/api/ums/user/login', 'POST', '{}', 'dev', 1606, 0, '2023-10-20 21:35:16', 0, '2023-10-20 21:35:16');
-INSERT INTO `t_sys_log` VALUES (334, 2, 1, 'com.zhengqing.ums.api.mini.MiniUmsUserController.bindPhone', 'mini-用户@绑定手机号(需小程序后台进行相关认证)', '', '新未来宝宝教育', '127.0.0.1', '/mini/api/ums/user/bindPhone', 'POST', '{}', 'dev', 34, 1715340020191019008, '2023-10-20 21:35:21', 1715340020191019008, '2023-10-20 21:35:21');
-INSERT INTO `t_sys_log` VALUES (335, 2, 1, 'com.zhengqing.ums.api.mini.MiniUmsUserController.login', 'mini-用户@小程序登录', '', '未知', '127.0.0.1', '/mini/api/ums/user/login', 'POST', '{}', 'dev', 241, 0, '2023-10-20 21:35:51', 0, '2023-10-20 21:35:51');
-INSERT INTO `t_sys_log` VALUES (336, 2, 1, 'com.zhengqing.ums.api.mini.MiniUmsUserController.login', 'mini-用户@小程序登录', '', '未知', '127.0.0.1', '/mini/api/ums/user/login', 'POST', '{}', 'dev', 252, 0, '2023-10-20 21:37:37', 0, '2023-10-20 21:37:37');
-INSERT INTO `t_sys_log` VALUES (337, 2, 1, 'com.zhengqing.ums.api.mini.MiniUmsUserController.bindPhone', 'mini-用户@绑定手机号(需小程序后台进行相关认证)', '', '新未来宝宝教育', '127.0.0.1', '/mini/api/ums/user/bindPhone', 'POST', '{}', 'dev', 29, 1715340020191019008, '2023-10-20 21:37:44', 1715340020191019008, '2023-10-20 21:37:44');
-INSERT INTO `t_sys_log` VALUES (338, 2, 1, 'com.zhengqing.ums.api.mini.MiniUmsUserController.updateUserInfo', 'mini-用户@更新用户信息', '', '新未来宝宝教育', '127.0.0.1', '/mini/api/ums/user/updateUserInfo', 'PUT', '{}', 'dev', 7, 1715340020191019008, '2023-10-20 21:37:51', 1715340020191019008, '2023-10-20 21:37:51');
-INSERT INTO `t_sys_log` VALUES (339, 2, 1, 'com.zhengqing.ums.api.mini.MiniUmsUserController.login', 'mini-用户@小程序登录', '', '未知', '127.0.0.1', '/mini/api/ums/user/login', 'POST', '{}', 'dev', 252, 0, '2023-10-20 21:38:43', 0, '2023-10-20 21:38:43');
-INSERT INTO `t_sys_log` VALUES (340, 2, 1, 'com.zhengqing.ums.api.mini.MiniUmsUserController.bindPhone', 'mini-用户@绑定手机号(需小程序后台进行相关认证)', '', '新未来宝宝教育', '127.0.0.1', '/mini/api/ums/user/bindPhone', 'POST', '{}', 'dev', 32, 1715340020191019008, '2023-10-20 21:38:48', 1715340020191019008, '2023-10-20 21:38:48');
-INSERT INTO `t_sys_log` VALUES (341, 2, 1, 'com.zhengqing.ums.api.mini.MiniUmsUserController.updateUserInfo', 'mini-用户@更新用户信息', '', '新未来宝宝教育', '127.0.0.1', '/mini/api/ums/user/updateUserInfo', 'PUT', '{}', 'dev', 6, 1715340020191019008, '2023-10-20 21:38:51', 1715340020191019008, '2023-10-20 21:38:51');
 
 -- ----------------------------
 -- Table structure for t_sys_menu
@@ -4825,19 +4691,19 @@ CREATE TABLE `t_sys_role_menu`  (
 -- ----------------------------
 -- Records of t_sys_role_menu
 -- ----------------------------
-INSERT INTO `t_sys_role_menu` VALUES (1, 1, 1, 1, 1, '2023-08-31 16:36:56', 0, '2023-10-20 21:32:08');
-INSERT INTO `t_sys_role_menu` VALUES (2, 1, 1, 3, 1, '2023-08-31 16:36:56', 0, '2023-10-20 21:32:08');
-INSERT INTO `t_sys_role_menu` VALUES (3, 1, 1, 4, 1, '2023-08-31 16:36:56', 0, '2023-10-20 21:32:08');
-INSERT INTO `t_sys_role_menu` VALUES (4, 1, 1, 5, 1, '2023-08-31 16:36:56', 0, '2023-10-20 21:32:08');
-INSERT INTO `t_sys_role_menu` VALUES (5, 1, 1, 6, 1, '2023-08-31 16:36:56', 0, '2023-10-20 21:32:08');
-INSERT INTO `t_sys_role_menu` VALUES (6, 1, 1, 7, 1, '2023-08-31 16:36:56', 0, '2023-10-20 21:32:08');
-INSERT INTO `t_sys_role_menu` VALUES (28, 1, 1, 30, 1, '2023-09-28 11:50:35', 0, '2023-10-20 21:32:09');
-INSERT INTO `t_sys_role_menu` VALUES (50, 1, 1, 33, 1, '2023-10-09 18:39:53', 0, '2023-10-20 21:32:09');
-INSERT INTO `t_sys_role_menu` VALUES (55, 1, 1, 35, 1, '2023-10-10 16:48:38', 0, '2023-10-20 21:32:09');
-INSERT INTO `t_sys_role_menu` VALUES (56, 1, 1, 36, 1, '2023-10-10 16:48:38', 0, '2023-10-20 21:32:09');
-INSERT INTO `t_sys_role_menu` VALUES (57, 1, 1, 37, 1, '2023-10-10 16:48:38', 0, '2023-10-20 21:32:09');
-INSERT INTO `t_sys_role_menu` VALUES (58, 1, 1, 38, 1, '2023-10-10 16:48:38', 0, '2023-10-20 21:32:09');
-INSERT INTO `t_sys_role_menu` VALUES (59, 1, 1, 39, 1, '2023-10-10 18:24:07', 0, '2023-10-20 21:32:09');
+INSERT INTO `t_sys_role_menu` VALUES (1, 1, 1, 1, 1, '2023-08-31 16:36:56', 0, '2023-10-20 21:55:57');
+INSERT INTO `t_sys_role_menu` VALUES (2, 1, 1, 3, 1, '2023-08-31 16:36:56', 0, '2023-10-20 21:55:57');
+INSERT INTO `t_sys_role_menu` VALUES (3, 1, 1, 4, 1, '2023-08-31 16:36:56', 0, '2023-10-20 21:55:57');
+INSERT INTO `t_sys_role_menu` VALUES (4, 1, 1, 5, 1, '2023-08-31 16:36:56', 0, '2023-10-20 21:55:57');
+INSERT INTO `t_sys_role_menu` VALUES (5, 1, 1, 6, 1, '2023-08-31 16:36:56', 0, '2023-10-20 21:55:57');
+INSERT INTO `t_sys_role_menu` VALUES (6, 1, 1, 7, 1, '2023-08-31 16:36:56', 0, '2023-10-20 21:55:57');
+INSERT INTO `t_sys_role_menu` VALUES (28, 1, 1, 30, 1, '2023-09-28 11:50:35', 0, '2023-10-20 21:55:57');
+INSERT INTO `t_sys_role_menu` VALUES (50, 1, 1, 33, 1, '2023-10-09 18:39:53', 0, '2023-10-20 21:55:57');
+INSERT INTO `t_sys_role_menu` VALUES (55, 1, 1, 35, 1, '2023-10-10 16:48:38', 0, '2023-10-20 21:55:57');
+INSERT INTO `t_sys_role_menu` VALUES (56, 1, 1, 36, 1, '2023-10-10 16:48:38', 0, '2023-10-20 21:55:57');
+INSERT INTO `t_sys_role_menu` VALUES (57, 1, 1, 37, 1, '2023-10-10 16:48:38', 0, '2023-10-20 21:55:57');
+INSERT INTO `t_sys_role_menu` VALUES (58, 1, 1, 38, 1, '2023-10-10 16:48:38', 0, '2023-10-20 21:55:57');
+INSERT INTO `t_sys_role_menu` VALUES (59, 1, 1, 39, 1, '2023-10-10 18:24:07', 0, '2023-10-20 21:55:57');
 INSERT INTO `t_sys_role_menu` VALUES (60, 2, 8, 5, 1, '2023-10-10 18:42:22', 1, '2023-10-20 19:42:31');
 INSERT INTO `t_sys_role_menu` VALUES (61, 2, 8, 6, 1, '2023-10-10 18:42:22', 1, '2023-10-20 19:42:31');
 INSERT INTO `t_sys_role_menu` VALUES (62, 2, 8, 7, 1, '2023-10-10 18:42:22', 1, '2023-10-20 19:42:31');
@@ -4864,11 +4730,11 @@ INSERT INTO `t_sys_role_menu` VALUES (102, 1, 10, 4, 1, '2023-10-13 16:53:09', 1
 INSERT INTO `t_sys_role_menu` VALUES (103, 1, 10, 5, 1, '2023-10-13 16:53:09', 1, '2023-10-18 20:18:56');
 INSERT INTO `t_sys_role_menu` VALUES (104, 1, 10, 6, 1, '2023-10-13 16:53:09', 1, '2023-10-18 20:18:56');
 INSERT INTO `t_sys_role_menu` VALUES (105, 1, 10, 7, 1, '2023-10-13 16:53:09', 1, '2023-10-18 20:18:56');
-INSERT INTO `t_sys_role_menu` VALUES (132, 1, 1, 41, 1, '2023-10-15 14:05:10', 0, '2023-10-20 21:32:09');
-INSERT INTO `t_sys_role_menu` VALUES (141, 1, 1, 45, 1, '2023-10-17 16:01:23', 0, '2023-10-20 21:32:09');
-INSERT INTO `t_sys_role_menu` VALUES (142, 1, 1, 46, 1, '2023-10-17 16:01:50', 0, '2023-10-20 21:32:09');
-INSERT INTO `t_sys_role_menu` VALUES (143, 1, 1, 47, 1, '2023-10-17 16:02:10', 0, '2023-10-20 21:32:09');
-INSERT INTO `t_sys_role_menu` VALUES (144, 1, 1, 44, 1, '2023-10-17 16:22:04', 0, '2023-10-20 21:32:09');
+INSERT INTO `t_sys_role_menu` VALUES (132, 1, 1, 41, 1, '2023-10-15 14:05:10', 0, '2023-10-20 21:55:57');
+INSERT INTO `t_sys_role_menu` VALUES (141, 1, 1, 45, 1, '2023-10-17 16:01:23', 0, '2023-10-20 21:55:57');
+INSERT INTO `t_sys_role_menu` VALUES (142, 1, 1, 46, 1, '2023-10-17 16:01:50', 0, '2023-10-20 21:55:57');
+INSERT INTO `t_sys_role_menu` VALUES (143, 1, 1, 47, 1, '2023-10-17 16:02:10', 0, '2023-10-20 21:55:57');
+INSERT INTO `t_sys_role_menu` VALUES (144, 1, 1, 44, 1, '2023-10-17 16:22:04', 0, '2023-10-20 21:55:57');
 INSERT INTO `t_sys_role_menu` VALUES (145, 2, 8, 44, 1, '2023-10-17 17:03:16', 1, '2023-10-20 19:42:31');
 INSERT INTO `t_sys_role_menu` VALUES (146, 2, 8, 45, 1, '2023-10-17 17:03:16', 1, '2023-10-20 19:42:31');
 INSERT INTO `t_sys_role_menu` VALUES (147, 2, 8, 46, 1, '2023-10-17 17:03:16', 1, '2023-10-20 19:42:31');
@@ -4903,33 +4769,33 @@ INSERT INTO `t_sys_role_menu` VALUES (204, 1, 11, 36, 1, '2023-10-20 17:49:44', 
 INSERT INTO `t_sys_role_menu` VALUES (205, 1, 11, 37, 1, '2023-10-20 17:49:44', 2, '2023-10-20 19:37:55');
 INSERT INTO `t_sys_role_menu` VALUES (206, 1, 11, 38, 1, '2023-10-20 17:49:44', 2, '2023-10-20 19:37:55');
 INSERT INTO `t_sys_role_menu` VALUES (207, 1, 11, 39, 1, '2023-10-20 17:49:44', 2, '2023-10-20 19:37:55');
-INSERT INTO `t_sys_role_menu` VALUES (208, 1, 1, 2, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:32:08');
-INSERT INTO `t_sys_role_menu` VALUES (209, 1, 1, 9, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:32:08');
-INSERT INTO `t_sys_role_menu` VALUES (210, 1, 1, 10, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:32:08');
-INSERT INTO `t_sys_role_menu` VALUES (211, 1, 1, 11, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:32:08');
-INSERT INTO `t_sys_role_menu` VALUES (212, 1, 1, 12, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:32:08');
-INSERT INTO `t_sys_role_menu` VALUES (213, 1, 1, 13, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:32:08');
-INSERT INTO `t_sys_role_menu` VALUES (214, 1, 1, 14, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:32:08');
-INSERT INTO `t_sys_role_menu` VALUES (215, 1, 1, 15, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:32:08');
-INSERT INTO `t_sys_role_menu` VALUES (216, 1, 1, 16, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:32:08');
-INSERT INTO `t_sys_role_menu` VALUES (217, 1, 1, 17, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:32:08');
-INSERT INTO `t_sys_role_menu` VALUES (218, 1, 1, 18, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:32:08');
-INSERT INTO `t_sys_role_menu` VALUES (219, 1, 1, 19, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:32:08');
-INSERT INTO `t_sys_role_menu` VALUES (220, 1, 1, 20, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:32:08');
-INSERT INTO `t_sys_role_menu` VALUES (221, 1, 1, 21, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:32:08');
-INSERT INTO `t_sys_role_menu` VALUES (222, 1, 1, 22, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:32:08');
-INSERT INTO `t_sys_role_menu` VALUES (223, 1, 1, 23, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:32:09');
-INSERT INTO `t_sys_role_menu` VALUES (224, 1, 1, 24, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:32:09');
-INSERT INTO `t_sys_role_menu` VALUES (225, 1, 1, 25, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:32:09');
-INSERT INTO `t_sys_role_menu` VALUES (226, 1, 1, 27, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:32:09');
-INSERT INTO `t_sys_role_menu` VALUES (227, 1, 1, 28, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:32:09');
-INSERT INTO `t_sys_role_menu` VALUES (228, 1, 1, 29, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:32:09');
-INSERT INTO `t_sys_role_menu` VALUES (229, 1, 1, 31, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:32:09');
-INSERT INTO `t_sys_role_menu` VALUES (230, 1, 1, 32, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:32:09');
-INSERT INTO `t_sys_role_menu` VALUES (231, 1, 1, 34, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:32:09');
-INSERT INTO `t_sys_role_menu` VALUES (232, 1, 1, 40, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:32:09');
-INSERT INTO `t_sys_role_menu` VALUES (233, 1, 1, 48, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:32:09');
-INSERT INTO `t_sys_role_menu` VALUES (234, 1, 1, 50, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:32:09');
+INSERT INTO `t_sys_role_menu` VALUES (208, 1, 1, 2, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:55:57');
+INSERT INTO `t_sys_role_menu` VALUES (209, 1, 1, 9, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:55:57');
+INSERT INTO `t_sys_role_menu` VALUES (210, 1, 1, 10, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:55:57');
+INSERT INTO `t_sys_role_menu` VALUES (211, 1, 1, 11, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:55:57');
+INSERT INTO `t_sys_role_menu` VALUES (212, 1, 1, 12, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:55:57');
+INSERT INTO `t_sys_role_menu` VALUES (213, 1, 1, 13, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:55:57');
+INSERT INTO `t_sys_role_menu` VALUES (214, 1, 1, 14, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:55:57');
+INSERT INTO `t_sys_role_menu` VALUES (215, 1, 1, 15, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:55:57');
+INSERT INTO `t_sys_role_menu` VALUES (216, 1, 1, 16, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:55:57');
+INSERT INTO `t_sys_role_menu` VALUES (217, 1, 1, 17, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:55:57');
+INSERT INTO `t_sys_role_menu` VALUES (218, 1, 1, 18, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:55:57');
+INSERT INTO `t_sys_role_menu` VALUES (219, 1, 1, 19, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:55:57');
+INSERT INTO `t_sys_role_menu` VALUES (220, 1, 1, 20, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:55:57');
+INSERT INTO `t_sys_role_menu` VALUES (221, 1, 1, 21, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:55:57');
+INSERT INTO `t_sys_role_menu` VALUES (222, 1, 1, 22, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:55:57');
+INSERT INTO `t_sys_role_menu` VALUES (223, 1, 1, 23, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:55:57');
+INSERT INTO `t_sys_role_menu` VALUES (224, 1, 1, 24, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:55:57');
+INSERT INTO `t_sys_role_menu` VALUES (225, 1, 1, 25, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:55:57');
+INSERT INTO `t_sys_role_menu` VALUES (226, 1, 1, 27, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:55:57');
+INSERT INTO `t_sys_role_menu` VALUES (227, 1, 1, 28, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:55:57');
+INSERT INTO `t_sys_role_menu` VALUES (228, 1, 1, 29, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:55:57');
+INSERT INTO `t_sys_role_menu` VALUES (229, 1, 1, 31, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:55:57');
+INSERT INTO `t_sys_role_menu` VALUES (230, 1, 1, 32, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:55:57');
+INSERT INTO `t_sys_role_menu` VALUES (231, 1, 1, 34, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:55:57');
+INSERT INTO `t_sys_role_menu` VALUES (232, 1, 1, 40, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:55:57');
+INSERT INTO `t_sys_role_menu` VALUES (233, 1, 1, 48, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:55:57');
+INSERT INTO `t_sys_role_menu` VALUES (234, 1, 1, 50, 0, '2023-10-20 17:54:47', 0, '2023-10-20 21:55:57');
 INSERT INTO `t_sys_role_menu` VALUES (235, 1, 2, 1, 1, '2023-10-20 18:12:51', 1, '2023-10-20 19:08:20');
 INSERT INTO `t_sys_role_menu` VALUES (240, 1, 2, 3, 1, '2023-10-20 18:12:51', 1, '2023-10-20 19:08:20');
 INSERT INTO `t_sys_role_menu` VALUES (241, 1, 2, 4, 1, '2023-10-20 18:12:51', 1, '2023-10-20 19:08:20');
@@ -5088,6 +4954,7 @@ CREATE TABLE `t_sys_user`  (
   `dept_id` int(11) NULL DEFAULT NULL COMMENT '部门id',
   `post_id_list` json NULL COMMENT '岗位ids',
   `is_fixed` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否固定(0->否 1->是)',
+  `mini_user_id` bigint(20) NULL DEFAULT NULL COMMENT '小程序用户id',
   `create_by` bigint(20) NOT NULL COMMENT '创建人',
   `create_time` datetime NOT NULL COMMENT '创建时间',
   `update_by` bigint(20) NOT NULL COMMENT '修改人',
@@ -5099,13 +4966,13 @@ CREATE TABLE `t_sys_user`  (
 -- ----------------------------
 -- Records of t_sys_user
 -- ----------------------------
-INSERT INTO `t_sys_user` VALUES (1, 1, 'superadmin', '3014dcb9ee3639535d5d9301b32c840c', '超级管理员', 1, '15188888888', 'zhengqingya@it.com', 'http://127.0.0.1:886/2023-09-28/1707276699923857408-美图35.jpg', NULL, '[]', 1, 1, '2020-08-22 15:01:51', 1, '2023-10-20 19:25:28', 0);
-INSERT INTO `t_sys_user` VALUES (2, 1, 'admin', '3014dcb9ee3639535d5d9301b32c840c', '系统管理员', 0, '', '', 'http://127.0.0.1:886/2023-10-08/1710975930417258496-小知识.jpg', NULL, '[]', 1, 1, '2020-08-22 15:01:51', 1, '2023-10-20 19:37:39', 0);
-INSERT INTO `t_sys_user` VALUES (5, 2, 'admin', '3014dcb9ee3639535d5d9301b32c840c', 'admin管理员', 0, '15188888888', '', 'http://127.0.0.1:886/2023-10-18/1714458689177530368-美图84.png', NULL, '[8]', 1, 1, '2023-10-10 18:42:24', 5, '2023-10-19 17:47:26', 0);
-INSERT INTO `t_sys_user` VALUES (6, 2, 'test', '3014dcb9ee3639535d5d9301b32c840c', '测试主播2', 0, '', '', 'http://127.0.0.1:886/2023-10-10/1711694989127454720-小知识.jpg', 5, '[9]', 0, 5, '2023-10-10 19:47:22', 5, '2023-10-19 17:48:43', 0);
-INSERT INTO `t_sys_user` VALUES (22, 2, 'zb1', '3014dcb9ee3639535d5d9301b32c840c', '主播A', 0, NULL, NULL, NULL, 5, '[]', 0, 5, '2023-10-19 17:41:20', 5, '2023-10-19 17:41:20', 0);
-INSERT INTO `t_sys_user` VALUES (23, 2, 'hrcompany', '3014dcb9ee3639535d5d9301b32c840c', '人力资源招聘有限公司管理员', 0, NULL, NULL, NULL, 5, NULL, 0, 5, '2023-10-19 18:42:45', 5, '2023-10-19 18:42:45', 0);
-INSERT INTO `t_sys_user` VALUES (24, 2, 'testc', '3014dcb9ee3639535d5d9301b32c840c', '测试企业管理员', 0, NULL, NULL, NULL, 10, NULL, 0, 5, '2023-10-19 18:43:44', 5, '2023-10-19 18:43:44', 0);
+INSERT INTO `t_sys_user` VALUES (1, 1, 'superadmin', '3014dcb9ee3639535d5d9301b32c840c', '超级管理员', 1, '15188888888', 'zhengqingya@it.com', 'http://127.0.0.1:886/2023-09-28/1707276699923857408-美图35.jpg', NULL, '[]', 1, NULL, 1, '2020-08-22 15:01:51', 1, '2023-10-20 19:25:28', 0);
+INSERT INTO `t_sys_user` VALUES (2, 1, 'admin', '3014dcb9ee3639535d5d9301b32c840c', '系统管理员', 0, '', '', 'http://127.0.0.1:886/2023-10-08/1710975930417258496-小知识.jpg', NULL, '[]', 1, NULL, 1, '2020-08-22 15:01:51', 1, '2023-10-20 19:37:39', 0);
+INSERT INTO `t_sys_user` VALUES (5, 2, 'admin', '3014dcb9ee3639535d5d9301b32c840c', 'admin管理员', 0, '15188888888', '', 'http://127.0.0.1:886/2023-10-18/1714458689177530368-美图84.png', NULL, '[8]', 1, NULL, 1, '2023-10-10 18:42:24', 5, '2023-10-19 17:47:26', 0);
+INSERT INTO `t_sys_user` VALUES (6, 2, 'test', '3014dcb9ee3639535d5d9301b32c840c', '测试主播2', 0, '', '', 'http://127.0.0.1:886/2023-10-10/1711694989127454720-小知识.jpg', 5, '[9]', 0, NULL, 5, '2023-10-10 19:47:22', 5, '2023-10-19 17:48:43', 0);
+INSERT INTO `t_sys_user` VALUES (22, 2, 'zb1', '3014dcb9ee3639535d5d9301b32c840c', '主播A', 0, NULL, NULL, NULL, 5, '[]', 0, NULL, 5, '2023-10-19 17:41:20', 5, '2023-10-19 17:41:20', 0);
+INSERT INTO `t_sys_user` VALUES (23, 2, 'hrcompany', '3014dcb9ee3639535d5d9301b32c840c', '人力资源招聘有限公司管理员', 0, NULL, NULL, NULL, 5, NULL, 0, NULL, 5, '2023-10-19 18:42:45', 5, '2023-10-19 18:42:45', 0);
+INSERT INTO `t_sys_user` VALUES (24, 2, 'testc', '3014dcb9ee3639535d5d9301b32c840c', '测试企业管理员', 0, NULL, NULL, NULL, 10, NULL, 0, NULL, 5, '2023-10-19 18:43:44', 5, '2023-10-19 18:43:44', 0);
 
 -- ----------------------------
 -- Table structure for t_sys_user_re_oauth
@@ -5147,7 +5014,7 @@ CREATE TABLE `t_sys_user_role`  (
 -- ----------------------------
 -- Records of t_sys_user_role
 -- ----------------------------
-INSERT INTO `t_sys_user_role` VALUES (1, 1, 1, 1, 0, '2023-08-31 15:54:57', 0, '2023-10-20 21:32:08');
+INSERT INTO `t_sys_user_role` VALUES (1, 1, 1, 1, 0, '2023-08-31 15:54:57', 0, '2023-10-20 21:55:57');
 INSERT INTO `t_sys_user_role` VALUES (7, 2, 5, 8, 1, '2023-10-10 18:42:24', 1, '2023-10-10 18:42:24');
 INSERT INTO `t_sys_user_role` VALUES (8, 2, 6, 9, 5, '2023-10-10 19:47:41', 5, '2023-10-19 17:48:43');
 INSERT INTO `t_sys_user_role` VALUES (10, 1, 8, 10, 1, '2023-10-13 15:16:12', 1, '2023-10-13 15:16:12');

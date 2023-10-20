@@ -33,30 +33,30 @@
 
         <!-- flink-cdc-connectors https://github.com/ververica/flink-cdc-connectors-->
         <!-- https://mvnrepository.com/artifact/com.ververica/flink-connector-mysql-cdc -->
-        <dependency>
-            <groupId>com.ververica</groupId>
-            <artifactId>flink-connector-mysql-cdc</artifactId>
-            <version>2.2.1</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.flink/flink-streaming-java -->
-        <dependency>
-            <groupId>org.apache.flink</groupId>
-            <artifactId>flink-streaming-java_2.12</artifactId>
-            <version>1.13.6</version>
-            <scope>provided</scope>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.flink/flink-clients -->
-        <dependency>
-            <groupId>org.apache.flink</groupId>
-            <artifactId>flink-clients_2.12</artifactId>
-            <version>1.13.6</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.flink/flink-java -->
-        <dependency>
-            <groupId>org.apache.flink</groupId>
-            <artifactId>flink-java</artifactId>
-            <version>1.13.6</version>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>com.ververica</groupId>-->
+        <!--            <artifactId>flink-connector-mysql-cdc</artifactId>-->
+        <!--            <version>2.2.1</version>-->
+        <!--        </dependency>-->
+        <!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.flink/flink-streaming-java &ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.apache.flink</groupId>-->
+        <!--            <artifactId>flink-streaming-java_2.12</artifactId>-->
+        <!--            <version>1.13.6</version>-->
+        <!--            <scope>provided</scope>-->
+        <!--        </dependency>-->
+        <!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.flink/flink-clients &ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.apache.flink</groupId>-->
+        <!--            <artifactId>flink-clients_2.12</artifactId>-->
+        <!--            <version>1.13.6</version>-->
+        <!--        </dependency>-->
+        <!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.flink/flink-java &ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.apache.flink</groupId>-->
+        <!--            <artifactId>flink-java</artifactId>-->
+        <!--            <version>1.13.6</version>-->
+        <!--        </dependency>-->
 
         <!-- 解决报错 java.lang.NoSuchMethodError: org.apache.commons.io.IOUtils.closeQuietly(Ljava/io/Closeable;)V -->
         <dependency>
