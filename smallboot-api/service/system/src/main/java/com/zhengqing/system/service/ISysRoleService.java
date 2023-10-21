@@ -43,6 +43,16 @@ public interface ISysRoleService extends IService<SysRole> {
     List<SysRoleBaseVO> list(SysRoleBaseDTO params);
 
     /**
+     * 详情
+     *
+     * @param roleId 角色ID
+     * @return 角色信息
+     * @author zhengqingya
+     * @date 2020/9/10 14:45
+     */
+    SysRole detail(Integer roleId);
+
+    /**
      * 角色id -> 角色名
      *
      * @param roleIdList 角色ids

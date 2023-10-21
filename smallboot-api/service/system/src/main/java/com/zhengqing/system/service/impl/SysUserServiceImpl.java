@@ -1,5 +1,6 @@
 package com.zhengqing.system.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -92,9 +93,16 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         userList.forEach(item -> {
             List<Integer> itemRoleIdList = mapRoleInfo.get(item.getUserId());
             item.setRoleIdList(itemRoleIdList);
-            StringJoiner sj = new StringJoiner(",");
-            itemRoleIdList.forEach(roleIdItem -> sj.add(roleNameMap.get(roleIdItem)));
-            item.setRoLeNames(sj.toString());
+            if (CollUtil.isNotEmpty(itemRoleIdList)) {
+                StringJoiner sj = new StringJoiner(",");
+                itemRoleIdList.forEach(roleIdItem -> {
+                    String itemRoleName = roleNameMap.get(roleIdItem);
+                    if (StrUtil.isNotBlank(itemRoleName)) {
+                        sj.add(itemRoleName);
+                    }
+                });
+                item.setRoLeNames(sj.toString());
+            }
             item.handleData();
         });
     }

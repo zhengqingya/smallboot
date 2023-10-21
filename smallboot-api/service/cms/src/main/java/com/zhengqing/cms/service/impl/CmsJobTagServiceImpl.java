@@ -66,7 +66,6 @@ public class CmsJobTagServiceImpl extends ServiceImpl<CmsJobTagMapper, CmsJobTag
 
         CmsJobTag.builder()
                 .id(params.getId())
-                .merchantId(params.getMerchantId())
                 .deptId(params.getDeptId())
                 .name(params.getName())
                 .sort(params.getSort())

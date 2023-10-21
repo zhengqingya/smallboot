@@ -86,6 +86,12 @@ public class SysUserPermVO extends BaseVO implements HandleParam {
     @ApiModelProperty(value = "可访问的菜单+按钮权限")
     private List<SysMenuTree> permissionTreeList;
 
+    // ================= ↓↓↓↓↓↓ 租户信息 ↓↓↓↓↓↓ =================
+
+    @ApiModelProperty(value = "租户名")
+    private String tenantName;
+
+
     @Override
     public void handleParam() {
 

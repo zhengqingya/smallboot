@@ -8,8 +8,10 @@ import com.google.common.collect.Maps;
 import com.zhengqing.common.auth.util.AuthUtil;
 import com.zhengqing.common.base.constant.AppConstant;
 import com.zhengqing.common.base.constant.SecurityConstant;
+import com.zhengqing.common.base.context.JwtUserContext;
 import com.zhengqing.common.base.context.TenantIdContext;
 import com.zhengqing.common.base.enums.SysRoleCodeEnum;
+import com.zhengqing.common.base.util.MyBeanUtil;
 import com.zhengqing.common.db.util.TenantUtil;
 import com.zhengqing.common.redis.util.RedisUtil;
 import com.zhengqing.system.entity.SysRole;
@@ -19,6 +21,7 @@ import com.zhengqing.system.model.bo.SysMenuTree;
 import com.zhengqing.system.model.dto.*;
 import com.zhengqing.system.model.vo.SysRoleAllPermissionDetailVO;
 import com.zhengqing.system.model.vo.SysRoleReBtnPermListVO;
+import com.zhengqing.system.model.vo.SysTenantListVO;
 import com.zhengqing.system.model.vo.SysUserPermVO;
 import com.zhengqing.system.service.*;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +34,7 @@ import org.springframework.util.CollectionUtils;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -87,6 +91,10 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
 
         // 2、权限树
         userPerm.setPermissionTreeList(this.iSysMenuService.tree(SysMenuTreeDTO.builder().roleIdList(userPerm.getRoleIdList()).isOnlyShowPerm(true).build()));
+
+        // 3、租户信息
+        SysTenant sysTenant = this.iSysTenantService.detail(TenantIdContext.getTenantId());
+        userPerm.setTenantName(sysTenant.getName());
 
         userPerm.handleData();
         return userPerm;
@@ -173,6 +181,37 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
     @Transactional(rollbackFor = Exception.class)
     public void saveRoleRePerm(SysRoleRePermSaveDTO params) {
         Integer roleId = params.getRoleId();
+        SysRole sysRole = this.iSysRoleService.detail(roleId);
+        Boolean isRefreshAllTenant = sysRole.getIsRefreshAllTenant();
+        Integer tenantId = TenantIdContext.getTenantId();
+
+        if (isRefreshAllTenant) {
+            Assert.isTrue(JwtUserContext.hasSuperAdmin(), "只有超管才有权限同步更新所有租户下的角色权限数据！");
+            // 刷新所有租户权限数据
+            List<SysTenantListVO> tenantList = this.iSysTenantService.list(SysTenantListDTO.builder().build());
+            tenantList.forEach(item -> TenantUtil.executeByTenantId(item.getId(), () -> {
+                Integer tenantIdItem = TenantIdContext.getTenantId();
+                if (!Objects.equals(tenantId, tenantIdItem)) {
+                    // 角色信息
+                    SysRoleSaveDTO sysRoleSaveDTO = MyBeanUtil.copyProperties(sysRole, SysRoleSaveDTO.class);
+                    sysRoleSaveDTO.setRoleId(null);
+                    Integer tenantReRoleId = this.iSysRoleService.addOrUpdateData(sysRoleSaveDTO);
+
+                    // 设置租户对应的角色id
+                    params.setRoleId(tenantReRoleId);
+                }
+
+                // 角色关联权限数据（菜单&数据权限）
+                this.baseSaveRoleRePerm(params);
+            }));
+        } else {
+            this.baseSaveRoleRePerm(params);
+        }
+    }
+
+    private void baseSaveRoleRePerm(SysRoleRePermSaveDTO params) {
+        Integer roleId = params.getRoleId();
+        // 角色关联权限数据（菜单&数据权限）
         this.iSysRoleMenuService.saveRoleMenuIds(
                 SysRoleReMenuSaveDTO.builder()
                         .roleId(roleId)

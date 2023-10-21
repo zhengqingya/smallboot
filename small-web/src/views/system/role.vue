@@ -10,20 +10,25 @@
 
     <base-content>
       <base-table row-key="roleId" :tree-props="{ children: 'children', hasChildren: 'hasChildren' }" :data="dataList" default-expand-all>
-        <el-table-column prop="name" label="角色名" />
-        <el-table-column prop="code" label="角色编码">
+        <el-table-column prop="name" label="角色名" align="center" />
+        <el-table-column prop="code" label="角色编码" align="center">
           <template #default="scope">
             <el-tag v-if="scope.row.isFixed" type="success"> {{ scope.row.code }}</el-tag>
             <el-tag v-else type="info"> {{ scope.row.code }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="code" label="固定角色">
+        <el-table-column prop="code" align="center" label="固定角色">
           <template #default="scope">
             <base-tag v-model="scope.row.isFixed" data-type="yes" />
           </template>
         </el-table-column>
-        <el-table-column prop="sort" label="排序" />
-        <el-table-column label="操作" align="center" width="250">
+        <el-table-column prop="code" align="center" label="是否同步更新所有租户角色权限">
+          <template #default="scope">
+            <base-tag v-model="scope.row.isRefreshAllTenant" data-type="yes" />
+          </template>
+        </el-table-column>
+        <el-table-column prop="sort" label="排序" align="center" />
+        <el-table-column label="操作" align="center" width="230">
           <template #default="scope">
             <!--  固定角色=系统管理员 时 只有超级管机员才能编辑 -->
             <el-button v-if="!scope.row.isFixed || (scope.row.isFixed && scope.row.code == 'system_admin' && userObj.userId == 1)" link @click="update(scope.row)">编辑</el-button>
@@ -55,7 +60,7 @@
           <el-input v-model="roleForm.name" placeholder="请输入角色名" />
         </el-form-item>
         <el-form-item label="角色编码：" prop="code">
-          <el-input v-model="roleForm.code" placeholder="请输入角色编码" />
+          <el-input v-model="roleForm.code" :disabled="roleForm.roleId" placeholder="请输入角色编码" />
         </el-form-item>
         <el-form-item label="排序：" prop="sort">
           <el-input-number v-model="roleForm.sort" :min="1" controls-position="right" placeholder="请输入排序" />

@@ -4,7 +4,7 @@
     :style="{
       'background-color': menuType === 1 ? '#304156' : '#fff',
     }">
-    <h1 style="width: 200px" class="flex-center-center p-y-10 text-color-primary">SmallBoot</h1>
+    <h1 style="width: 200px; font-size: 20px; height: 50px" class="flex-center-center text-color-primary">{{ userObj.tenantName }}</h1>
     <el-menu
       v-if="menuType === 1"
       background-color="#304156"
@@ -46,7 +46,7 @@
 import sidebarItem from './sidebar-item.vue';
 import { getCurrentInstance, toRefs } from 'vue';
 const { proxy } = getCurrentInstance();
-let { routerList, routerMap } = toRefs(proxy.$store.user.useUserStore());
+let { userObj, routerList, routerMap } = toRefs(proxy.$store.user.useUserStore());
 let { activeTabs } = proxy.$store.settings.useSettingsStore();
 let { menuType } = toRefs(proxy.$store.settings.useSettingsStore());
 

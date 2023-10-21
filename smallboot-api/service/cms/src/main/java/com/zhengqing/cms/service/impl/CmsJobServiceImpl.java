@@ -98,7 +98,6 @@ public class CmsJobServiceImpl extends ServiceImpl<CmsJobMapper, CmsJob> impleme
 
         CmsJob.builder()
                 .id(params.getId())
-                .merchantId(deptId)
                 .deptId(params.getDeptId())
                 .name(params.getName())
                 .postId(params.getPostId())

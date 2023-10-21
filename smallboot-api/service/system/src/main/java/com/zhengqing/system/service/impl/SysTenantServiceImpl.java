@@ -144,7 +144,8 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
                                 .name(SysRoleCodeEnum.租户管理员.getName())
                                 .code(SysRoleCodeEnum.租户管理员.getCode())
                                 .isFixed(true)
-                                .sort(2)
+                                .isRefreshAllTenant(true)
+                                .sort(SysRoleCodeEnum.租户管理员.getSort())
                                 .build()
                 );
                 // 默认创建商户管理员，权限由租户自己单独分配

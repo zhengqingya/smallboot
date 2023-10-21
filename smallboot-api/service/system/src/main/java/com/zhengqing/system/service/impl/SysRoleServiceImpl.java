@@ -58,6 +58,13 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     }
 
     @Override
+    public SysRole detail(Integer roleId) {
+        SysRole sysRole = this.sysRoleMapper.selectById(roleId);
+        Assert.notNull(sysRole, "角色不存在！");
+        return sysRole;
+    }
+
+    @Override
     public Map<Integer, String> mapByRoleIdList(List<Integer> roleIdList) {
         List<SysRole> list = this.sysRoleMapper.selectList(new LambdaQueryWrapper<SysRole>().in(SysRole::getRoleId, roleIdList));
         return list.stream().collect(Collectors.toMap(SysRole::getRoleId, SysRole::getName, (oldData, newData) -> newData));
@@ -129,26 +136,37 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Integer addOrUpdateData(SysRoleSaveDTO params) {
+        Integer roleId = params.getRoleId();
         String code = params.getCode();
+        Boolean isRefreshAllTenant = params.getIsRefreshAllTenant();
         Assert.isFalse(SysRoleCodeEnum.CODE_LIST.contains(code) && !JwtUserContext.hasSuperAdmin(), "只有超管才有权限操作特殊角色！");
 
-        // 校验名称是否重复
-        SysRole sysRoleOld = this.sysRoleMapper.selectOne(new LambdaQueryWrapper<SysRole>().eq(SysRole::getName, params.getName()).last(MybatisConstant.LIMIT_ONE));
+        SysRole sysRoleOld = this.sysRoleMapper.selectOne(new LambdaQueryWrapper<SysRole>().eq(SysRole::getCode, code).last(MybatisConstant.LIMIT_ONE));
         if (!JwtUserContext.hasSuperAdmin()) {
             Assert.isTrue(sysRoleOld == null || !sysRoleOld.getIsFixed(), "您没有权限操作固定角色！");
         }
-        Assert.isTrue(sysRoleOld == null || sysRoleOld.getRoleId().equals(params.getRoleId()), "名称重复，请重新输入！");
+        if (!isRefreshAllTenant) {
+            Assert.isTrue(sysRoleOld == null || sysRoleOld.getRoleId().equals(roleId), "角色编码重复，请重新输入！");
+        }
 
+        if (isRefreshAllTenant && sysRoleOld != null) {
+            // 查询如果有同编码的角色数据则做更新处理 -- 目的：保证各租户下都存在一个唯一的 此角色 信息
+            roleId = sysRoleOld.getRoleId();
+        }
+
+        // 保存角色
         SysRole sysRole = SysRole.builder()
-                .roleId(params.getRoleId())
+                .roleId(roleId)
                 .parentId(params.getParentId())
                 .name(params.getName())
                 .code(code)
                 .status(params.getStatus())
                 .isFixed(params.getIsFixed())
+                .isRefreshAllTenant(isRefreshAllTenant)
                 .sort(params.getSort())
                 .build();
         sysRole.insertOrUpdate();
+
         return sysRole.getRoleId();
     }
 

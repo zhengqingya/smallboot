@@ -33,9 +33,6 @@ public class CmsJobCategorySaveDTO extends BaseDTO {
     private Integer id;
 
 
-    @ApiModelProperty(value = "商户ID")
-    private Integer merchantId;
-
     @NotNull(message = "请选择归属企业！")
     @ApiModelProperty("部门id")
     private Integer deptId;

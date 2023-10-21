@@ -2,6 +2,7 @@ package com.zhengqing.common.core.api;
 
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.CharsetUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.servlet.ServletUtil;
 import com.zhengqing.common.base.context.JwtUserContext;
 import com.zhengqing.common.base.context.SysUserContext;
@@ -82,11 +83,14 @@ public class BaseController {
      * @author zhengqingya
      * @date 2020/8/30 15:41
      */
-    protected String getMiniShareSysUserId() {
+    protected Integer getMiniShareSysUserId() {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
         String shareSysUserId = ServletUtil.getHeader(request, "SHARE_SYS_USER_ID", CharsetUtil.UTF_8);
-        return shareSysUserId;
+        if (StrUtil.isBlank(shareSysUserId)) {
+            return null;
+        }
+        return Integer.valueOf(shareSysUserId);
     }
 
 }

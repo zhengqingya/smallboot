@@ -47,6 +47,9 @@ public class SysRoleBaseVO extends BaseVO {
     @ApiModelProperty(value = "排序")
     private Integer sort;
 
+    @ApiModelProperty(value = "是否刷新所有租户权限数据(false->否 true->是)")
+    private Boolean isRefreshAllTenant;
+
     @ApiModelProperty("子级")
     private List<SysRoleBaseVO> children;
 

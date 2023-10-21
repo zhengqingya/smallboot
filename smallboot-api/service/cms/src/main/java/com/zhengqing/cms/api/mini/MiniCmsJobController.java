@@ -50,7 +50,8 @@ public class MiniCmsJobController extends BaseController {
     @GetMapping("page")
     @ApiOperation("分页列表")
     public IPage<CmsJobBaseVO> page(@Validated @ModelAttribute CmsJobBaseDTO params) {
-        String miniShareSysUserId = this.getMiniShareSysUserId();
+        Integer miniShareSysUserId = this.getMiniShareSysUserId();
+        params.setShareSysUserId(miniShareSysUserId);
         params.setStatus(CommonStatusEnum.ENABLE.getStatus());
         return this.iCmsJobService.page(params);
     }
@@ -81,6 +82,7 @@ public class MiniCmsJobController extends BaseController {
     @PutMapping("apply/update")
     @ApiOperation("申请-更新")
     public void applyUpdate(@Validated(UpdateGroup.class) @RequestBody CmsJobApplySaveDTO params) {
+        params.setShareUserId(this.getMiniShareSysUserId());
         this.iCmsJobApplyService.addOrUpdateData(params);
     }
 

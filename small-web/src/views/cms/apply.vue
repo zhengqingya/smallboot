@@ -50,9 +50,9 @@
         <el-table-column align="center" label="操作">
           <template #default="scope">
             <!-- <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
-          <el-button link @click="handleDetail(scope.row)">详情</el-button>
-          <base-delete-btn @ok="handleDelete(scope.row)"></base-delete-btn> -->
-            <el-button v-if="scope.row.status == 1" link @click="handleUpdate(scope.row)">操作</el-button>
+          <el-button link @click="handleDetail(scope.row)">详情</el-button>-->
+            <el-button v-if="scope.row.status == 1" v-has-perm="'cms:job:operate'" link @click="handleUpdate(scope.row)">操作</el-button>
+            <base-delete-btn @ok="handleDelete(scope.row)"></base-delete-btn>
           </template>
         </el-table-column>
       </base-table-p>
@@ -100,6 +100,11 @@ function handleUpdate(row) {
   form = Object.assign({}, row);
   dialogStatus = 'update';
   dialogVisible = true;
+}
+async function handleDelete(row) {
+  let res = await proxy.$api.cms_job_apply.delete({ id: row.id });
+  proxy.submitOk(res.message);
+  refreshTableData();
 }
 function submitForm(status) {
   proxy.$refs.dataFormRef.validate(async (valid) => {

@@ -112,7 +112,9 @@ public class SysAppConfigServiceImpl extends ServiceImpl<SysAppConfigMapper, Sys
 
     @Override
     public SysAppConfigBO detailByAppId(String appId) {
-        return this.mapByAppIdList(Lists.newArrayList(appId)).get(appId);
+        SysAppConfigBO sysAppConfigBO = this.mapByAppIdList(Lists.newArrayList(appId)).get(appId);
+        Assert.notNull(sysAppConfigBO, "小程序配置丢失！");
+        return sysAppConfigBO;
     }
 
     @Override
