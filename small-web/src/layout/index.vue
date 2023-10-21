@@ -3,14 +3,7 @@
   <div v-show="isLogin && !$route.meta.isParentView" class="flex h-full w-full">
     <!-- 侧边栏菜单 -->
 
-    <sidebar
-      v-if="isShowMenu"
-      id="sidebar"
-      :style="{
-        width: '200px',
-        // height: appHeight + 'px',
-        // 'overflow-x': 'hidden',
-      }" />
+    <sidebar id="sidebar" />
 
     <div class="flex-1 flex-column">
       <div id="top">
@@ -39,7 +32,7 @@ import appMain from './components/app-main.vue';
 import tabsView from './components/tabs-view.vue';
 const { proxy } = getCurrentInstance();
 let { isLogin } = toRefs(proxy.$store.user.useUserStore());
-let { isShowMenu } = toRefs(proxy.$store.settings.useSettingsStore());
+
 let appMainWidth = ref(0);
 let appMainHeight = ref(0);
 let appHeight = ref(0);
@@ -56,6 +49,7 @@ onUpdated(() => {
   calWidthAndHeight();
 });
 
+let { isShowMenu } = toRefs(proxy.$store.settings.useSettingsStore());
 watch(
   [isLogin, isShowMenu],
   (newValue) => {

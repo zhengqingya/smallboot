@@ -7,7 +7,7 @@
           <el-button type="warning" @click="saveAppServiceConfig">保 存</el-button>
         </template>
         <div class="flex-column">
-          <base-cell label-width="150px">
+          <base-cell label-width="180px">
             <base-cell-item label="第三方小程序appid"><base-input v-model="appServiceConfig.componentAppId" style="width: 95%" /></base-cell-item>
             <base-cell-item label="第三方小程序appsecret"><base-input v-model="appServiceConfig.componentAppSecret" style="width: 95%" /></base-cell-item>
             <base-cell-item label="消息验证TOKEN"><base-input v-model="appServiceConfig.tpToken" style="width: 95%" /></base-cell-item>

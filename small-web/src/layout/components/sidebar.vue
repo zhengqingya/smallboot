@@ -1,24 +1,27 @@
 <template>
   <div
+    v-if="isShowMenu"
     class="app"
     :style="{
       'background-color': menuType === 1 ? '#304156' : '#fff',
     }">
-    <h1 style="width: 200px; font-size: 20px; height: 50px" class="flex-center-center text-color-primary">{{ userObj.tenantName }}</h1>
-    <el-menu
-      v-if="menuType === 1"
-      background-color="#304156"
-      text-color="hsla(0,0%,100%,.65)"
-      active-text-color="#409EFF"
-      router
-      :default-active="$route.meta.fullPath"
-      :collapse="false"
-      :unique-opened="true"
-      @select="handleSelect">
-      <el-scrollbar>
-        <sidebar-item :router-list="routerList" />
-      </el-scrollbar>
-    </el-menu>
+    <div v-if="menuType === 1" class="h-full">
+      <el-menu
+        class="h-full"
+        background-color="#304156"
+        text-color="hsla(0,0%,100%,.65)"
+        active-text-color="#409EFF"
+        router
+        :default-active="$route.meta.fullPath"
+        :collapse="false"
+        :unique-opened="true"
+        @select="handleSelect">
+        <h1 style="font-size: 20px; height: 50px" class="flex-center-center text-color-primary">{{ userObj.tenantName }}</h1>
+        <el-scrollbar>
+          <sidebar-item :router-list="routerList" />
+        </el-scrollbar>
+      </el-menu>
+    </div>
     <div v-else class="p-x-20 p-y-10">
       <div v-for="item in routerList.filter((e) => e.meta.isShow)" :key="item.path">
         <div class="font-bold cursor-pointer" @click="handleSelect(item.meta.fullPath)">
@@ -49,6 +52,7 @@ const { proxy } = getCurrentInstance();
 let { userObj, routerList, routerMap } = toRefs(proxy.$store.user.useUserStore());
 let { activeTabs } = proxy.$store.settings.useSettingsStore();
 let { menuType } = toRefs(proxy.$store.settings.useSettingsStore());
+let { isShowMenu } = toRefs(proxy.$store.settings.useSettingsStore());
 
 /**
  * 选中菜单时触发
@@ -60,22 +64,34 @@ let { menuType } = toRefs(proxy.$store.settings.useSettingsStore());
 function handleSelect(index, indexPath, item, routeResult) {
   // console.log(index, indexPath, item, routeResult);
   let router = routerMap.value[index];
-  if (router.children.length > 0) {
+  if (router.children.filter((e) => e.type == 1).length > 0) {
     return;
   }
   if (menuType.value === 2) {
     proxy.$router.push(index);
   }
+
   activeTabs(router);
 }
 </script>
 
 <style lang="scss" scoped>
 .app {
+  min-width: 200px;
   box-shadow: 1px 0 5px rgba(0, 0, 0, 0.2);
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 ::v-deep(.el-menu) {
-  // --el-menu-bg-color: rgb(38, 52, 69) !important;
+  // 一级菜单和二级菜单 -- 背景颜色
+  .el-sub-menu .el-menu-item {
+    background-color: rgb(38, 52, 69) !important;
+  }
+  // 当前被选中的菜单
+  .el-menu-item.is-active {
+    // color: #fff !important;
+    background: #1f2d3d !important;
+  }
 }
 </style>
