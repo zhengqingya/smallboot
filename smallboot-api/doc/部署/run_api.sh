@@ -36,7 +36,7 @@ APP_LOG_NAME=jenkins
 # 日志根目录
 APP_LOG_HOME=.
 # 程序运行参数
-JAVA_OPTS=" -Xmx500M -Xms500M -XX:+UseG1GC -Dspring.profiles.active=prod -Dserver.port=${APP_PORT}  "
+JAVA_OPTS=" -Xmx1000M -Xms1000M -XX:+UseG1GC -Dspring.profiles.active=prod -Dserver.port=${APP_PORT}  "
 
 echo "本次操作服务名：[${APP_NAME}]"
 echo "本次操作选择：[${APP_OPT}]"

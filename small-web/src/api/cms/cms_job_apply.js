@@ -18,4 +18,11 @@ export default {
       data: data,
     });
   },
+  delete(params) {
+    return request({
+      url: BASE_API + '/delete',
+      method: 'delete',
+      params: params,
+    });
+  },
 };

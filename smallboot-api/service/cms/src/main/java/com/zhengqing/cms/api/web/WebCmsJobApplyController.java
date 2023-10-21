@@ -51,11 +51,11 @@ public class WebCmsJobApplyController extends BaseController {
     public void update(@Validated(UpdateGroup.class) @RequestBody CmsJobApplySaveDTO params) {
         this.iCmsJobApplyService.addOrUpdateData(params);
     }
-//
-//    @DeleteMapping("delete")
-//    @ApiOperation("删除")
-//    public void delete(@RequestParam Integer id) {
-//        this.cmsJobApplyService.deleteData(id);
-//    }
+
+    @DeleteMapping("delete")
+    @ApiOperation("删除")
+    public void delete(@RequestParam Integer id) {
+        this.iCmsJobApplyService.deleteData(id);
+    }
 
 }
