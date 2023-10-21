@@ -121,11 +121,11 @@
       </template>
     </base-dialog>
 
-    <role-permission ref="rolePermRef" @save-succ="refreshTableData" />
+    <user-role-perm ref="rolePermRef" @save-succ="refreshTableData" />
   </base-wrapper>
 </template>
 <script setup>
-import RolePermission from './rolePermission.vue';
+import UserRolePerm from './user-role-perm.vue';
 
 const { proxy } = getCurrentInstance();
 let useUserStore = proxy.$store.user.useUserStore();

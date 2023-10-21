@@ -60,7 +60,7 @@
 </template>
 
 <script setup>
-import spu from './spu.vue';
+import spu from './category-spu.vue';
 const { proxy } = getCurrentInstance();
 let listQuery = $ref({});
 let form = $ref({});

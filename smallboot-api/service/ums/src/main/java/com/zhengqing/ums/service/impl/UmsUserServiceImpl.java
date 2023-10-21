@@ -21,6 +21,7 @@ import com.zhengqing.common.sdk.douyin.mini.model.vo.DyMiniLoginVO;
 import com.zhengqing.common.sdk.douyin.mini.util.DyMiniApiUtil;
 import com.zhengqing.system.model.bo.SysAppConfigBO;
 import com.zhengqing.system.service.ISysAppConfigService;
+import com.zhengqing.ums.constant.UmsConstant;
 import com.zhengqing.ums.entity.UmsUser;
 import com.zhengqing.ums.enums.MiniTypeEnum;
 import com.zhengqing.ums.factory.WxMaFactory;
@@ -134,6 +135,7 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
                     .phone(null)
                     .sex(UserSexEnum.未知.getType())
                     .birthday(null)
+                    .appId(appid)
                     .build();
             UmsUserInfoDTO userInfo = params.getUserInfo();
             if (userInfo != null) {
@@ -147,7 +149,7 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
         UmsUserVO result = this.getUser(userId);
 
         if (StrUtil.isNotBlank(sessionKey)) {
-            RedisUtil.set("smallboot:mini:user:sessionkey:" + userId, sessionKey);
+            RedisUtil.set(UmsConstant.USER_SESSION_KEY + userId, sessionKey);
         }
 
         // 登录认证
@@ -191,7 +193,7 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
 
         // 抖音
         Long currentUserId = params.getCurrentUserId();
-        String decryptStr = DyMiniApiUtil.decrypt(params.getEncryptedData(), params.getIv(), RedisUtil.get("smallboot:mini:user:sessionkey:" + currentUserId));
+        String decryptStr = DyMiniApiUtil.decrypt(params.getEncryptedData(), params.getIv(), RedisUtil.get(UmsConstant.USER_SESSION_KEY + currentUserId));
         String phone = DyMiniApiUtil.getPhone(decryptStr);
         UmsUser umsUser = this.detail(currentUserId);
         umsUser.setPhone(phone);

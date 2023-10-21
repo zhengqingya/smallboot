@@ -57,8 +57,8 @@
   </base-wrapper>
 </template>
 <script setup>
-import editDict from './edit-dict.vue';
-import editDictType from './edit-dict-type.vue';
+import editDict from './dict-edit.vue';
+import editDictType from './dict-type-edit.vue';
 const { proxy } = getCurrentInstance();
 let isShowAddDictButton = $ref(false);
 let dictionaryTree = $ref([]);

@@ -46,7 +46,7 @@
 </template>
 
 <script setup>
-import sku from './sku.vue';
+import sku from './product-sku.vue';
 const { proxy } = getCurrentInstance();
 let id = $ref(null);
 let form = $ref({});
