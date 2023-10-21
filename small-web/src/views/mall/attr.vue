@@ -3,7 +3,7 @@
     <el-row :gutter="20">
       <el-col :span="8">
         <base-header>
-          <el-input v-model="listQuery.attrKeyName" placeholder="请输入规格名称" style="width: 200px" clearable @clear="refreshTableData"></el-input>
+          <base-input v-model="listQuery.attrKeyName" label="规格名称" clearable @clear="refreshTableData"></base-input>
           <el-button type="primary" @click="refreshTableData">查询</el-button>
           <template #right>
             <el-button type="primary" @click="handleAdd">添加</el-button>

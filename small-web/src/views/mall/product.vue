@@ -1,7 +1,7 @@
 <template>
   <base-wrapper>
     <base-header>
-      <el-input v-model="listQuery.name" placeholder="请输入名称" style="width: 200px" clearable @clear="refreshTableData"></el-input>
+      <base-input v-model="listQuery.name" label="名称" clearable @clear="refreshTableData"></base-input>
       <el-button type="primary" @click="refreshTableData">查询</el-button>
       <template #right>
         <router-link to="/mall/product-edit?isAdd=true"><el-button type="primary">添加</el-button></router-link>

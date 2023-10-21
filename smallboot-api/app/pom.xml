@@ -39,15 +39,15 @@
             <artifactId>system</artifactId>
         </dependency>
 
-        <!--        <dependency>-->
-        <!--            <groupId>com.zhengqing</groupId>-->
-        <!--            <artifactId>wx-mp</artifactId>-->
-        <!--        </dependency>-->
+        <dependency>
+            <groupId>com.zhengqing</groupId>
+            <artifactId>wx-mp</artifactId>
+        </dependency>
 
-        <!--        <dependency>-->
-        <!--            <groupId>com.zhengqing</groupId>-->
-        <!--            <artifactId>mall</artifactId>-->
-        <!--        </dependency>-->
+        <dependency>
+            <groupId>com.zhengqing</groupId>
+            <artifactId>mall</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>com.zhengqing</groupId>

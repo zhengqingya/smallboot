@@ -1,7 +1,7 @@
 <template>
   <base-wrapper>
     <base-header>
-      <el-input v-model="listQuery.title" placeholder="请输入模板标题" style="width: 200px" clearable @clear="refreshTableData"></el-input>
+      <base-input v-model="listQuery.title" label="模板标题" style="width: 200px" clearable @clear="refreshTableData"></base-input>
       <el-button type="primary" @click="refreshTableData">查询</el-button>
       <template #right>
         <el-button type="primary" @click="handleSync">同步公众号模板数据</el-button>

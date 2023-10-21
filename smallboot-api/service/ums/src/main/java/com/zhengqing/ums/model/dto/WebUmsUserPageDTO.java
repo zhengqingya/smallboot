@@ -35,4 +35,7 @@ public class WebUmsUserPageDTO extends BaseDTO {
     @ApiModelProperty("openid")
     private String openid;
 
+    @ApiModelProperty("昵称")
+    private String nickname;
+
 }

@@ -1,7 +1,7 @@
 <template>
   <base-wrapper>
     <base-header>
-      <el-select v-model="listQuery.mediaType" placeholder="请选择">
+      <el-select v-model="listQuery.mediaType" placeholder="请选择" style="margin-right: 10px">
         <el-option v-for="item in materialTypeList" :key="item.value" :label="item.name" :value="item.value" />
       </el-select>
       <el-button type="primary" @click="refreshTableData">查询</el-button>

@@ -53,7 +53,11 @@
             <if test="filter.phone!=null and filter.phone!=''">
                 AND phone = #{filter.phone}
             </if>
+            <if test="filter.nickname!=null and filter.nickname!=''">
+                AND nickname = #{filter.nickname}
+            </if>
         </where>
+        order by create_time desc
     </select>
 
 </mapper>

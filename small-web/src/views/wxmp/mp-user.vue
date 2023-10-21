@@ -1,7 +1,7 @@
 <template>
   <base-wrapper>
     <base-header>
-      <el-input v-model="listQuery.openid" placeholder="请输入微信openid" style="width: 200px" clearable @clear="refreshTableData"></el-input>
+      <base-input v-model="listQuery.openid" label="openid" style="width: 200px" clearable @clear="refreshTableData"></base-input>
       <el-button type="primary" @click="refreshTableData">查询</el-button>
       <template #right>
         <el-button type="primary" @click="handleSync">同步公众号用户数据</el-button>
