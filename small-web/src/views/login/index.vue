@@ -16,7 +16,7 @@
       <div class="m-t-20">
         <el-form ref="loginFormRef" :model="loginForm" :rules="loginRules">
           <el-form-item v-if="!tenantId && tenantList && tenantList.length > 0">
-            <base-select v-model="loginForm.tenantId" :filterable="false" placeholder="请选择租户" :option-props="{ label: 'name', value: 'id' }" :data-list="tenantList">
+            <base-select v-model="loginForm.tenantId" :filterable="true" placeholder="请选择租户" :option-props="{ label: 'name', value: 'id' }" :data-list="tenantList">
               <template #prefix>
                 <el-icon> <OfficeBuilding /> </el-icon>
               </template>
@@ -80,8 +80,8 @@ watch(
     isAdmin = path.includes('admin');
 
     // 初始化变量
-    tenantId = isAdmin ? null : 1;
-    // tenantId = null;
+    // tenantId = isAdmin ? null : 1;
+    tenantId = null;
     loginForm.tenantId = tenantId;
 
     let lastPath = path.substring(path.lastIndexOf('/') + 1);

@@ -140,6 +140,9 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         String code = params.getCode();
         Boolean isRefreshAllTenant = params.getIsRefreshAllTenant();
         Assert.isFalse(SysRoleCodeEnum.CODE_LIST.contains(code) && !JwtUserContext.hasSuperAdmin(), "只有超管才有权限操作特殊角色！");
+        if (params.getIsRefreshAllTenant()) {
+            Assert.isTrue(JwtUserContext.hasSuperAdmin(), "只有超管才有权限同步更新所有租户下的角色数据！");
+        }
 
         SysRole sysRoleOld = this.sysRoleMapper.selectOne(new LambdaQueryWrapper<SysRole>().eq(SysRole::getCode, code).last(MybatisConstant.LIMIT_ONE));
         if (!JwtUserContext.hasSuperAdmin()) {
@@ -176,6 +179,9 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         SysRole sysRole = this.sysRoleMapper.selectById(roleId);
         if (!JwtUserContext.hasSuperAdmin()) {
             Assert.isFalse(sysRole.getIsFixed(), "您没有权限删除固定角色！");
+        }
+        if (sysRole.getIsRefreshAllTenant()) {
+            Assert.isTrue(JwtUserContext.hasSuperAdmin(), "只有超管才有权限同步更新所有租户下的角色数据！");
         }
         Assert.isFalse(SysRoleCodeEnum.CODE_LIST.contains(sysRole.getCode()) && !JwtUserContext.hasSuperAdmin(), "只有超管才有权限操作特殊角色！");
         // 1、删除该角色下关联的权限

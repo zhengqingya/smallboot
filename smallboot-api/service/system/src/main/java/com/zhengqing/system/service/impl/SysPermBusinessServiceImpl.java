@@ -94,6 +94,7 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
 
         // 3、租户信息
         SysTenant sysTenant = this.iSysTenantService.detail(TenantIdContext.getTenantId());
+        userPerm.setTenantId(sysTenant.getId());
         userPerm.setTenantName(sysTenant.getName());
 
         userPerm.handleData();

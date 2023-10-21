@@ -113,7 +113,7 @@ function update(row) {
   dialogStatus = 'update';
 }
 function add(parentId) {
-  roleForm = { parentId: parentId, isFixed: 0, sort: 100 };
+  roleForm = { parentId: parentId, isFixed: 0, status: 1, isRefreshAllTenant: 0, sort: 100 };
   dialogVisible = true;
   dialogStatus = 'add';
 }

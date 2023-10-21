@@ -18,33 +18,35 @@
 
     <wx-mp-account />
 
-    <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
-      <div class="flex-center-center">
-        <el-avatar class="" :size="32" :src="userObj.avatarUrl" />
+    <div class="flex">
+      <tenant-choose style="margin-right: 20px" />
+      <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="flex-center-center">
-          <span class="m-l-6"> {{ userObj.nickname }} </span>
-          <el-icon :size="20" style="width: 20px">
-            <ArrowDown />
-          </el-icon>
+          <el-avatar class="" :size="32" :src="userObj.avatarUrl" />
+          <div class="flex-center-center">
+            <span class="m-l-6"> {{ userObj.nickname }} </span>
+            <el-icon :size="20" style="width: 20px">
+              <ArrowDown />
+            </el-icon>
+          </div>
         </div>
-      </div>
-      <template #dropdown>
-        <el-dropdown-menu>
-          <router-link to="/">
-            <el-dropdown-item>首页</el-dropdown-item>
-          </router-link>
-          <router-link to="/system/personal-center">
-            <el-dropdown-item>个人中心</el-dropdown-item>
-          </router-link>
-          <!-- <a target="_blank" href="https://gitee.com/zhengqingya">
+        <template #dropdown>
+          <el-dropdown-menu>
+            <router-link to="/">
+              <el-dropdown-item>首页</el-dropdown-item>
+            </router-link>
+            <router-link to="/system/personal-center">
+              <el-dropdown-item>个人中心</el-dropdown-item>
+            </router-link>
+            <!-- <a target="_blank" href="https://gitee.com/zhengqingya">
             <el-dropdown-item>Gitee</el-dropdown-item>
           </a> -->
-          <el-dropdown-item @click="handleSettings">系统设置</el-dropdown-item>
-          <el-dropdown-item divided @click="logout">退出</el-dropdown-item>
-        </el-dropdown-menu>
-      </template>
-    </el-dropdown>
-
+            <el-dropdown-item @click="handleSettings">系统设置</el-dropdown-item>
+            <el-dropdown-item divided @click="logout">退出</el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
+    </div>
     <settings ref="settingsRef" />
   </div>
 </template>

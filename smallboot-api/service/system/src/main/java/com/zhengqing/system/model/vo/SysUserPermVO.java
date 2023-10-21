@@ -88,9 +88,11 @@ public class SysUserPermVO extends BaseVO implements HandleParam {
 
     // ================= ↓↓↓↓↓↓ 租户信息 ↓↓↓↓↓↓ =================
 
+    @ApiModelProperty(value = "租户ID")
+    private Integer tenantId;
+
     @ApiModelProperty(value = "租户名")
     private String tenantName;
-
 
     @Override
     public void handleParam() {

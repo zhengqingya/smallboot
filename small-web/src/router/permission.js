@@ -23,7 +23,9 @@ router.beforeEach(async (to, from, next) => {
   let { isLogin, userObj, routerList } = toRefs(useUserStore); // 响应式
 
   // 浏览器动态标题
-  document.title = userObj.value.tenantName;
+  if (isLogin.value) {
+    document.title = userObj.value.tenantName;
+  }
 
   if (isLogin.value) {
     // 已经登录后的操作

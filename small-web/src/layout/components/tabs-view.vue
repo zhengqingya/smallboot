@@ -5,7 +5,7 @@
         <div v-for="item in tabsList" :key="item" class="item m-4" :class="{ active: $route.meta.fullPath === item.meta.fullPath }" style="display: inline-block; white-space: nowrap">
           <div class="flex-between-center p-x-10" style="height: 25px" @click.right="handleRightClick(item, $event)">
             <router-link :to="item.meta.fullPath" @click="activeTabs(item)">
-              <span class="m-r-4" :class="{ active: $route.meta.fullPath === item.meta.fullPath }">{{ item.meta.title }}</span>
+              <span style="margin-right: 4px; font-size: 12px" :class="{ active: $route.meta.fullPath === item.meta.fullPath }">{{ item.meta.title }}</span>
             </router-link>
             <el-icon v-if="item.meta.fullPath !== '/'" :size="10" @click="handleClose(item)"> <Close /> </el-icon>
           </div>

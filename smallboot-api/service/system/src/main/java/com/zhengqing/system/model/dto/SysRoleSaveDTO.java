@@ -44,15 +44,18 @@ public class SysRoleSaveDTO extends BaseDTO {
     @ApiModelProperty(value = "角色编码")
     private String code;
 
+    @NotNull(message = "状态不能为空！")
     @ApiModelProperty(value = "状态(1:开启 0:禁用)")
     private Integer status;
 
+    @NotNull(message = "是否固定不能为空！")
     @ApiModelProperty(value = "是否固定(false->否 true->是)")
     private Boolean isFixed;
 
     @ApiModelProperty(value = "排序")
     private Integer sort;
 
+    @NotNull(message = "是否刷新所有租户权限数据不能为空！")
     @ApiModelProperty(value = "是否刷新所有租户权限数据(false->否 true->是)")
     private Boolean isRefreshAllTenant;
 
