@@ -15,7 +15,7 @@
 
       <div class="m-t-20">
         <el-form ref="loginFormRef" :model="loginForm" :rules="loginRules">
-          <el-form-item v-if="!tenantId && tenantList && tenantList.length > 0">
+          <el-form-item v-if="!tenantId && tenantList && tenantList.length > 0" prop="tenantId">
             <base-select v-model="loginForm.tenantId" :filterable="true" placeholder="请选择租户" :option-props="{ label: 'name', value: 'id' }" :data-list="tenantList">
               <template #prefix>
                 <el-icon> <OfficeBuilding /> </el-icon>

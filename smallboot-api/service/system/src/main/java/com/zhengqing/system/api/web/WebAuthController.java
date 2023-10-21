@@ -2,11 +2,13 @@ package com.zhengqing.system.api.web;
 
 
 import cn.dev33.satoken.stp.StpUtil;
+import cn.hutool.core.lang.Assert;
 import com.zhengqing.common.auth.custom.open.ApiOpen;
 import com.zhengqing.common.auth.model.dto.AuthLoginDTO;
 import com.zhengqing.common.auth.model.vo.AuthLoginVO;
 import com.zhengqing.common.auth.service.IAuthService;
 import com.zhengqing.common.base.constant.ServiceConstant;
+import com.zhengqing.common.base.context.TenantIdContext;
 import com.zhengqing.common.web.custom.noreturnhandle.NoReturnHandle;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -43,6 +45,7 @@ public class WebAuthController {
     @PostMapping("login")
     @ApiOperation("登录")
     public AuthLoginVO login(@Validated @RequestBody AuthLoginDTO params) {
+        Assert.notNull(TenantIdContext.getTenantId(), "请选择租户！");
         return this.iAuthService.login(params);
     }
 

@@ -187,7 +187,7 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
         Integer tenantId = TenantIdContext.getTenantId();
 
         if (isRefreshAllTenant) {
-            Assert.isTrue(JwtUserContext.hasSuperAdmin(), "只有超管才有权限同步更新所有租户下的角色权限数据！");
+            Assert.isTrue(JwtUserContext.hasSuperAdmin() || JwtUserContext.hasSystemAdmin(), "您没有权限同步更新所有租户下的角色权限数据！");
             // 刷新所有租户权限数据
             List<SysTenantListVO> tenantList = this.iSysTenantService.list(SysTenantListDTO.builder().build());
             tenantList.forEach(item -> TenantUtil.executeByTenantId(item.getId(), () -> {

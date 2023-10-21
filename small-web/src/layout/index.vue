@@ -55,12 +55,17 @@ watch(
   (newValue) => {
     calWidthAndHeight();
   },
-  { immediate: false, deep: true },
+  { immediate: false, deep: false },
 );
 
 function calWidthAndHeight() {
   let sidebar = document.getElementById('sidebar');
   let sidebarW = sidebar ? sidebar.offsetWidth : 0;
+  if (isShowMenu.value) {
+    sidebarW = 200;
+  } else {
+    sidebarW = 0;
+  }
   appMainWidth.value = window.innerWidth - sidebarW;
 
   let top = document.getElementById('top');
