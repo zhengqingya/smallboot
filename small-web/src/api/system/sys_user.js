@@ -97,4 +97,12 @@ export default {
       data: data,
     });
   },
+  // 绑定小程序用户
+  bindMiniUser(data) {
+    return request({
+      url: BASE_API + '/bindMiniUser',
+      method: 'post',
+      data,
+    });
+  },
 };

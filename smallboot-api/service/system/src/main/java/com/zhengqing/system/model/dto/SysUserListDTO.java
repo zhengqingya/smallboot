@@ -45,4 +45,10 @@ public class SysUserListDTO extends BaseDTO {
     @ApiModelProperty(value = "手机号")
     private String phone;
 
+    @ApiModelProperty(value = "昵称")
+    private String nickname;
+
+    @ApiModelProperty(value = "true:只要绑定小程序用户的数据，false:只要未绑定的数据")
+    private Boolean isBindMiniUser;
+
 }

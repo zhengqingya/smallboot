@@ -27,8 +27,19 @@
             <if test="filter.username!=null and filter.username!=''">
                 AND tsu.username LIKE CONCAT( '%', #{filter.username} , '%' )
             </if>
+            <if test="filter.nickname!=null and filter.nickname!=''">
+                AND tsu.nickname LIKE CONCAT( '%', #{filter.nickname} , '%' )
+            </if>
             <if test="filter.phone!=null and filter.phone!=''">
                 AND tsu.phone LIKE CONCAT( '%', #{filter.phone} , '%' )
+            </if>
+            <if test="filter.isBindMiniUser!=null">
+                <if test="filter.isBindMiniUser">
+                    AND tsu.mini_user_id is not null
+                </if>
+                <if test="!filter.isBindMiniUser">
+                    AND tsu.mini_user_id is null
+                </if>
             </if>
         </where>
         ORDER BY tsu.is_fixed DESC, tsu.create_time DESC

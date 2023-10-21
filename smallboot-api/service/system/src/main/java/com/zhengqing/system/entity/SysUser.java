@@ -70,6 +70,10 @@ public class SysUser extends IsDeletedBaseEntity<SysUser> {
     @ApiModelProperty(value = "是否固定(false->否 true->是)")
     private Boolean isFixed;
 
+    /**
+     * 值为空时，MP更新数据库时不忽略此字段值
+     */
+    @TableField(updateStrategy = FieldStrategy.IGNORED)
     @ApiModelProperty(value = "小程序用户id")
     private Long miniUserId;
 

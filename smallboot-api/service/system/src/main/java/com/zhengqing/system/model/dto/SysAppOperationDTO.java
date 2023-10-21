@@ -32,7 +32,7 @@ import java.util.List;
 @ApiModel("小程序批量操作-提交参数")
 public class SysAppOperationDTO extends BaseDTO implements HandleParam, CheckParam {
 
-    @ApiModelProperty(value = "appId", example = "[xx]")
+    @ApiModelProperty(value = "appId", example = "[1]")
     private List<String> appIdList;
 
     /**

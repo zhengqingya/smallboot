@@ -50,6 +50,7 @@ public class MiniCmsJobController extends BaseController {
     @GetMapping("page")
     @ApiOperation("分页列表")
     public IPage<CmsJobBaseVO> page(@Validated @ModelAttribute CmsJobBaseDTO params) {
+        String miniShareSysUserId = this.getMiniShareSysUserId();
         params.setStatus(CommonStatusEnum.ENABLE.getStatus());
         return this.iCmsJobService.page(params);
     }

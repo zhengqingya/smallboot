@@ -5,6 +5,7 @@ import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.common.core.custom.repeatsubmit.NoRepeatSubmit;
 import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
+import com.zhengqing.system.model.dto.SysUserBindMiniUserDTO;
 import com.zhengqing.system.model.dto.SysUserListDTO;
 import com.zhengqing.system.model.dto.SysUserSaveDTO;
 import com.zhengqing.system.model.dto.SysUserUpdatePasswordDTO;
@@ -76,6 +77,14 @@ public class WebSysUserController extends BaseController {
     @ApiOperation("修改用户密码")
     public void updatePassword(@RequestBody @Valid SysUserUpdatePasswordDTO params) {
         this.iSysUserService.updatePassword(params);
+    }
+
+    @NoRepeatSubmit
+    @PostMapping("bindMiniUser")
+    @ApiOperation("绑定小程序用户")
+    public Boolean bindMiniUser(@Validated @RequestBody SysUserBindMiniUserDTO params) {
+        this.iSysUserService.bindMiniUser(params);
+        return true;
     }
 
 }

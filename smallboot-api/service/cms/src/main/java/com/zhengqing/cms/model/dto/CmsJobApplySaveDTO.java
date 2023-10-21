@@ -35,6 +35,8 @@ public class CmsJobApplySaveDTO extends BaseDTO {
     @ApiModelProperty("职位id")
     private Integer jobId;
 
+    @ApiModelProperty(value = "职位分享人用户ID")
+    private Integer shareUserId;
 
     /**
      * {@link com.zhengqing.cms.enums.CmsJobApplyStatusEnum}

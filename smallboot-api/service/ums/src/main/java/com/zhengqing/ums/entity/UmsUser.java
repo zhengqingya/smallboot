@@ -66,7 +66,4 @@ public class UmsUser extends IsDeletedBaseEntity<UmsUser> {
     @ApiModelProperty("小程序appId")
     private String appId;
 
-    @ApiModelProperty(value = "绑定的系统用户id")
-    private Integer sysUserId;
-
 }

@@ -21,6 +21,7 @@ import com.zhengqing.common.sdk.douyin.mini.model.vo.DyMiniLoginVO;
 import com.zhengqing.common.sdk.douyin.mini.util.DyMiniApiUtil;
 import com.zhengqing.system.model.bo.SysAppConfigBO;
 import com.zhengqing.system.service.ISysAppConfigService;
+import com.zhengqing.system.service.ISysUserService;
 import com.zhengqing.ums.constant.UmsConstant;
 import com.zhengqing.ums.entity.UmsUser;
 import com.zhengqing.ums.enums.MiniTypeEnum;
@@ -55,6 +56,7 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
     private final UmsUserMapper umsUserMapper;
     private final WxMaFactory wxMaFactory;
     private final ISysAppConfigService iSysAppConfigService;
+    private final ISysUserService iSysUserService;
 
     @Override
     public UmsUser detail(Long id) {
@@ -164,6 +166,7 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
         );
         result.setTokenName(authLoginVO.getTokenName());
         result.setTokenValue(authLoginVO.getTokenValue());
+        result.setSysUserId(this.iSysUserService.getUserIdByMiniUserId(userId));
         return result;
     }
 
@@ -181,6 +184,7 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
         );
         result.setTokenName(authLoginVO.getTokenName());
         result.setTokenValue(authLoginVO.getTokenValue());
+        result.setSysUserId(TenantUtil.executeRemoveFlag(() -> this.iSysUserService.getUserIdByMiniUserId(1L)));
         return result;
     }
 

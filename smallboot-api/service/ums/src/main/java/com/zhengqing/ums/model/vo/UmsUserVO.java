@@ -54,4 +54,7 @@ public class UmsUserVO extends AuthLoginVO {
     @ApiModelProperty("创建时间")
     private Date createTime;
 
+    @ApiModelProperty(value = "绑定的系统用户id")
+    private Integer sysUserId;
+
 }

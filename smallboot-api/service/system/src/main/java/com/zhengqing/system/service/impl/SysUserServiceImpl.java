@@ -107,6 +107,15 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     @Override
+    public Integer getUserIdByMiniUserId(Long miniUserId) {
+        SysUser sysUser = this.sysUserMapper.selectOne(new LambdaQueryWrapper<SysUser>().eq(SysUser::getMiniUserId, miniUserId).last(MybatisConstant.LIMIT_ONE));
+        if (sysUser != null) {
+            return sysUser.getUserId();
+        }
+        return null;
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public Integer addOrUpdateData(SysUserSaveDTO params) {
         Integer userId = params.getUserId();
@@ -220,4 +229,24 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         );
     }
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void bindMiniUser(SysUserBindMiniUserDTO params) {
+        Boolean isBind = params.getIsBind();
+        Integer userId = params.getUserId();
+        Long miniUserId = params.getMiniUserId();
+        SysUser sysUser = this.detail(userId);
+        if (isBind) {
+            // 先看看之前有没有绑定过其它的用户
+            SysUser sysUserOld = this.sysUserMapper.selectOne(new LambdaQueryWrapper<SysUser>().eq(SysUser::getMiniUserId, miniUserId).last(MybatisConstant.LIMIT_ONE));
+            Assert.isTrue(sysUserOld == null || sysUserOld.getUserId().equals(userId), "小程序用户已绑定其他系统用户，请先解绑或重新选择！");
+
+            // 绑定
+            sysUser.setMiniUserId(miniUserId);
+        } else {
+            // 解绑
+            sysUser.setMiniUserId(null);
+        }
+        sysUser.updateById();
+    }
 }

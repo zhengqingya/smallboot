@@ -75,4 +75,18 @@ public class BaseController {
         return appId;
     }
 
+    /**
+     * 获取小程序分享人id
+     *
+     * @return 商户id
+     * @author zhengqingya
+     * @date 2020/8/30 15:41
+     */
+    protected String getMiniShareSysUserId() {
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = attributes.getRequest();
+        String shareSysUserId = ServletUtil.getHeader(request, "SHARE_SYS_USER_ID", CharsetUtil.UTF_8);
+        return shareSysUserId;
+    }
+
 }

@@ -29,6 +29,7 @@
         <dependency>
             <groupId>com.zhengqing</groupId>
             <artifactId>system</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <!-- 微信小程序 -->

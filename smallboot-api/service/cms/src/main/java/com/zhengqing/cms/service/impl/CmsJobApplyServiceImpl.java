@@ -70,6 +70,7 @@ public class CmsJobApplyServiceImpl extends ServiceImpl<CmsJobApplyMapper, CmsJo
         CmsJobApply cmsJobApply = CmsJobApply.builder()
                 .id(id)
                 .jobId(jobId)
+                .shareUserId(params.getShareUserId())
                 .status(params.getStatus())
                 .remark(params.getRemark())
                 .build();

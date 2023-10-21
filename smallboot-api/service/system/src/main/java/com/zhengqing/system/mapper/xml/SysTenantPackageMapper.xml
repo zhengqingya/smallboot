@@ -35,7 +35,7 @@
         id,name
         FROM t_sys_tenant_package
         <where>
-            AND id != 1
+            AND id != 1 and status=1
             <if test="filter.name!=null and filter.name!=''">
                 AND name LIKE CONCAT( '%', #{filter.name} , '%' )
             </if>

@@ -25,6 +25,7 @@
         <!-- <base-select v-model="listQuery.merchantId" label="商户" tag-type="success" style="margin-right: 10px" clearable :option-props="{ label: 'name', value: 'id' }" api="sys_merchant.list" /> -->
         <!-- <base-select v-model="listQuery.roleIdList" label="角色" tag-type="warning" multiple :option-props="{ label: 'name', value: 'roleId' }" api="sys_role.list" /> -->
         <base-input v-model="listQuery.username" label="账号" @clear="refreshTableData" />
+        <base-input v-model="listQuery.nickname" label="昵称" @clear="refreshTableData" />
         <base-input v-model="listQuery.phone" label="手机号" @clear="refreshTableData" />
         <el-button v-has-perm="'sys:user:page'" type="primary" @click="refreshTableData">查询</el-button>
         <template #right>
@@ -34,7 +35,6 @@
 
       <base-content>
         <base-table-p ref="baseTableRef" api="sys_user.listPage" :params="listQuery">
-          <el-table-column :show-overflow-tooltip="true" prop="deptName" align="center" label="归属企业" />
           <el-table-column :show-overflow-tooltip="true" prop="username" align="center" label="用户账号" />
           <el-table-column prop="nickname" label="用户名称" align="center" />
           <el-table-column prop="sexName" label="性别" align="center" />
@@ -52,10 +52,10 @@
               </span>
             </template>
           </el-table-column>
+          <el-table-column :show-overflow-tooltip="true" prop="deptName" align="center" label="归属企业" />
           <el-table-column label="操作" align="center" width="230">
             <template #default="scope">
-              <el-button link @click="handleUpdate(scope.row, 'update')">编辑</el-button>
-              <el-button v-if="!scope.row.isFixed" link @click="handleUpdate(scope.row, 'role')">角色权限</el-button>
+              <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
               <base-delete-btn v-if="!scope.row.isFixed" @ok="deleteData(scope.row.userId)" />
               <el-button link @click="updatePwd(scope.row)">更新密码</el-button>
             </template>
@@ -120,13 +120,9 @@
         <el-button type="primary" @click="submitForm">确定</el-button>
       </template>
     </base-dialog>
-
-    <user-role-perm ref="rolePermRef" @save-succ="refreshTableData" />
   </base-wrapper>
 </template>
 <script setup>
-import UserRolePerm from './user-role-perm.vue';
-
 const { proxy } = getCurrentInstance();
 let useUserStore = proxy.$store.user.useUserStore();
 let { logout } = useUserStore;
@@ -170,14 +166,10 @@ function handleCreate() {
   dialogStatus.value = 'add';
   dialogVisible.value = true;
 }
-function handleUpdate(row, type) {
-  if (type === 'update') {
-    form.value = Object.assign({}, row);
-    dialogStatus.value = 'update';
-    dialogVisible.value = true;
-  } else if (type === 'role') {
-    proxy.$refs.rolePermRef.open(row);
-  }
+function handleUpdate(row) {
+  form.value = Object.assign({}, row);
+  dialogStatus.value = 'update';
+  dialogVisible.value = true;
 }
 async function deleteData(id) {
   let res = await proxy.$api.sys_user.delete(id);

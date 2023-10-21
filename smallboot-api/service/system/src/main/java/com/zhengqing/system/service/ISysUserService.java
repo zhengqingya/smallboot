@@ -3,10 +3,7 @@ package com.zhengqing.system.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zhengqing.system.entity.SysUser;
-import com.zhengqing.system.model.dto.SysUserListDTO;
-import com.zhengqing.system.model.dto.SysUserPermDTO;
-import com.zhengqing.system.model.dto.SysUserSaveDTO;
-import com.zhengqing.system.model.dto.SysUserUpdatePasswordDTO;
+import com.zhengqing.system.model.dto.*;
 import com.zhengqing.system.model.vo.SysUserListVO;
 import com.zhengqing.system.model.vo.SysUserPermVO;
 
@@ -52,6 +49,16 @@ public interface ISysUserService extends IService<SysUser> {
      * @date 2020/9/10 10:53
      */
     SysUser detail(Integer userId);
+
+    /**
+     * 根据小程序用户id查询系统用户id
+     *
+     * @param miniUserId 小程序用户id
+     * @return 系统用户id
+     * @author zhengqingya
+     * @date 2020/9/10 10:53
+     */
+    Integer getUserIdByMiniUserId(Long miniUserId);
 
     /**
      * 新增或更新
@@ -103,4 +110,13 @@ public interface ISysUserService extends IService<SysUser> {
      */
     SysUser getUserByUsername(String username);
 
+    /**
+     * 绑定小程序用户
+     *
+     * @param params 提交参数
+     * @return void
+     * @author zhengqingya
+     * @date 2023/10/21 14:08
+     */
+    void bindMiniUser(SysUserBindMiniUserDTO params);
 }
