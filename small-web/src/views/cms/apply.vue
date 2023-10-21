@@ -34,7 +34,7 @@
       <base-table-p ref="baseTableRef" api="cms_job_apply.page" :params="listQuery">
         <el-table-column label="ID" prop="id" align="center" />
         <!-- <el-table-column label="归属商户" prop="merchantName" align="center" /> -->
-        <el-table-column label="归属企业" prop="deptName" align="center" />
+        <el-table-column label="归属企业" prop="jobObj.deptName" align="center" />
         <el-table-column label="职位名称" prop="jobObj.name" align="center" />
         <el-table-column label="状态" prop="statusName" align="center">
           <template #default="scope">
@@ -44,8 +44,13 @@
           </template>
         </el-table-column>
         <el-table-column label="联系人" prop="contact" align="center" />
+        <el-table-column label="年龄" align="center">
+          <template #default="scope">
+            <span>{{ getAge(scope.row.contactBirthday) }}</span>
+          </template>
+        </el-table-column>
         <el-table-column label="联系电话" prop="contactPhone" align="center" />
-        <el-table-column label="备注" prop="remark" align="center" />
+        <!-- <el-table-column label="备注" prop="remark" align="center" /> -->
         <el-table-column label="创建时间" prop="createTime" align="center" />
         <el-table-column align="center" label="操作">
           <template #default="scope">
@@ -116,6 +121,22 @@ function submitForm(status) {
       dialogVisible = false;
     }
   });
+}
+
+function getAge(val) {
+  if (!val) {
+    return '未知';
+  }
+  let currentYear = new Date().getFullYear(); //当前的年份
+  let calculationYear = new Date(val).getFullYear(); //计算的年份
+  const wholeTime = currentYear + val.substring(4); //周岁时间
+  const calculationAge = currentYear - calculationYear; //按照年份计算的年龄
+  // 判断是否过了生日
+  if (new Date().getTime() > new Date(wholeTime).getTime()) {
+    return calculationAge;
+  } else {
+    return calculationAge - 1;
+  }
 }
 </script>
 

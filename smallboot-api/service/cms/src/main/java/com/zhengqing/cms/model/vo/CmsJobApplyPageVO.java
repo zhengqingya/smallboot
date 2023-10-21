@@ -58,6 +58,9 @@ public class CmsJobApplyPageVO extends BaseVO {
     @ApiModelProperty("联系电话")
     private String contactPhone;
 
+    @ApiModelProperty("联系人生日")
+    private String contactBirthday;
+
     @ApiModelProperty("备注")
     private String remark;
 
