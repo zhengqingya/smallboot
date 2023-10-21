@@ -23,7 +23,7 @@ router.beforeEach(async (to, from, next) => {
   let { isLogin, userObj, routerList } = toRefs(useUserStore); // 响应式
 
   // 浏览器动态标题
-  if (isLogin.value) {
+  if (isLogin.value && userObj.value.tenantName) {
     document.title = userObj.value.tenantName;
   }
 

@@ -70,4 +70,11 @@ public class JwtUserContext {
         return loginUserReRoleCodeList.contains(SysRoleCodeEnum.系统管理员.getCode());
     }
 
+    /**
+     * 是否有 超管角色 / 系统管理员角色
+     */
+    public static boolean hasSuperOrSystemAdmin() {
+        return hasSuperAdmin() || hasSystemAdmin();
+    }
+
 }

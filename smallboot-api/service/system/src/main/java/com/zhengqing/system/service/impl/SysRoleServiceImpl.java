@@ -139,13 +139,15 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         Integer roleId = params.getRoleId();
         String code = params.getCode();
         Boolean isRefreshAllTenant = params.getIsRefreshAllTenant();
-        Assert.isFalse(SysRoleCodeEnum.CODE_LIST.contains(code) && !JwtUserContext.hasSuperAdmin(), "只有超管才有权限操作特殊角色！");
+        if (SysRoleCodeEnum.CODE_LIST.contains(code)) {
+            Assert.isTrue(JwtUserContext.hasSuperOrSystemAdmin(), "您没有权限操作特殊角色！");
+        }
         if (params.getIsRefreshAllTenant()) {
-            Assert.isTrue(JwtUserContext.hasSuperAdmin() || JwtUserContext.hasSystemAdmin(), "您没有权限同步更新所有租户下的角色数据！");
+            Assert.isTrue(JwtUserContext.hasSuperOrSystemAdmin(), "您没有权限同步更新所有租户下的角色数据！");
         }
 
         SysRole sysRoleOld = this.sysRoleMapper.selectOne(new LambdaQueryWrapper<SysRole>().eq(SysRole::getCode, code).last(MybatisConstant.LIMIT_ONE));
-        if (!JwtUserContext.hasSuperAdmin()) {
+        if (!JwtUserContext.hasSuperOrSystemAdmin()) {
             Assert.isTrue(sysRoleOld == null || !sysRoleOld.getIsFixed(), "您没有权限操作固定角色！");
         }
         if (!isRefreshAllTenant) {
