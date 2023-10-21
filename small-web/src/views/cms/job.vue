@@ -105,7 +105,7 @@
         </el-form-item>
         <el-form-item label="工作简介:" style="width: 100%">
           <span v-if="isDetail" v-html="form.intro" />
-          <base-Editor v-else v-model="form.intro" />
+          <base-editor v-else v-model="form.intro" />
         </el-form-item>
       </el-form>
       <template #footer>

@@ -34,7 +34,6 @@ import org.springframework.util.CollectionUtils;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>
@@ -191,16 +190,13 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
             // 刷新所有租户权限数据
             List<SysTenantListVO> tenantList = this.iSysTenantService.list(SysTenantListDTO.builder().build());
             tenantList.forEach(item -> TenantUtil.executeByTenantId(item.getId(), () -> {
-                Integer tenantIdItem = TenantIdContext.getTenantId();
-                if (!Objects.equals(tenantId, tenantIdItem)) {
-                    // 角色信息
-                    SysRoleSaveDTO sysRoleSaveDTO = MyBeanUtil.copyProperties(sysRole, SysRoleSaveDTO.class);
-                    sysRoleSaveDTO.setRoleId(null);
-                    Integer tenantReRoleId = this.iSysRoleService.addOrUpdateData(sysRoleSaveDTO);
+                // 角色信息
+                SysRoleSaveDTO sysRoleSaveDTO = MyBeanUtil.copyProperties(sysRole, SysRoleSaveDTO.class);
+                sysRoleSaveDTO.setRoleId(null);
+                Integer tenantReRoleId = this.iSysRoleService.addOrUpdateData(sysRoleSaveDTO);
 
-                    // 设置租户对应的角色id
-                    params.setRoleId(tenantReRoleId);
-                }
+                // 设置租户对应的角色id
+                params.setRoleId(tenantReRoleId);
 
                 // 角色关联权限数据（菜单&数据权限）
                 this.baseSaveRoleRePerm(params);
