@@ -144,7 +144,7 @@ public class SysAppConfigServiceImpl extends ServiceImpl<SysAppConfigMapper, Sys
         log.info("[系统管理] 批量操作(小程序提审、发布)：{}", JSONUtil.toJsonStr(params));
         List<String> appIdList = params.getAppIdList();
         String uploadCodeDesc = params.getUploadCodeDesc();
-        String version = params.getVersion();
+        String appVersion = params.getAppVersion();
         Integer templateId = params.getTemplateId();
         Integer appStatus = params.getAppStatus();
         Integer finallAppStatus = null;
@@ -201,12 +201,16 @@ public class SysAppConfigServiceImpl extends ServiceImpl<SysAppConfigMapper, Sys
                                     )
                                     .build()
                     );
-                    DyServiceApiUtil.uploadCode(component_appid, authorizer_access_token, templateId, uploadCodeDesc, version, ext_json);
+                    DyServiceApiUtil.uploadCode(component_appid, authorizer_access_token, templateId, uploadCodeDesc, appVersion, ext_json);
                     appConfigItem.setAppStatus(SysAppStatusEnum.提交代码.getStatus());
                     break;
                 case 提审代码:
                     DyServiceApiUtil.audit(component_appid, authorizer_access_token);
                     appConfigItem.setAppStatus(SysAppStatusEnum.提审中.getStatus());
+                    break;
+                case 撤回审核:
+                    DyServiceApiUtil.revoke_audit(component_appid, authorizer_access_token);
+                    appConfigItem.setAppStatus(SysAppStatusEnum.撤回审核.getStatus());
                     break;
                 case 发布代码:
                     DyServiceApiUtil.release(component_appid, authorizer_access_token);

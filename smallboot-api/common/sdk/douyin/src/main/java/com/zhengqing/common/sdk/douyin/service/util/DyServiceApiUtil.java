@@ -137,6 +137,26 @@ public class DyServiceApiUtil {
     }
 
     /**
+     * 撤回审核
+     * https://partner.open-douyin.com/docs/resource/zh-CN/thirdparty/API/smallprogram/auth-app-manage/develop/revoke-audit
+     *
+     * @param component_appid         第三方小程序应用 appid
+     * @param authorizer_access_token 授权小程序接口调用凭据
+     * @return 结果
+     * @author zhengqingya
+     * @date 2022/7/28 15:40
+     */
+    public static void revoke_audit(String component_appid, String authorizer_access_token) {
+        HashMap<String, String> map = DyBaseApiUtil.basePostParams("https://open.microapp.bytedance.com/openapi/v1/microapp/package/revoke_audit",
+                new HashMap<String, String>(2) {{
+                    this.put("component_appid", component_appid);
+                    this.put("authorizer_access_token", authorizer_access_token);
+                }}, HashMap.class);
+        Assert.isTrue(DyMiniResultCodeEnum.SUCCESS.getCode().equals(Long.valueOf(String.valueOf(map.get("errno")))), map.get("message"));
+    }
+
+
+    /**
      * 发布代码
      * https://partner.open-douyin.com/docs/resource/zh-CN/thirdparty/API/smallprogram/auth-app-manage/develop/release
      *

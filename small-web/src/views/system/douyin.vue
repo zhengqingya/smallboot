@@ -71,7 +71,7 @@
       <base-dialog v-model="qrcodeDialogVisible" :title="qrcodeDialogTitle" width="350px">
         <el-image style="width: 300px; height: 300px" :src="qrcodeUrl" />
       </base-dialog>
-      <base-dialog v-model="appDialogVisible" title="抖音小程序一键操作（☆谨慎操作☆）" width="600px">
+      <base-dialog v-model="appDialogVisible" title="抖音小程序一键操作（☆谨慎操作☆）" width="650px">
         <span v-if="appDataForm.name" style="color: red">操作企业： {{ appDataForm.name }}</span>
         <span v-else style="color: red">操作企业： 所有企业（☆☆☆）</span>
         <div class="flex-column">
@@ -84,6 +84,7 @@
             </div>
             <div class="flex-center-end m-l-20">
               <el-button type="success" @click="appOperationBatch(20)">② 一键提审代码</el-button>
+              <el-button type="warning" @click="appOperationBatch(22)">② 一键撤回审核</el-button>
               <el-button type="danger" @click="appOperationBatch(50)">③ 一键发布代码</el-button>
             </div>
           </div>
@@ -117,18 +118,6 @@ async function initAppServiceConfig() {
 async function saveAppServiceConfig() {
   let res = await proxy.$api.sys_app_service_config.update(appServiceConfig);
   proxy.submitOk(res.msg);
-}
-
-async function saveBatch() {
-  let list = [];
-  for (var key in mapObj) {
-    mapObj[key].key = key;
-    mapObj[key].type = 1; // 1:配置 2:属性
-    list.push(mapObj[key]);
-  }
-  let res = await proxy.$api.sys_config.saveBatch(list);
-  proxy.submitOk(res.msg);
-  init();
 }
 
 // --------------------------------- 小程序 ---------------------------------

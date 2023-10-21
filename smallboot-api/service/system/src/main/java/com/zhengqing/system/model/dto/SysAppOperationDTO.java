@@ -49,7 +49,7 @@ public class SysAppOperationDTO extends BaseDTO implements HandleParam, CheckPar
     private Integer templateId;
 
     @ApiModelProperty("版本号")
-    private String version;
+    private String appVersion;
 
     @Override
     public void handleParam() {
@@ -61,7 +61,7 @@ public class SysAppOperationDTO extends BaseDTO implements HandleParam, CheckPar
         if (SysAppStatusEnum.提交代码.getStatus().equals(this.appStatus)) {
             Assert.notNull(this.templateId, "模板id不能为空！");
             Assert.notBlank(this.uploadCodeDesc, "提交代码描述不能为空！");
-            Assert.notBlank(this.version, "版本号不能为空！");
+            Assert.notBlank(this.appVersion, "版本号不能为空！");
         }
     }
 }
