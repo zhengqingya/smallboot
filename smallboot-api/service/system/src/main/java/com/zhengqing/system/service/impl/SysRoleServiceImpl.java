@@ -11,6 +11,7 @@ import com.google.common.collect.Lists;
 import com.zhengqing.common.base.constant.AppConstant;
 import com.zhengqing.common.base.context.JwtUserContext;
 import com.zhengqing.common.base.enums.SysRoleCodeEnum;
+import com.zhengqing.common.base.exception.MyException;
 import com.zhengqing.common.db.constant.MybatisConstant;
 import com.zhengqing.system.entity.SysRole;
 import com.zhengqing.system.mapper.SysRoleMapper;
@@ -138,12 +139,15 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     public Integer addOrUpdateData(SysRoleSaveDTO params) {
         Integer roleId = params.getRoleId();
         String code = params.getCode();
+        Boolean isFixed = params.getIsFixed();
         Boolean isRefreshAllTenant = params.getIsRefreshAllTenant();
-        if (SysRoleCodeEnum.CODE_LIST.contains(code)) {
-            Assert.isTrue(JwtUserContext.hasSuperOrSystemAdmin(), "您没有权限操作特殊角色！");
+        if ((isFixed || isRefreshAllTenant) && !JwtUserContext.hasSuperOrSystemAdmin()) {
+            throw new MyException("您没有权限操作特殊角色！");
         }
-        if (params.getIsRefreshAllTenant()) {
-            Assert.isTrue(JwtUserContext.hasSuperOrSystemAdmin(), "您没有权限同步更新所有租户下的角色数据！");
+
+        if (SysRoleCodeEnum.CODE_LIST.contains(code)) {
+            // 二次保护
+            Assert.isTrue(JwtUserContext.hasSuperOrSystemAdmin(), "您没有权限操作特殊角色！");
         }
 
         SysRole sysRoleOld = this.sysRoleMapper.selectOne(new LambdaQueryWrapper<SysRole>().eq(SysRole::getCode, code).last(MybatisConstant.LIMIT_ONE));
@@ -166,7 +170,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
                 .name(params.getName())
                 .code(code)
                 .status(params.getStatus())
-                .isFixed(params.getIsFixed())
+                .isFixed(isFixed)
                 .isRefreshAllTenant(isRefreshAllTenant)
                 .sort(params.getSort())
                 .build();
@@ -179,8 +183,8 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     @Transactional(rollbackFor = Exception.class)
     public void deleteRoleAndRoleMenu(Integer roleId) {
         SysRole sysRole = this.sysRoleMapper.selectById(roleId);
-        if (!JwtUserContext.hasSuperAdmin()) {
-            Assert.isFalse(sysRole.getIsFixed(), "您没有权限删除固定角色！");
+        if (sysRole.getIsFixed()) {
+            Assert.isTrue(JwtUserContext.hasSuperAdmin(), "您没有权限删除固定角色！");
         }
         if (sysRole.getIsRefreshAllTenant()) {
             Assert.isTrue(JwtUserContext.hasSuperOrSystemAdmin(), "您没有权限同步更新所有租户下的角色数据！");

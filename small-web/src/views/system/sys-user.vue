@@ -105,9 +105,9 @@
             :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true, emitPath: false }"
             api="sys_dept.tree" />
         </el-form-item>
-        <!-- <el-form-item label="岗位:" prop="postIdList">
+        <el-form-item label="岗位:" prop="postIdList">
           <base-select v-if="dialogVisible" v-model="form.postIdList" tag-type="success" style="width: 100%" multiple clearable :option-props="{ label: 'name', value: 'id' }" api="sys_post.list" />
-        </el-form-item> -->
+        </el-form-item>
         <!-- <el-form-item v-if="dialogStatus == 'add'" label="归属商户:" style="width: 100%">
           <base-select v-if="dialogVisible" v-model="form.merchantId" clearable style="width: 100%" :option-props="{ label: 'name', value: 'id' }" api="sys_merchant.list" />
         </el-form-item> -->

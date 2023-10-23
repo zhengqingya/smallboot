@@ -79,7 +79,7 @@ public class MybatisPlusConfig {
                 return "tenant_id";
             }
 
-            // 这是 default 方法,默认返回 false 表示所有表都需要拼多租户条件
+            // 返回 true 表示此表不需要多租户
             @Override
             public boolean ignoreTable(String tableName) {
                 if (!TENANT_ID_TABLE.contains(tableName)) {
@@ -88,7 +88,8 @@ public class MybatisPlusConfig {
                 }
                 Boolean tenantIdFlag = TenantIdContext.getFlag();
                 Assert.notNull(tenantIdFlag, "租户id不能为空！");
-                return !tenantIdFlag;
+                boolean isIgnore = !tenantIdFlag;
+                return isIgnore;
             }
         }));
 

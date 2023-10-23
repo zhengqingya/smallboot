@@ -22,6 +22,7 @@ public enum SysRoleCodeEnum {
     超级管理员("super_admin", 1, "超级管理员"),
     系统管理员("system_admin", 2, "系统管理员"),
     租户管理员("tenant_admin", 3, "租户管理员"),
+    主播("anchor", 4, "主播"),
 //    商户管理员("merchant_admin", 4, "商户管理员")
     ;
 

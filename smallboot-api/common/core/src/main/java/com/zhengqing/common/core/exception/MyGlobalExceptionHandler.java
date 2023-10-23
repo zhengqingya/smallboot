@@ -120,7 +120,9 @@ public class MyGlobalExceptionHandler {
         log.error("系统异常:", e);
         Throwable cause = e.getCause();
         if (cause != null) {
-            return ApiResult.fail(e.getCause().getMessage());
+            if (cause.getMessage().contains("Field 'tenant_id' doesn't have a default value")) {
+                return ApiResult.fail("请先选择租户！");
+            }
         }
         return ApiResult.fail("系统异常，操作失败:" + e.getMessage());
     }

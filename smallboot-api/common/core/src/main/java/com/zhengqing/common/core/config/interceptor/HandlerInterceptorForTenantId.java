@@ -1,11 +1,8 @@
 package com.zhengqing.common.core.config.interceptor;
 
-import cn.hutool.core.lang.Assert;
-import com.zhengqing.common.base.context.JwtUserContext;
 import com.zhengqing.common.base.context.TenantIdContext;
 import com.zhengqing.common.core.config.WebAppConfig;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.http.HttpMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -36,17 +33,19 @@ public class HandlerInterceptorForTenantId implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String tenantId = request.getHeader(TENANT_ID);
-        if (StringUtils.isNotBlank(tenantId) && StringUtils.isNumeric(tenantId) && Integer.valueOf(tenantId) > 0) {
-            TenantIdContext.setTenantId(Integer.valueOf(tenantId));
-        } else {
-            String method = request.getMethod();
-            Assert.isTrue(HttpMethod.GET.name().equals(method), "请先选择租户！");
-            TenantIdContext.removeFlag();
+        if (StringUtils.isNotBlank(tenantId)) {
+            if (StringUtils.isNumeric(tenantId)) {
+                // > 0
+                TenantIdContext.setTenantId(Integer.valueOf(tenantId));
+            } else if ("-1".equals(tenantId)) {
+                // 全部租户
+                TenantIdContext.removeFlag();
+            }
         }
         // 是否排除租户ID标识
         String tenantIdFlag = request.getHeader(TENANT_ID_FLAG);
         String isTenantIdFlag = "true";
-        if (StringUtils.isNotBlank(tenantIdFlag) && isTenantIdFlag.equals(tenantIdFlag) && JwtUserContext.hasSuperOrSystemAdmin()) {
+        if (StringUtils.isNotBlank(tenantIdFlag) && isTenantIdFlag.equals(tenantIdFlag)) {
             TenantIdContext.removeFlag();
         }
         return true;

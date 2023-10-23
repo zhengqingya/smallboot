@@ -45,7 +45,7 @@ public class WebAuthController {
     @PostMapping("login")
     @ApiOperation("登录")
     public AuthLoginVO login(@Validated @RequestBody AuthLoginDTO params) {
-        Assert.notNull(TenantIdContext.getTenantId(), "请选择租户！");
+        Assert.notNull(TenantIdContext.getTenantId(), "请先选择租户！");
         return this.iAuthService.login(params);
     }
 

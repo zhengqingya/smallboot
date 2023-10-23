@@ -16,7 +16,9 @@
         :collapse="false"
         :unique-opened="true"
         @select="handleSelect">
-        <h1 style="font-size: 20px; height: 50px" class="flex-center-center text-color-primary">{{ userObj.tenantName }}</h1>
+        <div style="font-size: 20px; height: 50px; font-weight: bold" class="flex-center-center text-color-primary">
+          <span class="text-center text-overflow-1">{{ userObj.tenantName }}</span>
+        </div>
         <el-scrollbar>
           <sidebar-item :router-list="routerList" />
         </el-scrollbar>
