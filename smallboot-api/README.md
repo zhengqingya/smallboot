@@ -44,3 +44,29 @@ FROM information_schema.TABLES t
 WHERE t.table_schema = 'smallboot'
   and c.COLUMN_NAME = 'tenant_id';
 ```
+
+#### 删除重复数据 -- 保留唯一一条
+
+```
+DELETE FROM t_sys_user_role 
+WHERE id NOT IN (
+    SELECT t.id FROM (
+        SELECT MIN( id ) AS id 
+        FROM t_sys_user_role 
+				WHERE tenant_id = 1
+        GROUP BY user_id,role_id
+    ) t     
+)
+AND tenant_id = 1;
+
+DELETE FROM t_sys_role_menu 
+WHERE id NOT IN (
+    SELECT t.id FROM (
+        SELECT MIN( id ) AS id 
+        FROM t_sys_role_menu 
+				WHERE tenant_id = 1
+        GROUP BY menu_id,role_id
+    ) t     
+)
+AND tenant_id = 1;
+```
