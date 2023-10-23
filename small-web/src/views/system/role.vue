@@ -4,7 +4,7 @@
       <base-input v-model="listQuery.name" clearable label="角色名称" @clear="refreshTableData" />
       <el-button type="primary" @click="refreshTableData">查询</el-button>
       <template #right>
-        <el-button type="primary" @click="add">添加</el-button>
+        <el-button type="primary" @click="add(0)">添加</el-button>
       </template>
     </base-header>
 
@@ -22,7 +22,7 @@
             <base-tag v-model="scope.row.isFixed" data-type="yes" />
           </template>
         </el-table-column>
-        <el-table-column prop="code" align="center" label="是否同步更新所有租户角色权限">
+        <el-table-column prop="code" align="center" label="同步更新所有租户角色权限">
           <template #default="scope">
             <base-tag v-model="scope.row.isRefreshAllTenant" data-type="yes" />
           </template>
@@ -60,8 +60,16 @@
           <el-input v-model="roleForm.name" placeholder="请输入角色名" />
         </el-form-item>
         <el-form-item label="角色编码：" prop="code">
-          <el-input v-model="roleForm.code" :disabled="roleForm.roleId" placeholder="请输入角色编码" />
+          <el-input v-model="roleForm.code" :disabled="roleForm.roleId != null" placeholder="请输入角色编码" />
         </el-form-item>
+        <div v-if="roleForm.parentId == 0">
+          <el-form-item label="固定角色:">
+            <base-radio-group v-model="roleForm.isFixed" data-type="yes" />
+          </el-form-item>
+          <el-form-item label="同步更新权限:">
+            <base-radio-group v-model="roleForm.isRefreshAllTenant" data-type="yes" />
+          </el-form-item>
+        </div>
         <el-form-item label="排序：" prop="sort">
           <el-input-number v-model="roleForm.sort" :min="1" controls-position="right" placeholder="请输入排序" />
         </el-form-item>
@@ -113,7 +121,7 @@ function update(row) {
   dialogStatus = 'update';
 }
 function add(parentId) {
-  roleForm = { parentId: parentId, isFixed: 0, status: 1, isRefreshAllTenant: 0, sort: 100 };
+  roleForm = { parentId: parentId, isFixed: false, status: 1, isRefreshAllTenant: false, sort: 100 };
   dialogVisible = true;
   dialogStatus = 'add';
 }
