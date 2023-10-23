@@ -20,6 +20,7 @@ import com.zhengqing.system.entity.SysTenantPackage;
 import com.zhengqing.system.mapper.SysTenantMapper;
 import com.zhengqing.system.model.bo.SysAppConfigBO;
 import com.zhengqing.system.model.dto.*;
+import com.zhengqing.system.model.vo.SysRoleBaseVO;
 import com.zhengqing.system.model.vo.SysTenantConfigVO;
 import com.zhengqing.system.model.vo.SysTenantListVO;
 import com.zhengqing.system.model.vo.SysTenantPageVO;
@@ -58,6 +59,8 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
     private final ISysRoleService iSysRoleService;
     private final ISysDeptService iSysDeptService;
     private final ISysAppConfigService iSysAppConfigService;
+    private final ISysRoleMenuService iSysRoleMenuService;
+    private final ISysRoleScopeService iSysRoleScopeService;
 
     @Override
     public SysTenant detail(Integer id) {
@@ -132,6 +135,12 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
         id = sysTenant.getId();
 
         if (isAdd) {
+            // 同步系统租户下的部分角色信息
+            List<SysRoleBaseVO> roleList = this.iSysRoleService.list(SysRoleBaseDTO.builder()
+                    .isRefreshAllTenant(true)
+                    .excludeRoleId(this.iSysRoleService.getRoleIdByCode(SysRoleCodeEnum.租户管理员))
+                    .build());
+
             // 创建租户下的用户 & 分配角色权限
             TenantUtil.executeRemoveFlag(() -> {
                 TenantIdContext.setTenantId(sysTenant.getId());
@@ -186,6 +195,29 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
                         .build());
                 sysTenant.setAdminUserId(userId);
                 sysTenant.updateById();
+
+                // 同步系统租户下的同步更新角色数据（排除租户管理员）
+                roleList.forEach(roleItem -> {
+                    // 创建角色
+                    Integer roleIdItem = this.iSysRoleService.addOrUpdateData(
+                            SysRoleSaveDTO.builder()
+                                    .parentId(AppConstant.PARENT_ID)
+                                    .name(roleItem.getName())
+                                    .code(roleItem.getCode())
+                                    .isFixed(roleItem.getIsFixed())
+                                    .isRefreshAllTenant(roleItem.getIsRefreshAllTenant())
+                                    .sort(roleItem.getSort())
+                                    .build()
+                    );
+                    // 给角色绑定权限
+                    this.iSysPermBusinessService.saveRoleRePerm(
+                            SysRoleRePermSaveDTO.builder()
+                                    .roleId(roleIdItem)
+                                    .menuIdList(TenantUtil.executeByTenantId(AppConstant.SMALL_BOOT_TENANT_ID, () -> this.iSysRoleMenuService.getMenuIdsByRoleId(roleIdItem)))
+                                    .scopeIdList(TenantUtil.executeByTenantId(AppConstant.SMALL_BOOT_TENANT_ID, () -> this.iSysRoleScopeService.getScopeIdListByRoleId(roleIdItem)))
+                                    .build()
+                    );
+                });
             });
         } else {
             this.refreshTenantRePerm(sysTenant.getId());

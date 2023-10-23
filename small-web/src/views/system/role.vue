@@ -31,14 +31,12 @@
         <el-table-column label="操作" align="center" width="230">
           <template #default="scope">
             <!--  固定角色=系统管理员 时 只有超级管机员才能编辑 -->
-            <el-button v-if="!scope.row.isFixed || (scope.row.isFixed && scope.row.code == 'system_admin' && userObj.userId == 1)" link @click="update(scope.row)">编辑</el-button>
+            <el-button v-if="isHasOperatePerm(scope.row)" link @click="update(scope.row)">编辑</el-button>
             <el-button type="primary" link @click="add(scope.row.roleId)">新增子项</el-button>
-            <router-link
-              v-if="!scope.row.isFixed || (scope.row.isFixed && scope.row.code == 'system_admin' && userObj.userId == 1)"
-              :to="{ path: '/system/role-edit', query: { id: scope.row.roleId } }">
+            <router-link v-if="isHasOperatePerm(scope.row)" :to="{ path: '/system/role-edit', query: { id: scope.row.roleId } }">
               <el-button link>权限</el-button>
             </router-link>
-            <base-delete-btn v-if="!scope.row.isFixed" @ok="deleteData(scope.row.roleId)" />
+            <base-delete-btn v-if="isHasOperatePerm(scope.row)" @ok="deleteData(scope.row.roleId)" />
           </template>
         </el-table-column>
       </base-table>
@@ -129,6 +127,11 @@ async function deleteData(id) {
   let res = await proxy.$api.sys_role.delete(id);
   proxy.submitOk(res.msg);
   refreshTableData();
+}
+// 判断下是否有操作权限
+function isHasOperatePerm(row) {
+  let currentUserId = userObj.value.userId;
+  return !row.isFixed || currentUserId == 1 || (!['super_admin', 'system_admin', 'tenant_admin'].includes(row.code) && currentUserId == 2);
 }
 </script>
 <style scoped></style>

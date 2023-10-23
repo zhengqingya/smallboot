@@ -137,10 +137,16 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Integer addOrUpdateData(SysRoleSaveDTO params) {
+        Integer parentId = params.getParentId();
         Integer roleId = params.getRoleId();
         String code = params.getCode();
         Boolean isFixed = params.getIsFixed();
         Boolean isRefreshAllTenant = params.getIsRefreshAllTenant();
+        if (!AppConstant.PARENT_ID.equals(parentId)) {
+            // 只有第一级才有固定角色 和 同步刷新所有租户数据
+            isFixed = false;
+            isRefreshAllTenant = false;
+        }
         if ((isFixed || isRefreshAllTenant) && !JwtUserContext.hasSuperOrSystemAdmin()) {
             throw new MyException("您没有权限操作特殊角色！");
         }
@@ -166,7 +172,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         // 保存角色
         SysRole sysRole = SysRole.builder()
                 .roleId(roleId)
-                .parentId(params.getParentId())
+                .parentId(parentId)
                 .name(params.getName())
                 .code(code)
                 .status(params.getStatus())
