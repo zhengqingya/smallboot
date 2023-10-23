@@ -26,7 +26,7 @@ const props = defineProps({
 async function handleChange() {
   if (props.api) {
     let res = await apiMethod(props.params);
-    console.log('111', res);
+    // console.log('111', res);
   }
 }
 // 接口请求
