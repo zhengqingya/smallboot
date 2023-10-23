@@ -118,6 +118,10 @@ public class MyGlobalExceptionHandler {
     @ExceptionHandler(RuntimeException.class)
     public ApiResult handleRuntimeException(RuntimeException e) {
         log.error("系统异常:", e);
+        Throwable cause = e.getCause();
+        if (cause != null) {
+            return ApiResult.fail(e.getCause().getMessage());
+        }
         return ApiResult.fail("系统异常，操作失败:" + e.getMessage());
     }
 

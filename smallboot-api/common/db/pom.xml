@@ -69,6 +69,11 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>3.5.2</version>
         </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-extension</artifactId>
+            <version>3.5.2</version>
+        </dependency>
 
         <!-- freemarker:代码生成模板引擎 -->
         <!-- https://mvnrepository.com/artifact/org.freemarker/freemarker -->

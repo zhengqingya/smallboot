@@ -1,10 +1,10 @@
 package com.zhengqing.common.core.custom.fieldrepeat;
 
 import com.zhengqing.common.base.exception.MyException;
-import com.zhengqing.common.db.mapper.MyBaseMapper;
 import com.zhengqing.common.base.util.ApplicationContextUtil;
 import com.zhengqing.common.base.util.MyBeanUtil;
 import com.zhengqing.common.base.util.MyStringUtil;
+import com.zhengqing.common.db.mapper.MyBaseMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.CollectionUtils;
@@ -138,8 +138,7 @@ public class FieldRepeatValidatorUtil {
             }
         }
 
-        List<Map<String, Object>> list =
-                ApplicationContextUtil.getApplicationContext().getBean(MyBaseMapper.class).selectList(this.TABLE_NAME, queryMap);
+        List<Map<String, Object>> list = ApplicationContextUtil.getApplicationContext().getBean(MyBaseMapper.class).selectListBySomeColumn(this.TABLE_NAME, queryMap);
 
         // 6、如果数据重复返回false -> 再返回自定义错误消息到前端
         if (!CollectionUtils.isEmpty(list)) {

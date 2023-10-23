@@ -57,7 +57,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     @Override
     public List<SysMenuTree> tree(SysMenuTreeDTO params) {
         // 1、查询租户权限 （排除超管）
-        if (!JwtUserContext.hasSuperAdmin()) {
+        if (!JwtUserContext.hasSuperOrSystemAdmin()) {
             SysTenantPackage sysTenantPackage = this.iSysTenantPackageService.detailReTenantId(TenantIdContext.getTenantId());
             params.setMenuIdList(sysTenantPackage.getMenuIdList());
         }

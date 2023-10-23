@@ -91,10 +91,16 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
         // 2、权限树
         userPerm.setPermissionTreeList(this.iSysMenuService.tree(SysMenuTreeDTO.builder().roleIdList(userPerm.getRoleIdList()).isOnlyShowPerm(true).build()));
 
-        // 3、租户信息
-        SysTenant sysTenant = this.iSysTenantService.detail(TenantIdContext.getTenantId());
-        userPerm.setTenantId(sysTenant.getId());
-        userPerm.setTenantName(sysTenant.getName());
+        // 3、租户信息 -- 在系统管理员查询全部数据时，可能在这里没有租户id值
+        Integer tenantId = TenantIdContext.getTenantId();
+        if (tenantId != null) {
+            SysTenant sysTenant = this.iSysTenantService.detail(tenantId);
+            userPerm.setTenantId(sysTenant.getId());
+            userPerm.setTenantName(sysTenant.getName());
+        } else {
+            userPerm.setTenantId(-1);
+            userPerm.setTenantName("全部租户");
+        }
 
         userPerm.handleData();
         return userPerm;
@@ -183,9 +189,8 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
         Integer roleId = params.getRoleId();
         SysRole sysRole = this.iSysRoleService.detail(roleId);
         Boolean isRefreshAllTenant = sysRole.getIsRefreshAllTenant();
-        Integer tenantId = TenantIdContext.getTenantId();
 
-        if (isRefreshAllTenant) {
+        if (!SysRoleCodeEnum.租户管理员.getCode().equals(sysRole.getCode()) && isRefreshAllTenant) {
             Assert.isTrue(JwtUserContext.hasSuperOrSystemAdmin(), "您没有权限同步更新所有租户下的角色权限数据！");
             // 刷新所有租户权限数据
             List<SysTenantListVO> tenantList = this.iSysTenantService.list(SysTenantListDTO.builder().build());

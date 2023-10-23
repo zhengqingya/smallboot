@@ -17,6 +17,7 @@ import com.zhengqing.system.service.ISysFileService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,6 +38,8 @@ public class SysFileServiceImpl extends ServiceImpl<SysFileMapper, SysFile> impl
 
     private final SysFileMapper sysFileMapper;
     private final FileStorageUtil fileStorageUtil;
+    @Value("${spring.profiles.active:dev}")
+    private String env;
 
     @Override
     public IPage<SysFilePageVO> page(SysFilePageDTO params) {
@@ -59,7 +62,7 @@ public class SysFileServiceImpl extends ServiceImpl<SysFileMapper, SysFile> impl
         SysFileVO result = SysFileVO.builder().name(filename).type(fileType).build();
 
         SysFile sysFile = this.sysFileMapper.selectOne(
-                new LambdaQueryWrapper<SysFile>().eq(SysFile::getMd5, md5).last(MybatisConstant.LIMIT_ONE)
+                new LambdaQueryWrapper<SysFile>().eq(SysFile::getEnv, this.env).eq(SysFile::getMd5, md5).last(MybatisConstant.LIMIT_ONE)
         );
         if (sysFile == null) {
             String fileUrl = this.fileStorageUtil.upload(file);
@@ -69,6 +72,7 @@ public class SysFileServiceImpl extends ServiceImpl<SysFileMapper, SysFile> impl
                     .type(fileType)
                     .md5(md5)
                     .size(fileSize)
+                    .env(this.env)
                     .build());
             result.setUrl(fileUrl);
         } else {

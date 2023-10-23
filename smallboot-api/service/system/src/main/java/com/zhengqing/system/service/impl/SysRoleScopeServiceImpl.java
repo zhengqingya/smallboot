@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
+import com.zhengqing.common.base.context.TenantIdContext;
 import com.zhengqing.common.base.model.bo.ScopeDataBO;
 import com.zhengqing.system.entity.SysRoleScope;
 import com.zhengqing.system.mapper.SysRoleScopeMapper;
@@ -80,12 +81,13 @@ public class SysRoleScopeServiceImpl extends ServiceImpl<SysRoleScopeMapper, Sys
         List<SysRoleScope> roleScopeList = Lists.newArrayList();
         scopeIdList.forEach(scopeId ->
                 roleScopeList.add(SysRoleScope.builder()
+                        .tenantId(TenantIdContext.getTenantId())
                         .id(mapOld.get(scopeId))
                         .roleId(roleId)
                         .scopeId(scopeId)
                         .build())
         );
-        this.saveOrUpdateBatch(roleScopeList);
+        this.sysRoleScopeMapper.insertBatchSomeColumn(roleScopeList);
     }
 
     @Override

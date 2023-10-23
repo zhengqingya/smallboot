@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.zhengqing.common.base.context.TenantIdContext;
 import com.zhengqing.system.entity.SysUserRole;
 import com.zhengqing.system.mapper.SysUserRoleMapper;
 import com.zhengqing.system.model.bo.SysUserReRoleIdListBO;
@@ -73,13 +74,14 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
         roleIdList.forEach(roleId ->
                 saveList.add(
                         SysUserRole.builder()
+                                .tenantId(TenantIdContext.getTenantId())
                                 .id(roleReIdMapOld.get(roleId))
                                 .userId(userId)
                                 .roleId(roleId)
                                 .build()
                 )
         );
-        super.saveOrUpdateBatch(saveList);
+        this.sysUserRoleMapper.insertBatchSomeColumn(saveList);
     }
 
     @Override

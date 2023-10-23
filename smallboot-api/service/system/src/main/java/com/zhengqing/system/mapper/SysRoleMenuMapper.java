@@ -1,6 +1,6 @@
 package com.zhengqing.system.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.zhengqing.common.db.mapper.MyBaseMapper;
 import com.zhengqing.system.entity.SysRoleMenu;
 import com.zhengqing.system.model.vo.SysRoleReBtnPermListVO;
 import org.apache.ibatis.annotations.Param;
@@ -17,7 +17,7 @@ import java.util.List;
  * @description
  * @date 2020/4/15 19:00
  */
-public interface SysRoleMenuMapper extends BaseMapper<SysRoleMenu> {
+public interface SysRoleMenuMapper extends MyBaseMapper<SysRoleMenu> {
 
     /**
      * 批量保存角色菜单对应关系

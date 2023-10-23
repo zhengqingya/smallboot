@@ -10,6 +10,7 @@ import com.zhengqing.common.base.context.TenantIdContext;
 import com.zhengqing.common.db.config.mybatis.data.permission.first.DataPermissionInterceptor;
 import com.zhengqing.common.db.config.mybatis.data.permission.second.MyDataPermissionHandler;
 import com.zhengqing.common.db.config.mybatis.data.permission.second.MyDataPermissionInterceptor;
+import com.zhengqing.common.db.config.mybatis.injector.MySqlInjector;
 import com.zhengqing.common.db.config.mybatis.plugins.LogicDeleteInterceptor;
 import com.zhengqing.common.db.config.mybatis.plugins.SqlLogInterceptor;
 import net.sf.jsqlparser.expression.Expression;
@@ -152,6 +153,16 @@ public class MybatisPlusConfig {
     @ConditionalOnMissingBean
     public LogicDeleteInterceptor logicDeleteInterceptor() {
         return new LogicDeleteInterceptor();
+    }
+
+
+    /**
+     * MySQL批量保存
+     * 如果有租户id暂时需要自己手动设置，后面有时间可以看看能不能让这个插件放在租户插件之后执行，这样租户id就会自动填充值了...
+     */
+    @Bean
+    public MySqlInjector sqlInjector() {
+        return new MySqlInjector();
     }
 
 }

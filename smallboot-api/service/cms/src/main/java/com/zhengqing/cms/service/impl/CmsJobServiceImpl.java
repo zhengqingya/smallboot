@@ -85,7 +85,7 @@ public class CmsJobServiceImpl extends ServiceImpl<CmsJobMapper, CmsJob> impleme
     @Transactional(rollbackFor = Exception.class)
     public void addOrUpdateData(CmsJobSaveDTO params) {
         Integer deptId = params.getDeptId();
-        // 校验商户的发布数
+        // 校验租户的发布数
         if (params.getId() == null) {
             SysTenant sysTenant = this.iSysTenantService.checkData(deptId);
             Integer maxJobNum = sysTenant.getJobNum();

@@ -46,4 +46,7 @@ public class SysFile extends IsDeletedBaseEntity<SysFile> {
     @ApiModelProperty("文件大小（byte）")
     private Long size;
 
+    @ApiModelProperty("服务器环境")
+    private String env;
+    
 }

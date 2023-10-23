@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
 import com.zhengqing.common.base.constant.AppConstant;
+import com.zhengqing.common.base.context.TenantIdContext;
 import com.zhengqing.system.entity.SysRoleMenu;
 import com.zhengqing.system.mapper.SysRoleMenuMapper;
 import com.zhengqing.system.model.dto.SysRoleReMenuSaveDTO;
@@ -79,12 +80,13 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
         List<SysRoleMenu> roleMenuList = Lists.newArrayList();
         menuIdList.forEach(menuId ->
                 roleMenuList.add(SysRoleMenu.builder()
+                        .tenantId(TenantIdContext.getTenantId())
                         .id(menuReIdMapOld.get(menuId))
                         .roleId(roleId)
                         .menuId(menuId)
                         .build())
         );
-        this.saveOrUpdateBatch(roleMenuList);
+        this.sysRoleMenuMapper.insertBatchSomeColumn(roleMenuList);
     }
 
 

@@ -1,6 +1,6 @@
 package com.zhengqing.system.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.zhengqing.common.db.mapper.MyBaseMapper;
 import com.zhengqing.system.entity.SysUserRole;
 import com.zhengqing.system.model.bo.SysUserReRoleIdListBO;
 import org.apache.ibatis.annotations.Param;
@@ -17,7 +17,7 @@ import java.util.List;
  * @description
  * @date 2020/4/15 18:44
  */
-public interface SysUserRoleMapper extends BaseMapper<SysUserRole> {
+public interface SysUserRoleMapper extends MyBaseMapper<SysUserRole> {
 
     /**
      * 根据角色id查询关联用户ids

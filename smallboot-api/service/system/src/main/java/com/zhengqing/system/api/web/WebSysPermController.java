@@ -1,7 +1,9 @@
 package com.zhengqing.system.api.web;
 
 import com.zhengqing.common.base.constant.ServiceConstant;
+import com.zhengqing.common.base.context.JwtUserContext;
 import com.zhengqing.common.base.context.SysUserContext;
+import com.zhengqing.common.base.context.TenantIdContext;
 import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.common.core.custom.repeatsubmit.NoRepeatSubmit;
 import com.zhengqing.system.model.dto.SysRoleRePermSaveDTO;
@@ -38,6 +40,9 @@ public class WebSysPermController extends BaseController {
     @GetMapping("getUserPerm")
     @ApiOperation("获取当前登录用户权限信息")
     public SysUserPermVO getUserPerm(@RequestParam(required = false) Integer userId) {
+        if (JwtUserContext.hasSuperOrSystemAdmin()) {
+            TenantIdContext.removeFlag();
+        }
         SysUserPermVO userPerm = this.iSysPermBusinessService.getUserPerm(
                 SysUserPermDTO.builder()
                         .userId(userId == null ? SysUserContext.getUserId() : userId)
