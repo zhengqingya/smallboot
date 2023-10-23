@@ -78,15 +78,19 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
 
         // 3、再保存角色关联的菜单权限信息
         List<SysRoleMenu> roleMenuList = Lists.newArrayList();
-        menuIdList.forEach(menuId ->
+        menuIdList.forEach(menuId -> {
+            if (menuReIdMapOld.get(menuId) == null) {
                 roleMenuList.add(SysRoleMenu.builder()
                         .tenantId(TenantIdContext.getTenantId())
-                        .id(menuReIdMapOld.get(menuId))
+                        .id(null)
                         .roleId(roleId)
                         .menuId(menuId)
-                        .build())
-        );
-        this.sysRoleMenuMapper.insertBatchSomeColumn(roleMenuList);
+                        .build());
+            }
+        });
+        if (CollUtil.isNotEmpty(roleMenuList)) {
+            this.sysRoleMenuMapper.insertBatchSomeColumn(roleMenuList);
+        }
     }
 
 

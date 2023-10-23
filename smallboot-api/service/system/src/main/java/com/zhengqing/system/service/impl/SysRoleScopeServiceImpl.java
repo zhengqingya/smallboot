@@ -79,15 +79,19 @@ public class SysRoleScopeServiceImpl extends ServiceImpl<SysRoleScopeMapper, Sys
 
         // 3、再保存角色关联的权限信息
         List<SysRoleScope> roleScopeList = Lists.newArrayList();
-        scopeIdList.forEach(scopeId ->
+        scopeIdList.forEach(scopeId -> {
+            if (mapOld.get(scopeId) == null) {
                 roleScopeList.add(SysRoleScope.builder()
                         .tenantId(TenantIdContext.getTenantId())
-                        .id(mapOld.get(scopeId))
+                        .id(null)
                         .roleId(roleId)
                         .scopeId(scopeId)
-                        .build())
-        );
-        this.sysRoleScopeMapper.insertBatchSomeColumn(roleScopeList);
+                        .build());
+            }
+        });
+        if (CollUtil.isNotEmpty(roleScopeList)) {
+            this.sysRoleScopeMapper.insertBatchSomeColumn(roleScopeList);
+        }
     }
 
     @Override

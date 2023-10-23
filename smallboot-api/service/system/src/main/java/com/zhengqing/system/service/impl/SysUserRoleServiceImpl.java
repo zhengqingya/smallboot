@@ -71,17 +71,19 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
 
         // 3、再新增角色
         List<SysUserRole> saveList = Lists.newArrayList();
-        roleIdList.forEach(roleId ->
-                saveList.add(
-                        SysUserRole.builder()
-                                .tenantId(TenantIdContext.getTenantId())
-                                .id(roleReIdMapOld.get(roleId))
-                                .userId(userId)
-                                .roleId(roleId)
-                                .build()
-                )
-        );
-        this.sysUserRoleMapper.insertBatchSomeColumn(saveList);
+        roleIdList.forEach(roleId -> {
+            if (roleReIdMapOld.get(roleId) == null) {
+                saveList.add(SysUserRole.builder()
+                        .tenantId(TenantIdContext.getTenantId())
+                        .id(null)
+                        .userId(userId)
+                        .roleId(roleId)
+                        .build());
+            }
+        });
+        if (CollUtil.isNotEmpty(saveList)) {
+            this.sysUserRoleMapper.insertBatchSomeColumn(saveList);
+        }
     }
 
     @Override
