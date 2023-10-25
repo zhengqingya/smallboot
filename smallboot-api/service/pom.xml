@@ -17,7 +17,6 @@
     <properties></properties>
 
     <modules>
-        <module>cms</module>
         <module>mall</module>
         <module>system</module>
         <module>ums</module>

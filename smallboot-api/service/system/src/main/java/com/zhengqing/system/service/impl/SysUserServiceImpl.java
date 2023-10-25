@@ -10,12 +10,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhengqing.common.auth.util.AuthUtil;
 import com.zhengqing.common.base.constant.AppConstant;
 import com.zhengqing.common.base.context.JwtUserContext;
-import com.zhengqing.common.base.context.TenantIdContext;
 import com.zhengqing.common.base.exception.MyException;
 import com.zhengqing.common.core.enums.UserSexEnum;
 import com.zhengqing.common.core.util.DesUtil;
 import com.zhengqing.common.db.constant.MybatisConstant;
-import com.zhengqing.system.entity.SysTenant;
 import com.zhengqing.system.entity.SysUser;
 import com.zhengqing.system.mapper.SysUserMapper;
 import com.zhengqing.system.model.dto.*;
@@ -128,13 +126,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     public Integer addOrUpdateData(SysUserSaveDTO params) {
         Integer userId = params.getUserId();
         boolean isAdd = userId == null;
-        Integer deptId = params.getDeptId();
-        if (deptId != null) {
-            // 校验最大用户数
-            SysTenant sysTenant = this.iSysTenantService.checkData(TenantIdContext.getTenantId());
-            Integer accountCount = sysTenant.getAccountCount();
-            Assert.isTrue(accountCount > this.sysUserMapper.selectUserNumByDeptId(deptId), "限制：该租户最大用户数 " + accountCount);
-        }
 
         String password = params.getPassword();
         Boolean isFixed = params.getIsFixed();
@@ -151,7 +142,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         sysUser.setPhone(params.getPhone());
         sysUser.setEmail(params.getEmail());
         sysUser.setAvatarUrl(params.getAvatarUrl());
-        sysUser.setDeptId(deptId);
+        sysUser.setDeptId(params.getDeptId());
         sysUser.setPostIdList(params.getPostIdList());
         sysUser.setIsFixed(isFixed);
 

@@ -120,7 +120,6 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
                 .status(params.getStatus())
                 .expireTime(params.getExpireTime())
                 .accountCount(params.getAccountCount())
-                .jobNum(params.getJobNum())
                 .packageId(packageId)
                 .sort(params.getSort())
                 .build();

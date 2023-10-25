@@ -29,11 +29,6 @@
             <el-tag v-if="scope.row.accountCount" type="success"> {{ scope.row.accountCount }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="职位发布数" prop="jobNum" align="center">
-          <template #default="scope">
-            <el-tag v-if="scope.row.jobNum" type="success"> {{ scope.row.jobNum }}</el-tag>
-          </template>
-        </el-table-column>
         <el-table-column label="租户套餐" prop="packageName" align="center" />
         <el-table-column label="创建时间" prop="createTime" align="center" />
         <el-table-column align="center" width="150px" label="操作">
@@ -64,9 +59,6 @@
             </el-form-item>
             <el-form-item label="账号数量:">
               <el-input-number v-model="form.accountCount" :min="1" controls-position="right" placeholder="请输入" />
-            </el-form-item>
-            <el-form-item label="职位发布数:">
-              <el-input-number v-model="form.jobNum" :min="1" controls-position="right" placeholder="请输入" />
             </el-form-item>
             <el-form-item label="排序:">
               <el-input-number v-model="form.sort" :min="1" controls-position="right" placeholder="请输入" />

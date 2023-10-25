@@ -63,10 +63,6 @@ public class SysTenantSaveDTO extends BaseDTO {
     @ApiModelProperty("账号数量")
     private Integer accountCount;
 
-    @NotNull(message = "最大职位发布数不能为空！")
-    @ApiModelProperty("最大职位发布数")
-    private Integer jobNum;
-
     @NotNull(message = "租户套餐不能为空！")
     @ApiModelProperty("租户套餐ID")
     private Integer packageId;
