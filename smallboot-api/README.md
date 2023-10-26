@@ -28,6 +28,26 @@ WHERE t.table_schema = 'smallboot'
 #### 清理指定租户下的所有数据 （谨慎使用！！！）
 
 ```sql
+-- 逻辑删除
+select CONCAT('update ', r.TABLE_NAME, ' set is_deleted = 1 where tenant_id in ( 租户id );')
+from (SELECT re.*, count(1) count
+      from (
+          SELECT t.TABLE_NAME
+          FROM information_schema.TABLES t
+          join information_schema.COLUMNS c on (t.TABLE_NAME = c.TABLE_NAME and c.COLUMN_NAME in ( 'is_deleted', 'tenant_id' ) )
+          WHERE t.table_schema = 'smallboot'
+          GROUP BY t.TABLE_NAME, c.COLUMN_NAME
+          ) re
+      GROUP BY re.TABLE_NAME) r
+-- 说明删除和租户2个字段都存在
+where r.count > 1
+-- 租户表数据
+update t_sys_tenant
+set is_deleted = 1
+where id in (租户id);
+
+
+-- 真正删除
 SELECT CONCAT('DELETE FROM ', t.TABLE_NAME, ' where tenant_id in (xxx);')
 FROM information_schema.TABLES t
          left join information_schema.COLUMNS c on t.TABLE_NAME = c.TABLE_NAME
