@@ -3,7 +3,9 @@
   <span v-if="label" class="label font-bold">{{ label }} &nbsp;</span>
   <el-select filterable v-bind="$attrs" :placeholder="label ? `请选择${label}` : '请选择'" @change="handleChange">
     <template #prefix> <slot name="prefix" /></template>
-    <el-option v-for="item in list" :key="item[optionProps.value]" :label="item[optionProps.label]" :value="item[optionProps.value]" />
+    <el-option v-for="item in list" :key="item[optionProps.value]" :label="item[optionProps.label]" :value="item[optionProps.value]">
+      <slot name="option" :data="item" />
+    </el-option>
   </el-select>
 </template>
 
