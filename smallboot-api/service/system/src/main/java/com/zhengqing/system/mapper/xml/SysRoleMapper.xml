@@ -15,8 +15,12 @@
             <if test="filter.name != null and filter.name != ''">
                 AND name LIKE CONCAT( '%', #{filter.name} , '%' )
             </if>
-            <if test="filter.excludeRoleId!=null">
-                AND role_id != #{filter.excludeRoleId}
+            <if test="filter.excludeRoleIdList != null and filter.excludeRoleIdList.size() > 0">
+                AND role_id not in
+                <foreach item="excludeRoleId" index="index" collection="filter.excludeRoleIdList" open="(" separator=","
+                         close=")">
+                    #{excludeRoleId}
+                </foreach>
             </if>
         </where>
         ORDER BY is_fixed DESC, sort ASC, create_time DESC

@@ -80,28 +80,28 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         if (StrUtil.isNotBlank(params.getName())) {
             return list;
         }
-        return this.recurveRole(AppConstant.PARENT_ID, list, params.getExcludeRoleId());
+        return this.recurveRole(AppConstant.PARENT_ID, list, params.getExcludeRoleIdList());
     }
 
     /**
      * 递归
      *
-     * @param parentId      父id
-     * @param allList       所有数据
-     * @param excludeRoleId 排除指定角色id下级的数据
+     * @param parentId          父id
+     * @param allList           所有数据
+     * @param excludeRoleIdList 排除指定角色id下级的数据
      * @return 菜单树列表
      * @author zhengqingya
      * @date 2020/9/10 20:56
      */
-    private List<SysRoleBaseVO> recurveRole(Integer parentId, List<SysRoleBaseVO> allList, Integer excludeRoleId) {
-        if (parentId.equals(excludeRoleId)) {
+    private List<SysRoleBaseVO> recurveRole(Integer parentId, List<SysRoleBaseVO> allList, List<Integer> excludeRoleIdList) {
+        if (CollUtil.isNotEmpty(excludeRoleIdList) && excludeRoleIdList.contains(parentId)) {
             return Lists.newArrayList();
         }
         // 存放子集合
         List<SysRoleBaseVO> childList = allList.stream().filter(e -> e.getParentId().equals(parentId)).collect(Collectors.toList());
         // 递归
         childList.forEach(item -> {
-            item.setChildren(this.recurveRole(item.getRoleId(), allList, excludeRoleId));
+            item.setChildren(this.recurveRole(item.getRoleId(), allList, excludeRoleIdList));
             item.handleData();
         });
         return childList;

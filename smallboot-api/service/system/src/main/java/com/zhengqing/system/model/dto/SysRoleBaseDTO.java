@@ -9,6 +9,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.util.List;
+
 /**
  * <p>
  * 系统管理 - 角色管理查询参数
@@ -30,7 +32,7 @@ public class SysRoleBaseDTO extends BaseDTO {
     private String name;
 
     @ApiModelProperty("排除指定角色id下级的数据")
-    private Integer excludeRoleId;
+    private List<Integer> excludeRoleIdList;
 
     @ApiModelProperty(value = "是否刷新所有租户权限数据(false->否 true->是)")
     private Boolean isRefreshAllTenant;

@@ -74,10 +74,12 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
         // 暂时主要是校验，不返回给小程序任何信息...
         try {
             SysTenant sysTenant = this.checkData(id);
+            Map<Integer, SysAppConfigBO> appConfigMap = this.iSysAppConfigService.mapByTenantIdList(Lists.newArrayList(id));
+            SysAppConfigBO sysAppConfigBO = appConfigMap.get(id);
+            return SysTenantConfigVO.builder().build();
         } catch (Exception e) {
             throw new MyException(ApiResultCodeEnum.APP_SERVICE_ERROR.getCode(), e.getMessage());
         }
-        return SysTenantConfigVO.builder().build();
     }
 
     @Override
@@ -135,10 +137,14 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
 
         if (isAdd) {
             // 同步系统租户下的部分角色信息
-            List<SysRoleBaseVO> roleList = this.iSysRoleService.list(SysRoleBaseDTO.builder()
+            List<SysRoleBaseVO> roleList = TenantUtil.executeByTenantId(AppConstant.SMALL_BOOT_TENANT_ID, () -> this.iSysRoleService.list(SysRoleBaseDTO.builder()
                     .isRefreshAllTenant(true)
-                    .excludeRoleId(this.iSysRoleService.getRoleIdByCode(SysRoleCodeEnum.租户管理员))
-                    .build());
+                    .excludeRoleIdList(Lists.newArrayList(
+                            this.iSysRoleService.getRoleIdByCode(SysRoleCodeEnum.超级管理员),
+                            this.iSysRoleService.getRoleIdByCode(SysRoleCodeEnum.系统管理员),
+                            this.iSysRoleService.getRoleIdByCode(SysRoleCodeEnum.租户管理员))
+                    )
+                    .build()));
 
             // 创建租户下的用户 & 分配角色权限
             TenantUtil.executeRemoveFlag(() -> {
@@ -196,24 +202,25 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
                 sysTenant.updateById();
 
                 // 同步系统租户下的同步更新角色数据（排除租户管理员）
-                roleList.forEach(roleItem -> {
+                roleList.forEach(sysRoleItem -> {
+                    Integer sysRoleIdItem = sysRoleItem.getRoleId();
                     // 创建角色
                     Integer roleIdItem = this.iSysRoleService.addOrUpdateData(
                             SysRoleSaveDTO.builder()
                                     .parentId(AppConstant.PARENT_ID)
-                                    .name(roleItem.getName())
-                                    .code(roleItem.getCode())
-                                    .isFixed(roleItem.getIsFixed())
-                                    .isRefreshAllTenant(roleItem.getIsRefreshAllTenant())
-                                    .sort(roleItem.getSort())
+                                    .name(sysRoleItem.getName())
+                                    .code(sysRoleItem.getCode())
+                                    .isFixed(sysRoleItem.getIsFixed())
+                                    .isRefreshAllTenant(sysRoleItem.getIsRefreshAllTenant())
+                                    .sort(sysRoleItem.getSort())
                                     .build()
                     );
                     // 给角色绑定权限
                     this.iSysPermBusinessService.saveRoleRePerm(
                             SysRoleRePermSaveDTO.builder()
                                     .roleId(roleIdItem)
-                                    .menuIdList(TenantUtil.executeByTenantId(AppConstant.SMALL_BOOT_TENANT_ID, () -> this.iSysRoleMenuService.getMenuIdsByRoleId(roleIdItem)))
-                                    .scopeIdList(TenantUtil.executeByTenantId(AppConstant.SMALL_BOOT_TENANT_ID, () -> this.iSysRoleScopeService.getScopeIdListByRoleId(roleIdItem)))
+                                    .menuIdList(TenantUtil.executeByTenantId(AppConstant.SMALL_BOOT_TENANT_ID, () -> this.iSysRoleMenuService.getMenuIdsByRoleId(sysRoleIdItem)))
+                                    .scopeIdList(TenantUtil.executeByTenantId(AppConstant.SMALL_BOOT_TENANT_ID, () -> this.iSysRoleScopeService.getScopeIdListByRoleId(sysRoleIdItem)))
                                     .build()
                     );
                 });
