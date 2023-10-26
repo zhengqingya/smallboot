@@ -122,7 +122,7 @@ public class DyServiceVersionVO implements Serializable {
         /**
          * 审核不通过原因
          */
-        private Integer reason;
+        private String reason;
         /**
          * 格式化后的审核不通过原因
          */
