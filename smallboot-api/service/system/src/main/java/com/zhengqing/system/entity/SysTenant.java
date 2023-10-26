@@ -3,7 +3,7 @@ package com.zhengqing.system.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.zhengqing.common.db.entity.BaseEntity;
+import com.zhengqing.common.db.entity.IsDeletedBaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -24,7 +24,7 @@ import java.util.Date;
 @NoArgsConstructor
 @TableName("t_sys_tenant")
 @ApiModel("系统管理-租户信息")
-public class SysTenant extends BaseEntity<SysTenant> {
+public class SysTenant extends IsDeletedBaseEntity<SysTenant> {
 
     @ApiModelProperty("主键ID")
     @TableId(value = "id", type = IdType.AUTO)

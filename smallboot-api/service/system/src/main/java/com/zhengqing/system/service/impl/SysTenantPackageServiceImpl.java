@@ -54,7 +54,7 @@ public class SysTenantPackageServiceImpl extends ServiceImpl<SysTenantPackageMap
     @Override
     public SysTenantPackage detail(Integer id) {
         SysTenantPackage sysTenantPackage = this.sysTenantPackageMapper.selectById(id);
-        Assert.notNull(sysTenantPackage, "该套餐数据不存在！");
+        Assert.notNull(sysTenantPackage, "权限套餐数据不存在！");
         return sysTenantPackage;
     }
 
@@ -128,9 +128,7 @@ public class SysTenantPackageServiceImpl extends ServiceImpl<SysTenantPackageMap
         Assert.isFalse(AppConstant.SMALL_BOOT_TENANT_ID_PACKAGE_ID.equals(id), "超级套餐无法操作！");
         // 1、校验数据是否存在
         this.detail(id);
-        // 2、刷新租户关联权限
-        this.refreshAllTenantPermByPackageId(id);
-        // 3、删除套餐
+        // 2、删除套餐
         this.sysTenantPackageMapper.deleteById(id);
     }
 
