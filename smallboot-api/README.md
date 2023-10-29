@@ -40,7 +40,7 @@ from (SELECT re.*, count(1) count
           ) re
       GROUP BY re.TABLE_NAME) r
 -- 说明删除和租户2个字段都存在
-where r.count > 1
+where r.count > 1;
 -- 租户表数据
 update t_sys_tenant
 set is_deleted = 1
