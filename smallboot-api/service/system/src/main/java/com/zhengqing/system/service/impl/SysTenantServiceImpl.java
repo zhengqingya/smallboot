@@ -15,6 +15,7 @@ import com.zhengqing.common.base.exception.MyException;
 import com.zhengqing.common.base.util.MyDateUtil;
 import com.zhengqing.common.db.constant.MybatisConstant;
 import com.zhengqing.common.db.util.TenantUtil;
+import com.zhengqing.system.config.SystemProperty;
 import com.zhengqing.system.entity.SysTenant;
 import com.zhengqing.system.entity.SysTenantPackage;
 import com.zhengqing.system.mapper.SysTenantMapper;
@@ -61,6 +62,7 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
     private final ISysAppConfigService iSysAppConfigService;
     private final ISysRoleMenuService iSysRoleMenuService;
     private final ISysRoleScopeService iSysRoleScopeService;
+    private final SystemProperty systemProperty;
 
     @Override
     public SysTenant detail(Integer id) {
@@ -231,7 +233,6 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
 
         // 保存小程序配置
         SysAppConfigBO appConfigObj = params.getAppConfigObj();
-        appConfigObj.setId(id);
         appConfigObj.setTenantId(id);
         appConfigObj.setName(name);
         this.iSysAppConfigService.addOrUpdateData(appConfigObj);
@@ -241,9 +242,11 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void deleteData(Integer id) {
-        this.refreshTenantRePerm(id);
         this.sysTenantMapper.deleteById(id);
-        // TODO 逻辑删除整个租户下的所有数据...
+        // TODO 逻辑删除整个租户下的所有数据...  tips: 部分表并不在逻辑删除中
+        String dbName = this.systemProperty.getMysql().getMaster().getDbName();
+        List<String> sqlList = this.sysTenantMapper.selectDelAllDataSql(dbName, id);
+        sqlList.forEach(this.sysTenantMapper::execSql);
     }
 
     /**

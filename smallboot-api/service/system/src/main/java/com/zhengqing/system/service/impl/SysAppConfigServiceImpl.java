@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
 import com.zhengqing.common.base.context.TenantIdContext;
 import com.zhengqing.common.base.exception.MyException;
+import com.zhengqing.common.db.constant.MybatisConstant;
 import com.zhengqing.common.db.util.TenantUtil;
 import com.zhengqing.common.sdk.douyin.service.model.vo.DyServiceVersionVO;
 import com.zhengqing.common.sdk.douyin.service.util.DyServiceApiUtil;
@@ -69,11 +70,10 @@ public class SysAppConfigServiceImpl extends ServiceImpl<SysAppConfigMapper, Sys
         String appId = params.getAppId();
         Integer id = params.getId();
 
-        if (id == null) {
-            SysAppConfig sysAppConfigOld = this.sysAppConfigMapper.selectOne(new LambdaQueryWrapper<SysAppConfig>().eq(SysAppConfig::getTenantId, tenantId));
-            if (sysAppConfigOld != null) {
-                id = sysAppConfigOld.getId();
-            }
+        if (StrUtil.isNotBlank(appId)) {
+            // 校验appId是否重复
+            SysAppConfig sysAppConfigOld = TenantUtil.executeRemoveFlag(() -> this.sysAppConfigMapper.selectOne(new LambdaQueryWrapper<SysAppConfig>().eq(SysAppConfig::getAppId, appId).last(MybatisConstant.LIMIT_ONE)));
+            Assert.isTrue(sysAppConfigOld == null || sysAppConfigOld.getId().equals(id), "AppID重复，请重新输入！");
         }
 
         SysAppConfig sysAppConfig = SysAppConfig.builder()

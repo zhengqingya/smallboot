@@ -1,7 +1,7 @@
 package com.zhengqing.system.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.zhengqing.common.db.mapper.MyBaseMapper;
 import com.zhengqing.system.entity.SysTenant;
 import com.zhengqing.system.model.dto.SysTenantListDTO;
 import com.zhengqing.system.model.dto.SysTenantPageDTO;
@@ -18,7 +18,7 @@ import java.util.List;
  * @description
  * @date 2023/10/08 15:40
  */
-public interface SysTenantMapper extends BaseMapper<SysTenant> {
+public interface SysTenantMapper extends MyBaseMapper<SysTenant> {
 
     /**
      * 列表分页
@@ -40,5 +40,16 @@ public interface SysTenantMapper extends BaseMapper<SysTenant> {
      * @date 2023/10/08 15:40
      */
     List<SysTenantListVO> selectDataList(@Param("filter") SysTenantListDTO filter);
+
+    /**
+     * 拿到删除整个租户下所有数据的sql
+     *
+     * @param tableSchema 库
+     * @param tenantId    租户id
+     * @return void
+     * @author zhengqingya
+     * @date 2023/10/08 15:40
+     */
+    List<String> selectDelAllDataSql(@Param("tableSchema") String tableSchema, @Param("tenantId") Integer tenantId);
 
 }

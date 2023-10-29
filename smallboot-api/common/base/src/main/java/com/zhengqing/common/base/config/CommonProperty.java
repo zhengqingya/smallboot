@@ -48,6 +48,7 @@ public class CommonProperty {
     public static class MysqlConn {
         private String ip;
         private String port;
+        private String dbName;
         private String username;
         private String password;
     }
