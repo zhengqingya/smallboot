@@ -20,10 +20,10 @@ import java.util.HashMap;
 @AllArgsConstructor
 public class SysExtJsonBO {
 
-    private Boolean extEnable = true;
+    private Boolean extEnable;
 
     private String extAppid;
-    private String directCommit = "false";
+    private Boolean directCommit;
     private HashMap<String, Object> extPages;
     private Ext ext;
 

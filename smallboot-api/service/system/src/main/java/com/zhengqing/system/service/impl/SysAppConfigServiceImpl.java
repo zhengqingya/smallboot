@@ -9,7 +9,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
-import com.zhengqing.common.base.context.TenantIdContext;
 import com.zhengqing.common.base.exception.MyException;
 import com.zhengqing.common.db.constant.MybatisConstant;
 import com.zhengqing.common.db.util.TenantUtil;
@@ -173,9 +172,8 @@ public class SysAppConfigServiceImpl extends ServiceImpl<SysAppConfigMapper, Sys
         String component_appsecret = sysAppServiceConfigDetailVO.getComponentAppSecret();
         String component_access_token = DyServiceApiUtil.component_access_token(sysAppServiceConfigDetailVO.getId(), component_appid, component_appsecret);
         for (SysAppConfigBO appConfigItem : appConfigList) {
-            Integer deptId = appConfigItem.getId();
+            Integer appReTenantId = appConfigItem.getTenantId();
             String appId = appConfigItem.getAppId();
-            String appSecret = appConfigItem.getAppSecret();
             String appIndexTitle = appConfigItem.getAppIndexTitle();
             String authorizer_access_token = DyServiceApiUtil.authorizer_access_token(component_appid, component_access_token, DyServiceApiUtil.retrieve_authorization_code(component_appid, component_access_token, appId));
             switch (appStatusEnum) {
@@ -185,20 +183,21 @@ public class SysAppConfigServiceImpl extends ServiceImpl<SysAppConfigMapper, Sys
 //                    }
                     String ext_json = JSONUtil.toJsonStr(
                             SysExtJsonBO.builder()
+                                    .extEnable(true)
+//                                    .directCommit(true)
                                     .extAppid(appId)
+                                    .ext(
+                                            SysExtJsonBO.Ext.builder()
+                                                    .tenantId(String.valueOf(appReTenantId))
+                                                    .appId(appId)
+                                                    .build()
+                                    )
                                     .extPages(new HashMap<String, Object>() {{
                                         this.put("pages/index/index",
                                                 StrUtil.format("{\"navigationBarTitleText\": \"{}\"}",
                                                         StrUtil.isBlank(appIndexTitle) ? "首页" : appIndexTitle)
                                         );
                                     }})
-                                    .ext(
-                                            SysExtJsonBO.Ext.builder()
-                                                    .tenantId(String.valueOf(TenantIdContext.getTenantId()))
-                                                    .deptId(String.valueOf(deptId))
-                                                    .appId(appId)
-                                                    .build()
-                                    )
                                     .build()
                     );
                     DyServiceApiUtil.uploadCode(component_appid, authorizer_access_token, templateId, uploadCodeDesc, appVersion, ext_json);

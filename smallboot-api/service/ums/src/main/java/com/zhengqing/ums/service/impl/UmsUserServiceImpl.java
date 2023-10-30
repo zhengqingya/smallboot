@@ -16,11 +16,13 @@ import com.zhengqing.common.core.util.IdGeneratorUtil;
 import com.zhengqing.common.db.constant.MybatisConstant;
 import com.zhengqing.common.db.util.TenantUtil;
 import com.zhengqing.common.redis.util.RedisUtil;
-import com.zhengqing.common.sdk.douyin.mini.model.dto.DyMiniLoginDTO;
-import com.zhengqing.common.sdk.douyin.mini.model.vo.DyMiniLoginVO;
 import com.zhengqing.common.sdk.douyin.mini.util.DyMiniApiUtil;
-import com.zhengqing.system.model.bo.SysAppConfigBO;
+import com.zhengqing.common.sdk.douyin.service.model.dto.DyServiceLoginDTO;
+import com.zhengqing.common.sdk.douyin.service.model.vo.DyServiceLoginVO;
+import com.zhengqing.common.sdk.douyin.service.util.DyServiceApiUtil;
+import com.zhengqing.system.model.vo.SysAppServiceConfigDetailVO;
 import com.zhengqing.system.service.ISysAppConfigService;
+import com.zhengqing.system.service.ISysAppServiceConfigService;
 import com.zhengqing.system.service.ISysUserService;
 import com.zhengqing.ums.constant.UmsConstant;
 import com.zhengqing.ums.entity.UmsUser;
@@ -56,6 +58,7 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
     private final UmsUserMapper umsUserMapper;
     private final WxMaFactory wxMaFactory;
     private final ISysAppConfigService iSysAppConfigService;
+    private final ISysAppServiceConfigService iSysAppServiceConfigService;
     private final ISysUserService iSysUserService;
 
     @Override
@@ -96,26 +99,29 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
                 openid = wxMaJscode2SessionResult.getOpenid();
                 break;
             case 抖音小程序:
-//                String component_appid = params.getComponent_appid();
-//                String component_appsecret = params.getComponent_appsecret();
-//                String component_access_token = DyServiceApiUtil.component_access_token(component_appid, component_appsecret);
-//                String authorizer_access_token = DyServiceApiUtil.authorizer_access_token(component_appid,
-//                        component_access_token,
-//                        DyServiceApiUtil.retrieve_authorization_code(component_appid, component_access_token, appid)
-//                );
-//                DyServiceLoginVO.Data dyData = DyServiceApiUtil.code2session(DyServiceLoginDTO.builder()
-//                        .component_appid(component_appid)
-//                        .authorizer_access_token(authorizer_access_token)
+                // 模板代开发
+//                SysAppConfigBO sysAppConfigBO = this.iSysAppConfigService.detailByAppId(appid);
+//                DyMiniLoginVO.Data dyData = DyMiniApiUtil.jscode2session(DyMiniLoginDTO.builder()
+//                        .appid(appid)
+//                        .secret(sysAppConfigBO.getAppSecret())
 //                        .code(code)
 //                        .anonymous_code(params.getAnonymousCode())
 //                        .build());
-                SysAppConfigBO sysAppConfigBO = this.iSysAppConfigService.detailByAppId(appid);
-                DyMiniLoginVO.Data dyData = DyMiniApiUtil.jscode2session(DyMiniLoginDTO.builder()
-                        .appid(appid)
-                        .secret(sysAppConfigBO.getAppSecret())
+
+                // 定制代开发
+                // 拿到小程序appid信息
+                SysAppServiceConfigDetailVO sysAppServiceConfigDetailVO = this.iSysAppServiceConfigService.detail();
+                String component_appid = sysAppServiceConfigDetailVO.getComponentAppId();
+                String component_appsecret = sysAppServiceConfigDetailVO.getComponentAppSecret();
+                String component_access_token = DyServiceApiUtil.component_access_token(sysAppServiceConfigDetailVO.getId(), component_appid, component_appsecret);
+                String authorizer_access_token = DyServiceApiUtil.authorizer_access_token(component_appid, component_access_token, DyServiceApiUtil.retrieve_authorization_code(component_appid, component_access_token, params.getAppId()));
+                DyServiceLoginVO.Data dyData = DyServiceApiUtil.code2session(DyServiceLoginDTO.builder()
+                        .component_appid(component_appid)
+                        .authorizer_access_token(authorizer_access_token)
                         .code(code)
                         .anonymous_code(params.getAnonymousCode())
                         .build());
+
                 openid = dyData.getOpenid();
                 unionid = dyData.getUnionid();
                 sessionKey = dyData.getSession_key();
