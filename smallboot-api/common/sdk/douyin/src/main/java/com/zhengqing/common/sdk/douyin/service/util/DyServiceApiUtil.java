@@ -21,6 +21,7 @@ import org.springframework.stereotype.Component;
 import java.security.MessageDigest;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -28,7 +29,9 @@ import java.util.concurrent.TimeUnit;
  *
  * @author zhengqingya
  * @description 抖音服务商开发接口文档见 https://partner.open-douyin.com/docs/resource/zh-CN/thirdparty/API/smallprogram/format
+ * 整体流程：https://partner.open-douyin.com/docs/resource/zh-CN/thirdparty/overview-guide/smallprogram/process
  * 授权环节说明： https://partner.open-douyin.com/docs/resource/zh-CN/thirdparty/overview-guide/smallprogram/authorization
+ * 定制化代开发小程序：https://partner.open-douyin.com/docs/resource/zh-CN/thirdparty/guide/customization/smallprogram
  * @date 2022/7/28 15:40
  */
 @Slf4j
@@ -366,6 +369,27 @@ public class DyServiceApiUtil {
         return dyServiceVersionVO.getData();
     }
 
+    /**
+     * 获取模板列表
+     * https://partner.open-douyin.com/docs/resource/zh-CN/thirdparty/API/smallprogram/tpl-manage/tpl-list
+     *
+     * @param component_appid        第三方小程序应用 appid
+     * @param component_access_token 第三方小程序应用接口调用凭据
+     * @return 结果
+     * @author zhengqingya
+     * @date 2022/7/28 15:40
+     */
+    public static List<DyServiceTplVO.Tpl> get_tpl_list(String component_appid, String component_access_token) {
+        DyServiceTplVO dyServiceTplVO = DyBaseApiUtil.baseGet("https://open.microapp.bytedance.com/openapi/v1/tp/template/get_tpl_list",
+                new HashMap<String, String>(2) {{
+                    this.put("component_appid", component_appid);
+                    this.put("component_access_token", component_access_token);
+                }}, DyServiceTplVO.class);
+
+        Assert.isTrue(DyMiniResultCodeEnum.SUCCESS.getCode().equals(dyServiceTplVO.getErrno()), String.valueOf(dyServiceTplVO.getMessage()));
+        return dyServiceTplVO.getTemplate_list();
+    }
+
 
     /**
      * 找回授权码
@@ -416,7 +440,7 @@ public class DyServiceApiUtil {
      * @date 2022/7/28 15:40
      */
     public static String authorizer_access_token(String component_appid, String component_access_token, String authorization_code) {
-        String key = AUTHORIZER_ACCESS_TOKEN + component_appid;
+        String key = AUTHORIZER_ACCESS_TOKEN + component_appid + ":" + authorization_code;
         // 1、缓存中获取
         String authorizer_access_token = RedisUtil.get(key);
         if (StrUtil.isNotBlank(authorizer_access_token)) {
