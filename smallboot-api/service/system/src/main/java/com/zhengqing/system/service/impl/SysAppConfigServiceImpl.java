@@ -194,8 +194,9 @@ public class SysAppConfigServiceImpl extends ServiceImpl<SysAppConfigMapper, Sys
                                     )
                                     .extPages(new HashMap<String, Object>() {{
                                         this.put("pages/index/index",
-                                                StrUtil.format("{\"navigationBarTitleText\": \"{}\"}",
-                                                        StrUtil.isBlank(appIndexTitle) ? "首页" : appIndexTitle)
+                                                new HashMap<String, String>() {{
+                                                    this.put("navigationBarTitleText", StrUtil.isBlank(appIndexTitle) ? "首页" : appIndexTitle);
+                                                }}
                                         );
                                     }})
                                     .build()
