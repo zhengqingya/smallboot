@@ -1,6 +1,7 @@
 package com.zhengqing.system.aspect;
 
 import cn.hutool.json.JSONUtil;
+import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.base.context.JwtUserContext;
 import com.zhengqing.common.web.util.ServletUtil;
 import com.zhengqing.system.enums.SysLogTypeEnum;
@@ -60,6 +61,7 @@ public class ApiLogAspect {
     public Object doAround(ProceedingJoinPoint joinPoint) throws Throwable {
         long start = System.currentTimeMillis();
         HttpServletRequest request = ServletUtil.getRequest();
+
         String userId = JwtUserContext.getUserId();
         String username = JwtUserContext.getUsername();
 
@@ -84,8 +86,10 @@ public class ApiLogAspect {
 //            log.debug("========================== ↑↑↑↑↑↑ 《ApiLogAspect》 End... ↑↑↑↑↑↑ ==========================");
 
         String requestMethod = request.getMethod();
-        String url = requestMethod + ":" + request.getRequestURI();
-        log.debug("开始请求[{}] 操作人:[{}] 请求参数:{}", url, username, this.getRequestValue(request));
+        String requestURI = request.getRequestURI();
+        String url = requestMethod + ":" + requestURI;
+        String requestParams = JSONUtil.toJsonStr(joinPoint.getArgs());
+        log.debug("开始请求[{}] 操作人:[{}] 请求参数:{}", url, username, requestParams);
 
         // 处理业务
         Object result = joinPoint.proceed();
@@ -97,6 +101,10 @@ public class ApiLogAspect {
             return result;
         }
 
+        if (requestURI.startsWith(ServiceConstant.SERVICE_API_PREFIX_MINI)) {
+            return result;
+        }
+
         this.iSysLogService.addOrUpdateData(
                 SysLogSaveDTO.builder()
                         .type(SysLogTypeEnum.操作日志.getType())
@@ -105,9 +113,9 @@ public class ApiLogAspect {
                         .apiHeader("")
                         .operationName(username)
                         .requestIp(request.getRemoteAddr())
-                        .requestUrl(request.getRequestURI())
+                        .requestUrl(requestURI)
                         .requestHttpMethod(requestMethod)
-                        .requestParams(this.getRequestValue(request))
+                        .requestParams(requestParams)
                         .env(this.env)
                         .time(time.intValue())
                         .build()
@@ -119,10 +127,16 @@ public class ApiLogAspect {
     /**
      * 获取请求的参数
      */
-    private String getRequestValue(HttpServletRequest request) {
-        Map<String, String[]> map = request.getParameterMap();
-        String params = JSONUtil.toJsonStr(map);
-        return StringUtils.substring(params, 0, 2000);
+    private String getRequestValue(ProceedingJoinPoint joinPoint, HttpServletRequest request) {
+        String requestMethod = request.getMethod();
+        if (HttpMethod.POST.name().equals(requestMethod) || HttpMethod.PUT.name().equals(requestMethod)) {
+            return "";
+        } else {
+            // GET请求
+            Map<String, String[]> map = request.getParameterMap();
+            String params = JSONUtil.toJsonStr(map);
+            return StringUtils.substring(params, 0, 2000);
+        }
     }
 
 }
