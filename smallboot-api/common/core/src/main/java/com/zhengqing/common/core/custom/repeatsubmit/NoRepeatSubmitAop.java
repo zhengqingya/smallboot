@@ -70,7 +70,7 @@ public class NoRepeatSubmitAop {
                 // ApiResult result = (ApiResult)pjp.proceed();
                 return pjp.proceed();
             } else {
-                throw new MyException("请勿重复提交!");
+                throw new MyException("请勿频繁操作!");
             }
         } else {
             // 这里是第一次操作
