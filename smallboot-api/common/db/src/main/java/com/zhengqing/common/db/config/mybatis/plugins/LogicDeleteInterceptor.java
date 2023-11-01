@@ -100,6 +100,9 @@ public class LogicDeleteInterceptor implements Interceptor {
             return;
         }
         Table fromItemOfTable = (Table) fromItem;
+        if (fromItemOfTable == null) {
+            return;
+        }
         // 有别名用别名，无别名用表名，防止字段冲突报错
         Alias fromItemAlias = fromItemOfTable.getAlias();
         String originalTableName = fromItemOfTable.getName();
