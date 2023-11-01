@@ -2,6 +2,7 @@ package com.zhengqing.common.db.util;
 
 
 import com.zhengqing.common.base.context.TenantIdContext;
+import com.zhengqing.common.base.exception.MyException;
 
 import java.util.concurrent.Callable;
 
@@ -51,7 +52,7 @@ public class TenantUtil {
             TenantIdContext.setTenantId(tenantId);
             return callable.call();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new MyException(e);
         } finally {
             TenantIdContext.setTenantId(oldTenantId);
             TenantIdContext.setFlag(isFlag);
@@ -92,7 +93,7 @@ public class TenantUtil {
             TenantIdContext.removeFlag();
             return callable.call();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new MyException(e.getMessage());
         } finally {
             TenantIdContext.setTenantId(oldTenantId);
             TenantIdContext.setFlag(isFlag);
