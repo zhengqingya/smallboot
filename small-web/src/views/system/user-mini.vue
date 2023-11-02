@@ -25,34 +25,16 @@
           </template>
         </el-table-column>
         <el-table-column label="创建时间" prop="createTime" align="center"> </el-table-column>
-        <el-table-column label="操作" align="center" width="130">
-          <template #default="scope">
-            <el-button type="primary" link @click="showAnchor(scope.row)">绑定主播</el-button>
-          </template>
-        </el-table-column>
       </base-table-p>
     </base-content>
-
-    <choose-sys-user-dialog v-if="dialogVisible" v-model="dialogVisible" title="绑定主播" width="66%" @choose="bindAnchor" />
   </base-wrapper>
 </template>
 
 <script setup>
 const { proxy } = getCurrentInstance();
 let listQuery = $ref({});
-let chooseMiniUserId = $ref(null);
-let dialogVisible = $ref(false);
 function refreshTableData() {
   proxy.$refs.baseTableRef.refresh();
-}
-function showAnchor(row) {
-  chooseMiniUserId = row.id;
-  dialogVisible = true;
-}
-async function bindAnchor(userId) {
-  let res = await proxy.$api.sys_user.bindMiniUser({ isBind: true, userId: userId, miniUserId: chooseMiniUserId });
-  proxy.submitOk(res.msg);
-  dialogVisible = false;
 }
 </script>
 <style scoped></style>

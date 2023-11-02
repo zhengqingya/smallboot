@@ -37,7 +37,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * <p> 系统管理-租户信息 服务实现类 </p>
@@ -58,7 +57,6 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
     private final ISysPermBusinessService iSysPermBusinessService;
     private final ISysUserService iSysUserService;
     private final ISysRoleService iSysRoleService;
-    private final ISysDeptService iSysDeptService;
     private final ISysAppConfigService iSysAppConfigService;
     private final ISysRoleMenuService iSysRoleMenuService;
     private final ISysRoleScopeService iSysRoleScopeService;
@@ -88,13 +86,7 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
     public IPage<SysTenantPageVO> page(SysTenantPageDTO params) {
         IPage<SysTenantPageVO> result = this.sysTenantMapper.selectDataPage(new Page<>(), params);
         List<SysTenantPageVO> list = result.getRecords();
-        // 拿到关联小程序配置信息
-        List<Integer> tenantIdList = list.stream().map(SysTenantPageVO::getId).collect(Collectors.toList());
-        Map<Integer, SysAppConfigBO> appConfigMap = TenantUtil.executeRemoveFlag(() -> this.iSysAppConfigService.mapByTenantIdList(tenantIdList));
-        list.forEach(e -> {
-            e.setAppConfigObj(appConfigMap.get(e.getId()));
-            e.handleData();
-        });
+        list.forEach(SysTenantPageVO::handleData);
         return result;
     }
 
@@ -164,23 +156,6 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
                                 .sort(SysRoleCodeEnum.租户管理员.getSort())
                                 .build()
                 );
-                // 默认创建商户管理员，权限由租户自己单独分配
-//                this.iSysRoleService.addOrUpdateData(
-//                        SysRoleSaveDTO.builder()
-//                                .parentId(roleId)
-//                                .name(SysRoleCodeEnum.商户管理员.getName())
-//                                .code(SysRoleCodeEnum.商户管理员.getCode())
-//                                .isFixed(true)
-//                                .sort(1)
-//                                .build()
-//                );
-                // 默认创建一个部门
-                Integer deptId = this.iSysDeptService.addOrUpdateData(
-                        SysDeptSaveDTO.builder()
-                                .parentId(AppConstant.PARENT_ID)
-                                .name(name)
-                                .build()
-                );
 
                 // 给角色绑定权限
                 this.iSysPermBusinessService.saveRoleRePerm(
@@ -196,7 +171,6 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
                         .password(params.getPassword())
                         .nickname(params.getAdminName())
                         .phone(params.getAdminPhone())
-                        .deptId(deptId)
                         .roleIdList(Lists.newArrayList(roleId))
                         .isFixed(true)
                         .build());
@@ -230,12 +204,6 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
         } else {
             this.refreshTenantRePerm(sysTenant.getId());
         }
-
-        // 保存小程序配置
-        SysAppConfigBO appConfigObj = params.getAppConfigObj();
-        appConfigObj.setTenantId(id);
-        appConfigObj.setName(name);
-        this.iSysAppConfigService.addOrUpdateData(appConfigObj);
     }
 
 
@@ -243,9 +211,9 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
     @Transactional(rollbackFor = Exception.class)
     public void deleteData(Integer id) {
         this.sysTenantMapper.deleteById(id);
-        // TODO 逻辑删除整个租户下的所有数据...  tips: 部分表并不在逻辑删除中
+        //  删除整个租户下的所有数据...  tips: 真实业务最好使用逻辑删除
         String dbName = this.systemProperty.getMysql().getMaster().getDbName();
-        List<String> sqlList = this.sysTenantMapper.selectDelAllDataSql(dbName, id);
+        List<String> sqlList = this.sysTenantMapper.selectPhysicsDelAllDataSql(dbName, id);
         sqlList.forEach(this.sysTenantMapper::execSql);
     }
 

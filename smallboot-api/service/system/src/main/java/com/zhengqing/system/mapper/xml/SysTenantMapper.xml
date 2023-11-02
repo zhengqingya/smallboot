@@ -31,7 +31,7 @@
         </where>
     </select>
 
-    <select id="selectDelAllDataSql" resultType="java.lang.String">
+    <select id="selectLogicDelAllDataSql" resultType="java.lang.String">
         select CONCAT('update ', r.TABLE_NAME, ' set is_deleted = 1 where tenant_id in ( ', #{tenantId}, ' );')
         from (SELECT re.*, count(1) count
               from (
@@ -43,6 +43,14 @@
                   ) re
               GROUP BY re.TABLE_NAME) r
         where r.count > 1
+    </select>
+
+    <select id="selectPhysicsDelAllDataSql" resultType="java.lang.String">
+        SELECT CONCAT('DELETE FROM ', t.TABLE_NAME, ' where tenant_id in ( ', #{tenantId}, ' );')
+        FROM information_schema.TABLES t
+                 left join information_schema.COLUMNS c on t.TABLE_NAME = c.TABLE_NAME
+        WHERE t.table_schema = #{tableSchema}
+          and c.COLUMN_NAME = 'tenant_id';
     </select>
 
 </mapper>

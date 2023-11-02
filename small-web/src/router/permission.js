@@ -7,7 +7,7 @@ import 'nprogress/nprogress.css'; // 导入样式
 NProgress.configure({ showSpinner: true }); // 显示右上角螺旋加载提示
 
 // 白名单路由
-const whiteList = ['/login', '/admin/login', '/test', '/test-layout'];
+const whiteList = ['/login', '/test', '/test-layout'];
 // 是否存在路由
 let hasRouter = false;
 

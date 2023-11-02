@@ -1,17 +1,7 @@
 <template>
-  <base-wrapper
-    class="flex-center-center"
-    :style="{
-      'background-color': isAdmin ? '#304156' : '#00aaff',
-    }">
+  <base-wrapper class="flex-center-center" style="background-color: #00aaff">
     <div class="flex-c-center-center bg-color-white" style="height: 400px; width: 500px; border-radius: 10px">
-      <h1 v-if="isAdmin" class="font-size-lg">后台管理系统</h1>
-      <div v-else>
-        <h1 v-if="tenantId && tenantList && tenantList.length > 0" class="font-size-lg">{{ getTenantName() }}</h1>
-        <h1 v-else class="font-size-lg">SmallBoot多租户管理系统</h1>
-      </div>
-
-      <!-- <h1 class="font-size-lg">SmallBoot多租户管理系统</h1> -->
+      <h1 class="font-size-lg">SmallBoot多租户管理系统</h1>
 
       <div class="m-t-20">
         <el-form ref="loginFormRef" :model="loginForm" :rules="loginRules">
@@ -30,10 +20,10 @@
             <el-input v-model="loginForm.password" prefix-icon="Lock" placeholder="请输入密码" show-password maxlength="30" />
           </el-form-item>
         </el-form>
-        <!-- <div class="tips">
+        <div class="tips">
           <span>用户名: admin</span>
           <span class="m-l-20"> 密码: 123456</span>
-        </div> -->
+        </div>
         <el-button type="primary" class="m-t-10 w-full" @click="handleLogin">登 录</el-button>
       </div>
     </div>
@@ -51,7 +41,6 @@ const { login } = proxy.$store.user.useUserStore();
 const loginForm = $ref({});
 let tenantId = $ref(null);
 let tenantList = $ref([]);
-let isAdmin = $ref(false);
 
 const loginRules = {
   tenantId: [{ required: true, trigger: 'change', message: '请选择租户' }],
@@ -69,32 +58,6 @@ function validatePassword(rule, value, callback) {
 }
 
 onUpdated(async () => {});
-
-watch(
-  () => proxy.$router.currentRoute.value,
-  (newValue) => {
-    // console.log('路由变化：', newValue.path);
-
-    // 赋值
-    var path = newValue.path;
-    isAdmin = path.includes('admin');
-
-    // 初始化变量
-    // tenantId = isAdmin ? null : 1;
-    tenantId = null;
-    loginForm.tenantId = tenantId;
-
-    let lastPath = path.substring(path.lastIndexOf('/') + 1);
-    if (!lastPath || lastPath == 'login') {
-      return;
-    }
-    tenantId = lastPath;
-    loginForm.tenantId = parseInt(tenantId);
-  },
-  {
-    immediate: true, // 初始化执行一次
-  },
-);
 
 onMounted(async () => {
   // 拿到租户数据
@@ -118,14 +81,6 @@ function handleLogin() {
       });
     }
   });
-}
-
-function getTenantName() {
-  let obj = tenantList.find((e) => e.id == tenantId);
-  if (!obj) {
-    return '';
-  }
-  return obj.name;
 }
 </script>
 

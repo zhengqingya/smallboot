@@ -51,7 +51,9 @@
         <base-cell-item label="请求IP">{{ form.requestIp }}</base-cell-item>
         <base-cell-item label="请求url">{{ form.requestUrl }}</base-cell-item>
         <base-cell-item label="请求方式">{{ form.requestHttpMethod }}</base-cell-item>
-        <base-cell-item label="请求参数">{{ form.requestParams }}</base-cell-item>
+        <base-cell-item label="请求参数">
+          <el-scrollbar>{{ form.requestParams }} </el-scrollbar>
+        </base-cell-item>
         <base-cell-item label="服务器环境">{{ form.env }}</base-cell-item>
         <base-cell-item label="执行时间(单位：毫秒)">{{ form.time }}</base-cell-item>
         <base-cell-item label="操作时间">{{ form.createTime }}</base-cell-item>

@@ -1,7 +1,6 @@
 package com.zhengqing.system.model.vo;
 
 import com.zhengqing.common.base.model.vo.BaseVO;
-import com.zhengqing.system.model.bo.SysAppConfigBO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -48,9 +47,6 @@ public class SysTenantPageVO extends BaseVO {
     @ApiModelProperty("账号数量")
     private Integer accountCount;
 
-    @ApiModelProperty("最大职位发布数")
-    private Integer jobNum;
-
     @ApiModelProperty("租户套餐ID")
     private Integer packageId;
 
@@ -60,12 +56,9 @@ public class SysTenantPageVO extends BaseVO {
     @ApiModelProperty(value = "创建时间")
     private Date createTime;
 
-    @ApiModelProperty("小程序配置")
-    private SysAppConfigBO appConfigObj;
-
     @ApiModelProperty("排序")
     private Integer sort;
-    
+
     public void handleData() {
 
     }

@@ -78,6 +78,9 @@ export const useUserStore = defineStore('user', () => {
       let permItem = permList[index];
 
       // 填充字段数据
+      if (permItem.parentId == 0 && !permItem.path.startsWith('/')) {
+        permItem.path = `/${permItem.path}`;
+      }
       if (!permItem.meta) {
         permItem.meta = {};
       }

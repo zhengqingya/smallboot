@@ -42,7 +42,7 @@ public interface SysTenantMapper extends MyBaseMapper<SysTenant> {
     List<SysTenantListVO> selectDataList(@Param("filter") SysTenantListDTO filter);
 
     /**
-     * 拿到删除整个租户下所有数据的sql
+     * 拿到删除整个租户下所有数据的sql -- 逻辑删除
      *
      * @param tableSchema 库
      * @param tenantId    租户id
@@ -50,6 +50,17 @@ public interface SysTenantMapper extends MyBaseMapper<SysTenant> {
      * @author zhengqingya
      * @date 2023/10/08 15:40
      */
-    List<String> selectDelAllDataSql(@Param("tableSchema") String tableSchema, @Param("tenantId") Integer tenantId);
+    List<String> selectLogicDelAllDataSql(@Param("tableSchema") String tableSchema, @Param("tenantId") Integer tenantId);
+
+    /**
+     * 拿到删除整个租户下所有数据的sql -- 物理删除
+     *
+     * @param tableSchema 库
+     * @param tenantId    租户id
+     * @return void
+     * @author zhengqingya
+     * @date 2023/10/08 15:40
+     */
+    List<String> selectPhysicsDelAllDataSql(@Param("tableSchema") String tableSchema, @Param("tenantId") Integer tenantId);
 
 }

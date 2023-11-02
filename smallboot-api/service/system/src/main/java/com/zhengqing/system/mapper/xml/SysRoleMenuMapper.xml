@@ -29,8 +29,8 @@
     <select id="selectBtnPerm" resultMap="map">
         SELECT tsm.name, tsm.id menuId, tsm.path, tsm.btn_perm, GROUP_CONCAT(DISTINCT tsr.code) roleCodeList
         FROM t_sys_role_menu tsrm
-                 left join t_sys_menu tsm on tsm.id = tsrm.menu_id
-                 left join t_sys_role tsr on tsr.role_id = tsrm.role_id
+                 join t_sys_menu tsm on tsm.id = tsrm.menu_id
+                 join t_sys_role tsr on tsr.role_id = tsrm.role_id
         GROUP BY tsm.id
     </select>
 

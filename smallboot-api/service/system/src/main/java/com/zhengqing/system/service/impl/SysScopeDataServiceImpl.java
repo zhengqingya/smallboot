@@ -73,6 +73,9 @@ public class SysScopeDataServiceImpl extends ServiceImpl<SysScopeDataMapper, Sys
         // 数据权限
         List<SysScopeDataBaseVO> scopeList = this.list(params);
         List<Integer> menuIdList = scopeList.stream().map(SysScopeDataBaseVO::getMenuId).distinct().sorted().collect(Collectors.toList());
+        if (CollUtil.isEmpty(menuIdList)) {
+            return Lists.newArrayList();
+        }
         Map<Integer, List<SysScopeDataBaseVO>> scopeMap = scopeList.stream().collect(Collectors.groupingBy(SysScopeDataBaseVO::getMenuId, Collectors.mapping(t -> t, Collectors.toList())));
 
         // 菜单

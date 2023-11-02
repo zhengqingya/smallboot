@@ -3,7 +3,6 @@ package com.zhengqing.system.model.dto;
 import com.zhengqing.common.base.model.dto.BaseDTO;
 import com.zhengqing.common.core.custom.validator.common.CreateGroup;
 import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
-import com.zhengqing.system.model.bo.SysAppConfigBO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -77,9 +76,6 @@ public class SysTenantSaveDTO extends BaseDTO {
     @NotBlank(groups = {CreateGroup.class}, message = "密码不能为空！")
     @ApiModelProperty(value = "密码")
     private String password;
-
-    @ApiModelProperty("小程序配置")
-    private SysAppConfigBO appConfigObj;
 
     @ApiModelProperty("排序")
     private Integer sort;
