@@ -19,3 +19,4 @@ docker/*.jar
 tmp/assets
 tmp/index.html
 tmp/vite.svg
+tmp/h5
