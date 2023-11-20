@@ -41,7 +41,7 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="菜单权限:">
-          <div style="height: 400px; width: 100%" class="overflow-y-auto">
+          <div style="height: 400px; width: 100%">
             <menu-perm-tree v-if="dialogVisible && form.menuTree && form.menuTree.length > 0" ref="menuTreeRef" v-model="form.menuTree" />
           </div>
         </el-form-item>
