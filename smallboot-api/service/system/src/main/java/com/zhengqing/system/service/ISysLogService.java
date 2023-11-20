@@ -46,4 +46,14 @@ public interface ISysLogService extends IService<SysLog> {
      */
     void deleteData(Long id);
 
+    /**
+     * 清理n天前的日志
+     *
+     * @param day 天数
+     * @return void
+     * @author zhengqingya
+     * @date 2023/10/19 16:32
+     */
+    void deleteDataBeforeDay(Integer day);
+
 }

@@ -8,6 +8,8 @@
       <el-button type="primary" @click="refreshTableData">查询</el-button>
       <template #right>
         <!-- <el-button type="primary" @click="handleAdd">添加</el-button> -->
+        <!-- <el-button type="warning" @click="deleteDataBeforeDay"></el-button> -->
+        <base-btn-ok @ok="deleteDataBeforeDay">清理3天前的日志</base-btn-ok>
       </template>
     </base-header>
 
@@ -91,6 +93,11 @@ function submitForm() {
       dialogVisible = false;
     }
   });
+}
+async function deleteDataBeforeDay() {
+  let res = await proxy.$api.sys_log.deleteDataBeforeDay({ day: 3 });
+  proxy.submitOk(res.message);
+  refreshTableData();
 }
 </script>
 

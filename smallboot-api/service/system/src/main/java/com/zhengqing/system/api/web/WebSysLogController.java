@@ -10,10 +10,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 /**
@@ -36,5 +33,12 @@ public class WebSysLogController extends BaseController {
     public IPage<SysLogPageVO> page(@Validated @ModelAttribute SysLogPageDTO params) {
         return this.iSysLogService.page(params);
     }
+
+    @DeleteMapping("deleteDataBeforeDay")
+    @ApiOperation("清理n天前的日志")
+    public void deleteDataBeforeDay(@RequestParam Integer day) {
+        this.iSysLogService.deleteDataBeforeDay(day);
+    }
+
 
 }
