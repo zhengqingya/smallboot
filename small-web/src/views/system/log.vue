@@ -9,7 +9,9 @@
       <template #right>
         <!-- <el-button type="primary" @click="handleAdd">添加</el-button> -->
         <!-- <el-button type="warning" @click="deleteDataBeforeDay"></el-button> -->
-        <base-btn-ok @ok="deleteDataBeforeDay">清理3天前的日志</base-btn-ok>
+        <base-btn-ok @ok="deleteDataBeforeDay">
+          <span style="color: #f36161">清理3天前的日志</span>
+        </base-btn-ok>
       </template>
     </base-header>
 
