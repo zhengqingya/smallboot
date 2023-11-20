@@ -3,6 +3,7 @@ package com.zhengqing.system.api.web;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.core.api.BaseController;
+import com.zhengqing.common.db.util.TenantUtil;
 import com.zhengqing.system.model.dto.SysLogPageDTO;
 import com.zhengqing.system.model.vo.SysLogPageVO;
 import com.zhengqing.system.service.ISysLogService;
@@ -37,8 +38,7 @@ public class WebSysLogController extends BaseController {
     @DeleteMapping("deleteDataBeforeDay")
     @ApiOperation("清理n天前的日志")
     public void deleteDataBeforeDay(@RequestParam Integer day) {
-        this.iSysLogService.deleteDataBeforeDay(day);
+        TenantUtil.executeRemoveFlag(() -> this.iSysLogService.deleteDataBeforeDay(day));
     }
-
 
 }
