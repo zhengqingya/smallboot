@@ -15,7 +15,6 @@ import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 /**
  * <p> 系统管理-系统配置-保存-提交参数 </p>
@@ -57,7 +56,7 @@ public class SysConfigSaveDTO extends BaseDTO implements HandleParam {
 
     @Override
     public void handleParam() {
-        if (this.value instanceof List) {
+        if (JSONUtil.isTypeJSON(String.valueOf(this.value))) {
             this.value = JSONUtil.toJsonStr(this.value);
         }
     }
