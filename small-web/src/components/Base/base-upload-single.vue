@@ -32,6 +32,10 @@ function beforeUpload(file) {
 }
 
 async function onSuccess(res, uploadFile, fileList) {
+  if (res.code != 200) {
+    proxy.submitFail(res.msg);
+    return;
+  }
   const data = res.data;
   proxy.$emit('update:modelValue', data.url);
 }

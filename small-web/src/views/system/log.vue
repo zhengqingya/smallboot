@@ -8,6 +8,10 @@
       <el-button type="primary" @click="refreshTableData">查询</el-button>
       <template #right>
         <!-- <el-button type="primary" @click="handleAdd">添加</el-button> -->
+        <!-- <el-button type="warning" @click="deleteDataBeforeDay"></el-button> -->
+        <base-btn-ok @ok="deleteDataBeforeDay">
+          <span style="color: #f36161">清理3天前的日志</span>
+        </base-btn-ok>
       </template>
     </base-header>
 
@@ -51,7 +55,9 @@
         <base-cell-item label="请求IP">{{ form.requestIp }}</base-cell-item>
         <base-cell-item label="请求url">{{ form.requestUrl }}</base-cell-item>
         <base-cell-item label="请求方式">{{ form.requestHttpMethod }}</base-cell-item>
-        <base-cell-item label="请求参数">{{ form.requestParams }}</base-cell-item>
+        <base-cell-item label="请求参数">
+          <el-scrollbar>{{ form.requestParams }} </el-scrollbar>
+        </base-cell-item>
         <base-cell-item label="服务器环境">{{ form.env }}</base-cell-item>
         <base-cell-item label="执行时间(单位：毫秒)">{{ form.time }}</base-cell-item>
         <base-cell-item label="操作时间">{{ form.createTime }}</base-cell-item>
@@ -89,6 +95,11 @@ function submitForm() {
       dialogVisible = false;
     }
   });
+}
+async function deleteDataBeforeDay() {
+  let res = await proxy.$api.sys_log.deleteDataBeforeDay({ day: 3 });
+  proxy.submitOk(res.message);
+  refreshTableData();
 }
 </script>
 

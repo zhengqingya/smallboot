@@ -11,4 +11,11 @@ export default {
       headers,
     });
   },
+  deleteDataBeforeDay(query) {
+    return request({
+      url: BASE_API + '/deleteDataBeforeDay',
+      method: 'delete',
+      params: query,
+    });
+  },
 };

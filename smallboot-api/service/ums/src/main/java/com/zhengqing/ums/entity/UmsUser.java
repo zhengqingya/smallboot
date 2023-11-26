@@ -27,7 +27,7 @@ import lombok.*;
 public class UmsUser extends IsDeletedBaseEntity<UmsUser> {
 
     @ApiModelProperty("主键ID")
-    @TableId(type = IdType.INPUT)
+    @TableId(type = IdType.AUTO)
     private Long id;
 
     @ApiModelProperty("租户ID")

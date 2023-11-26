@@ -26,4 +26,10 @@
         ORDER BY tsl.create_time DESC
     </select>
 
+    <delete id="deleteDataBeforeDay">
+        DELETE
+        FROM t_sys_log
+        WHERE create_time &lt;= addDate(now(), interval -#{day} day)
+    </delete>
+
 </mapper>

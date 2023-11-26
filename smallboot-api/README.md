@@ -53,6 +53,10 @@ FROM information_schema.TABLES t
          left join information_schema.COLUMNS c on t.TABLE_NAME = c.TABLE_NAME
 WHERE t.table_schema = 'smallboot'
   and c.COLUMN_NAME = 'tenant_id';
+-- 租户表数据
+DELETE
+FROM t_sys_tenant
+where id in (xxx);
 ```
 
 #### 租户id统一变更 （谨慎使用！！！）

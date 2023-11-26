@@ -3,6 +3,7 @@ package com.zhengqing.system.api.web;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.core.api.BaseController;
+import com.zhengqing.common.db.util.TenantUtil;
 import com.zhengqing.system.model.dto.SysLogPageDTO;
 import com.zhengqing.system.model.vo.SysLogPageVO;
 import com.zhengqing.system.service.ISysLogService;
@@ -10,10 +11,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 /**
@@ -35,6 +33,12 @@ public class WebSysLogController extends BaseController {
     @ApiOperation("分页列表")
     public IPage<SysLogPageVO> page(@Validated @ModelAttribute SysLogPageDTO params) {
         return this.iSysLogService.page(params);
+    }
+
+    @DeleteMapping("deleteDataBeforeDay")
+    @ApiOperation("清理n天前的日志")
+    public void deleteDataBeforeDay(@RequestParam Integer day) {
+        TenantUtil.executeRemoveFlag(() -> this.iSysLogService.deleteDataBeforeDay(day));
     }
 
 }

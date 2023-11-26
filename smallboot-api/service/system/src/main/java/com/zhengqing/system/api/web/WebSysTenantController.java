@@ -64,10 +64,10 @@ public class WebSysTenantController extends BaseController {
         this.iSysTenantService.addOrUpdateData(params);
     }
 
-//    @DeleteMapping("delete")
-//    @ApiOperation("删除")
-//    public void delete(@RequestParam Integer id) {
-//        this.iSysTenantService.deleteData(id);
-//    }
+    @DeleteMapping("delete")
+    @ApiOperation("删除")
+    public void delete(@RequestParam Integer id) {
+        this.iSysTenantService.deleteData(id);
+    }
 
 }

@@ -1,21 +1,23 @@
 <template>
-  <div class="flex-between-center">
-    <el-tree
-      ref="menuTreeRef"
-      class="overflow-y-auto overflow-x-hidden"
-      :data="menuTree"
-      :props="{
-        children: 'children',
-        label: 'name',
-      }"
-      show-checkbox
-      default-expand-all
-      check-strictly
-      :default-checked-keys="defaultCheckedKeys"
-      node-key="id"
-      highlight-current
-      @node-click="menuNodeClick"
-      @check-change="changeCheckMenu" />
+  <div class="flex-between-center h-full w-full">
+    <el-scrollbar>
+      <el-tree
+        ref="menuTreeRef"
+        style="min-width: 300px"
+        :data="menuTree"
+        :props="{
+          children: 'children',
+          label: 'name',
+        }"
+        show-checkbox
+        default-expand-all
+        check-strictly
+        :default-checked-keys="defaultCheckedKeys"
+        node-key="id"
+        highlight-current
+        @node-click="menuNodeClick"
+        @check-change="changeCheckMenu" />
+    </el-scrollbar>
   </div>
 </template>
 <script setup>

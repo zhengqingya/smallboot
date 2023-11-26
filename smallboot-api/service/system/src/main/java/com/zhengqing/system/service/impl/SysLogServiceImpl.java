@@ -1,5 +1,6 @@
 package com.zhengqing.system.service.impl;
 
+import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -70,4 +71,10 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
         this.sysLogMapper.deleteById(id);
     }
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteDataBeforeDay(Integer day) {
+        Assert.isTrue(day > 0, "天数需要大于0");
+        this.sysLogMapper.deleteDataBeforeDay(day);
+    }
 }

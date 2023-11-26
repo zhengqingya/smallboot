@@ -37,20 +37,8 @@ public class UmsUserLoginDTO extends BaseDTO implements HandleParam, CheckParam 
     @ApiModelProperty("小程序类型")
     private Integer type;
 
-    @ApiModelProperty("部门ID")
-    private Integer deptId;
-
-    @ApiModelProperty("小程序appid")
+    @ApiModelProperty("小程序appId")
     private String appId;
-
-//    @ApiModelProperty("小程序secret")
-//    private String appSecret;
-
-//    @ApiModelProperty("第三方小程序应用 appid")
-//    private String component_appid;
-//
-//    @ApiModelProperty("第三方小程序应用 appsecret")
-//    private String component_appsecret;
 
     @NotBlank
     @ApiModelProperty("登录凭证")
