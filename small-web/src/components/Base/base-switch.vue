@@ -27,6 +27,7 @@ async function handleChange() {
   if (props.api) {
     let res = await apiMethod(props.params);
     // console.log('111', res);
+    proxy.$emit('ok');
   }
 }
 // 接口请求

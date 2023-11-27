@@ -1,12 +1,14 @@
 <template>
   <!-- {{ list[0] }} -->
-  <span v-if="label" class="label font-bold">{{ label }} &nbsp;</span>
-  <el-select filterable v-bind="$attrs" :placeholder="label ? `请选择${label}` : '请选择'" @change="handleChange">
-    <template #prefix> <slot name="prefix" /></template>
-    <el-option v-for="item in list" :key="item[optionProps.value]" :label="item[optionProps.label]" :value="item[optionProps.value]">
-      <slot name="option" :data="item" />
-    </el-option>
-  </el-select>
+  <div style="display: inline-block; white-space: nowrap; margin-right: 10px" :class="{ gap: label }">
+    <span v-if="label" class="label font-bold">{{ label }} &nbsp;</span>
+    <el-select filterable v-bind="$attrs" :placeholder="label ? `请选择${label}` : '请选择'" @change="handleChange">
+      <template #prefix> <slot name="prefix" /></template>
+      <el-option v-for="item in list" :key="item[optionProps.value]" :label="item[optionProps.label]" :value="item[optionProps.value]">
+        <slot name="option" :data="item" />
+      </el-option>
+    </el-select>
+  </div>
 </template>
 
 <script setup>
@@ -61,4 +63,9 @@ function apiMethod(params, headers) {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.label {
+  font-size: var(--el-form-label-font-size);
+  color: var(--el-text-color-regular);
+}
+</style>

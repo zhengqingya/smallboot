@@ -46,11 +46,11 @@ function onPreview(uploadFile) {
 }
 
 function beforeUpload(file) {
-  const patt = /^[a-z0-9A-Z\u4e00-\u9fa5|\.]+$/;
-  if (!patt.test(file.name)) {
-    proxy.submitFail('上传失败：文件名只能为中文，数字或大小写字母，请修改文件名或重新上传文件!');
-    return false;
-  }
+  // const patt = /^[a-z0-9A-Z\u4e00-\u9fa5|\.]+$/;
+  // if (!patt.test(file.name)) {
+  //   proxy.submitFail('上传失败：文件名只能为中文，数字或大小写字母，请修改文件名或重新上传文件!');
+  //   return false;
+  // }
   return true;
 }
 

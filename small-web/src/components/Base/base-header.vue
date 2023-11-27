@@ -4,7 +4,9 @@
       <div class="flex-1">
         <slot />
       </div>
-      <slot name="right"></slot>
+      <div class="gap">
+        <slot name="right" />
+      </div>
     </div>
   </el-card>
 </template>

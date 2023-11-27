@@ -14,10 +14,6 @@
 </template>
 <script setup>
 const { proxy } = getCurrentInstance();
-const props = defineProps({
-  label: { type: String, default: '删除' },
-});
-
 let visible = $ref(false);
 
 const emits = defineEmits(['ok']);

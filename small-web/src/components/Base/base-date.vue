@@ -1,7 +1,7 @@
 <template>
   <div style="display: inline-block; white-space: nowrap" :class="{ gap: label }">
     <span v-if="label" class="label font-bold">{{ label }} &nbsp;</span>
-    <el-input :placeholder="`请输入${label}`" style="width: 200px; margin-right: 10px" clearable v-bind="$attrs" />
+    <el-date-picker format="YYYY-MM-DD HH:mm:ss" value-format="YYYY-MM-DD HH:mm:ss" :placeholder="`请选择${label}`" style="width: 200px; margin-right: 10px" clearable v-bind="$attrs" />
   </div>
 </template>
 <script setup>
