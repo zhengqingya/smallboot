@@ -42,4 +42,7 @@ public class SysLogPageDTO extends BasePageDTO {
     @ApiModelProperty("请求url")
     private String requestUrl;
 
+    @ApiModelProperty("状态(0:异常 1:正常)")
+    private Integer status;
+    
 }

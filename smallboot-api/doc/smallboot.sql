@@ -11,7 +11,7 @@
  Target Server Version : 50726 (5.7.26-log)
  File Encoding         : 65001
 
- Date: 20/11/2023 15:22:45
+ Date: 29/11/2023 17:17:46
 */
 
 SET NAMES utf8mb4;
@@ -713,7 +713,7 @@ CREATE TABLE `t_sys_dept`  (
 -- ----------------------------
 -- Records of t_sys_dept
 -- ----------------------------
-INSERT INTO `t_sys_dept` VALUES (1, 1, 0, '自由科技公司', 1, 1, '', '', 1, '四川省', '成都市', '武侯区', '天府五街', '我的第一个公司', 1, '2023-10-09 19:16:37', 1, '2023-10-20 16:55:31', 0);
+INSERT INTO `t_sys_dept` VALUES (1, 1, 0, '自由科技公司', 1, 1, '', '', 1, '四川省', '成都市', '武侯区', '天府五街', '我的第一个公司', 1, '2023-10-09 19:16:37', 1, '2023-11-20 17:41:51', 0);
 INSERT INTO `t_sys_dept` VALUES (9, 1, 0, '测试部门', 100, NULL, '', '', 1, '四川省', '成都市', '武侯区', '天府五街', '测试使用', 1, '2023-10-17 18:46:48', 1, '2023-10-18 15:10:43', 0);
 INSERT INTO `t_sys_dept` VALUES (11, 1, 1, '开发部', 100, 1, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, 1, '2023-10-20 14:50:42', 1, '2023-10-20 14:50:42', 0);
 INSERT INTO `t_sys_dept` VALUES (12, 1, 1, '财务部', 100, 1, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, 1, '2023-10-20 14:50:57', 1, '2023-10-20 14:50:57', 0);
@@ -1118,12 +1118,14 @@ CREATE TABLE `t_sys_log`  (
   `request_params` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '请求参数',
   `env` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '服务器环境',
   `time` int(11) NULL DEFAULT 1 COMMENT '执行时间(单位：毫秒)',
+  `status` tinyint(2) NULL DEFAULT 1 COMMENT '状态(0:异常 1:正常)',
+  `response_result` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '响应结果',
   `create_by` bigint(20) NOT NULL COMMENT '创建人',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_by` bigint(20) NOT NULL COMMENT '修改人',
   `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 563 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-操作日志' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 576 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-操作日志' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_sys_log

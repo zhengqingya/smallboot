@@ -68,6 +68,12 @@ public class SysLogPageVO extends BaseVO {
     @ApiModelProperty("操作时间")
     private Date createTime;
 
+    @ApiModelProperty("状态(0:异常 1:正常)")
+    private Integer status;
+
+    @ApiModelProperty("响应结果")
+    private String responseResult;
+
     public void handleData() {
 
     }

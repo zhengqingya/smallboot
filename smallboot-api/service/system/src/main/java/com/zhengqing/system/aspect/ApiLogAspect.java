@@ -91,37 +91,50 @@ public class ApiLogAspect {
         String requestParams = JSONUtil.toJsonStr(joinPoint.getArgs());
         log.debug("开始请求[{}] 操作人:[{}] 请求参数:{}", url, username, requestParams);
 
-        // 处理业务
-        Object result = joinPoint.proceed();
-
-        Long time = System.currentTimeMillis() - start;
-        log.debug("结束[{}] 耗时为:{}毫秒", url, time);
-
-        if (HttpMethod.GET.name().equals(requestMethod)) {
+        Integer status = 1;
+        Object result = null;
+        try {
+            // 处理业务
+            result = joinPoint.proceed();
             return result;
+        } catch (Throwable e) {
+            result = "异常：" + e.getMessage();
+            status = 0;
+            throw e;
+        } finally {
+            Long time = System.currentTimeMillis() - start;
+            log.debug("结束[{}] 耗时为:{}毫秒", url, time);
+
+            boolean isSavaLog = true;
+            if (HttpMethod.GET.name().equals(requestMethod)) {
+                isSavaLog = false;
+            }
+
+            if (requestURI.startsWith(ServiceConstant.SERVICE_API_PREFIX_MINI)) {
+                isSavaLog = false;
+            }
+
+            if (isSavaLog) {
+                String apiResult = JSONUtil.toJsonStr(result);
+                this.iSysLogService.addOrUpdateData(
+                        SysLogSaveDTO.builder()
+                                .type(SysLogTypeEnum.操作日志.getType())
+                                .apiMethod(signature.getDeclaringTypeName() + "." + signature.getName())
+                                .apiMethodName(api.tags()[0] + "@" + apiOperation.value())
+                                .apiHeader("")
+                                .operationName(username)
+                                .requestIp(request.getRemoteAddr())
+                                .requestUrl(requestURI)
+                                .requestHttpMethod(requestMethod)
+                                .requestParams(requestParams)
+                                .env(this.env)
+                                .time(time.intValue())
+                                .status(status)
+                                .responseResult(apiResult)
+                                .build()
+                );
+            }
         }
-
-        if (requestURI.startsWith(ServiceConstant.SERVICE_API_PREFIX_MINI)) {
-            return result;
-        }
-
-        this.iSysLogService.addOrUpdateData(
-                SysLogSaveDTO.builder()
-                        .type(SysLogTypeEnum.操作日志.getType())
-                        .apiMethod(signature.getDeclaringTypeName() + "." + signature.getName())
-                        .apiMethodName(api.tags()[0] + "@" + apiOperation.value())
-                        .apiHeader("")
-                        .operationName(username)
-                        .requestIp(request.getRemoteAddr())
-                        .requestUrl(requestURI)
-                        .requestHttpMethod(requestMethod)
-                        .requestParams(requestParams)
-                        .env(this.env)
-                        .time(time.intValue())
-                        .build()
-        );
-
-        return result;
     }
 
     /**

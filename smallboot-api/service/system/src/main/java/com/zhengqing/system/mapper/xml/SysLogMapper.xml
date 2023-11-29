@@ -10,6 +10,9 @@
             <if test="filter.type!=null">
                 AND tsl.type = #{filter.type}
             </if>
+            <if test="filter.status!=null">
+                AND tsl.status = #{filter.status}
+            </if>
             <if test="filter.apiMethod!=null and filter.apiMethod!=''">
                 AND tsl.api_method = #{filter.apiMethod}
             </if>

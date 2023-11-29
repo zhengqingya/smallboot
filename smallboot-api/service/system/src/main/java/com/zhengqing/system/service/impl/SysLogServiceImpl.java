@@ -61,6 +61,8 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
                 .requestParams(params.getRequestParams())
                 .env(params.getEnv())
                 .time(params.getTime())
+                .status(params.getStatus())
+                .responseResult(params.getResponseResult())
                 .build()
                 .insertOrUpdate();
     }

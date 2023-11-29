@@ -5,10 +5,20 @@
       <base-input v-model="listQuery.requestUrl" label="请求url" @clear="refreshTableData" />
       <!-- <base-input v-model="listQuery.apiMethodName" label="请求方法名" @clear="refreshTableData" /> -->
       <base-input v-model="listQuery.operationName" label="操作人名称" @clear="refreshTableData" />
+      <base-select
+        v-model="listQuery.status"
+        :data-list="[
+          { id: 1, name: '正常' },
+          { id: 0, name: '异常' },
+        ]"
+        label="状态"
+        tag-type="success"
+        clearable
+        :option-props="{ label: 'name', value: 'id' }"
+        @clear="refreshTableData" />
       <el-button type="primary" @click="refreshTableData">查询</el-button>
       <template #right>
         <!-- <el-button type="primary" @click="handleAdd">添加</el-button> -->
-        <!-- <el-button type="warning" @click="deleteDataBeforeDay"></el-button> -->
         <base-btn-ok @ok="deleteDataBeforeDay">
           <span style="color: #f36161">清理3天前的日志</span>
         </base-btn-ok>
@@ -20,7 +30,7 @@
         <el-table-column label="ID" prop="id" align="center" />
         <!-- <el-table-column label="类型(1:操作日志 2:登录日志)" prop="type" align="center" /> -->
         <!-- <el-table-column label="请求方法" prop="apiMethod" width="500px" align="center" /> -->
-        <el-table-column label="请求方法名" prop="apiMethodName" width="300px" align="left" />
+        <el-table-column label="请求方法名" prop="apiMethodName" width="350px" align="left" />
         <!-- <el-table-column label="请求头参数" prop="apiHeader" align="center" /> -->
         <el-table-column label="操作人名称" prop="operationName" align="center" />
         <el-table-column label="请求IP" prop="requestIp" align="center" />
@@ -34,6 +44,13 @@
           </template>
         </el-table-column>
         <el-table-column label="操作时间" prop="createTime" align="center" />
+        <el-table-column label="状态" align="center">
+          <template #default="scope">
+            <el-tooltip :content="scope.row.responseResult">
+              <el-tag :type="scope.row.status == 1 ? 'success' : 'danger'"> {{ scope.row.status == 1 ? '正常' : '异常' }} </el-tag>
+            </el-tooltip>
+          </template>
+        </el-table-column>
         <el-table-column align="center" label="操作">
           <template #default="scope">
             <!-- <el-button link @click="handleUpdate(scope.row)">编辑</el-button> -->
@@ -56,11 +73,19 @@
         <base-cell-item label="请求url">{{ form.requestUrl }}</base-cell-item>
         <base-cell-item label="请求方式">{{ form.requestHttpMethod }}</base-cell-item>
         <base-cell-item label="请求参数">
-          <el-scrollbar>{{ form.requestParams }} </el-scrollbar>
+          <el-scrollbar>
+            {{ form.requestParams }}
+          </el-scrollbar>
         </base-cell-item>
         <base-cell-item label="服务器环境">{{ form.env }}</base-cell-item>
         <base-cell-item label="执行时间(单位：毫秒)">{{ form.time }}</base-cell-item>
         <base-cell-item label="操作时间">{{ form.createTime }}</base-cell-item>
+        <base-cell-item label="状态">{{ form.status == 1 ? '正常' : '异常' }}</base-cell-item>
+        <base-cell-item label="响应结果">
+          <el-scrollbar>
+            {{ form.responseResult }}
+          </el-scrollbar>
+        </base-cell-item>
       </base-cell>
       <template v-if="dialogStatus !== 'detail'" #footer>
         <el-button @click="dialogVisible = false">取 消</el-button>

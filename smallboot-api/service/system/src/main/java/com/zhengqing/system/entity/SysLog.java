@@ -67,4 +67,10 @@ public class SysLog extends BaseEntity<SysLog> {
     @ApiModelProperty("执行时间(单位：毫秒)")
     private Integer time;
 
+    @ApiModelProperty("状态(0:异常 1:正常)")
+    private Integer status;
+
+    @ApiModelProperty("响应结果")
+    private String responseResult;
+    
 }
