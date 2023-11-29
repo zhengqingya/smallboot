@@ -5,7 +5,7 @@
       v-model:file-list="fileList"
       :action="uploadUrl"
       list-type="picture-card"
-      :headers="{ [tokenObj.tokenName]: tokenObj.tokenValue, TENANT_ID: tenantId }"
+      :headers="{ [tokenObj.tokenName]: tokenObj.tokenValue, TENANT_ID: customTenantId ? customTenantId : tenantId }"
       :before-upload="beforeUpload"
       :on-success="onSuccess"
       :on-remove="onRemove"
@@ -23,6 +23,7 @@ const { proxy } = getCurrentInstance();
 let { tenantId, tokenObj } = toRefs(proxy.$store.user.useUserStore());
 let props = defineProps({
   modelValue: { type: Array, default: () => [] },
+  customTenantId: { type: String, default: '' },
 });
 let fileList = $ref([]);
 let uploadUrl = import.meta.env.VITE_APP_BASE_FILE_API;
@@ -55,6 +56,10 @@ function beforeUpload(file) {
 }
 
 async function onSuccess(res, uploadFile, fileList) {
+  if (res.code != 200) {
+    proxy.submitFail(res.msg);
+    return;
+  }
   const data = res.data;
 
   // 上传成功需手动替换文件路径为远程URL，否则图片地址为预览地址 blob:http://
