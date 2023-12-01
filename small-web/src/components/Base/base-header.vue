@@ -1,10 +1,10 @@
 <template>
   <el-card class="app">
-    <div class="flex-start-center">
+    <div class="flex-between-end">
       <div class="flex-1">
         <slot />
       </div>
-      <div class="gap">
+      <div class="base-header-gap">
         <slot name="right" />
       </div>
     </div>

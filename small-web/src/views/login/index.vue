@@ -3,10 +3,10 @@
     <div class="flex-c-center-center bg-color-white" style="height: 400px; width: 500px; border-radius: 10px">
       <h1 class="font-size-lg">SmallBoot多租户管理系统</h1>
 
-      <div class="m-t-20">
+      <div style="margin-top: 20px">
         <el-form ref="loginFormRef" :model="loginForm" :rules="loginRules">
           <el-form-item v-if="!tenantId && tenantList && tenantList.length > 0" prop="tenantId">
-            <base-select v-model="loginForm.tenantId" :filterable="true" placeholder="请选择租户" :option-props="{ label: 'name', value: 'id' }" :data-list="tenantList">
+            <base-select v-model="loginForm.tenantId" style="width: 260px" :filterable="true" placeholder="请选择租户" :option-props="{ label: 'name', value: 'id' }" :data-list="tenantList">
               <template #prefix>
                 <el-icon> <OfficeBuilding /> </el-icon>
               </template>
@@ -14,17 +14,17 @@
             <!-- <el-input v-model="loginForm.tenantName" prefix-icon="House" placeholder="请输入租户名称" maxlength="30" /> -->
           </el-form-item>
           <el-form-item prop="username">
-            <el-input v-model="loginForm.username" prefix-icon="User" placeholder="请输入账号" maxlength="30" />
+            <el-input v-model="loginForm.username" style="width: 260px" prefix-icon="User" placeholder="请输入账号" maxlength="30" />
           </el-form-item>
           <el-form-item prop="password">
-            <el-input v-model="loginForm.password" prefix-icon="Lock" placeholder="请输入密码" show-password maxlength="30" />
+            <el-input v-model="loginForm.password" style="width: 260px" prefix-icon="Lock" placeholder="请输入密码" show-password maxlength="30" />
           </el-form-item>
         </el-form>
-        <div class="tips">
+        <div class="tips text-color-grey">
           <span>用户名: admin</span>
-          <span class="m-l-20"> 密码: 123456</span>
+          <span>&nbsp;&nbsp;密码: 123456</span>
         </div>
-        <el-button type="primary" class="m-t-10 w-full" @click="handleLogin">登 录</el-button>
+        <el-button type="primary" class="w-full" style="margin-top: 10px; width: 260px" @click="handleLogin">登 录</el-button>
       </div>
     </div>
     <div class="copyright">
@@ -38,7 +38,7 @@ import { getCurrentInstance, onMounted } from 'vue';
 // 组件实例
 const { proxy } = getCurrentInstance();
 const { login } = proxy.$store.user.useUserStore();
-const loginForm = $ref({});
+const loginForm = $ref({ tenantId: 1 });
 let tenantId = $ref(null);
 let tenantList = $ref([]);
 
@@ -85,6 +85,15 @@ function handleLogin() {
 </script>
 
 <style lang="scss" scoped>
+// 谷歌浏览器中input输入框默认填充时的背景色设置
+::v-deep(.el-input) {
+  input:-internal-autofill-selected {
+    box-shadow: inset 0 0 0 32px #fff !important;
+    -webkit-text-fill-color: black;
+    color: black;
+  }
+}
+
 .copyright {
   width: 100%;
   position: absolute;

@@ -1,5 +1,5 @@
 <template>
-  <div style="display: inline-block; white-space: nowrap; margin-right: 10px" :class="{ gap: label }">
+  <div style="display: inline-block; white-space: nowrap; margin-right: 10px" :class="{ 'base-header-gap': label }">
     <span v-if="label" class="label font-bold">{{ label }} &nbsp;</span>
     <!-- :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true, emitPath: false }" -->
     <el-cascader ref="cascaderRef" filterable v-bind="$attrs" :options="list" :placeholder="label ? `请选择${label}` : '请选择'" @change="handleChange" />

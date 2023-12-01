@@ -1,8 +1,8 @@
 <template>
   <!-- {{ route.meta }} -->
-  <div class="app flex-between-center p-x-10">
+  <div class="app flex-between-center" style="padding: 0px 10px">
     <div class="flex-center-center">
-      <div class="m-r-10" style="cursor: pointer" @click="proxy.$store.settings.useSettingsStore().update">
+      <div style="cursor: pointer; margin-right: 10px" @click="proxy.$store.settings.useSettingsStore().update">
         <el-icon :size="22">
           <component :is="proxy.$store.settings.useSettingsStore().isShowMenu ? 'Fold' : 'Expand'" />
         </el-icon>
@@ -24,7 +24,7 @@
         <div class="flex-center-center">
           <el-avatar class="" :size="32" :src="userObj.avatarUrl" />
           <div class="flex-center-center">
-            <span class="m-l-6"> {{ userObj.nickname }} </span>
+            <span style="margin-left: 6px"> {{ userObj.nickname }} </span>
             <el-icon :size="20" style="width: 20px">
               <ArrowDown />
             </el-icon>
