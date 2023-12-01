@@ -23,6 +23,7 @@
         <module>excel</module>
         <module>file</module>
         <module>flink-cdc</module>
+        <module>flowable</module>
         <module>log</module>
         <module>mq</module>
         <module>pay</module>

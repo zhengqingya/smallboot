@@ -41,6 +41,11 @@
 
         <dependency>
             <groupId>com.zhengqing</groupId>
+            <artifactId>flowable</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.zhengqing</groupId>
             <artifactId>wx-mp</artifactId>
         </dependency>
 

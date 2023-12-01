@@ -14,6 +14,7 @@ spring:
       - excel
       - file
       - flink-cdc
+      - flowable
       - log
       - mq
       - pay
