@@ -9,7 +9,7 @@
     </base-header>
 
     <base-content>
-      <base-table row-key="id" :tree-props="{ children: 'children', hasChildren: 'hasChildren' }" :data="dataList" default-expand-all>
+      <base-table row-key="id" :tree-props="{ children: 'children', hasChildren: 'hasChildren' }" :data="dataList" :default-expand-all="false">
         <el-table-column label="ID" prop="id" align="center" />
         <el-table-column label="名称" align="left">
           <template #default="scope">
@@ -57,10 +57,10 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="访问路径:" prop="path">
-          <el-input v-model="form.path" placeholder="请输入" />
+          <el-input v-model="form.path" placeholder="eg: 一级菜单（/sys） 二级菜单（user）" />
         </el-form-item>
         <el-form-item v-if="form.type == 1" label="组件:" prop="component">
-          <el-input v-model="form.component" placeholder="请输入菜单对应的文件路径" />
+          <el-input v-model="form.component" placeholder="请输入菜单对应的文件路径 eg: sys/user" />
         </el-form-item>
         <el-form-item v-if="form.type == 2" label="按钮权限标识：">
           <el-input v-model="form.btnPerm" placeholder="sys:user:add" />
