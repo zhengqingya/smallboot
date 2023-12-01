@@ -41,7 +41,7 @@
 
         <dependency>
             <groupId>com.zhengqing</groupId>
-            <artifactId>flowable</artifactId>
+            <artifactId>workflow</artifactId>
         </dependency>
 
         <dependency>

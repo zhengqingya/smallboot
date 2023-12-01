@@ -20,6 +20,7 @@
         <module>mall</module>
         <module>system</module>
         <module>ums</module>
+        <module>workflow</module>
         <module>wx-mp</module>
     </modules>
 
