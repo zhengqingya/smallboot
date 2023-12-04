@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhengqing.wf.mapper.WfFormMapper">
+
+    <select id="selectDataPage" resultType="com.zhengqing.wf.model.vo.WfFormPageVO">
+        SELECT
+        wf.id,
+        wf.name,
+        wf.content,
+        wf.remark,
+        wf.create_by,
+        wf.create_time,
+        wf.update_by,
+        wf.update_time
+        FROM wf_form wf
+        <where>
+            wf.is_deleted=0
+            <if test="filter.id!=null and filter.id!=''">
+                AND wf.id = #{filter.id}
+            </if>
+            <if test="filter.name!=null and filter.name!=''">
+                AND wf.name LIKE CONCAT( '%', #{filter.name} , '%' )
+            </if>
+        </where>
+        ORDER BY wf.create_time DESC
+    </select>
+
+    <select id="selectDataList" resultType="com.zhengqing.wf.model.vo.WfFormListVO">
+        SELECT id, name
+        FROM wf_form
+        where is_deleted = 0
+        ORDER BY create_time DESC
+    </select>
+
+    <select id="detail" resultType="com.zhengqing.wf.model.vo.WfFormDetailVO">
+        SELECT
+        wf.*
+        FROM wf_form wf
+        <where>
+            wf.is_deleted=0
+            <if test="filter.id!=null and filter.id!=''">
+                AND wf.id = #{filter.id}
+            </if>
+        </where>
+    </select>
+
+</mapper>
