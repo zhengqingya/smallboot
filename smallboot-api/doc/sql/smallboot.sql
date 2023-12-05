@@ -11,7 +11,7 @@
  Target Server Version : 50726 (5.7.26-log)
  File Encoding         : 65001
 
- Date: 04/12/2023 17:35:34
+ Date: 05/12/2023 18:12:34
 */
 
 SET NAMES utf8mb4;
@@ -2515,7 +2515,7 @@ CREATE TABLE `t_sys_log`  (
   `update_by` bigint(20) NOT NULL COMMENT '修改人',
   `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 584 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-操作日志' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 587 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-操作日志' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_sys_log
@@ -2544,7 +2544,7 @@ CREATE TABLE `t_sys_menu`  (
   `update_time` datetime NOT NULL COMMENT '修改时间',
   `is_deleted` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否删除(1->是，0->否)',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 53 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-菜单表' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 54 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-菜单表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_sys_menu
@@ -2590,6 +2590,7 @@ INSERT INTO `t_sys_menu` VALUES (48, 3, '数据权限', 'Star', 'scope-data', NU
 INSERT INTO `t_sys_menu` VALUES (50, 3, '操作日志', 'ChatLineSquare', 'log', '', 100, 'system/log', '', 1, 1, 1, 1, '2020-08-22 15:01:51', 1, '2023-10-19 17:00:29', 0);
 INSERT INTO `t_sys_menu` VALUES (51, 0, '工作流', 'MagicStick', '/workflow', '', 8, '', '', 1, 1, 1, 1, '2023-12-01 17:39:13', 1, '2023-12-01 17:46:51', 0);
 INSERT INTO `t_sys_menu` VALUES (52, 51, '表单管理', 'Flag', 'form', NULL, 1, 'workflow/form', NULL, 1, 1, 1, 1, '2023-12-01 17:43:57', 1, '2023-12-01 17:43:57', 0);
+INSERT INTO `t_sys_menu` VALUES (53, 3, '代码生成器', 'SwitchFilled', 'code-generate', NULL, 100, 'system/code-generate', NULL, 1, 1, 1, 1, '2023-12-05 15:10:33', 1, '2023-12-05 15:10:33', 0);
 
 -- ----------------------------
 -- Table structure for t_sys_merchant
@@ -5934,7 +5935,7 @@ CREATE TABLE `t_sys_role_menu`  (
   `update_by` bigint(20) NOT NULL COMMENT '修改人',
   `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1514 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-角色菜单关联表' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 1515 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-角色菜单关联表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_sys_role_menu
@@ -6014,6 +6015,7 @@ INSERT INTO `t_sys_role_menu` VALUES (1510, 3, 30, 3, 2, '2023-10-23 16:31:46', 
 INSERT INTO `t_sys_role_menu` VALUES (1511, 3, 30, 4, 2, '2023-10-23 16:31:46', 2, '2023-10-23 16:31:46');
 INSERT INTO `t_sys_role_menu` VALUES (1512, 1, 1, 51, 1, '2023-12-01 17:39:14', 1, '2023-12-01 17:39:14');
 INSERT INTO `t_sys_role_menu` VALUES (1513, 1, 1, 52, 1, '2023-12-01 17:43:58', 1, '2023-12-01 17:43:58');
+INSERT INTO `t_sys_role_menu` VALUES (1514, 1, 1, 53, 1, '2023-12-05 15:10:33', 1, '2023-12-05 15:10:33');
 
 -- ----------------------------
 -- Table structure for t_sys_role_scope

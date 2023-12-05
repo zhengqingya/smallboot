@@ -6,7 +6,7 @@
         <div><slot name="append" /></div>
       </div>
     </div>
-    <div class="line m-y-10"></div>
+    <div class="line"></div>
     <div class="content">
       <slot />
     </div>
@@ -26,5 +26,6 @@ defineProps({
 }
 .line {
   border-bottom: 1px solid #e5e7ee;
+  margin: 10px 0;
 }
 </style>

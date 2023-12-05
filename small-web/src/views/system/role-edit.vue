@@ -1,15 +1,15 @@
 <template>
   <base-wrapper>
     <base-card title="角色信息">
-      <base-cell label-width="100px">
+      <base-cell label-width="120px">
         <base-cell-item label="角色名：">{{ roleForm.name }}</base-cell-item>
         <base-cell-item label="角色编码：">{{ roleForm.code }}</base-cell-item>
       </base-cell>
       <template #append> <el-button type="success" @click="initData">刷新</el-button> </template>
     </base-card>
 
-    <div class="flex m-t-10">
-      <base-card title="菜单&按钮 权限" style="width: 40%">
+    <div class="flex" style="margin-top: 10px">
+      <base-card title="菜单&按钮 权限">
         <menu-perm-tree v-show="menuTree.length > 0" ref="menuTreeRef" v-model="menuTree" :role-id="roleId" />
       </base-card>
 
@@ -29,11 +29,11 @@
       </base-card>
     </div>
 
-    <div class="flex-center-center m-t-10">
+    <div class="flex-center-center" style="margin-top: 10px">
       <router-link to="/system/role">
         <el-button>返回</el-button>
       </router-link>
-      <el-button type="primary" class="m-l-20" @click="savePerm">保存</el-button>
+      <el-button type="primary" style="margin-left: 20px" @click="savePerm">保存</el-button>
     </div>
   </base-wrapper>
 </template>

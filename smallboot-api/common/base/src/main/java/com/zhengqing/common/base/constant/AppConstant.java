@@ -97,11 +97,8 @@ public interface AppConstant extends BaseConstant {
     /**
      * 代码生成临时存储路径
      */
-    String FILE_PATH_CODE_GENERATOR_DATA_PATH = PROJECT_ROOT_DIRECTORY + "/tmp/upload";
-    String FILE_PATH_CODE_GENERATOR_SRC_CODE = PROJECT_ROOT_DIRECTORY + "/tmp/upload/generate_code";
-    String FILE_PATH_CODE_GENERATOR_TEMPLATE_CODE = PROJECT_ROOT_DIRECTORY + "/tmp/upload/template_code";
+    String FILE_PATH_CODE_GENERATOR_DATA_PATH = PROJECT_ROOT_DIRECTORY + "/tmp/code-generate";
 
-    String FILE_PATH_CODE_GENERATOR_FILE_NAME_DATA = PROJECT_ROOT_DIRECTORY + "/tmp/upload/handle_generate_file_name_data";
     String FILE_PATH_CODE_GENERATOR_ZIP = PROJECT_ROOT_DIRECTORY + "/tmp/upload/code.zip";
 
     /**

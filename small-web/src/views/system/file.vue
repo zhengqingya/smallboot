@@ -1,7 +1,7 @@
 <template>
   <base-wrapper>
     <base-header>
-      <base-input v-model="listQuery.name" label="文件名" style="width: 200px" clearable @clear="refreshTableData" />
+      <base-input v-model="listQuery.name" label="文件名" clearable @clear="refreshTableData" />
       <el-button type="primary" @click="refreshTableData">查询</el-button>
     </base-header>
 

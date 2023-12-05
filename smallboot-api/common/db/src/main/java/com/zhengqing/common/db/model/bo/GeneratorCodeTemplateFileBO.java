@@ -8,9 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * <p>
- * 模板文件信息
- * </p>
+ * <p> 模板文件信息 </p>
  *
  * @author zhengqingya
  * @description
@@ -23,16 +21,19 @@ import lombok.NoArgsConstructor;
 @ApiModel("模板文件信息")
 public class GeneratorCodeTemplateFileBO {
 
-    @ApiModelProperty(value = "模板文件名")
+    @ApiModelProperty(value = "文件名")
     private String fileName;
 
-    @ApiModelProperty(value = "待生成文件后缀")
-    private String generateFileSuffix;
+    @ApiModelProperty(value = "文件前缀")
+    private String filePrefix;
+
+    @ApiModelProperty(value = "文件后缀")
+    private String fileSuffix;
 
     @ApiModelProperty(value = "模板内容")
-    private String templateContent;
+    private String tplContent;
 
     @ApiModelProperty(value = "模板关联包")
-    private String templateRePackage;
+    private String tplRePackage;
 
 }

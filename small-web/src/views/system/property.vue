@@ -1,7 +1,7 @@
 <template>
   <base-wrapper>
     <base-header>
-      <el-input v-model="listQuery.key" clearable placeholder="key" style="width: 200px" @clear="refreshTableData" />
+      <base-input v-model="listQuery.key" clearable label="key" @clear="refreshTableData" />
       <el-button type="primary" @click="refreshTableData">查询</el-button>
       <template #right>
         <el-button type="primary" @click="add">添加</el-button>

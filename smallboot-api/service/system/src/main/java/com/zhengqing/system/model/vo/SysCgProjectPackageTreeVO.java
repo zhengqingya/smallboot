@@ -9,6 +9,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.util.List;
+
 /**
  * <p> 代码生成器-项目包 </p>
  *
@@ -22,12 +24,16 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ApiModel("代码生成器-项目包")
-public class SysCgProjectPackageVO extends BaseVO {
-
+public class SysCgProjectPackageTreeVO extends BaseVO {
 
     @ApiModelProperty("名称")
     private String name;
 
+    @ApiModelProperty("模板内容")
+    private String tplContent;
+
+    @ApiModelProperty("名称")
+    private List<SysCgProjectPackageTreeVO> childList;
 
     public void handleData() {
 

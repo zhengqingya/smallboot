@@ -1,9 +1,9 @@
 <template>
   <div class="app flex">
-    <div class="flex-end-center p-y-10 bg-color-lightgrey" :style="{ width: computedLabelWidth }">
-      <span class="m-r-10">{{ label }}</span>
+    <div class="flex-end-center bg-color-lightgrey" style="padding: 10px 0px" :style="{ width: computedLabelWidth }">
+      <span style="margin-right: 10px">{{ label }}</span>
     </div>
-    <div class="flex-1 flex-start-center m-x-10" style="overflow: hidden">
+    <div class="flex-1 flex-start-center" style="overflow: hidden; margin: 0px 10px">
       <slot />
     </div>
   </div>

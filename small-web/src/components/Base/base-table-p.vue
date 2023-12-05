@@ -27,7 +27,7 @@
       </template>
     </el-table>
 
-    <div v-if="isPage" class="flex-end-center m-t-10">
+    <div v-if="isPage" class="flex-end-center" style="margin-top: 10px">
       <el-config-provider :locale="zhCn">
         <el-pagination
           v-if="pageRes && pageRes.total > 0"
