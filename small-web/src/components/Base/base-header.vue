@@ -1,5 +1,5 @@
 <template>
-  <div style="margin: 15px 0px">
+  <div style="margin: 10px 0px">
     <base-content>
       <div class="flex-between-end">
         <div class="flex-1">

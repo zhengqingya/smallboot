@@ -1,12 +1,11 @@
 <template>
   <base-wrapper>
     <base-header>
-      订单状态：
-      <el-select v-model="listQuery.tabValue" placeholder="请选择订单状态" style="margin-right: 10px">
+      <base-select v-model="listQuery.tabValue" label="订单状态" style="margin-right: 10px">
         <el-option v-for="item in tabList" :key="item.value" :label="item.name" :value="item.value" />
-      </el-select>
-      <base-input v-model="listQuery.orderNo" label="订单编号" style="width: 200px" clearable @clear="refreshTableData"></base-input>
-      <base-input v-model="listQuery.userPhone" label="手机号" style="width: 200px" clearable @clear="refreshTableData"></base-input>
+      </base-select>
+      <base-input v-model="listQuery.orderNo" label="订单编号" clearable @clear="refreshTableData"></base-input>
+      <base-input v-model="listQuery.userPhone" label="手机号" clearable @clear="refreshTableData"></base-input>
       <el-button type="primary" @click="refreshTableData">查询</el-button>
       <template #right>
         <!-- <el-button type="primary" @click="handleAdd">添加</el-button> -->

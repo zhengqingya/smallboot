@@ -1,8 +1,8 @@
 <template>
   <base-wrapper>
     <base-header>
-      <base-input v-model="listQuery.name" label="名称" style="width: 200px" clearable @clear="refreshTableData"></base-input>
-      <base-input v-model="listQuery.matchValue" label="关键词" style="width: 200px" clearable @clear="refreshTableData"></base-input>
+      <base-input v-model="listQuery.name" label="名称" clearable @clear="refreshTableData"></base-input>
+      <base-input v-model="listQuery.matchValue" label="关键词" clearable @clear="refreshTableData"></base-input>
       <el-button type="primary" @click="refreshTableData">查询</el-button>
       <template #right>
         <el-button type="primary" @click="handleAdd">添加</el-button>

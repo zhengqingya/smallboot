@@ -1,8 +1,8 @@
 <template>
   <base-wrapper>
     <base-header>
-      <base-input v-model="listQuery.shopId" label="门店ID" style="width: 200px" clearable @clear="refreshTableData"></base-input>
-      <base-input v-model="listQuery.shopName" label="门店名称" style="width: 200px" clearable @clear="refreshTableData"></base-input>
+      <base-input v-model="listQuery.shopId" label="门店ID" clearable @clear="refreshTableData"></base-input>
+      <base-input v-model="listQuery.shopName" label="门店名称" clearable @clear="refreshTableData"></base-input>
       <el-button type="primary" @click="refreshTableData">查询</el-button>
       <template #right>
         <router-link to="/mall/shop-edit?isAdd=true">

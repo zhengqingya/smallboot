@@ -1,9 +1,9 @@
 <template>
   <base-wrapper>
     <base-header>
-      <base-input v-model="listQuery.name" label="名称" style="width: 200px" clearable @clear="refreshTableData"></base-input>
-      <base-input v-model="listQuery.account" label="公众号ID" style="width: 200px" clearable @clear="refreshTableData"></base-input>
-      <base-input v-model="listQuery.appId" label="AppID" style="width: 200px" clearable @clear="refreshTableData"></base-input>
+      <base-input v-model="listQuery.name" label="名称" clearable @clear="refreshTableData"></base-input>
+      <base-input v-model="listQuery.account" label="公众号ID" clearable @clear="refreshTableData"></base-input>
+      <base-input v-model="listQuery.appId" label="AppID" clearable @clear="refreshTableData"></base-input>
       <el-button type="primary" @click="refreshTableData">查询</el-button>
       <template #right>
         <el-button type="primary" @click="handleAdd">添加</el-button>
