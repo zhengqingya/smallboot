@@ -7,6 +7,7 @@ import com.zhengqing.common.auth.custom.open.ApiOpen;
 import com.zhengqing.common.auth.model.dto.AuthLoginDTO;
 import com.zhengqing.common.auth.model.vo.AuthLoginVO;
 import com.zhengqing.common.auth.service.IAuthService;
+import com.zhengqing.common.base.constant.AppConstant;
 import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.base.context.TenantIdContext;
 import com.zhengqing.common.web.custom.noreturnhandle.NoReturnHandle;
@@ -61,6 +62,7 @@ public class WebAuthController {
     @ApiOperation("登录(knife4j授权使用)")
     @PostMapping("knife4j")
     public Map<String, String> knife4j(@ApiIgnore Principal principal, @ModelAttribute AuthLoginDTO params) {
+        TenantIdContext.setTenantId(AppConstant.SMALL_BOOT_TENANT_ID);
         AuthLoginVO oAuth2AccessToken = this.iAuthService.login(params);
         /**
          * UI授权成功后取值逻辑见：{@see /knife4j-spring-ui/3.0.3/knife4j-spring-ui-3.0.3.jar!/META-INF/resources/webjars/oauth/oauth2.html}
