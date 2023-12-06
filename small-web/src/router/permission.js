@@ -55,15 +55,21 @@ router.beforeEach(async (to, from, next) => {
     }
   } else {
     // 未登录
-    // whiteList.indexOf(to.path) !== -1  // 完全等于才放行
-    whiteList.forEach((e) => {
-      // 以白名单开头的地址都放行
-      if (to.path.startsWith(e)) {
-        next(); // 放行 -- 可以访问白名单页面(eg: 登录页面)
+    let isHasPermGo = false;
+    for (let i = 0; i < whiteList.length; i++) {
+      // whiteList.indexOf(to.path) !== -1  // 完全等于才放行
+      if (to.path.startsWith(whiteList[i])) {
+        // 以白名单开头的地址都放行
+        isHasPermGo = true;
+        break;
       }
-    });
+    }
 
-    next(`/login?redirect=${to.path}`); // 无权限 & 白名单页面未配置  =》 跳转到登录页面
+    if (isHasPermGo) {
+      next(); // 放行 -- 可以访问白名单页面(eg: 登录页面)
+    } else {
+      next(`/login?redirect=${to.path}`); // 无权限 & 白名单页面未配置  =》 跳转到登录页面
+    }
   }
 });
 

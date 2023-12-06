@@ -60,6 +60,7 @@ function validatePassword(rule, value, callback) {
 onUpdated(async () => {});
 
 onMounted(async () => {
+  console.log('111', 1);
   // 拿到租户数据
   let res = await proxy.$api.sys_tenant.list();
   tenantList = res.data;

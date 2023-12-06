@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import sysUserApi from '@/api/system/sys_user.js';
+import api from '@/api';
 // 动态导入拿到所有页面 eg: {/src/views/test/index.vue: () => import("/src/views/test/index.vue")}
 const views = import.meta.glob('@/views/**/**.vue');
 import { useRoute, useRouter } from 'vue-router';
@@ -14,6 +14,8 @@ export const useUserStore = defineStore('user', () => {
   let userObj = ref({});
   let routerMap = ref({}); // 全路径'/system/user' -> 路由信息
   let loginBeforeUrl = ref(''); // 登录前的路径
+  let tenantList = ref([]); // 租户列表
+  let isSuperOrSystemAdmin = ref(false); // 是否为系统管理员|超管
 
   // 登录
   async function login(loginObj) {
@@ -22,7 +24,7 @@ export const useUserStore = defineStore('user', () => {
     }
     tenantId.value = loginObj.tenantId;
     loginBeforeUrl.value = route.path;
-    let result = await sysUserApi.login({
+    let result = await api.sys_user.login({
       username: loginObj.username.trim(),
       password: loginObj.password.trim(),
     });
@@ -55,11 +57,25 @@ export const useUserStore = defineStore('user', () => {
 
   // 获取用户 & 权限数据
   async function getUserInfo() {
-    let result = await sysUserApi.getUserPerm();
+    let result = await api.sys_user.getUserPerm();
     userObj.value = result.data;
+    if ((userObj.value.roleCodeList && userObj.value.roleCodeList.includes('system_admin')) || userObj.value.roleCodeList.includes('super_admin')) {
+      isSuperOrSystemAdmin.value = true;
+    }
 
     // 初始化系统设置数据
     store.system.useSystemStore().init();
+
+    // 初始化租户数据
+    initTenant();
+  }
+
+  async function initTenant() {
+    if (isSuperOrSystemAdmin.value) {
+      let res = await api.sys_tenant.list();
+      tenantList.value = res.data;
+      tenantList.value.unshift({ id: -1, name: '全部租户' });
+    }
   }
 
   const routerList = computed(() => {
@@ -126,5 +142,5 @@ export const useUserStore = defineStore('user', () => {
     return result;
   }
 
-  return { tenantId, isLogin, loginBeforeUrl, login, logout, tokenObj, userObj, getUserInfo, routerList, routerMap };
+  return { tenantId, tenantList, isLogin, loginBeforeUrl, login, logout, tokenObj, userObj, getUserInfo, routerList, routerMap, isSuperOrSystemAdmin };
 });

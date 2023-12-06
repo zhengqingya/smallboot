@@ -13,13 +13,9 @@
 import { onMounted } from 'vue';
 
 const { proxy } = getCurrentInstance();
-let { isLogin, tenantId, userObj } = toRefs(proxy.$store.user.useUserStore());
-let tenantList = $ref([]);
-onMounted(async () => {
-  let res = await proxy.$api.sys_tenant.list();
-  tenantList = res.data;
-  tenantList.unshift({ id: -1, name: '全部租户' });
-});
+let { isLogin, tenantId, userObj, tenantList } = toRefs(proxy.$store.user.useUserStore());
+// let tenantList = $ref([]);
+onMounted(async () => {});
 
 function handleChange(tenantIdVal) {
   // 直接选择值的时候来的是数字，通过搜索过滤后再点击的值非数字

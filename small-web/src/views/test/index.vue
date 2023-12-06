@@ -15,7 +15,9 @@ let code = `public class Main {
     }
 }`;
 
-onMounted(() => {});
+onMounted(() => {
+  console.log('111', 111);
+});
 </script>
 <style lang="scss" scoped>
 .codemirror,
