@@ -22,8 +22,11 @@ onMounted(async () => {
 });
 
 function handleChange(tenantIdVal) {
-  // userObj.value.tenantName = tenantList.find((item) => item.id === tenantIdVal).name;
-  location.reload(); // 强制刷新页面
+  // 直接选择值的时候来的是数字，通过搜索过滤后再点击的值非数字
+  if (isFinite(tenantIdVal)) {
+    // userObj.value.tenantName = tenantList.find((item) => item.id === tenantIdVal).name;
+    location.reload(); // 强制刷新页面
+  }
 }
 </script>
 <style lang="scss" scoped></style>

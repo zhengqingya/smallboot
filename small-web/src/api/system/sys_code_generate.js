@@ -3,10 +3,17 @@ import request from '@/utils/request';
 const BASE_API = '/web/api/system/codeGenerate';
 
 export default {
-  projectPackageTree() {
+  getConfig() {
     return request({
-      url: BASE_API + '/projectPackageTree',
+      url: BASE_API + '/getConfig',
       method: 'get',
+    });
+  },
+  saveConfig(data) {
+    return request({
+      url: BASE_API + '/saveConfig',
+      method: 'post',
+      data: data,
     });
   },
   generateTplData(data) {

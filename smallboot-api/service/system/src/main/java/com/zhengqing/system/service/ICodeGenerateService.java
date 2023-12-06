@@ -1,8 +1,6 @@
 package com.zhengqing.system.service;
 
-import com.zhengqing.system.model.vo.SysCgProjectPackageTreeVO;
-
-import java.util.List;
+import com.zhengqing.system.model.bo.SysCgConfigBO;
 
 /**
  * <p> 代码生成器 服务类 </p>
@@ -14,21 +12,32 @@ import java.util.List;
 public interface ICodeGenerateService {
 
     /**
-     * 项目包
+     * 获取项目模板配置
      *
-     * @return 树形包结构
+     * @return 配置信息
      * @author zhengqingya
      * @date 2023/12/5 9:28
      */
-    List<SysCgProjectPackageTreeVO> projectPackageTree();
+    SysCgConfigBO getConfig();
 
     /**
-     * 生成代码
+     * 保持模板配置
      *
+     * @param config 提交参数
      * @return void
      * @author zhengqingya
      * @date 2023/12/5 9:28
      */
-    void generateTplData();
+    void saveConfig(SysCgConfigBO config);
+
+    /**
+     * 生成代码
+     *
+     * @param params 提交参数
+     * @return void
+     * @author zhengqingya
+     * @date 2023/12/5 9:28
+     */
+    void generateTplData(SysCgConfigBO params);
 
 }

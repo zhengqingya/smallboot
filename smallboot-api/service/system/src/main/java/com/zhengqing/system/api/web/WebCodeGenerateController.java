@@ -2,18 +2,14 @@ package com.zhengqing.system.api.web;
 
 
 import com.zhengqing.common.base.constant.ServiceConstant;
-import com.zhengqing.system.model.vo.SysCgProjectPackageTreeVO;
+import com.zhengqing.system.model.bo.SysCgConfigBO;
 import com.zhengqing.system.service.ICodeGenerateService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p> 代码生成器 </p>
@@ -31,16 +27,22 @@ public class WebCodeGenerateController {
 
     private final ICodeGenerateService iCodeGenerateService;
 
-    @ApiOperation("项目树包")
-    @GetMapping("projectPackageTree")
-    public List<SysCgProjectPackageTreeVO> projectPackageTree() {
-        return this.iCodeGenerateService.projectPackageTree();
+    @ApiOperation("模板配置")
+    @GetMapping("getConfig")
+    public SysCgConfigBO getConfig() {
+        return this.iCodeGenerateService.getConfig();
+    }
+
+    @ApiOperation("保存模块配置")
+    @PostMapping("saveConfig")
+    public void saveConfig(@RequestBody SysCgConfigBO config) {
+        this.iCodeGenerateService.saveConfig(config);
     }
 
     @ApiOperation("生成代码")
     @PostMapping("generateTplData")
-    public void generateTplData() {
-        this.iCodeGenerateService.generateTplData();
+    public void generateTplData(@Validated @RequestBody SysCgConfigBO params) {
+        this.iCodeGenerateService.generateTplData(params);
     }
 
 }

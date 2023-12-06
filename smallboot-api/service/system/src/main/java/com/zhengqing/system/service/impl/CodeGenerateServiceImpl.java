@@ -3,8 +3,11 @@ package com.zhengqing.system.service.impl;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.Assert;
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.zhengqing.common.base.config.CommonProperty;
 import com.zhengqing.common.base.constant.AppConstant;
 import com.zhengqing.common.base.util.MyDateUtil;
 import com.zhengqing.common.base.util.MyFileUtil;
@@ -16,8 +19,8 @@ import com.zhengqing.common.db.model.bo.GeneratorCodeTemplateFileBO;
 import com.zhengqing.common.db.model.vo.DbTableColumnListVO;
 import com.zhengqing.common.db.util.FreeMarkerUtil;
 import com.zhengqing.common.db.util.MyJdbcUtil;
-import com.zhengqing.common.web.util.YmlUtil;
-import com.zhengqing.system.model.vo.SysCgProjectPackageTreeVO;
+import com.zhengqing.system.config.SystemProperty;
+import com.zhengqing.system.model.bo.SysCgConfigBO;
 import com.zhengqing.system.service.ICodeGenerateService;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -44,15 +47,24 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CodeGenerateServiceImpl implements ICodeGenerateService {
 
-    final String rootTplPath = AppConstant.PROJECT_ROOT_DIRECTORY + "/doc/code-generate-template/smallboot";
+    private final SystemProperty systemProperty;
+
+    final String ROOT_TPL_PATH = AppConstant.PROJECT_ROOT_DIRECTORY + "/doc/code-generate-template/smallboot";
+    final String CONFIG_JSON = AppConstant.PROJECT_ROOT_DIRECTORY + "/doc/code-generate-template/config.json";
 
     @Override
-    public List<SysCgProjectPackageTreeVO> projectPackageTree() {
-        return this.recursiveTplFile(this.rootTplPath, "", "");
+    public SysCgConfigBO getConfig() {
+        SysCgConfigBO config = JSONUtil.toBean(FileUtil.readUtf8String(this.CONFIG_JSON), SysCgConfigBO.class);
+        config.setPgList(this.recursiveTplFile(this.ROOT_TPL_PATH, "", ""));
+        // 查询表字段信息
+        DbTableColumnListVO columnInfo = this.getDbColumn(config.getTableName());
+        config.setDbColumnList(columnInfo.getColumnInfoList().stream().map(DbTableColumnListVO.ColumnInfo::getColumnName).collect(Collectors.toList()));
+        return config;
     }
 
-    private List<SysCgProjectPackageTreeVO> recursiveTplFile(String tplRootPath, String tplChildDir, String rootPackageName) {
-        List<SysCgProjectPackageTreeVO> childList = Lists.newArrayList();
+
+    private List<SysCgConfigBO.ProjectPackage> recursiveTplFile(String tplRootPath, String tplChildDir, String rootPackageName) {
+        List<SysCgConfigBO.ProjectPackage> childList = Lists.newArrayList();
         File tplFile = new File(tplRootPath + tplChildDir);
         if (!tplFile.exists()) {
             return null;
@@ -61,7 +73,7 @@ public class CodeGenerateServiceImpl implements ICodeGenerateService {
         File[] tplFileArray = tplFile.listFiles();
         for (File tplFileItem : tplFileArray) {
             String tplFileItemName = tplFileItem.getName();
-            SysCgProjectPackageTreeVO cgItem = SysCgProjectPackageTreeVO.builder().build();
+            SysCgConfigBO.ProjectPackage cgItem = SysCgConfigBO.ProjectPackage.builder().build();
             if (tplFileItem.isDirectory()) {
                 // 目录
                 String childDir = tplChildDir + "/" + tplFileItemName;
@@ -71,6 +83,7 @@ public class CodeGenerateServiceImpl implements ICodeGenerateService {
             } else if (tplFileItem.isFile()) {
                 // 文件
                 cgItem.setName(tplFileItemName);
+                cgItem.setTplFilePath(tplFileItem.getAbsolutePath());
                 cgItem.setTplContent(FileUtil.readUtf8String(tplFileItem.getAbsoluteFile()));
             }
 
@@ -81,35 +94,45 @@ public class CodeGenerateServiceImpl implements ICodeGenerateService {
     }
 
     @Override
-    public void generateTplData() {
-        // 读取基本生成配置信息（mysql连接配置等...）
-        final String GENERATE_CONFIG_PATH = AppConstant.PROJECT_ROOT_DIRECTORY + "/app/src/main/resources/generate-config.yml";
-        GenerateConfig generateConfig = YmlUtil.getYml(GENERATE_CONFIG_PATH, GenerateConfig.class);
+    public void saveConfig(SysCgConfigBO config) {
+        FileUtil.writeUtf8String(JSONUtil.toJsonStr(config), this.CONFIG_JSON);
+        this.recursiveTplData(config.getPgList());
+    }
 
-        final String ip = generateConfig.getIp();
-        final String port = generateConfig.getPort();
-        final String username = generateConfig.getUsername();
-        final String password = generateConfig.getPassword();
-        final String dbName = generateConfig.getDbName();
-        final String tableName = generateConfig.getTableName();
-        final String parentPackageName = generateConfig.getParentPackageName();
-        final String moduleName = generateConfig.getModuleName();
+    private void recursiveTplData(List<SysCgConfigBO.ProjectPackage> list) {
+        if (CollUtil.isEmpty(list)) {
+            return;
+        }
+        list.forEach(item -> {
+            String tplContent = item.getTplContent();
+            if (StrUtil.isNotBlank(tplContent)) {
+                // 保存
+                FileUtil.writeUtf8String(tplContent, item.getTplFilePath());
+            }
+            List<SysCgConfigBO.ProjectPackage> childList = item.getChildList();
+            if (CollUtil.isNotEmpty(childList)) {
+                // 继续下一级
+                this.recursiveTplData(childList);
+            }
+        });
+    }
 
 
-        // 查询字段数据   eg: "username"
-        List<String> queryColumnList = Lists.newArrayList();
+    @Override
+    public void generateTplData(SysCgConfigBO params) {
+        String parentPackageName = params.getParentPackageName();
+        String moduleName = params.getModuleName();
+        String tableName = params.getTableName();
+        List<String> queryColumnList = params.getQueryColumnList();
 
         // 包名
         String rootPackageName = parentPackageName + "." + moduleName;
 
         // 生成文件信息
-        List<GeneratorCodeTemplateFileBO> tplFileInfoList = this.getTplFileInfo(this.rootTplPath, rootPackageName);
+        List<GeneratorCodeTemplateFileBO> tplFileInfoList = this.getTplFileInfo(this.ROOT_TPL_PATH, rootPackageName);
 
         // 查询表字段信息
-        DbTableColumnListVO columnInfo = new MyJdbcUtil().getAllColumnsByDbInfo(DataSourceTypeEnum.MySQL, ip, port, username, password, dbName, tableName);
-
-        // TODO 默认所有字段
-        queryColumnList = columnInfo.getColumnInfoList().stream().map(DbTableColumnListVO.ColumnInfo::getColumnName).collect(Collectors.toList());
+        DbTableColumnListVO columnInfo = this.getDbColumn(tableName);
 
         // 模板数据处理
         Map<String, Object> templateDataMap = this.getTplData(columnInfo, tplFileInfoList.stream().map(GeneratorCodeTemplateFileBO::getTplRePackage).collect(Collectors.toList()), queryColumnList);
@@ -121,6 +144,15 @@ public class CodeGenerateServiceImpl implements ICodeGenerateService {
 
         // 模板数据生成
         this.generateTplData(AppConstant.FILE_PATH_CODE_GENERATOR_DATA_PATH, tplFileInfoList, templateDataMap);
+    }
+
+    /**
+     * 查询表字段信息
+     */
+    private DbTableColumnListVO getDbColumn(String tableName) {
+        // 拿到mysql连接配置
+        CommonProperty.MysqlConn mysqlConfig = this.systemProperty.getMysql().getMaster();
+        return new MyJdbcUtil().getAllColumnsByDbInfo(DataSourceTypeEnum.MySQL, mysqlConfig.getIp(), mysqlConfig.getPort(), mysqlConfig.getUsername(), mysqlConfig.getPassword(), mysqlConfig.getDbName(), tableName);
     }
 
     /**
