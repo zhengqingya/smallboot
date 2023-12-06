@@ -1,8 +1,7 @@
 <template>
-  <div style="display: inline-block; white-space: nowrap" :class="{ 'base-header-gap': label }">
-    <span v-if="label" class="label">{{ label }} &nbsp;</span>
+  <base-header-form :label="label">
     <el-input :placeholder="`请输入${label}`" style="width: 200px; margin-right: 10px" clearable v-bind="$attrs" />
-  </div>
+  </base-header-form>
 </template>
 <script setup>
 const props = defineProps({

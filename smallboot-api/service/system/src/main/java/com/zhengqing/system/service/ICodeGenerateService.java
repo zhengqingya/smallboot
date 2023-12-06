@@ -33,11 +33,11 @@ public interface ICodeGenerateService {
     /**
      * 生成代码
      *
-     * @param params 提交参数
+     * @param config 提交参数
      * @return void
      * @author zhengqingya
      * @date 2023/12/5 9:28
      */
-    void generateTplData(SysCgConfigBO params);
+    void generateTplData(SysCgConfigBO config);
 
 }

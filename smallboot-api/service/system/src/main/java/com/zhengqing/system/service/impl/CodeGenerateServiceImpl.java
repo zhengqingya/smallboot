@@ -119,11 +119,15 @@ public class CodeGenerateServiceImpl implements ICodeGenerateService {
 
 
     @Override
-    public void generateTplData(SysCgConfigBO params) {
-        String parentPackageName = params.getParentPackageName();
-        String moduleName = params.getModuleName();
-        String tableName = params.getTableName();
-        List<String> queryColumnList = params.getQueryColumnList();
+    public void generateTplData(SysCgConfigBO config) {
+        // 1、先保存下配置
+        this.saveConfig(config);
+
+        // 2、再生成代码
+        String parentPackageName = config.getParentPackageName();
+        String moduleName = config.getModuleName();
+        String tableName = config.getTableName();
+        List<String> queryColumnList = config.getQueryColumnList();
 
         // 包名
         String rootPackageName = parentPackageName + "." + moduleName;
