@@ -21,7 +21,10 @@ let dataForm = $ref({});
 
 onMounted(() => {
   id = proxy.$route.query.id;
-  init();
+  dataForm = {};
+  if (id) {
+    init();
+  }
 });
 
 async function init() {
@@ -45,6 +48,7 @@ async function submitForm() {
 
   let res = await proxy.$api.wf_form[dataForm.id ? 'update' : 'add'](dataForm);
   proxy.submitOk(res.message);
+  proxy.$router.push('/workflow/form');
 }
 </script>
 

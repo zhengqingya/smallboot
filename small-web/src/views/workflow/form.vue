@@ -18,9 +18,8 @@
         <el-table-column label="创建时间" prop="createTime" align="center" />
         <el-table-column align="center" label="操作">
           <template #default="scope">
-            <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
             <router-link :to="{ path: '/workflow/form-edit', query: { id: scope.row.id } }">
-              <el-button link>详情</el-button>
+              <el-button link>编辑</el-button>
             </router-link>
             <base-delete-btn @ok="handleDelete(scope.row)"></base-delete-btn>
           </template>

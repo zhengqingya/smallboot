@@ -9,6 +9,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * <p> 工作流-表单-详情-请求参数 </p>
  *
@@ -24,6 +26,7 @@ import lombok.experimental.SuperBuilder;
 @ApiModel("工作流-表单-详情-请求参数")
 public class WfFormDetailDTO extends BaseDTO {
 
+    @NotNull(message = "ID不能为空！")
     @ApiModelProperty("主键ID")
     private Long id;
 
