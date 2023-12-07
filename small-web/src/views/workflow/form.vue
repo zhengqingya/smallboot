@@ -4,7 +4,9 @@
       <base-input v-model="listQuery.name" label="名称" @clear="refreshTableData" />
       <el-button type="primary" @click="refreshTableData">查询</el-button>
       <template #right>
-        <el-button type="primary" @click="handleAdd">添加</el-button>
+        <router-link :to="{ path: '/workflow/form-edit' }">
+          <el-button type="primary">添加</el-button>
+        </router-link>
       </template>
     </base-header>
 

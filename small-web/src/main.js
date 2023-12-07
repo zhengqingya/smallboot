@@ -74,4 +74,10 @@ Object.keys(directive).forEach((key) => {
   app.directive(key, directive[key]);
 });
 
+// 表单设计器
+import formCreate from '@form-create/element-ui';
+import FcDesigner from '@form-create/designer';
+app.use(formCreate);
+app.use(FcDesigner);
+
 app.mount('#app');
