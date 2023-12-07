@@ -1,56 +1,50 @@
 <template>
   <base-wrapper>
-    <base-content>
-      <base-input v-model="form.name" label="名称" @clear="refreshTableData" />
-      <base-input v-model="form.remark" label="备注" @clear="refreshTableData" />
+    <base-card title="基本信息">
+      <template #append>
+        <el-button type="warning" @click="submitForm">保存</el-button>
+      </template>
+      <base-input v-model="dataForm.name" label="名称" />
+      <base-input v-model="dataForm.remark" label="备注" />
+    </base-card>
 
-      <el-button type="primary" @click="handleAdd">添加</el-button>
-    </base-content>
-
-    <base-content> 1 </base-content>
+    <base-card title="表单内容">
+      <fc-designer ref="designerRef" height="600px" />
+    </base-card>
   </base-wrapper>
 </template>
 
 <script setup>
 const { proxy } = getCurrentInstance();
-let listQuery = $ref({});
-let form = $ref({});
-let dialogVisible = $ref(false);
-let dialogStatus = $ref('');
-let rules = $ref({});
+let id = $ref();
+let dataForm = $ref({});
 
-function refreshTableData() {
-  proxy.$refs.baseTableRef.refresh();
+onMounted(() => {
+  id = proxy.$route.query.id;
+  init();
+});
+
+async function init() {
+  let res = await proxy.$api.wf_form.detail({ id: id });
+  dataForm = res.data;
+  let config = dataForm.config;
+  // 回显表单
+  proxy.$refs.designerRef.setRule(config.rule);
+  proxy.$refs.designerRef.setOption(config.option);
 }
-function handleDetail(row) {
-  form = Object.assign({}, row);
-  dialogStatus = 'detail';
-  dialogVisible = true;
-}
-function handleAdd() {
-  form = {};
-  dialogStatus = 'add';
-  dialogVisible = true;
-}
-function handleUpdate(row) {
-  form = Object.assign({}, row);
-  dialogStatus = 'update';
-  dialogVisible = true;
-}
-async function handleDelete(row) {
-  let res = await proxy.$api.wf_form.delete({ id: row.id });
-  refreshTableData();
+
+async function submitForm() {
+  // 获取生成规则
+  const FcDesignerRule = proxy.$refs.designerRef.getRule(); // FcDesigner 生成的`JSON`
+  const FcDesignerOptions = proxy.$refs.designerRef.getOption(); // FcDesigner 生成的`options`
+
+  dataForm.config = {
+    rule: FcDesignerRule,
+    option: FcDesignerOptions,
+  };
+
+  let res = await proxy.$api.wf_form[dataForm.id ? 'update' : 'add'](dataForm);
   proxy.submitOk(res.message);
-}
-function submitForm() {
-  proxy.$refs.dataFormRef.validate(async (valid) => {
-    if (valid) {
-      let res = await proxy.$api.wf_form[form.id ? 'update' : 'add'](form);
-      proxy.submitOk(res.message);
-      refreshTableData();
-      dialogVisible = false;
-    }
-  });
 }
 </script>
 

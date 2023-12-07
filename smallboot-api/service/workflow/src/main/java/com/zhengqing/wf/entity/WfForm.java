@@ -1,9 +1,12 @@
 package com.zhengqing.wf.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import com.zhengqing.common.db.entity.IsDeletedBaseEntity;
+import com.zhengqing.wf.model.bo.WfFormConfigBO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -31,8 +34,9 @@ public class WfForm extends IsDeletedBaseEntity<WfForm> {
     @ApiModelProperty("名称")
     private String name;
 
-    @ApiModelProperty("内容")
-    private String content;
+    @ApiModelProperty("配置")
+    @TableField(typeHandler = JacksonTypeHandler.class)
+    private WfFormConfigBO config;
 
     @ApiModelProperty("备注")
     private String remark;

@@ -1,6 +1,7 @@
 package com.zhengqing.system.model.vo;
 
 
+import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -56,9 +57,13 @@ public class SysConfigVO extends BaseVO {
 //            this.value = JSONUtil.toList(StrUtil.toString(this.value), JSONObject.class);
 //        }
 
-        if (JSONUtil.isTypeJSONObject(String.valueOf(this.value))) {
-            this.value = JSONUtil.toBean(String.valueOf(this.value), JSONObject.class);
+        String valueStr = String.valueOf(this.value);
+        if (JSONUtil.isTypeJSONObject(valueStr)) {
+            this.value = JSONUtil.toBean(valueStr, JSONObject.class);
+        } else if (JSONUtil.isTypeJSONArray(valueStr)) {
+            this.value = JSONUtil.toList(valueStr, JSONArray.class);
         }
+
     }
 
 }

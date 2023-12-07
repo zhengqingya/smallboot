@@ -1,11 +1,11 @@
 package com.zhengqing.wf.model.vo;
 
 import com.zhengqing.common.base.model.vo.BaseVO;
+import com.zhengqing.wf.model.bo.WfFormConfigBO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import java.util.Date;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -31,8 +31,8 @@ public class WfFormDetailVO extends BaseVO {
     @ApiModelProperty("名称")
     private String name;
 
-    @ApiModelProperty("内容")
-    private String content;
+    @ApiModelProperty("配置")
+    private WfFormConfigBO config;
 
     @ApiModelProperty("备注")
     private String remark;

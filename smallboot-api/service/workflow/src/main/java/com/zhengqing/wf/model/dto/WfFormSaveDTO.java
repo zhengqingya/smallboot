@@ -2,6 +2,7 @@ package com.zhengqing.wf.model.dto;
 
 import com.zhengqing.common.base.model.dto.BaseDTO;
 import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
+import com.zhengqing.wf.model.bo.WfFormConfigBO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -36,9 +37,8 @@ public class WfFormSaveDTO extends BaseDTO {
     @ApiModelProperty("名称")
     private String name;
 
-    @NotBlank(message = "内容不能为空！")
-    @ApiModelProperty("内容")
-    private String content;
+    @ApiModelProperty("配置")
+    private WfFormConfigBO config;
 
     @ApiModelProperty("备注")
     private String remark;

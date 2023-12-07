@@ -61,7 +61,7 @@ public class WfFormServiceImpl extends ServiceImpl<WfFormMapper, WfForm> impleme
         WfForm.builder()
                 .id(params.getId())
                 .name(params.getName())
-                .content(params.getContent())
+                .config(params.getConfig())
                 .remark(params.getRemark())
                 .build()
                 .insertOrUpdate();
