@@ -3,6 +3,7 @@ package com.zhengqing.system.aspect;
 import cn.hutool.json.JSONUtil;
 import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.base.context.JwtUserContext;
+import com.zhengqing.common.core.custom.log.ApiLog;
 import com.zhengqing.common.web.util.ServletUtil;
 import com.zhengqing.system.enums.SysLogTypeEnum;
 import com.zhengqing.system.model.dto.SysLogSaveDTO;
@@ -71,6 +72,7 @@ public class ApiLogAspect {
         // 获取切入点所在的方法
         Api api = signature.getMethod().getDeclaringClass().getAnnotation(Api.class);
         ApiOperation apiOperation = signature.getMethod().getAnnotation(ApiOperation.class);
+        ApiLog apiLog = signature.getMethod().getAnnotation(ApiLog.class);
 
 //            log.debug("========================== ↓↓↓↓↓↓ 《ApiLogAspect》 Start... ↓↓↓↓↓↓ ==========================");
 //            log.debug("《ApiLogAspect》 controller method: {}",
@@ -112,6 +114,10 @@ public class ApiLogAspect {
 
             if (requestURI.startsWith(ServiceConstant.SERVICE_API_PREFIX_MINI)) {
                 isSavaLog = false;
+            }
+
+            if (apiLog != null) {
+                isSavaLog = apiLog.isSave();
             }
 
             if (isSavaLog) {

@@ -2,6 +2,7 @@ package com.zhengqing.system.api.web;
 
 
 import com.zhengqing.common.base.constant.ServiceConstant;
+import com.zhengqing.common.core.custom.log.ApiLog;
 import com.zhengqing.system.model.bo.SysCgConfigBO;
 import com.zhengqing.system.service.ICodeGenerateService;
 import io.swagger.annotations.Api;
@@ -33,12 +34,14 @@ public class WebCodeGenerateController {
         return this.iCodeGenerateService.getConfig();
     }
 
+    @ApiLog(isSave = false)
     @ApiOperation("保存模块配置")
     @PostMapping("saveConfig")
     public void saveConfig(@RequestBody SysCgConfigBO config) {
         this.iCodeGenerateService.saveConfig(config);
     }
 
+    @ApiLog(isSave = false)
     @ApiOperation("生成代码")
     @PostMapping("generateTplData")
     public void generateTplData(@Validated @RequestBody SysCgConfigBO params) {

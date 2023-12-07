@@ -20,7 +20,7 @@
             <el-input v-model="loginForm.password" style="width: 260px" prefix-icon="Lock" placeholder="请输入密码" show-password maxlength="30" />
           </el-form-item>
         </el-form>
-        <div class="tips text-color-grey">
+        <div class="tips text-color-grey font-size-sm">
           <span>用户名: admin</span>
           <span>&nbsp;&nbsp;密码: 123456</span>
         </div>
