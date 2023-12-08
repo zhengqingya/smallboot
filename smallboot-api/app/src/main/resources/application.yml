@@ -1,5 +1,12 @@
 server:
   port: 888
+  tomcat:
+    threads:
+      max: 2000      # 最大线程数
+      min-spare: 100 # 最小工作线程数
+    max-connections: 10000 # 接受和处理的最大连接数
+    accept-count: 1000 # 可以放到处理队列中的请求数
+    # 查看服务线程数   pstree -p `ps -e | grep java | awk '{print $1}'` | wc -l
 
 spring:
   application:
