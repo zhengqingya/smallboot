@@ -13,6 +13,7 @@
         <base-cell-item label="性别">{{ $filters.sexName(userObj.sex) }}</base-cell-item>
         <base-cell-item label="手机号码">{{ userObj.phone }}</base-cell-item>
         <base-cell-item label="邮箱">{{ userObj.email }}</base-cell-item>
+        <base-cell-item label="角色">{{ userObj.roleNameList }}</base-cell-item>
         <base-cell-item label="创建时间">{{ userObj.createTime }}</base-cell-item>
       </base-cell>
     </base-card>

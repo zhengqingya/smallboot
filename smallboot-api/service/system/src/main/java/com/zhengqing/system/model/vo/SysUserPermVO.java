@@ -74,12 +74,14 @@ public class SysUserPermVO extends BaseVO implements HandleParam {
 
     // ================= ↓↓↓↓↓↓ 角色信息 ↓↓↓↓↓↓ =================
 
-    @JsonIgnore
-    @ApiModelProperty(value = "角色ID", hidden = true)
+    @ApiModelProperty("角色ID")
     private List<Integer> roleIdList;
 
     @ApiModelProperty("角色编码")
     private List<String> roleCodeList;
+
+    @ApiModelProperty("角色名称")
+    private List<String> roleNameList;
 
     // ================= ↓↓↓↓↓↓ 权限信息 ↓↓↓↓↓↓ =================
 

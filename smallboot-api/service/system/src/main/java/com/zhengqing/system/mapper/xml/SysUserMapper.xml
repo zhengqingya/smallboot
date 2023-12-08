@@ -62,6 +62,9 @@
         <collection property="roleIdList" ofType="Integer" javaType="list">
             <result column="roleId"/>
         </collection>
+        <collection property="roleNameList" ofType="String" javaType="list">
+            <result column="roleName"/>
+        </collection>
         <collection property="roleCodeList" ofType="String" javaType="list">
             <result column="roleCode"/>
         </collection>
@@ -81,6 +84,7 @@
         su.dept_id,
         su.post_id_list,
         sr.role_id roleId,
+        sr.name roleName,
         sr.code roleCode
         FROM t_sys_user su
         JOIN t_sys_user_role sur ON sur.user_id = su.user_id

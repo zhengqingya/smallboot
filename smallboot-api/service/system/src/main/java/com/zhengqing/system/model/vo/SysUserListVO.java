@@ -63,7 +63,7 @@ public class SysUserListVO {
     private List<Integer> roleIdList;
 
     @ApiModelProperty(value = "角色名称")
-    private String roLeNames;
+    private String roleNames;
 
     @ApiModelProperty(value = "部门id")
     private Integer deptId;

@@ -99,7 +99,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
                         sj.add(itemRoleName);
                     }
                 });
-                item.setRoLeNames(sj.toString());
+                item.setRoleNames(sj.toString());
             }
             item.handleData();
         });
