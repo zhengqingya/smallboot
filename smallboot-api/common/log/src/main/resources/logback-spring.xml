@@ -103,7 +103,9 @@
 
     <!-- 生产环境：输出到文件 -->
     <springProfile name="prod">
-        <root level="DEBUG">
+        <!-- 线上环境单独设置日志级别 -->
+        <logger name="com.zhengqing" level="INFO"/>
+        <root level="INFO">
             <appender-ref ref="CONSOLE"/>
             <appender-ref ref="FILE"/>
         </root>
