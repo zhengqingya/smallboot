@@ -66,7 +66,7 @@
           <el-input v-model="form.email" />
         </el-form-item>
         <el-form-item label="头像:" prop="avatar">
-          <base-upload-single v-model="userObj.avatarUrl" />
+          <base-upload-single v-model="form.avatarUrl" />
         </el-form-item>
       </el-form>
       <template #footer>
@@ -81,19 +81,23 @@
 const { proxy } = getCurrentInstance();
 let useUserStore = proxy.$store.user.useUserStore();
 let { userObj } = toRefs(useUserStore);
+let { logout } = useUserStore;
 
 let dialogVisible = $ref(false);
 let form = $ref({});
 
 function updateUser() {
   dialogVisible = true;
-  form = userObj.value;
+  form = JSON.parse(JSON.stringify(userObj.value));
 }
 
 async function submitForm() {
   await proxy.$api.sys_user.update(form);
-  proxy.submitOk('保存成功');
-  dialogVisible = false;
+  // proxy.submitOk('保存成功');
+  // dialogVisible = false;
+  proxy.submitConfirm('保存成功，请重新登录！', () => {
+    logout(); // 退出登录
+  });
 }
 
 // async function refreshTableData() {

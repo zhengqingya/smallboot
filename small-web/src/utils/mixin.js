@@ -1,3 +1,5 @@
+import { ElMessage, ElMessageBox } from 'element-plus';
+
 // 抽取公用的实例 - 操作成功与失败消息提醒内容等
 export default {
   data() {
@@ -33,6 +35,18 @@ export default {
       this.$message({
         message: msg || '网络异常，请稍后重试！',
         type: 'error',
+      });
+    },
+    // 消息确认后执行
+    submitConfirm(msg, cb) {
+      ElMessageBox.alert(msg, '', {
+        confirmButtonText: '确认',
+        showClose: false,
+        callback: (action) => {
+          if (action == 'confirm') {
+            cb && cb();
+          }
+        },
       });
     },
   },
