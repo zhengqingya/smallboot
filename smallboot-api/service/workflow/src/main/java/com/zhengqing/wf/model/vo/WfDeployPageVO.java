@@ -13,7 +13,7 @@ import lombok.experimental.SuperBuilder;
 import java.util.Date;
 
 /**
- * <p>工作流-表单-分页列表-响应参数</p>
+ * <p>工作流-流程部署-分页列表-响应参数</p>
  *
  * @author zhengqingya
  * @description
@@ -41,6 +41,6 @@ public class WfDeployPageVO extends BaseVO {
 
     @ApiModelProperty(value = "创建时间")
     private Date createTime;
- 
+
 
 }

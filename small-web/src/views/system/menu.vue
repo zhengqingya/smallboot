@@ -4,7 +4,7 @@
       <base-input v-model="listQuery.name" label="名称" @clear="refreshTableData" />
       <el-button type="primary" @click="refreshTableData">查询</el-button>
       <template #right>
-        <el-button type="primary" @click="handleAdd">添加</el-button>
+        <el-button type="primary" @click="handleAdd()">添加</el-button>
       </template>
     </base-header>
 
@@ -28,7 +28,7 @@
         <el-table-column align="center" label="操作">
           <template #default="scope">
             <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
-            <el-button type="primary" link @click="handleAdd(scope.row.id)">新增子项</el-button>
+            <el-button type="primary" link @click="handleAdd(scope.row)">新增子项</el-button>
             <base-delete-btn @ok="handleDelete(scope.row)"></base-delete-btn>
           </template>
         </el-table-column>
@@ -125,12 +125,12 @@ async function getIconList() {
   let res = await proxy.$api.sys_dict.listFromCacheByCode('element_icon');
   elIconList = res.data;
 }
-function handleAdd(parentId) {
+function handleAdd(row) {
   form = {
-    parentId: parentId,
+    parentId: row ? row.id : 0,
     status: 1,
     type: 1,
-    sort: 100,
+    sort: row ? row.children.length + 1 : dataList.length + 1,
     isShow: true, // 是否显示
     isShowBreadcrumb: true, // 面包屑是否显示
   };

@@ -28,7 +28,7 @@
         <template slot-scope="scope">
           <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
           <el-button link @click="handleDetail(scope.row)">详情</el-button>
-          <base-delete-btn @ok="handleDelete(scope.row)"></base-delete-btn>
+          <base-delete-btn @ok="handleDelete(scope.row)" />
         </template>
       </el-table-column>
     </base-table-p>

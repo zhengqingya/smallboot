@@ -11,7 +11,7 @@
  Target Server Version : 50726 (5.7.26-log)
  File Encoding         : 65001
 
- Date: 07/12/2023 17:21:01
+ Date: 08/12/2023 17:50:55
 */
 
 SET NAMES utf8mb4;
@@ -3471,7 +3471,7 @@ CREATE TABLE `t_sys_log`
     `update_by`           bigint(20) NOT NULL COMMENT '修改人',
     `update_time`         datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
     PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 644 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-操作日志' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 653 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-操作日志' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_sys_log
@@ -3501,7 +3501,7 @@ CREATE TABLE `t_sys_menu`
     `update_time`        datetime NOT NULL COMMENT '修改时间',
     `is_deleted`         tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否删除(1->是，0->否)',
     PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 55 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-菜单表' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 57 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-菜单表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_sys_menu
@@ -3633,8 +3633,14 @@ INSERT INTO `t_sys_menu`
 VALUES (53, 3, '代码生成器', 'SwitchFilled', 'code-generate', NULL, 100, 'system/code-generate', NULL, 1, 1, 1, 1,
         '2023-12-05 15:10:33', 1, '2023-12-05 15:10:33', 0);
 INSERT INTO `t_sys_menu`
-VALUES (54, 51, '表单-编辑', NULL, 'form-edit', NULL, 100, 'workflow/form-edit', NULL, 0, 1, 1, 1,
-        '2023-12-07 11:11:33', 1, '2023-12-07 11:11:33', 0);
+VALUES (54, 51, '表单-编辑', '', 'form-edit', '', 2, 'workflow/form-edit', '', 0, 1, 1, 1, '2023-12-07 11:11:33', 1,
+        '2023-12-08 16:55:37', 0);
+INSERT INTO `t_sys_menu`
+VALUES (55, 51, '流程模型', 'Star', 'model', '', 3, 'workflow/model', '', 1, 1, 1, 1, '2023-12-08 16:53:08', 1,
+        '2023-12-08 16:53:40', 0);
+INSERT INTO `t_sys_menu`
+VALUES (56, 51, '流程模型-编辑', NULL, 'model-edit', NULL, 4, 'workflow/model-edit', NULL, 1, 1, 1, 1,
+        '2023-12-08 17:07:45', 1, '2023-12-08 17:07:45', 0);
 
 -- ----------------------------
 -- Table structure for t_sys_merchant
@@ -10213,7 +10219,7 @@ CREATE TABLE `t_sys_role_menu`
     `update_by`   bigint(20) NOT NULL COMMENT '修改人',
     `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
     PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1516 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-角色菜单关联表' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 1518 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-角色菜单关联表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_sys_role_menu
@@ -10372,6 +10378,10 @@ INSERT INTO `t_sys_role_menu`
 VALUES (1514, 1, 1, 53, 1, '2023-12-05 15:10:33', 1, '2023-12-05 15:10:33');
 INSERT INTO `t_sys_role_menu`
 VALUES (1515, 1, 1, 54, 1, '2023-12-07 11:11:33', 1, '2023-12-07 11:11:33');
+INSERT INTO `t_sys_role_menu`
+VALUES (1516, 1, 1, 55, 1, '2023-12-08 16:53:08', 1, '2023-12-08 16:53:08');
+INSERT INTO `t_sys_role_menu`
+VALUES (1517, 1, 1, 56, 1, '2023-12-08 17:07:46', 1, '2023-12-08 17:07:46');
 
 -- ----------------------------
 -- Table structure for t_sys_role_scope
@@ -10858,9 +10868,9 @@ CREATE TABLE `wf_category`
     `name`        varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '名称',
     `code`        varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '编码',
     `remark`      varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '备注',
-    `create_by`   bigint(20) NOT NULL DEFAULT '' COMMENT '创建人',
+    `create_by`   bigint(20) NOT NULL COMMENT '创建人',
     `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    `update_by`   bigint(20) NOT NULL DEFAULT '' COMMENT '修改人',
+    `update_by`   bigint(20) NOT NULL COMMENT '修改人',
     `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
     `is_deleted`  tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否删除(1->是，0->否)',
     PRIMARY KEY (`id`) USING BTREE
@@ -10889,8 +10899,8 @@ CREATE TABLE `wf_copy`
     `originator_name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '发起人名称',
     `create_time`     datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `update_time`     datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-    `create_by`       bigint(20) UNSIGNED NOT NULL DEFAULT '' COMMENT '创建人id',
-    `update_by`       bigint(20) UNSIGNED NOT NULL DEFAULT '' COMMENT '更新人id',
+    `create_by`       bigint(20) UNSIGNED NOT NULL COMMENT '创建人id',
+    `update_by`       bigint(20) UNSIGNED NOT NULL COMMENT '更新人id',
     `is_deleted`      tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否删除(0->否,1->是)',
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '工作流-抄送' ROW_FORMAT = Dynamic;
@@ -10929,13 +10939,13 @@ CREATE TABLE `wf_form`
     `name`        varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '名称',
     `config`      longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '配置',
     `remark`      varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
-    `create_by`   bigint(20) NOT NULL DEFAULT '' COMMENT '创建人',
+    `create_by`   bigint(20) NOT NULL COMMENT '创建人',
     `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    `update_by`   bigint(20) NOT NULL DEFAULT '' COMMENT '修改人',
+    `update_by`   bigint(20) NOT NULL COMMENT '修改人',
     `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
     `is_deleted`  tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否删除(1->是，0->否)',
     PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '工作流-表单' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '工作流-表单' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of wf_form

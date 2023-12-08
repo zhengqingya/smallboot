@@ -31,4 +31,8 @@ public class BasePageDTO extends BaseDTO {
     @ApiModelProperty(value = "每页显示数量", required = true, position = 1, example = "10")
     private Integer pageSize = 10;
 
+    public int getOffset() {
+        return (this.pageNum - 1) * this.pageSize;
+    }
+
 }
