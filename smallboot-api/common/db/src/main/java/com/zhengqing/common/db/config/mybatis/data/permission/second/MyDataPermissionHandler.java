@@ -93,7 +93,7 @@ public class MyDataPermissionHandler {
                 String scopeVisibleField = item.getScopeVisibleField();
                 String scopeValue = item.getScopeValue();
                 DataPermissionTypeEnum dataPermissionTypeEnum = DataPermissionTypeEnum.getEnum(item.getScopeType());
-                log.info("[数据权限过滤] dataPermissionType:[{}]  where:[{}]  mapperClassName:[{}]", dataPermissionTypeEnum, where, mapperClassName);
+                log.debug("[数据权限过滤] dataPermissionType:[{}]  where:[{}]  mapperClassName:[{}]", dataPermissionTypeEnum, where, mapperClassName);
                 Expression expression = new HexValue(" 1 = 1 ");
                 if (where == null) {
                     where = expression;
