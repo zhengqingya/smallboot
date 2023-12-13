@@ -39,10 +39,10 @@
             <artifactId>system</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.zhengqing</groupId>
-            <artifactId>workflow</artifactId>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>com.zhengqing</groupId>-->
+        <!--            <artifactId>workflow</artifactId>-->
+        <!--        </dependency>-->
 
         <dependency>
             <groupId>com.zhengqing</groupId>
