@@ -16,9 +16,9 @@
         <el-table-column label="ID" prop="id" align="center" />
         <el-table-column label="名称" prop="name" align="center" />
         <el-table-column label="标识" prop="key" align="center" />
-        <el-table-column label="表单" prop="" align="center">
-          <template #default="scope">{{ scope.row.formObj.description }}</template>
-        </el-table-column>
+        <!-- <el-table-column label="表单" prop="" align="center">
+          <template #default="scope">{{ scope.row.metaInfoObj.description }}</template>
+        </el-table-column> -->
         <el-table-column label="创建时间" prop="createTime" align="center" />
         <el-table-column align="center" label="操作">
           <template #default="scope">

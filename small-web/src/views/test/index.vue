@@ -1,11 +1,14 @@
 <template>
-  <div style="margin-top: 10px">
-    <fc-designer ref="designer" />
-  </div>
+  <div style="margin-top: 10px">{{ test }}</div>
 </template>
-<script setup>
-const { proxy } = getCurrentInstance();
+<script setup lang="ts">
+// import { onMounted, getCurrentInstance } from 'vue';
 
-onMounted(() => {});
+const { proxy } = getCurrentInstance();
+let test = $ref('hello world');
+onMounted(() => {
+  let num: String = 'xx';
+  // console.log('num', num);
+});
 </script>
 <style lang="scss" scoped></style>

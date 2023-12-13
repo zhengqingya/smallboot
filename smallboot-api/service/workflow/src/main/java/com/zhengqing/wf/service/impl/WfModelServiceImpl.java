@@ -133,29 +133,37 @@ public class WfModelServiceImpl implements IWfModelService {
     @Transactional(rollbackFor = Exception.class)
     public void addOrUpdateData(WfModelSaveDTO params) {
         String id = params.getId();
+        boolean isAdd = StrUtil.isBlank(id);
         String bpmnXml = params.getBpmnXml();
 
-        BpmnModel bpmnModel = FlowableUtil.getBpmnModel(bpmnXml);
-        Assert.isFalse(ObjectUtil.isNotEmpty(bpmnModel), "获取模型设计失败！");
-
-        String processName = bpmnModel.getMainProcess().getName();
-
-        // 获取开始节点
-        StartEvent startEvent = FlowableUtil.getStartEvent(bpmnModel);
-        Assert.isFalse(ObjectUtil.isNull(startEvent), "开始节点不存在，请检查流程设计是否有误！");
-        Assert.isFalse(StrUtil.isBlank(startEvent.getFormKey()), "请配置流程开始节点的表单key");
-
         Model model;
-        if (params.getIsNewVersion()) {
-            // 新流程
+        if (isAdd) {
             model = this.repositoryService.newModel();
+            model.setName(params.getName());
         } else {
-            model = this.repositoryService.getModel(id);
-            Assert.isFalse(ObjectUtil.isNull(model), "流程模型不存在！");
-            model.setVersion(model.getVersion() + 1);
+            BpmnModel bpmnModel = FlowableUtil.getBpmnModel(bpmnXml);
+            Assert.isFalse(ObjectUtil.isNotEmpty(bpmnModel), "获取模型设计失败！");
+
+            String processName = bpmnModel.getMainProcess().getName();
+
+            // 获取开始节点
+            StartEvent startEvent = FlowableUtil.getStartEvent(bpmnModel);
+            Assert.isFalse(ObjectUtil.isNull(startEvent), "开始节点不存在，请检查流程设计是否有误！");
+            Assert.isFalse(StrUtil.isBlank(startEvent.getFormKey()), "请配置流程开始节点的表单key");
+
+            if (params.getIsNewVersion()) {
+                // 新流程
+                model = this.repositoryService.newModel();
+            } else {
+                model = this.repositoryService.getModel(id);
+                Assert.isFalse(ObjectUtil.isNull(model), "流程模型不存在！");
+                model.setVersion(model.getVersion() + 1);
+            }
+
+            model.setName(processName);
         }
 
-        model.setName(processName);
+
         model.setKey(params.getKey());
         model.setCategory(params.getCategory());
         model.setMetaInfo(JSONUtil.toJsonStr(params.getMetaInfoObj()));
@@ -164,8 +172,10 @@ public class WfModelServiceImpl implements IWfModelService {
         this.repositoryService.saveModel(model);
 
         // 保存 BPMN XML
-        byte[] bpmnXmlBytes = StrUtil.bytes(bpmnXml, StandardCharsets.UTF_8);
-        this.repositoryService.addModelEditorSource(model.getId(), bpmnXmlBytes);
+        if (!isAdd) {
+            byte[] bpmnXmlBytes = StrUtil.bytes(bpmnXml, StandardCharsets.UTF_8);
+            this.repositoryService.addModelEditorSource(model.getId(), bpmnXmlBytes);
+        }
     }
 
 

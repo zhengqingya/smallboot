@@ -43,7 +43,7 @@
         </base-card>
       </el-col> -->
 
-    <base-dialog v-model="dialogVisible" title="修改个人信息" width="50%">
+    <base-dialog v-model="dialogVisible" title="修改个人信息" width="30%">
       <el-form :model="form" label-width="80px">
         <el-form-item label="账号:" prop="username">
           <el-input v-model="form.username" disabled />
@@ -55,7 +55,7 @@
           <el-input v-model="form.nickname" />
         </el-form-item>
         <el-form-item label="性别:" prop="sex">
-          <el-select v-model="form.sex" placeholder="请选择">
+          <el-select v-model="form.sex" placeholder="请选择" style="width: 100%">
             <el-option v-for="item in sexList" :key="item.value" :label="item.name" :value="item.value" />
           </el-select>
         </el-form-item>
