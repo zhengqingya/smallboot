@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhengqing.common.db.constant.MybatisConstant;
+import com.zhengqing.common.db.util.TenantUtil;
 import com.zhengqing.common.file.util.FileStorageUtil;
 import com.zhengqing.system.entity.SysFile;
 import com.zhengqing.system.mapper.SysFileMapper;
@@ -61,9 +62,9 @@ public class SysFileServiceImpl extends ServiceImpl<SysFileMapper, SysFile> impl
 
         SysFileVO result = SysFileVO.builder().name(filename).type(fileType).build();
 
-        SysFile sysFile = this.sysFileMapper.selectOne(
+        SysFile sysFile = TenantUtil.executeRemoveFlag(() -> this.sysFileMapper.selectOne(
                 new LambdaQueryWrapper<SysFile>().eq(SysFile::getEnv, this.env).eq(SysFile::getMd5, md5).last(MybatisConstant.LIMIT_ONE)
-        );
+        ));
         if (sysFile == null) {
             String fileUrl = this.fileStorageUtil.upload(file);
             this.sysFileMapper.insert(SysFile.builder()
