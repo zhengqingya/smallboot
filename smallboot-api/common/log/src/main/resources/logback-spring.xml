@@ -12,7 +12,7 @@
           config: classpath:logback-spring.xml
           log:
             home: logs            # 日志文件保存位置
-            max-history-day: 30   # 日志文件保留天数
+            max-history-day: 3    # 日志文件保留天数
     -->
 
     <!-- 应用名称 -->
@@ -25,14 +25,13 @@
     <!-- ============================= ↓↓↓↓↓↓ 本地变量 ↓↓↓↓↓↓ ============================= -->
 
     <!-- 日志文件输出的文件名 -->
-    <property name="LOG_FILE_NAME" value="${LOG_HOME}/%d{yyyy-MM-dd}/${APP_NAME}.log"/>
+    <property name="LOG_FILE_NAME_PATTERN" value="${LOG_HOME}/${APP_NAME}-%d{yyyy-MM-dd}.log"/>
 
     <!-- ============================= ↓↓↓↓↓↓ 日志生成配置 ↓↓↓↓↓↓ ============================= -->
 
     <!-- 彩色日志 -->
     <!-- 彩色日志依赖的渲染类 -->
-    <conversionRule conversionWord="clr"
-                    converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
     <conversionRule conversionWord="wex"
                     converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
     <conversionRule conversionWord="wEx"
@@ -74,9 +73,11 @@
 
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 日志文件输出的文件名 -->
-            <fileNamePattern>${LOG_FILE_NAME}</fileNamePattern>
+            <fileNamePattern>${LOG_FILE_NAME_PATTERN}</fileNamePattern>
             <!-- 日志文件保留天数 -->
             <maxHistory>${LOG_MAX_HISTORY_DAY}</maxHistory>
+            <!-- 在应用程序启动时删除所有超过 maxHistory 天数的日志文件 -->
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
         </rollingPolicy>
 
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
