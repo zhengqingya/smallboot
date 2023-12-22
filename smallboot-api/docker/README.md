@@ -13,7 +13,7 @@ docker push registry.cn-hangzhou.aliyuncs.com/zhengqingya/smallboot-api:prod
 docker pull registry.cn-hangzhou.aliyuncs.com/zhengqingya/smallboot-api:prod
 
 # 运行
-docker run -d -p 888:888 --name smallboot-api registry.cn-hangzhou.aliyuncs.com/zhengqingya/smallboot-api:prod
+docker run -d -p 888:888 --name smallboot-api -e JAVA_OPTS="-Xmx100M -Xms100M" registry.cn-hangzhou.aliyuncs.com/zhengqingya/smallboot-api:prod
 
 # 删除旧容器
 docker ps -a | grep smallboot-api | grep dev | awk '{print $1}' | xargs -i docker stop {} | xargs -I docker rm {}
