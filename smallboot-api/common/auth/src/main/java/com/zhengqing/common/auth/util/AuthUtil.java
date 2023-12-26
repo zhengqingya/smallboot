@@ -83,8 +83,7 @@ public class AuthUtil {
      * @date 2020/4/15 11:33
      */
     public static JwtUserBO getLoginUser() {
-        String loginTag = StpUtil.getLoginId().toString();
-        String userObj = RedisUtil.get(JWT_USER_KEY + loginTag.split(":")[1]);
+        String userObj = RedisUtil.get(JWT_USER_KEY + StpUtil.getLoginId().toString());
         if (StrUtil.isBlank(userObj)) {
             throw NotLoginException.newInstance(StpUtil.getLoginType(), NotLoginException.NOT_TOKEN).setCode(SaErrorCode.CODE_11011);
         }
