@@ -50,10 +50,11 @@ public class AuthUtil {
         Assert.notBlank(userId, "用户id不能为空！");
 
         // 登录
-        StpUtil.login(jwtUserBO.getAuthSourceEnum().getValue() + ":" + userId);
+        String userKey = jwtUserBO.getAuthSourceEnum().getValue() + ":" + userId;
+        StpUtil.login(userKey);
 
         // 将登录信息存储到redis
-        RedisUtil.setEx(JWT_USER_KEY + userId, JSONUtil.toJsonStr(jwtUserBO), StpUtil.getTokenTimeout(), TimeUnit.SECONDS);
+        RedisUtil.setEx(JWT_USER_KEY + userKey, JSONUtil.toJsonStr(jwtUserBO), StpUtil.getTokenTimeout(), TimeUnit.SECONDS);
 
         String tokenValue = StpUtil.getTokenValue();
         return AuthLoginVO.builder()
