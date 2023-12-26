@@ -14,9 +14,9 @@ sa-token:
   is-concurrent: true
   # 在多人登录同一账号时，是否共用一个token (为true时所有登录共用一个token, 为false时每次登录新建一个token)
   # tips: 使用 jwt-simple 模式后，is-share=false 恒等于 false。
-  is-share: false
+  is-share: true
   # token风格
-  #  token-style: random-128
+  token-style: simple-uuid
   # 是否从cookie中读取token
   is-read-cookie: false
   # 是否从请求体里读取token

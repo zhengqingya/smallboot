@@ -50,7 +50,7 @@ public class AuthUtil {
         Assert.notBlank(userId, "用户id不能为空！");
 
         // 登录
-        StpUtil.login(userId);
+        StpUtil.login(jwtUserBO.getAuthSourceEnum().getValue() + ":" + userId);
 
         // 将登录信息存储到redis
         RedisUtil.setEx(JWT_USER_KEY + userId, JSONUtil.toJsonStr(jwtUserBO), StpUtil.getTokenTimeout(), TimeUnit.SECONDS);
@@ -82,8 +82,8 @@ public class AuthUtil {
      * @date 2020/4/15 11:33
      */
     public static JwtUserBO getLoginUser() {
-        String userId = StpUtil.getLoginId().toString();
-        String userObj = RedisUtil.get(JWT_USER_KEY + userId);
+        String loginTag = StpUtil.getLoginId().toString();
+        String userObj = RedisUtil.get(JWT_USER_KEY + loginTag.split(":")[1]);
         if (StrUtil.isBlank(userObj)) {
             throw NotLoginException.newInstance(StpUtil.getLoginType(), NotLoginException.NOT_TOKEN).setCode(SaErrorCode.CODE_11011);
         }
