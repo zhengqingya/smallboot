@@ -1,6 +1,9 @@
 package com.zhengqing.common.base.config;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 /**
  * <p>
@@ -12,6 +15,9 @@ import lombok.Data;
  * @date 2019/8/19 9:07
  */
 @Data
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 public class CommonProperty {
 
     /**
@@ -39,12 +45,18 @@ public class CommonProperty {
     private Mysql mysql;
 
     @Data
+    @SuperBuilder
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Mysql {
         private MysqlConn master;
         private MysqlConn dbTest;
     }
 
     @Data
+    @SuperBuilder
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class MysqlConn {
         private String ip;
         private String port;

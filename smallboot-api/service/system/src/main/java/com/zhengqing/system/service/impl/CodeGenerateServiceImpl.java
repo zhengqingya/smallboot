@@ -49,12 +49,25 @@ public class CodeGenerateServiceImpl implements ICodeGenerateService {
 
     private final SystemProperty systemProperty;
 
-    final String ROOT_TPL_PATH = AppConstant.PROJECT_ROOT_DIRECTORY + "/doc/code-generate-template/smallboot";
-    final String CONFIG_JSON = AppConstant.PROJECT_ROOT_DIRECTORY + "/doc/code-generate-template/config.json";
+    /**
+     * 项目根路径
+     * replace 目的：便于在测试类中使用
+     */
+    final String ROOT_PATH = AppConstant.PROJECT_ROOT_DIRECTORY.replace("/smallboot-api/app", "/smallboot-api");
+
+    /**
+     * 模板配置信息
+     */
+    final String ROOT_TPL_PATH = this.ROOT_PATH + "/doc/code-generate-template/smallboot";
+    final String CONFIG_JSON_PATH = this.ROOT_PATH + "/doc/code-generate-template/config.json";
+    /**
+     * 代码生成临时存储路径
+     */
+    String CODE_GENERATOR_DATA_PATH = this.ROOT_PATH + "/tmp/code-generate";
 
     @Override
     public SysCgConfigBO getConfig() {
-        SysCgConfigBO config = JSONUtil.toBean(FileUtil.readUtf8String(this.CONFIG_JSON), SysCgConfigBO.class);
+        SysCgConfigBO config = JSONUtil.toBean(FileUtil.readUtf8String(this.CONFIG_JSON_PATH), SysCgConfigBO.class);
         config.setPgList(this.recursiveTplFile(this.ROOT_TPL_PATH, "", ""));
         // 查询表字段信息
         DbTableColumnListVO columnInfo = this.getDbColumn(config.getTableName());
@@ -95,7 +108,7 @@ public class CodeGenerateServiceImpl implements ICodeGenerateService {
 
     @Override
     public void saveConfig(SysCgConfigBO config) {
-        FileUtil.writeUtf8String(JSONUtil.toJsonStr(config), this.CONFIG_JSON);
+        FileUtil.writeUtf8String(JSONUtil.toJsonStr(config), this.CONFIG_JSON_PATH);
         this.recursiveTplData(config.getPgList());
     }
 
@@ -144,10 +157,10 @@ public class CodeGenerateServiceImpl implements ICodeGenerateService {
         templateDataMap.put("moduleName", moduleName);
 
         // 先删除旧数据
-        MyFileUtil.deleteFileOrFolder(AppConstant.FILE_PATH_CODE_GENERATOR_DATA_PATH);
+        MyFileUtil.deleteFileOrFolder(this.CODE_GENERATOR_DATA_PATH);
 
         // 模板数据生成
-        this.generateTplData(AppConstant.FILE_PATH_CODE_GENERATOR_DATA_PATH, tplFileInfoList, templateDataMap);
+        this.generateTplData(this.CODE_GENERATOR_DATA_PATH, tplFileInfoList, templateDataMap);
     }
 
     /**
