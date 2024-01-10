@@ -1,5 +1,5 @@
 # jre基础环境
-FROM openjdk:8-jre-alpine
+FROM registry.cn-hangzhou.aliyuncs.com/zhengqing/openjdk:8-jre-alpine
 
 # 维护者信息
 MAINTAINER zhengqingya
