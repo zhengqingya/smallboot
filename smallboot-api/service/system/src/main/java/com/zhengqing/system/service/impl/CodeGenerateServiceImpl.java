@@ -67,7 +67,7 @@ public class CodeGenerateServiceImpl implements ICodeGenerateService {
 
     @Override
     public SysCgConfigBO getConfig() {
-        SysCgConfigBO config = JSONUtil.toBean(FileUtil.readUtf8String(this.CONFIG_JSON_PATH), SysCgConfigBO.class);
+        SysCgConfigBO config = JSONUtil.toBean(FileUtil.exist(this.CONFIG_JSON_PATH) ? FileUtil.readUtf8String(this.CONFIG_JSON_PATH) : "{}", SysCgConfigBO.class);
         config.setPgList(this.recursiveTplFile(this.ROOT_TPL_PATH, "", ""));
         // 查询表字段信息
         DbTableColumnListVO columnInfo = this.getDbColumn(config.getTableName());
@@ -108,8 +108,11 @@ public class CodeGenerateServiceImpl implements ICodeGenerateService {
 
     @Override
     public void saveConfig(SysCgConfigBO config) {
-        FileUtil.writeUtf8String(JSONUtil.toJsonStr(config), this.CONFIG_JSON_PATH);
+        // 1、生成文件
         this.recursiveTplData(config.getPgList());
+
+        // 2、保存配置
+        FileUtil.writeUtf8String(JSONUtil.toJsonStr(config), this.CONFIG_JSON_PATH);
     }
 
     private void recursiveTplData(List<SysCgConfigBO.ProjectPackage> list) {
