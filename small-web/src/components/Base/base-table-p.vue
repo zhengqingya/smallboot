@@ -1,9 +1,11 @@
 <template>
   <div>
     <slot name="custom-header" />
+
     <el-table
       ref="baseTableRef"
-      v-loading="isLoading && (isPage ? pageRes.records == null || pageRes.records.length == 0 : tableDataList == null || tableDataList.length == 0)"
+      v-loading="isLoading"
+      element-loading-text="加载中..."
       border
       stripe
       v-bind="$attrs"
@@ -46,12 +48,7 @@
 </template>
 <script setup>
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs';
-zhCn.el.pagination = {
-  goto: '前往',
-  pageClassifier: '页',
-  pagesize: '条/页',
-  total: '共{total}条数据',
-};
+zhCn.el.pagination = { goto: '前往', pageClassifier: '页', pagesize: '条/页', total: '共{total}条数据' };
 const { proxy } = getCurrentInstance();
 const props = defineProps({
   indexCode: { type: Boolean, default: false },
@@ -96,7 +93,7 @@ onMounted(() => {
 });
 
 // 刷新
-function refresh() {
+async function refresh() {
   isLoading = true;
   if (props.data && props.data.length > 0) {
     // 情况1：走父组件传值过来
@@ -113,7 +110,7 @@ function refresh() {
       };
       pageParams.pageNum = 1;
     }
-    getApiData();
+    await getApiData();
   }
   isLoading = false;
 }
@@ -123,8 +120,6 @@ async function getApiData(pageObj) {
   if (!props.api) {
     return;
   }
-
-  isLoading = true;
 
   if (props.isPage) {
     // 处理分页参数
@@ -139,8 +134,6 @@ async function getApiData(pageObj) {
     let response = await apiMethod(props.params);
     tableDataList = response.data;
   }
-
-  isLoading = false;
 }
 function apiMethod(params, headers) {
   // eg: proxy.$api.sys_user.save(xx);
