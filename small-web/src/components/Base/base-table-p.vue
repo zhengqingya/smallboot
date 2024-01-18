@@ -121,6 +121,8 @@ async function getApiData(pageObj) {
     return;
   }
 
+  isLoading = true;
+
   if (props.isPage) {
     // 处理分页参数
     if (pageObj) {
@@ -134,6 +136,7 @@ async function getApiData(pageObj) {
     let response = await apiMethod(props.params);
     tableDataList = response.data;
   }
+  isLoading = false;
 }
 function apiMethod(params, headers) {
   // eg: proxy.$api.sys_user.save(xx);
