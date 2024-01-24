@@ -87,8 +87,8 @@
         sr.name roleName,
         sr.code roleCode
         FROM t_sys_user su
-        JOIN t_sys_user_role sur ON ( sur.user_id = su.user_id AND sur.is_deleted = 0 )
-        JOIN t_sys_role sr ON ( sr.role_id = sur.role_id AND sr.is_deleted = 0 )
+        JOIN t_sys_user_role sur ON sur.user_id = su.user_id
+        JOIN t_sys_role sr ON sr.role_id = sur.role_id
         WHERE su.is_deleted = 0
         <if test="filter.userId!=null">
             AND su.user_id = #{filter.userId}

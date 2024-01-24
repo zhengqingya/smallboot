@@ -1,6 +1,7 @@
 package com.zhengqing.common.core.aspect;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zhengqing.common.base.constant.BaseConstant;
 import com.zhengqing.common.base.exception.ParameterException;
 import com.zhengqing.common.web.util.ServletUtil;
@@ -48,9 +49,10 @@ public class MapperAspect {
                 if (pageNum < 1 || pageSize < 1) {
                     throw new ParameterException("传递的分页参数有误!");
                 }
-                IPage<?> page = ((IPage<?>) paramObj);
+                Page<?> page = ((Page<?>) paramObj);
                 page.setCurrent(pageNum);
                 page.setSize(pageSize);
+//                page.setSearchCount(false);
             }
         }
     }

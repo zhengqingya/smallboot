@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.zhengqing.common.db.config.mybatis.handler.ListJsonIntegerTypeHandler;
-import com.zhengqing.common.db.entity.BaseEntity;
+import com.zhengqing.common.db.entity.IsDeletedBaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -26,7 +26,7 @@ import java.util.List;
 @NoArgsConstructor
 @TableName(value = "t_sys_tenant_package", autoResultMap = true)
 @ApiModel("系统管理-租户套餐")
-public class SysTenantPackage extends BaseEntity<SysTenantPackage> {
+public class SysTenantPackage extends IsDeletedBaseEntity<SysTenantPackage> {
 
     @ApiModelProperty("主键ID")
     @TableId(value = "id", type = IdType.AUTO)
