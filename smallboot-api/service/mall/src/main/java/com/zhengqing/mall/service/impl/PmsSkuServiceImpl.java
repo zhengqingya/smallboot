@@ -21,6 +21,7 @@ import org.springframework.util.CollectionUtils;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * <p> 商城-商品规格 服务实现类 </p>
@@ -116,15 +117,19 @@ public class PmsSkuServiceImpl extends ServiceImpl<PmsSkuMapper, PmsSku> impleme
     @Transactional(rollbackFor = Exception.class)
     public void deleteDataBySpuIdList(List<String> spuIdList) {
         Assert.notNull(spuIdList, "删除规格时，商品id不能为空！");
-        this.pmsSkuMapper.delete(new LambdaQueryWrapper<PmsSku>()
-                .in(PmsSku::getSpuId, spuIdList));
+        this.pmsSkuMapper.delete(new LambdaQueryWrapper<PmsSku>().in(PmsSku::getSpuId, spuIdList));
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void updateBatchVirtualUseStock(List<WebPmsSpuEditVirtualUseStockDTO> list) {
-        long updateNum = this.pmsSkuMapper.updateBatchVirtualUseStock(list);
-        Assert.isTrue(updateNum == list.size(), "数据不存在或存在更新数据超过可用库存，请检查后再提交！");
+        try {
+            // 只要大于0的数据
+            list = list.stream().filter(e -> e.getVirtualUseStock() > 0).collect(Collectors.toList());
+            this.pmsSkuMapper.updateBatchVirtualUseStock(list);
+        } catch (Exception e) {
+            throw new MyException("数据不存在或存在更新数据超过可用库存，请检查后再提交！");
+        }
     }
 
 }

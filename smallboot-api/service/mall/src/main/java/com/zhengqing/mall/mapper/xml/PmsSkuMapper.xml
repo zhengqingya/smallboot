@@ -41,7 +41,6 @@
             use_stock = (use_stock - #{item.num})
             WHERE is_deleted = 0
             AND id = #{item.skuId}
-            AND (usable_stock + #{item.num}) >= 0
         </foreach>
     </update>
 
@@ -53,7 +52,6 @@
             usable_stock = (usable_stock - #{item.virtualUseStock})
             WHERE is_deleted = 0
             AND id = #{item.id}
-            AND #{item.virtualUseStock} &lt;= usable_stock
         </foreach>
     </update>
 
