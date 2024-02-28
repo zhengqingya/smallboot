@@ -26,6 +26,7 @@
         <module>flowable</module>
         <module>log</module>
         <module>mq</module>
+        <module>netty</module>
         <module>pay</module>
         <module>redis</module>
         <module>sdk</module>

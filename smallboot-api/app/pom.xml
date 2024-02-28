@@ -36,6 +36,11 @@
 
         <dependency>
             <groupId>com.zhengqing</groupId>
+            <artifactId>netty</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.zhengqing</groupId>
             <artifactId>system</artifactId>
         </dependency>
 

@@ -30,6 +30,7 @@ spring:
       - web
       - ums
       - douyin
+      - netty
 
 management:
   endpoints:
