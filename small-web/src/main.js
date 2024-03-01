@@ -80,4 +80,8 @@ import FcDesigner from '@form-create/designer';
 app.use(formCreate);
 app.use(FcDesigner);
 
+// web-socket
+import * as socketApi from '@/utils/web-socket.js';
+app.config.globalProperties.$wsApi = socketApi;
+
 app.mount('#app');
