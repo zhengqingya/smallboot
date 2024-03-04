@@ -75,13 +75,15 @@ public class WebSocketServer implements NettyServerStrategy {
                         pipeline.addLast("http-codec", new HttpServerCodec());
                         pipeline.addLast("aggregator", new HttpObjectAggregator(65535));
                         pipeline.addLast("http-chunked", new ChunkedWriteHandler());
+                        // 请求头解析
+//                        pipeline.addLast("handler-header", new NettyHeaderHandler());
                         pipeline.addLast(new WebSocketServerProtocolHandler("/im"));
                         // 编码
                         pipeline.addLast("encode", new WsMsgEncoder());
                         // 解码
                         pipeline.addLast("decode", new WsMsgDecoder());
-                        // 消息处理
-                        pipeline.addLast("handler", new NettyMsgHandler());
+                        // 自定义消息处理
+                        pipeline.addLast("handler-msg", new NettyMsgHandler());
                     }
                 });
 

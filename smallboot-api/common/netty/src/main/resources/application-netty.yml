@@ -7,6 +7,3 @@ netty:
     enable: false
     port: 10082
 
-jwt:
-  accessToken:
-    secret: netty-server

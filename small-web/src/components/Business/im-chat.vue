@@ -4,7 +4,7 @@
 
 <script setup>
 const { proxy } = getCurrentInstance();
-let { isLogin, tenantId, userObj } = toRefs(proxy.$store.user.useUserStore());
+let { isLogin, tenantId, userObj, tokenObj } = toRefs(proxy.$store.user.useUserStore());
 
 onMounted(async () => {
   init();
@@ -16,7 +16,7 @@ function unmounted() {
 
 async function init() {
   // ws初始化
-  proxy.$wsApi.connect(import.meta.env.VITE_APP_WS_URL, 'xxxxxxxxxxxxx');
+  proxy.$wsApi.connect(import.meta.env.VITE_APP_WS_URL, tokenObj.value.tokenValue);
   proxy.$wsApi.onConnect(() => {
     // 加载离线消息
   });
@@ -25,11 +25,9 @@ async function init() {
   });
   proxy.$wsApi.onClose((e) => {
     console.log(e);
-    if (e.code != 3000) {
-      // 断线重连
-      proxy.submitFail('ws连接断开，正在尝试重新连接...');
-      proxy.$wsApi.reconnect(import.meta.env.VITE_APP_WS_URL, 'xxxxxxxxxxxxx');
-    }
+    // 断线重连
+    proxy.submitFail('ws连接断开，正在尝试重新连接...');
+    proxy.$wsApi.reconnect(import.meta.env.VITE_APP_WS_URL, tokenObj.value.tokenValue);
   });
 }
 </script>

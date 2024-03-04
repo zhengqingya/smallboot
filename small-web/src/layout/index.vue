@@ -23,6 +23,8 @@
   <div v-if="!isLogin || (isLogin && $route.meta.isParentView)" class="h-full">
     <router-view />
   </div>
+
+  <im-chat v-if="isLogin" />
 </template>
 
 <script setup>

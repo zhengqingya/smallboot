@@ -5,8 +5,6 @@
       <router-view />
     </div>
   </el-scrollbar>
-
-  <im-chat />
 </template>
 <script setup>
 defineProps({

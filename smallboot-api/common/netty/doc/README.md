@@ -6,7 +6,7 @@
 
 ### websocket在线测试
 
-https://docs.wildfirechat.cn/web/wstool/index.html
+http://docs.wildfirechat.cn/web/wstool/index.html
 
 连接地址
 

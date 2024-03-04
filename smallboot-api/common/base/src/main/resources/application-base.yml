@@ -1,0 +1,3 @@
+jwt:
+  accessToken:
+    secret: smallboot-server

@@ -2,14 +2,16 @@ package com.zhengqing.common.netty.server.handler;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
+import com.zhengqing.common.auth.util.AuthUtil;
+import com.zhengqing.common.base.context.JwtUserContext;
+import com.zhengqing.common.base.model.bo.JwtUserBO;
 import com.zhengqing.common.netty.constant.NettyRedisConstant;
 import com.zhengqing.common.netty.enums.NettyMsgCmdType;
-import com.zhengqing.common.netty.model.NettyJwtUser;
+import com.zhengqing.common.netty.enums.NettyTerminalType;
 import com.zhengqing.common.netty.model.NettyLogin;
 import com.zhengqing.common.netty.model.NettyMsgBase;
 import com.zhengqing.common.netty.server.NettyServerRunner;
 import com.zhengqing.common.netty.server.NettyUserCtxMap;
-import com.zhengqing.common.netty.util.JwtUtil;
 import com.zhengqing.common.netty.util.NettyChannelAttrKeyUtil;
 import com.zhengqing.common.redis.util.RedisUtil;
 import io.netty.channel.ChannelHandlerContext;
@@ -42,27 +44,25 @@ public class LoginHandler extends AbstractMsgHandler<NettyLogin> {
 
     @Override
     public synchronized void handle(ChannelHandlerContext ctx, NettyLogin loginInfo) {
-        if (!JwtUtil.checkSign(loginInfo.getAccessToken(), this.accessTokenSecret)) {
-            log.warn("【netty】用户token：{} 校验不通过，强制下线", loginInfo.getAccessToken());
+        JwtUserBO jwtUserBO = null;
+        try {
+            jwtUserBO = AuthUtil.getLoginUser(loginInfo.getAccessToken());
+        } catch (Exception e) {
+            log.warn("【netty】用户token：{} 校验不通过:{}，强制下线", loginInfo.getAccessToken(), e.getMessage());
             ctx.channel().close();
             return;
         }
+        JwtUserContext.set(jwtUserBO);
 
-        NettyJwtUser nettyJwtUser = JwtUtil.get(loginInfo.getAccessToken());
-        Long userId = nettyJwtUser.getUserId();
-        Integer terminal = nettyJwtUser.getTerminal();
-        log.info("【netty】用户登录: {}", JSONUtil.toJsonStr(nettyJwtUser));
+        Long userId = Long.valueOf(jwtUserBO.getUserId());
+        Integer terminal = NettyTerminalType.WEB.getType();
+        log.info("【netty】用户登录: {}", JSONUtil.toJsonStr(jwtUserBO));
 
         ChannelHandlerContext context = NettyUserCtxMap.getCtx(userId, terminal);
         if (context != null && !ctx.channel().id().equals(context.channel().id())) {
             // 不允许多地登录,强制下线
-            context.channel().writeAndFlush(
-                    NettyMsgBase.builder()
-                            .cmd(NettyMsgCmdType.FORCE_LOGOUT.getType())
-                            .data("您已在其他地方登陆，将被强制下线")
-                            .build()
-            );
-            log.info("【netty】异地登录，强制下线: {}", JSONUtil.toJsonStr(nettyJwtUser));
+            context.channel().writeAndFlush(NettyMsgBase.builder().cmd(NettyMsgCmdType.FORCE_LOGOUT.getType()).data("您已在其他地方登陆，将被强制下线").build());
+            log.info("【netty】异地登录，强制下线: {}", JSONUtil.toJsonStr(jwtUserBO));
         }
 
         // 绑定用户和channel

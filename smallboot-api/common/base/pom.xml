@@ -25,6 +25,12 @@
             <artifactId>swagger</artifactId>
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>3.11.0</version>
+        </dependency>
     </dependencies>
 
 </project>

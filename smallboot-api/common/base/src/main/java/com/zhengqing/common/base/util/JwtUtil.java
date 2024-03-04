@@ -1,9 +1,10 @@
-package com.zhengqing.common.netty.util;
+package com.zhengqing.common.base.util;
 
 import cn.hutool.json.JSONUtil;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.zhengqing.common.netty.model.NettyJwtUser;
+import com.zhengqing.common.base.enums.AuthSourceEnum;
+import com.zhengqing.common.base.model.bo.JwtUserBO;
 
 import java.util.Date;
 
@@ -17,7 +18,7 @@ import java.util.Date;
 public class JwtUtil {
 
     public static void main(String[] args) {
-        System.out.println(sign(NettyJwtUser.builder().userId(1L).terminal(0).build(), 60000, "netty-server"));
+        System.out.println(sign(JwtUserBO.builder().userId("1").authSourceEnum(AuthSourceEnum.B).build(), 60000, "netty-server"));
     }
 
     /**
@@ -28,7 +29,7 @@ public class JwtUtil {
      * @param secret   秘钥
      * @return jwt token
      */
-    public static String sign(NettyJwtUser userObj, long expireIn, String secret) {
+    public static String sign(JwtUserBO userObj, long expireIn, String secret) {
         Date date = new Date(System.currentTimeMillis() + expireIn * 1000);
         Algorithm algorithm = Algorithm.HMAC256(secret);
         return JWT.create()
@@ -73,8 +74,8 @@ public class JwtUtil {
      * @param token 用户登录token
      * @return 用户数据
      */
-    public static NettyJwtUser get(String token) {
-        return JSONUtil.toBean(JWT.decode(token).getClaim("userObj").asString(), NettyJwtUser.class);
+    public static JwtUserBO get(String token) {
+        return JSONUtil.toBean(JWT.decode(token).getClaim("userObj").asString(), JwtUserBO.class);
     }
 
 }

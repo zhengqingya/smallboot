@@ -90,4 +90,24 @@ public class AuthUtil {
         return JSONUtil.toBean(userObj, JwtUserBO.class);
     }
 
+    /**
+     * 获取登录用户信息
+     *
+     * @return 登录用户信息
+     * @author zhengqingya
+     * @date 2020/4/15 11:33
+     */
+    public static JwtUserBO getLoginUser(String token) {
+        if (token.contains(" ")) {
+            token = token.split(" ")[1];
+        }
+        Object loginId = StpUtil.getLoginIdByToken(token);
+        Assert.notNull(loginId, "登录认证失败！");
+        String userObj = RedisUtil.get(JWT_USER_KEY + loginId.toString());
+        if (StrUtil.isBlank(userObj)) {
+            throw NotLoginException.newInstance(StpUtil.getLoginType(), NotLoginException.NOT_TOKEN).setCode(SaErrorCode.CODE_11011);
+        }
+        return JSONUtil.toBean(userObj, JwtUserBO.class);
+    }
+
 }
