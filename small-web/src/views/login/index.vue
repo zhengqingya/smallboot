@@ -38,7 +38,7 @@ import { getCurrentInstance, onMounted } from 'vue';
 // 组件实例
 const { proxy } = getCurrentInstance();
 const { login } = proxy.$store.user.useUserStore();
-const loginForm = $ref({ tenantId: 1 });
+const loginForm = $ref({ tenantId: 1, username: 'admin', password: '123456' });
 let tenantId = $ref(null);
 let tenantList = $ref([]);
 
@@ -60,7 +60,6 @@ function validatePassword(rule, value, callback) {
 onUpdated(async () => {});
 
 onMounted(async () => {
-  console.log('111', 1);
   // 拿到租户数据
   let res = await proxy.$api.sys_tenant.list();
   tenantList = res.data;

@@ -5,6 +5,12 @@
 let a = ref(1);
 test();
 
+console.log('加载test页面xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
+
+onMounted(async () => {
+  console.log('111', 1);
+});
+
 function test() {
   console.log('test1');
   test2();

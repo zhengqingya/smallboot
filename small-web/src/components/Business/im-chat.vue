@@ -1,10 +1,12 @@
 <template>
-  <div class="app">hello</div>
+  <div class="app" v-if="isShow">hello</div>
 </template>
 
 <script setup>
 const { proxy } = getCurrentInstance();
 let { isLogin, tenantId, userObj, tokenObj } = toRefs(proxy.$store.user.useUserStore());
+
+let isShow = $ref(false);
 
 onMounted(async () => {
   init();
@@ -42,5 +44,6 @@ async function init() {
   background-color: #409eff;
   width: 380px;
   height: 600px;
+  z-index: 999999;
 }
 </style>

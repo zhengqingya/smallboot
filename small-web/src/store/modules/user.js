@@ -30,7 +30,7 @@ export const useUserStore = defineStore('user', () => {
     });
     isLogin.value = true;
     tokenObj.value = result.data;
-    getUserInfo();
+    // getUserInfo();
   }
 
   // 退出登录

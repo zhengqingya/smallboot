@@ -16,6 +16,7 @@ let hasRouter = false;
  * next();放行 -- 其它的路由跳转在没放行之前都会走 router.beforeEach()
  */
 router.beforeEach(async (to, from, next) => {
+  // console.log('去哪儿：', to.fullPath, '来自哪里：', from.fullPath);
   NProgress.start(); // 开启进度条
 
   let useUserStore = store.user.useUserStore();
