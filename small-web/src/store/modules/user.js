@@ -50,6 +50,8 @@ export const useUserStore = defineStore('user', () => {
     window.localStorage.clear();
     window.sessionStorage.clear();
 
+    isLogin.value = false; // 放在这里，防止pinia数据未清空，路由跳转过去时还是登录状态，然后就会出现死循环问题
+
     // 跳转登录页
     router.push(`${localLoginUrl}?redirect=${route.fullPath}`);
     location.reload(); // 强制刷新页面
