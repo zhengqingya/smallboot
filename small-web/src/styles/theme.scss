@@ -1,0 +1,41 @@
+:root {
+  --el-component-size: 32px;
+  --el-color-primary: #409eff;
+
+  .el-button--primary {
+    --el-button-bg-color: #409eff;
+  }
+
+  .el-button.is-link {
+    color: #409eff;
+    text-decoration-line: underline;
+    opacity: 0.74;
+  }
+
+  .el-drawer__body {
+    padding: 0;
+  }
+
+  .el-dialog {
+    padding: 0;
+    z-index: 9999999;
+    border-radius: 6px;
+
+    .el-dialog__header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0;
+      margin-right: 0;
+      height: 68px;
+      .el-dialog__title {
+        font-weight: 500;
+        font-size: 16px;
+      }
+    }
+  }
+
+  .el-form-item {
+    margin-right: 6px;
+  }
+}

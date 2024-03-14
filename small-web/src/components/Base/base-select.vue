@@ -1,13 +1,22 @@
 <template>
   <!-- {{ list[0] }} -->
-  <base-header-form :label="label">
-    <el-select filterable v-bind="$attrs" :placeholder="label ? `请选择${label}` : '请选择'" @change="handleChange">
+  <el-form-item :label="label">
+    <el-select
+      filterable
+      v-bind="$attrs"
+      style="min-width: 200px"
+      :placeholder="placeholder ? placeholder : label ? `请选择${label}` : list.length == 0 && isCustomNull ? isCustomNullTips : '请选择'"
+      @change="handleChange">
       <template #prefix> <slot name="prefix" /></template>
+
       <el-option v-for="item in list" :key="item[optionProps.value]" :label="item[optionProps.label]" :value="item[optionProps.value]">
         <slot name="option" :data="item" />
       </el-option>
+      <div v-if="list.length == 0 && isCustomNull">
+        <el-option> <slot name="custom-null" /> </el-option>
+      </div>
     </el-select>
-  </base-header-form>
+  </el-form-item>
 </template>
 
 <script setup>
@@ -19,7 +28,10 @@ const props = defineProps({
   optionProps: { type: Object, default: () => {} },
   dataList: { type: Array, default: () => [] },
   label: { type: String, default: '' },
+  placeholder: { type: String, default: null },
   isDefaultValue: { type: Boolean, default: false }, // true:默认选中第一个值
+  isCustomNull: { type: Boolean, default: false },
+  isCustomNullTips: { type: String, default: '暂无数据' },
 });
 
 let list = $ref([]);
@@ -62,4 +74,9 @@ function apiMethod(params, headers) {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.label {
+  font-size: var(--el-form-label-font-size);
+  color: var(--el-text-color-regular);
+}
+</style>

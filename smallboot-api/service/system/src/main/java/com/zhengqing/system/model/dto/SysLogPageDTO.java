@@ -39,10 +39,13 @@ public class SysLogPageDTO extends BasePageDTO {
     @ApiModelProperty("操作人名称")
     private String operationName;
 
+    @ApiModelProperty("请求参数")
+    private String requestParams;
+
     @ApiModelProperty("请求url")
     private String requestUrl;
 
     @ApiModelProperty("状态(0:异常 1:正常)")
     private Integer status;
-    
+
 }

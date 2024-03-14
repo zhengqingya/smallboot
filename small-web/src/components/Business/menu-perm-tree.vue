@@ -1,6 +1,6 @@
 <template>
   <div class="flex-between-center h-full w-full">
-    <el-scrollbar>
+    <el-scrollbar style="width: 100%">
       <el-tree
         ref="menuTreeRef"
         style="min-width: 300px"

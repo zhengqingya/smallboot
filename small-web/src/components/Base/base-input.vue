@@ -1,18 +1,17 @@
 <template>
-  <base-header-form :label="label">
-    <el-input :placeholder="`请输入${label}`" style="width: 200px; margin-right: 10px" clearable v-bind="$attrs" />
-  </base-header-form>
+  <el-form-item>
+    <el-input :placeholder="label ? `请输入${label}` : '请输入'" :prefix-icon="Search" style="width: 200px; margin-right: 0px" clearable v-bind="$attrs" />
+  </el-form-item>
 </template>
 <script setup>
+import { Search } from '@element-plus/icons-vue';
 const props = defineProps({
   label: { type: String, default: '' },
-  prop: { type: String, default: '' },
 });
 </script>
 <style lang="scss" scoped>
 .label {
   font-size: var(--el-form-label-font-size);
   color: var(--el-text-color-regular);
-  font-weight: 600;
 }
 </style>

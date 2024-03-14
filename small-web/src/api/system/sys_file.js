@@ -18,4 +18,12 @@ export default {
       params: params,
     });
   },
+  upload(data) {
+    return request({
+      url: BASE_API + '/upload',
+      method: 'post',
+      data: data,
+      isFile: true,
+    });
+  },
 };

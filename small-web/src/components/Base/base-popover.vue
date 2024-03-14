@@ -1,14 +1,10 @@
 <template>
   <span ref="boxRef">
-    <el-popover :visible="visible" placement="top" :width="200" trigger="click" @show="show" @hide="hide">
-      <p>您确定吗？</p>
-      <div style="text-align: right; margin: 0">
-        <el-button link @click="visible = false">取消</el-button>
-        <el-button link @click="handleOk">确定</el-button>
-      </div>
+    <el-popover v-bind="$attrs" popper-style="padding:0;display: inline-block;" :visible="visible" placement="bottom" :width="200" trigger="click" @show="show" @hide="hide">
       <template #reference>
-        <el-button link style="margin-left: 5px; color: #f36161" @click="visible = true"> <slot /></el-button>
+        <div @click="visible = true"><slot /></div>
       </template>
+      <slot name="content" />
     </el-popover>
   </span>
 </template>

@@ -1,41 +1,30 @@
 <template>
-  <span ref="boxRef">
-    <el-popover :visible="visible" placement="top" :width="200" trigger="click" @show="show" @hide="hide">
-      <p>您确定此操作吗？</p>
-      <div style="text-align: right; margin: 0">
-        <el-button link @click="visible = false">取消</el-button>
-        <el-button link @click="handleOk">确定</el-button>
-      </div>
-      <template #reference>
-        <el-button link @click="visible = true"><slot /></el-button>
-      </template>
-    </el-popover>
-  </span>
+  <el-button v-bind="$attrs" link style="color: #1e5eff" @click="dialogVisible = true">
+    <slot />
+  </el-button>
+
+  <base-dialog v-model="dialogVisible" append-to-body title="系统提示" width="360px">
+    <div class="flex-center-center">
+      <span style="font-size: 16px">{{ tips }}</span>
+    </div>
+    <template #footer>
+      <el-button @click="dialogVisible = false">取 消</el-button>
+      <el-button type="primary" @click="handleOk">确 定</el-button>
+    </template>
+  </base-dialog>
 </template>
 <script setup>
 const { proxy } = getCurrentInstance();
-
-let visible = $ref(false);
+const props = defineProps({
+  label: { type: String, default: '' },
+  tips: { type: String, default: '您确定此操作吗？' },
+});
+let dialogVisible = $ref(false);
 
 const emits = defineEmits(['ok']);
 function handleOk() {
+  dialogVisible = false;
   emits('ok');
-  visible = false;
-}
-
-function show() {
-  document.addEventListener('click', handleClick, false);
-}
-
-function hide() {
-  document.removeEventListener('click', handleClick, false);
-}
-
-function handleClick(e) {
-  if (!proxy.$refs.boxRef.contains(e.target)) {
-    visible = false;
-    hide();
-  }
 }
 </script>
 <style lang="scss" scoped></style>

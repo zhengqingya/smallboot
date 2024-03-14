@@ -1,18 +1,22 @@
 <template>
-  <div>
+  <div style="height: 100%; width: 100%" class="flex-column">
     <slot name="custom-header" />
 
     <el-table
       ref="baseTableRef"
       v-loading="isLoading"
-      element-loading-text="加载中..."
+      class="flex-1"
       border
       stripe
+      element-loading-text="加载中..."
       v-bind="$attrs"
       :data="isPage ? pageRes.records : tableDataList"
-      size="small"
-      :header-cell-style="{ background: 'rgba(243, 242, 242, 0.555)', color: '#000' }"
-      highlight-current-row>
+      size="default"
+      :header-cell-style="{ background: '#F8F9FA', color: '#333333' }"
+      highlight-current-row
+      :row-key="rowKey"
+      :selection="true"
+      :reserve-selection="true">
       <el-table-column v-if="selection" type="selection" :width="55"></el-table-column>
       <template v-if="indexCode">
         <el-table-column type="index" label="序号" width="60px"></el-table-column>
@@ -60,6 +64,8 @@ const props = defineProps({
   data: { type: Array, default: () => [] },
   //是否分页
   isPage: { type: Boolean, default: () => true },
+  // row-key
+  rowKey: { type: String, default: 'id' },
 });
 
 let isLoading = $ref(true);
@@ -71,6 +77,8 @@ let tableDataList = $ref([]); // 列表响应数据
 // 暴露方法
 defineExpose({
   refresh,
+  getSelectionRows,
+  getSelectionRowIdList,
 });
 
 watch(
@@ -150,5 +158,28 @@ function handleCurrentChange(val) {
 function handleSizeChange(val) {
   getApiData({ page: pageParams.pageNum, limit: val });
 }
+
+// 拿到选中行数据
+function getSelectionRows() {
+  return proxy.$refs.baseTableRef.getSelectionRows();
+}
+
+// 拿到选中行数据中的属性值
+function getSelectionRowIdList() {
+  let idList = getSelectionRows();
+  return idList.map((item) => item[props.rowKey]);
+}
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+::v-deep(.el-pagination) {
+  .el-pager li {
+    background-color: #fff;
+    border: 1px solid #d9d9d9;
+  }
+  .btn-prev,
+  .btn-next {
+    background-color: #fff;
+    border: 1px solid #d9d9d9;
+  }
+}
+</style>

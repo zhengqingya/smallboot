@@ -7,8 +7,8 @@
       }"
       v-bind="$attrs"
       inline-prompt
-      :active-icon="Check"
-      :inactive-icon="Close"
+      :active-icon="activeIcon"
+      :inactive-icon="inactiveIcon"
       @change="handleChange" />
   </div>
 </template>
@@ -21,6 +21,8 @@ const props = defineProps({
   offColor: { type: String, required: false, default: '' },
   api: { type: String, required: false, default: '' },
   params: { type: Object, required: false, default: () => {} },
+  activeIcon: { type: Object, required: false, default: Check },
+  inactiveIcon: { type: Object, required: false, default: Close },
 });
 
 async function handleChange() {

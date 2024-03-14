@@ -4,6 +4,7 @@ import cn.hutool.json.JSONUtil;
 import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.base.context.JwtUserContext;
 import com.zhengqing.common.core.custom.log.ApiLog;
+import com.zhengqing.common.web.util.IpUtil;
 import com.zhengqing.common.web.util.ServletUtil;
 import com.zhengqing.system.enums.SysLogTypeEnum;
 import com.zhengqing.system.model.dto.SysLogSaveDTO;
@@ -129,7 +130,7 @@ public class ApiLogAspect {
                                 .apiMethodName(api.tags()[0] + "@" + apiOperation.value())
                                 .apiHeader("")
                                 .operationName(username)
-                                .requestIp(request.getRemoteAddr())
+                                .requestIp(IpUtil.getIpAdrress(request))
                                 .requestUrl(requestURI)
                                 .requestHttpMethod(requestMethod)
                                 .requestParams(requestParams)

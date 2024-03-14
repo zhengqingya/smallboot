@@ -22,6 +22,9 @@
             <if test="filter.operationName!=null and filter.operationName!=''">
                 AND tsl.operation_name LIKE CONCAT( '%', #{filter.operationName} , '%' )
             </if>
+            <if test="filter.requestParams!=null and filter.requestParams!=''">
+                AND tsl.request_params LIKE CONCAT( '%', #{filter.requestParams} , '%' )
+            </if>
             <if test="filter.requestUrl!=null and filter.requestUrl!=''">
                 AND tsl.request_url LIKE CONCAT( '%', #{filter.requestUrl} , '%' )
             </if>
