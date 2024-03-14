@@ -42,6 +42,12 @@ service.interceptors.request.use(
       // 微信公众号appId
       config.headers['appId'] = localStorage.get('appId');
     }
+    
+    if (config.isFile) {
+      // 图片上传
+      config.headers['Content-Type'] = 'multipart/form-data';
+    }
+    
     return config;
   },
   (error) => {
