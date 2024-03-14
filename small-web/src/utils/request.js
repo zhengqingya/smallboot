@@ -32,6 +32,10 @@ service.interceptors.request.use(
       config.headers['TENANT_ID'] = tenantId.value;
     }
 
+    if (config.isFile) {
+      config.headers['Content-Type'] = 'multipart/form-data';
+    }
+
     return config;
   },
   (error) => {
