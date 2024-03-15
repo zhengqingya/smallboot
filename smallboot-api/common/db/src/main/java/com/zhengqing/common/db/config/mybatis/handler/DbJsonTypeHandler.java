@@ -12,7 +12,7 @@ import org.apache.ibatis.type.MappedTypes;
  *
  * @author zhengqingya
  * @description json类型转对象
- * tips: 可以直接使用 {@link com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler}
+ * tips: 可以直接使用 {@link com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler} 但对嵌套的内部类不生效
  * @date 2022/6/6 11:25
  */
 @MappedJdbcTypes(JdbcType.VARCHAR)
