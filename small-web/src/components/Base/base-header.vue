@@ -1,5 +1,5 @@
 <template>
-  <base-content>
+  <div class="app">
     <div class="flex-start-center">
       <div class="flex-1">
         <el-form label-position="left" inline>
@@ -10,15 +10,15 @@
         <slot name="right" />
       </div>
     </div>
-  </base-content>
+  </div>
 </template>
 <script setup></script>
 <style lang="scss" scoped>
 .app {
-  // margin: 10px 0px;
-  margin-bottom: 24px;
-  // border-radius: 5px;
-  // padding: 10px 5px;
+  padding: 12px 10px;
+  box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  margin-bottom: 12px;
 }
 
 ::v-deep(.el-form-item) {

@@ -1,5 +1,5 @@
 <template>
-  <div style="padding: 10px">
+  <div style="padding: 0px">
     <div class="app">
       <slot />
     </div>

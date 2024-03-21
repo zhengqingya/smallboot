@@ -11,6 +11,9 @@
         is_show
         FROM pms_category
         WHERE is_deleted = 0
+        <if test="filter.parentId!=null">
+            AND parent_id = #{filter.parentId}
+        </if>
         <if test="filter.name!=null and filter.name!=''">
             AND name LIKE CONCAT( #{filter.name} , '%' )
         </if>
