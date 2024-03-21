@@ -12,8 +12,8 @@
 
     <base-content>
       <base-table-p ref="baseTableRef" api="wx_mp_material.page" :params="listQuery">
-        <el-table-column label="mediaId" prop="mediaId" width="500px" align="center"></el-table-column>
-        <el-table-column label="名称" prop="name" align="center"></el-table-column>
+        <el-table-column label="mediaId" show-overflow-tooltip prop="mediaId" width="500px" align="center"></el-table-column>
+        <el-table-column label="名称" prop="name" show-overflow-tooltip align="center"></el-table-column>
         <el-table-column label="更新时间" prop="updateTime" align="center"></el-table-column>
         <el-table-column label="url" prop="url" align="center">
           <template #default="scope">

@@ -11,7 +11,7 @@
  Target Server Version : 50726 (5.7.26-log)
  File Encoding         : 65001
 
- Date: 13/12/2023 18:07:43
+ Date: 21/03/2024 14:36:31
 */
 
 SET NAMES utf8mb4;
@@ -594,7 +594,7 @@ CREATE TABLE `sms_shop`  (
 -- ----------------------------
 INSERT INTO `sms_shop` VALUES (1, 1, '天府三街测试门店', '[{\"url\": \"http://127.0.0.1:886/2023-09-28/1707276699923857408-美图35.jpg\", \"name\": \"美图35.jpg\"}]', '四川省', '成都市', '武侯区', '四川省成都市武侯区天府三街', 104.069038, 30.546109, 1, '小郑', '15183308888', 1, 0, 0, 0, '[{\"endTime\": \"22:00\", \"weekList\": [1, 2, 3, 4, 5, 6, 7], \"startTime\": \"09:00\"}]', 1000, NULL, NULL, '2023-09-15 18:20:55', '2023-09-28 14:24:56', 1, 1, 0);
 INSERT INTO `sms_shop` VALUES (2, 1, '高新区天府五街分店', '[{\"url\": \"http://127.0.0.1:886/2023-09-28/1707240834895855616-美图13.png\", \"name\": \"美图13.png\"}]', '四川省', '成都市', '武侯区', '四川省成都市武侯区天府五街', 104.069398, 30.536950, 1, '小郑', '15183308888', 1, 1, 1, 1, '[{\"endTime\": \"22:00\", \"weekList\": [1, 2, 3, 4, 5, 6, 7], \"startTime\": \"09:00\"}]', 1000, NULL, NULL, '2023-09-15 18:20:55', '2023-09-28 14:24:49', 1, 1, 0);
-INSERT INTO `sms_shop` VALUES (4, 1, '四川大学测试店', '[{\"url\": \"http://127.0.0.1:886/2023-09-28/1707280259789041664-美图28.jpg\", \"name\": \"美图28.jpg\"}]', '四川省', '成都市', '双流区', '四川省成都市双流区明远路', 103.999260, 30.557481, 1, '小郑', '15183008888', 1, 0, 0, 0, '[{\"endTime\": \"18:00\", \"weekList\": [1, 2, 3, 4, 5, 6, 7], \"startTime\": \"09:00\"}]', 3, NULL, NULL, '2023-09-26 14:54:42', '2023-09-28 14:34:38', 1, 1, 0);
+INSERT INTO `sms_shop` VALUES (4, 1, '四川大学测试店', '[{\"url\": \"http://127.0.0.1:886/2023-09-28/1707280259789041664-美图28.jpg\", \"name\": \"美图28.jpg\"}]', '四川省', '成都市', '双流区', '四川省成都市双流区明远路', 103.999260, 30.557481, 1, '小郑', '15183008888', 1, 0, 0, 0, '[{\"endTime\": \"18:00\", \"weekList\": [1, 2, 3, 4, 5, 6, 7], \"startTime\": \"09:00\"}]', 3, NULL, NULL, '2023-09-26 14:54:42', '2024-03-21 11:14:45', 1, 1, 0);
 
 -- ----------------------------
 -- Table structure for t_sys_app_config
@@ -1123,7 +1123,7 @@ CREATE TABLE `t_sys_log`  (
   `update_by` bigint(20) NOT NULL COMMENT '修改人',
   `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 659 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-操作日志' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 699 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-操作日志' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_sys_log
@@ -1175,12 +1175,12 @@ INSERT INTO `t_sys_menu` VALUES (16, 12, '公众号用户', 'User', 'mp-user', N
 INSERT INTO `t_sys_menu` VALUES (17, 12, '素材管理', 'Management', 'material', NULL, 5, 'wxmp/material', '', 1, 1, 1, 1, '2020-08-22 15:01:51', 1, '2023-08-28 19:56:12', 0);
 INSERT INTO `t_sys_menu` VALUES (18, 12, '消息自动回复', 'MessageBox', 'msg-auto-reply', NULL, 6, 'wxmp/msg-auto-reply', '', 1, 1, 1, 1, '2020-08-22 15:01:51', 1, '2023-08-28 19:55:57', 0);
 INSERT INTO `t_sys_menu` VALUES (19, 0, '商城管理', 'ColdDrink', '/mall', NULL, 6, NULL, '', 1, 1, 1, 1, '2020-08-22 15:01:51', 1, '2023-08-28 20:01:14', 0);
-INSERT INTO `t_sys_menu` VALUES (20, 19, '分类', 'Guide', 'category', NULL, 2, 'mall/category', '', 1, 1, 1, 1, '2020-08-22 15:01:51', 1, '2023-08-28 19:56:48', 0);
+INSERT INTO `t_sys_menu` VALUES (20, 19, '菜单分类', 'Guide', 'category', NULL, 5, 'mall/category', '', 1, 1, 1, 1, '2020-08-22 15:01:51', 1, '2023-08-28 19:56:48', 0);
 INSERT INTO `t_sys_menu` VALUES (21, 19, '商品', 'Lollipop', 'product', NULL, 4, 'mall/product', '', 1, 1, 1, 1, '2020-08-22 15:01:51', 1, '2023-08-28 20:01:32', 0);
 INSERT INTO `t_sys_menu` VALUES (22, 19, '规格', 'KnifeFork', 'attr', NULL, 3, 'mall/attr', '', 1, 1, 1, 1, '2023-05-25 11:14:14', 1, '2023-08-28 19:57:54', 0);
-INSERT INTO `t_sys_menu` VALUES (23, 19, '订单', 'List', 'order', NULL, 5, 'mall/order', '', 1, 1, 1, 1, '2023-05-25 11:14:14', 1, '2023-08-28 19:57:38', 0);
+INSERT INTO `t_sys_menu` VALUES (23, 19, '订单', 'List', 'order', NULL, 10, 'mall/order', '', 1, 1, 1, 1, '2023-05-25 11:14:14', 1, '2023-08-28 19:57:38', 0);
 INSERT INTO `t_sys_menu` VALUES (24, 0, '小程序用户', 'User', '/mini-user', NULL, 6, 'system/user-mini', '', 1, 1, 1, 1, '2023-05-25 11:14:14', 1, '2023-08-28 19:57:25', 0);
-INSERT INTO `t_sys_menu` VALUES (25, 19, '编辑商品', '', 'product-edit', NULL, 1, 'mall/product-edit', '', 0, 0, 1, 1, '2023-08-28 11:51:07', 1, '2023-08-29 15:37:14', 0);
+INSERT INTO `t_sys_menu` VALUES (25, 19, '编辑商品', '', 'product-edit', NULL, 4, 'mall/product-edit', '', 0, 0, 1, 1, '2023-08-28 11:51:07', 1, '2023-08-29 15:37:14', 0);
 INSERT INTO `t_sys_menu` VALUES (27, 19, '店铺', 'Shop', 'shop', NULL, 1, 'mall/shop', '', 1, 1, 1, 1, '2023-09-13 11:15:18', 1, '2023-09-13 11:15:38', 0);
 INSERT INTO `t_sys_menu` VALUES (28, 19, '店铺-编辑', '', 'shop-edit', NULL, 1, 'mall/shop-edit', '', 0, 0, 1, 1, '2023-09-13 17:55:23', 1, '2023-09-14 09:21:46', 0);
 INSERT INTO `t_sys_menu` VALUES (29, 3, '系统配置', 'SetUp', 'config', NULL, 21, 'system/config', NULL, 1, 1, 1, 1, '2023-09-15 16:44:56', 1, '2023-09-15 16:44:56', 0);

@@ -2,7 +2,7 @@
   <base-wrapper>
     <div class="flex h-full">
       <div style="width: 600px">
-        <base-card title="菜单" style="height: 100%">
+        <base-card title="菜单">
           <base-header>
             <base-input v-model="listQuery.name" label="分类名称" clearable @clear="refreshTableData"></base-input>
             <el-button type="primary" @click="refreshTableData">查询</el-button>
@@ -56,11 +56,15 @@
           </template>
         </base-dialog>
       </div>
+      <div class="flex-1 m-x-10">
+        <spu ref="spuRef" />
+      </div>
     </div>
   </base-wrapper>
 </template>
 
 <script setup>
+import spu from './category-spu.vue';
 const { proxy } = getCurrentInstance();
 let listQuery = $ref({});
 let form = $ref({});

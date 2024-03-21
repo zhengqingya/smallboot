@@ -3,7 +3,7 @@
     <base-content>
       <h1 class="flex-center-center">{{ proxy.$route.query.isAdd ? '添加店铺' : isDetail ? '店铺详情' : '编辑店铺' }}</h1>
 
-      <div class="flex m-t-10">
+      <div class="flex" style="margin-top: 10px">
         <base-card title="基本信息" class="flex-1">
           <el-form ref="dataFormRef" :model="form" label-width="100px">
             <el-form-item label="名称:">
@@ -44,7 +44,7 @@
         </base-card>
 
         <div>
-          <base-card title="营业信息" class="flex-1 m-l-10 bg-color-white">
+          <base-card title="营业信息" class="flex-1 bg-color-white" style="margin-left: 10px">
             <el-form ref="dataFormRef" :model="form" label-width="100px">
               <el-form-item label="堂食:">
                 <el-radio-group v-model="form.snackStatus" :disabled="isDetail">
@@ -93,9 +93,9 @@
         </div>
       </div>
 
-      <div class="flex-center-center m-t-10">
+      <div class="flex-center-center">
         <router-link to="/mall/shop"> <el-button>返回</el-button></router-link>
-        <el-button v-if="!isDetail" type="primary" class="m-l-20" @click="submitForm">确定</el-button>
+        <el-button v-if="!isDetail" type="primary" style="margin-left: 20px" @click="submitForm">确定</el-button>
       </div>
     </base-content>
   </base-wrapper>

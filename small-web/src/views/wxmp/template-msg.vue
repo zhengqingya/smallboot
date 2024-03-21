@@ -11,7 +11,7 @@
     <base-content>
       <base-table-p ref="baseTableRef" api="wx_mp_template_msg.page" :params="listQuery">
         <el-table-column label="AppID" prop="appId" align="center"></el-table-column>
-        <el-table-column label="模板ID" prop="templateId" align="center"></el-table-column>
+        <el-table-column label="模板ID" prop="templateId" align="center" show-overflow-tooltip></el-table-column>
         <el-table-column label="模板标题" prop="title" align="center"></el-table-column>
         <el-table-column label="模板内容" prop="content" show-overflow-tooltip></el-table-column>
         <el-table-column align="center" label="操作">

@@ -1,9 +1,9 @@
 <template>
-  <base-wrapper class="flex-center-center" style="background-color: #00aaff">
+  <div class="flex-center-center" style="height: 100%; width: 100%; background-color: #00aaff">
     <div class="flex-c-center-center bg-color-white" style="height: 400px; width: 500px; border-radius: 10px">
       <h1 class="font-size-lg">SmallBoot多租户管理系统</h1>
 
-      <div style="margin-top: 20px">
+      <div style="margin-top: 30px">
         <el-form ref="loginFormRef" :model="loginForm" :rules="loginRules">
           <el-form-item v-if="!tenantId && tenantList && tenantList.length > 0" prop="tenantId">
             <base-select v-model="loginForm.tenantId" style="width: 260px" :filterable="true" placeholder="请选择租户" :option-props="{ label: 'name', value: 'id' }" :data-list="tenantList">
@@ -30,7 +30,7 @@
     <div class="copyright">
       <p>IF I WERE YOU</p>
     </div>
-  </base-wrapper>
+  </div>
 </template>
 
 <script setup>

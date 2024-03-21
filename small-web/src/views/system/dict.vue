@@ -1,59 +1,61 @@
 <template>
-  <base-wrapper class="flex">
-    <base-card title="字典类型">
-      <template #append>
-        <el-button type="primary" @click="addDictType">添加</el-button>
-      </template>
-      <el-tree
-        v-if="dictionaryTree.length > 0"
-        :props="{
-          children: 'children',
-          label: 'name',
-        }"
-        :data="dictionaryTree"
-        highlight-current
-        @node-click="handleNodeClick" />
-    </base-card>
+  <base-wrapper>
+    <div class="flex h-full">
+      <base-card title="字典类型">
+        <template #append>
+          <el-button type="primary" @click="addDictType">添加</el-button>
+        </template>
+        <el-tree
+          v-if="dictionaryTree.length > 0"
+          :props="{
+            children: 'children',
+            label: 'name',
+          }"
+          :data="dictionaryTree"
+          highlight-current
+          @node-click="handleNodeClick" />
+      </base-card>
 
-    <div class="flex-1 p-x-10">
-      <base-no-data v-if="!selectedDictTypeData" style="height: 200px">点击左侧数据查看</base-no-data>
+      <div class="flex-1" style="margin-left: 10px">
+        <base-no-data v-if="!selectedDictTypeData" style="height: 200px">点击左侧数据查看</base-no-data>
 
-      <div v-else>
-        <base-card title="字典类型信息">
-          <template #append>
-            <el-button type="primary" @click="updateDictType(selectedDictTypeData)">编辑 </el-button>
-            <el-button type="danger" @click="deleteDictType">删除</el-button>
-          </template>
-          <base-cell label-width="120px">
-            <base-cell-item label="字典类型名称">{{ selectedDictTypeData.name }}</base-cell-item>
-            <base-cell-item label="字典类型编码">{{ selectedDictTypeData.code }}</base-cell-item>
-            <base-cell-item label="字典类型状态"><base-tag v-model="selectedDictTypeData.status" /> </base-cell-item>
-          </base-cell>
-        </base-card>
+        <div v-else>
+          <base-card title="字典类型信息">
+            <template #append>
+              <el-button type="primary" @click="updateDictType(selectedDictTypeData)">编辑 </el-button>
+              <el-button type="danger" @click="deleteDictType">删除</el-button>
+            </template>
+            <base-cell label-width="120px">
+              <base-cell-item label="字典类型名称">{{ selectedDictTypeData.name }}</base-cell-item>
+              <base-cell-item label="字典类型编码">{{ selectedDictTypeData.code }}</base-cell-item>
+              <base-cell-item label="字典类型状态"><base-tag v-model="selectedDictTypeData.status" /> </base-cell-item>
+            </base-cell>
+          </base-card>
 
-        <base-card title="字典列表" class="m-t-10">
-          <template #append>
-            <el-button v-if="isShowAddDictButton" type="primary" @click="addDict">添加</el-button>
-          </template>
-          <base-table v-loading.body="listLoading" :data="dicList" :height="calcTableHeight">
-            <el-table-column type="index" label="序号" width="60px" align="center" />
-            <el-table-column prop="name" label="字典名称" align="center" />
-            <el-table-column prop="value" label="字典值" align="center" />
-            <el-table-column prop="sort" label="排序" align="center" />
-            <el-table-column prop="remark" label="备注" align="center" />
-            <el-table-column label="操作" align="center" width="150">
-              <template #default="scope">
-                <el-button link @click="updateDict(scope.row)">编辑</el-button>
-                <base-delete-btn @ok="deleteDict(scope.row)" />
-              </template>
-            </el-table-column>
-          </base-table>
-        </base-card>
+          <base-card title="字典列表" style="margin-top: 10px">
+            <template #append>
+              <el-button v-if="isShowAddDictButton" type="primary" @click="addDict">添加</el-button>
+            </template>
+            <base-table v-loading.body="listLoading" :data="dicList" :height="calcTableHeight">
+              <el-table-column type="index" label="序号" width="60px" align="center" />
+              <el-table-column prop="name" label="字典名称" align="center" />
+              <el-table-column prop="value" label="字典值" align="center" />
+              <el-table-column prop="sort" label="排序" align="center" />
+              <el-table-column prop="remark" label="备注" align="center" />
+              <el-table-column label="操作" align="center" width="150">
+                <template #default="scope">
+                  <el-button link @click="updateDict(scope.row)">编辑</el-button>
+                  <base-delete-btn @ok="deleteDict(scope.row)" />
+                </template>
+              </el-table-column>
+            </base-table>
+          </base-card>
+        </div>
       </div>
-    </div>
 
-    <edit-dict ref="editDictRef" @save-succ="getDicList(selectedDictTypeData)" />
-    <edit-dict-type ref="editDictTypeRef" @save-succ="getDictTree()" />
+      <edit-dict ref="editDictRef" @save-succ="getDicList(selectedDictTypeData)" />
+      <edit-dict-type ref="editDictTypeRef" @save-succ="getDictTree()" />
+    </div>
   </base-wrapper>
 </template>
 <script setup>

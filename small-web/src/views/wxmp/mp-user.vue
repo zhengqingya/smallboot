@@ -10,7 +10,7 @@
 
     <base-content>
       <base-table-p ref="baseTableRef" api="wx_mp_user.page" :params="listQuery">
-        <el-table-column label="微信openid" prop="openid" align="center" width="220px"></el-table-column>
+        <el-table-column label="微信openid" prop="openid" show-overflow-tooltip align="center" width="220px"></el-table-column>
         <el-table-column label="昵称" prop="nickname" align="center"></el-table-column>
         <el-table-column label="头像" prop="headImgUrl" align="center"></el-table-column>
         <el-table-column label="关注来源" prop="subscribeSceneName" align="center"></el-table-column>

@@ -13,7 +13,7 @@
         <menu-perm-tree v-show="menuTree.length > 0" ref="menuTreeRef" v-model="menuTree" :role-id="roleId" />
       </base-card>
 
-      <base-card title="数据权限" class="flex-1">
+      <base-card title="数据权限" class="flex-1" style="margin-left: 10px">
         <el-tree
           ref="scopeTreeRef"
           :data="scopeTree"

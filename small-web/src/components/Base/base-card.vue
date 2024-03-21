@@ -1,5 +1,5 @@
 <template>
-  <el-card class="app">
+  <el-card>
     <div class="header">
       <div class="flex-between-center">
         <span class="font-bold font-size-base">{{ title }}</span>
@@ -21,9 +21,6 @@ defineProps({
 });
 </script>
 <style lang="scss" scoped>
-.app {
-  margin: 10px;
-}
 .line {
   border-bottom: 1px solid #e5e7ee;
   margin: 10px 0;

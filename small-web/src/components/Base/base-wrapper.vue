@@ -1,6 +1,8 @@
 <template>
-  <div class="h-full" style="background-color: rgba(243, 242, 242, 0.555); padding: 0px">
-    <slot />
+  <div style="height: 100%; width: 100%; background-color: rgba(243, 242, 242, 0.555); padding: 10px">
+    <div style="height: 100%; width: 100%; background-color: #fff; padding: 0px; border-radius: 6px">
+      <slot />
+    </div>
   </div>
 </template>
 <script setup></script>

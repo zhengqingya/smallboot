@@ -1,8 +1,6 @@
 <template>
   <base-wrapper>
-    <base-content class="h-full">
-      <base-no-data />
-    </base-content>
+    <div style="height: 100%; padding: 10px">等你来开发...</div>
   </base-wrapper>
 </template>
 

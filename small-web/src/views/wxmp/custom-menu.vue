@@ -31,8 +31,8 @@
           </div>
         </div>
         <!-- 右边配置 -->
-        <base-no-data v-if="!selectedMenu" class="right m-l-20">tips:选择菜单可查看菜单详情哦</base-no-data>
-        <div v-else class="flex-1 m-l-20 p-10">
+        <base-no-data v-if="!selectedMenu" class="right" style="margin-left: 10px">tips:选择菜单可查看菜单详情哦</base-no-data>
+        <div v-else class="flex-1" style="margin-left: 10px">
           <div class="content">
             <base-card title="菜单详情">
               <template #append>
