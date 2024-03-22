@@ -11,7 +11,7 @@
  Target Server Version : 50726 (5.7.26-log)
  File Encoding         : 65001
 
- Date: 21/03/2024 14:36:31
+ Date: 22/03/2024 16:36:53
 */
 
 SET NAMES utf8mb4;
@@ -338,9 +338,12 @@ CREATE TABLE `pms_category`  (
 -- ----------------------------
 -- Records of pms_category
 -- ----------------------------
-INSERT INTO `pms_category` VALUES (1532285889399619584, 1, 0, 'NICE', 1, 1, '2022-06-02 16:59:59', '2022-06-02 16:59:59', 0, 0, 0);
-INSERT INTO `pms_category` VALUES (1532285975026335744, 1, 0, '六一专属', 1, 1, '2022-06-02 17:00:20', '2023-09-18 17:08:42', 0, 1, 0);
+INSERT INTO `pms_category` VALUES (1, 1, 0, '六一专属', 1, 1, '2022-06-02 17:00:20', '2024-03-22 11:02:13', 0, 1, 0);
+INSERT INTO `pms_category` VALUES (2, 1, 0, 'NICE', 1, 1, '2022-06-02 16:59:59', '2024-03-22 09:44:55', 0, 0, 0);
 INSERT INTO `pms_category` VALUES (1533982865094737920, 1, 0, 'GOODS', 3, 1, '2022-06-07 09:23:10', '2023-09-11 17:03:30', 0, 1, 0);
+INSERT INTO `pms_category` VALUES (1770728751886127104, 1, 1, '无茶', 1, 1, '2024-03-21 16:26:48', '2024-03-22 09:45:00', 1, 1, 0);
+INSERT INTO `pms_category` VALUES (1770997150059487232, 1, 1, '红茶', 1, 1, '2024-03-22 10:13:19', '2024-03-22 10:17:33', 1, 1, 0);
+INSERT INTO `pms_category` VALUES (1770998288443924480, 1, 1, '白开水', 1, 1, '2024-03-22 10:17:50', '2024-03-22 14:55:15', 1, 1, 0);
 
 -- ----------------------------
 -- Table structure for pms_category_attr_relation
@@ -387,17 +390,17 @@ CREATE TABLE `pms_category_spu_relation`  (
 -- ----------------------------
 -- Records of pms_category_spu_relation
 -- ----------------------------
-INSERT INTO `pms_category_spu_relation` VALUES (1661567883463884800, 1, 1532285889399619584, 1534420706752856064, 1, 1, 1, '2023-05-25 11:00:29', '2023-05-25 11:00:29', 1, 1, 0);
-INSERT INTO `pms_category_spu_relation` VALUES (1697128804988379136, 1, 1533982865094737920, 1661570067979304960, 1, 1, 1, '2023-08-31 14:06:53', '2023-08-31 14:06:53', 1, 1, 0);
-INSERT INTO `pms_category_spu_relation` VALUES (1701133399041798144, 1, 1532285975026335744, 1701131118611034112, 1, 1, 1, '2023-09-11 15:19:43', '2023-09-11 15:19:43', 1, 1, 0);
-INSERT INTO `pms_category_spu_relation` VALUES (1701133413470203904, 1, 1532285975026335744, 1701132647401549824, 1, 1, 1, '2023-09-11 15:19:46', '2023-09-11 15:19:46', 1, 1, 0);
-INSERT INTO `pms_category_spu_relation` VALUES (1701133429664411648, 1, 1532285975026335744, 1701132492304576512, 1, 1, 1, '2023-09-11 15:19:50', '2023-09-11 15:19:50', 1, 1, 0);
-INSERT INTO `pms_category_spu_relation` VALUES (1701133441819504640, 1, 1532285975026335744, 1701133018807169024, 1, 1, 1, '2023-09-11 15:19:53', '2023-09-11 15:19:53', 1, 1, 0);
-INSERT INTO `pms_category_spu_relation` VALUES (1701133453488058368, 1, 1532285975026335744, 1701133260151615488, 1, 1, 1, '2023-09-11 15:19:56', '2023-09-11 15:19:56', 1, 1, 0);
-INSERT INTO `pms_category_spu_relation` VALUES (1701133466112913408, 1, 1532285975026335744, 1701132775487205376, 1, 1, 1, '2023-09-11 15:19:59', '2023-09-11 15:19:59', 1, 1, 0);
-INSERT INTO `pms_category_spu_relation` VALUES (1701134230172495872, 1, 1532285889399619584, 1701133818556084224, 1, 1, 1, '2023-09-11 15:23:01', '2023-09-11 15:23:01', 1, 1, 0);
-INSERT INTO `pms_category_spu_relation` VALUES (1701134241518088192, 1, 1532285889399619584, 1701133961695096832, 1, 1, 1, '2023-09-11 15:23:03', '2023-09-11 15:23:03', 1, 1, 0);
-INSERT INTO `pms_category_spu_relation` VALUES (1701134253304082432, 1, 1532285889399619584, 1701134202930491392, 1, 1, 1, '2023-09-11 15:23:06', '2023-09-11 15:23:06', 1, 1, 0);
+INSERT INTO `pms_category_spu_relation` VALUES (1661567883463884800, 1, 1770998288443924480, 1534420706752856064, 1, 1, 1, '2023-05-25 11:00:29', '2024-03-22 16:30:09', 1, 1, 0);
+INSERT INTO `pms_category_spu_relation` VALUES (1697128804988379136, 1, 1770998288443924480, 1661570067979304960, 1, 1, 1, '2023-08-31 14:06:53', '2024-03-22 16:30:09', 1, 1, 0);
+INSERT INTO `pms_category_spu_relation` VALUES (1701133399041798144, 1, 1770998288443924480, 1701131118611034112, 1, 1, 1, '2023-09-11 15:19:43', '2024-03-22 16:30:09', 1, 1, 0);
+INSERT INTO `pms_category_spu_relation` VALUES (1701133429664411648, 1, 1770997150059487232, 1701132492304576512, 1, 1, 1, '2023-09-11 15:19:50', '2024-03-22 16:30:25', 1, 1, 0);
+INSERT INTO `pms_category_spu_relation` VALUES (1701133441819504640, 1, 1770997150059487232, 1701133018807169024, 1, 1, 1, '2023-09-11 15:19:53', '2024-03-22 16:30:25', 1, 1, 0);
+INSERT INTO `pms_category_spu_relation` VALUES (1701133453488058368, 1, 1770997150059487232, 1701133260151615488, 1, 1, 1, '2023-09-11 15:19:56', '2024-03-22 16:30:25', 1, 1, 0);
+INSERT INTO `pms_category_spu_relation` VALUES (1701133466112913408, 1, 1770997150059487232, 1701132775487205376, 1, 0, 1, '2023-09-11 15:19:59', '2024-03-22 16:33:34', 1, 1, 0);
+INSERT INTO `pms_category_spu_relation` VALUES (1701134230172495872, 1, 1770997150059487232, 1701133818556084224, 1, 1, 1, '2023-09-11 15:23:01', '2024-03-22 16:30:25', 1, 1, 0);
+INSERT INTO `pms_category_spu_relation` VALUES (1701134241518088192, 1, 1770728751886127104, 1701133961695096832, 1, 1, 1, '2023-09-11 15:23:03', '2024-03-22 16:30:42', 1, 1, 0);
+INSERT INTO `pms_category_spu_relation` VALUES (1701134253304082432, 1, 1770728751886127104, 1701134202930491392, 1, 1, 1, '2023-09-11 15:23:06', '2024-03-22 16:30:43', 1, 1, 0);
+INSERT INTO `pms_category_spu_relation` VALUES (1771093544594857984, 1, 1770998288443924480, 1701132647401549824, 1, 0, 1, '2024-03-22 16:36:21', '2024-03-22 16:36:21', 1, 1, 0);
 
 -- ----------------------------
 -- Table structure for pms_sku
@@ -1123,7 +1126,7 @@ CREATE TABLE `t_sys_log`  (
   `update_by` bigint(20) NOT NULL COMMENT '修改人',
   `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 699 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-操作日志' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 737 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-操作日志' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_sys_log
@@ -1152,7 +1155,7 @@ CREATE TABLE `t_sys_menu`  (
   `update_time` datetime NOT NULL COMMENT '修改时间',
   `is_deleted` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否删除(1->是，0->否)',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 57 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-菜单表' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 58 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-菜单表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_sys_menu
@@ -1178,10 +1181,10 @@ INSERT INTO `t_sys_menu` VALUES (19, 0, '商城管理', 'ColdDrink', '/mall', NU
 INSERT INTO `t_sys_menu` VALUES (20, 19, '菜单分类', 'Guide', 'category', NULL, 5, 'mall/category', '', 1, 1, 1, 1, '2020-08-22 15:01:51', 1, '2023-08-28 19:56:48', 0);
 INSERT INTO `t_sys_menu` VALUES (21, 19, '商品', 'Lollipop', 'product', NULL, 4, 'mall/product', '', 1, 1, 1, 1, '2020-08-22 15:01:51', 1, '2023-08-28 20:01:32', 0);
 INSERT INTO `t_sys_menu` VALUES (22, 19, '规格', 'KnifeFork', 'attr', NULL, 3, 'mall/attr', '', 1, 1, 1, 1, '2023-05-25 11:14:14', 1, '2023-08-28 19:57:54', 0);
-INSERT INTO `t_sys_menu` VALUES (23, 19, '订单', 'List', 'order', NULL, 10, 'mall/order', '', 1, 1, 1, 1, '2023-05-25 11:14:14', 1, '2023-08-28 19:57:38', 0);
+INSERT INTO `t_sys_menu` VALUES (23, 19, '订单', 'Trophy', 'order', NULL, 10, 'mall/order', '', 1, 1, 1, 1, '2023-05-25 11:14:14', 1, '2023-08-28 19:57:38', 0);
 INSERT INTO `t_sys_menu` VALUES (24, 0, '小程序用户', 'User', '/mini-user', NULL, 6, 'system/user-mini', '', 1, 1, 1, 1, '2023-05-25 11:14:14', 1, '2023-08-28 19:57:25', 0);
 INSERT INTO `t_sys_menu` VALUES (25, 19, '编辑商品', '', 'product-edit', NULL, 4, 'mall/product-edit', '', 0, 0, 1, 1, '2023-08-28 11:51:07', 1, '2023-08-29 15:37:14', 0);
-INSERT INTO `t_sys_menu` VALUES (27, 19, '店铺', 'Shop', 'shop', NULL, 1, 'mall/shop', '', 1, 1, 1, 1, '2023-09-13 11:15:18', 1, '2023-09-13 11:15:38', 0);
+INSERT INTO `t_sys_menu` VALUES (27, 19, '店铺', 'Mug', 'shop', NULL, 1, 'mall/shop', '', 1, 1, 1, 1, '2023-09-13 11:15:18', 1, '2023-09-13 11:15:38', 0);
 INSERT INTO `t_sys_menu` VALUES (28, 19, '店铺-编辑', '', 'shop-edit', NULL, 1, 'mall/shop-edit', '', 0, 0, 1, 1, '2023-09-13 17:55:23', 1, '2023-09-14 09:21:46', 0);
 INSERT INTO `t_sys_menu` VALUES (29, 3, '系统配置', 'SetUp', 'config', NULL, 21, 'system/config', NULL, 1, 1, 1, 1, '2023-09-15 16:44:56', 1, '2023-09-15 16:44:56', 0);
 INSERT INTO `t_sys_menu` VALUES (30, 3, '文件上传记录', 'Files', 'file', NULL, 22, 'system/file', '', 1, 1, 1, 1, '2023-09-28 11:50:14', 1, '2023-09-28 11:50:22', 0);
@@ -1202,6 +1205,7 @@ INSERT INTO `t_sys_menu` VALUES (53, 3, '代码生成器', 'SwitchFilled', 'code
 INSERT INTO `t_sys_menu` VALUES (54, 51, '表单-编辑', '', 'form-edit', '', 2, 'workflow/form-edit', '', 0, 1, 1, 1, '2023-12-07 11:11:33', 1, '2023-12-08 16:55:37', 0);
 INSERT INTO `t_sys_menu` VALUES (55, 51, '流程模型', 'Star', 'model', '', 3, 'workflow/model', '', 1, 1, 1, 1, '2023-12-08 16:53:08', 1, '2023-12-08 16:53:40', 0);
 INSERT INTO `t_sys_menu` VALUES (56, 51, '流程模型-编辑', '', 'model-edit', '', 4, 'workflow/model-edit', '', 0, 1, 1, 1, '2023-12-08 17:07:45', 1, '2023-12-11 09:14:20', 0);
+INSERT INTO `t_sys_menu` VALUES (57, 19, '菜单商品', 'ForkSpoon', 'category-spu', NULL, 6, 'mall/category-spu', '', 1, 1, 1, 1, '2020-08-22 15:01:51', 1, '2023-08-28 19:56:48', 0);
 
 -- ----------------------------
 -- Table structure for t_sys_merchant
@@ -4546,7 +4550,7 @@ CREATE TABLE `t_sys_role_menu`  (
   `update_by` bigint(20) NOT NULL COMMENT '修改人',
   `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1518 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-角色菜单关联表' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 1519 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-角色菜单关联表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_sys_role_menu
@@ -4630,6 +4634,7 @@ INSERT INTO `t_sys_role_menu` VALUES (1514, 1, 1, 53, 1, '2023-12-05 15:10:33', 
 INSERT INTO `t_sys_role_menu` VALUES (1515, 1, 1, 54, 1, '2023-12-07 11:11:33', 1, '2023-12-07 11:11:33');
 INSERT INTO `t_sys_role_menu` VALUES (1516, 1, 1, 55, 1, '2023-12-08 16:53:08', 1, '2023-12-08 16:53:08');
 INSERT INTO `t_sys_role_menu` VALUES (1517, 1, 1, 56, 1, '2023-12-08 17:07:46', 1, '2023-12-08 17:07:46');
+INSERT INTO `t_sys_role_menu` VALUES (1518, 1, 1, 57, 0, '2024-03-22 10:45:33', 0, '2024-03-22 10:45:33');
 
 -- ----------------------------
 -- Table structure for t_sys_role_scope

@@ -28,8 +28,8 @@ import java.util.List;
 @ApiModel("web-商城-分类显示-保存参数")
 public class WebPmsCategoryEditShowDTO extends BaseDTO {
 
-    @NotEmpty(message = "商品不能为空")
-    @ApiModelProperty(value = "商品ids", required = true, example = "[1]")
+    @NotEmpty(message = "id不能为空")
+    @ApiModelProperty(value = "ids", required = true, example = "[1]")
     private List<String> idList;
 
     @NotNull(message = "是否显示不能为空！")

@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
+import com.zhengqing.common.base.constant.AppConstant;
 import com.zhengqing.common.core.util.IdGeneratorUtil;
 import com.zhengqing.common.db.constant.MybatisConstant;
 import com.zhengqing.mall.entity.PmsCategory;
@@ -102,6 +103,28 @@ public class PmsCategoryServiceImpl extends ServiceImpl<PmsCategoryMapper, PmsCa
     @Override
     public List<WebPmsCategoryBaseVO> list(WebPmsCategoryBaseDTO params) {
         return this.pmsCategoryMapper.selectDataList(params);
+    }
+
+    @Override
+    public List<WebPmsCategoryBaseVO> tree(WebPmsCategoryBaseDTO params) {
+        return this.recurveData(AppConstant.PARENT_ID_LONG, this.pmsCategoryMapper.selectDataList(params));
+    }
+
+    /**
+     * 递归分类
+     *
+     * @param parentId 父id
+     * @param allList  所有数据
+     * @return 树列表
+     * @author zhengqingya
+     * @date 2020/9/10 20:56
+     */
+    private List<WebPmsCategoryBaseVO> recurveData(Long parentId, List<WebPmsCategoryBaseVO> allList) {
+        // 存放子集合
+        List<WebPmsCategoryBaseVO> childList = allList.stream().filter(e -> e.getParentId().equals(parentId)).collect(Collectors.toList());
+        // 递归
+        childList.forEach(item -> item.setChildren(this.recurveData(item.getId(), allList)));
+        return childList;
     }
 
     @Override

@@ -19,7 +19,13 @@
               <el-table-column label="排序" prop="sort" align="center"></el-table-column>
               <el-table-column label="显示" prop="isShow" align="center">
                 <template #default="scope">
-                  {{ scope.row.isShow ? '是' : '否' }}
+                  <base-switch
+                    v-model="scope.row.isShow"
+                    api="pms_category.updateBatchShow"
+                    :params="{
+                      idList: [scope.row.id],
+                      isShow: !scope.row.isShow,
+                    }" />
                 </template>
               </el-table-column>
               <el-table-column align="center" label="操作">
@@ -46,7 +52,13 @@
             <el-table-column label="排序" prop="sort" align="center"></el-table-column>
             <el-table-column label="显示" prop="isShow" align="center">
               <template #default="scope">
-                {{ scope.row.isShow ? '是' : '否' }}
+                <base-switch
+                  v-model="scope.row.isShow"
+                  api="pms_category.updateBatchShow"
+                  :params="{
+                    idList: [scope.row.id],
+                    isShow: !scope.row.isShow,
+                  }" />
               </template>
             </el-table-column>
             <el-table-column align="center" label="操作">

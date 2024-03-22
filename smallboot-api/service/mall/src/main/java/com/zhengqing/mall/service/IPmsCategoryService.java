@@ -84,6 +84,16 @@ public interface IPmsCategoryService extends IService<PmsCategory> {
     List<WebPmsCategoryBaseVO> list(WebPmsCategoryBaseDTO params);
 
     /**
+     * 树
+     *
+     * @param params 查询参数
+     * @return 查询结果
+     * @author zhengqingya
+     * @date 2022/02/10 14:01
+     */
+    List<WebPmsCategoryBaseVO> tree(WebPmsCategoryBaseDTO params);
+
+    /**
      * 新增或更新
      *
      * @param params 保存参数

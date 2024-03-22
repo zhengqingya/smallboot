@@ -44,6 +44,12 @@ public class WebPmsCategoryController {
         return this.iPmsCategoryService.list(params);
     }
 
+    @GetMapping("tree")
+    @ApiOperation("树")
+    public List<WebPmsCategoryBaseVO> tree(@Validated @ModelAttribute WebPmsCategoryBaseDTO params) {
+        return this.iPmsCategoryService.tree(params);
+    }
+
     @PostMapping("")
     @ApiOperation("新增")
     public Long add(@Validated @RequestBody WebPmsCategorySaveDTO params) {

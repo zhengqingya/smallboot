@@ -36,11 +36,11 @@
         <el-table-column label="ID" prop="id" align="left" width="90px" />
         <!-- <el-table-column label="类型(1:操作日志 2:登录日志)" prop="type" align="left" /> -->
         <!-- <el-table-column label="请求方法" prop="apiMethod" width="500px" align="left" /> -->
-        <el-table-column label="请求方法名" prop="apiMethodName" width="350px" align="left" />
+        <el-table-column label="请求方法名" prop="apiMethodName" show-overflow-tooltip align="left" />
         <!-- <el-table-column label="请求头参数" prop="apiHeader" align="left" /> -->
         <el-table-column label="操作人名称" prop="operationName" align="left" width="120px" />
         <el-table-column label="请求IP" prop="requestIp" align="left" width="150px" />
-        <el-table-column label="请求url" prop="requestUrl" width="350px" align="left" />
+        <el-table-column label="请求url" prop="requestUrl" show-overflow-tooltip align="left" />
         <!-- <el-table-column label="请求方式" prop="requestHttpMethod" align="left" /> -->
         <!-- <el-table-column label="请求参数" prop="requestParams" align="left" /> -->
         <!-- <el-table-column label="服务器环境" prop="env" align="left" /> -->
@@ -50,14 +50,14 @@
           </template>
         </el-table-column>
         <el-table-column label="操作时间" prop="createTime" align="left" width="180px" />
-        <el-table-column label="状态" align="left">
+        <el-table-column label="状态" align="left" width="80px">
           <template #default="scope">
             <el-tooltip :content="scope.row.responseResult">
               <el-tag :type="scope.row.status == 1 ? 'success' : 'danger'"> {{ scope.row.status == 1 ? '正常' : '异常' }} </el-tag>
             </el-tooltip>
           </template>
         </el-table-column>
-        <el-table-column align="left" label="操作">
+        <el-table-column align="left" label="操作" width="80px">
           <template #default="scope">
             <!-- <el-button link @click="handleUpdate(scope.row)">编辑</el-button> -->
             <el-button link @click="handleDetail(scope.row)">详情</el-button>

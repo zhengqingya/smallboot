@@ -9,6 +9,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.util.List;
+
 /**
  * <p>商城-分类-响应参数</p>
  *
@@ -25,10 +27,10 @@ import lombok.experimental.SuperBuilder;
 public class WebPmsCategoryBaseVO extends BaseVO {
 
     @ApiModelProperty("主键ID")
-    private String id;
+    private Long id;
 
     @ApiModelProperty("父分类id")
-    private String parentId;
+    private Long parentId;
 
     @ApiModelProperty("分类名称")
     private String name;
@@ -38,5 +40,8 @@ public class WebPmsCategoryBaseVO extends BaseVO {
 
     @ApiModelProperty("是否显示(false->否,true->是)")
     private Boolean isShow;
+
+    @ApiModelProperty("子分类")
+    private List<WebPmsCategoryBaseVO> children;
 
 }

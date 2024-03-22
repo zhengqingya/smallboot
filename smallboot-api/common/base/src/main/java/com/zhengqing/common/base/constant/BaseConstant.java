@@ -20,6 +20,7 @@ public interface BaseConstant {
      * 第一级父类id
      */
     Integer PARENT_ID = 0;
+    Long PARENT_ID_LONG = 0L;
 
 
     /**

@@ -66,6 +66,8 @@ const props = defineProps({
   isPage: { type: Boolean, default: () => true },
   // row-key
   rowKey: { type: String, default: 'id' },
+  // 是否初始化数据
+  isInitData: { type: Boolean, default: true },
 });
 
 let isLoading = $ref(true);
@@ -97,7 +99,11 @@ watch(
 );
 
 onMounted(() => {
-  refresh();
+  if (props.isInitData) {
+    refresh();
+  } else {
+    isLoading = false;
+  }
 });
 
 // 刷新
