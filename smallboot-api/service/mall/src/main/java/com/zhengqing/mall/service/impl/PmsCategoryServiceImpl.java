@@ -18,7 +18,7 @@ import com.zhengqing.mall.model.dto.WebPmsCategorySaveDTO;
 import com.zhengqing.mall.model.vo.MiniPmsCategoryReSpuListVO;
 import com.zhengqing.mall.model.vo.PmsCategoryReSpuListVO;
 import com.zhengqing.mall.model.vo.WebPmsCategoryBaseVO;
-import com.zhengqing.mall.service.IOmsCategoryService;
+import com.zhengqing.mall.service.IPmsCategoryService;
 import com.zhengqing.mall.service.IPmsCategorySpuRelationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -42,7 +42,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class OmsCategoryServiceImpl extends ServiceImpl<PmsCategoryMapper, PmsCategory> implements IOmsCategoryService {
+public class PmsCategoryServiceImpl extends ServiceImpl<PmsCategoryMapper, PmsCategory> implements IPmsCategoryService {
 
     private final PmsCategoryMapper pmsCategoryMapper;
     @Lazy
@@ -59,9 +59,8 @@ public class OmsCategoryServiceImpl extends ServiceImpl<PmsCategoryMapper, PmsCa
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void deleteBatch(List<String> idList) {
-        this.pmsCategoryMapper.delete(
-                new LambdaQueryWrapper<PmsCategory>().in(PmsCategory::getId, idList)
-        );
+        this.pmsCategoryMapper.delete(new LambdaQueryWrapper<PmsCategory>().in(PmsCategory::getId, idList));
+        this.pmsCategoryMapper.delete(new LambdaQueryWrapper<PmsCategory>().in(PmsCategory::getParentId, idList));
     }
 
     @Override
@@ -107,9 +106,9 @@ public class OmsCategoryServiceImpl extends ServiceImpl<PmsCategoryMapper, PmsCa
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public String addOrUpdateData(WebPmsCategorySaveDTO params) {
-        String id = params.getId();
-        String parentId = params.getParentId();
+    public Long addOrUpdateData(WebPmsCategorySaveDTO params) {
+        Long id = params.getId();
+        Long parentId = params.getParentId();
         String name = params.getName();
         Integer sort = params.getSort();
         Boolean isShow = params.getIsShow();
@@ -131,7 +130,7 @@ public class OmsCategoryServiceImpl extends ServiceImpl<PmsCategoryMapper, PmsCa
 
         if (id == null) {
             // 新增
-            id = IdGeneratorUtil.nextStrId();
+            id = IdGeneratorUtil.nextId();
             pmsCategory.setId(id);
             pmsCategory.insert();
         } else {

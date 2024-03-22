@@ -33,21 +33,15 @@
         </base-card>
       </div>
 
-      <base-card title="分类" style="height: 100%; width: 100%; margin-left: 10px" v-if="selectParentId">
+      <base-card :title="selectParentName" style="height: 100%; width: 100%; margin-left: 10px" v-if="selectParentId">
         <template #append>
           <el-button type="primary" @click="handleAdd(selectParentId)">添加</el-button>
         </template>
 
         <base-content>
-          <base-table-p
-            ref="baseTableChildRef"
-            api="pms_category.list"
-            :params="{
-              parentId: selectParentId,
-            }"
-            :is-page="false">
+          <base-table-p :data="childList" :is-page="false">
             <!-- <el-table-column label="ID" prop="id" align="center" width="160px"></el-table-column> -->
-            <el-table-column label="父分类id" prop="parentId" align="center" width="160px"></el-table-column>
+            <!-- <el-table-column label="父分类id" prop="parentId" align="center" width="160px"></el-table-column> -->
             <el-table-column label="名称" prop="name" align="center"></el-table-column>
             <el-table-column label="排序" prop="sort" align="center"></el-table-column>
             <el-table-column label="显示" prop="isShow" align="center">
@@ -66,9 +60,9 @@
       </base-card>
     </div>
 
-    <base-dialog v-model="dialogVisible" :title="dialogTitleObj[dialogStatus]" width="400px">
+    <base-dialog v-model="dialogVisible" :title="dialogTitleObj[dialogStatus]" width="500px">
       <el-form v-if="dialogStatus !== 'detail'" ref="dataFormRef" :model="form" label-width="100px">
-        <el-form-item label="父分类:" v-if="form.parentId !== 0">
+        <el-form-item label="父分类:" v-if="form.parentId != 0">
           <el-input v-model="selectParentName" :disabled="true" />
         </el-form-item>
         <el-form-item label="名称:" prop="name">
@@ -94,7 +88,7 @@
 
 <script setup>
 const { proxy } = getCurrentInstance();
-let listQuery = $ref({});
+let listQuery = $ref({ parentId: 0 });
 let form = $ref({});
 let dialogVisible = $ref(false);
 let dialogStatus = $ref('');
@@ -117,27 +111,43 @@ function handleUpdate(row) {
 }
 async function handleDelete(row) {
   let res = await proxy.$api.pms_category.deleteBatch({ idList: [row.id].join() });
-  refreshTableData();
+  if (row.parentId == 0) {
+    refreshTableData();
+    if (row.id == selectParentId) {
+      selectParentId = null;
+    }
+  } else {
+    refreshChildList();
+  }
   proxy.submitOk(res.message);
 }
 function submitForm() {
   proxy.$refs.dataFormRef.validate(async (valid) => {
     if (valid) {
-      form.parentId = 0;
       let res = await proxy.$api.pms_category[form.id ? 'update' : 'add'](form);
       proxy.submitOk(res.message);
-      refreshTableData();
       dialogVisible = false;
+      if (form.parentId == 0) {
+        refreshTableData();
+      } else {
+        refreshChildList();
+      }
     }
   });
 }
 
 let selectParentId = $ref(null);
 let selectParentName = $ref(null);
-function tableNodeclick(row) {
+
+async function tableNodeclick(row) {
   selectParentId = row.id;
   selectParentName = row.name;
-  proxy.$refs.baseTableChildRef.refresh();
+  refreshChildList();
+}
+let childList = $ref([]);
+async function refreshChildList() {
+  let res = await proxy.$api.pms_category.list({ parentId: selectParentId });
+  childList = res.data;
 }
 </script>
 <style scoped></style>

@@ -19,7 +19,7 @@ import java.util.List;
  * @description
  * @date 2022/02/10 14:01
  */
-public interface IOmsCategoryService extends IService<PmsCategory> {
+public interface IPmsCategoryService extends IService<PmsCategory> {
 
     /**
      * 详情
@@ -91,7 +91,7 @@ public interface IOmsCategoryService extends IService<PmsCategory> {
      * @author zhengqingya
      * @date 2021/08/20 17:38
      */
-    String addOrUpdateData(WebPmsCategorySaveDTO params);
+    Long addOrUpdateData(WebPmsCategorySaveDTO params);
 
     /**
      * 删除数据 -- 批量

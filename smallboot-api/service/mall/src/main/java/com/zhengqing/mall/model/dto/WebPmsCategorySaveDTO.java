@@ -29,12 +29,12 @@ import javax.validation.constraints.NotNull;
 public class WebPmsCategorySaveDTO extends BaseDTO {
 
     @ApiModelProperty("主键ID")
-    @NotBlank(groups = {UpdateGroup.class}, message = "主键ID不能为空!")
-    private String id;
+    @NotNull(groups = {UpdateGroup.class}, message = "主键ID不能为空!")
+    private Long id;
 
-    @NotBlank(message = "父分类id不能为空!")
+    @NotNull(message = "父分类id不能为空!")
     @ApiModelProperty(value = "父分类id(0:第一级)", example = "0")
-    private String parentId;
+    private Long parentId;
 
     @NotBlank(message = "分类名称不能为空!")
     @ApiModelProperty(value = "分类名称", example = "高质量人类")

@@ -18,7 +18,7 @@ import com.zhengqing.mall.model.dto.*;
 import com.zhengqing.mall.model.vo.PmsCategoryReSpuListVO;
 import com.zhengqing.mall.model.vo.WebPmsCategorySpuRelationListVO;
 import com.zhengqing.mall.model.vo.WebPmsCategorySpuRelationPageVO;
-import com.zhengqing.mall.service.IOmsCategoryService;
+import com.zhengqing.mall.service.IPmsCategoryService;
 import com.zhengqing.mall.service.IPmsCategorySpuRelationService;
 import com.zhengqing.mall.service.IPmsSkuService;
 import com.zhengqing.mall.service.IPmsSpuService;
@@ -53,7 +53,7 @@ public class PmsCategorySpuRelationServiceImpl extends ServiceImpl<PmsCategorySp
     private IPmsSpuService iPmsSpuService;
     @Lazy
     @Resource
-    private IOmsCategoryService iOmsCategoryService;
+    private IPmsCategoryService iPmsCategoryService;
     private final IPmsSkuService iPmsSkuService;
 
     @Override
@@ -142,7 +142,7 @@ public class PmsCategorySpuRelationServiceImpl extends ServiceImpl<PmsCategorySp
         Boolean isShow = params.getIsShow();
         Boolean isPut = params.getIsPut();
         // 1、校验分类数据是否存在
-        this.iOmsCategoryService.detail(categoryId);
+        this.iPmsCategoryService.detail(categoryId);
         // 2、校验商品数据是否存在 & 是否显示或上架
         PmsSpu spu = this.iPmsSpuService.getSpu(spuId);
         Assert.isTrue(spu.getIsShow(), "商品未显示，无法添加数据！");

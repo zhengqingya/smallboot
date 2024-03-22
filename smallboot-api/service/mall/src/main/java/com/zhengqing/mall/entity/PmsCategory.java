@@ -26,13 +26,13 @@ public class PmsCategory extends BaseEntity<PmsCategory> {
 
     @ApiModelProperty("主键ID")
     @TableId(type = IdType.INPUT)
-    private String id;
+    private Long id;
 
     @ApiModelProperty("租户ID")
     private Integer tenantId;
 
     @ApiModelProperty("父分类id")
-    private String parentId;
+    private Long parentId;
 
     @ApiModelProperty("分类名称")
     private String name;

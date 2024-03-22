@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.mall.model.dto.MiniPmsCategoryReSpuListDTO;
 import com.zhengqing.mall.model.vo.MiniPmsCategoryReSpuListVO;
-import com.zhengqing.mall.service.IOmsCategoryService;
+import com.zhengqing.mall.service.IPmsCategoryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -30,18 +30,18 @@ import java.util.List;
 @Api(tags = {"mini-分类"})
 public class MiniPmsCategoryController {
 
-    private final IOmsCategoryService iOmsCategoryService;
+    private final IPmsCategoryService iPmsCategoryService;
 
     @GetMapping("reSpuList")
     @ApiOperation("列表(包含关联商品数据)")
     public List<MiniPmsCategoryReSpuListVO> reSpuList(@Validated @ModelAttribute MiniPmsCategoryReSpuListDTO params) {
-        return this.iOmsCategoryService.reSpuList(params);
+        return this.iPmsCategoryService.reSpuList(params);
     }
 
     @GetMapping("reSpuPage")
     @ApiOperation("分页列表(包含4个商品数据)")
     public IPage<MiniPmsCategoryReSpuListVO> reSpuPage(@Validated @ModelAttribute MiniPmsCategoryReSpuListDTO params) {
-        return this.iOmsCategoryService.reSpuPage(params);
+        return this.iPmsCategoryService.reSpuPage(params);
     }
 
 }
