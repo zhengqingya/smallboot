@@ -1,7 +1,7 @@
 <template>
   <base-wrapper>
-    <div class="flex h-full">
-      <base-card title="菜单" style="width: 500px" isCustomLeft>
+    <div class="flex h-full w-full">
+      <base-card title="菜单" style="width: 300px; max-width: 300px" isCustomLeft>
         <template #left>
           <div class="flex-start-center">
             <div class="font-bold font-size-base" style="width: 40px">菜单</div>
@@ -22,7 +22,7 @@
           </div>
         </div>
       </base-card>
-      <base-card title="关联商品" style="margin-left: 10px; width: 100%">
+      <base-card title="关联商品" style="margin-left: 10px; width: 100%" v-show="selectCategoryChildList.length > 0">
         <template #append>
           <el-button type="primary" @click="handleAddSpu">添加</el-button>
         </template>
@@ -132,11 +132,13 @@ async function refreshTableDataForCategory() {
 let selectCategoryChildList = $ref([]);
 function clickCategory(id) {
   selectCategoryChildList = categoryMap.get(id);
+  if (selectCategoryChildList.length > 0) {
+    clickChildCategory(selectCategoryChildList[0]);
+  }
 }
 let selectCategoryChildId = $ref(null);
 function clickChildCategory(item) {
   selectCategoryChildId = item.id;
-
   listQuerySpu.categoryId = selectCategoryChildId;
   refreshTableDataSpu();
 }
