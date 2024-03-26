@@ -11,7 +11,7 @@
  Target Server Version : 50726 (5.7.26-log)
  File Encoding         : 65001
 
- Date: 22/03/2024 16:36:53
+ Date: 26/03/2024 16:35:45
 */
 
 SET NAMES utf8mb4;
@@ -556,6 +556,43 @@ CREATE TABLE `pms_spu_rate_reply_relation`  (
 
 -- ----------------------------
 -- Records of pms_spu_rate_reply_relation
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for sms_coupon
+-- ----------------------------
+DROP TABLE IF EXISTS `sms_coupon`;
+CREATE TABLE `sms_coupon`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `tenant_id` int(11) UNSIGNED NOT NULL COMMENT '租户ID',
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '名称',
+  `status` tinyint(4) NOT NULL COMMENT '状态（1:正常 2:停用 3:作废）',
+  `type` tinyint(4) NOT NULL COMMENT '类型（1:满减券 2:折扣券 3:代金券 4:一杯免费卷 5:第二杯半价卷）',
+  `discount` tinyint(4) NULL DEFAULT NULL COMMENT '折扣',
+  `discount_max_price` int(11) NULL DEFAULT NULL COMMENT '最高折扣金额（单位：分）',
+  `full_price` int(11) NULL DEFAULT NULL COMMENT '满',
+  `reduce_price` int(11) NULL DEFAULT NULL COMMENT '减',
+  `face_value` int(11) NOT NULL COMMENT '面额值（单位:分）',
+  `threshold` int(11) NULL DEFAULT NULL COMMENT '使用门槛（满xx分可用，0:无限制）',
+  `is_give` bit(1) NOT NULL COMMENT '是否可赠送（1:是 2:否）',
+  `indate_obj` json NOT NULL COMMENT '有效期',
+  `use_shop_id_list` json NULL COMMENT '可用店铺ID（为空标识所有店铺）',
+  `use_spu_id_list` json NULL COMMENT '可用商品ID（为空标识所有商品）',
+  `explain` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '说明',
+  `total_stock` int(11) UNSIGNED NOT NULL COMMENT '总库存(0:不限制)',
+  `use_stock` int(11) UNSIGNED NOT NULL COMMENT '已用库存',
+  `limit_count` int(11) UNSIGNED NOT NULL COMMENT '每人限购(0:不限制)',
+  `open_time_list` json NULL COMMENT '可用营业时间',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `create_by` bigint(20) UNSIGNED NOT NULL COMMENT '创建人id',
+  `update_by` bigint(20) UNSIGNED NOT NULL COMMENT '更新人id',
+  `is_deleted` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否删除(0->否,1->是)',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商城-优惠券' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sms_coupon
 -- ----------------------------
 
 -- ----------------------------
@@ -1126,7 +1163,7 @@ CREATE TABLE `t_sys_log`  (
   `update_by` bigint(20) NOT NULL COMMENT '修改人',
   `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 737 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-操作日志' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 738 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-操作日志' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_sys_log
