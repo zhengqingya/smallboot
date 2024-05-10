@@ -28,8 +28,12 @@
         </dependency>
         <dependency>
             <groupId>com.zhengqing</groupId>
-            <artifactId>system</artifactId>
-            <scope>provided</scope>
+            <artifactId>system-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.zhengqing</groupId>
+            <artifactId>ums-api</artifactId>
         </dependency>
 
         <!-- 微信小程序 -->

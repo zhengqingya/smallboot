@@ -65,6 +65,12 @@
             <version>0.7.3</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.zhengqing</groupId>
+            <artifactId>ums-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
     </dependencies>
 
 

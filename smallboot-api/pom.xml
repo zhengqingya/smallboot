@@ -25,6 +25,7 @@
     <modules>
         <module>common</module>
         <module>service</module>
+        <module>service-api</module>
         <module>app</module>
     </modules>
 
@@ -144,7 +145,17 @@
             </dependency>
             <dependency>
                 <groupId>com.zhengqing</groupId>
+                <artifactId>system-api</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zhengqing</groupId>
                 <artifactId>ums</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zhengqing</groupId>
+                <artifactId>ums-api</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
