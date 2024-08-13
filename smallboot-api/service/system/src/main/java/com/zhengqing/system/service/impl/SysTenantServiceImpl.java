@@ -213,8 +213,10 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
         this.sysTenantMapper.deleteById(id);
         //  删除整个租户下的所有数据...  tips: 真实业务最好使用逻辑删除
         String dbName = this.systemProperty.getMysql().getMaster().getDbName();
-        List<String> sqlList = this.sysTenantMapper.selectPhysicsDelAllDataSql(dbName, id);
-        sqlList.forEach(this.sysTenantMapper::execSql);
+        TenantUtil.executeRemoveFlag(() -> {
+            List<String> sqlList = this.sysTenantMapper.selectPhysicsDelAllDataSql(dbName, id);
+            sqlList.forEach(this.sysTenantMapper::execSql);
+        });
     }
 
     /**
