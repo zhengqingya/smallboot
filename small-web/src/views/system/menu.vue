@@ -35,12 +35,13 @@
       </base-table>
     </base-content>
 
-    <base-dialog v-model="dialogVisible" :title="dialogTitleObj[dialogStatus]" width="60%">
+    <base-dialog v-model="dialogVisible" :title="dialogTitleObj[dialogStatus]" width="30%">
       <el-form ref="dataFormRef" :model="form" :rules="rules" label-width="120px">
         <el-form-item label="父菜单:">
           <base-cascader
             v-if="dialogVisible"
             v-model="form.parentId"
+            is-full
             clearable
             :params="{ excludeMenuId: form.id }"
             placeholder="请选择(为空时标识顶级)"
@@ -66,7 +67,7 @@
           <el-input v-model="form.btnPerm" placeholder="sys:user:add" />
         </el-form-item>
         <el-form-item v-if="form.type == 1" label="图标:">
-          <el-select v-model="form.icon" placeholder="请选择图标" style="width: 200px" filterable clearable allow-create>
+          <el-select v-model="form.icon" placeholder="请选择图标" filterable clearable allow-create>
             <el-option v-for="item in elIconList" :key="item.name" :value="item.name" :label="item.name">
               <span style="float: left; color: #8492a6; font-size: 12px">{{ item.name }}</span>
               <div style="float: right">

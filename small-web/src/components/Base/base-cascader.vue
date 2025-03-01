@@ -5,14 +5,15 @@
   </div> -->
 
   <!-- :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true, emitPath: false }" -->
-  <el-form-item>
+  <el-form-item :style="{ width: isFull ? '100%' : '' }">
     <el-cascader
+      show-all-levels
       ref="cascaderRef"
       filterable
       v-bind="$attrs"
       :options="list"
       :placeholder="placeholder ? placeholder : label ? `请选择${label}` : '请选择'"
-      style="width: 200px; margin-right: 0px"
+      :style="{ width: isFull ? '100vh' : '200px', 'margin-left': '0px' }"
       @change="handleChange" />
   </el-form-item>
 </template>
@@ -26,6 +27,7 @@ const props = defineProps({
   label: { type: String, default: '' },
   isShowLabel: { type: Boolean, default: true },
   dataList: { type: Array, default: () => [] },
+  isFull: { type: Boolean, default: false },
 });
 
 let list = $ref([]);

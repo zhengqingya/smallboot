@@ -2,7 +2,7 @@ import { defineConfig, loadEnv } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import * as path from 'path';
 import AutoImport from 'unplugin-auto-import/vite';
-import ReactivityTransform from '@vue-macros/reactivity-transform/vite'
+import ReactivityTransform from '@vue-macros/reactivity-transform/vite';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
@@ -47,6 +47,7 @@ export default defineConfig(({ mode }) => {
     css: {
       preprocessorOptions: {
         scss: {
+          // api: 'modern-compiler', // [无效] 解决scss高版本提示  The legacy JS API is deprecated and will be removed in Dart Sass 2.0.0.
           // tips: index.scss在main.js中加载过的无需再次配置 &  下面配置开启后在启动项目第一次访问时会有点慢...
           // additionalData: `@import "@/styles/color.scss";@import "@/styles/theme.scss";`,
         },
