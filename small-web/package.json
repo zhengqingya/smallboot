@@ -33,7 +33,7 @@
     "@typescript-eslint/eslint-plugin": "^6.14.0",
     "@typescript-eslint/parser": "^6.14.0",
     "@vitejs/plugin-vue": "^4.2.3",
-    "@vue-macros/reactivity-transform": "^0.3.20",
+    "@vue-macros/reactivity-transform": "^3.0.0-alpha.0",
     "eslint": "^8.55.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
