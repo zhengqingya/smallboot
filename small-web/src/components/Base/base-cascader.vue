@@ -5,7 +5,16 @@
   </div> -->
 
   <!-- :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true, emitPath: false }" -->
-  <el-cascader ref="cascaderRef" filterable v-bind="$attrs" :options="list" :placeholder="label ? `请选择${label}` : '请选择'" @change="handleChange" />
+  <el-form-item>
+    <el-cascader
+      ref="cascaderRef"
+      filterable
+      v-bind="$attrs"
+      :options="list"
+      :placeholder="placeholder ? placeholder : label ? `请选择${label}` : '请选择'"
+      style="width: 200px; margin-right: 0px"
+      @change="handleChange" />
+  </el-form-item>
 </template>
 
 <script setup>
@@ -13,6 +22,7 @@ const { proxy } = getCurrentInstance();
 const props = defineProps({
   api: { type: String, required: false, default: '' },
   params: { type: Object, required: false, default: () => {} },
+  placeholder: { type: String, default: '' },
   label: { type: String, default: '' },
   isShowLabel: { type: Boolean, default: true },
   dataList: { type: Array, default: () => [] },

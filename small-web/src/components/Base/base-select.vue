@@ -1,6 +1,6 @@
 <template>
   <!-- {{ list[0] }} -->
-  <el-form-item :label="label">
+  <el-form-item>
     <el-select
       filterable
       v-bind="$attrs"

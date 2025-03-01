@@ -18,12 +18,10 @@
         <base-header>
           <base-cascader
             v-model="listQuery.deptId"
-            style="margin-right: 10px"
             clearable
-            label="企业"
+            placeholder="请选择部门"
             :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true, emitPath: false }"
             api="sys_dept.tree" />
-          <!-- <base-select v-model="listQuery.merchantId" label="商户" tag-type="success" style="margin-right: 10px" clearable :option-props="{ label: 'name', value: 'id' }" api="sys_merchant.list" /> -->
           <!-- <base-select v-model="listQuery.roleIdList" label="角色" tag-type="warning" multiple :option-props="{ label: 'name', value: 'roleId' }" api="sys_role.list" /> -->
           <base-input v-model="listQuery.username" label="账号" @clear="refreshTableData" />
           <base-input v-model="listQuery.nickname" label="昵称" @clear="refreshTableData" />
@@ -109,9 +107,6 @@
           <el-form-item label="岗位:" prop="postIdList">
             <base-select v-if="dialogVisible" v-model="form.postIdList" tag-type="success" style="width: 100%" multiple clearable :option-props="{ label: 'name', value: 'id' }" api="sys_post.list" />
           </el-form-item>
-          <!-- <el-form-item v-if="dialogStatus == 'add'" label="归属商户:" style="width: 100%">
-          <base-select v-if="dialogVisible" v-model="form.merchantId" clearable style="width: 100%" :option-props="{ label: 'name', value: 'id' }" api="sys_merchant.list" />
-        </el-form-item> -->
           <el-form-item label="角色:">
             <base-select v-if="dialogVisible" v-model="form.roleIdList" tag-type="warning" multiple style="width: 100%" :option-props="{ label: 'name', value: 'roleId' }" api="sys_role.list" />
           </el-form-item>

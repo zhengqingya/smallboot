@@ -3,9 +3,8 @@
     <base-header>
       <base-cascader
         v-model="listQuery.deptId"
-        style="margin-right: 10px"
         clearable
-        label="部门"
+        placeholder="请选择部门"
         :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true, emitPath: false }"
         api="sys_dept.tree" />
       <base-input v-model="listQuery.name" label="岗位名称" @clear="refreshTableData" />

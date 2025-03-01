@@ -5,7 +5,7 @@
         v-model="listQuery.menuId"
         style="margin-right: 10px"
         clearable
-        label="菜单"
+        placeholder="请选择菜单"
         :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true, emitPath: false }"
         :data-list="menuList" />
       <base-input v-model="listQuery.scopeName" label="权限名称" @clear="refreshTableData" />
@@ -46,7 +46,7 @@
         </el-table-column>
         <!-- <el-table-column label="规则值" prop="scopeValue" align="center" /> -->
         <!-- <el-table-column label="备注" prop="remark" align="center" /> -->
-        <el-table-column label="创建时间" prop="createTime" align="center" />
+        <!-- <el-table-column label="创建时间" prop="createTime" align="center" /> -->
         <el-table-column align="center" label="操作">
           <template #default="scope">
             <div v-if="scope.row.children.length == 0">
