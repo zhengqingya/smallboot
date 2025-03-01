@@ -40,7 +40,7 @@
           :current-page="pageParams.pageNum"
           :page-size="pageParams.pageSize"
           :total="pageRes.total == null ? 0 : pageRes.total"
-          :small="true"
+          size="default"
           :page-sizes="[10, 20, 30, 40, 50]"
           :background="true"
           layout="total, sizes, prev, pager, next, jumper, slot"

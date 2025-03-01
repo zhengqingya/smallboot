@@ -124,8 +124,15 @@ export const useUserStore = defineStore('user', () => {
         }
       }
 
-      // 组件页面显示处理
-      permItem.component = views[`/src/views/${permItem.component}.vue`];
+      // 组件页面显示处理  () => import('@/views/login/index.vue')
+
+      if (permItem.component) {
+        let localCp = views[`/src/views/${permItem.component}.vue`];
+        if (localCp) {
+          // console.log('222', permItem.component, localCp);
+          permItem.component = localCp;
+        }
+      }
 
       routerMap.value[permItem.meta.fullPath] = permItem;
 
