@@ -11,7 +11,7 @@
  Target Server Version : 50726 (5.7.26-log)
  File Encoding         : 65001
 
- Date: 03/04/2024 15:47:31
+ Date: 01/03/2025 17:49:44
 */
 
 SET NAMES utf8mb4;
@@ -589,7 +589,7 @@ CREATE TABLE `sms_coupon`  (
   `update_by` bigint(20) UNSIGNED NOT NULL COMMENT '更新人id',
   `is_deleted` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否删除(0->否,1->是)',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商城-优惠券' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商城-优惠券' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sms_coupon
@@ -1163,7 +1163,7 @@ CREATE TABLE `t_sys_log`  (
   `update_by` bigint(20) NOT NULL COMMENT '修改人',
   `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 739 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-操作日志' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 751 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-操作日志' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_sys_log
@@ -1227,9 +1227,8 @@ INSERT INTO `t_sys_menu` VALUES (29, 3, '系统配置', 'SetUp', 'config', NULL,
 INSERT INTO `t_sys_menu` VALUES (30, 3, '文件上传记录', 'Files', 'file', NULL, 22, 'system/file', '', 1, 1, 1, 1, '2023-09-28 11:50:14', 1, '2023-09-28 11:50:22', 0);
 INSERT INTO `t_sys_menu` VALUES (31, 2, '租户套餐', 'Management', 'tenant-package', NULL, 2, 'system/tenant-package', '', 1, 1, 1, 1, '2023-10-08 10:58:32', 1, '2023-10-08 17:04:43', 0);
 INSERT INTO `t_sys_menu` VALUES (32, 2, '租户列表', 'List', 'tenant', NULL, 1, 'system/tenant', '', 1, 1, 1, 1, '2023-10-08 10:58:32', 1, '2023-10-15 14:05:10', 0);
-INSERT INTO `t_sys_menu` VALUES (33, 3, '企业管理', 'List', 'dept', NULL, 16, 'system/dept', '', 1, 1, 1, 1, '2023-10-08 10:58:32', 1, '2023-10-08 17:04:22', 0);
+INSERT INTO `t_sys_menu` VALUES (33, 3, '部门管理', 'List', 'dept', '', 16, 'system/dept', '', 1, 1, 1, 1, '2023-10-08 10:58:32', 1, '2025-03-01 17:31:01', 0);
 INSERT INTO `t_sys_menu` VALUES (34, 3, '岗位管理', 'List', 'post', NULL, 18, 'system/post', '', 1, 1, 1, 1, '2023-10-08 10:58:32', 1, '2023-10-08 17:04:22', 0);
-INSERT INTO `t_sys_menu` VALUES (40, 3, '商户管理', 'Star', 'merchant', NULL, 30, 'system/merchant', '', 1, 1, 1, 1, '2023-10-08 10:58:32', 1, '2023-10-13 14:57:08', 0);
 INSERT INTO `t_sys_menu` VALUES (44, 5, '查看用户分页列表', '', 'GET:/web/api/system/user/page', 'sys:user:page', 1, '', '', 0, 0, 2, 1, '2023-10-17 15:59:25', 1, '2023-10-17 16:41:43', 0);
 INSERT INTO `t_sys_menu` VALUES (45, 5, '编辑用户', '', 'PUT:/web/api/system/user', 'sys:user:edit', 2, '', '', 0, 0, 2, 1, '2023-10-17 16:01:22', 1, '2023-10-17 16:46:50', 0);
 INSERT INTO `t_sys_menu` VALUES (46, 5, '新增用户', '', 'POST:/web/api/system/user', 'sys:user:add', 3, '', '', 0, 0, 2, 1, '2023-10-17 16:01:49', 1, '2023-10-17 16:41:53', 0);
@@ -4634,7 +4633,6 @@ INSERT INTO `t_sys_role_menu` VALUES (228, 1, 1, 29, 0, '2023-10-20 17:54:47', 0
 INSERT INTO `t_sys_role_menu` VALUES (229, 1, 1, 31, 0, '2023-10-20 17:54:47', 0, '2023-10-23 09:28:25');
 INSERT INTO `t_sys_role_menu` VALUES (230, 1, 1, 32, 0, '2023-10-20 17:54:47', 0, '2023-10-23 09:28:25');
 INSERT INTO `t_sys_role_menu` VALUES (231, 1, 1, 34, 0, '2023-10-20 17:54:47', 0, '2023-10-23 09:28:25');
-INSERT INTO `t_sys_role_menu` VALUES (232, 1, 1, 40, 0, '2023-10-20 17:54:47', 0, '2023-10-23 09:28:25');
 INSERT INTO `t_sys_role_menu` VALUES (233, 1, 1, 48, 0, '2023-10-20 17:54:47', 0, '2023-10-23 09:28:25');
 INSERT INTO `t_sys_role_menu` VALUES (234, 1, 1, 50, 0, '2023-10-20 17:54:47', 0, '2023-10-23 09:28:25');
 INSERT INTO `t_sys_role_menu` VALUES (235, 1, 2, 1, 1, '2023-10-20 18:12:51', 1, '2023-10-21 17:29:51');
@@ -5036,7 +5034,7 @@ CREATE TABLE `wf_category`  (
   `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `is_deleted` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否删除(1->是，0->否)',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '工作流-分类' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '工作流-分类' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of wf_category
@@ -5064,7 +5062,7 @@ CREATE TABLE `wf_copy`  (
   `update_by` bigint(20) UNSIGNED NOT NULL COMMENT '更新人id',
   `is_deleted` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否删除(0->否,1->是)',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '工作流-抄送' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '工作流-抄送' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of wf_copy
@@ -5082,7 +5080,7 @@ CREATE TABLE `wf_deploy_form`  (
   `node_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '节点名称',
   `content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '表单内容',
   PRIMARY KEY (`deploy_id`, `form_key`, `node_key`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '工作流-流程关联表单' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '工作流-流程关联表单' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of wf_deploy_form
@@ -5104,7 +5102,7 @@ CREATE TABLE `wf_form`  (
   `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `is_deleted` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否删除(1->是，0->否)',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '工作流-表单' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '工作流-表单' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of wf_form

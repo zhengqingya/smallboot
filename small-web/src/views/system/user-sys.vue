@@ -53,7 +53,7 @@
                 </span>
               </template>
             </el-table-column>
-            <el-table-column :show-overflow-tooltip="true" prop="deptName" align="center" label="归属企业" />
+            <el-table-column :show-overflow-tooltip="true" prop="deptName" align="center" label="归属部门" />
             <el-table-column label="操作" align="center" width="230">
               <template #default="scope">
                 <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
@@ -96,7 +96,7 @@
           <el-form-item label="头像:" prop="avatarUrl">
             <base-upload-single v-model="form.avatarUrl" />
           </el-form-item>
-          <el-form-item label="归属企业:">
+          <el-form-item label="归属部门:">
             <base-cascader
               v-if="dialogVisible"
               v-model="form.deptId"

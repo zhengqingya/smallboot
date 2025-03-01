@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.zhengqing.common.base.enums.SysRoleCodeEnum;
 import com.zhengqing.common.core.custom.fieldrepeat.FieldRepeatValidator;
 import com.zhengqing.common.db.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
@@ -44,6 +45,9 @@ public class SysRole extends BaseEntity<SysRole> {
     @ApiModelProperty(value = "角色名")
     private String name;
 
+    /**
+     * {@link SysRoleCodeEnum}
+     */
     @ApiModelProperty(value = "角色编码")
     private String code;
 

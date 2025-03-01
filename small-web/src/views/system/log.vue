@@ -25,9 +25,9 @@
       <el-button type="primary" @click="refreshTableData">查询</el-button>
       <template #right>
         <!-- <el-button type="primary" @click="handleAdd">添加</el-button> -->
-        <!-- <base-btn-ok @ok="deleteDataBeforeDay">
+        <base-btn-ok @ok="deleteDataBeforeDay">
           <span style="color: #f36161">清理3天前的日志</span>
-        </base-btn-ok> -->
+        </base-btn-ok>
       </template>
     </base-header>
 

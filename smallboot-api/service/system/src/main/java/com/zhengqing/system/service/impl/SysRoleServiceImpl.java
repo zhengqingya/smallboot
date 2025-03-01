@@ -157,6 +157,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         }
 
         SysRole sysRoleOld = this.sysRoleMapper.selectOne(new LambdaQueryWrapper<SysRole>().eq(SysRole::getCode, code).last(MybatisConstant.LIMIT_ONE));
+        Assert.isFalse(SysRoleCodeEnum.isSpecialRole(sysRoleOld.getCode()), "无权限操作特殊角色！");
         if (!JwtUserContext.hasSuperOrSystemAdmin()) {
             Assert.isTrue(sysRoleOld == null || !sysRoleOld.getIsFixed(), "您没有权限操作固定角色！");
         }
@@ -189,6 +190,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     @Transactional(rollbackFor = Exception.class)
     public void deleteRoleAndRoleMenu(Integer roleId) {
         SysRole sysRole = this.sysRoleMapper.selectById(roleId);
+        Assert.isFalse(SysRoleCodeEnum.isSpecialRole(sysRole.getCode()), "无权限操作特殊角色！");
         if (sysRole.getIsFixed()) {
             Assert.isTrue(JwtUserContext.hasSuperAdmin(), "您没有权限删除固定角色！");
         }

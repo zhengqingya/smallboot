@@ -20,9 +20,8 @@ mysql、redis、minio
 ```sql
 SELECT CONCAT('DELETE FROM ', t.TABLE_NAME, ' where is_deleted=1;')
 FROM information_schema.TABLES t
-         left join information_schema.COLUMNS c on t.TABLE_NAME = c.TABLE_NAME
-WHERE t.table_schema = 'smallboot'
-  and c.COLUMN_NAME = 'is_deleted';
+JOIN information_schema.COLUMNS c ON t.TABLE_NAME = c.TABLE_NAME AND c.table_schema = 'smallboot' AND c.COLUMN_NAME = 'is_deleted'
+GROUP BY t.TABLE_NAME;
 ```
 
 #### 清理指定租户下的所有数据 （谨慎使用！！！）

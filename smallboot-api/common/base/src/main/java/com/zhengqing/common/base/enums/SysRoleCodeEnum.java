@@ -1,5 +1,6 @@
 package com.zhengqing.common.base.enums;
 
+import com.google.common.collect.Lists;
 import com.zhengqing.common.base.exception.MyException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,6 +33,10 @@ public enum SysRoleCodeEnum {
 
     public static final List<SysRoleCodeEnum> LIST = Arrays.asList(SysRoleCodeEnum.values());
     public static final List<String> CODE_LIST = Arrays.asList(SysRoleCodeEnum.values()).stream().map(SysRoleCodeEnum::getCode).collect(Collectors.toList());
+    /**
+     * 特殊角色 -- 不能删除、编辑基本信息
+     */
+    public static final List<String> SPECIAL_CODE_LIST = Lists.newArrayList(超级管理员.getCode(), 系统管理员.getCode(), 租户管理员.getCode());
 
 
     public static SysRoleCodeEnum getEnum(String type) {
@@ -41,6 +46,10 @@ public enum SysRoleCodeEnum {
             }
         }
         throw new MyException("未找到指定的角色code类型！");
+    }
+
+    public static boolean isSpecialRole(String code) {
+        return SPECIAL_CODE_LIST.contains(code);
     }
 
 }
