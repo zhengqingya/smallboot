@@ -6,7 +6,7 @@
         style="margin-right: 10px"
         clearable
         placeholder="请选择菜单"
-        :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: false, emitPath: false }"
+        :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true, emitPath: false }"
         :data-list="menuList" />
       <base-input v-model="listQuery.scopeName" label="权限名称" @clear="refreshTableData" />
       <base-select
@@ -65,7 +65,7 @@
             v-model="form.menuId"
             style="width: 100%"
             clearable
-            :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: false, emitPath: false }"
+            :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true, emitPath: false }"
             :data-list="menuList" />
         </el-form-item>
         <el-form-item label="名称:">

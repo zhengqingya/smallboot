@@ -20,7 +20,7 @@
             v-model="listQuery.deptId"
             clearable
             placeholder="请选择部门"
-            :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: false, emitPath: false }"
+            :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true, emitPath: false }"
             api="sys_dept.tree" />
           <!-- <base-select v-model="listQuery.roleIdList" label="角色" tag-type="warning" multiple :option-props="{ label: 'name', value: 'roleId' }" api="sys_role.list" /> -->
           <base-input v-model="listQuery.username" label="账号" @clear="refreshTableData" />
@@ -101,7 +101,7 @@
               clearable
               style="width: 100%"
               placeholder="请选择"
-              :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: false, emitPath: false }"
+              :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true, emitPath: false }"
               api="sys_dept.tree" />
           </el-form-item>
           <el-form-item label="岗位:" prop="postIdList">

@@ -51,7 +51,7 @@
             clearable
             :params="{ excludeRoleId: roleForm.roleId }"
             placeholder="请选择(为空时标识顶级)"
-            :props="{ value: 'roleId', label: 'name', children: 'children', checkStrictly: false, emitPath: false }"
+            :props="{ value: 'roleId', label: 'name', children: 'children', checkStrictly: true, emitPath: false }"
             api="sys_role.tree" />
         </el-form-item>
         <el-form-item label="角色名：" prop="name">

@@ -4,7 +4,7 @@
     <el-cascader ref="cascaderRef" filterable v-bind="$attrs" :options="list" :placeholder="label ? `请选择${label}` : '请选择'" @change="handleChange" />
   </div> -->
 
-  <!-- :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: false, emitPath: false }" -->
+  <!-- :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true, emitPath: false }" -->
   <el-form-item :style="{ width: isFull ? '100%' : '' }">
     <el-cascader
       show-all-levels
