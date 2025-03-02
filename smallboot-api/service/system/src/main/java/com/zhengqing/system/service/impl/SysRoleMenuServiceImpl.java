@@ -6,7 +6,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
 import com.zhengqing.common.base.constant.AppConstant;
 import com.zhengqing.common.base.context.TenantIdContext;
+import com.zhengqing.system.entity.SysMenu;
 import com.zhengqing.system.entity.SysRoleMenu;
+import com.zhengqing.system.mapper.SysMenuMapper;
 import com.zhengqing.system.mapper.SysRoleMenuMapper;
 import com.zhengqing.system.model.dto.SysRoleReMenuSaveDTO;
 import com.zhengqing.system.model.vo.SysRoleReBtnPermListVO;
@@ -16,8 +18,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -35,6 +39,7 @@ import java.util.stream.Collectors;
 public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRoleMenu> implements ISysRoleMenuService {
 
     private final SysRoleMenuMapper sysRoleMenuMapper;
+    private final SysMenuMapper sysMenuMapper;
 
     @Override
     public List<Integer> getMenuIdsByRoleId(Integer roleId) {
@@ -50,13 +55,14 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
     @Transactional(rollbackFor = Exception.class)
     public void saveRoleMenuIds(SysRoleReMenuSaveDTO params) {
         Integer roleId = params.getRoleId();
-        List<Integer> menuIdList = params.getMenuIdList();
-
-        if (CollUtil.isEmpty(menuIdList)) {
+        if (CollUtil.isEmpty(params.getMenuIdList())) {
             // 直接删除角色关联的所有菜单权限
             this.delByRoleId(roleId);
             return;
         }
+
+        // 添加父级菜单id
+        List<Integer> menuIdList = addParentMenuId(params.getMenuIdList());
 
         // 1、查询角色关联的旧菜单权限信息
         List<SysRoleMenu> roleReMenuListOld = this.sysRoleMenuMapper.selectList(new LambdaQueryWrapper<SysRoleMenu>().eq(SysRoleMenu::getRoleId, roleId));
@@ -91,6 +97,46 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
         if (CollUtil.isNotEmpty(roleMenuList)) {
             this.sysRoleMenuMapper.insertBatchSomeColumn(roleMenuList);
         }
+    }
+
+    /**
+     * 添加父级菜单id
+     *
+     * @param menuIdList 菜单id
+     * @return 菜单id & 关联的父级菜单id
+     * @author zhengqingya
+     * @date 2025/3/2 19:08
+     */
+    private List<Integer> addParentMenuId(List<Integer> menuIdList) {
+        // 菜单id -> 菜单信息
+        Map<Integer, SysMenu> menuIdReObjMap = sysMenuMapper.selectList(new LambdaQueryWrapper<>())
+                .stream().collect(Collectors.toMap(SysMenu::getId, t -> t, (oldData, newData) -> newData));
+        List<Integer> list = Lists.newArrayList();
+        for (Integer menuId : menuIdList) {
+            list.add(menuId);
+            if (menuId == null || CollUtil.isEmpty(menuIdReObjMap)) {
+                continue;
+            }
+            SysMenu sysMenu = menuIdReObjMap.get(menuId);
+            if (sysMenu == null) {
+                continue;
+            }
+            // 防止无限循环：使用 visited 集合来记录已经访问过的菜单 ID，防止循环引用。
+            Set<Integer> visited = new HashSet<>();
+            while (!sysMenu.isFirstParentId()) {
+                Integer parentId = sysMenu.getParentId();
+                if (parentId == null || visited.contains(parentId)) {
+                    break;
+                }
+                list.add(parentId);
+                visited.add(parentId);
+                sysMenu = menuIdReObjMap.get(parentId);
+                if (sysMenu == null) {
+                    break;
+                }
+            }
+        }
+        return list.stream().distinct().collect(Collectors.toList());
     }
 
 

@@ -31,7 +31,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="访问路径" prop="path" width="260px" align="left" show-overflow-tooltip />
+        <el-table-column label="访问路径" prop="path" width="300px" align="left" show-overflow-tooltip />
         <el-table-column label="组件名" prop="component" align="left" show-overflow-tooltip />
         <el-table-column label="按钮权限" prop="btnPerm" align="left" show-overflow-tooltip />
         <el-table-column label="排序" prop="sort" align="center" width="60px" />

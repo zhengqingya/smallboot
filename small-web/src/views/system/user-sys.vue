@@ -54,8 +54,8 @@
             <el-table-column :show-overflow-tooltip="true" prop="deptName" align="center" label="归属部门" />
             <el-table-column label="操作" align="center" width="230">
               <template #default="scope">
-                <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
-                <base-delete-btn v-if="!scope.row.isFixed" @ok="deleteData(scope.row.userId)" />
+                <el-button link @click="handleUpdate(scope.row)" v-has-perm="'sys:user:edit'">编辑</el-button>
+                <base-delete-btn v-if="!scope.row.isFixed" v-has-perm="'sys:user:delete'" @ok="deleteData(scope.row.userId)" />
                 <el-button link @click="updatePwd(scope.row)">更新密码</el-button>
               </template>
             </el-table-column>

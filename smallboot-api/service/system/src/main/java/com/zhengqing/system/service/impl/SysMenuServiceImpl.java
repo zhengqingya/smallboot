@@ -16,7 +16,6 @@ import com.zhengqing.system.model.dto.SysMenuSaveDTO;
 import com.zhengqing.system.model.dto.SysMenuTreeDTO;
 import com.zhengqing.system.service.ISysMenuService;
 import com.zhengqing.system.service.ISysRoleMenuService;
-import com.zhengqing.system.service.ISysRoleService;
 import com.zhengqing.system.service.ISysTenantPackageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -43,7 +42,6 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
     private final SysMenuMapper sysMenuMapper;
     private final ISysTenantPackageService iSysTenantPackageService;
-    private final ISysRoleService iSysRoleService;
     private final ISysRoleMenuService iSysRoleMenuService;
 
     @Override

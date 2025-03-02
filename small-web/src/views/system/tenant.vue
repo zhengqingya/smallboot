@@ -2,9 +2,9 @@
   <base-wrapper>
     <base-header>
       <base-input v-model="listQuery.name" label="租户名" @clear="refreshTableData" />
-      <el-button type="primary" @click="refreshTableData">查询</el-button>
+      <el-button type="primary" @click="refreshTableData" v-has-perm="'sys:tenant:page'">查询</el-button>
       <template #right>
-        <el-button type="primary" @click="handleAdd">添加</el-button>
+        <el-button type="primary" @click="handleAdd" v-has-perm="'sys:tenant:add'">添加</el-button>
       </template>
     </base-header>
 
@@ -33,8 +33,8 @@
         <el-table-column label="创建时间" prop="createTime" align="center" />
         <el-table-column align="center" width="150px" label="操作">
           <template #default="scope">
-            <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
-            <base-delete-btn @ok="handleDelete(scope.row)"></base-delete-btn>
+            <el-button link @click="handleUpdate(scope.row)" v-has-perm="'sys:tenant:edit'">编辑</el-button>
+            <base-delete-btn @ok="handleDelete(scope.row)" v-has-perm="'sys:tenant:delete'"></base-delete-btn>
           </template>
         </el-table-column>
       </base-table-p>

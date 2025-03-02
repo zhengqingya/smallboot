@@ -1,6 +1,7 @@
 <template>
   <div class="flex-between-center h-full w-full">
     <el-scrollbar style="width: 100%">
+      <!-- check-strictly=false 父子不关联，如果关联的话会导致父有可能选不中，可以在后端做数据补充父菜单处理 -->
       <el-tree
         ref="menuTreeRef"
         style="min-width: 300px"
@@ -11,7 +12,7 @@
         }"
         show-checkbox
         default-expand-all
-        check-strictly
+        :check-strictly="true"
         :default-checked-keys="defaultCheckedKeys"
         node-key="id"
         highlight-current
@@ -41,7 +42,7 @@ watch(
       return;
     }
     isInitCount++;
-    // console.log('监听器执行了... ', newValue[0]);
+    console.log('监听器执行了... ', newValue[0]);
     menuTree = newValue;
     defaultCheckedKeys = recurveGetCheckedKeys([], menuTree);
   },
@@ -51,7 +52,12 @@ watch(
   },
 );
 
-defineExpose({ getCheckedKeys });
+defineExpose({ update, getCheckedKeys });
+
+function update() {
+  console.log('更新菜单树数据...');
+  defaultCheckedKeys = recurveGetCheckedKeys([], props.modelValue);
+}
 
 // 拿到选中的菜单ids -- 用于提交数据
 function getCheckedKeys() {

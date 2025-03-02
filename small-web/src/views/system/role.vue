@@ -2,9 +2,9 @@
   <base-wrapper>
     <base-header>
       <base-input v-model="listQuery.name" clearable label="角色名称" @clear="refreshTableData" />
-      <el-button type="primary" @click="refreshTableData">查询</el-button>
+      <el-button type="primary" @click="refreshTableData" v-has-perm="'sys:role:tree'">查询</el-button>
       <template #right>
-        <el-button type="primary" @click="add(0)">添加</el-button>
+        <el-button type="primary" @click="add(0)" v-has-perm="'sys:role:add'">添加</el-button>
       </template>
     </base-header>
 
@@ -30,13 +30,13 @@
         <el-table-column prop="sort" label="排序" align="center" />
         <el-table-column label="操作" align="center" width="230">
           <template #default="scope">
-            <!--  固定角色=系统管理员 时 只有超级管机员才能编辑 -->
-            <el-button v-if="isHasOperatePerm(scope.row)" link @click="update(scope.row)">编辑</el-button>
-            <el-button type="primary" link @click="add(scope.row.roleId)">新增子项</el-button>
+            <!--  固定角色=系统管理员 时 只有超级管理员才能编辑 -->
+            <el-button v-if="isHasOperatePerm(scope.row)" link @click="update(scope.row)" v-has-perm="'sys:role:edit'">编辑</el-button>
+            <el-button v-if="isHasOperatePerm(scope.row)" type="primary" link @click="add(scope.row.roleId)" v-has-perm="'sys:role:edit'">新增子项</el-button>
             <router-link v-if="isHasOperatePerm(scope.row)" :to="{ path: '/system/role-edit', query: { id: scope.row.roleId } }">
-              <el-button link>权限</el-button>
+              <el-button link v-has-perm="'sys:role:perm'">权限</el-button>
             </router-link>
-            <base-delete-btn v-if="isHasOperatePerm(scope.row)" @ok="deleteData(scope.row.roleId)" />
+            <base-delete-btn v-has-perm="'sys:role:delete'" v-if="isHasOperatePerm(scope.row)" @ok="deleteData(scope.row.roleId)" />
           </template>
         </el-table-column>
       </base-table>

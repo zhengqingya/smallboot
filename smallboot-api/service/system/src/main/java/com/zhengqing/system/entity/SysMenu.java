@@ -66,4 +66,8 @@ public class SysMenu extends IsDeletedBaseEntity<SysMenu> {
     @ApiModelProperty(value = "类型")
     private Integer type;
 
+    public boolean isFirstParentId() {
+        return this.parentId == 0;
+    }
+
 }

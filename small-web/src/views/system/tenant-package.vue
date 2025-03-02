@@ -2,9 +2,9 @@
   <base-wrapper>
     <base-header>
       <base-input v-model="listQuery.name" label="套餐名" clearable @clear="refreshTableData" />
-      <el-button type="primary" @click="refreshTableData">查询</el-button>
+      <el-button type="primary" @click="refreshTableData" v-has-perm="'sys:tenant-package:page'">查询</el-button>
       <template #right>
-        <el-button type="primary" @click="handleAdd">添加</el-button>
+        <el-button type="primary" @click="handleAdd" v-has-perm="'sys:tenant-package:add'">添加</el-button>
       </template>
     </base-header>
 
@@ -22,14 +22,14 @@
         <el-table-column label="创建时间" prop="createTime" align="center" />
         <el-table-column align="center" label="操作">
           <template #default="scope">
-            <el-button v-if="scope.row.id !== 1" link @click="handleUpdate(scope.row)">编辑</el-button>
-            <base-delete-btn v-if="scope.row.id !== 1" @ok="handleDelete(scope.row)"></base-delete-btn>
+            <el-button v-if="scope.row.id !== 1" link @click="handleUpdate(scope.row)" v-has-perm="'sys:tenant-package:edit'">编辑</el-button>
+            <base-delete-btn v-if="scope.row.id !== 1" @ok="handleDelete(scope.row)" v-has-perm="'sys:tenant-package:delete'"></base-delete-btn>
           </template>
         </el-table-column>
       </base-table-p>
     </base-content>
 
-    <base-dialog v-model="dialogVisible" :title="dialogTitleObj[dialogStatus]" width="60%">
+    <base-dialog v-model="dialogVisible" :title="dialogTitleObj[dialogStatus]" width="500px">
       <el-form ref="dataFormRef" :model="form" label-width="100px">
         <el-form-item label="套餐名:">
           <el-input v-model="form.name" />

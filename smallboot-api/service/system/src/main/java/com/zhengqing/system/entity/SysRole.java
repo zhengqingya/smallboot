@@ -63,4 +63,8 @@ public class SysRole extends BaseEntity<SysRole> {
     @ApiModelProperty(value = "是否刷新所有租户权限数据(false->否 true->是)")
     private Boolean isRefreshAllTenant;
 
+    public boolean isSpecialRole(){
+        return SysRoleCodeEnum.isSpecialRole(this.code);
+    }
+
 }

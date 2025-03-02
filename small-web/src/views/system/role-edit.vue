@@ -2,8 +2,8 @@
   <base-wrapper>
     <base-card title="角色信息">
       <base-cell label-width="120px">
-        <base-cell-item label="角色名：">{{ roleForm.name }}</base-cell-item>
-        <base-cell-item label="角色编码：">{{ roleForm.code }}</base-cell-item>
+        <base-cell-item label="角色名">{{ roleForm.name }}</base-cell-item>
+        <base-cell-item label="角色编码">{{ roleForm.code }}</base-cell-item>
       </base-cell>
       <template #append> <el-button type="success" @click="initData">刷新</el-button> </template>
     </base-card>
@@ -28,14 +28,18 @@
           highlight-current />
       </base-card>
     </div>
-
-    <div class="flex-center-center" style="margin-top: 10px">
-      <router-link to="/system/role">
-        <el-button>返回</el-button>
-      </router-link>
-      <el-button type="primary" style="margin-left: 20px" @click="savePerm">保存</el-button>
-    </div>
   </base-wrapper>
+
+  <div class="opt-bottom-container">
+    <div class="opt-floating-content">
+      <div class="flex-center-center">
+        <router-link to="/system/role">
+          <el-button>返回</el-button>
+        </router-link>
+        <el-button type="primary" style="margin-left: 20px" @click="savePerm">保存</el-button>
+      </div>
+    </div>
+  </div>
 </template>
 <script setup>
 import { onMounted } from 'vue';
@@ -79,7 +83,30 @@ async function savePerm() {
   let selectMenuIdList = proxy.$refs.menuTreeRef.getCheckedKeys();
   let res = await proxy.$api.sys_perm.saveRoleRePerm({ roleId: roleId, menuIdList: selectMenuIdList, scopeIdList: selectScopeIdList });
   proxy.submitOk(res.msg);
+
   proxy.$router.push('/system/role');
+
+  // 本地方便测试...，直接刷新数据
+  // await initData();
+  // proxy.$refs.menuTreeRef.update();
 }
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.opt-bottom-container {
+  display: flex;
+  justify-content: center; /* 水平居中 */
+  align-items: flex-end; /* 垂直底部对齐 */
+  .opt-floating-content {
+    position: fixed; /* 固定在视口中 */
+    bottom: 20px; /* 距离底部的距离 */
+    left: 50%; /* 水平居中 */
+    transform: translateX(-50%); /* 偏移自身宽度的一半 */
+    background-color: #fff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000; /* 确保内容在其他元素之上 */
+  }
+}
+</style>

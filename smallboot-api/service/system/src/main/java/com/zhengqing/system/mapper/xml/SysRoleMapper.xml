@@ -3,22 +3,22 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhengqing.system.mapper.SysRoleMapper">
 
-    <!-- 超管 不让其它用户看到 -->
+    <!-- 非超管不能看特俗角色, 租户管理员权限来源租户套餐分配的权限，不可被操作 -->
     <select id="selectDataList" resultType="com.zhengqing.system.model.vo.SysRoleBaseVO">
         SELECT
         *
         FROM t_sys_role
         <where>
+            code != 'tenant_admin'
             <if test="filter.currentUserId!=1">
-                AND role_id != 1
+                AND code not in ('super_admin', 'system_admin', 'tenant_admin')
             </if>
             <if test="filter.name != null and filter.name != ''">
                 AND name LIKE CONCAT( '%', #{filter.name} , '%' )
             </if>
             <if test="filter.excludeRoleIdList != null and filter.excludeRoleIdList.size() > 0">
                 AND role_id not in
-                <foreach item="excludeRoleId" index="index" collection="filter.excludeRoleIdList" open="(" separator=","
-                         close=")">
+                <foreach item="excludeRoleId" index="index" collection="filter.excludeRoleIdList" open="(" separator="," close=")">
                     #{excludeRoleId}
                 </foreach>
             </if>

@@ -157,7 +157,6 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         }
 
         SysRole sysRoleOld = this.sysRoleMapper.selectOne(new LambdaQueryWrapper<SysRole>().eq(SysRole::getCode, code).last(MybatisConstant.LIMIT_ONE));
-        Assert.isFalse(SysRoleCodeEnum.isSpecialRole(sysRoleOld.getCode()), "无权限操作特殊角色！");
         if (!JwtUserContext.hasSuperOrSystemAdmin()) {
             Assert.isTrue(sysRoleOld == null || !sysRoleOld.getIsFixed(), "您没有权限操作固定角色！");
         }
@@ -169,6 +168,8 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
             // 查询如果有同编码的角色数据则做更新处理 -- 目的：保证各租户下都存在一个唯一的 此角色 信息
             roleId = sysRoleOld.getRoleId();
         }
+
+        Assert.isFalse(sysRoleOld != null && sysRoleOld.isSpecialRole(), "无权限操作特殊角色！");
 
         // 保存角色
         SysRole sysRole = SysRole.builder()
@@ -190,7 +191,8 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     @Transactional(rollbackFor = Exception.class)
     public void deleteRoleAndRoleMenu(Integer roleId) {
         SysRole sysRole = this.sysRoleMapper.selectById(roleId);
-        Assert.isFalse(SysRoleCodeEnum.isSpecialRole(sysRole.getCode()), "无权限操作特殊角色！");
+        Assert.notNull(sysRole, "角色不存在！");
+        Assert.isFalse(sysRole.isSpecialRole(), "无权限操作特殊角色！");
         if (sysRole.getIsFixed()) {
             Assert.isTrue(JwtUserContext.hasSuperAdmin(), "您没有权限删除固定角色！");
         }
