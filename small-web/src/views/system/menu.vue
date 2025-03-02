@@ -9,9 +9,19 @@
     </base-header>
 
     <base-content>
-      <base-table row-key="id" :tree-props="{ children: 'children', hasChildren: 'hasChildren' }" :data="dataList" :default-expand-all="false">
-        <el-table-column label="ID" prop="id" align="center" />
-        <el-table-column label="名称" align="left">
+      <base-table
+        border
+        :header-cell-style="{ background: '#13C3C3', color: '#fff' }"
+        row-key="id"
+        :row-class-name="tableRowClassName"
+        :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
+        :data="dataList"
+        :default-expand-all="true"
+        :highlight-current-row="false"
+        @row-click="handleRowClick">
+        <el-table-column label="ID" prop="id" width="120px" align="center" />
+        <!-- <el-table-column label="层级" prop="level" width="60px" align="center" /> -->
+        <el-table-column label="名称" align="left" width="200px" show-overflow-tooltip>
           <template #default="scope">
             <div class="flex-start-center">
               <el-icon size="15">
@@ -21,10 +31,10 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="访问路径" prop="path" align="left" />
-        <el-table-column label="组件名" prop="component" align="left" />
-        <el-table-column label="按钮权限" prop="btnPerm" align="left" />
-        <el-table-column label="排序" prop="sort" align="center" />
+        <el-table-column label="访问路径" prop="path" width="260px" align="left" show-overflow-tooltip />
+        <el-table-column label="组件名" prop="component" align="left" show-overflow-tooltip />
+        <el-table-column label="按钮权限" prop="btnPerm" align="left" show-overflow-tooltip />
+        <el-table-column label="排序" prop="sort" align="center" width="60px" />
         <el-table-column align="center" label="操作">
           <template #default="scope">
             <el-button link @click="handleUpdate(scope.row)">编辑</el-button>
@@ -121,6 +131,16 @@ onMounted(() => {
 async function refreshTableData() {
   let res = await proxy.$api.sys_menu.tree(listQuery);
   dataList = res.data;
+  calTreeLevel(dataList);
+}
+function calTreeLevel(dataList, level = 0) {
+  if (dataList.length == 0) {
+    return;
+  }
+  dataList.forEach((rowItem) => {
+    rowItem.level = level;
+    calTreeLevel(rowItem.children, ++rowItem.level);
+  });
 }
 async function getIconList() {
   let res = await proxy.$api.sys_dict.listFromCacheByCode('element_icon');
@@ -162,6 +182,50 @@ function submitForm() {
     }
   });
 }
+
+let selectedRowId = $ref(null);
+function handleRowClick(row) {
+  selectedRowId = row.id; // 更新选中的行
+}
+
+function tableRowClassName({ row, rowIndex }) {
+  if (row.id === selectedRowId) {
+    console.log('111', selectedRowId, rowIndex);
+    return 'row-selected';
+  }
+  if (row.children.length > 0) {
+    let isHasBtn = row.children.some((e) => e.type == 2);
+    return isHasBtn ? 'success-row' : 'row-level-' + row.level;
+  }
+  if (row.type == 2) {
+    return 'row-btn'; // 按钮
+  }
+  return 'row-level-' + row.level;
+}
 </script>
 
-<style lang="scss" scoped></style>
+<!-- 不要加 scoped 否则表格行样式会失效 -->
+<style lang="scss">
+.el-table .row-level-1 {
+  --el-table-tr-bg-color: #9370db;
+}
+.el-table .row-level-2 {
+  --el-table-tr-bg-color: #faebd7;
+}
+.el-table .row-level-3 {
+  --el-table-tr-bg-color: #ee799f;
+}
+.el-table .success-row {
+  --el-table-tr-bg-color: #00eeee;
+}
+.el-table .row-btn {
+  --el-table-tr-bg-color: #97ffff;
+}
+.el-table .row-selected {
+  --el-table-tr-bg-color: #ff6347;
+}
+/* 设置鼠标悬停时的行背景颜色 */
+.el-table__body tr:hover > td {
+  background-color: #ffa500 !important;
+}
+</style>

@@ -1,5 +1,5 @@
 <template>
-  <el-table border stripe :header-cell-style="{ background: 'rgba(243, 242, 242, 0.555)', color: '#000' }" v-bind="$attrs">
+  <el-table highlight-current-row border v-bind="$attrs" :header-cell-style="{ background: 'rgba(243, 242, 242, 0.555)', color: '#000' }">
     <slot />
   </el-table>
 </template>

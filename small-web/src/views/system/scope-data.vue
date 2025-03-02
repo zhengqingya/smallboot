@@ -24,9 +24,10 @@
     </base-header>
 
     <base-content>
-      <el-table
+      <base-table
         ref="baseTableRef"
         border
+        highlight-current-row
         :header-cell-style="{ background: '#13C3C3', color: '#fff' }"
         row-key="customId"
         :row-class-name="tableRowClassName"
@@ -55,7 +56,7 @@
             </div>
           </template>
         </el-table-column>
-      </el-table>
+      </base-table>
     </base-content>
 
     <base-dialog v-model="dialogVisible" :title="dialogTitleObj[dialogStatus]" width="50%">
