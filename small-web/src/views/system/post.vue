@@ -5,7 +5,7 @@
         v-model="listQuery.deptId"
         clearable
         placeholder="请选择部门"
-        :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true, emitPath: false }"
+        :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: false, emitPath: false }"
         api="sys_dept.tree" />
       <base-input v-model="listQuery.name" label="岗位名称" @clear="refreshTableData" />
       <el-button type="primary" @click="refreshTableData">查询</el-button>
@@ -40,7 +40,7 @@
     <base-dialog v-model="dialogVisible" :title="dialogTitleObj[dialogStatus]" width="30%">
       <el-form ref="dataFormRef" :model="form" label-width="100px">
         <el-form-item label="归属部门:">
-          <base-cascader v-model="form.deptId" style="width: 100%" clearable :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true, emitPath: false }" api="sys_dept.tree" />
+          <base-cascader v-model="form.deptId" style="width: 100%" clearable :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: false, emitPath: false }" api="sys_dept.tree" />
         </el-form-item>
         <el-form-item label="岗位名称:">
           <el-input v-model="form.name" />

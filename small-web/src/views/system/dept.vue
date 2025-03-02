@@ -41,7 +41,7 @@
             clearable
             :params="{ excludeDeptId: form.id }"
             placeholder="请选择(为空时标识顶级)"
-            :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true, emitPath: false }"
+            :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: false, emitPath: false }"
             api="sys_dept.tree" />
         </el-form-item>
         <el-form-item label="名称:">
