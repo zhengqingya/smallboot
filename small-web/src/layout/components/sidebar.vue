@@ -3,18 +3,20 @@
     v-if="isShowMenu"
     class="app"
     :style="{
-      'background-color': menuType === 1 ? '#304156' : '#fff',
+      'background-color': '#fff',
     }">
     <div v-if="menuType === 1" class="h-full">
       <el-menu
         class="h-full"
-        background-color="#304156"
-        text-color="hsla(0,0%,100%,.65)"
-        active-text-color="#409EFF"
+        style="padding-top: 16px"
+        background-color="#fff"
+        text-color="#666666"
+        active-text-color="#fff"
         router
         :default-active="$route.meta.fullPath"
         :collapse="false"
         :unique-opened="true"
+        :default-openeds="['/xxx']"
         @select="handleSelect">
         <el-scrollbar>
           <div style="font-size: 20px; height: 50px; font-weight: bold" class="flex-center-center text-color-primary">
@@ -80,20 +82,36 @@ function handleSelect(index, indexPath, item, routeResult) {
 <style lang="scss" scoped>
 .app {
   min-width: 200px;
-  box-shadow: 1px 0 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 1px 0px 4px 0px rgba(21, 34, 50, 0.08);
   overflow-x: hidden;
   overflow-y: hidden;
 }
 
+@mixin menu-box {
+  height: 44px;
+  border-radius: 4px;
+}
+
 ::v-deep(.el-menu) {
   // 一级菜单和二级菜单 -- 背景颜色
-  .el-sub-menu .el-menu-item {
-    background-color: rgb(38, 52, 69) !important;
+  .el-menu-item,
+  .el-sub-menu__title {
+    @include menu-box;
+    &:hover {
+      background: #f4f7ff;
+    }
   }
+
   // 当前被选中的菜单
   .el-menu-item.is-active {
-    // color: #fff !important;
-    background: #1f2d3d !important;
+    @include menu-box;
+    color: #fff !important;
+    background: #1e5eff !important;
+  }
+
+  // 选中时主菜单样式
+  .is-active > .el-sub-menu__title {
+    color: #1e5eff;
   }
 }
 </style>

@@ -5,7 +5,9 @@
       <el-menu-item v-if="item.meta.isShow && item.children.filter((e) => e.type == 1).length == 0" :index="item.meta.fullPath">
         <el-icon v-if="item.meta && item.meta.icon"><component :is="item.meta.icon" /></el-icon>
         <div v-else style="width: 30px"></div>
-        <template #title>{{ item.meta.title }}</template>
+        <template #title>
+          <span class="font-bold">{{ item.meta.title }}</span>
+        </template>
       </el-menu-item>
       <!-- 含二级菜单 -->
       <div v-else>
@@ -13,7 +15,7 @@
           <template #title>
             <el-icon v-if="item.meta && item.meta.icon"><component :is="item.meta.icon" /></el-icon>
             <div v-else style="width: 30px"></div>
-            <span>{{ item.meta.title }}</span>
+            <span class="font-bold">{{ item.meta.title }}</span>
           </template>
           <!-- 递归 -->
           <sidebarItem :router-list="item.children" />
