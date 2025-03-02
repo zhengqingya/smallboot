@@ -85,8 +85,8 @@
         </el-form-item>
         <el-form-item label="显示:" prop="isShow">
           <el-radio-group v-model="form.isShow">
-            <el-radio :label="true">是</el-radio>
-            <el-radio :label="false">否</el-radio>
+            <el-radio :value="true">是</el-radio>
+            <el-radio :value="false">否</el-radio>
           </el-radio-group>
         </el-form-item>
       </el-form>

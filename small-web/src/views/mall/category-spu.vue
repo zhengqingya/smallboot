@@ -80,14 +80,14 @@
             </el-form-item>
             <el-form-item label="是否上架:" prop="isPut">
               <el-radio-group v-model="formSpu.isPut">
-                <el-radio :label="true">是</el-radio>
-                <el-radio :label="false">否</el-radio>
+                <el-radio :value="true">是</el-radio>
+                <el-radio :value="false">否</el-radio>
               </el-radio-group>
             </el-form-item>
             <el-form-item label="是否显示:" prop="isShow">
               <el-radio-group v-model="formSpu.isShow">
-                <el-radio :label="true">是</el-radio>
-                <el-radio :label="false">否</el-radio>
+                <el-radio :value="true">是</el-radio>
+                <el-radio :value="false">否</el-radio>
               </el-radio-group>
             </el-form-item>
             <el-form-item label="排序:" prop="sort">

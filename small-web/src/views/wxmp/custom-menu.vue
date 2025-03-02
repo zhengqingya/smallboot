@@ -51,9 +51,9 @@
 
                   <el-form-item label="消息类型">
                     <el-radio-group v-model="selectedMenu.type">
-                      <el-radio :label="'media_id'">发送素材</el-radio>
-                      <el-radio :label="'view'">跳转网页</el-radio>
-                      <el-radio :label="'miniprogram'">跳转小程序</el-radio>
+                      <el-radio :value="'media_id'">发送素材</el-radio>
+                      <el-radio :value="'view'">跳转网页</el-radio>
+                      <el-radio :value="'miniprogram'">跳转小程序</el-radio>
                     </el-radio-group>
                   </el-form-item>
 

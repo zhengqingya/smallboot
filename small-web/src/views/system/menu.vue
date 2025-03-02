@@ -53,8 +53,8 @@
         </el-form-item>
         <el-form-item label="类型:">
           <el-radio-group v-model="form.type">
-            <el-radio :label="1">菜单</el-radio>
-            <el-radio :label="2">按钮</el-radio>
+            <el-radio :value="1">菜单</el-radio>
+            <el-radio :value="2">按钮</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="访问路径:" prop="path">

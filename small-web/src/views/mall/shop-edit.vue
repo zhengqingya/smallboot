@@ -17,8 +17,8 @@
             </el-form-item>
             <el-form-item label="是否显示:">
               <el-radio-group v-model="form.isShow" :disabled="isDetail">
-                <el-radio :label="false">隐藏</el-radio>
-                <el-radio :label="true">显示</el-radio>
+                <el-radio :value="false">隐藏</el-radio>
+                <el-radio :value="true">显示</el-radio>
               </el-radio-group>
             </el-form-item>
             <el-form-item label="门店头图:">
@@ -48,20 +48,20 @@
             <el-form ref="dataFormRef" :model="form" label-width="100px">
               <el-form-item label="堂食:">
                 <el-radio-group v-model="form.snackStatus" :disabled="isDetail">
-                  <el-radio :label="false">关闭</el-radio>
-                  <el-radio :label="true">开启</el-radio>
+                  <el-radio :value="false">关闭</el-radio>
+                  <el-radio :value="true">开启</el-radio>
                 </el-radio-group>
               </el-form-item>
               <el-form-item label="外卖:">
                 <el-radio-group v-model="form.takeoutStatus" :disabled="isDetail">
-                  <el-radio :label="false">关闭</el-radio>
-                  <el-radio :label="true">开启</el-radio>
+                  <el-radio :value="false">关闭</el-radio>
+                  <el-radio :value="true">开启</el-radio>
                 </el-radio-group>
               </el-form-item>
               <el-form-item label="营业:">
                 <el-radio-group v-model="form.openStatus" :disabled="isDetail">
-                  <el-radio :label="false">未营业</el-radio>
-                  <el-radio :label="true">营业中</el-radio>
+                  <el-radio :value="false">未营业</el-radio>
+                  <el-radio :value="true">营业中</el-radio>
                 </el-radio-group>
               </el-form-item>
               <el-form-item label="营业时间:">

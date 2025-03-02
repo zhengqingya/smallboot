@@ -1,12 +1,12 @@
 <template>
   <el-radio-group v-bind="$attrs">
     <div v-if="dataType == 'status'">
-      <el-radio :label="1">正常</el-radio>
-      <el-radio :label="0">停用</el-radio>
+      <el-radio :value="1">正常</el-radio>
+      <el-radio :value="0">停用</el-radio>
     </div>
     <div v-if="dataType == 'yes'">
-      <el-radio :label="true">是</el-radio>
-      <el-radio :label="false">否</el-radio>
+      <el-radio :value="true">是</el-radio>
+      <el-radio :value="false">否</el-radio>
     </div>
   </el-radio-group>
 </template>
