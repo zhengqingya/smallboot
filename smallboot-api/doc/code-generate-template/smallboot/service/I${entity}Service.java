@@ -11,7 +11,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
- * <p>  ${tableComment} 服务类 </p>
+ * <p> ${tableComment} 服务类 </p>
  *
  * @author ${author}
  * @description

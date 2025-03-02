@@ -16,7 +16,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
- * <p>  ${tableComment} </p>
+ * <p> ${tableComment} </p>
  *
  * @author ${author}
  * @description
