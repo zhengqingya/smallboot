@@ -1,17 +1,14 @@
 package com.zhengqing.common.netty.server.handler;
 
-import cn.hutool.core.util.StrUtil;
-import com.zhengqing.common.netty.constant.NettyRedisConstant;
 import com.zhengqing.common.netty.enums.NettyMsgCmdType;
+import com.zhengqing.common.netty.enums.NettyTerminalType;
 import com.zhengqing.common.netty.model.NettyMsgBase;
 import com.zhengqing.common.netty.util.NettyChannelAttrKeyUtil;
-import com.zhengqing.common.redis.util.RedisUtil;
+import com.zhengqing.common.netty.util.NettyUtil;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-
-import java.util.concurrent.TimeUnit;
 
 /**
  * <p> 心跳连接 扑通扑通... </p>
@@ -43,7 +40,7 @@ public class HeartbeatHandler extends AbstractMsgHandler<String> {
             // 每心跳10次，用户在线状态续一次命
             Long userId = NettyChannelAttrKeyUtil.getAttr(ctx.channel(), NettyChannelAttrKeyUtil.USER_ID);
             Integer terminal = NettyChannelAttrKeyUtil.getAttr(ctx.channel(), NettyChannelAttrKeyUtil.TERMINAL);
-            RedisUtil.expire(StrUtil.format("{}:{}:{}", NettyRedisConstant.USER_RE_SERVER_ID, userId, terminal), NettyRedisConstant.HEARTBEAT_TIMEOUT_SECOND, TimeUnit.SECONDS);
+            NettyUtil.ONLINE_STATUS.add(userId, NettyTerminalType.getType(terminal));
         }
 
         ctx.channel().writeAndFlush(NettyMsgBase.builder().cmd(NettyMsgCmdType.HEART_BEAT).data("pong").build());

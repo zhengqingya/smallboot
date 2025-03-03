@@ -13,6 +13,7 @@ import com.zhengqing.common.netty.model.NettyMsgBase;
 import com.zhengqing.common.netty.server.NettyServerRunner;
 import com.zhengqing.common.netty.server.NettyUserCtxMap;
 import com.zhengqing.common.netty.util.NettyChannelAttrKeyUtil;
+import com.zhengqing.common.netty.util.NettyUtil;
 import com.zhengqing.common.redis.util.RedisUtil;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.RequiredArgsConstructor;
@@ -56,10 +57,10 @@ public class LoginHandler extends AbstractMsgHandler<NettyLogin> {
         JwtUserContext.set(jwtUserBO);
 
         Long userId = Long.valueOf(jwtUserBO.getUserId());
-        Integer terminal = NettyTerminalType.WEB.getType();
+        NettyTerminalType terminal = NettyTerminalType.WEB;
         log.info("【netty】用户登录: {}", JSONUtil.toJsonStr(jwtUserBO));
 
-        ChannelHandlerContext context = NettyUserCtxMap.getCtx(userId, terminal);
+        ChannelHandlerContext context = NettyUserCtxMap.getCtx(userId, terminal.getType());
         if (context != null && !ctx.channel().id().equals(context.channel().id())) {
             // 不允许多地登录,强制下线
             context.channel().writeAndFlush(NettyMsgBase.builder().cmd(NettyMsgCmdType.FORCE_LOGOUT).data("您已在其他地方登陆，将被强制下线").build());
@@ -67,20 +68,16 @@ public class LoginHandler extends AbstractMsgHandler<NettyLogin> {
         }
 
         // 绑定用户和channel
-        NettyUserCtxMap.add(userId, terminal, ctx);
+        NettyUserCtxMap.add(userId, terminal.getType(), ctx);
 
         // 设置用户id属性
         NettyChannelAttrKeyUtil.setAttr(ctx.channel(), NettyChannelAttrKeyUtil.USER_ID, userId);
         // 设置用户终端类型
-        NettyChannelAttrKeyUtil.setAttr(ctx.channel(), NettyChannelAttrKeyUtil.TERMINAL, terminal);
+        NettyChannelAttrKeyUtil.setAttr(ctx.channel(), NettyChannelAttrKeyUtil.TERMINAL, terminal.getType());
         // 初始化心跳次数
         NettyChannelAttrKeyUtil.setAttr(ctx.channel(), NettyChannelAttrKeyUtil.HEARTBEAT_TIMES, 0L);
-
-        /**
-         * 记录每个user的channelId，没有心跳续期时自动过期
-         * {@link HeartbeatHandler#handle(ChannelHandlerContext, String)
-         */
-        RedisUtil.setEx(StrUtil.format("{}:{}:{}", NettyRedisConstant.USER_RE_SERVER_ID, userId, terminal), NettyServerRunner.server_id, NettyRedisConstant.HEARTBEAT_TIMEOUT_SECOND, TimeUnit.SECONDS);
+        // 记录在线状态 & 心跳
+        NettyUtil.ONLINE_STATUS.add(userId, terminal);
 
         ctx.channel().writeAndFlush(NettyMsgBase.builder().cmd(NettyMsgCmdType.LOGIN).data("登陆成功").build());
     }

@@ -29,6 +29,11 @@
             <artifactId>core</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.zhengqing</groupId>
+            <artifactId>netty</artifactId>
+        </dependency>
+
         <!-- justauth工具类 -->
         <!--    https://mvnrepository.com/artifact/me.zhyd.oauth/JustAuth-->
         <dependency>

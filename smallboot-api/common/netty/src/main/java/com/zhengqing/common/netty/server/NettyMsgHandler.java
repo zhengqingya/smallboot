@@ -1,13 +1,11 @@
 package com.zhengqing.common.netty.server;
 
-import cn.hutool.core.util.StrUtil;
-import com.zhengqing.common.netty.constant.NettyRedisConstant;
-import com.zhengqing.common.netty.enums.NettyMsgCmdType;
+import com.zhengqing.common.netty.enums.NettyTerminalType;
 import com.zhengqing.common.netty.model.NettyMsgBase;
 import com.zhengqing.common.netty.server.handler.AbstractMsgHandler;
 import com.zhengqing.common.netty.server.handler.MsgHandlerStrategy;
 import com.zhengqing.common.netty.util.NettyChannelAttrKeyUtil;
-import com.zhengqing.common.redis.util.RedisUtil;
+import com.zhengqing.common.netty.util.NettyUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.timeout.IdleState;
@@ -74,8 +72,7 @@ public class NettyMsgHandler extends SimpleChannelInboundHandler<NettyMsgBase> {
         if (context != null && ctx.channel().id().equals(context.channel().id())) {
             // 移除channel
             NettyUserCtxMap.remove(userId, terminal);
-            // 用户下线
-            RedisUtil.delete(StrUtil.format("{}:{}:{}", NettyRedisConstant.USER_RE_SERVER_ID, userId, terminal));
+            NettyUtil.ONLINE_STATUS.delete(userId, NettyTerminalType.getType(terminal));
             log.info("【netty】断开连接, userId:{}, 终端类型:{}", userId, terminal);
         }
     }

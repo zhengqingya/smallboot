@@ -80,6 +80,9 @@ public class SysUserListVO {
     @ApiModelProperty(value = "小程序用户id")
     private Long miniUserId;
 
+    @ApiModelProperty(value = "是否在线(false->否 true->是)")
+    private Boolean isOnline;
+
     public void handleData() {
         this.sexName = UserSexEnum.getEnum(this.sex).getDesc();
     }

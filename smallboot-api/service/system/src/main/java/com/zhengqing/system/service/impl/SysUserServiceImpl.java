@@ -14,6 +14,7 @@ import com.zhengqing.common.base.exception.MyException;
 import com.zhengqing.common.core.enums.UserSexEnum;
 import com.zhengqing.common.core.util.DesUtil;
 import com.zhengqing.common.db.constant.MybatisConstant;
+import com.zhengqing.common.netty.util.NettyUtil;
 import com.zhengqing.system.entity.SysUser;
 import com.zhengqing.system.mapper.SysUserMapper;
 import com.zhengqing.system.model.dto.*;
@@ -87,7 +88,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         List<Integer> roleIdList = Lists.newArrayList();
         mapRoleInfo.forEach((key, value) -> roleIdList.addAll(value));
         List<Integer> disRoleIdList = roleIdList.stream().distinct().collect(Collectors.toList());
+        // 角色id -> 角色名称
         Map<Integer, String> roleNameMap = this.iSysRoleService.mapByRoleIdList(disRoleIdList);
+        // 用户id -> 在线情况
+        Map<Long, Boolean> userReOnlineStatusMap = NettyUtil.ONLINE_STATUS.batchGet(userIdList.stream().map(Integer::longValue).collect(Collectors.toList()));
         userList.forEach(item -> {
             List<Integer> itemRoleIdList = mapRoleInfo.get(item.getUserId());
             item.setRoleIdList(itemRoleIdList);
@@ -101,6 +105,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
                 });
                 item.setRoleNames(sj.toString());
             }
+            item.setIsOnline(userReOnlineStatusMap.getOrDefault(Long.valueOf(item.getUserId()), false));
             item.handleData();
         });
     }

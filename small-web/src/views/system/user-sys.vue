@@ -39,9 +39,15 @@
             <el-table-column prop="sexName" label="性别" align="center" />
             <el-table-column prop="phone" label="手机号码" align="center" />
             <el-table-column prop="email" label="邮箱" align="center" />
+            <el-table-column label="在线状态" align="center">
+              <template #default="scope">
+                <el-tag v-if="scope.row.isOnline">在线</el-tag>
+                <el-tag v-else type="info">离线</el-tag>
+              </template>
+            </el-table-column>
             <el-table-column label="角色" :show-overflow-tooltip="true" align="center">
               <template #default="scope">
-                <el-tag v-if="scope.row.roleNames"> {{ scope.row.roleNames }}</el-tag>
+                <el-tag v-if="scope.row.roleNames">{{ scope.row.roleNames }}</el-tag>
               </template>
             </el-table-column>
             <el-table-column label="头像" prop="avatarUrl" align="center">
