@@ -21,19 +21,19 @@ let connect = (wsUrl, accessToken) => {
       console.log('WebSocket连接成功');
       isConnect = true;
       // 发送登录命令
-      let loginInfo = { cmd: 0, data: { accessToken: accessToken } };
+      let loginInfo = { cmd: 'LOGIN', data: { accessToken: accessToken } };
       ws.send(JSON.stringify(loginInfo));
     };
 
     // 监听socket消息
     ws.onmessage = function (e) {
       let sendInfo = JSON.parse(e.data);
-      if (sendInfo.cmd == 0) {
+      if (sendInfo.cmd == 'LOGIN') {
         heartCheck.start();
         // 登录成功才算真正完成连接
         connectCallBack && connectCallBack();
         console.log('WebSocket登录成功');
-      } else if (sendInfo.cmd == 1) {
+      } else if (sendInfo.cmd == 'HEART_BEAT') {
         // 重新开启心跳定时
         heartCheck.reset();
       } else {
