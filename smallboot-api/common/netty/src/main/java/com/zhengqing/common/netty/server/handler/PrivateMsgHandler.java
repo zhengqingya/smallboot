@@ -40,7 +40,7 @@ public class PrivateMsgHandler extends AbstractMsgHandler<NettyChat> {
         ChannelHandlerContext channelCtx = NettyUserCtxMap.getCtx(receiverUserId, receiver.getTerminal());
         if (channelCtx != null) {
             // 推送消息给用户
-            channelCtx.channel().writeAndFlush(NettyMsgBase.builder().cmd(NettyMsgCmdType.PRIVATE_MESSAGE.getType()).data(chatData).build());
+            channelCtx.channel().writeAndFlush(NettyMsgBase.builder().cmd(NettyMsgCmdType.PRIVATE_MESSAGE).data(chatData).build());
         } else {
             log.error("【netty】私聊未找到channel，发送者:{}，接收者:{}，内容:{}", userId, receiverUserId, JSONUtil.toJsonStr(chatData));
         }

@@ -32,7 +32,7 @@ public class NettyMsgHandler extends SimpleChannelInboundHandler<NettyMsgBase> {
      */
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, NettyMsgBase msg) {
-        AbstractMsgHandler msgHandler = MsgHandlerStrategy.get(NettyMsgCmdType.getType(msg.getCmd()));
+        AbstractMsgHandler msgHandler = MsgHandlerStrategy.get(msg.getCmd());
         msgHandler.handle(ctx, msgHandler.transform(msg.getData()));
     }
 

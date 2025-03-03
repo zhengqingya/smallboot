@@ -40,7 +40,7 @@ public class GroupMsgHandler extends AbstractMsgHandler<NettyChat> {
             ChannelHandlerContext channelCtx = NettyUserCtxMap.getCtx(item.getUserId(), item.getTerminal());
             if (channelCtx != null) {
                 // 推送消息给用户
-                channelCtx.channel().writeAndFlush(NettyMsgBase.builder().cmd(NettyMsgCmdType.GROUP_MESSAGE.getType()).data(chatData).build());
+                channelCtx.channel().writeAndFlush(NettyMsgBase.builder().cmd(NettyMsgCmdType.GROUP_MESSAGE).data(chatData).build());
             } else {
                 log.error("【netty】群聊未找到channel，发送者:{}，接收者:{}，内容:{}", userId, item.getUserId(), chatData);
             }

@@ -1,5 +1,6 @@
 package com.zhengqing.common.netty.model;
 
+import com.zhengqing.common.netty.enums.NettyMsgCmdType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,7 +22,7 @@ public class NettyMsgBase<T> {
     /**
      * 消息指令
      */
-    private Integer cmd;
+    private NettyMsgCmdType cmd;
 
     /**
      * 推送消息体

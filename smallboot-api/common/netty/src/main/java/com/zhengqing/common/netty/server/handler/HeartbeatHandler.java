@@ -46,7 +46,7 @@ public class HeartbeatHandler extends AbstractMsgHandler<String> {
             RedisUtil.expire(StrUtil.format("{}:{}:{}", NettyRedisConstant.USER_RE_SERVER_ID, userId, terminal), NettyRedisConstant.HEARTBEAT_TIMEOUT_SECOND, TimeUnit.SECONDS);
         }
 
-        ctx.channel().writeAndFlush(NettyMsgBase.builder().cmd(NettyMsgCmdType.HEART_BEAT.getType()).data("pong").build());
+        ctx.channel().writeAndFlush(NettyMsgBase.builder().cmd(NettyMsgCmdType.HEART_BEAT).data("pong").build());
     }
 
 }

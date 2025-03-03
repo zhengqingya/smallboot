@@ -4,7 +4,9 @@
 
 <script setup>
 const { proxy } = getCurrentInstance();
-let { isLogin, tenantId, userObj, tokenObj } = toRefs(proxy.$store.user.useUserStore());
+let useUserStore = proxy.$store.user.useUserStore();
+let { isLogin, tenantId, userObj, tokenObj } = toRefs(useUserStore);
+let { logout } = useUserStore;
 
 let isShow = $ref(false);
 
@@ -24,9 +26,13 @@ async function init() {
   });
   proxy.$wsApi.onMessage((cmd, msgInfo) => {
     console.log('接收消息:', cmd, msgInfo);
+    if (cmd == 'FORCE_LOGOUT') {
+      proxy.submitFail(msgInfo);
+      logout();
+    }
   });
   proxy.$wsApi.onClose((e) => {
-    console.log(e);
+    console.log('ws-onClose:', e);
     // 断线重连
     proxy.submitFail('ws连接断开，正在尝试重新连接...');
     proxy.$wsApi.reconnect(import.meta.env.VITE_APP_WS_URL, tokenObj.value.tokenValue);

@@ -18,7 +18,7 @@ ws://127.0.0.1:10081/im
 
 ```json
 {
-  "cmd": 0,
+  "cmd": "LOGIN",
   "data": {
     "accessToken": "xxx"
   }
@@ -29,7 +29,7 @@ ws://127.0.0.1:10081/im
 
 ```json
 {
-  "cmd": 1,
+  "cmd": "HEART_BEAT",
   "data": "ping"
 }
 ```
@@ -38,7 +38,7 @@ ws://127.0.0.1:10081/im
 
 ```json
 {
-  "cmd": 3,
+  "cmd": "PRIVATE_MESSAGE",
   "data": {
     "sender": {
       "userId": 2,
@@ -65,7 +65,7 @@ ws://127.0.0.1:10081/im
 
 ```json
 {
-  "cmd": 4,
+  "cmd": "GROUP_MESSAGE",
   "data": {
     "sender": {
       "userId": 2,

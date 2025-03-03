@@ -49,6 +49,7 @@ public class LoginHandler extends AbstractMsgHandler<NettyLogin> {
             jwtUserBO = AuthUtil.getLoginUser(loginInfo.getAccessToken());
         } catch (Exception e) {
             log.warn("【netty】用户token：{} 校验不通过:{}，强制下线", loginInfo.getAccessToken(), e.getMessage());
+            ctx.channel().writeAndFlush(NettyMsgBase.builder().cmd(NettyMsgCmdType.FORCE_LOGOUT).data("强制下线：" + e.getMessage()).build());
             ctx.channel().close();
             return;
         }
@@ -61,7 +62,7 @@ public class LoginHandler extends AbstractMsgHandler<NettyLogin> {
         ChannelHandlerContext context = NettyUserCtxMap.getCtx(userId, terminal);
         if (context != null && !ctx.channel().id().equals(context.channel().id())) {
             // 不允许多地登录,强制下线
-            context.channel().writeAndFlush(NettyMsgBase.builder().cmd(NettyMsgCmdType.FORCE_LOGOUT.getType()).data("您已在其他地方登陆，将被强制下线").build());
+            context.channel().writeAndFlush(NettyMsgBase.builder().cmd(NettyMsgCmdType.FORCE_LOGOUT).data("您已在其他地方登陆，将被强制下线").build());
             log.info("【netty】异地登录，强制下线: {}", JSONUtil.toJsonStr(jwtUserBO));
         }
 
@@ -81,7 +82,7 @@ public class LoginHandler extends AbstractMsgHandler<NettyLogin> {
          */
         RedisUtil.setEx(StrUtil.format("{}:{}:{}", NettyRedisConstant.USER_RE_SERVER_ID, userId, terminal), NettyServerRunner.server_id, NettyRedisConstant.HEARTBEAT_TIMEOUT_SECOND, TimeUnit.SECONDS);
 
-        ctx.channel().writeAndFlush(NettyMsgBase.builder().cmd(NettyMsgCmdType.LOGIN.getType()).data("登陆成功").build());
+        ctx.channel().writeAndFlush(NettyMsgBase.builder().cmd(NettyMsgCmdType.LOGIN).data("登陆成功").build());
     }
 
     @Override
