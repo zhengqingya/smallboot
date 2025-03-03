@@ -87,7 +87,7 @@ let heartCheck = {
   start: function () {
     if (isConnect) {
       console.log('发送WebSocket心跳');
-      ws.send(JSON.stringify({ cmd: 1, data: 'ping' }));
+      ws.send(JSON.stringify({ cmd: 'HEART_BEAT', data: 'ping' }));
     }
   },
 

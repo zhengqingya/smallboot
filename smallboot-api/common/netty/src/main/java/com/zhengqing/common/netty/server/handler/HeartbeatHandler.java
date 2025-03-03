@@ -36,8 +36,8 @@ public class HeartbeatHandler extends AbstractMsgHandler<String> {
         }
 
         NettyChannelAttrKeyUtil.setAttr(ctx.channel(), NettyChannelAttrKeyUtil.HEARTBEAT_TIMES, ++heartbeatTimes);
-        if (heartbeatTimes % 10 == 0) {
-            // 每心跳10次，用户在线状态续一次命
+        if (heartbeatTimes % 2 == 0) {
+            // 每心跳2次，用户在线状态续一次命 tips: 如果前端每5秒发送一次心跳，这里间隔2次，相当于每10秒续一次命。
             Long userId = NettyChannelAttrKeyUtil.getAttr(ctx.channel(), NettyChannelAttrKeyUtil.USER_ID);
             Integer terminal = NettyChannelAttrKeyUtil.getAttr(ctx.channel(), NettyChannelAttrKeyUtil.TERMINAL);
             NettyUtil.ONLINE_STATUS.add(userId, NettyTerminalType.getType(terminal));
