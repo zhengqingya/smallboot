@@ -6,7 +6,7 @@
       <div style="margin-top: 30px">
         <el-form ref="loginFormRef" :model="loginForm" :rules="loginRules">
           <el-form-item v-if="!tenantId && tenantList && tenantList.length > 0" prop="tenantId">
-            <base-select v-model="loginForm.tenantId" style="width: 260px" :filterable="true" placeholder="请选择租户" :option-props="{ label: 'name', value: 'id' }" :data-list="tenantList">
+            <base-select is-full v-model="loginForm.tenantId" style="width: 260px" :filterable="true" placeholder="请选择租户" :option-props="{ label: 'name', value: 'id' }" :data-list="tenantList">
               <template #prefix>
                 <el-icon> <OfficeBuilding /> </el-icon>
               </template>

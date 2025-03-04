@@ -1,9 +1,7 @@
 package com.zhengqing.common.core.custom.parameter;
 
 /**
- * <p>
- * 处理参数数据
- * </p>
+ * <p> 处理参数数据 </p>
  *
  * @author zhengqingya
  * @description

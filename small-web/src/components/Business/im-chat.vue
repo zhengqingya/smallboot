@@ -24,11 +24,12 @@ async function init() {
   proxy.$wsApi.onConnect(() => {
     // 加载离线消息
   });
-  proxy.$wsApi.onMessage((cmd, msgInfo) => {
-    console.log('接收消息:', cmd, msgInfo);
+  proxy.$wsApi.onMessage((cmd, msg) => {
+    console.log('接收消息:', cmd, msg);
     if (cmd == 'FORCE_LOGOUT') {
-      proxy.submitFail(msgInfo);
-      logout();
+      proxy.submitFail(msg, () => {
+        logout();
+      });
     }
   });
   proxy.$wsApi.onClose((e) => {

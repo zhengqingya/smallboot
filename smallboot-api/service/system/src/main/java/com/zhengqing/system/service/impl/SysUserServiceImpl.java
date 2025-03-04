@@ -10,10 +10,11 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhengqing.common.auth.util.AuthUtil;
 import com.zhengqing.common.base.constant.AppConstant;
 import com.zhengqing.common.base.context.JwtUserContext;
+import com.zhengqing.common.base.exception.BizException;
 import com.zhengqing.common.base.exception.MyException;
 import com.zhengqing.common.core.enums.UserSexEnum;
-import com.zhengqing.common.core.util.DesUtil;
 import com.zhengqing.common.db.constant.MybatisConstant;
+import com.zhengqing.common.netty.enums.NettyUserLogoutMsgEnum;
 import com.zhengqing.common.netty.util.NettyUtil;
 import com.zhengqing.system.entity.SysUser;
 import com.zhengqing.system.mapper.SysUserMapper;
@@ -124,27 +125,24 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         boolean isAdd = userId == null;
 
         String password = params.getPassword();
-        Boolean isFixed = params.getIsFixed();
 
         // 校验名称是否重复
         SysUser sysUserOld = this.sysUserMapper.selectOne(new LambdaQueryWrapper<SysUser>().eq(SysUser::getUsername, params.getUsername()).last(MybatisConstant.LIMIT_ONE));
         Assert.isTrue(sysUserOld == null || sysUserOld.getUserId().equals(params.getUserId()), "用户名重复，请重新输入！");
 
         // 保存用户
-        SysUser sysUser = new SysUser();
-        sysUser.setUserId(userId);
-        sysUser.setNickname(params.getNickname());
-        sysUser.setSexEnum(UserSexEnum.getEnum(params.getSex()));
-        sysUser.setPhone(params.getPhone());
-        sysUser.setEmail(params.getEmail());
-        sysUser.setAvatarUrl(params.getAvatarUrl());
-        sysUser.setDeptId(params.getDeptId());
-        sysUser.setPostIdList(params.getPostIdList());
-        sysUser.setIsFixed(isFixed);
-
-        boolean isFixedRole = false;
-        // 是否超管在操作修改
-        boolean isSuperAdminOperate = JwtUserContext.hasSuperAdmin();
+        boolean isFixedUser = params.getIsFixed();
+        SysUser sysUser = SysUser.builder()
+                .userId(userId)
+                .nickname(params.getNickname())
+                .sexEnum(UserSexEnum.getEnum(params.getSex()))
+                .phone(params.getPhone())
+                .email(params.getEmail())
+                .avatarUrl(params.getAvatarUrl())
+                .deptId(params.getDeptId())
+                .postIdList(params.getPostIdList())
+                .isFixed(isFixedUser)
+                .build();
 
         if (isAdd) {
             sysUser.setUsername(params.getUsername());
@@ -152,28 +150,32 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             sysUser.insert();
             userId = sysUser.getUserId();
         } else {
-            if (StrUtil.isNotBlank(password)) {
-                if (AppConstant.SYSTEM_SUPER_ADMIN_USER_ID.equals(userId) && !isSuperAdminOperate) {
-                    throw new MyException("超管的密码你别搞！！！");
-                }
-                sysUser.setPassword(PasswordUtil.encodePassword(password));
-            }
+//            if (StrUtil.isNotBlank(password)) {
+//                if (AppConstant.SYSTEM_SUPER_ADMIN_USER_ID.equals(userId) && !isSuperAdminOperate) {
+//                    throw new MyException("超管的密码你别搞！！！");
+//                }
+//                sysUser.setPassword(PasswordUtil.encodePassword(password));
+//            }
             SysUser sysUserOldData = this.sysUserMapper.selectById(userId);
-            isFixedRole = sysUserOldData.getIsFixed();
+            isFixedUser = sysUserOldData.getIsFixed();
+            sysUser.setIsFixed(sysUserOldData.getIsFixed());
             sysUser.updateById();
         }
 
         // ---------------------- 下面修改用户角色 ----------------------------
-
+        if (!params.getIsUpdateRolePerm()) {
+            return userId;
+        }
         if (AppConstant.SYSTEM_SUPER_ADMIN_USER_ID.equals(userId)) {
             // 超管的角色信息不能修改
             return userId;
         }
         // 给用户绑定角色信息  超管可以操作固定用户角色的修改
-        if (!isFixedRole || (isFixedRole && isSuperAdminOperate)) {
+        if (!isFixedUser || (isFixedUser && JwtUserContext.hasSuperAdmin())) {
             this.iSysUserRoleService.addOrUpdateData(SysUserRoleSaveDTO.builder().userId(userId).roleIdList(params.getRoleIdList()).build());
 
             AuthUtil.logout(userId);
+            NettyUtil.SEND_MSG.logout(Long.valueOf(userId), NettyUserLogoutMsgEnum.UPDATE_ROLE_PERM);
         }
 
         return userId;
@@ -196,13 +198,22 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void updatePassword(SysUserUpdatePasswordDTO params) {
-        String password = DesUtil.decrypt(params.getPassword(), AppConstant.DES_KEY);
-        SysUser userInfo = this.sysUserMapper.selectById(params.getUserId());
-        boolean isValid = PasswordUtil.isValidPassword(password, userInfo.getPassword());
-        // 校验原始密码是否正确
-        Assert.isTrue(isValid, AppConstant.WRONG_OLD_PASSWORD);
-        userInfo.setPassword(PasswordUtil.encodePassword(params.getNewPassword()));
-        this.sysUserMapper.updateById(userInfo);
+        // TODO: 后面可以配置个更新密码接口的数据权限 & 密码加密
+//        String password = DesUtil.decrypt(params.getPassword(), AppConstant.DES_KEY);
+//        SysUser sysUser = this.sysUserMapper.selectById(params.getUserId());
+//        boolean isValid = PasswordUtil.isValidPassword(password, sysUser.getPassword());
+//        // 校验原始密码是否正确
+//        Assert.isTrue(isValid, AppConstant.WRONG_OLD_PASSWORD);
+//        sysUser.setPassword(PasswordUtil.encodePassword(params.getNewPassword()));
+//        this.sysUserMapper.updateById(sysUser);
+
+        Integer userId = params.getUserId();
+        if (AppConstant.SYSTEM_SUPER_ADMIN_USER_ID.equals(userId) && !JwtUserContext.hasSuperAdmin()) {
+            throw new BizException("超管的密码你别搞！！！");
+        }
+        SysUser sysUser = this.detail(userId);
+        sysUser.setPassword(PasswordUtil.encodePassword(params.getNewPassword()));
+        this.sysUserMapper.updateById(sysUser);
     }
 
     @Override

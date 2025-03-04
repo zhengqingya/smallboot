@@ -2,13 +2,18 @@ package com.zhengqing.common.netty.util;
 
 import cn.hutool.core.util.StrUtil;
 import com.zhengqing.common.netty.constant.NettyRedisConstant;
+import com.zhengqing.common.netty.enums.NettyMsgCmdType;
 import com.zhengqing.common.netty.enums.NettyTerminalType;
+import com.zhengqing.common.netty.enums.NettyUserLogoutMsgEnum;
 import com.zhengqing.common.netty.model.NettyLogin;
+import com.zhengqing.common.netty.model.NettyMsgBase;
 import com.zhengqing.common.netty.server.NettyServerRunner;
+import com.zhengqing.common.netty.server.NettyUserCtxMap;
 import com.zhengqing.common.netty.server.handler.HeartbeatHandler;
 import com.zhengqing.common.netty.server.handler.LoginHandler;
 import com.zhengqing.common.redis.util.RedisUtil;
 import io.netty.channel.ChannelHandlerContext;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +27,7 @@ import java.util.concurrent.TimeUnit;
  * @description
  * @date 2024/2/27 14:09
  */
+@Slf4j
 public class NettyUtil {
 
     /**
@@ -60,5 +66,16 @@ public class NettyUtil {
         }
     }
 
-
+    /**
+     * 发送消息
+     */
+    public static class SEND_MSG {
+        public static void logout(Long userId, NettyUserLogoutMsgEnum msgEnum) {
+            ChannelHandlerContext ctx = NettyUserCtxMap.getCtx(userId, NettyTerminalType.WEB.getType());
+            if (ctx != null) {
+                ctx.channel().writeAndFlush(NettyMsgBase.builder().cmd(NettyMsgCmdType.FORCE_LOGOUT).data("强制下线：" + msgEnum.getDesc()).build());
+                log.info("【netty】userId:{} 强制下线: {}", userId, msgEnum.getDesc());
+            }
+        }
+    }
 }

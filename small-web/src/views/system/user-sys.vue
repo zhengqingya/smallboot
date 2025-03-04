@@ -68,19 +68,18 @@
           </base-table-p>
         </base-content>
       </base-card>
-      <base-dialog v-if="dialogStatus === 'updatePwd'" v-model="dialogVisible" :title="titleMap[dialogStatus]" width="30%">
-        <el-input v-model="newPassword" placeholder="请输入密码" />
-        <template #footer>
-          <el-button @click="dialogVisible = false">取消</el-button>
-          <el-button type="primary" @click="submitPwd()">确定</el-button>
-        </template>
-      </base-dialog>
-      <base-dialog v-else v-model="dialogVisible" :title="titleMap[dialogStatus]" width="50%">
+      <update-sys-user-password
+        :userId="form.userId"
+        @cancel="dialogVisible = false"
+        @ok="dialogVisible = false"
+        v-if="dialogStatus === 'updatePwd' && dialogVisible"
+        :title="titleMap[dialogStatus]" />
+      <base-dialog v-else v-model="dialogVisible" :title="titleMap[dialogStatus]" width="500px">
         <el-form ref="dataFormRef" :model="form" :rules="rules" label-width="80px">
           <el-form-item label="账号:" prop="username">
             <el-input v-model="form.username" :disabled="dialogStatus != 'add'" />
           </el-form-item>
-          <el-form-item label="密码:" prop="password">
+          <el-form-item label="密码:" prop="password" v-if="dialogStatus == 'add'">
             <el-input v-model="form.password" placeholder="请输入密码" />
           </el-form-item>
           <el-form-item label="昵称:" prop="nickname">
@@ -105,16 +104,16 @@
               v-if="dialogVisible"
               v-model="form.deptId"
               clearable
-              style="width: 100%"
+              is-full
               placeholder="请选择"
               :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true, emitPath: false }"
               api="sys_dept.tree" />
           </el-form-item>
           <el-form-item label="岗位:" prop="postIdList">
-            <base-select v-if="dialogVisible" v-model="form.postIdList" tag-type="success" style="width: 100%" multiple clearable :option-props="{ label: 'name', value: 'id' }" api="sys_post.list" />
+            <base-select is-full v-if="dialogVisible" v-model="form.postIdList" tag-type="success" multiple clearable :option-props="{ label: 'name', value: 'id' }" api="sys_post.list" />
           </el-form-item>
           <el-form-item label="角色:">
-            <base-select v-if="dialogVisible" v-model="form.roleIdList" tag-type="warning" multiple style="width: 100%" :option-props="{ label: 'name', value: 'roleId' }" api="sys_role.list" />
+            <base-select is-full v-if="dialogVisible" v-model="form.roleIdList" tag-type="warning" multiple :option-props="{ label: 'name', value: 'roleId' }" api="sys_role.list" />
           </el-form-item>
         </el-form>
         <template #footer>
@@ -140,10 +139,10 @@ let titleMap = ref({
   add: '创建',
   updatePwd: '更新密码',
 });
-let newPassword = ref('123456');
+
 let rules = ref({
   username: [{ required: true, message: '请输入账号', trigger: 'blur' }],
-  password: [{ pattern: /^(\w){6,16}$/, message: '请设置6-16位字母、数字组合' }],
+  password: [{ required: true, pattern: /^(\w){6,16}$/, message: '请设置6-16位字母、数字组合', trigger: 'blur' }],
   nickname: [{ required: true, message: '请输入你昵称', trigger: 'blur' }],
 });
 let deptTreeData = ref([]);
@@ -182,32 +181,19 @@ async function deleteData(id) {
 async function updatePwd(row) {
   form.value = Object.assign({}, row);
   dialogStatus.value = 'updatePwd';
-  newPassword.value = '123456';
   dialogVisible.value = true;
 }
-async function submitPwd() {
-  form.value.password = newPassword.value;
-  let res = await proxy.$api.sys_user.update(form.value);
-  proxy.submitOk(res.msg, () => {
-    handelCurrentLoginUser();
-  });
-  dialogVisible.value = false;
-}
+
 function submitForm() {
   proxy.$refs.dataFormRef.validate(async (valid) => {
     if (valid) {
+      form.value.isUpdateRolePerm = true;
       let res = await proxy.$api.sys_user[form.value.userId ? 'update' : 'add'](form.value);
       proxy.submitOk(res.msg);
-      handelCurrentLoginUser();
-      refreshTableData();
       dialogVisible.value = false;
+      refreshTableData();
     }
   });
-}
-function handelCurrentLoginUser() {
-  if (form.value.userId === userObj.value.userId) {
-    // logout();
-  }
 }
 </script>
 <style lang="scss" scoped></style>

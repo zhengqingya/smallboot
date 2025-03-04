@@ -1,10 +1,10 @@
 <template>
   <!-- {{ list[0] }} -->
-  <el-form-item>
+  <el-form-item :style="{ width: isFull ? '100%' : '' }">
     <el-select
       filterable
       v-bind="$attrs"
-      style="min-width: 200px"
+      :style="{ width: isFull ? '100vh' : '200px', 'margin-left': '0px' }"
       :placeholder="placeholder ? placeholder : label ? `请选择${label}` : list.length == 0 && isCustomNull ? isCustomNullTips : '请选择'"
       @change="handleChange">
       <template #prefix> <slot name="prefix" /></template>
@@ -32,6 +32,7 @@ const props = defineProps({
   isDefaultValue: { type: Boolean, default: false }, // true:默认选中第一个值
   isCustomNull: { type: Boolean, default: false },
   isCustomNullTips: { type: String, default: '暂无数据' },
+  isFull: { type: Boolean, default: false },
 });
 
 let list = $ref([]);

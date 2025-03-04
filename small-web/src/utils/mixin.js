@@ -31,10 +31,13 @@ export default {
       });
     },
     // 操作失败消息提醒内容
-    submitFail(msg) {
+    submitFail(msg, cb) {
       this.$message({
         message: msg || '网络异常，请稍后重试！',
         type: 'error',
+        onClose: function () {
+          cb && cb();
+        },
       });
     },
     // 消息确认后执行

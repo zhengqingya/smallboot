@@ -172,6 +172,7 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
                         .nickname(params.getAdminName())
                         .phone(params.getAdminPhone())
                         .roleIdList(Lists.newArrayList(roleId))
+                        .isUpdateRolePerm(true)
                         .isFixed(true)
                         .build());
                 sysTenant.setAdminUserId(userId);

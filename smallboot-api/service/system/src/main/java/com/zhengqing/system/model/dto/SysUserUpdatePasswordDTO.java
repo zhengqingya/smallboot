@@ -31,10 +31,10 @@ public class SysUserUpdatePasswordDTO {
     @ApiModelProperty(value = "用户ID")
     private Integer userId;
 
-    @Length(min = 6, message = "密码最少6位数!")
-    @NotBlank(message = "久密码不能为空！")
-    @ApiModelProperty(value = "密码")
-    private String password;
+//    @Length(min = 6, message = "密码最少6位数!")
+//    @NotBlank(message = "旧密码不能为空！")
+//    @ApiModelProperty(value = "密码")
+//    private String password;
 
     @Length(min = 6, message = "密码最少6位数!")
     @NotBlank(message = "新密码不能为空！")

@@ -1,24 +1,37 @@
 <template>
-  <base-wrapper>
-    <base-card title="个人信息" style="width: 400px">
-      <template #append>
-        <el-button type="warning" @click="updateUser">修改</el-button>
-      </template>
-      <base-cell label-width="80px">
-        <base-cell-item label="头像">
-          <el-image :src="userObj.avatarUrl" style="width: 100px; height: 100px" />
-        </base-cell-item>
-        <base-cell-item label="账号">{{ userObj.username }}</base-cell-item>
-        <base-cell-item label="名称">{{ userObj.nickname }}</base-cell-item>
-        <base-cell-item label="性别">{{ $filters.sexName(userObj.sex) }}</base-cell-item>
-        <base-cell-item label="手机号码">{{ userObj.phone }}</base-cell-item>
-        <base-cell-item label="邮箱">{{ userObj.email }}</base-cell-item>
-        <base-cell-item label="角色">{{ userObj.roleNameList }}</base-cell-item>
-        <base-cell-item label="创建时间">{{ userObj.createTime }}</base-cell-item>
-      </base-cell>
-    </base-card>
+  <div style="background: #f5f6fa; height: 100%; width: 100%">
+    <div class="bg" />
+    <div style="position: absolute; top: 118px; width: 100%; padding: 0px 24px">
+      <div style="padding: 40px; border-radius: 6px; background: #fff">
+        <div class="flex-between-start">
+          <div class="flex-start-center">
+            <el-avatar :size="78" :src="userObj.avatarUrl" />
+            <span style="margin-left: 32px; font-weight: 600; font-size: 22px; color: #333333">Hi，{{ userObj.nickname }}</span>
+          </div>
 
-    <!-- <el-col :span="11">
+          <div>
+            <el-button type="primary" @click="updateUser">修改基本信息</el-button>
+            <el-button type="warning" @click="updatePwdDialogVisible = true">修改密码</el-button>
+          </div>
+        </div>
+
+        <div style="height: 1px; background: #e6e9f4; margin: 40px 0px 24px 0px" />
+
+        <div class="grid-start-center-2" style="grid-gap: 20px; margin-left: 100px; width: 500px">
+          <span>账号：{{ userObj.username }}</span>
+          <span>性别：{{ $filters.sexName(userObj.sex) }}</span>
+          <span>手机：{{ userObj.phone }}</span>
+          <span>邮箱：{{ userObj.email }}</span>
+          <span>角色：{{ userObj.roleNameList }}</span>
+          <span>创建时间：{{ userObj.createTime }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <update-sys-user-password :userId="userObj.userId" @cancel="updatePwdDialogVisible = false" @ok="updatePwdDialogVisible = false" v-if="updatePwdDialogVisible" />
+
+  <!-- <el-col :span="11">
         <base-card title="第三方帐号绑定">
           <base-table-p ref="baseTableRef" api="sys_oauth.getOauthDataList" :params="tableOauthDataListQuery" :index-code="true" :is-page="false">
             <el-table-column label="绑定帐号信息" align="center">
@@ -42,39 +55,37 @@
           </base-table-p>
         </base-card>
       </el-col> -->
-
-    <base-dialog v-model="dialogVisible" title="修改个人信息" width="30%">
-      <el-form :model="form" label-width="80px">
-        <el-form-item label="账号:" prop="username">
-          <el-input v-model="form.username" disabled />
-        </el-form-item>
-        <el-form-item label="密码:" prop="password">
+  <base-dialog v-model="dialogVisible" title="修改基本信息" width="500px">
+    <el-form :model="form" label-width="80px">
+      <el-form-item label="账号:" prop="username">
+        <el-input v-model="form.username" disabled />
+      </el-form-item>
+      <!-- <el-form-item label="密码:" prop="password">
           <el-input v-model="form.password" placeholder="请输入密码" />
-        </el-form-item>
-        <el-form-item label="昵称:" prop="nickname">
-          <el-input v-model="form.nickname" />
-        </el-form-item>
-        <el-form-item label="性别:" prop="sex">
-          <el-select v-model="form.sex" placeholder="请选择" style="width: 100%">
-            <el-option v-for="item in sexList" :key="item.value" :label="item.name" :value="item.value" />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="手机号码:" prop="phone">
-          <el-input v-model="form.phone" />
-        </el-form-item>
-        <el-form-item label="邮箱:" prop="email">
-          <el-input v-model="form.email" />
-        </el-form-item>
-        <el-form-item label="头像:" prop="avatar">
-          <base-upload-single v-model="form.avatarUrl" />
-        </el-form-item>
-      </el-form>
-      <template #footer>
-        <el-button @click="dialogVisible = false">取消</el-button>
-        <el-button type="primary" @click="submitForm">确定</el-button>
-      </template>
-    </base-dialog>
-  </base-wrapper>
+        </el-form-item> -->
+      <el-form-item label="昵称:" prop="nickname">
+        <el-input v-model="form.nickname" />
+      </el-form-item>
+      <el-form-item label="性别:" prop="sex">
+        <el-select v-model="form.sex" placeholder="请选择" style="width: 100%">
+          <el-option v-for="item in sexList" :key="item.value" :label="item.name" :value="item.value" />
+        </el-select>
+      </el-form-item>
+      <el-form-item label="手机号码:" prop="phone">
+        <el-input v-model="form.phone" />
+      </el-form-item>
+      <el-form-item label="邮箱:" prop="email">
+        <el-input v-model="form.email" />
+      </el-form-item>
+      <el-form-item label="头像:" prop="avatar">
+        <base-upload-single v-model="form.avatarUrl" />
+      </el-form-item>
+    </el-form>
+    <template #footer>
+      <el-button @click="dialogVisible = false">取消</el-button>
+      <el-button type="primary" @click="submitForm">确定</el-button>
+    </template>
+  </base-dialog>
 </template>
 
 <script setup>
@@ -84,6 +95,7 @@ let { userObj } = toRefs(useUserStore);
 let { logout } = useUserStore;
 
 let dialogVisible = $ref(false);
+let updatePwdDialogVisible = $ref(false);
 let form = $ref({});
 
 function updateUser() {
@@ -93,11 +105,11 @@ function updateUser() {
 
 async function submitForm() {
   await proxy.$api.sys_user.update(form);
-  // proxy.submitOk('保存成功');
-  // dialogVisible = false;
-  proxy.submitConfirm('保存成功，请重新登录！', () => {
-    logout(); // 退出登录
-  });
+  proxy.submitOk('保存成功');
+  dialogVisible = false;
+  // proxy.submitConfirm('保存成功，请重新登录！', () => {
+  //   logout(); // 退出登录
+  // });
 }
 
 // async function refreshTableData() {
@@ -119,4 +131,10 @@ async function submitForm() {
 // }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.bg {
+  width: 100%;
+  height: 355px;
+  background-color: #00bfff;
+}
+</style>

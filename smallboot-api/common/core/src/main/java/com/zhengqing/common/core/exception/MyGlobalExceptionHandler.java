@@ -1,6 +1,7 @@
 package com.zhengqing.common.core.exception;
 
 import cn.dev33.satoken.exception.NotLoginException;
+import com.zhengqing.common.base.exception.BizException;
 import com.zhengqing.common.base.exception.MyException;
 import com.zhengqing.common.base.exception.ParameterException;
 import com.zhengqing.common.base.model.vo.ApiResult;
@@ -45,6 +46,15 @@ public class MyGlobalExceptionHandler {
     @ExceptionHandler(value = ParameterException.class)
     public ApiResult myException(ParameterException e) {
         log.error("参数异常：", e);
+        if (e.getCode() != null) {
+            return ApiResult.fail(e.getCode(), e.getMessage());
+        }
+        return ApiResult.fail(e.getMessage());
+    }
+
+    @ExceptionHandler(value = BizException.class)
+    public ApiResult bizException(BizException e) {
+        log.error("业务异常：", e);
         if (e.getCode() != null) {
             return ApiResult.fail(e.getCode(), e.getMessage());
         }
