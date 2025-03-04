@@ -14,7 +14,8 @@
       :options="list"
       :placeholder="placeholder ? placeholder : label ? `请选择${label}` : '请选择'"
       :style="{ width: isFull ? '100vh' : '200px', 'margin-left': '0px' }"
-      @change="handleChange" />
+      @change="handleChange"
+      @clear="handleClear" />
   </el-form-item>
 </template>
 
@@ -58,8 +59,15 @@ async function init() {
 
 async function handleChange(value) {
   // proxy.$emit('update:modelValue', value[value.length - 1]);
-  // 关闭弹窗
-  proxy.$refs.cascaderRef.togglePopperVisible();
+
+  proxy.$refs.cascaderRef.togglePopperVisible(); // 关闭弹窗
+  proxy.$emit('update');
+}
+
+async function handleClear() {
+  proxy.$emit('update:modelValue', null);
+  proxy.$refs.cascaderRef.togglePopperVisible(); // 关闭弹窗
+  proxy.$emit('update');
 }
 
 // 接口请求

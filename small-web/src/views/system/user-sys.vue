@@ -21,7 +21,8 @@
             clearable
             placeholder="请选择部门"
             :props="{ value: 'id', label: 'name', children: 'children', checkStrictly: true, emitPath: false }"
-            api="sys_dept.tree" />
+            api="sys_dept.tree"
+            @update="refreshTableData" />
           <!-- <base-select v-model="listQuery.roleIdList" label="角色" tag-type="warning" multiple :option-props="{ label: 'name', value: 'roleId' }" api="sys_role.list" /> -->
           <base-input v-model="listQuery.username" label="账号" @clear="refreshTableData" />
           <base-input v-model="listQuery.nickname" label="昵称" @clear="refreshTableData" />
@@ -36,10 +37,10 @@
           <base-table-p ref="baseTableRef" api="sys_user.listPage" :params="listQuery">
             <el-table-column :show-overflow-tooltip="true" prop="username" align="center" label="用户账号" />
             <el-table-column prop="nickname" label="用户名称" align="center" />
-            <el-table-column prop="sexName" label="性别" align="center" />
+            <el-table-column prop="sexName" label="性别" align="center" width="60px" />
             <el-table-column prop="phone" label="手机号码" align="center" />
             <el-table-column prop="email" label="邮箱" align="center" />
-            <el-table-column label="在线状态" align="center">
+            <el-table-column label="在线状态" align="center" width="88px">
               <template #default="scope">
                 <el-tag v-if="scope.row.isOnline">在线</el-tag>
                 <el-tag v-else type="info">离线</el-tag>
@@ -50,7 +51,7 @@
                 <el-tag v-if="scope.row.roleNames">{{ scope.row.roleNames }}</el-tag>
               </template>
             </el-table-column>
-            <el-table-column label="头像" prop="avatarUrl" align="center">
+            <el-table-column label="头像" prop="avatarUrl" align="center" width="88px">
               <template #default="scope">
                 <span>
                   <img :src="scope.row.avatarUrl" alt="" class="img-sm" />
