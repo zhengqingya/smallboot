@@ -22,8 +22,10 @@
         <div v-else>
           <base-card title="字典类型信息">
             <template #append>
-              <el-button type="primary" @click="updateDictType(selectedDictTypeData)">编辑 </el-button>
-              <el-button type="danger" @click="deleteDictType">删除</el-button>
+              <div class="flex">
+                <el-button type="primary" @click="updateDictType(selectedDictTypeData)">编辑 </el-button>
+                <el-button type="danger" @click="deleteDictType">删除</el-button>
+              </div>
             </template>
             <base-cell label-width="120px">
               <base-cell-item label="字典类型名称">{{ selectedDictTypeData.name }}</base-cell-item>
