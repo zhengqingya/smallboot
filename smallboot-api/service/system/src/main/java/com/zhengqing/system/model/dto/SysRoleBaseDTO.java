@@ -34,6 +34,9 @@ public class SysRoleBaseDTO extends BaseDTO {
     @ApiModelProperty("排除指定角色id下级的数据")
     private List<Integer> excludeRoleIdList;
 
+    @ApiModelProperty("排除指定角色code的数据")
+    private List<String> excludeRoleCodeList;
+
     @ApiModelProperty(value = "是否刷新所有租户权限数据(false->否 true->是)")
     private Boolean isRefreshAllTenant;
 

@@ -85,7 +85,7 @@ const { proxy } = getCurrentInstance();
 let { userObj } = toRefs(proxy.$store.user.useUserStore());
 let roleForm = $ref({});
 let dialogVisible = $ref(false);
-let listQuery = $ref({});
+let listQuery = $ref({ excludeRoleCodeList: 'tenant_admin' });
 let rules = {
   code: [{ required: true, message: '请输入角色编码', trigger: 'blur' }],
   name: [{ required: true, message: '请输入角色名称', trigger: 'blur' }],

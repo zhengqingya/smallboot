@@ -21,6 +21,12 @@
                     #{excludeRoleId}
                 </foreach>
             </if>
+            <if test="filter.excludeRoleCodeList != null and filter.excludeRoleCodeList.size() > 0">
+                AND code not in
+                <foreach item="excludeRoleCode" index="index" collection="filter.excludeRoleCodeList" open="(" separator="," close=")">
+                    #{excludeRoleCode}
+                </foreach>
+            </if>
         </where>
         ORDER BY is_fixed DESC, sort ASC, create_time DESC
     </select>
