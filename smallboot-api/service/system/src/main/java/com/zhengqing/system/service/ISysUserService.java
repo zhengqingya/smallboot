@@ -51,16 +51,6 @@ public interface ISysUserService extends IService<SysUser> {
     SysUser detail(Integer userId);
 
     /**
-     * 根据小程序用户id查询系统用户id
-     *
-     * @param miniUserId 小程序用户id
-     * @return 系统用户id
-     * @author zhengqingya
-     * @date 2020/9/10 10:53
-     */
-    Integer getUserIdByMiniUserId(Long miniUserId);
-
-    /**
      * 新增或更新
      *
      * @param params 提交参数
@@ -110,13 +100,4 @@ public interface ISysUserService extends IService<SysUser> {
      */
     SysUser getUserByUsername(String username);
 
-    /**
-     * 绑定小程序用户
-     *
-     * @param params 提交参数
-     * @return void
-     * @author zhengqingya
-     * @date 2023/10/21 14:08
-     */
-    void bindMiniUser(SysUserBindMiniUserDTO params);
 }

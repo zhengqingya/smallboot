@@ -34,7 +34,7 @@
 </template>
 <script setup>
 const { proxy } = getCurrentInstance();
-let listQuery = ref({ isBindMiniUser: false });
+let listQuery = ref({});
 async function refreshTableData() {
   proxy.$refs.baseTableRef.refresh();
 }

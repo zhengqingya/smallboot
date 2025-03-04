@@ -21,8 +21,10 @@
           </el-form-item>
         </el-form>
         <div class="tips text-color-grey font-size-sm">
-          <span>用户名: admin</span>
-          <span>&nbsp;&nbsp;密码: 123456</span>
+          <span>&nbsp;&nbsp;1. 超管: superadmin/123456</span>
+        </div>
+        <div class="tips text-color-grey font-size-sm">
+          <span>&nbsp;&nbsp;2. 系统管理员: admin/123456</span>
         </div>
         <el-button type="primary" class="w-full" style="margin-top: 10px; width: 260px" @click="handleLogin">登 录</el-button>
       </div>
