@@ -6,9 +6,7 @@ import com.google.common.collect.Lists;
 import java.util.List;
 
 /**
- * <p>
- * 全局常用变量 - base
- * </p>
+ * <p> 全局常用变量 - base </p>
  *
  * @author zhengqingya
  * @description
@@ -22,17 +20,6 @@ public interface BaseConstant {
     Integer PARENT_ID = 0;
     Long PARENT_ID_LONG = 0L;
 
-
-    /**
-     * 超级管理员 -- 用户id、角色id
-     */
-    Integer SYSTEM_SUPER_ADMIN_USER_ID = 1;
-    Integer SMALL_BOOT_SUPER_ADMIN_ROLE_ID = 1;
-    // 系统管理员 -- 用户id、角色id
-    Integer SMALL_BOOT_SYSTEM_ADMIN_USER_ID = 2;
-    Integer SMALL_BOOT_SYSTEM_ADMIN_ROLE_ID = 2;
-    // 租户套餐 变更时  不清除的角色关联菜单数据
-    List<Integer> NOT_DEL_MENU_EXCLUDE_ROLE_ID_LIST = Lists.newArrayList(1, 2);
 
     /**
      * smallboot项目租户 -- id、超级套餐
@@ -55,17 +42,6 @@ public interface BaseConstant {
     String CONTEXT_KEY_USERNAME = "smallboot_username";
     String DEFAULT_CONTEXT_KEY_USER_ID = "0";
     String DEFAULT_CONTEXT_KEY_USERNAME = "未知";
-
-    /**
-     * 当前页、每页显示数量
-     */
-    String PAGE_NUM = "pageNum";
-    String PAGE_SIZE = "pageSize";
-    /**
-     * 分页默认值
-     */
-    int DEFAULT_PAGE_NUM = 1;
-    int DEFAULT_PAGE_SIZE = 10;
 
     /**
      * 服务调用不需要封装返回值的api

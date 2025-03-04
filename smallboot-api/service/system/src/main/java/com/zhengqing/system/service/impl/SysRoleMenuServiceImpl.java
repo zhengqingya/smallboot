@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
 import com.zhengqing.common.base.constant.AppConstant;
+import com.zhengqing.common.base.constant.AuthConstant;
 import com.zhengqing.common.base.context.TenantIdContext;
 import com.zhengqing.system.entity.SysMenu;
 import com.zhengqing.system.entity.SysRoleMenu;
@@ -160,7 +161,7 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
         this.sysRoleMenuMapper.delete(
                 new LambdaQueryWrapper<SysRoleMenu>()
                         .in(SysRoleMenu::getMenuId, delMenuIdList)
-                        .notIn(SysRoleMenu::getRoleId, AppConstant.NOT_DEL_MENU_EXCLUDE_ROLE_ID_LIST)
+                        .notIn(SysRoleMenu::getRoleId, AuthConstant.NOT_DEL_MENU_EXCLUDE_ROLE_ID_LIST)
         );
     }
 

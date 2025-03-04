@@ -1,6 +1,7 @@
 package com.zhengqing.common.core.aspect;
 
 import com.zhengqing.common.base.constant.BaseConstant;
+import com.zhengqing.common.base.constant.PageConstant;
 import com.zhengqing.common.base.context.JwtUserContext;
 import com.zhengqing.common.base.model.dto.BaseDTO;
 import com.zhengqing.common.base.model.dto.BasePageDTO;
@@ -58,8 +59,8 @@ public class ControllerAspect {
             // page参数处理
             if (paramObj instanceof BasePageDTO) {
                 BasePageDTO pageDTO = (BasePageDTO) paramObj;
-                pageDTO.setPageNum(ServletUtil.getParameterToInt(BaseConstant.PAGE_NUM, BaseConstant.DEFAULT_PAGE_NUM));
-                pageDTO.setPageSize(ServletUtil.getParameterToInt(BaseConstant.PAGE_SIZE, BaseConstant.DEFAULT_PAGE_SIZE));
+                pageDTO.setPageNum(ServletUtil.getParameterToInt(PageConstant.PAGE_NUM, PageConstant.DEFAULT_PAGE_NUM));
+                pageDTO.setPageSize(ServletUtil.getParameterToInt(PageConstant.PAGE_SIZE, PageConstant.DEFAULT_PAGE_SIZE));
             }
 
 

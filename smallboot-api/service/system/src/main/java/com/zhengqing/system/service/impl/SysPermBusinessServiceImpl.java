@@ -7,6 +7,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.zhengqing.common.auth.util.AuthUtil;
 import com.zhengqing.common.base.constant.AppConstant;
+import com.zhengqing.common.base.constant.AuthConstant;
 import com.zhengqing.common.base.constant.SecurityConstant;
 import com.zhengqing.common.base.context.JwtUserContext;
 import com.zhengqing.common.base.context.TenantIdContext;
@@ -70,7 +71,7 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
         Assert.notNull(roleId, "超级管理员角色丢失！");
         this.iSysUserRoleService.addOrUpdateData(
                 SysUserRoleSaveDTO.builder()
-                        .userId(AppConstant.SYSTEM_SUPER_ADMIN_USER_ID)
+                        .userId(AuthConstant.SYSTEM_SUPER_ADMIN_USER_ID)
                         .roleIdList(Lists.newArrayList(roleId))
                         .build()
         );

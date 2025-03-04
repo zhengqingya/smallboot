@@ -5,6 +5,7 @@ import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhengqing.common.base.constant.AppConstant;
+import com.zhengqing.common.base.constant.AuthConstant;
 import com.zhengqing.common.base.context.JwtUserContext;
 import com.zhengqing.common.base.context.TenantIdContext;
 import com.zhengqing.system.entity.SysMenu;
@@ -63,7 +64,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         Boolean isOnlySystemAdminRePerm = params.getIsOnlySystemAdminRePerm();
         if ((isOnlySystemAdminRePerm != null && isOnlySystemAdminRePerm) || JwtUserContext.hasSystemAdmin()) {
             // 查询系统管理员有的权限
-            params.setMenuIdList(this.iSysRoleMenuService.getMenuIdsByRoleId(AppConstant.SMALL_BOOT_SYSTEM_ADMIN_ROLE_ID));
+            params.setMenuIdList(this.iSysRoleMenuService.getMenuIdsByRoleId(AuthConstant.SMALL_BOOT_SYSTEM_ADMIN_ROLE_ID));
         }
 
 

@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.google.common.collect.Lists;
 import com.zhengqing.common.base.constant.AppConstant;
+import com.zhengqing.common.base.constant.AuthConstant;
 import com.zhengqing.common.base.context.JwtUserContext;
 import com.zhengqing.common.base.model.bo.JwtUserBO;
 import com.zhengqing.common.base.model.bo.ScopeDataBO;
@@ -136,7 +137,7 @@ public class MyDataPermissionHandler {
                     case 所在角色以及下级角色:
                         // 创建IN 表达式
                         // 创建IN范围的元素集合
-                        if (userReAllRoleIdList.contains(AppConstant.SMALL_BOOT_SUPER_ADMIN_ROLE_ID)) {
+                        if (userReAllRoleIdList.contains(AuthConstant.SMALL_BOOT_SUPER_ADMIN_ROLE_ID)) {
                             return where;
                         }
                         if (CollUtil.isEmpty(userReAllRoleIdList)) {

@@ -3,6 +3,7 @@ package com.zhengqing.common.core.aspect;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zhengqing.common.base.constant.BaseConstant;
+import com.zhengqing.common.base.constant.PageConstant;
 import com.zhengqing.common.base.exception.ParameterException;
 import com.zhengqing.common.web.util.ServletUtil;
 import org.aspectj.lang.JoinPoint;
@@ -41,8 +42,8 @@ public class MapperAspect {
     @Before("mapperPointCut()")
     public void mapperPointCut(JoinPoint joinPoint) {
         Object[] paramObjArray = joinPoint.getArgs();
-        int pageNum = ServletUtil.getParameterToInt(BaseConstant.PAGE_NUM, BaseConstant.DEFAULT_PAGE_NUM);
-        int pageSize = ServletUtil.getParameterToInt(BaseConstant.PAGE_SIZE, BaseConstant.DEFAULT_PAGE_SIZE);
+        int pageNum = ServletUtil.getParameterToInt(PageConstant.PAGE_NUM, PageConstant.DEFAULT_PAGE_NUM);
+        int pageSize = ServletUtil.getParameterToInt(PageConstant.PAGE_SIZE, PageConstant.DEFAULT_PAGE_SIZE);
         // 遍历所有传入参数,赋值
         for (Object paramObj : paramObjArray) {
             if (paramObj instanceof IPage) {

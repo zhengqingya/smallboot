@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhengqing.common.auth.util.AuthUtil;
 import com.zhengqing.common.base.constant.AppConstant;
+import com.zhengqing.common.base.constant.AuthConstant;
 import com.zhengqing.common.base.context.JwtUserContext;
 import com.zhengqing.common.base.exception.BizException;
 import com.zhengqing.common.base.exception.MyException;
@@ -166,7 +167,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         if (!params.getIsUpdateRolePerm()) {
             return userId;
         }
-        if (AppConstant.SYSTEM_SUPER_ADMIN_USER_ID.equals(userId)) {
+        if (AuthConstant.SYSTEM_SUPER_ADMIN_USER_ID.equals(userId)) {
             // 超管的角色信息不能修改
             return userId;
         }
@@ -186,8 +187,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     public void deleteUser(Integer userId) {
         SysUser sysUser = this.detail(userId);
         Assert.isFalse(sysUser.getIsFixed(), "您没有权限删除系统用户！");
-        if (AppConstant.SYSTEM_SUPER_ADMIN_USER_ID.equals(userId)) {
-            throw new MyException("您没有权限删除超级管理员！");
+        if (AuthConstant.SYSTEM_SUPER_ADMIN_USER_ID.equals(userId)) {
+            throw new BizException("您没有权限删除超级管理员！");
         }
         // 1、删除关联角色
         this.iSysUserRoleService.delByUserId(userId);
@@ -208,7 +209,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 //        this.sysUserMapper.updateById(sysUser);
 
         Integer userId = params.getUserId();
-        if (AppConstant.SYSTEM_SUPER_ADMIN_USER_ID.equals(userId) && !JwtUserContext.hasSuperAdmin()) {
+        if (AuthConstant.SYSTEM_SUPER_ADMIN_USER_ID.equals(userId) && !JwtUserContext.hasSuperAdmin()) {
             throw new BizException("超管的密码你别搞！！！");
         }
         SysUser sysUser = this.detail(userId);
