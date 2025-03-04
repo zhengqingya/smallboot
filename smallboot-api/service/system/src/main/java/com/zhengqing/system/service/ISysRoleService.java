@@ -106,6 +106,16 @@ public interface ISysRoleService extends IService<SysRole> {
     /**
      * 根据code查询角色ID
      *
+     * @param sysRoleCodeEnumList 角色codes
+     * @return 角色ids
+     * @author zhengqingya
+     * @date 2020/9/10 18:03
+     */
+    List<Integer> getRoleIdByCodes(List<SysRoleCodeEnum> sysRoleCodeEnumList);
+
+    /**
+     * 根据code查询角色ID
+     *
      * @param sysRoleCodeEnum 角色code
      * @return 角色ID
      * @author zhengqingya

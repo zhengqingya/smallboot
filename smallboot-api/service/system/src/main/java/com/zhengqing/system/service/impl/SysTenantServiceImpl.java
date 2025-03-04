@@ -133,10 +133,12 @@ public class SysTenantServiceImpl extends ServiceImpl<SysTenantMapper, SysTenant
             // 同步系统租户下的部分角色信息
             List<SysRoleBaseVO> roleList = TenantUtil.executeByTenantId(AppConstant.SMALL_BOOT_TENANT_ID, () -> this.iSysRoleService.list(SysRoleBaseDTO.builder()
                     .isRefreshAllTenant(true)
-                    .excludeRoleIdList(Lists.newArrayList(
-                            this.iSysRoleService.getRoleIdByCode(SysRoleCodeEnum.超级管理员),
-                            this.iSysRoleService.getRoleIdByCode(SysRoleCodeEnum.系统管理员),
-                            this.iSysRoleService.getRoleIdByCode(SysRoleCodeEnum.租户管理员))
+                    .excludeRoleIdList(
+                            iSysRoleService.getRoleIdByCodes(Lists.newArrayList(
+                                    SysRoleCodeEnum.超级管理员,
+                                    SysRoleCodeEnum.系统管理员,
+                                    SysRoleCodeEnum.租户管理员
+                            ))
                     )
                     .build()));
 

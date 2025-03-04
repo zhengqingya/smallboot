@@ -51,6 +51,16 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
     /**
      * 根据角色编码查询角色ID
      *
+     * @param codes 角色编码
+     * @return 角色ids
+     * @author zhengqingya
+     * @date 2020/9/10 18:03
+     */
+    List<Integer> selectRoleIdByCodes(@Param("codes") List<String> codes);
+
+    /**
+     * 根据角色编码查询角色ID
+     *
      * @param code 角色编码
      * @return 角色ID
      * @author zhengqingya

@@ -7,6 +7,7 @@ import com.google.common.collect.Lists;
 import com.zhengqing.common.base.constant.AppConstant;
 import com.zhengqing.common.base.constant.AuthConstant;
 import com.zhengqing.common.base.context.TenantIdContext;
+import com.zhengqing.common.base.enums.SysRoleCodeEnum;
 import com.zhengqing.system.entity.SysMenu;
 import com.zhengqing.system.entity.SysRoleMenu;
 import com.zhengqing.system.mapper.SysMenuMapper;
@@ -14,8 +15,11 @@ import com.zhengqing.system.mapper.SysRoleMenuMapper;
 import com.zhengqing.system.model.dto.SysRoleReMenuSaveDTO;
 import com.zhengqing.system.model.vo.SysRoleReBtnPermListVO;
 import com.zhengqing.system.service.ISysRoleMenuService;
+import com.zhengqing.system.service.ISysRoleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,6 +45,9 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
 
     private final SysRoleMenuMapper sysRoleMenuMapper;
     private final SysMenuMapper sysMenuMapper;
+    @Lazy
+    @Autowired
+    private ISysRoleService iSysRoleService;
 
     @Override
     public List<Integer> getMenuIdsByRoleId(Integer roleId) {
@@ -161,7 +168,13 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
         this.sysRoleMenuMapper.delete(
                 new LambdaQueryWrapper<SysRoleMenu>()
                         .in(SysRoleMenu::getMenuId, delMenuIdList)
-                        .notIn(SysRoleMenu::getRoleId, AuthConstant.NOT_DEL_MENU_EXCLUDE_ROLE_ID_LIST)
+                        // 不要清除指定角色（超管、系统管理员）关联的菜单数据
+                        .notIn(SysRoleMenu::getRoleId,
+                                iSysRoleService.getRoleIdByCodes(Lists.newArrayList(
+                                        SysRoleCodeEnum.超级管理员,
+                                        SysRoleCodeEnum.系统管理员
+                                ))
+                        )
         );
     }
 

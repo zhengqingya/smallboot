@@ -122,10 +122,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Integer addOrUpdateData(SysUserSaveDTO params) {
+        // 1、保存用户基本信息
         Integer userId = params.getUserId();
         boolean isAdd = userId == null;
-
-        String password = params.getPassword();
 
         // 校验名称是否重复
         SysUser sysUserOld = this.sysUserMapper.selectOne(new LambdaQueryWrapper<SysUser>().eq(SysUser::getUsername, params.getUsername()).last(MybatisConstant.LIMIT_ONE));
@@ -147,23 +146,17 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
         if (isAdd) {
             sysUser.setUsername(params.getUsername());
-            sysUser.setPassword(PasswordUtil.encodePassword(StrUtil.isBlank(password) ? AppConstant.DEFAULT_PASSWORD : password));
+            sysUser.setPassword(PasswordUtil.encodePassword(StrUtil.isBlank(params.getPassword()) ? AppConstant.DEFAULT_PASSWORD : params.getPassword()));
             sysUser.insert();
             userId = sysUser.getUserId();
         } else {
-//            if (StrUtil.isNotBlank(password)) {
-//                if (AppConstant.SYSTEM_SUPER_ADMIN_USER_ID.equals(userId) && !isSuperAdminOperate) {
-//                    throw new MyException("超管的密码你别搞！！！");
-//                }
-//                sysUser.setPassword(PasswordUtil.encodePassword(password));
-//            }
             SysUser sysUserOldData = this.sysUserMapper.selectById(userId);
             isFixedUser = sysUserOldData.getIsFixed();
             sysUser.setIsFixed(sysUserOldData.getIsFixed());
             sysUser.updateById();
         }
 
-        // ---------------------- 下面修改用户角色 ----------------------------
+        // 2、保存用户角色信息
         if (!params.getIsUpdateRolePerm()) {
             return userId;
         }

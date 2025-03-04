@@ -5,9 +5,9 @@ import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhengqing.common.base.constant.AppConstant;
-import com.zhengqing.common.base.constant.AuthConstant;
 import com.zhengqing.common.base.context.JwtUserContext;
 import com.zhengqing.common.base.context.TenantIdContext;
+import com.zhengqing.common.base.enums.SysRoleCodeEnum;
 import com.zhengqing.system.entity.SysMenu;
 import com.zhengqing.system.entity.SysTenantPackage;
 import com.zhengqing.system.enums.SysMenuTypeEnum;
@@ -17,6 +17,7 @@ import com.zhengqing.system.model.dto.SysMenuSaveDTO;
 import com.zhengqing.system.model.dto.SysMenuTreeDTO;
 import com.zhengqing.system.service.ISysMenuService;
 import com.zhengqing.system.service.ISysRoleMenuService;
+import com.zhengqing.system.service.ISysRoleService;
 import com.zhengqing.system.service.ISysTenantPackageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,6 +45,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     private final SysMenuMapper sysMenuMapper;
     private final ISysTenantPackageService iSysTenantPackageService;
     private final ISysRoleMenuService iSysRoleMenuService;
+    private final ISysRoleService iSysRoleService;
 
     @Override
     public List<SysMenuTree> list(SysMenuTreeDTO params) {
@@ -64,7 +66,8 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         Boolean isOnlySystemAdminRePerm = params.getIsOnlySystemAdminRePerm();
         if ((isOnlySystemAdminRePerm != null && isOnlySystemAdminRePerm) || JwtUserContext.hasSystemAdmin()) {
             // 查询系统管理员有的权限
-            params.setMenuIdList(this.iSysRoleMenuService.getMenuIdsByRoleId(AuthConstant.SMALL_BOOT_SYSTEM_ADMIN_ROLE_ID));
+            Integer systemRoleId = this.iSysRoleService.getRoleIdByCode(SysRoleCodeEnum.系统管理员);
+            params.setMenuIdList(this.iSysRoleMenuService.getMenuIdsByRoleId(systemRoleId));
         }
 
 

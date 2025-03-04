@@ -23,9 +23,12 @@ import com.zhengqing.system.service.ISysRoleScopeService;
 import com.zhengqing.system.service.ISysRoleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -45,7 +48,9 @@ import java.util.stream.Collectors;
 public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> implements ISysRoleService {
 
     private final SysRoleMapper sysRoleMapper;
-    private final ISysRoleMenuService iSysRoleMenuService;
+    @Lazy
+    @Autowired
+    private ISysRoleMenuService iSysRoleMenuService;
     private final ISysRoleScopeService iSysRoleScopeService;
 
     @Override
@@ -205,6 +210,11 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         this.iSysRoleScopeService.delByRoleId(roleId);
         // 2、删除角色
         this.removeById(roleId);
+    }
+
+    @Override
+    public List<Integer> getRoleIdByCodes(List<SysRoleCodeEnum> sysRoleCodeEnumList) {
+        return sysRoleMapper.selectRoleIdByCodes(sysRoleCodeEnumList.stream().map(SysRoleCodeEnum::getCode).collect(Collectors.toList()));
     }
 
     @Override
