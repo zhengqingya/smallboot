@@ -1,10 +1,7 @@
 package com.zhengqing.common.base.constant;
 
 
-import com.google.common.collect.Lists;
 import com.zhengqing.common.base.enums.SysRoleCodeEnum;
-
-import java.util.List;
 
 /**
  * <p> 权限认证 常用变量 </p>
@@ -22,6 +19,11 @@ public interface AuthConstant extends BaseConstant {
      */
     Integer SYSTEM_SUPER_ADMIN_USER_ID = 1;
     Integer SMALL_BOOT_SUPER_ADMIN_ROLE_ID = 1;
+
+    /**
+     * 系统租户 - 超级套餐
+     */
+    Integer SYS_RE_PACKAGE = 1;
 
     /**
      * 系统管理员 -- 用户id、角色id

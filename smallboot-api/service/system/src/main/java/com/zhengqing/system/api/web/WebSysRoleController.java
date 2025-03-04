@@ -39,9 +39,9 @@ public class WebSysRoleController extends BaseController {
     private final ISysRoleService iSysRoleService;
     private final ISysPermBusinessService iSysPermBusinessService;
 
-    @GetMapping("listPage")
+    @GetMapping("page")
     @ApiOperation("列表分页")
-    public IPage<SysRoleBaseVO> listPage(@ModelAttribute SysRoleBaseDTO params) {
+    public IPage<SysRoleBaseVO> page(@ModelAttribute SysRoleBaseDTO params) {
         return this.iSysRoleService.listPage(params);
     }
 

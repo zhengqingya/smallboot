@@ -15,6 +15,7 @@ export const useUserStore = defineStore('user', () => {
   let routerMap = ref({}); // 全路径'/system/user' -> 路由信息
   let loginBeforeUrl = ref(''); // 登录前的路径
   let tenantList = ref([]); // 租户列表
+  let isSuperAdmin = ref(false); // 是否为超管
   let isSuperOrSystemAdmin = ref(false); // 是否为系统管理员|超管
 
   // 登录
@@ -61,7 +62,10 @@ export const useUserStore = defineStore('user', () => {
   async function getUserInfo() {
     let result = await api.sys_user.getUserPerm();
     userObj.value = result.data;
-    if ((userObj.value.roleCodeList && userObj.value.roleCodeList.includes('system_admin')) || userObj.value.roleCodeList.includes('super_admin')) {
+    if (userObj.value.roleCodeList && userObj.value.roleCodeList.includes('system_admin')) {
+      isSuperAdmin.value = true;
+    }
+    if (isSuperAdmin.value || userObj.value.roleCodeList.includes('super_admin')) {
       isSuperOrSystemAdmin.value = true;
     }
 
@@ -151,5 +155,5 @@ export const useUserStore = defineStore('user', () => {
     return result;
   }
 
-  return { tenantId, tenantList, isLogin, loginBeforeUrl, login, logout, tokenObj, userObj, getUserInfo, routerList, routerMap, isSuperOrSystemAdmin };
+  return { tenantId, tenantList, isLogin, loginBeforeUrl, login, logout, tokenObj, userObj, getUserInfo, routerList, routerMap, isSuperAdmin, isSuperOrSystemAdmin };
 });

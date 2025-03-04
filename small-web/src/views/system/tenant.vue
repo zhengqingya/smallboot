@@ -40,40 +40,40 @@
       </base-table-p>
     </base-content>
 
-    <base-dialog v-model="dialogVisible" :title="dialogTitleObj[dialogStatus]" width="30%">
+    <base-dialog v-model="dialogVisible" :title="dialogTitleObj[dialogStatus]" width="500px">
       <el-form ref="dataFormRef" :model="form" :rules="rules" label-width="130px">
         <el-form-item label="租户ID:">
           <el-input v-if="form.id" v-model="form.id" disabled />
           <el-input v-else v-model="form.customTenantId" :disabled="form.id" placeholder="不填则由系统自动生成" />
         </el-form-item>
-        <el-form-item label="租户名:">
+        <el-form-item label="租户名:" prop="name">
           <el-input v-model="form.name" />
         </el-form-item>
-        <el-form-item label="租户状态:">
+        <el-form-item label="租户状态:" prop="status">
           <base-radio-group v-model="form.status" />
         </el-form-item>
-        <el-form-item label="过期时间:">
-          <el-date-picker v-model="form.expireTime" type="datetime" placeholder="请选择" format="YYYY-MM-DD hh:mm:ss" value-format="YYYY-MM-DD hh:mm:ss" />
+        <el-form-item label="过期时间:" prop="expireTime">
+          <el-date-picker style="width: 100%" v-model="form.expireTime" type="datetime" placeholder="请选择" format="YYYY-MM-DD hh:mm:ss" value-format="YYYY-MM-DD hh:mm:ss" />
         </el-form-item>
-        <el-form-item label="账号数量:">
+        <el-form-item label="账号数量:" prop="accountCount">
           <el-input-number v-model="form.accountCount" :min="1" controls-position="right" placeholder="请输入" />
         </el-form-item>
-        <el-form-item label="排序:">
+        <el-form-item label="排序:" prop="sort">
           <el-input-number v-model="form.sort" :min="1" controls-position="right" placeholder="请输入" />
         </el-form-item>
-        <el-form-item label="租户套餐:">
-          <base-select v-if="dialogVisible" v-model="form.packageId" :option-props="{ label: 'name', value: 'id' }" api="sys_tenant_package.list" />
+        <el-form-item label="租户套餐:" prop="packageId">
+          <base-select v-if="dialogVisible" is-full v-model="form.packageId" :option-props="{ label: 'name', value: 'id' }" api="sys_tenant_package.list" />
         </el-form-item>
-        <el-form-item label="管理员名称:">
+        <el-form-item label="管理员名称:" prop="adminName">
           <el-input v-model="form.adminName" />
         </el-form-item>
-        <el-form-item label="管理员手机号:">
+        <el-form-item label="管理员手机号:" prop="adminPhone">
           <el-input v-model="form.adminPhone" />
         </el-form-item>
-        <el-form-item v-if="dialogStatus == 'add'" label="账号:">
+        <el-form-item v-if="dialogStatus == 'add'" label="账号:" prop="username">
           <el-input v-model="form.username" />
         </el-form-item>
-        <el-form-item v-if="dialogStatus == 'add'" label="密码:">
+        <el-form-item v-if="dialogStatus == 'add'" label="密码:" prop="password">
           <el-input v-model="form.password" />
         </el-form-item>
       </el-form>
@@ -92,7 +92,16 @@ let listQuery = $ref({});
 let form = $ref({});
 let dialogVisible = $ref(false);
 let dialogStatus = $ref('');
-let rules = $ref({});
+let rules = $ref({
+  name: [{ required: true, message: '请输入租户名', trigger: 'blur' }],
+  status: [{ required: true, message: '请选择租户状态', trigger: 'blur' }],
+  accountCount: [{ required: true, message: '请输入账号数量', trigger: 'blur' }],
+  packageId: [{ required: true, message: '请选择租户套餐', trigger: 'blur' }],
+  adminName: [{ required: true, message: '请输入管理员名称', trigger: 'blur' }],
+  adminPhone: [{ required: true, message: '请输入管理员手机号', trigger: 'blur' }],
+  username: [{ required: true, message: '请输入账号', trigger: 'blur' }],
+  password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
+});
 
 function refreshTableData() {
   proxy.$refs.baseTableRef.refresh();

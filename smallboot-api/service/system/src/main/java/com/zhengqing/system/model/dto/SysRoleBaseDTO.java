@@ -37,4 +37,7 @@ public class SysRoleBaseDTO extends BaseDTO {
     @ApiModelProperty(value = "是否刷新所有租户权限数据(false->否 true->是)")
     private Boolean isRefreshAllTenant;
 
+    @ApiModelProperty(value = "是否刷新所有租户权限数据(false->否 true->是)")
+    private Boolean isSee;
+
 }

@@ -6,7 +6,6 @@ import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.zhengqing.common.auth.util.AuthUtil;
-import com.zhengqing.common.base.constant.AppConstant;
 import com.zhengqing.common.base.constant.AuthConstant;
 import com.zhengqing.common.base.constant.SecurityConstant;
 import com.zhengqing.common.base.context.JwtUserContext;
@@ -33,6 +32,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -81,6 +81,12 @@ public class SysPermBusinessServiceImpl implements ISysPermBusinessService {
 
         // 3、保存角色关联的菜单和按钮权限
         this.saveRoleRePerm(SysRoleRePermSaveDTO.builder().roleId(roleId).menuIdList(menuIdList).build());
+
+        // 4、给系统租户关联的超级套餐也加上所有菜单&按钮权限
+        SysTenantPackage sysTenantPackage = this.iSysTenantPackageService.detail(AuthConstant.SYS_RE_PACKAGE);
+        sysTenantPackage.setMenuIdList(menuIdList);
+        sysTenantPackage.setUpdateTime(new Date());
+        this.iSysTenantPackageService.updateById(sysTenantPackage);
         log.info("刷新超级管理员权限成功!");
     }
 

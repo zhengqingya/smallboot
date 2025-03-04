@@ -10,14 +10,14 @@ export default {
       params: query,
     });
   },
-  // listPage(query, headers) {
-  //   return request({
-  //     url: BASE_API + '/listPage',
-  //     method: 'get',
-  //     params: query,
-  //     headers,
-  //   });
-  // },
+  page(query, headers) {
+    return request({
+      url: BASE_API + '/page',
+      method: 'get',
+      params: query,
+      headers,
+    });
+  },
   list(query) {
     return request({
       url: BASE_API + '/list',

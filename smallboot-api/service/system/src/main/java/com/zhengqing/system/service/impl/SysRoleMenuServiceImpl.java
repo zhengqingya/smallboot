@@ -4,10 +4,9 @@ import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
-import com.zhengqing.common.base.constant.AppConstant;
-import com.zhengqing.common.base.constant.AuthConstant;
 import com.zhengqing.common.base.context.TenantIdContext;
 import com.zhengqing.common.base.enums.SysRoleCodeEnum;
+import com.zhengqing.common.db.util.TenantUtil;
 import com.zhengqing.system.entity.SysMenu;
 import com.zhengqing.system.entity.SysRoleMenu;
 import com.zhengqing.system.mapper.SysMenuMapper;
@@ -70,7 +69,7 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
         }
 
         // 添加父级菜单id
-        List<Integer> menuIdList = addParentMenuId(params.getMenuIdList());
+        List<Integer> menuIdList = this.addParentMenuId(params.getMenuIdList());
 
         // 1、查询角色关联的旧菜单权限信息
         List<SysRoleMenu> roleReMenuListOld = this.sysRoleMenuMapper.selectList(new LambdaQueryWrapper<SysRoleMenu>().eq(SysRoleMenu::getRoleId, roleId));
@@ -117,7 +116,7 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
      */
     private List<Integer> addParentMenuId(List<Integer> menuIdList) {
         // 菜单id -> 菜单信息
-        Map<Integer, SysMenu> menuIdReObjMap = sysMenuMapper.selectList(new LambdaQueryWrapper<>())
+        Map<Integer, SysMenu> menuIdReObjMap = this.sysMenuMapper.selectList(new LambdaQueryWrapper<>())
                 .stream().collect(Collectors.toMap(SysMenu::getId, t -> t, (oldData, newData) -> newData));
         List<Integer> list = Lists.newArrayList();
         for (Integer menuId : menuIdList) {
@@ -170,10 +169,11 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
                         .in(SysRoleMenu::getMenuId, delMenuIdList)
                         // 不要清除指定角色（超管、系统管理员）关联的菜单数据
                         .notIn(SysRoleMenu::getRoleId,
-                                iSysRoleService.getRoleIdByCodes(Lists.newArrayList(
-                                        SysRoleCodeEnum.超级管理员,
-                                        SysRoleCodeEnum.系统管理员
-                                ))
+                                TenantUtil.executeRemoveFlag(() ->
+                                        this.iSysRoleService.getRoleIdByCodes(Lists.newArrayList(
+                                                SysRoleCodeEnum.超级管理员,
+                                                SysRoleCodeEnum.系统管理员
+                                        )))
                         )
         );
     }

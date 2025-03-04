@@ -11,7 +11,7 @@
  Target Server Version : 50726 (5.7.26-log)
  File Encoding         : 65001
 
- Date: 02/03/2025 20:23:02
+ Date: 05/03/2025 01:43:17
 */
 
 SET NAMES utf8mb4;
@@ -1163,7 +1163,7 @@ CREATE TABLE `t_sys_log`  (
   `update_by` bigint(20) NOT NULL COMMENT '修改人',
   `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 837 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-操作日志' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 954 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-操作日志' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_sys_log
@@ -1250,7 +1250,7 @@ INSERT INTO `t_sys_menu` VALUES (62, 31, '分页列表', NULL, 'GET:/web/api/sys
 INSERT INTO `t_sys_menu` VALUES (63, 31, '新增', NULL, 'POST:/web/api/system/tenant/package/add', 'sys:tenant-package:add', 2, NULL, NULL, 0, 0, 2, 1, '2025-03-02 18:10:54', 1, '2025-03-02 18:10:54', 0);
 INSERT INTO `t_sys_menu` VALUES (64, 31, '编辑', NULL, 'PUT:/web/api/system/tenant/package/update', 'sys:tenant-package:edit', 3, NULL, NULL, 0, 0, 2, 1, '2025-03-02 18:10:54', 1, '2025-03-02 18:10:54', 0);
 INSERT INTO `t_sys_menu` VALUES (65, 31, '删除', NULL, 'DELETE:/web/api/system/tenant/package/delete', 'sys:tenant-package:delete', 4, NULL, NULL, 0, 0, 2, 1, '2025-03-02 18:10:54', 1, '2025-03-02 18:10:54', 0);
-INSERT INTO `t_sys_menu` VALUES (66, 6, '树形列表', NULL, 'GET:/web/api/system/role/tree', 'sys:role:tree', 1, NULL, NULL, 0, 0, 2, 1, '2025-03-02 19:37:54', 1, '2025-03-02 19:37:54', 0);
+INSERT INTO `t_sys_menu` VALUES (66, 6, '分页列表', '', 'GET:/web/api/system/role/page', 'sys:role:page', 1, '', '', 0, 0, 2, 1, '2025-03-02 19:37:54', 1, '2025-03-05 01:35:48', 0);
 INSERT INTO `t_sys_menu` VALUES (67, 6, '新增', NULL, 'POST:/web/api/system/role', 'sys:role:add', 2, NULL, NULL, 0, 0, 2, 1, '2025-03-02 19:37:54', 1, '2025-03-02 19:37:54', 0);
 INSERT INTO `t_sys_menu` VALUES (68, 6, '编辑', NULL, 'PUT:/web/api/system/role', 'sys:role:edit', 3, NULL, NULL, 0, 0, 2, 1, '2025-03-02 19:37:54', 1, '2025-03-02 19:37:54', 0);
 INSERT INTO `t_sys_menu` VALUES (69, 6, '删除', NULL, 'DELETE:/web/api/system/role', 'sys:role:delete', 4, NULL, NULL, 0, 0, 2, 1, '2025-03-02 19:37:54', 1, '2025-03-02 19:37:54', 0);
@@ -4572,19 +4572,20 @@ CREATE TABLE `t_sys_role`  (
   `update_by` bigint(20) NOT NULL COMMENT '修改人',
   `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`role_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 35 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-角色管理表' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 37 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-角色管理表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_sys_role
 -- ----------------------------
-INSERT INTO `t_sys_role` VALUES (1, 1, 0, '超级管理员', 'super_admin', 1, 1, 1, b'0', 1, '2020-08-22 15:01:51', 1, '2023-10-21 17:24:42');
-INSERT INTO `t_sys_role` VALUES (2, 1, 0, '系统管理员', 'system_admin', 1, 1, 2, b'0', 1, '2023-10-20 18:03:26', 1, '2023-10-21 17:24:42');
+INSERT INTO `t_sys_role` VALUES (1, 1, 0, '超级管理员', 'super_admin', 1, 1, 1, b'0', 1, '2020-08-22 15:01:51', 1, '2025-03-05 01:22:58');
+INSERT INTO `t_sys_role` VALUES (2, 1, 0, '系统管理员', 'system_admin', 1, 1, 2, b'0', 1, '2023-10-20 18:03:26', 1, '2025-03-05 01:23:01');
 INSERT INTO `t_sys_role` VALUES (11, 1, 0, '租户管理员', 'tenant_admin', 1, 1, 3, b'1', 1, '2023-10-13 15:09:04', 2, '2023-10-23 10:20:23');
-INSERT INTO `t_sys_role` VALUES (28, 1, 0, '测试同步角色', 'sync_role_test', 1, 1, 100, b'1', 2, '2023-10-23 16:28:29', 2, '2025-03-02 19:53:32');
-INSERT INTO `t_sys_role` VALUES (30, 3, 0, '租户管理员', 'tenant_admin', 1, 1, 3, b'1', 2, '2023-10-23 16:31:46', 2, '2023-10-23 16:31:46');
-INSERT INTO `t_sys_role` VALUES (31, 3, 0, '系统管理员', 'system_admin', 1, 1, 2, b'0', 2, '2023-10-23 16:31:46', 2, '2023-10-23 16:31:46');
-INSERT INTO `t_sys_role` VALUES (32, 3, 0, '测试同步角色', 'sync_role_test', 1, 1, 100, b'1', 2, '2023-10-23 16:31:46', 2, '2025-03-02 19:53:32');
+INSERT INTO `t_sys_role` VALUES (28, 1, 0, '测试同步角色', 'sync_role_test', 1, 1, 100, b'1', 2, '2023-10-23 16:28:29', 1, '2025-03-05 00:28:39');
+INSERT INTO `t_sys_role` VALUES (30, 3, 0, '租户管理员', 'tenant_admin', 1, 1, 3, b'1', 2, '2023-10-23 16:31:46', 1, '2025-03-05 01:14:29');
+INSERT INTO `t_sys_role` VALUES (32, 3, 0, '测试同步角色', 'sync_role_test', 1, 1, 100, b'1', 2, '2023-10-23 16:31:46', 1, '2025-03-05 00:28:39');
 INSERT INTO `t_sys_role` VALUES (34, 3, 0, '开发工程师', 'dev', 1, 0, 100, b'0', 25, '2025-03-02 20:08:39', 25, '2025-03-02 20:08:39');
+INSERT INTO `t_sys_role` VALUES (35, 4, 0, '租户管理员', 'tenant_admin', 1, 1, 3, b'1', 1, '2025-03-05 00:28:39', 1, '2025-03-05 00:28:39');
+INSERT INTO `t_sys_role` VALUES (36, 4, 0, '测试同步角色', 'sync_role_test', 1, 1, 100, b'1', 1, '2025-03-05 00:28:39', 1, '2025-03-05 00:28:39');
 
 -- ----------------------------
 -- Table structure for t_sys_role_menu
@@ -4600,7 +4601,7 @@ CREATE TABLE `t_sys_role_menu`  (
   `update_by` bigint(20) NOT NULL COMMENT '修改人',
   `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1568 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-角色菜单关联表' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 1599 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-角色菜单关联表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_sys_role_menu
@@ -4714,12 +4715,40 @@ INSERT INTO `t_sys_role_menu` VALUES (1558, 3, 30, 45, 1, '2025-03-02 20:04:24',
 INSERT INTO `t_sys_role_menu` VALUES (1559, 3, 30, 46, 1, '2025-03-02 20:04:24', 1, '2025-03-02 20:04:24');
 INSERT INTO `t_sys_role_menu` VALUES (1560, 3, 30, 47, 1, '2025-03-02 20:04:24', 1, '2025-03-02 20:04:24');
 INSERT INTO `t_sys_role_menu` VALUES (1561, 3, 30, 6, 1, '2025-03-02 20:07:34', 1, '2025-03-02 20:07:34');
-INSERT INTO `t_sys_role_menu` VALUES (1562, 3, 30, 66, 1, '2025-03-02 20:07:34', 1, '2025-03-02 20:07:34');
 INSERT INTO `t_sys_role_menu` VALUES (1563, 3, 30, 67, 1, '2025-03-02 20:07:34', 1, '2025-03-02 20:07:34');
 INSERT INTO `t_sys_role_menu` VALUES (1564, 3, 30, 68, 1, '2025-03-02 20:07:34', 1, '2025-03-02 20:07:34');
 INSERT INTO `t_sys_role_menu` VALUES (1565, 3, 30, 69, 1, '2025-03-02 20:07:34', 1, '2025-03-02 20:07:34');
 INSERT INTO `t_sys_role_menu` VALUES (1566, 3, 30, 70, 1, '2025-03-02 20:07:34', 1, '2025-03-02 20:07:34');
 INSERT INTO `t_sys_role_menu` VALUES (1567, 3, 30, 7, 1, '2025-03-02 20:07:34', 1, '2025-03-02 20:07:34');
+INSERT INTO `t_sys_role_menu` VALUES (1568, 4, 35, 1, 1, '2025-03-05 00:28:39', 1, '2025-03-05 00:28:39');
+INSERT INTO `t_sys_role_menu` VALUES (1569, 4, 35, 3, 1, '2025-03-05 00:28:39', 1, '2025-03-05 00:28:39');
+INSERT INTO `t_sys_role_menu` VALUES (1570, 4, 35, 4, 1, '2025-03-05 00:28:39', 1, '2025-03-05 00:28:39');
+INSERT INTO `t_sys_role_menu` VALUES (1571, 4, 35, 5, 1, '2025-03-05 00:28:39', 1, '2025-03-05 00:28:39');
+INSERT INTO `t_sys_role_menu` VALUES (1572, 4, 35, 44, 1, '2025-03-05 00:28:39', 1, '2025-03-05 00:28:39');
+INSERT INTO `t_sys_role_menu` VALUES (1573, 4, 35, 45, 1, '2025-03-05 00:28:39', 1, '2025-03-05 00:28:39');
+INSERT INTO `t_sys_role_menu` VALUES (1574, 4, 35, 46, 1, '2025-03-05 00:28:39', 1, '2025-03-05 00:28:39');
+INSERT INTO `t_sys_role_menu` VALUES (1575, 4, 35, 47, 1, '2025-03-05 00:28:39', 1, '2025-03-05 00:28:39');
+INSERT INTO `t_sys_role_menu` VALUES (1576, 4, 35, 6, 1, '2025-03-05 00:28:39', 1, '2025-03-05 00:28:39');
+INSERT INTO `t_sys_role_menu` VALUES (1578, 4, 35, 67, 1, '2025-03-05 00:28:39', 1, '2025-03-05 00:28:39');
+INSERT INTO `t_sys_role_menu` VALUES (1579, 4, 35, 68, 1, '2025-03-05 00:28:39', 1, '2025-03-05 00:28:39');
+INSERT INTO `t_sys_role_menu` VALUES (1580, 4, 35, 69, 1, '2025-03-05 00:28:39', 1, '2025-03-05 00:28:39');
+INSERT INTO `t_sys_role_menu` VALUES (1581, 4, 35, 70, 1, '2025-03-05 00:28:39', 1, '2025-03-05 00:28:39');
+INSERT INTO `t_sys_role_menu` VALUES (1582, 4, 35, 7, 1, '2025-03-05 00:28:39', 1, '2025-03-05 00:28:39');
+INSERT INTO `t_sys_role_menu` VALUES (1583, 4, 36, 1, 1, '2025-03-05 00:28:40', 1, '2025-03-05 00:28:40');
+INSERT INTO `t_sys_role_menu` VALUES (1584, 1, 11, 5, 1, '2025-03-05 01:06:25', 1, '2025-03-05 01:06:25');
+INSERT INTO `t_sys_role_menu` VALUES (1585, 1, 11, 44, 1, '2025-03-05 01:06:25', 1, '2025-03-05 01:06:25');
+INSERT INTO `t_sys_role_menu` VALUES (1586, 1, 11, 45, 1, '2025-03-05 01:06:25', 1, '2025-03-05 01:06:25');
+INSERT INTO `t_sys_role_menu` VALUES (1587, 1, 11, 46, 1, '2025-03-05 01:06:25', 1, '2025-03-05 01:06:25');
+INSERT INTO `t_sys_role_menu` VALUES (1588, 1, 11, 47, 1, '2025-03-05 01:06:25', 1, '2025-03-05 01:06:25');
+INSERT INTO `t_sys_role_menu` VALUES (1589, 1, 11, 6, 1, '2025-03-05 01:07:20', 1, '2025-03-05 01:07:20');
+INSERT INTO `t_sys_role_menu` VALUES (1591, 1, 11, 67, 1, '2025-03-05 01:07:20', 1, '2025-03-05 01:07:20');
+INSERT INTO `t_sys_role_menu` VALUES (1592, 1, 11, 68, 1, '2025-03-05 01:07:20', 1, '2025-03-05 01:07:20');
+INSERT INTO `t_sys_role_menu` VALUES (1593, 1, 11, 69, 1, '2025-03-05 01:07:20', 1, '2025-03-05 01:07:20');
+INSERT INTO `t_sys_role_menu` VALUES (1594, 1, 11, 70, 1, '2025-03-05 01:07:20', 1, '2025-03-05 01:07:20');
+INSERT INTO `t_sys_role_menu` VALUES (1595, 1, 11, 7, 1, '2025-03-05 01:07:20', 1, '2025-03-05 01:07:20');
+INSERT INTO `t_sys_role_menu` VALUES (1596, 1, 11, 66, 1, '2025-03-05 01:36:22', 1, '2025-03-05 01:36:22');
+INSERT INTO `t_sys_role_menu` VALUES (1597, 3, 30, 66, 1, '2025-03-05 01:42:07', 1, '2025-03-05 01:42:07');
+INSERT INTO `t_sys_role_menu` VALUES (1598, 4, 35, 66, 1, '2025-03-05 01:42:07', 1, '2025-03-05 01:42:07');
 
 -- ----------------------------
 -- Table structure for t_sys_role_scope
@@ -4735,7 +4764,7 @@ CREATE TABLE `t_sys_role_scope`  (
   `update_by` bigint(20) NOT NULL COMMENT '修改人',
   `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-角色&数据权限关联表' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-角色&数据权限关联表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_sys_role_scope
@@ -4792,13 +4821,14 @@ CREATE TABLE `t_sys_tenant`  (
   `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   `is_deleted` bit(1) NOT NULL DEFAULT b'0' COMMENT '是否删除(1->是，0->否)',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-租户信息' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-租户信息' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_sys_tenant
 -- ----------------------------
 INSERT INTO `t_sys_tenant` VALUES (1, 'SmallBoot', 1, '郑清', '15183308888', 1, 1, '3023-10-08 05:02:06', 999, 1, 1, '2023-10-08 17:02:17', 1, '2023-11-02 19:05:29', b'0');
-INSERT INTO `t_sys_tenant` VALUES (3, '测试租户', 25, '管理员', '15186668888', 1, 4, '2026-03-05 08:06:26', 10, 100, 2, '2023-10-23 16:31:46', 1, '2025-03-02 20:06:54', b'0');
+INSERT INTO `t_sys_tenant` VALUES (3, '测试租户', 25, '管理员1', '15186668888', 1, 4, '2026-03-05 08:06:26', 10, 100, 2, '2023-10-23 16:31:46', 1, '2025-03-05 00:30:42', b'0');
+INSERT INTO `t_sys_tenant` VALUES (4, '普通租户', 26, '普通租户管理员', '15183333333', 1, 4, '2025-03-06 12:00:00', 2, 100, 1, '2025-03-05 00:28:34', 1, '2025-03-05 00:28:34', b'0');
 
 -- ----------------------------
 -- Table structure for t_sys_tenant_package
@@ -4822,8 +4852,8 @@ CREATE TABLE `t_sys_tenant_package`  (
 -- ----------------------------
 -- Records of t_sys_tenant_package
 -- ----------------------------
-INSERT INTO `t_sys_tenant_package` VALUES (1, '超级套餐', 1, '[1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 44, 45, 46, 47, 48, 50]', '包含系统所有操作权限', 1, 1, '2023-10-08 14:45:41', 0, '2023-10-20 17:30:37', b'0');
-INSERT INTO `t_sys_tenant_package` VALUES (4, '普通套餐', 1, '[1, 3, 4, 5, 44, 45, 46, 47, 6, 66, 67, 68, 69, 70, 7]', '普通套餐', 4, 1, '2023-10-08 15:33:45', 1, '2025-03-02 20:07:34', b'0');
+INSERT INTO `t_sys_tenant_package` VALUES (1, '超级套餐', 1, '[1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 27, 28, 29, 30, 31, 32, 33, 34, 44, 45, 46, 47, 48, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70]', '包含系统所有操作权限', 1, 1, '2023-10-08 14:45:41', 0, '2025-03-05 01:41:41', b'0');
+INSERT INTO `t_sys_tenant_package` VALUES (4, '普通套餐', 1, '[1, 3, 4, 5, 44, 45, 46, 47, 6, 66, 67, 68, 69, 70, 7]', '普通套餐', 4, 1, '2023-10-08 15:33:45', 1, '2025-03-05 01:42:07', b'0');
 
 -- ----------------------------
 -- Table structure for t_sys_user
@@ -4849,14 +4879,16 @@ CREATE TABLE `t_sys_user`  (
   `update_time` datetime NOT NULL COMMENT '修改时间',
   `is_deleted` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否删除(1->是，0->否)',
   PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 26 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-用户基础信息表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 28 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-用户基础信息表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_sys_user
 -- ----------------------------
-INSERT INTO `t_sys_user` VALUES (1, 1, 'superadmin', '3014dcb9ee3639535d5d9301b32c840c', '超级管理员', 1, '15188888888', 'zhengqingya@it.com', 'http://127.0.0.1:886/2023-09-28/1707276699923857408-美图35.jpg', NULL, '[]', 1, 1, 1, '2020-08-22 15:01:51', 1, '2023-10-21 14:47:52', 0);
-INSERT INTO `t_sys_user` VALUES (2, 1, 'admin', '3014dcb9ee3639535d5d9301b32c840c', '系统管理员', 0, '', '', 'http://127.0.0.1:886/2023-10-08/1710975930417258496-小知识.jpg', NULL, '[1]', 1, NULL, 1, '2020-08-22 15:01:51', 2, '2023-10-23 10:30:19', 0);
+INSERT INTO `t_sys_user` VALUES (1, 1, 'superadmin', '3014dcb9ee3639535d5d9301b32c840c', '超级管理员', 1, '15188888888', 'zhengqingya@it.com', 'http://127.0.0.1:886/2023-09-28/1707276699923857408-美图35.jpg', NULL, '[]', 1, 1, 1, '2020-08-22 15:01:51', 1, '2025-03-04 23:30:55', 0);
+INSERT INTO `t_sys_user` VALUES (2, 1, 'admin', '3014dcb9ee3639535d5d9301b32c840c', '系统管理员', 0, '', '', 'http://127.0.0.1:886/2023-10-08/1710975930417258496-小知识.jpg', NULL, '[1]', 1, NULL, 1, '2020-08-22 15:01:51', 2, '2025-03-05 01:03:28', 0);
 INSERT INTO `t_sys_user` VALUES (25, 3, 'admin', '3014dcb9ee3639535d5d9301b32c840c', '管理员', 0, '15186668888', NULL, NULL, 14, NULL, 1, NULL, 2, '2023-10-23 16:31:46', 2, '2023-10-23 16:31:46', 0);
+INSERT INTO `t_sys_user` VALUES (26, 4, 'admin', '3014dcb9ee3639535d5d9301b32c840c', '普通租户管理员', 0, '15183333333', '', 'http://127.0.0.1:886', NULL, '[]', 1, NULL, 1, '2025-03-05 00:28:39', 26, '2025-03-05 01:03:11', 0);
+INSERT INTO `t_sys_user` VALUES (27, 1, 'test', '3014dcb9ee3639535d5d9301b32c840c', '测试账号', 0, '', '', 'http://127.0.0.1:886', NULL, '[]', 0, NULL, 2, '2025-03-05 01:03:50', 27, '2025-03-05 01:16:57', 0);
 
 -- ----------------------------
 -- Table structure for t_sys_user_re_oauth
@@ -4893,7 +4925,7 @@ CREATE TABLE `t_sys_user_role`  (
   `update_by` bigint(20) NOT NULL COMMENT '修改人',
   `update_time` datetime NOT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 48 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-用户角色关联表' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 51 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-用户角色关联表' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_sys_user_role
@@ -4905,6 +4937,8 @@ INSERT INTO `t_sys_user_role` VALUES (12, 1, 10, 10, 1, '2023-10-13 15:37:31', 1
 INSERT INTO `t_sys_user_role` VALUES (13, 1, 11, 10, 1, '2023-10-13 15:54:44', 1, '2023-10-13 15:54:44');
 INSERT INTO `t_sys_user_role` VALUES (28, 1, 2, 2, 1, '2023-10-20 19:36:21', 1, '2023-10-20 19:37:39');
 INSERT INTO `t_sys_user_role` VALUES (47, 3, 25, 30, 2, '2023-10-23 16:31:46', 2, '2023-10-23 16:31:46');
+INSERT INTO `t_sys_user_role` VALUES (48, 4, 26, 35, 1, '2025-03-05 00:28:39', 1, '2025-03-05 00:28:39');
+INSERT INTO `t_sys_user_role` VALUES (50, 1, 27, 11, 2, '2025-03-05 01:04:08', 2, '2025-03-05 01:04:08');
 
 -- ----------------------------
 -- Table structure for t_sys_version

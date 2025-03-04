@@ -179,7 +179,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Transactional(rollbackFor = Exception.class)
     public void deleteUser(Integer userId) {
         SysUser sysUser = this.detail(userId);
-        Assert.isFalse(sysUser.getIsFixed(), "您没有权限删除系统用户！");
+        Assert.isFalse(sysUser.getIsFixed(), "您没有权限删除系统固定用户！");
         if (AuthConstant.SYSTEM_SUPER_ADMIN_USER_ID.equals(userId)) {
             throw new BizException("您没有权限删除超级管理员！");
         }

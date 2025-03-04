@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.zhengqing.common.base.context.JwtUserContext;
 import com.zhengqing.common.base.enums.SysRoleCodeEnum;
 import com.zhengqing.common.core.custom.fieldrepeat.FieldRepeatValidator;
 import com.zhengqing.common.db.entity.BaseEntity;
@@ -64,7 +65,7 @@ public class SysRole extends BaseEntity<SysRole> {
     private Boolean isRefreshAllTenant;
 
     public boolean isSpecialRole(){
-        return SysRoleCodeEnum.isSpecialRole(this.code);
+        return !JwtUserContext.hasSuperOrSystemAdmin() && SysRoleCodeEnum.isSpecialRole(this.code);
     }
 
 }

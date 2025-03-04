@@ -60,8 +60,8 @@
             <el-table-column :show-overflow-tooltip="true" prop="deptName" align="center" label="归属部门" />
             <el-table-column label="操作" align="center" width="230">
               <template #default="scope">
-                <el-button link @click="handleUpdate(scope.row)" v-has-perm="'sys:user:edit'">编辑</el-button>
-                <base-delete-btn v-if="!scope.row.isFixed" v-has-perm="'sys:user:delete'" @ok="deleteData(scope.row.userId)" />
+                <el-button v-if="isDoFixedUser(scope.row, 'edit')" link @click="handleUpdate(scope.row)" v-has-perm="'sys:user:edit'">编辑</el-button>
+                <base-delete-btn v-if="isDoFixedUser(scope.row, 'delete')" v-has-perm="'sys:user:delete'" @ok="deleteData(scope.row.userId)" />
                 <el-button link @click="updatePwd(scope.row)">更新密码</el-button>
               </template>
             </el-table-column>
@@ -112,7 +112,7 @@
           <el-form-item label="岗位:" prop="postIdList">
             <base-select is-full v-if="dialogVisible" v-model="form.postIdList" tag-type="success" multiple clearable :option-props="{ label: 'name', value: 'id' }" api="sys_post.list" />
           </el-form-item>
-          <el-form-item label="角色:">
+          <el-form-item label="角色:" v-if="isDoFixedUser(form, 'updateRolePerm')">
             <base-select is-full v-if="dialogVisible" v-model="form.roleIdList" tag-type="warning" multiple :option-props="{ label: 'name', value: 'roleId' }" api="sys_role.list" />
           </el-form-item>
         </el-form>
@@ -128,7 +128,7 @@
 const { proxy } = getCurrentInstance();
 let useUserStore = proxy.$store.user.useUserStore();
 let { logout } = useUserStore;
-let { userObj } = toRefs(useUserStore);
+let { userObj, isSuperAdmin, isSuperOrSystemAdmin } = toRefs(useUserStore);
 
 let dialogVisible = ref(false);
 let listQuery = ref({});
@@ -163,6 +163,24 @@ function handleNodeClick(data) {
 async function refreshTableData() {
   proxy.$refs.baseTableRef.refresh();
 }
+
+function isDoFixedUser(row, optType) {
+  if (!row.isFixed) {
+    return true;
+  }
+  if (row.userId == userObj.value.userId) {
+    if (optType == 'delete' || optType == 'updateRolePerm') {
+      // 自己不能删除自己 | 更新自己的角色权限
+      return false;
+    }
+    return true;
+  }
+  if (isSuperOrSystemAdmin.value) {
+    return true;
+  }
+  return false;
+}
+
 function handleCreate() {
   form.value = { sex: 0, deptId: listQuery.value.deptId };
   dialogStatus.value = 'add';
