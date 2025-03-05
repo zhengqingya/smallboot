@@ -1,6 +1,7 @@
 package com.zhengqing.common.core.config;
 
 import com.zhengqing.common.auth.config.SaTokenProperty;
+import com.zhengqing.common.core.config.interceptor.HandlerInterceptorForIp;
 import com.zhengqing.common.core.config.interceptor.HandlerInterceptorForTenantId;
 import com.zhengqing.common.core.config.interceptor.HandlerInterceptorForToken;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,7 @@ public class WebAppConfig implements WebMvcConfigurer {
         // 可添加多个
         registry.addInterceptor(new HandlerInterceptorForToken(this.saTokenProperty)).addPathPatterns("/**");
         registry.addInterceptor(new HandlerInterceptorForTenantId()).addPathPatterns("/**");
+        registry.addInterceptor(new HandlerInterceptorForIp()).addPathPatterns("/**");
 
     }
 

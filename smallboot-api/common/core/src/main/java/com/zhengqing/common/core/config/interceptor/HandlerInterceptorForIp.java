@@ -1,11 +1,8 @@
 package com.zhengqing.common.core.config.interceptor;
 
-import cn.hutool.core.util.BooleanUtil;
-import com.zhengqing.common.base.context.TenantIdContext;
-import com.zhengqing.common.base.exception.BizException;
+import com.zhengqing.common.base.context.IpContext;
 import com.zhengqing.common.core.config.WebAppConfig;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.http.HttpMethod;
+import com.zhengqing.common.web.util.IpUtil;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -13,52 +10,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * <p> 拦截器 -- 租户ID </p>
+ * <p> 拦截器 -- ip </p>
  *
  * @author zhengqingya
  * @description 注册使用参考 {@link WebAppConfig}
  * @date 2022/1/10 16:28
  */
-public class HandlerInterceptorForTenantId implements HandlerInterceptor {
-
-    /**
-     * 租户ID字段名称
-     */
-    private static final String TENANT_ID = "TENANT_ID";
-    /**
-     * 是否排除租户ID标识
-     */
-    private static final String TENANT_ID_FLAG = "TENANT_ID_FLAG";
+public class HandlerInterceptorForIp implements HandlerInterceptor {
 
     /**
      * 在业务处理器处理请求之前被调用。预处理，可以进行编码、安全控制、权限校验等处理；
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        // 是否排除租户ID标识
-        String tenantIdFlag = request.getHeader(TENANT_ID_FLAG);
-        if (StringUtils.isNotBlank(tenantIdFlag) && BooleanUtil.toBoolean(tenantIdFlag)) {
-            TenantIdContext.removeFlag();
-        }
-
-        String tenantId = request.getHeader(TENANT_ID);
-        if (StringUtils.isNotBlank(tenantId)) {
-            if (StringUtils.isNumeric(tenantId)) {
-                // > 0
-                TenantIdContext.setTenantId(Integer.valueOf(tenantId));
-            } else if ("-1".equals(tenantId)) {
-                String method = request.getMethod();
-                if (!HttpMethod.GET.name().equals(method)) {
-                    throw new BizException("请选择具体租户后再保存数据！");
-                }
-                // 全部租户
-                TenantIdContext.removeFlag();
-            }
-        }
-
-        if (TenantIdContext.getFlag()) {
-            TenantIdContext.removeFlag();
-        }
+        IpContext.setIp(IpUtil.getIpAdrress(request));
         return true;
     }
 
@@ -77,7 +42,7 @@ public class HandlerInterceptorForTenantId implements HandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
         HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
-        TenantIdContext.remove();
+        IpContext.remove();
     }
 
 }
