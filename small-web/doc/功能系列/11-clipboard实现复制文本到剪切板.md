@@ -1,7 +1,7 @@
 # vue3 + vue-clipboard3 实现复制文本到剪切板
 
 ```shell
-import useClipboard from 'vue-clipboard3';
+cnpm install vue-clipboard3
 ```
 
 ```
