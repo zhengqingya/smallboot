@@ -230,6 +230,9 @@ public class CodeGenerateServiceImpl implements ICodeGenerateService {
         templateDataMap.put("entityNameLower", entityNameLower);
         templateDataMap.put("entityNameUpper", entityNameUpper);
         templateDataMap.put("entity", entityNameUpper);
+        templateDataMap.put("entityBtnPerm", tableName.replace("_", ":"));
+        String[] tableNameList = tableName.split("_");
+        templateDataMap.put("entityResource", tableNameList[tableNameList.length - 1]);
 
         // 获取表字段信息
         // 表注释
