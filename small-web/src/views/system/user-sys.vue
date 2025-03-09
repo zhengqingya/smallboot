@@ -27,7 +27,9 @@
           <base-input v-model="listQuery.username" label="账号" @clear="refreshTableData" />
           <base-input v-model="listQuery.nickname" label="昵称" @clear="refreshTableData" />
           <base-input v-model="listQuery.phone" label="手机号" @clear="refreshTableData" />
-          <el-button v-has-perm="'sys:user:page'" type="primary" @click="refreshTableData">查询</el-button>
+          <template #left>
+            <el-button v-has-perm="'sys:user:page'" type="primary" @click="refreshTableData">查询</el-button>
+          </template>
           <template #right>
             <el-button v-has-perm="'sys:user:add'" type="primary" @click="handleCreate">添加</el-button>
           </template>
