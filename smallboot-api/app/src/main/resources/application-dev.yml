@@ -14,7 +14,7 @@ smallboot:
     bucketName: test
   # redis密码
   redis:
-    database: 0
+    database: 8
     host: ${smallboot.ip}
     port: 6379
     password: 123456

@@ -56,9 +56,6 @@ public class HandlerInterceptorForTenantId implements HandlerInterceptor {
             }
         }
 
-        if (TenantIdContext.getFlag()) {
-            TenantIdContext.removeFlag();
-        }
         return true;
     }
 

@@ -28,7 +28,7 @@
         </div>
         <el-button type="primary" class="w-full" style="margin-top: 10px; width: 260px" @click="handleLogin">登 录</el-button>
       </div>
-    </div>
+    </div> 
     <div class="copyright">
       <p>IF I WERE YOU</p>
     </div>
