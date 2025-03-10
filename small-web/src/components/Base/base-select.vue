@@ -38,6 +38,7 @@ const props = defineProps({
   isCustomNull: { type: Boolean, default: false },
   isCustomNullTips: { type: String, default: '暂无数据' },
   isFull: { type: Boolean, default: false },
+  isPage: { type: Boolean, default: false },
 });
 
 let list = $ref([]);
@@ -55,10 +56,17 @@ onMounted(() => {
   init();
 });
 
+let pageParams = { pageNum: 1, pageSize: 1000 };
 async function init() {
   if (props.api) {
-    let res = await apiMethod(props.params);
-    list = res.data;
+    let res;
+    if (props.isPage) {
+      res = await apiMethod(props.params, pageParams);
+      list = res.data.records;
+    } else {
+      res = await apiMethod(props.params);
+      list = res.data;
+    }
     if (list.length > 0 && props.isDefaultValue) {
       proxy.$emit('update:modelValue', list[0][props.optionProps.value]);
     }
