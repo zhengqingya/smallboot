@@ -7,7 +7,12 @@
       :style="{ width: isFull ? '100vh' : '200px', 'margin-left': '0px' }"
       :placeholder="placeholder ? placeholder : label ? `请选择${label}` : list.length == 0 && isCustomNull ? isCustomNullTips : '请选择'"
       @change="handleChange">
-      <template #prefix> <slot name="prefix" /></template>
+      <template #prefix>
+        <slot name="prefix">
+          <!-- 默认图标 -->
+          <el-icon> <Check /> </el-icon>
+        </slot>
+      </template>
 
       <el-option v-for="item in list" :key="item[optionProps.value]" :label="item[optionProps.label]" :value="item[optionProps.value]">
         <slot name="option" :data="item" />
