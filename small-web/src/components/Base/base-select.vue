@@ -1,16 +1,16 @@
 <template>
   <!-- {{ list[0] }} -->
-  <el-form-item :style="{ width: isFull ? '100%' : '' }">
+  <el-form-item :style="{ width: isFull ? '100%' : '', 'margin-right': '0px' }">
     <el-select
       filterable
       v-bind="$attrs"
-      :style="{ width: isFull ? '100vh' : '200px', 'margin-left': '0px' }"
+      :style="{ width: isFull ? '100%' : '200px', 'margin-left': '0px' }"
       :placeholder="placeholder ? placeholder : label ? `请选择${label}` : list.length == 0 && isCustomNull ? isCustomNullTips : '请选择'"
       @change="handleChange">
       <template #prefix>
         <slot name="prefix">
           <!-- 默认图标 -->
-          <el-icon> <Check /> </el-icon>
+          <!-- <el-icon> <Check /> </el-icon> -->
         </slot>
       </template>
 
