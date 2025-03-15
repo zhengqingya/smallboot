@@ -43,6 +43,9 @@ const props = defineProps({
 
 let list = $ref([]);
 
+// 暴露方法
+defineExpose({ refresh });
+
 watch(
   () => props.dataList,
   (newValue) => {
@@ -55,6 +58,10 @@ watch(
 onMounted(() => {
   init();
 });
+
+async function refresh() {
+  await init();
+}
 
 let pageParams = { pageNum: 1, pageSize: 1000 };
 async function init() {
