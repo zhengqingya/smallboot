@@ -26,6 +26,7 @@ public class SaTokenProperty {
 
     /**
      * 开放url
+     * FIXME：暂不支持restful接口放行
      */
     private List<String> openUrlList;
 
