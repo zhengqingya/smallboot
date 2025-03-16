@@ -1,5 +1,6 @@
 package com.zhengqing.common.auth.util;
 
+import cn.hutool.core.util.StrUtil;
 import lombok.SneakyThrows;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
@@ -92,7 +93,7 @@ public class AnnotationUtil {
             }
 
             String childPathFirst = childPath[0];
-            if (!childPathFirst.startsWith("/")) {
+            if (StrUtil.isNotBlank(childPathFirst) && !childPathFirst.startsWith("/")) {
                 childPathFirst = "/" + childPathFirst;
             }
             String path = pathParent + childPathFirst;
