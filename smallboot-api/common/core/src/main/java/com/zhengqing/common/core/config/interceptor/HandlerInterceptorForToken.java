@@ -35,7 +35,7 @@ import java.util.Map;
  */
 public class HandlerInterceptorForToken implements HandlerInterceptor {
 
-    private SaTokenProperty saTokenProperty;
+    private final SaTokenProperty saTokenProperty;
 
     public HandlerInterceptorForToken(SaTokenProperty saTokenProperty) {
         this.saTokenProperty = saTokenProperty;
@@ -124,7 +124,7 @@ public class HandlerInterceptorForToken implements HandlerInterceptor {
      * @date 2023/2/13 15:52
      */
     private JwtUserBO checkPermission(HttpServletRequest request) {
-        String token = request.getHeader(SecurityConstant.AUTHORIZATION_KEY);
+        String token = request.getHeader(this.saTokenProperty.getTokenName());
         if (StrUtil.isBlank(token)) {
             throw new MyException(ApiResultCodeEnum.UN_LOGIN.getCode(), "无操作权限");
         }

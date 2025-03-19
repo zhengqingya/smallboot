@@ -20,6 +20,11 @@ import java.util.List;
 public class SaTokenProperty {
 
     /**
+     * token名称 (同时也是cookie名称)  注意不能带冒号:
+     */
+    private String tokenName;
+
+    /**
      * 拦截url
      */
     private List<String> interceptUrlList;
