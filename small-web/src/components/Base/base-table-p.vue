@@ -6,7 +6,7 @@
       ref="baseTableRef"
       v-loading="isLoading"
       class="flex-1"
-      border
+      :border="false"
       stripe
       element-loading-text="加载中..."
       v-bind="$attrs"
@@ -19,7 +19,7 @@
       :reserve-selection="true">
       <el-table-column v-if="selection" type="selection" :width="55"></el-table-column>
       <template v-if="indexCode">
-        <el-table-column type="index" label="序号" width="60px"></el-table-column>
+        <el-table-column type="index" :index="(index) => index + 1 + (isPage ? (pageRes.current - 1) * pageRes.size : 0)" label="序号" align="center" width="80px" />
       </template>
       <slot />
 
