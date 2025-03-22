@@ -14,7 +14,7 @@
         </slot>
       </template>
 
-      <el-option v-for="item in list" :key="item[optionProps.value]" :label="item[optionProps.label]" :value="item[optionProps.value]">
+      <el-option v-for="item in list" :key="item[optionProps.value]" :label="item[optionProps.label]" :value="valueType == 'string' ? String(item[optionProps.value]) : item[optionProps.value]">
         <slot name="option" :data="item" />
       </el-option>
       <div v-if="list.length == 0 && isCustomNull">
@@ -39,6 +39,7 @@ const props = defineProps({
   isCustomNullTips: { type: String, default: '暂无数据' },
   isFull: { type: Boolean, default: false },
   isPage: { type: Boolean, default: false },
+  valueType: { type: String, default: null }, // 'string' | 'long' 默认根据类型判断回显
 });
 
 let list = $ref([]);
