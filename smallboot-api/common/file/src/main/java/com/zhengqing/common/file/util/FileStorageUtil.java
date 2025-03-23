@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class FileStorageUtil {
 
     private final BaseProperty baseProperty;
+    private final QiniuFileUtil qiniuFileUtil;
 
     public boolean isMinio() {
         return FileStorageTypeEnum.MINIO.getType().equals(this.baseProperty.getFileStorageType());
@@ -34,6 +35,9 @@ public class FileStorageUtil {
     public String upload(MultipartFile file) {
         // 文件名 eg: test.png
         String originalFilename = file.getOriginalFilename();
+        // 自定义文件路径 eg: file/2023-12-12/1734457162606034988.png
+        String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
+        String filePath = BaseConstant.BASE_PREFIX + "/" + MyDateUtil.nowStr(MyDateUtil.DATE_FORMAT) + "/" + IdUtil.getSnowflakeNextId() + fileExtension;
         String url = null;
         switch (FileStorageTypeEnum.getEnum(this.baseProperty.getFileStorageType())) {
             case LOCAL:
@@ -42,12 +46,15 @@ public class FileStorageUtil {
                 if (!localFileDir.startsWith("/") && !localFileDir.contains(":")) {
                     localFileDir = BaseConstant.PROJECT_ROOT_DIRECTORY + "/" + localFileDir;
                 }
-                String absolutePath = FileUtil.writeBytes(file.getBytes(), localFileDir + MyDateUtil.nowStr(MyDateUtil.DATE_FORMAT) + "/" + IdUtil.getSnowflakeNextId() + "-" + originalFilename).getAbsolutePath();
+                String absolutePath = FileUtil.writeBytes(file.getBytes(), localFileDir + filePath).getAbsolutePath();
                 absolutePath = absolutePath.replaceAll("\\\\", "/");
                 url = absolutePath.substring(absolutePath.indexOf(localFileDir) + localFileDir.length());
                 break;
             case MINIO:
                 url = MinIoUtil.upload(file);
+                break;
+            case QINIU:
+                url = this.qiniuFileUtil.upload(file, filePath);
                 break;
             default:
                 break;

@@ -22,6 +22,7 @@ public interface BaseConstant {
 
     /**
      * 项目基础前缀，不要带：等特殊分割符
+     * 用于文件上传基础前缀、redis key前缀等等
      */
     String BASE_PREFIX = "smallboot";
 

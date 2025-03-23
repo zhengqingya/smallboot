@@ -40,3 +40,13 @@ management:
 #  security:
 #    enabled: false   # 关闭安全验证
 
+
+# ========================== ↓↓↓↓↓↓ 七牛云配置 ↓↓↓↓↓↓ ==========================
+qiniu:
+  accessKey: xxx
+  secretKey: xxx
+  # 对象储存
+  bucket: smallboot                   # 空间名称
+  zone: huanan                        # 存储区域
+  domain: ${smallboot.base-file-url}  # 访问域名
+  expireInSeconds: 3600               # 过期时间(默认1小时)

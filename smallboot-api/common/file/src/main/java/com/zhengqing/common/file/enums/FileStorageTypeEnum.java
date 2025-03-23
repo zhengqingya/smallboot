@@ -27,7 +27,12 @@ public enum FileStorageTypeEnum {
     /**
      * minio
      */
-    MINIO("minio");
+    MINIO("minio"),
+
+    /**
+     * 七牛云
+     */
+    QINIU("qiniu");
 
     /**
      * 文件存储类型
