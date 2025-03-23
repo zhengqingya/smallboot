@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhengqing.common.db.constant.MybatisConstant;
 import com.zhengqing.common.db.util.TenantUtil;
 import com.zhengqing.common.file.util.FileStorageUtil;
+import com.zhengqing.system.config.SystemProperty;
 import com.zhengqing.system.entity.SysFile;
 import com.zhengqing.system.mapper.SysFileMapper;
 import com.zhengqing.system.model.dto.SysFilePageDTO;
@@ -39,6 +40,7 @@ public class SysFileServiceImpl extends ServiceImpl<SysFileMapper, SysFile> impl
 
     private final SysFileMapper sysFileMapper;
     private final FileStorageUtil fileStorageUtil;
+    private final SystemProperty systemProperty;
     @Value("${spring.profiles.active:dev}")
     private String env;
 
@@ -62,9 +64,10 @@ public class SysFileServiceImpl extends ServiceImpl<SysFileMapper, SysFile> impl
 
         SysFileVO result = SysFileVO.builder().name(filename).type(fileType).build();
 
-        SysFile sysFile = TenantUtil.executeRemoveFlag(() -> this.sysFileMapper.selectOne(
-                new LambdaQueryWrapper<SysFile>().eq(SysFile::getEnv, this.env).eq(SysFile::getMd5, md5).last(MybatisConstant.LIMIT_ONE)
-        ));
+        SysFile sysFile = this.systemProperty.getIsFileRepeatUpload() ? null :
+                TenantUtil.executeRemoveFlag(() -> this.sysFileMapper.selectOne(
+                        new LambdaQueryWrapper<SysFile>().eq(SysFile::getEnv, this.env).eq(SysFile::getMd5, md5).last(MybatisConstant.LIMIT_ONE)
+                ));
         if (sysFile == null) {
             String fileUrl = this.fileStorageUtil.upload(file);
             this.sysFileMapper.insert(SysFile.builder()

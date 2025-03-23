@@ -29,6 +29,7 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = BaseConstant.YML_BASE_PREFIX)
 public class SystemProperty extends CommonProperty {
 
+
     /**
      * 第三方授权参数
      */
