@@ -1,5 +1,6 @@
 package com.zhengqing.common.base.config;
 
+import com.zhengqing.common.base.constant.BaseConstant;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -15,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Configuration
-@ConfigurationProperties(prefix = "smallboot")
+@ConfigurationProperties(prefix = BaseConstant.YML_BASE_PREFIX)
 public class BaseProperty extends CommonProperty {
 
 

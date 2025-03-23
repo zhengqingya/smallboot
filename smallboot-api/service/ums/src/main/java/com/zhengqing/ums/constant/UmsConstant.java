@@ -1,5 +1,7 @@
 package com.zhengqing.ums.constant;
 
+import com.zhengqing.common.base.constant.BaseConstant;
+
 /**
  * <p>
  * 全局常用变量 - ums
@@ -18,7 +20,7 @@ public interface UmsConstant {
     /**
      * 用户登录时的 sessionKey
      */
-    String USER_SESSION_KEY = "smallboot:mini:user:sessionkey:";
+    String USER_SESSION_KEY = BaseConstant.BASE_PREFIX + ":mini:user:sessionkey:";
 
 
 }

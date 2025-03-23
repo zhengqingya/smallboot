@@ -1,6 +1,7 @@
 package com.zhengqing.system.aspect;
 
 import cn.hutool.json.JSONUtil;
+import com.zhengqing.common.base.constant.BaseConstant;
 import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.base.context.JwtUserContext;
 import com.zhengqing.common.core.custom.log.ApiLog;
@@ -40,7 +41,7 @@ import java.util.Map;
 @Aspect
 @Component
 @ConditionalOnProperty(
-        value = {"smallboot.api-log"},
+        value = {BaseConstant.YML_BASE_PREFIX + ".api-log"},
         havingValue = "true",
         // true表示缺少此配置属性时也会加载该bean
         matchIfMissing = true

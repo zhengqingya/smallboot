@@ -20,6 +20,12 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.zhengqing</groupId>
+            <artifactId>base</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
         <!-- redis (注：reactive具有限流功能) -->
         <!--        <dependency>-->
         <!--            <groupId>org.springframework.boot</groupId>-->

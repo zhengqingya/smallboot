@@ -7,6 +7,7 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.json.JSONUtil;
 import com.google.common.collect.Lists;
+import com.zhengqing.common.base.constant.BaseConstant;
 import com.zhengqing.common.base.exception.MyException;
 import com.zhengqing.common.base.util.MyDateUtil;
 import com.zhengqing.common.redis.constant.RedisConstant;
@@ -54,7 +55,7 @@ public class IdGeneratorUtil {
     /**
      * 缓存key
      */
-    private static String ID_GENERATE = "smallboot:id_generate:";
+    private static String ID_GENERATE = BaseConstant.BASE_PREFIX + ":id_generate:";
 
     @PostConstruct
     public void init() {

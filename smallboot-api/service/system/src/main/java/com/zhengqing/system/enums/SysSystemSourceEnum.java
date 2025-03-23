@@ -7,9 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * <p>
- * 系统来源
- * </p>
+ * <p> 系统来源 </p>
  *
  * @author zhengqingya
  * @description
@@ -19,21 +17,21 @@ import java.util.List;
 @AllArgsConstructor
 public enum SysSystemSourceEnum {
 
-    小工具(0, "smallboot"),
-    其它(1, "other");
+    当前系统("smallboot", "当前系统"),
+    其它("other", "其它");
 
-    private final Integer systemSource;
+    private final String systemSource;
     private final String desc;
 
     private static final List<SysSystemSourceEnum> LIST = Arrays.asList(SysSystemSourceEnum.values());
 
-    public static SysSystemSourceEnum getEnum(Integer systemSource) {
+    public static SysSystemSourceEnum getEnum(String systemSource) {
         for (SysSystemSourceEnum itemEnum : LIST) {
             if (itemEnum.getSystemSource().equals(systemSource)) {
                 return itemEnum;
             }
         }
-        return 小工具;
+        return null;
     }
 
 }

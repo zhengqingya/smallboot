@@ -9,6 +9,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.zhengqing.common.base.config.CommonProperty;
 import com.zhengqing.common.base.constant.AppConstant;
+import com.zhengqing.common.base.constant.BaseConstant;
 import com.zhengqing.common.base.util.MyDateUtil;
 import com.zhengqing.common.base.util.MyFileUtil;
 import com.zhengqing.common.base.util.MyStringUtil;
@@ -53,7 +54,10 @@ public class CodeGenerateServiceImpl implements ICodeGenerateService {
      * 项目根路径
      * replace 目的：便于在测试类中使用
      */
-    final String ROOT_PATH = AppConstant.PROJECT_ROOT_DIRECTORY.replace("/smallboot-api/app", "/smallboot-api");
+    final String ROOT_PATH = AppConstant.PROJECT_ROOT_DIRECTORY.replace(
+            StrUtil.format("/{}-api/app", BaseConstant.CURRENT_PROJECT_NAME),
+            StrUtil.format("/{}-api", BaseConstant.CURRENT_PROJECT_NAME)
+    );
 
     /**
      * 模板配置信息

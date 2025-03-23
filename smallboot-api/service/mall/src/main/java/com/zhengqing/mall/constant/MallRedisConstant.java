@@ -18,14 +18,14 @@ public interface MallRedisConstant {
     /**
      * 门店位置
      */
-    String SHOP_GEO_LOCATION = "smallboot:mall:shop:geo_location:";
+    String SHOP_GEO_LOCATION = BaseConstant.BASE_PREFIX + ":mall:shop:geo_location:";
 
     // ====================================== ↓↓↓↓↓↓ 商品 ↓↓↓↓↓↓ ======================================
 
     /**
      * 某商品预售需提醒的用户
      */
-    String SPU_PRESELL_REMIND = "smallboot:mall:spu:presell_remind:";
+    String SPU_PRESELL_REMIND = BaseConstant.BASE_PREFIX + ":mall:spu:presell_remind:";
     /**
      * 某商品预售需提醒的用户 -> 过期时间30天
      */
@@ -34,7 +34,7 @@ public interface MallRedisConstant {
     /**
      * 商品sku库存
      */
-    String SKU_STOCK = "smallboot:mall:sku:stock:";
+    String SKU_STOCK = BaseConstant.BASE_PREFIX + ":mall:sku:stock:";
     /**
      * 商品sku库存时间 - 60分钟
      */
@@ -42,7 +42,7 @@ public interface MallRedisConstant {
     /**
      * 商品sku库存锁
      */
-    String SKU_STOCK_LOCK = "smallboot:mall:sku:stock:lock:";
+    String SKU_STOCK_LOCK = BaseConstant.BASE_PREFIX + ":mall:sku:stock:lock:";
     /**
      * 商品sku库存锁等待时间
      */
@@ -61,15 +61,15 @@ public interface MallRedisConstant {
     /**
      * 每一个用户的购物车数据
      */
-    String MINI_CART = "smallboot:mall:mini:cart:";
-    String MINI_CART_LOCK = "smallboot:mall:mini:cart_lock:";
+    String MINI_CART = BaseConstant.BASE_PREFIX + ":mall:mini:cart:";
+    String MINI_CART_LOCK = BaseConstant.BASE_PREFIX + ":mall:mini:cart_lock:";
 
     // ====================================== ↓↓↓↓↓↓ 订单 ↓↓↓↓↓↓ ======================================
 
     /**
      * 订单自动收货时间 - 天
      */
-    String ORDER_AUTO_RECEIVE_TIME = "smallboot:mall:order:auto_receive_time:";
+    String ORDER_AUTO_RECEIVE_TIME = BaseConstant.BASE_PREFIX + ":mall:order:auto_receive_time:";
     /**
      * 默认订单自动收货时间 -> 30天
      */
@@ -78,12 +78,12 @@ public interface MallRedisConstant {
     /**
      * 订单收货时间 - 秒
      */
-    String ORDER_RECEIVE_TIME = "smallboot:mall:order:receive_time:";
+    String ORDER_RECEIVE_TIME = BaseConstant.BASE_PREFIX + ":mall:order:receive_time:";
 
     /**
      * 订单待支付
      */
-    String ORDER_UN_PAY = "smallboot:mall:order:un:pay:";
+    String ORDER_UN_PAY = BaseConstant.BASE_PREFIX + ":mall:order:un:pay:";
     /**
      * 订单待支付时间 - 10分钟
      */

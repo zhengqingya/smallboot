@@ -1,5 +1,7 @@
 package com.zhengqing.common.core.custom.lock;
 
+import com.zhengqing.common.base.constant.BaseConstant;
+
 import java.lang.annotation.*;
 import java.util.concurrent.TimeUnit;
 
@@ -19,7 +21,7 @@ public @interface RedisLock {
      * 锁的资源，key。支持spring El表达式
      */
 //    @AliasFor("key")
-    String key() default "'smallboot:redis_lock'";
+    String key() default "'" + BaseConstant.BASE_PREFIX + "':redis_lock'";
 
     /**
      * 锁类型

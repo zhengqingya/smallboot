@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.handler.TenantLineHandler;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
+import com.zhengqing.common.base.constant.BaseConstant;
 import com.zhengqing.common.base.context.TenantIdContext;
 import com.zhengqing.common.db.config.mybatis.data.permission.first.DataPermissionInterceptor;
 import com.zhengqing.common.db.config.mybatis.data.permission.second.MyDataPermissionHandler;
@@ -130,7 +131,7 @@ public class MybatisPlusConfig {
      */
     @Bean
     @ConditionalOnProperty(
-            value = "smallboot.mybatis-plus-sql-log",
+            value = BaseConstant.YML_BASE_PREFIX + ".mybatis-plus-sql-log",
             havingValue = "true",
             // true表示缺少此配置属性时也会加载该bean
             matchIfMissing = true)

@@ -2,6 +2,7 @@ package com.zhengqing.common.core.custom.repeatsubmit;
 
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.StrUtil;
+import com.zhengqing.common.base.constant.BaseConstant;
 import com.zhengqing.common.base.context.JwtUserContext;
 import com.zhengqing.common.redis.util.RedisUtil;
 import com.zhengqing.common.web.util.IpUtil;
@@ -51,7 +52,7 @@ public class NoRepeatSubmitAop {
         String restfulApi = request.getMethod() + ":" + request.getRequestURI();
 
         // 自定义key值
-        String key = StrUtil.format("smallboot:no_repeat_submit:{}:{}:ip_{}", JwtUserContext.getUserId(), restfulApi, ip);
+        String key = StrUtil.format(BaseConstant.BASE_PREFIX + ":no_repeat_submit:{}:{}:ip_{}", JwtUserContext.getUserId(), restfulApi, ip);
 
         // key存在的话说明频繁操作了...
         Assert.isFalse(RedisUtil.hasKey(key), noRepeatSubmit.msg());

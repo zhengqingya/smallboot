@@ -61,17 +61,17 @@ public interface SecurityConstant {
     /**
      * jwt自定义用户信息
      */
-    String JWT_CUSTOM_USER = "smallboot:system:jwt_custom_user:";
+    String JWT_CUSTOM_USER = BaseConstant.BASE_PREFIX + ":system:jwt_custom_user:";
 
     /**
      * url权限关联角色
      * [ {接口路径:[角色编码]},...]
      */
-    String URL_PERM_RE_ROLES = "smallboot:system:perm_rule:url:";
+    String URL_PERM_RE_ROLES = BaseConstant.BASE_PREFIX + ":system:perm_rule:url:";
 
     /**
      * 验证码
      */
-    String CAPTCHA_CODE = "smallboot:auth:captcha:";
+    String CAPTCHA_CODE = BaseConstant.BASE_PREFIX + ":auth:captcha:";
 
 }

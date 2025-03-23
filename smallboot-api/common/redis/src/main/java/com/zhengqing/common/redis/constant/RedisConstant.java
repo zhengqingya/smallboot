@@ -1,5 +1,7 @@
 package com.zhengqing.common.redis.constant;
 
+import com.zhengqing.common.base.constant.BaseConstant;
+
 /**
  * <p>
  * 全局常用变量 - Redis缓存
@@ -14,20 +16,20 @@ public interface RedisConstant {
     /**
      * ID生成
      */
-    String ID_GENERATE_KEY_PREFIX = "smallboot:id_generate:";
+    String ID_GENERATE_KEY_PREFIX = BaseConstant.BASE_PREFIX + ":id_generate:";
     /**
      * 记录重复ID
      */
-    String ID_GENERATE_REPEAT_KEY = "smallboot:id_generate_repeat";
+    String ID_GENERATE_REPEAT_KEY = BaseConstant.BASE_PREFIX + ":id_generate_repeat";
 
     /**
      * 随机code码生成
      */
-    String GENERATE_RANDOM_CODE_KEY = "smallboot:generate-random-code";
+    String GENERATE_RANDOM_CODE_KEY = BaseConstant.BASE_PREFIX + ":generate-random-code";
     /**
      * 随机code码生成尝试次数记录 -- 用于码用尽告警
      */
-    String GENERATE_RANDOM_CODE_RETRY_NUM_KEY = "smallboot:generate-random-code:retry-num";
+    String GENERATE_RANDOM_CODE_RETRY_NUM_KEY = BaseConstant.BASE_PREFIX + ":generate-random-code:retry-num";
     int GENERATE_RANDOM_CODE_MAX_RETRY_NUM = 5;
 
     /**

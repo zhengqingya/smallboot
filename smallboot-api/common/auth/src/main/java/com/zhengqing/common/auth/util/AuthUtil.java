@@ -7,6 +7,7 @@ import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.zhengqing.common.auth.model.vo.AuthLoginVO;
+import com.zhengqing.common.base.constant.BaseConstant;
 import com.zhengqing.common.base.model.bo.JwtUserBO;
 import com.zhengqing.common.redis.util.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +28,7 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class AuthUtil {
 
-    private final static String JWT_USER_KEY = "smallboot:login:";
+    private final static String JWT_USER_KEY = BaseConstant.BASE_PREFIX + ":login:";
 
     private static String tokenPrefix;
 

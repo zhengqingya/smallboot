@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Configuration
-@ConfigurationProperties(prefix = "smallboot")
+@ConfigurationProperties(prefix = BaseConstant.YML_BASE_PREFIX)
 public class WfProperty extends CommonProperty {
 
 
