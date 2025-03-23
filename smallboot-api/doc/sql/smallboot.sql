@@ -11,7 +11,7 @@
  Target Server Version : 50726 (5.7.26-log)
  File Encoding         : 65001
 
- Date: 05/03/2025 01:43:17
+ Date: 23/03/2025 14:48:42
 */
 
 SET NAMES utf8mb4;
@@ -1127,16 +1127,18 @@ CREATE TABLE `t_sys_file`  (
   `update_by` bigint(20) UNSIGNED NOT NULL COMMENT '更新人id',
   `is_deleted` tinyint(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否删除(0->否,1->是)',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 26 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-文件上传记录' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 33 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-文件上传记录' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_sys_file
 -- ----------------------------
-INSERT INTO `t_sys_file` VALUES (21, 1, '美图13.png', '/2023-09-28/1707240834895855616-美图13.png', 'image/png', 'a846e6a993854b34f46e909b2e3971d7', 124751, 'dev', '2023-09-28 11:48:29', '2023-10-23 09:29:05', 1, 1, 0);
 INSERT INTO `t_sys_file` VALUES (22, 1, '美图14.jpg', '/2023-09-28/1707276494134525952-美图14.jpg', 'image/jpeg', '7612baeeb4e1f22b28c92400b1a727a6', 805694, 'dev', '2023-09-28 14:10:11', '2023-10-23 09:29:05', 1, 1, 0);
 INSERT INTO `t_sys_file` VALUES (23, 1, '美图35.jpg', '/2023-09-28/1707276699923857408-美图35.jpg', 'image/jpeg', 'bafca25d99f49411f09c76985654f78c', 115888, 'dev', '2023-09-28 14:11:00', '2023-10-23 09:29:05', 1, 1, 0);
 INSERT INTO `t_sys_file` VALUES (24, 1, '美图28.jpg', '/2023-09-28/1707280259789041664-美图28.jpg', 'image/jpeg', '4336d41fcd5a3076e54ed6f9d39e82d5', 874939, 'dev', '2023-09-28 14:25:08', '2023-10-23 09:29:05', 1, 1, 0);
 INSERT INTO `t_sys_file` VALUES (25, 1, '小知识.jpg', '/2023-10-08/1710975930417258496-小知识.jpg', 'image/jpeg', '5d57274ba11b7a30b2716d2149a27fc9', 11619, 'dev', '2023-10-08 19:10:25', '2023-10-23 09:29:05', 1, 1, 0);
+INSERT INTO `t_sys_file` VALUES (30, 1, '美图13.png', '/smallboot/2025-03-23/1903698879992291328.png', 'image/png', 'a846e6a993854b34f46e909b2e3971d7', 124751, 'dev', '2025-03-23 14:42:37', '2025-03-23 14:42:37', 1, 1, 0);
+INSERT INTO `t_sys_file` VALUES (31, 1, '美图15.jpg', '/smallboot/2025-03-23/1903698991514640384.jpg', 'image/jpeg', '7c28e2eeff667fdad5e66576285ecef1', 1149835, 'dev', '2025-03-23 14:43:03', '2025-03-23 14:43:03', 1, 1, 0);
+INSERT INTO `t_sys_file` VALUES (32, 1, '美图36.jpg', '/smallboot/2025-03-23/1903700098701815808.jpg', 'image/jpeg', 'dcc3ae263e6d6b2ac91bf00b82660fd0', 52755, 'dev', '2025-03-23 14:47:27', '2025-03-23 14:47:27', 1, 1, 0);
 
 -- ----------------------------
 -- Table structure for t_sys_log
@@ -1163,7 +1165,7 @@ CREATE TABLE `t_sys_log`  (
   `update_by` bigint(20) NOT NULL COMMENT '修改人',
   `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 954 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-操作日志' ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 991 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统管理-操作日志' ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of t_sys_log
@@ -4578,14 +4580,14 @@ CREATE TABLE `t_sys_role`  (
 -- Records of t_sys_role
 -- ----------------------------
 INSERT INTO `t_sys_role` VALUES (1, 1, 0, '超级管理员', 'super_admin', 1, 1, 1, b'0', 1, '2020-08-22 15:01:51', 1, '2025-03-05 01:22:58');
-INSERT INTO `t_sys_role` VALUES (2, 1, 0, '系统管理员', 'system_admin', 1, 1, 2, b'0', 1, '2023-10-20 18:03:26', 1, '2025-03-05 01:23:01');
+INSERT INTO `t_sys_role` VALUES (2, 1, 0, '系统管理员', 'system_admin', 1, 1, 2, b'0', 1, '2023-10-20 18:03:26', 1, '2025-03-05 20:54:18');
 INSERT INTO `t_sys_role` VALUES (11, 1, 0, '租户管理员', 'tenant_admin', 1, 1, 3, b'1', 1, '2023-10-13 15:09:04', 2, '2023-10-23 10:20:23');
-INSERT INTO `t_sys_role` VALUES (28, 1, 0, '测试同步角色', 'sync_role_test', 1, 1, 100, b'1', 2, '2023-10-23 16:28:29', 1, '2025-03-05 00:28:39');
+INSERT INTO `t_sys_role` VALUES (28, 1, 0, '测试同步角色', 'sync_role_test', 1, 1, 100, b'1', 2, '2023-10-23 16:28:29', 1, '2025-03-05 19:50:01');
 INSERT INTO `t_sys_role` VALUES (30, 3, 0, '租户管理员', 'tenant_admin', 1, 1, 3, b'1', 2, '2023-10-23 16:31:46', 1, '2025-03-05 01:14:29');
-INSERT INTO `t_sys_role` VALUES (32, 3, 0, '测试同步角色', 'sync_role_test', 1, 1, 100, b'1', 2, '2023-10-23 16:31:46', 1, '2025-03-05 00:28:39');
+INSERT INTO `t_sys_role` VALUES (32, 3, 0, '测试同步角色', 'sync_role_test', 1, 1, 100, b'1', 2, '2023-10-23 16:31:46', 1, '2025-03-05 19:50:02');
 INSERT INTO `t_sys_role` VALUES (34, 3, 0, '开发工程师', 'dev', 1, 0, 100, b'0', 25, '2025-03-02 20:08:39', 25, '2025-03-02 20:08:39');
 INSERT INTO `t_sys_role` VALUES (35, 4, 0, '租户管理员', 'tenant_admin', 1, 1, 3, b'1', 1, '2025-03-05 00:28:39', 1, '2025-03-05 00:28:39');
-INSERT INTO `t_sys_role` VALUES (36, 4, 0, '测试同步角色', 'sync_role_test', 1, 1, 100, b'1', 1, '2025-03-05 00:28:39', 1, '2025-03-05 00:28:39');
+INSERT INTO `t_sys_role` VALUES (36, 4, 0, '测试同步角色', 'sync_role_test', 1, 1, 100, b'1', 1, '2025-03-05 00:28:39', 1, '2025-03-05 19:50:02');
 
 -- ----------------------------
 -- Table structure for t_sys_role_menu
@@ -4852,7 +4854,7 @@ CREATE TABLE `t_sys_tenant_package`  (
 -- ----------------------------
 -- Records of t_sys_tenant_package
 -- ----------------------------
-INSERT INTO `t_sys_tenant_package` VALUES (1, '超级套餐', 1, '[1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 27, 28, 29, 30, 31, 32, 33, 34, 44, 45, 46, 47, 48, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70]', '包含系统所有操作权限', 1, 1, '2023-10-08 14:45:41', 0, '2025-03-05 01:41:41', b'0');
+INSERT INTO `t_sys_tenant_package` VALUES (1, '超级套餐', 1, '[1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 27, 28, 29, 30, 31, 32, 33, 34, 44, 45, 46, 47, 48, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70]', '包含系统所有操作权限', 1, 1, '2023-10-08 14:45:41', 0, '2025-03-23 14:47:20', b'0');
 INSERT INTO `t_sys_tenant_package` VALUES (4, '普通套餐', 1, '[1, 3, 4, 5, 44, 45, 46, 47, 6, 66, 67, 68, 69, 70, 7]', '普通套餐', 4, 1, '2023-10-08 15:33:45', 1, '2025-03-05 01:42:07', b'0');
 
 -- ----------------------------
@@ -4884,11 +4886,11 @@ CREATE TABLE `t_sys_user`  (
 -- ----------------------------
 -- Records of t_sys_user
 -- ----------------------------
-INSERT INTO `t_sys_user` VALUES (1, 1, 'superadmin', '3014dcb9ee3639535d5d9301b32c840c', '超级管理员', 1, '15188888888', 'zhengqingya@it.com', 'http://127.0.0.1:886/2023-09-28/1707276699923857408-美图35.jpg', NULL, '[]', 1, 1, 1, '2020-08-22 15:01:51', 1, '2025-03-04 23:30:55', 0);
-INSERT INTO `t_sys_user` VALUES (2, 1, 'admin', '3014dcb9ee3639535d5d9301b32c840c', '系统管理员', 0, '', '', 'http://127.0.0.1:886/2023-10-08/1710975930417258496-小知识.jpg', NULL, '[1]', 1, NULL, 1, '2020-08-22 15:01:51', 2, '2025-03-05 01:03:28', 0);
+INSERT INTO `t_sys_user` VALUES (1, 1, 'superadmin', '3014dcb9ee3639535d5d9301b32c840c', '超级管理员', 1, '15188888888', 'zhengqingya@it.com', 'http://127.0.0.1:886/smallboot/2025-03-23/1903698879992291328.png', NULL, '[]', 1, 1, 1, '2020-08-22 15:01:51', 1, '2025-03-23 14:42:41', 0);
+INSERT INTO `t_sys_user` VALUES (2, 1, 'admin', '3014dcb9ee3639535d5d9301b32c840c', '系统管理员', 0, '', '', 'http://127.0.0.1:886/2023-10-08/1710975930417258496-小知识.jpg', NULL, '[1]', 1, NULL, 1, '2020-08-22 15:01:51', 1, '2025-03-05 01:57:15', 0);
 INSERT INTO `t_sys_user` VALUES (25, 3, 'admin', '3014dcb9ee3639535d5d9301b32c840c', '管理员', 0, '15186668888', NULL, NULL, 14, NULL, 1, NULL, 2, '2023-10-23 16:31:46', 2, '2023-10-23 16:31:46', 0);
 INSERT INTO `t_sys_user` VALUES (26, 4, 'admin', '3014dcb9ee3639535d5d9301b32c840c', '普通租户管理员', 0, '15183333333', '', 'http://127.0.0.1:886', NULL, '[]', 1, NULL, 1, '2025-03-05 00:28:39', 26, '2025-03-05 01:03:11', 0);
-INSERT INTO `t_sys_user` VALUES (27, 1, 'test', '3014dcb9ee3639535d5d9301b32c840c', '测试账号', 0, '', '', 'http://127.0.0.1:886', NULL, '[]', 0, NULL, 2, '2025-03-05 01:03:50', 27, '2025-03-05 01:16:57', 0);
+INSERT INTO `t_sys_user` VALUES (27, 1, 'test', '3014dcb9ee3639535d5d9301b32c840c', '测试账号', 0, '', '', 'http://127.0.0.1:886/smallboot/2025-03-23/1903700098701815808.jpg', NULL, '[]', 0, NULL, 2, '2025-03-05 01:03:50', 1, '2025-03-23 14:47:29', 0);
 
 -- ----------------------------
 -- Table structure for t_sys_user_re_oauth
