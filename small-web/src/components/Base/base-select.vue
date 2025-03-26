@@ -14,6 +14,15 @@
         </slot>
       </template>
 
+      <!-- 自定义标签 -->
+      <template #label="{ label, value }">
+        <slot name="label" :label="label" :value="value">
+          <span>{{ label }}</span>
+        </slot>
+      </template>
+
+      <!-- 选择值 -->
+      <!-- :label="item" 这里可以直接传整个值，上面自定义标签的时候可以拿到整个item做自定义数据展示 -->
       <el-option v-for="item in list" :key="item[optionProps.value]" :label="item[optionProps.label]" :value="valueType == 'string' ? String(item[optionProps.value]) : item[optionProps.value]">
         <slot name="option" :data="item" />
       </el-option>
@@ -26,6 +35,8 @@
 
 <script setup>
 const { proxy } = getCurrentInstance();
+import { useAttrs } from 'vue';
+const attrs = useAttrs(); // 获取所有传递的属性（包括未在 props 中声明的）
 const props = defineProps({
   api: { type: String, required: false, default: '' },
   params: { type: Object, required: false, default: () => {} },
@@ -40,8 +51,10 @@ const props = defineProps({
   isFull: { type: Boolean, default: false },
   isPage: { type: Boolean, default: false },
   valueType: { type: String, default: null }, // 'string' | 'long' 默认根据类型判断回显
+  isFilterInvalidValue: { type: Boolean, default: true }, // 是否过滤无效值
 });
 
+let modelValueLocal = $ref([]);
 let list = $ref([]);
 
 // 暴露方法
@@ -78,11 +91,60 @@ async function init() {
     if (list.length > 0 && props.isDefaultValue) {
       proxy.$emit('update:modelValue', list[0][props.optionProps.value]);
     }
-    return;
-  }
-  if (props.dataList) {
+  } else if (props.dataList) {
     list = props.dataList;
   }
+  filterModelValue();
+}
+
+watch(
+  () => attrs.modelValue,
+  (newValue) => {
+    // console.log('监听器执行了... ', newValue);
+    if (list.length > 0) {
+      // 在数据初始化后执行
+      filterModelValue();
+    }
+  },
+  {
+    deep: true,
+    immediate: true, // 初始化执行一次
+  },
+);
+
+// 过滤无效数据值 -- 比如下拉框数据已被删除，无法正常回显...
+function filterModelValue() {
+  if (true) {
+    // return; // 临时关闭
+  }
+  let modelValueLocal = attrs.modelValue;
+  if (!props.isFilterInvalidValue || !modelValueLocal) {
+    // console.log('无数据...', modelValueLocal);
+    return;
+  }
+  // 判断 multiple 是否存在
+  // let hasMultiple = Object.prototype.hasOwnProperty.call(attrs, 'multiple');
+  // 处理实际值（兼容字符串和布尔类型）
+  let isMultipleEnabled = attrs.multiple !== undefined && attrs.multiple !== false;
+
+  // console.log('是否多选：', isMultipleEnabled, '列表数据：', list, '数据值:', modelValueLocal);
+  if (isMultipleEnabled) {
+    // 多选
+    modelValueLocal = filterIdList(list, isMultipleEnabled ? modelValueLocal : [modelValueLocal]);
+  } else {
+    // 单选
+    modelValueLocal = list.find((item) => item?.[props.optionProps.value] == modelValueLocal)?.[props.optionProps.value];
+  }
+  proxy.$emit('update:modelValue', modelValueLocal);
+  // console.log('过滤无效数据后的值：', modelValueLocal);
+}
+
+function filterIdList(list, idList) {
+  if (!list?.length || !idList?.length) return [];
+  // 统一转换为字符串避免类型问题
+  // console.log('xxx:', list[0]?.[props.optionProps.value]?.toString());
+  const listIdSet = new Set(list.map((item) => item?.[props.optionProps.value]?.toString()));
+  return idList.filter((id) => listIdSet.has(id?.toString()));
 }
 
 function handleChange(val) {
