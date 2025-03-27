@@ -51,7 +51,8 @@ const props = defineProps({
   isFull: { type: Boolean, default: false },
   isPage: { type: Boolean, default: false },
   valueType: { type: String, default: null }, // 'string' | 'long' 默认根据类型判断回显
-  isFilterInvalidValue: { type: Boolean, default: true }, // 是否过滤无效值
+  // 是否过滤无效值 -- tips: 假设有2个选择框A、B，B依赖A，这个配置暂无法过滤选项框B的无效值，因为B框的值可能没有刷新就触发过滤，就有可能过滤错误。
+  isFilterInvalidValue: { type: Boolean, default: true },
 });
 
 let modelValueLocal = $ref([]);
@@ -117,6 +118,9 @@ function filterModelValue() {
   if (true) {
     // return; // 临时关闭
   }
+  if (!list || list.length == 0) {
+    return;
+  }
   let modelValueLocal = attrs.modelValue;
   if (!props.isFilterInvalidValue || !modelValueLocal) {
     // console.log('无数据...', modelValueLocal);
@@ -136,7 +140,7 @@ function filterModelValue() {
     modelValueLocal = list.find((item) => item?.[props.optionProps.value] == modelValueLocal)?.[props.optionProps.value];
   }
   proxy.$emit('update:modelValue', modelValueLocal);
-  // console.log('过滤无效数据后的值：', modelValueLocal);
+  // console.log(isMultipleEnabled, '原数据值：', attrs.modelValue, '过滤无效数据后的值：', modelValueLocal, list);
 }
 
 function filterIdList(list, idList) {
