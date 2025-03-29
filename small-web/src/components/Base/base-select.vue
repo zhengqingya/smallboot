@@ -116,7 +116,7 @@ watch(
 // 过滤无效数据值 -- 比如下拉框数据已被删除，无法正常回显...
 function filterModelValue() {
   if (true) {
-    // return; // 临时关闭
+    return; // 临时关闭
   }
   if (!list || list.length == 0) {
     return;
