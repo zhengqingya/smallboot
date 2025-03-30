@@ -40,6 +40,7 @@ public class EasyExcelUtil {
     @SneakyThrows(Exception.class)
     public static void dynamicMergeData(HttpServletResponse response, String fileName, String sheetName,
                                         Class<?> clz, List<?> dataList, int[] mergeColIndex, int mergeRowIndex) {
+        response.setHeader("file-type", "xlsx");
         response.setContentType("application/vnd.ms-excel");
         response.setCharacterEncoding("utf-8");
         // 这里URLEncoder.encode可以防止中文乱码 当然和easyexcel没有关系
