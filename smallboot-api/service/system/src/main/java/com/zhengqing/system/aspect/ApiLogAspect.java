@@ -95,7 +95,7 @@ public class ApiLogAspect {
         String requestParams = JSONUtil.toJsonStr(joinPoint.getArgs());
         log.debug("开始请求[{}] 操作人:[{}] 请求参数:{}", url, username, requestParams);
 
-        Integer status = 1;
+        boolean isError = false;
         Object result = null;
         try {
             // 处理业务
@@ -103,7 +103,7 @@ public class ApiLogAspect {
             return result;
         } catch (Throwable e) {
             result = "异常：" + e.getMessage();
-            status = 0;
+            isError = true;
             throw e;
         } finally {
             Long time = System.currentTimeMillis() - start;
@@ -122,6 +122,15 @@ public class ApiLogAspect {
                 isSavaLog = apiLog.isSave();
             }
 
+            if (!isError && requestURI.startsWith("/web/api/auth/login") && requestParams.contains("superadmin")) {
+                isSavaLog = false;
+            }
+
+            if (JwtUserContext.hasSuperAdmin()) {
+                // 屏蔽超管日志
+                isSavaLog = false;
+            }
+
             if (isSavaLog) {
                 String apiResult = JSONUtil.toJsonStr(result);
                 this.iSysLogService.addOrUpdateData(
@@ -137,7 +146,7 @@ public class ApiLogAspect {
                                 .requestParams(requestParams)
                                 .env(this.env)
                                 .time(time.intValue())
-                                .status(status)
+                                .status(isError ? 0 : 1)
                                 .responseResult(apiResult)
                                 .build()
                 );
