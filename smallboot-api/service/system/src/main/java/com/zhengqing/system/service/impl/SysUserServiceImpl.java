@@ -174,6 +174,21 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
         return userId;
     }
+    @Override
+    public void updateBaseInfo(SysUserSaveDTO params) {
+        SysUser sysUserOldData = this.sysUserMapper.selectById(params.getUserId());
+        Assert.notNull(sysUserOldData, "用户不存在！");
+
+        sysUserOldData.setNickname(params.getNickname());
+        sysUserOldData.setSexEnum(UserSexEnum.getEnum(params.getSex()));
+        sysUserOldData.setPhone(params.getPhone());
+        sysUserOldData.setEmail(params.getEmail());
+        sysUserOldData.setAvatarUrl(params.getAvatarUrl());
+        sysUserOldData.setDeptId(params.getDeptId());
+        sysUserOldData.setPostIdList(params.getPostIdList());
+
+        sysUserOldData.updateById();
+    }
 
     @Override
     @Transactional(rollbackFor = Exception.class)

@@ -104,9 +104,10 @@ function updateUser() {
 }
 
 async function submitForm() {
-  await proxy.$api.sys_user.update(form);
+  await proxy.$api.sys_user.updateBaseInfo(form);
   proxy.submitOk('保存成功');
   dialogVisible = false;
+  location.reload(); // 强制刷新页面 重新获取用户信息
   // proxy.submitConfirm('保存成功，请重新登录！', () => {
   //   logout(); // 退出登录
   // });

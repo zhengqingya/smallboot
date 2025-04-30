@@ -66,6 +66,12 @@ public class WebSysUserController extends BaseController {
         return this.iSysUserService.addOrUpdateData(params);
     }
 
+    @PutMapping("update-base-info")
+    @ApiOperation("更新用户基本信息")
+    public void updateBaseInfo(@Validated(UpdateGroup.class) @RequestBody SysUserSaveDTO params) {
+        this.iSysUserService.updateBaseInfo(params);
+    }
+
     @DeleteMapping("")
     @ApiOperation("删除")
     public void delete(@RequestParam Integer userId) {

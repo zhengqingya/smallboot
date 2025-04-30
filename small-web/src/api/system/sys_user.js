@@ -66,6 +66,13 @@ export default {
       data,
     });
   },
+  updateBaseInfo(data) {
+    return request({
+      url: BASE_API + '/update-base-info',
+      method: 'put',
+      data,
+    });
+  },
   delete(id) {
     return request({
       url: BASE_API,

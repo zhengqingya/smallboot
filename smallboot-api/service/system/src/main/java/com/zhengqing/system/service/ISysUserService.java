@@ -61,6 +61,16 @@ public interface ISysUserService extends IService<SysUser> {
     Integer addOrUpdateData(SysUserSaveDTO params);
 
     /**
+     * 更新用户基本信息
+     *
+     * @param params 提交参数
+     * @return void
+     * @author zhengqingya
+     * @date 2020/9/10 10:12
+     */
+    void updateBaseInfo(SysUserSaveDTO params);
+
+    /**
      * 删除用户
      *
      * @param userId 用户id
