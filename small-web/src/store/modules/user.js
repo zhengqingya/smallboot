@@ -62,10 +62,10 @@ export const useUserStore = defineStore('user', () => {
   async function getUserInfo() {
     let result = await api.sys_user.getUserPerm();
     userObj.value = result.data;
-    if (userObj.value.roleCodeList && userObj.value.roleCodeList.includes('system_admin')) {
+    if (userObj.value.roleCodeList && userObj.value.roleCodeList.includes('super_admin')) {
       isSuperAdmin.value = true;
     }
-    if (isSuperAdmin.value || userObj.value.roleCodeList.includes('super_admin')) {
+    if (isSuperAdmin.value || userObj.value.roleCodeList.includes('system_admin')) {
       isSuperOrSystemAdmin.value = true;
     }
 
