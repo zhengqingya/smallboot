@@ -14,6 +14,7 @@ export const useUserStore = defineStore('user', () => {
   let userObj = ref({});
   let routerMap = ref({}); // 全路径'/system/user' -> 路由信息
   let loginBeforeUrl = ref(''); // 登录前的路径
+  let firstRouterPermPath = ref('/'); // 首次登录后跳转的路径 -- 仅有权限的第一个路由
   let tenantList = ref([]); // 租户列表
   let isSuperAdmin = ref(false); // 是否为超管
   let isSuperOrSystemAdmin = ref(false); // 是否为系统管理员|超管
@@ -74,6 +75,17 @@ export const useUserStore = defineStore('user', () => {
 
     // 初始化租户数据
     initTenant();
+
+    // 拿到第一个路由权限
+    calFirstRouter();
+  }
+
+  async function calFirstRouter() {
+    if (routerList) {
+      let firstPerm = routerList.value[0];
+      firstRouterPermPath.value = firstPerm.path;
+      // console.log('111', firstPerm);
+    }
   }
 
   async function initTenant() {
@@ -155,5 +167,5 @@ export const useUserStore = defineStore('user', () => {
     return result;
   }
 
-  return { tenantId, tenantList, isLogin, loginBeforeUrl, login, logout, tokenObj, userObj, getUserInfo, routerList, routerMap, isSuperAdmin, isSuperOrSystemAdmin };
+  return { tenantId, tenantList, isLogin, loginBeforeUrl, firstRouterPermPath, login, logout, tokenObj, userObj, getUserInfo, routerList, routerMap, isSuperAdmin, isSuperOrSystemAdmin };
 });

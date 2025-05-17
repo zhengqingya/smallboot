@@ -28,7 +28,7 @@
         </div>
         <el-button type="primary" class="w-full" style="margin-top: 10px; width: 260px" @click="handleLogin">登 录</el-button>
       </div>
-    </div> 
+    </div>
     <div class="copyright">
       <p>IF I WERE YOU</p>
     </div>
@@ -40,6 +40,7 @@ import { getCurrentInstance, onMounted } from 'vue';
 // 组件实例
 const { proxy } = getCurrentInstance();
 const { login } = proxy.$store.user.useUserStore();
+let { firstRouterPermPath } = toRefs(proxy.$store.user.useUserStore());
 const loginForm = $ref({ tenantId: 1, username: 'admin', password: '123456' });
 let tenantId = $ref(null);
 let tenantList = $ref([]);
@@ -77,8 +78,8 @@ function handleLogin() {
           // 跳转到上次退出的页面
           proxy.$router.push({ path: lastPath });
         } else {
-          // 跳转到首页
-          proxy.$router.push({ path: '/' });
+          // 跳转有权限的第一个页面
+          proxy.$router.push({ path: firstRouterPermPath.value });
         }
       });
     }
