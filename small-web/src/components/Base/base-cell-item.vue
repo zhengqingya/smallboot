@@ -1,6 +1,6 @@
 <template>
-  <div class="flex-start-center" style="line-height: 25px">
-    <div class="flex-end-center" :style="{ width: computedLabelWidth }" style="padding: 0px 2px">
+  <div class="flex-start-start" style="line-height: 25px">
+    <div class="flex-end-start" :style="{ width: computedLabelWidth }" style="padding: 0px 2px">
       <span style="display: inline-block; white-space: nowrap">{{ label }}：</span>
     </div>
 

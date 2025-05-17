@@ -29,9 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
- * <p>
- * 日志切面
- * </p>
+ * <p> 日志切面 </p>
  *
  * @author zhengqingya
  * @description
@@ -128,7 +126,7 @@ public class ApiLogAspect {
 
             if (JwtUserContext.hasSuperAdmin()) {
                 // 屏蔽超管日志
-                isSavaLog = false;
+//                isSavaLog = false;
             }
 
             if (isSavaLog) {
