@@ -21,7 +21,7 @@ router.beforeEach(async (to, from, next) => {
 
   let useUserStore = store.user.useUserStore();
   const { getUserInfo, logout } = useUserStore;
-  let { isLogin, userObj, routerList } = toRefs(useUserStore); // 响应式
+  let { isLogin, userObj, routerList, firstRouterPermPath } = toRefs(useUserStore); // 响应式
 
   // 浏览器动态标题
   if (isLogin.value && userObj.value.tenantName) {
@@ -35,7 +35,7 @@ router.beforeEach(async (to, from, next) => {
         let lastPath = to.fullPath.replace('/login?redirect=', '');
         next({ path: lastPath }); // 跳转到上次退出的页面
       } else {
-        next({ path: '/' }); // 跳转到首页
+        next({ path: firstRouterPermPath.value }); // 跳转有权限的第一个页面
       }
     } else {
       try {
