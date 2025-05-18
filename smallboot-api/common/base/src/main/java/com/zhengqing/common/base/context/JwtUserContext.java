@@ -42,6 +42,14 @@ public class JwtUserContext {
         return jwtUserBO.getUsername();
     }
 
+    public static String getNickname() {
+        JwtUserBO jwtUserBO = get();
+        if (jwtUserBO == null) {
+            return "未知";
+        }
+        return jwtUserBO.getNickname();
+    }
+
     public static void remove() {
         THREAD_LOCAL.remove();
     }

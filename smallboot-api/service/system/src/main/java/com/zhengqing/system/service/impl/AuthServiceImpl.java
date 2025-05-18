@@ -74,6 +74,7 @@ public class AuthServiceImpl implements IAuthService {
                         .authSourceEnum(AuthSourceEnum.B)
                         .userId(String.valueOf(userPerm.getUserId()))
                         .username(userPerm.getUsername())
+                        .nickname(userPerm.getNickname())
                         .allRoleIdList(allRoleIdListFinal)
                         .roleCodeList(roleCodeList)
                         .deptId(userPerm.getDeptId())

@@ -128,6 +128,7 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
                         .userId(String.valueOf(userId))
                         .openid(openid)
                         .username(umsUser.getNickname())
+                        .nickname(umsUser.getNickname())
                         .roleCodeList(Lists.newArrayList())
                         .build()
         );
@@ -145,6 +146,7 @@ public class UmsUserServiceImpl extends ServiceImpl<UmsUserMapper, UmsUser> impl
                         .userId(String.valueOf(result.getId()))
                         .openid(result.getOpenid())
                         .username(result.getNickname())
+                        .nickname(result.getNickname())
                         .roleCodeList(Lists.newArrayList())
                         .build()
         );

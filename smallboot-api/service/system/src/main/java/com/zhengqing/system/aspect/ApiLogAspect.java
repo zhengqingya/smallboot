@@ -64,7 +64,7 @@ public class ApiLogAspect {
         HttpServletRequest request = ServletUtil.getRequest();
 
         String userId = JwtUserContext.getUserId();
-        String username = JwtUserContext.getUsername();
+        String nickname = JwtUserContext.getNickname();
 
         // 从切面织入点处通过反射机制获取织入点处的方法
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
@@ -79,7 +79,7 @@ public class ApiLogAspect {
 //                    signature.getDeclaringTypeName() + "." + signature.getName());
 //            log.debug("《ApiLogAspect》 controller method description: {}", apiOperation.value());
 //            log.debug("《ApiLogAspect》 operatorId: {}", userId);
-//            log.debug("《ApiLogAspect》 operatorName: {}", username);
+//            log.debug("《ApiLogAspect》 operatorName: {}", nickname);
 //            log.debug("《ApiLogAspect》 request header: {}", request.getHeader(SwaggerConstant.REQUEST_HEADER_AUTHORIZATION));
 //            log.debug("《ApiLogAspect》 request ip: {}", request.getRemoteAddr());
 //            log.debug("《ApiLogAspect》 request url: {}", request.getRequestURL().toString());
@@ -91,7 +91,7 @@ public class ApiLogAspect {
         String requestURI = request.getRequestURI();
         String url = requestMethod + ":" + requestURI;
         String requestParams = JSONUtil.toJsonStr(joinPoint.getArgs());
-        log.debug("开始请求[{}] 操作人:[{}] 请求参数:{}", url, username, requestParams);
+        log.debug("开始请求[{}] 操作人:[{}] 请求参数:{}", url, nickname, requestParams);
 
         boolean isError = false;
         Object result = null;
@@ -137,7 +137,7 @@ public class ApiLogAspect {
                                 .apiMethod(signature.getDeclaringTypeName() + "." + signature.getName())
                                 .apiMethodName(api.tags()[0] + "@" + apiOperation.value())
                                 .apiHeader("")
-                                .operationName(username)
+                                .operationName(nickname)
                                 .requestIp(IpUtil.getIpAdrress(request))
                                 .requestUrl(requestURI)
                                 .requestHttpMethod(requestMethod)
