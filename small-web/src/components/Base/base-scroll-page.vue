@@ -24,6 +24,7 @@ let dataList = $ref([]); // 列表数据
 // 暴露方法
 defineExpose({
   refresh,
+  refreshCurrentPage,
 });
 
 // 生命周期
@@ -45,6 +46,15 @@ async function refresh() {
   isLoading = true;
   dataList = [];
   pageParams.pageNum = 1;
+  await getApiData();
+  isLoading = false;
+}
+
+// 刷新当前page
+async function refreshCurrentPage() {
+  console.log('刷新当前page:', pageParams.pageNum);
+  isLoading = true;
+  // pageParams.pageNum = 1;
   await getApiData();
   isLoading = false;
 }

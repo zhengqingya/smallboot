@@ -79,6 +79,7 @@ let tableDataList = $ref([]); // 列表响应数据
 // 暴露方法
 defineExpose({
   refresh,
+  refreshCurrentPage,
   getSelectionRows,
   getSelectionRowIdList,
 });
@@ -126,6 +127,15 @@ async function refresh() {
     }
     await getApiData();
   }
+  isLoading = false;
+}
+
+// 刷新当前page
+async function refreshCurrentPage() {
+  console.log('刷新当前page:', pageParams.pageNum);
+  isLoading = true;
+  // pageParams.pageNum = 1;
+  await getApiData();
   isLoading = false;
 }
 
