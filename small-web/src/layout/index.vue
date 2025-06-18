@@ -2,14 +2,14 @@
   <!-- <h1>{{ route.meta }}</h1> -->
   <div v-if="isLogin && !$route.meta.isParentView" class="app-box">
     <!-- 侧边栏菜单 -->
-    <sidebar id="sidebar1" class="sidebar-box" />
+    <sidebar class="sidebar-box" />
 
     <div class="content-box">
       <div id="top">
         <!-- 顶部导航栏 -->
         <navbar style="height: 50px" />
         <!-- Tabs标签页 -->
-        <tabs-view />
+        <tabs-view style="height: 35px" />
       </div>
 
       <!-- 主页面 -->
@@ -63,11 +63,9 @@ onUpdated(() => {
     height: 100%;
 
     .main-box {
-      // flex: 1;
+      flex: 1;
+      min-height: 0;
       // min-height: calc(100vh - 50px); // 满屏 - navbar
-      background-color: rgba(243, 242, 242, 0.555);
-
-      // background-color: red;
     }
   }
 }
