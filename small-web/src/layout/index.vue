@@ -1,27 +1,24 @@
 <template>
   <!-- <h1>{{ route.meta }}</h1> -->
-  <div v-if="isLogin && !$route.meta.isParentView" class="flex h-full w-full">
+  <div v-if="isLogin && !$route.meta.isParentView" class="app-box">
     <!-- 侧边栏菜单 -->
+    <sidebar id="sidebar1" class="sidebar-box" />
 
-    <sidebar id="sidebar" />
-
-    <div class="flex-1 flex-column">
+    <div class="content-box">
       <div id="top">
         <!-- 顶部导航栏 -->
         <navbar style="height: 50px" />
         <!-- Tabs标签页 -->
-        <div :style="{ width: appMainWidth + 'px' }">
-          <tabs-view />
-        </div>
+        <tabs-view />
       </div>
 
       <!-- 主页面 -->
-      <app-main class="flex-1 app-main" :height="appMainHeight + 'px'" :width="appMainWidth + 'px'" />
+      <app-main class="main-box" />
     </div>
   </div>
 
   <div v-if="!isLogin || (isLogin && $route.meta.isParentView)" class="h-full">
-    <router-view />
+    <app-main class="main-box" />
   </div>
 
   <im-chat v-if="isLogin" />
@@ -35,49 +32,43 @@ import tabsView from './components/tabs-view.vue';
 const { proxy } = getCurrentInstance();
 let { isLogin } = toRefs(proxy.$store.user.useUserStore());
 
-let appMainWidth = ref(0);
-let appMainHeight = ref(0);
-let appHeight = ref(0);
-
 onMounted(() => {
   // 窗口宽高变化时触发 -- tips：window.onresize只能在项目内触发1次
   window.onresize = function windowResize() {
-    calWidthAndHeight();
+    console.log('windowResize');
   };
 });
 
 // 注册一个回调函数，在组件因为响应式状态变更而更新其 DOM 树之后调用。
 onUpdated(() => {
-  calWidthAndHeight();
+  console.log('onUpdated...');
 });
-
-let { isShowMenu } = toRefs(proxy.$store.settings.useSettingsStore());
-watch(
-  [isLogin, isShowMenu],
-  (newValue) => {
-    calWidthAndHeight();
-  },
-  { immediate: false, deep: false },
-);
-
-function calWidthAndHeight() {
-  let sidebar = document.getElementById('sidebar');
-  let sidebarW = sidebar ? sidebar.offsetWidth : 0;
-  if (isShowMenu.value) {
-    sidebarW = 200;
-  } else {
-    sidebarW = 0;
-  }
-  appMainWidth.value = window.innerWidth - sidebarW;
-
-  let top = document.getElementById('top');
-  let topH = top ? top.offsetHeight : 0;
-  appHeight.value = window.innerHeight;
-  appMainHeight.value = window.innerHeight - topH;
-}
 </script>
 <style lang="scss" scoped>
-.app-main {
-  // height: calc(100vh - 50px); // 满屏 - navbar
+.app-box {
+  height: 100%;
+  width: 100%;
+  display: flex;
+
+  .sidebar-box {
+    min-width: 200px;
+  }
+
+  .content-box {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0px;
+    height: 100%;
+
+    .main-box {
+      // flex: 1;
+      // min-height: calc(100vh - 50px); // 满屏 - navbar
+      background-color: rgba(243, 242, 242, 0.555);
+
+      // background-color: red;
+    }
+  }
 }
 </style>
