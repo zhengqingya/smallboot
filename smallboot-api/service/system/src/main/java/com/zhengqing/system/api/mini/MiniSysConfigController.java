@@ -1,6 +1,7 @@
 package com.zhengqing.system.api.mini;
 
 import com.zhengqing.common.base.constant.ServiceConstant;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.system.model.vo.SysConfigVO;
 import com.zhengqing.system.service.ISysConfigService;
@@ -33,8 +34,8 @@ public class MiniSysConfigController extends BaseController {
 
     @GetMapping("listByKey")
     @ApiOperation("根据属性key查询")
-    public Map<String, SysConfigVO> listByKey(@RequestParam List<String> keyList) {
-        return this.iSysConfigService.mapByKey(keyList);
+    public ApiResult<Map<String, SysConfigVO>> listByKey(@RequestParam List<String> keyList) {
+        return ApiResult.ok(this.iSysConfigService.mapByKey(keyList));
     }
 
 }

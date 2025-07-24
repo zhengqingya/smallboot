@@ -10,6 +10,7 @@ import com.zhengqing.common.auth.service.IAuthService;
 import com.zhengqing.common.base.constant.AppConstant;
 import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.base.context.TenantIdContext;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import com.zhengqing.common.web.custom.noreturnhandle.NoReturnHandle;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -45,9 +46,9 @@ public class WebAuthController {
     @ApiOpen
     @PostMapping("login")
     @ApiOperation("登录")
-    public AuthLoginVO login(@Validated @RequestBody AuthLoginDTO params) {
+    public ApiResult<AuthLoginVO> login(@Validated @RequestBody AuthLoginDTO params) {
         Assert.notNull(TenantIdContext.getTenantId(), "请先选择租户！");
-        return this.iAuthService.login(params);
+        return ApiResult.ok(this.iAuthService.login(params));
     }
 
     @ApiOpen

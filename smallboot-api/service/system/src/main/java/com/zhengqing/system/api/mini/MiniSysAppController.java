@@ -3,6 +3,7 @@ package com.zhengqing.system.api.mini;
 import com.zhengqing.common.auth.custom.open.ApiOpen;
 import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.base.context.TenantIdContext;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.system.service.ISysTenantService;
 import io.swagger.annotations.Api;
@@ -32,8 +33,8 @@ public class MiniSysAppController extends BaseController {
     @ApiOpen
     @GetMapping("config")
     @ApiOperation("小程序配置")
-    public Object config(@RequestParam String appId) {
-        return this.iSysTenantService.configForApp(TenantIdContext.getTenantId());
+    public ApiResult<Object> config(@RequestParam String appId) {
+        return ApiResult.ok(this.iSysTenantService.configForApp(TenantIdContext.getTenantId()));
     }
 
 }

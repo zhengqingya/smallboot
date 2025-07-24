@@ -1,6 +1,7 @@
 package com.zhengqing.system.api.mini;
 
 import com.zhengqing.common.base.constant.ServiceConstant;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.system.model.dto.SysProvinceCityAreaTreeDTO;
 import com.zhengqing.system.model.vo.SysProvinceCityAreaTreeVO;
@@ -34,8 +35,8 @@ public class MiniSysProvinceCityAreaController extends BaseController {
 
     @GetMapping("tree")
     @ApiOperation("树")
-    public List<SysProvinceCityAreaTreeVO> tree(@Validated @ModelAttribute SysProvinceCityAreaTreeDTO params) {
-        return this.sysProvinceCityAreaService.tree(params);
+    public ApiResult<List<SysProvinceCityAreaTreeVO>> tree(@Validated @ModelAttribute SysProvinceCityAreaTreeDTO params) {
+        return ApiResult.ok(this.sysProvinceCityAreaService.tree(params));
     }
 
 }

@@ -1,6 +1,7 @@
 package com.zhengqing.system.api.mini;
 
 import com.zhengqing.common.base.constant.ServiceConstant;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import com.zhengqing.common.file.util.FileStorageUtil;
 import com.zhengqing.system.model.vo.SysFileVO;
 import io.swagger.annotations.Api;
@@ -29,12 +30,12 @@ public class MiniSysFileController {
     @PostMapping("upload")
     @ApiOperation("上传文件")
     @SneakyThrows(Exception.class)
-    public SysFileVO upload(@RequestPart @RequestParam MultipartFile file) {
-        return SysFileVO.builder()
+    public ApiResult<SysFileVO> upload(@RequestPart @RequestParam MultipartFile file) {
+        return ApiResult.ok(SysFileVO.builder()
                 .name(file.getOriginalFilename())
                 .url(this.fileStorageUtil.upload(file))
                 .type(file.getContentType())
-                .build();
+                .build());
     }
 
 }
