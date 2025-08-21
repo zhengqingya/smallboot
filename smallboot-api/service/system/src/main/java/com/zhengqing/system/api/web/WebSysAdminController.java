@@ -3,6 +3,7 @@ package com.zhengqing.system.api.web;
 import com.zhengqing.common.auth.custom.open.ApiOpen;
 import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.base.context.TenantIdContext;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.common.db.mapper.MyBaseMapper;
 import com.zhengqing.system.model.vo.SysRoleReBtnPermListVO;
@@ -42,14 +43,15 @@ public class WebSysAdminController extends BaseController {
 
     @ApiOperation("获取角色权限映射数据")
     @GetMapping("listRoleReBtnPerm")
-    public List<SysRoleReBtnPermListVO> listRoleReBtnPerm() {
-        return this.iSysRoleMenuService.listRoleReBtnPerm();
+    public ApiResult<List<SysRoleReBtnPermListVO>> listRoleReBtnPerm() {
+        return ApiResult.ok(this.iSysRoleMenuService.listRoleReBtnPerm());
     }
 
     @ApiOperation("刷新Redis缓存中的角色菜单权限")
     @GetMapping("refreshRedisPerm")
-    public void refreshRedisPerm() {
+    public ApiResult refreshRedisPerm() {
         this.iSysPermBusinessService.refreshRedisPerm();
+        return ApiResult.ok();
     }
 
     /**
@@ -57,13 +59,13 @@ public class WebSysAdminController extends BaseController {
      */
     @ApiOperation("初始化DB(谨慎操作)")
     @GetMapping("initDb")
-    public Object initDb() {
+    public ApiResult<Object> initDb() {
 //        String initDbSql = "DROP DATABASE IF EXISTS `smallboot`; " +
 //                "CREATE DATABASE `smallboot` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci; ";
 //        String initSql = "USE `smallboot`; " + MyFileUtil.readFileContent(ProjectConstant.PROJECT_ROOT_DIRECTORY + "/doc/sql/smallboot.sql");
 //        this.myBaseMapper.execSql(initDbSql);
 //        this.myBaseMapper.execSql(initSql);
-        return "OK";
+        return ApiResult.ok("OK");
     }
 
     /**
@@ -72,9 +74,9 @@ public class WebSysAdminController extends BaseController {
     @ApiOpen
     @ApiOperation("测试调用ums接口")
     @GetMapping("testGetUmsApi")
-    public Object testGetUmsApi() {
+    public ApiResult<Object> testGetUmsApi() {
         TenantIdContext.removeFlag();
-        return this.iUmsUserFeignApi.getUser(1L);
+        return ApiResult.ok(this.iUmsUserFeignApi.getUser(1L));
     }
 
 }

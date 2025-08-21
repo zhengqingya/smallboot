@@ -2,6 +2,7 @@ package com.zhengqing.system.api.web;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.common.base.constant.ServiceConstant;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.common.core.custom.repeatsubmit.NoRepeatSubmit;
 import com.zhengqing.common.db.util.TenantUtil;
@@ -35,37 +36,37 @@ public class WebSysAppConfigController extends BaseController {
 
     @GetMapping("page")
     @ApiOperation("列表分页")
-    public IPage<SysAppConfigBO> page(@ModelAttribute SysAppConfigDTO params) {
-        return TenantUtil.executeRemoveFlag(() -> this.iSysAppConfigService.page(params));
+    public ApiResult<IPage<SysAppConfigBO>> page(@ModelAttribute SysAppConfigDTO params) {
+        return ApiResult.ok(TenantUtil.executeRemoveFlag(() -> this.iSysAppConfigService.page(params)));
     }
 
     @GetMapping("genLink")
     @ApiOperation("生成授权链接")
-    public String genLink() {
-        return TenantUtil.executeRemoveFlag(this.iSysAppConfigService::genLink);
+    public ApiResult<String> genLink() {
+        return ApiResult.ok(TenantUtil.executeRemoveFlag(this.iSysAppConfigService::genLink));
     }
 
     @NoReturnHandle
     @GetMapping("qrcode")
     @ApiOperation("获取二维码")
-    public byte[] qrcode(@Validated @ModelAttribute SysAppQrcodeDTO params) {
-        return TenantUtil.executeRemoveFlag(() -> this.iSysAppConfigService.qrcode(params));
+    public ApiResult<byte[]> qrcode(@Validated @ModelAttribute SysAppQrcodeDTO params) {
+        return ApiResult.ok(TenantUtil.executeRemoveFlag(() -> this.iSysAppConfigService.qrcode(params)));
     }
 
     @NoRepeatSubmit
     @PostMapping("operationBatch")
     @ApiOperation("批量操作(小程序提审、发布)")
-    public Boolean operationBatch(@Validated @RequestBody SysAppOperationDTO params) {
+    public ApiResult<Boolean> operationBatch(@Validated @RequestBody SysAppOperationDTO params) {
         TenantUtil.executeRemoveFlag(() -> this.iSysAppConfigService.operationBatch(params));
-        return true;
+        return ApiResult.ok(true);
     }
 
     @NoRepeatSubmit
     @PostMapping("syncStatus")
     @ApiOperation("同步小程序最新状态")
-    public Boolean syncStatus() {
+    public ApiResult<Boolean> syncStatus() {
         TenantUtil.executeRemoveFlag(this.iSysAppConfigService::syncStatus);
-        return true;
+        return ApiResult.ok(true);
     }
 
 }
