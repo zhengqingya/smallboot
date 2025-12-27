@@ -2,6 +2,7 @@ package com.zhengqing.mall.api.web;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.common.base.constant.ServiceConstant;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
 import com.zhengqing.mall.model.dto.WebPmsCategoryBaseDTO;
 import com.zhengqing.mall.model.dto.WebPmsCategoryEditShowDTO;
@@ -34,46 +35,47 @@ public class WebPmsCategoryController {
 
     @GetMapping("page")
     @ApiOperation("分页列表")
-    public IPage<WebPmsCategoryBaseVO> page(@Validated @ModelAttribute WebPmsCategoryBaseDTO params) {
-        return this.iPmsCategoryService.page(params);
+    public ApiResult<IPage<WebPmsCategoryBaseVO>> page(@Validated @ModelAttribute WebPmsCategoryBaseDTO params) {
+        return ApiResult.ok(this.iPmsCategoryService.page(params));
     }
 
     @GetMapping("list")
     @ApiOperation("列表")
-    public List<WebPmsCategoryBaseVO> list(@Validated @ModelAttribute WebPmsCategoryBaseDTO params) {
-        return this.iPmsCategoryService.list(params);
+    public ApiResult<List<WebPmsCategoryBaseVO>> list(@Validated @ModelAttribute WebPmsCategoryBaseDTO params) {
+        return ApiResult.ok(this.iPmsCategoryService.list(params));
     }
 
     @GetMapping("tree")
     @ApiOperation("树")
-    public List<WebPmsCategoryBaseVO> tree(@Validated @ModelAttribute WebPmsCategoryBaseDTO params) {
-        return this.iPmsCategoryService.tree(params);
+    public ApiResult<List<WebPmsCategoryBaseVO>> tree(@Validated @ModelAttribute WebPmsCategoryBaseDTO params) {
+        return ApiResult.ok(this.iPmsCategoryService.tree(params));
     }
 
     @PostMapping("")
     @ApiOperation("新增")
-    public Long add(@Validated @RequestBody WebPmsCategorySaveDTO params) {
+    public ApiResult<Long> add(@Validated @RequestBody WebPmsCategorySaveDTO params) {
         params.setId(null);
-        return this.iPmsCategoryService.addOrUpdateData(params);
+        return ApiResult.ok(this.iPmsCategoryService.addOrUpdateData(params));
     }
 
     @PutMapping("")
     @ApiOperation("更新")
-    public Long update(@Validated(UpdateGroup.class) @RequestBody WebPmsCategorySaveDTO params) {
-        return this.iPmsCategoryService.addOrUpdateData(params);
+    public ApiResult<Long> update(@Validated(UpdateGroup.class) @RequestBody WebPmsCategorySaveDTO params) {
+        return ApiResult.ok(this.iPmsCategoryService.addOrUpdateData(params));
     }
 
     @DeleteMapping("deleteBatch")
     @ApiOperation("批量删除")
-    public void deleteBatch(@RequestParam List<String> idList) {
+    public ApiResult<Void> deleteBatch(@RequestParam List<String> idList) {
         this.iPmsCategoryService.deleteBatchForBusiness(idList);
+        return ApiResult.ok();
     }
 
     @PutMapping("updateBatchShow")
     @ApiOperation("批量更新显示状态")
-    public Boolean updateBatchShow(@Validated @RequestBody WebPmsCategoryEditShowDTO params) {
+    public ApiResult<Boolean> updateBatchShow(@Validated @RequestBody WebPmsCategoryEditShowDTO params) {
         this.iPmsCategoryService.updateBatchShow(params);
-        return true;
+        return ApiResult.ok(true);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.zhengqing.system.api.web;
 
 import com.zhengqing.common.base.constant.ServiceConstant;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.common.core.custom.repeatsubmit.NoRepeatSubmit;
 import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
@@ -34,29 +35,32 @@ public class WebSysDeptController extends BaseController {
 
     @GetMapping("tree")
     @ApiOperation("树")
-    public List<SysDeptTreeVO> tree(@Validated @ModelAttribute SysDeptTreeDTO params) {
-        return this.iSysDeptService.tree(params);
+    public ApiResult<List<SysDeptTreeVO>> tree(@Validated @ModelAttribute SysDeptTreeDTO params) {
+        return ApiResult.ok(this.iSysDeptService.tree(params));
     }
 
     @NoRepeatSubmit
     @PostMapping("add")
     @ApiOperation("新增")
-    public void add(@Validated @RequestBody SysDeptSaveDTO params) {
+    public ApiResult<Void> add(@Validated @RequestBody SysDeptSaveDTO params) {
         params.setId(null);
         this.iSysDeptService.addOrUpdateData(params);
+        return ApiResult.ok();
     }
 
     @NoRepeatSubmit
     @PutMapping("update")
     @ApiOperation("更新")
-    public void update(@Validated(UpdateGroup.class) @RequestBody SysDeptSaveDTO params) {
+    public ApiResult<Void> update(@Validated(UpdateGroup.class) @RequestBody SysDeptSaveDTO params) {
         this.iSysDeptService.addOrUpdateData(params);
+        return ApiResult.ok();
     }
 
     @DeleteMapping("delete")
     @ApiOperation("删除")
-    public void delete(@RequestParam Integer id) {
+    public ApiResult<Void> delete(@RequestParam Integer id) {
         this.iSysDeptService.deleteData(id);
+        return ApiResult.ok();
     }
 
 

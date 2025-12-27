@@ -13,6 +13,7 @@ import com.zhengqing.wf.model.vo.WfFormDetailVO;
 import com.zhengqing.wf.model.vo.WfFormListVO;
 import com.zhengqing.wf.model.vo.WfFormPageVO;
 import com.zhengqing.wf.service.IWfFormService;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -39,41 +40,44 @@ public class WfFormController extends BaseController {
 
     @GetMapping("page")
     @ApiOperation("分页列表")
-    public IPage<WfFormPageVO> page(@Validated @ModelAttribute WfFormPageDTO params) {
-        return this.iWfFormService.page(params);
+    public ApiResult<IPage<WfFormPageVO>> page(@Validated @ModelAttribute WfFormPageDTO params) {
+        return ApiResult.ok(this.iWfFormService.page(params));
     }
 
     @GetMapping("list")
     @ApiOperation("列表")
-    public List<WfFormListVO> list(@Validated @ModelAttribute WfFormListDTO params) {
-        return this.iWfFormService.list(params);
+    public ApiResult<List<WfFormListVO>> list(@Validated @ModelAttribute WfFormListDTO params) {
+        return ApiResult.ok(this.iWfFormService.list(params));
     }
 
     @GetMapping("detail")
     @ApiOperation("详情")
-    public WfFormDetailVO detail(@Validated @ModelAttribute WfFormDetailDTO params) {
-        return this.iWfFormService.detail(params);
+    public ApiResult<WfFormDetailVO> detail(@Validated @ModelAttribute WfFormDetailDTO params) {
+        return ApiResult.ok(this.iWfFormService.detail(params));
     }
 
     @NoRepeatSubmit
     @PostMapping("add")
     @ApiOperation("新增")
-    public void add(@Validated @RequestBody WfFormSaveDTO params) {
+    public ApiResult<Void> add(@Validated @RequestBody WfFormSaveDTO params) {
         params.setId(null);
         this.iWfFormService.addOrUpdateData(params);
+        return ApiResult.ok();
     }
 
     @NoRepeatSubmit
     @PutMapping("update")
     @ApiOperation("更新")
-    public void update(@Validated(UpdateGroup.class) @RequestBody WfFormSaveDTO params) {
+    public ApiResult<Void> update(@Validated(UpdateGroup.class) @RequestBody WfFormSaveDTO params) {
         this.iWfFormService.addOrUpdateData(params);
+        return ApiResult.ok();
     }
 
     @DeleteMapping("delete")
     @ApiOperation("删除")
-    public void delete(@RequestParam Long id) {
+    public ApiResult<Void> delete(@RequestParam Long id) {
         this.iWfFormService.deleteData(id);
+        return ApiResult.ok();
     }
 
 }

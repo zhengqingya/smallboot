@@ -2,6 +2,7 @@ package com.zhengqing.system.api.web;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.common.base.constant.ServiceConstant;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.common.core.custom.repeatsubmit.NoRepeatSubmit;
 import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
@@ -38,48 +39,52 @@ public class WebSysConfigController extends BaseController {
 
     @GetMapping("listPage")
     @ApiOperation("列表分页")
-    public IPage<SysConfigPageVO> listPage(@ModelAttribute SysConfigPageDTO params) {
-        return this.iSysConfigService.listPage(params);
+    public ApiResult<IPage<SysConfigPageVO>> listPage(@ModelAttribute SysConfigPageDTO params) {
+        return ApiResult.ok(this.iSysConfigService.listPage(params));
     }
 
     @PostMapping("")
     @ApiOperation("新增")
-    public void add(@Validated @RequestBody SysConfigSaveDTO params) {
+    public ApiResult<Void> add(@Validated @RequestBody SysConfigSaveDTO params) {
         params.setId(null);
         this.iSysConfigService.addOrUpdateData(params);
+        return ApiResult.ok();
     }
 
     @PutMapping("")
     @ApiOperation("更新")
-    public void update(@Validated(UpdateGroup.class) @RequestBody SysConfigSaveDTO params) {
+    public ApiResult<Void> update(@Validated(UpdateGroup.class) @RequestBody SysConfigSaveDTO params) {
         this.iSysConfigService.addOrUpdateData(params);
+        return ApiResult.ok();
     }
 
     @DeleteMapping("")
     @ApiOperation("删除")
-    public void delete(@RequestParam Integer id) {
+    public ApiResult<Void> delete(@RequestParam Integer id) {
         this.iSysConfigService.removeById(id);
+        return ApiResult.ok();
     }
 
     // ----------------------------------------------------------------------------------------
 
     @GetMapping("listByKey")
     @ApiOperation("根据属性key查询")
-    public Map<String, SysConfigVO> listByKey(@RequestParam List<String> keyList) {
-        return this.iSysConfigService.mapByKey(keyList);
+    public ApiResult<Map<String, SysConfigVO>> listByKey(@RequestParam List<String> keyList) {
+        return ApiResult.ok(this.iSysConfigService.mapByKey(keyList));
     }
 
     @GetMapping("list")
     @ApiOperation("列表")
-    public List<SysConfigVO> list(@RequestParam List<String> keyList) {
-        return this.iSysConfigService.listByKey(keyList);
+    public ApiResult<List<SysConfigVO>> list(@RequestParam List<String> keyList) {
+        return ApiResult.ok(this.iSysConfigService.listByKey(keyList));
     }
 
     @NoRepeatSubmit
     @PostMapping("saveBatch")
     @ApiOperation("批量保存")
-    public void saveBatch(@Validated @RequestBody ValidList<SysConfigSaveDTO> dataList) {
+    public ApiResult<Void> saveBatch(@Validated @RequestBody ValidList<SysConfigSaveDTO> dataList) {
         this.iSysConfigService.saveBatch(dataList);
+        return ApiResult.ok();
     }
 
 //    @DeleteMapping("deleteByKey")

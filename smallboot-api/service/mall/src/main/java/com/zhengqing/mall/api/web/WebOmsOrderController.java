@@ -2,6 +2,7 @@ package com.zhengqing.mall.api.web;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.common.base.constant.ServiceConstant;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import com.zhengqing.mall.model.dto.OmsOrderCancelDTO;
 import com.zhengqing.mall.model.dto.OmsOrderPageDTO;
 import com.zhengqing.mall.model.dto.WebOmsOrderSendSpuDTO;
@@ -49,47 +50,49 @@ public class WebOmsOrderController {
 
     @GetMapping("getTabCondition")
     @ApiOperation("获取tab条件")
-    public List<MallTabConditionListVO> getTabCondition(@ModelAttribute OmsOrderPageDTO params) {
+    public ApiResult<List<MallTabConditionListVO>> getTabCondition(@ModelAttribute OmsOrderPageDTO params) {
         params.setTabValue(null);
-        return this.iOmsOrderService.getTabCondition(params);
+        return ApiResult.ok(this.iOmsOrderService.getTabCondition(params));
     }
 
     @GetMapping("page")
     @ApiOperation("分页列表")
-    public IPage<OmsOrderBaseVO> page(@Validated @ModelAttribute OmsOrderPageDTO params) {
-        return this.iOmsOrderService.page(params);
+    public ApiResult<IPage<OmsOrderBaseVO>> page(@Validated @ModelAttribute OmsOrderPageDTO params) {
+        return ApiResult.ok(this.iOmsOrderService.page(params));
     }
 
     @GetMapping("{orderNo}")
     @ApiOperation("详情")
-    public OmsOrderBaseVO detail(@PathVariable String orderNo) {
-        return this.iOmsOrderService.detail(orderNo);
+    public ApiResult<OmsOrderBaseVO> detail(@PathVariable String orderNo) {
+        return ApiResult.ok(this.iOmsOrderService.detail(orderNo));
     }
 
     @PutMapping("cancel")
     @ApiOperation("待支付-取消订单")
-    public Boolean cancel(@Validated @RequestBody OmsOrderCancelDTO params) {
+    public ApiResult<Boolean> cancel(@Validated @RequestBody OmsOrderCancelDTO params) {
         this.iOmsOrderService.cancelOrderForBusiness(params);
-        return true;
+        return ApiResult.ok(true);
     }
 
     @PostMapping("sendSpu")
     @ApiOperation("订单发货")
-    public Boolean sendSpu(@Validated @RequestBody WebOmsOrderSendSpuDTO params) {
+    public ApiResult<Boolean> sendSpu(@Validated @RequestBody WebOmsOrderSendSpuDTO params) {
         this.iOmsOrderService.sendSpu(params);
-        return true;
+        return ApiResult.ok(true);
     }
 
     @PostMapping("importBatchSendSpu")
     @ApiOperation("导入批量发货")
-    public void importBatchSendSpu(MultipartFile file) {
+    public ApiResult<Void> importBatchSendSpu(MultipartFile file) {
         this.iOmsOrderService.importBatchSendSpu(file);
+        return ApiResult.ok();
     }
 
     @GetMapping("export")
     @ApiOperation("导出(最多导出10000条数据)")
-    public void export(HttpServletResponse response, @ModelAttribute OmsOrderPageDTO params) {
+    public ApiResult<Void> export(HttpServletResponse response, @ModelAttribute OmsOrderPageDTO params) {
         this.iOmsOrderService.export(response, params);
+        return ApiResult.ok();
     }
 
 }

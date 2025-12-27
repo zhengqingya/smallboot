@@ -2,6 +2,7 @@ package com.zhengqing.system.api.web;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.common.base.constant.ServiceConstant;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.common.core.custom.repeatsubmit.NoRepeatSubmit;
 import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
@@ -42,46 +43,49 @@ public class WebSysUserController extends BaseController {
 
     @GetMapping("listPage")
     @ApiOperation("列表分页")
-    public IPage<SysUserListVO> listPage(@ModelAttribute SysUserListDTO params) {
-        return this.iSysUserService.listPage(params);
+    public ApiResult<IPage<SysUserListVO>> listPage(@ModelAttribute SysUserListDTO params) {
+        return ApiResult.ok(this.iSysUserService.listPage(params));
     }
 
     @GetMapping("list")
     @ApiOperation("列表")
-    public List<SysUserListVO> list(@ModelAttribute SysUserListDTO params) {
-        return this.iSysUserService.list(params);
+    public ApiResult<List<SysUserListVO>> list(@ModelAttribute SysUserListDTO params) {
+        return ApiResult.ok(this.iSysUserService.list(params));
     }
 
     @NoRepeatSubmit
     @PostMapping("")
     @ApiOperation("新增")
-    public Integer add(@Validated @RequestBody SysUserSaveDTO params) {
-        return this.iSysUserService.addOrUpdateData(params);
+    public ApiResult<Integer> add(@Validated @RequestBody SysUserSaveDTO params) {
+        return ApiResult.ok(this.iSysUserService.addOrUpdateData(params));
     }
 
     @NoRepeatSubmit
     @PutMapping("")
     @ApiOperation("更新")
-    public Integer update(@Validated(UpdateGroup.class) @RequestBody SysUserSaveDTO params) {
-        return this.iSysUserService.addOrUpdateData(params);
+    public ApiResult<Integer> update(@Validated(UpdateGroup.class) @RequestBody SysUserSaveDTO params) {
+        return ApiResult.ok(this.iSysUserService.addOrUpdateData(params));
     }
 
     @PutMapping("update-base-info")
     @ApiOperation("更新用户基本信息")
-    public void updateBaseInfo(@Validated(UpdateGroup.class) @RequestBody SysUserSaveDTO params) {
+    public ApiResult<Void> updateBaseInfo(@Validated(UpdateGroup.class) @RequestBody SysUserSaveDTO params) {
         this.iSysUserService.updateBaseInfo(params);
+        return ApiResult.ok();
     }
 
     @DeleteMapping("")
     @ApiOperation("删除")
-    public void delete(@RequestParam Integer userId) {
+    public ApiResult<Void> delete(@RequestParam Integer userId) {
         this.iSysUserService.deleteUser(userId);
+        return ApiResult.ok();
     }
 
     @PutMapping("updatePassword")
     @ApiOperation("修改用户密码")
-    public void updatePassword(@RequestBody @Valid SysUserUpdatePasswordDTO params) {
+    public ApiResult<Void> updatePassword(@RequestBody @Valid SysUserUpdatePasswordDTO params) {
         this.iSysUserService.updatePassword(params);
+        return ApiResult.ok();
     }
 
 }

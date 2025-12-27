@@ -6,6 +6,7 @@ import com.zhengqing.system.model.dto.SysOauthRemoveBindDTO;
 import com.zhengqing.system.model.dto.SysOauthSaveDTO;
 import com.zhengqing.system.model.vo.SysOauthDataListVO;
 import com.zhengqing.system.service.ISysOauthService;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -49,20 +50,21 @@ public class WebSysOauthController extends BaseController {
 
     @PostMapping("bindThirdPart")
     @ApiOperation("第三方账号绑定")
-    public Integer handleBindThirdPartData(@Validated @RequestBody SysOauthSaveDTO params) {
-        return this.iSysOauthService.addOrUpdateData(params);
+    public ApiResult<Integer> handleBindThirdPartData(@Validated @RequestBody SysOauthSaveDTO params) {
+        return ApiResult.ok(this.iSysOauthService.addOrUpdateData(params));
     }
 
     @GetMapping("getOauthDataList")
     @ApiOperation("获取第三方账号绑定授权数据")
-    public List<SysOauthDataListVO> getOauthDataList(@RequestParam Integer userId) {
-        return this.iSysOauthService.getOauthDataList(userId);
+    public ApiResult<List<SysOauthDataListVO>> getOauthDataList(@RequestParam Integer userId) {
+        return ApiResult.ok(this.iSysOauthService.getOauthDataList(userId));
     }
 
     @PostMapping("removeBind")
     @ApiOperation("解除第三方账号绑定")
-    public void removeBind(@RequestBody SysOauthRemoveBindDTO params) {
+    public ApiResult<Void> removeBind(@RequestBody SysOauthRemoveBindDTO params) {
         this.iSysOauthService.removeBind(params);
+        return ApiResult.ok();
     }
 
 }

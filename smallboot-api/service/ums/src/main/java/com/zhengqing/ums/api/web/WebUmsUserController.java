@@ -2,6 +2,7 @@ package com.zhengqing.ums.api.web;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.common.base.constant.ServiceConstant;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.ums.model.dto.WebUmsUserPageDTO;
 import com.zhengqing.ums.model.vo.WebUmsUserPageVO;
@@ -37,8 +38,8 @@ public class WebUmsUserController extends BaseController {
 
     @GetMapping("page")
     @ApiOperation("分页列表")
-    public IPage<WebUmsUserPageVO> page(@Validated @ModelAttribute WebUmsUserPageDTO params) {
-        return this.sysUserService.page(params);
+    public ApiResult<IPage<WebUmsUserPageVO>> page(@Validated @ModelAttribute WebUmsUserPageDTO params) {
+        return ApiResult.ok(this.sysUserService.page(params));
     }
 
 }

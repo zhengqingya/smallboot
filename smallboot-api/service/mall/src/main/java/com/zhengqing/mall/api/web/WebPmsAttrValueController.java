@@ -1,6 +1,7 @@
 package com.zhengqing.mall.api.web;
 
 import com.zhengqing.common.base.constant.ServiceConstant;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
 import com.zhengqing.mall.model.dto.WebPmsAttrValueListDTO;
 import com.zhengqing.mall.model.dto.WebPmsAttrValueSaveDTO;
@@ -32,27 +33,28 @@ public class WebPmsAttrValueController {
 
     @GetMapping("list")
     @ApiOperation("列表")
-    public List<WebPmsAttrValueListVO> list(@Validated @ModelAttribute WebPmsAttrValueListDTO params) {
-        return this.iPmsAttrValueService.list(params);
+    public ApiResult<List<WebPmsAttrValueListVO>> list(@Validated @ModelAttribute WebPmsAttrValueListDTO params) {
+        return ApiResult.ok(this.iPmsAttrValueService.list(params));
     }
 
     @PostMapping("")
     @ApiOperation("新增")
-    public String add(@Validated @RequestBody WebPmsAttrValueSaveDTO params) {
+    public ApiResult<String> add(@Validated @RequestBody WebPmsAttrValueSaveDTO params) {
         params.setId(null);
-        return this.iPmsAttrValueService.addOrUpdateData(params);
+        return ApiResult.ok(this.iPmsAttrValueService.addOrUpdateData(params));
     }
 
     @PutMapping("")
     @ApiOperation("更新")
-    public String update(@Validated(UpdateGroup.class) @RequestBody WebPmsAttrValueSaveDTO params) {
-        return this.iPmsAttrValueService.addOrUpdateData(params);
+    public ApiResult<String> update(@Validated(UpdateGroup.class) @RequestBody WebPmsAttrValueSaveDTO params) {
+        return ApiResult.ok(this.iPmsAttrValueService.addOrUpdateData(params));
     }
 
     @DeleteMapping("")
     @ApiOperation("删除")
-    public void delete(@RequestParam String id) {
+    public ApiResult<Void> delete(@RequestParam String id) {
         this.iPmsAttrValueService.deleteData(id);
+        return ApiResult.ok();
     }
 
 }

@@ -2,6 +2,7 @@ package com.zhengqing.mall.api.web;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.common.base.constant.ServiceConstant;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
 import com.zhengqing.common.core.custom.validator.common.ValidList;
 import com.zhengqing.mall.model.dto.*;
@@ -33,48 +34,49 @@ public class WebPmsCategorySpuRelationController {
 
     @GetMapping("page")
     @ApiOperation("分页列表")
-    public IPage<WebPmsCategorySpuRelationPageVO> page(@Validated @ModelAttribute WebPmsCategorySpuRelationPageDTO params) {
-        return this.iPmsCategorySpuRelationService.page(params);
+    public ApiResult<IPage<WebPmsCategorySpuRelationPageVO>> page(@Validated @ModelAttribute WebPmsCategorySpuRelationPageDTO params) {
+        return ApiResult.ok(this.iPmsCategorySpuRelationService.page(params));
     }
 
     @PostMapping("")
     @ApiOperation("新增")
-    public String add(@Validated @RequestBody WebPmsCategorySpuRelationSaveDTO params) {
+    public ApiResult<String> add(@Validated @RequestBody WebPmsCategorySpuRelationSaveDTO params) {
         params.setId(null);
-        return this.iPmsCategorySpuRelationService.addOrUpdateData(params);
+        return ApiResult.ok(this.iPmsCategorySpuRelationService.addOrUpdateData(params));
     }
 
     @PutMapping("")
     @ApiOperation("更新")
-    public String update(@Validated(UpdateGroup.class) @RequestBody WebPmsCategorySpuRelationSaveDTO params) {
-        return this.iPmsCategorySpuRelationService.addOrUpdateData(params);
+    public ApiResult<String> update(@Validated(UpdateGroup.class) @RequestBody WebPmsCategorySpuRelationSaveDTO params) {
+        return ApiResult.ok(this.iPmsCategorySpuRelationService.addOrUpdateData(params));
     }
 
     @DeleteMapping("deleteBatch")
     @ApiOperation("批量删除")
-    public void delete(@RequestParam List<String> idList) {
+    public ApiResult<Void> delete(@RequestParam List<String> idList) {
         this.iPmsCategorySpuRelationService.deleteBatch(idList);
+        return ApiResult.ok();
     }
 
     @PutMapping("updateBatchShow")
     @ApiOperation("批量更新显示状态")
-    public Boolean updateBatchShow(@Validated @RequestBody WebPmsCategorySpuRelationEditShowDTO params) {
+    public ApiResult<Boolean> updateBatchShow(@Validated @RequestBody WebPmsCategorySpuRelationEditShowDTO params) {
         this.iPmsCategorySpuRelationService.updateBatchShow(params);
-        return true;
+        return ApiResult.ok(true);
     }
 
     @PutMapping("updateBatchPut")
     @ApiOperation("批量更新上下架状态")
-    public Boolean updateBatchPut(@Validated @RequestBody WebPmsCategorySpuRelationEditPutDTO params) {
+    public ApiResult<Boolean> updateBatchPut(@Validated @RequestBody WebPmsCategorySpuRelationEditPutDTO params) {
         this.iPmsCategorySpuRelationService.updateBatchPut(params);
-        return true;
+        return ApiResult.ok(true);
     }
 
     @PutMapping("updateBatchSort")
     @ApiOperation("批量排序")
-    public Boolean updateBatchSort(@Validated @RequestBody ValidList<WebPmsCategorySpuRelationEditSortDTO> list) {
+    public ApiResult<Boolean> updateBatchSort(@Validated @RequestBody ValidList<WebPmsCategorySpuRelationEditSortDTO> list) {
         this.iPmsCategorySpuRelationService.updateBatchSort(list);
-        return true;
+        return ApiResult.ok(true);
     }
 
 }

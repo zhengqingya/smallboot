@@ -12,6 +12,7 @@ import com.zhengqing.system.model.dto.SysTenantSaveDTO;
 import com.zhengqing.system.model.vo.SysTenantListVO;
 import com.zhengqing.system.model.vo.SysTenantPageVO;
 import com.zhengqing.system.service.ISysTenantService;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -38,36 +39,39 @@ public class WebSysTenantController extends BaseController {
 
     @GetMapping("page")
     @ApiOperation("分页列表")
-    public IPage<SysTenantPageVO> page(@Validated @ModelAttribute SysTenantPageDTO params) {
-        return this.iSysTenantService.page(params);
+    public ApiResult<IPage<SysTenantPageVO>> page(@Validated @ModelAttribute SysTenantPageDTO params) {
+        return ApiResult.ok(this.iSysTenantService.page(params));
     }
 
     @ApiOpen
     @GetMapping("list")
     @ApiOperation("列表")
-    public List<SysTenantListVO> list(@Validated @ModelAttribute SysTenantListDTO params) {
-        return this.iSysTenantService.list(params);
+    public ApiResult<List<SysTenantListVO>> list(@Validated @ModelAttribute SysTenantListDTO params) {
+        return ApiResult.ok(this.iSysTenantService.list(params));
     }
 
     @NoRepeatSubmit
     @PostMapping("add")
     @ApiOperation("新增")
-    public void add(@Validated @RequestBody SysTenantSaveDTO params) {
+    public ApiResult<Void> add(@Validated @RequestBody SysTenantSaveDTO params) {
         params.setId(null);
         this.iSysTenantService.addOrUpdateData(params);
+        return ApiResult.ok();
     }
 
     @NoRepeatSubmit
     @PutMapping("update")
     @ApiOperation("更新")
-    public void update(@Validated(UpdateGroup.class) @RequestBody SysTenantSaveDTO params) {
+    public ApiResult<Void> update(@Validated(UpdateGroup.class) @RequestBody SysTenantSaveDTO params) {
         this.iSysTenantService.addOrUpdateData(params);
+        return ApiResult.ok();
     }
 
     @DeleteMapping("delete")
     @ApiOperation("删除")
-    public void delete(@RequestParam Integer id) {
+    public ApiResult<Void> delete(@RequestParam Integer id) {
         this.iSysTenantService.deleteData(id);
+        return ApiResult.ok();
     }
 
 }

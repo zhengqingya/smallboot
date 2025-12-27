@@ -8,6 +8,7 @@ import com.zhengqing.mall.model.vo.*;
 import com.zhengqing.mall.service.IOmsLogisticService;
 import com.zhengqing.mall.service.IOmsOrderService;
 import com.zhengqing.pay.model.vo.PayOrderCreateVO;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -35,88 +36,88 @@ public class MiniOmsOrderController {
 
     @GetMapping("getTabCondition")
     @ApiOperation("获取tab条件")
-    public List<MallTabConditionListVO> getTabCondition(@ModelAttribute OmsOrderPageDTO params) {
+    public ApiResult<List<MallTabConditionListVO>> getTabCondition(@ModelAttribute OmsOrderPageDTO params) {
         params.setTabValue(null);
-        return this.iOmsOrderService.getTabCondition(params);
+        return ApiResult.ok(this.iOmsOrderService.getTabCondition(params));
     }
 
     @GetMapping("page")
     @ApiOperation("列表分页")
-    public IPage<OmsOrderBaseVO> page(@Validated @ModelAttribute OmsOrderPageDTO params) {
-        return this.iOmsOrderService.page(params);
+    public ApiResult<IPage<OmsOrderBaseVO>> page(@Validated @ModelAttribute OmsOrderPageDTO params) {
+        return ApiResult.ok(this.iOmsOrderService.page(params));
     }
 
     @GetMapping("{orderNo}")
     @ApiOperation("详情")
-    public OmsOrderBaseVO detail(@PathVariable String orderNo) {
-        return this.iOmsOrderService.detail(orderNo);
+    public ApiResult<OmsOrderBaseVO> detail(@PathVariable String orderNo) {
+        return ApiResult.ok(this.iOmsOrderService.detail(orderNo));
     }
 
     @PostMapping("create")
     @ApiOperation("购买-创建订单")
-    public MiniOmsSpuBuyVO createOrder(@Validated @RequestBody MiniOmsSpuBuyDTO params) {
-        return this.iOmsOrderService.createOrder(params);
+    public ApiResult<MiniOmsSpuBuyVO> createOrder(@Validated @RequestBody MiniOmsSpuBuyDTO params) {
+        return ApiResult.ok(this.iOmsOrderService.createOrder(params));
     }
 
     @PutMapping("cancel")
     @ApiOperation("待支付-取消订单")
-    public Boolean cancel(@Validated @RequestBody OmsOrderCancelDTO params) {
+    public ApiResult<Boolean> cancel(@Validated @RequestBody OmsOrderCancelDTO params) {
         this.iOmsOrderService.cancelOrderForBusiness(params);
-        return true;
+        return ApiResult.ok(true);
     }
 
     @PostMapping("pay")
     @ApiOperation("待支付-支付订单")
-    public PayOrderCreateVO pay(@Validated @RequestBody MiniOmsOrderPayDTO params) {
-        return this.iOmsOrderService.payOrder(params);
+    public ApiResult<PayOrderCreateVO> pay(@Validated @RequestBody MiniOmsOrderPayDTO params) {
+        return ApiResult.ok(this.iOmsOrderService.payOrder(params));
     }
 
     @PostMapping("payTest")
     @ApiOperation("待支付-支付订单(仅测试环境使用，订单直接变成已支付状态流程)")
-    public Boolean payTest(@Validated @RequestBody MiniOmsOrderPayDTO params) {
+    public ApiResult<Boolean> payTest(@Validated @RequestBody MiniOmsOrderPayDTO params) {
         this.iOmsOrderService.payOrderTest(params);
-        return true;
+        return ApiResult.ok(true);
     }
 
     @DeleteMapping("deleteBatch")
     @ApiOperation("批量删除")
-    public Boolean deleteBatch(@Validated @ModelAttribute OmsOrderDeleteDTO params) {
+    public ApiResult<Boolean> deleteBatch(@Validated @ModelAttribute OmsOrderDeleteDTO params) {
         throw new MyException("暂不支持删除订单操作！");
 //        this.miniOmsOrderService.deleteBatch(params);
-//        return true;
+//        return ApiResult.ok(true);
     }
 
     @PutMapping("updateReceiverAddress")
     @ApiOperation("修改收货人地址")
-    public Boolean updateReceiverAddress(@Validated @RequestBody MiniOmsOrderUpdateReceiverAddressDTO params) {
+    public ApiResult<Boolean> updateReceiverAddress(@Validated @RequestBody MiniOmsOrderUpdateReceiverAddressDTO params) {
         this.iOmsOrderService.updateReceiverAddress(params);
-        return true;
+        return ApiResult.ok(true);
     }
 
     @GetMapping("getAfterSaleStatus")
     @ApiOperation("售后状态(判断是否可申请售后)")
-    public MiniPmsOrderReAfterSaleStatusVO getAfterSaleStatus(@RequestParam String orderNo) {
-        return this.iOmsOrderService.getAfterSaleStatus(orderNo);
+    public ApiResult<MiniPmsOrderReAfterSaleStatusVO> getAfterSaleStatus(@RequestParam String orderNo) {
+        return ApiResult.ok(this.iOmsOrderService.getAfterSaleStatus(orderNo));
     }
 
     @PostMapping("applyAfterSale")
     @ApiOperation("申请售后（退款/退货退款/换货）")
-    public Boolean applyAfterSale(@Validated @RequestBody MiniOmsOrderApplyAfterSaleDTO params) {
+    public ApiResult<Boolean> applyAfterSale(@Validated @RequestBody MiniOmsOrderApplyAfterSaleDTO params) {
         this.iOmsOrderService.applyAfterSale(params);
-        return true;
+        return ApiResult.ok(true);
     }
 
     @PostMapping("confirmReceipt")
     @ApiOperation("确认收货")
-    public Boolean confirmReceipt(@Validated @RequestBody MiniOmsOrderConfirmReceiptDTO params) {
+    public ApiResult<Boolean> confirmReceipt(@Validated @RequestBody MiniOmsOrderConfirmReceiptDTO params) {
         this.iOmsOrderService.confirmReceipt(params);
-        return true;
+        return ApiResult.ok(true);
     }
 
     @GetMapping("getLogisticInfo")
     @ApiOperation("查询物流")
-    public OmsLogisticVO getLogisticInfo(@Validated @ModelAttribute OmsLogisticDTO params) {
-        return this.iOmsLogisticService.detail(params);
+    public ApiResult<OmsLogisticVO> getLogisticInfo(@Validated @ModelAttribute OmsLogisticDTO params) {
+        return ApiResult.ok(this.iOmsLogisticService.detail(params));
     }
 
 }

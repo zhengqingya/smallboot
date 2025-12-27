@@ -8,6 +8,7 @@ import com.zhengqing.mall.model.dto.MiniOmsCartSaveDTO;
 import com.zhengqing.mall.model.dto.MiniOmsCartUpdateNumDTO;
 import com.zhengqing.mall.model.vo.MiniOmsCartVO;
 import com.zhengqing.mall.service.IOmsCartService;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -34,35 +35,39 @@ public class MiniOmsCartController {
 
     @GetMapping("list")
     @ApiOperation("列表")
-    public List<MiniOmsCartVO> list(@RequestParam(required = false) Long userId) {
+    public ApiResult<List<MiniOmsCartVO>> list(@RequestParam(required = false) Long userId) {
         if (userId == null) {
             userId = UmsUserContext.getUserId();
         }
-        return this.iOmsCartService.list(userId);
+        return ApiResult.ok(this.iOmsCartService.list(userId));
     }
 
     @PostMapping("")
     @ApiOperation("新增")
-    public void add(@Validated @RequestBody MiniOmsCartSaveDTO params) {
+    public ApiResult<Void> add(@Validated @RequestBody MiniOmsCartSaveDTO params) {
         this.iOmsCartService.addData(params);
+        return ApiResult.ok();
     }
 
     @PutMapping("updateNum")
     @ApiOperation("更新数量")
-    public void updateNum(@Validated @RequestBody MiniOmsCartUpdateNumDTO params) {
+    public ApiResult<Void> updateNum(@Validated @RequestBody MiniOmsCartUpdateNumDTO params) {
         this.iOmsCartService.updateNum(params);
+        return ApiResult.ok();
     }
 
     @PutMapping("batchUpdateNum")
     @ApiOperation("批量更新数量")
-    public void batchUpdateNum(@Validated @RequestBody MiniOmsCartBatchUpdateNumDTO params) {
+    public ApiResult<Void> batchUpdateNum(@Validated @RequestBody MiniOmsCartBatchUpdateNumDTO params) {
         this.iOmsCartService.batchUpdateNum(params);
+        return ApiResult.ok();
     }
 
     @DeleteMapping("")
     @ApiOperation("删除")
-    public void delete(@Validated @RequestBody MiniOmsCartDeleteDTO params) {
+    public ApiResult<Void> delete(@Validated @RequestBody MiniOmsCartDeleteDTO params) {
         this.iOmsCartService.deleteData(params);
+        return ApiResult.ok();
     }
 
 }

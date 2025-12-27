@@ -1,5 +1,6 @@
 package com.zhengqing.pay.controller;
 
+import com.zhengqing.common.base.model.vo.ApiResult;
 import com.zhengqing.pay.model.dto.PayOrderRefundDTO;
 import com.zhengqing.pay.service.IPayService;
 import io.swagger.annotations.Api;
@@ -31,8 +32,8 @@ public class WxAdminController {
 
     @ApiOperation("退款")
     @PostMapping("/refund")
-    public Boolean refund(@Validated @RequestBody PayOrderRefundDTO params) {
-        return this.payService.refund(params);
+    public ApiResult<Boolean> refund(@Validated @RequestBody PayOrderRefundDTO params) {
+        return ApiResult.ok(this.payService.refund(params));
     }
 
 }

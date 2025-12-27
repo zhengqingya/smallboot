@@ -10,6 +10,7 @@ import com.zhengqing.system.model.dto.SysRoleRePermSaveDTO;
 import com.zhengqing.system.model.dto.SysUserPermDTO;
 import com.zhengqing.system.model.vo.SysUserPermVO;
 import com.zhengqing.system.service.ISysPermBusinessService;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +40,7 @@ public class WebSysPermController extends BaseController {
 
     @GetMapping("getUserPerm")
     @ApiOperation("获取当前登录用户权限信息")
-    public SysUserPermVO getUserPerm(@RequestParam(required = false) Integer userId) {
+    public ApiResult<SysUserPermVO> getUserPerm(@RequestParam(required = false) Integer userId) {
         if (JwtUserContext.hasSuperOrSystemAdmin()) {
             TenantIdContext.removeFlag();
         }
@@ -49,21 +50,22 @@ public class WebSysPermController extends BaseController {
                         .build()
         );
         userPerm.setPassword(null);
-        return userPerm;
+        return ApiResult.ok(userPerm);
     }
 
     @NoRepeatSubmit
     @PostMapping("saveRoleRePerm")
     @ApiOperation("保存角色权限（菜单权限+按钮权限+数据权限）")
-    public void saveRoleRePerm(@Validated @RequestBody SysRoleRePermSaveDTO params) {
+    public ApiResult<Void> saveRoleRePerm(@Validated @RequestBody SysRoleRePermSaveDTO params) {
         this.iSysPermBusinessService.saveRoleRePerm(params);
         this.iSysPermBusinessService.logoutUserByRole(params.getRoleId());
+        return ApiResult.ok();
     }
 
     @GetMapping("getScopeIdListByRoleId")
     @ApiOperation("根据角色id拿到关联的数据权限")
-    public List<Integer> getScopeIdListByRoleId(@RequestParam Integer roleId) {
-        return this.iSysPermBusinessService.getScopeIdListByRoleId(roleId);
+    public ApiResult<List<Integer>> getScopeIdListByRoleId(@RequestParam Integer roleId) {
+        return ApiResult.ok(this.iSysPermBusinessService.getScopeIdListByRoleId(roleId));
     }
 
 }

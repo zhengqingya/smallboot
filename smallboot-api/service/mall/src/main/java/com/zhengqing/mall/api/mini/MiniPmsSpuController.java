@@ -2,6 +2,7 @@ package com.zhengqing.mall.api.mini;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.common.base.constant.ServiceConstant;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import com.zhengqing.mall.model.dto.MiniPmsSpuPresellRemindDTO;
 import com.zhengqing.mall.model.dto.PmsSpuPageDTO;
 import com.zhengqing.mall.model.vo.PmsSpuBaseVO;
@@ -31,21 +32,21 @@ public class MiniPmsSpuController {
 
     @GetMapping("page")
     @ApiOperation("列表分页")
-    public IPage<PmsSpuBaseVO> page(@Validated @ModelAttribute PmsSpuPageDTO params) {
-        return this.iPmsSpuService.page(params);
+    public ApiResult<IPage<PmsSpuBaseVO>> page(@Validated @ModelAttribute PmsSpuPageDTO params) {
+        return ApiResult.ok(this.iPmsSpuService.page(params));
     }
 
     @GetMapping("{id}")
     @ApiOperation("详情")
-    public PmsSpuBaseVO detail(@ApiParam("商品id") @PathVariable String id) {
-        return this.iPmsSpuService.detail(id);
+    public ApiResult<PmsSpuBaseVO> detail(@ApiParam("商品id") @PathVariable String id) {
+        return ApiResult.ok(this.iPmsSpuService.detail(id));
     }
 
     @PostMapping("presellRemind")
     @ApiOperation("预售提醒")
-    public boolean presellRemind(@Validated @RequestBody MiniPmsSpuPresellRemindDTO params) {
+    public ApiResult<Boolean> presellRemind(@Validated @RequestBody MiniPmsSpuPresellRemindDTO params) {
         this.iPmsSpuService.presellRemind(params);
-        return true;
+        return ApiResult.ok(true);
     }
 
 }

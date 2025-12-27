@@ -2,6 +2,7 @@ package com.zhengqing.app.api;
 
 import cn.hutool.json.JSONUtil;
 import com.zhengqing.common.base.constant.ServiceConstant;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.common.core.custom.limit.ApiLimit;
 import com.zhengqing.system.entity.SysUser;
@@ -39,8 +40,8 @@ public class TestAppController extends BaseController {
      */
     @GetMapping("sql")
     @ApiOperation("sql注入")
-    public Object testSqlmap(@RequestParam String username) {
-        return this.sysUserMapper.testSqlmap(username);
+    public ApiResult<Object> testSqlmap(@RequestParam String username) {
+        return ApiResult.ok(this.sysUserMapper.testSqlmap(username));
     }
 
     @PostMapping("testMapSpringEl（获取map值）")
@@ -57,19 +58,19 @@ public class TestAppController extends BaseController {
 
     @GetMapping("pathVariable/{id}/{name}")
     @ApiOperation("@PathVariable路径获取")
-    public Object pathVariable(@PathVariable Integer id, @PathVariable String name, HttpServletRequest request) {
+    public ApiResult<Object> pathVariable(@PathVariable Integer id, @PathVariable String name, HttpServletRequest request) {
 //        return request.getAttribute("org.springframework.web.servlet.HandlerMapping.bestMatchingPattern");
-        return request.getAttribute(HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE);
+        return ApiResult.ok(request.getAttribute(HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE));
     }
 
     @ApiOperation("测试mybatis一级缓存")
     @GetMapping("test_mybaits_one_cache")
-    public Object test_mybaits_one_cache() {
+    public ApiResult<Object> test_mybaits_one_cache() {
         SysUser sysUser = sysUserMapper.selectById(1);
         System.out.println(sysUser.getNickname());
         SysUser sysUser2 = sysUserMapper.selectById(1);
         System.out.println(sysUser2.getNickname());
-        return sysUser;
+        return ApiResult.ok(sysUser);
     }
 
 }

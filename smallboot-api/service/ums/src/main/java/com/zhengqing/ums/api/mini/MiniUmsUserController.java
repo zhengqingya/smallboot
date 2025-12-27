@@ -3,6 +3,7 @@ package com.zhengqing.ums.api.mini;
 import com.zhengqing.common.auth.custom.open.ApiOpen;
 import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.common.base.context.UmsUserContext;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.ums.model.dto.UmsUserBindPhoneDTO;
 import com.zhengqing.ums.model.dto.UmsUserDTO;
@@ -38,34 +39,35 @@ public class MiniUmsUserController extends BaseController {
     @ApiOpen
     @PostMapping("wxLogin")
     @ApiOperation("微信小程序登录")
-    public UmsUserVO wxLogin(@RequestBody UmsUserLoginDTO params) {
-        return this.sysUserService.login(params);
+    public ApiResult<UmsUserVO> wxLogin(@RequestBody UmsUserLoginDTO params) {
+        return ApiResult.ok(this.sysUserService.login(params));
     }
 
     @ApiOpen
     @PostMapping("login")
     @ApiOperation("小程序登录")
-    public UmsUserVO login(@RequestBody UmsUserLoginDTO params) {
-        return this.sysUserService.login(params);
+    public ApiResult<UmsUserVO> login(@RequestBody UmsUserLoginDTO params) {
+        return ApiResult.ok(this.sysUserService.login(params));
     }
 
     @PostMapping("bindPhone")
     @ApiOperation("绑定手机号(需小程序后台进行相关认证)")
-    public String bindPhone(@Validated @RequestBody UmsUserBindPhoneDTO params) {
-        return this.sysUserService.bindPhone(params);
+    public ApiResult<String> bindPhone(@Validated @RequestBody UmsUserBindPhoneDTO params) {
+        return ApiResult.ok(this.sysUserService.bindPhone(params));
     }
 
     @GetMapping("getUserInfo")
     @ApiOperation("获取用户信息")
-    public UmsUserVO getUserInfo(@ModelAttribute UmsUserDTO params) {
-        return this.sysUserService.getUserInfo(params);
+    public ApiResult<UmsUserVO> getUserInfo(@ModelAttribute UmsUserDTO params) {
+        return ApiResult.ok(this.sysUserService.getUserInfo(params));
     }
 
     @PutMapping("updateUserInfo")
     @ApiOperation("更新用户信息")
-    public void updateUserInfo(@Validated @RequestBody UmsUserInfoDTO params) {
+    public ApiResult<Void> updateUserInfo(@Validated @RequestBody UmsUserInfoDTO params) {
         params.setId(UmsUserContext.getUserId());
         this.sysUserService.updateUserInfo(params);
+        return ApiResult.ok();
     }
 
 }

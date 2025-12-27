@@ -35,7 +35,7 @@ public class MyGlobalExceptionHandler {
      * 自定义异常处理
      */
     @ExceptionHandler(value = MyException.class)
-    public ApiResult myException(MyException e) {
+    public ApiResult<String> myException(MyException e) {
         log.error("自定义异常：", e);
         if (e.getCode() != null) {
             return ApiResult.fail(e.getCode(), e.getMessage());
@@ -44,7 +44,7 @@ public class MyGlobalExceptionHandler {
     }
 
     @ExceptionHandler(value = ParameterException.class)
-    public ApiResult myException(ParameterException e) {
+    public ApiResult<String> myException(ParameterException e) {
         log.error("参数异常：", e);
         if (e.getCode() != null) {
             return ApiResult.fail(e.getCode(), e.getMessage());
@@ -53,7 +53,7 @@ public class MyGlobalExceptionHandler {
     }
 
     @ExceptionHandler(value = BizException.class)
-    public ApiResult bizException(BizException e) {
+    public ApiResult<String> bizException(BizException e) {
         log.error("业务异常：", e);
         if (e.getCode() != null) {
             return ApiResult.fail(e.getCode(), e.getMessage());
@@ -68,7 +68,7 @@ public class MyGlobalExceptionHandler {
      * 方法参数校验
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ApiResult handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+    public ApiResult<String> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         log.error("方法参数校验:" + e.getMessage(), e);
         return ApiResult.fail(e.getBindingResult().getFieldError().getDefaultMessage());
     }
@@ -77,7 +77,7 @@ public class MyGlobalExceptionHandler {
      * ValidationException
      */
     @ExceptionHandler(ValidationException.class)
-    public ApiResult handleValidationException(ValidationException e) {
+    public ApiResult<String> handleValidationException(ValidationException e) {
         log.error("ValidationException:", e);
         Throwable cause = e.getCause();
         if (cause == null) {
@@ -100,7 +100,7 @@ public class MyGlobalExceptionHandler {
      * ConstraintViolationException
      */
     @ExceptionHandler(ConstraintViolationException.class)
-    public ApiResult handleConstraintViolationException(ConstraintViolationException e) {
+    public ApiResult<String> handleConstraintViolationException(ConstraintViolationException e) {
         log.error("ValidationException:" + e.getMessage(), e);
         return ApiResult.fail(e.getMessage());
     }
@@ -112,13 +112,13 @@ public class MyGlobalExceptionHandler {
     }
 
     @ExceptionHandler(NoHandlerFoundException.class)
-    public ApiResult handlerNoFoundException(Exception e) {
+    public ApiResult<String> handlerNoFoundException(Exception e) {
         log.error("404:", e);
         return ApiResult.fail(404, "路径不存在，请检查路径是否正确");
     }
 
     @ExceptionHandler(DuplicateKeyException.class)
-    public ApiResult handleDuplicateKeyException(DuplicateKeyException e) {
+    public ApiResult<String> handleDuplicateKeyException(DuplicateKeyException e) {
         log.error("数据重复，请检查后提交:", e);
         return ApiResult.fail("数据重复，请检查后提交:" + e.getMessage());
     }
@@ -126,7 +126,7 @@ public class MyGlobalExceptionHandler {
     // ===============================================
 
     @ExceptionHandler(RuntimeException.class)
-    public ApiResult handleRuntimeException(RuntimeException e) {
+    public ApiResult<String> handleRuntimeException(RuntimeException e) {
         log.error("系统异常:", e);
         Throwable cause = e.getCause();
         if (cause != null) {
@@ -138,7 +138,7 @@ public class MyGlobalExceptionHandler {
     }
 
     @ExceptionHandler(NotLoginException.class)
-    public ApiResult handleNotLoginException(NotLoginException e) {
+    public ApiResult<String> handleNotLoginException(NotLoginException e) {
         log.error("认证异常:", e);
         return ApiResult.expired(e.getMessage());
     }
@@ -147,7 +147,7 @@ public class MyGlobalExceptionHandler {
      * 空指针异常
      */
     @ExceptionHandler(NullPointerException.class)
-    public ApiResult nullPointerExceptionHandler(NullPointerException e) {
+    public ApiResult<String> nullPointerExceptionHandler(NullPointerException e) {
         log.error("空指针异常:", e);
         return ApiResult.fail("空指针异常:" + e.getMessage());
     }
@@ -156,7 +156,7 @@ public class MyGlobalExceptionHandler {
      * 类型转换异常
      */
     @ExceptionHandler(ClassCastException.class)
-    public ApiResult classCastExceptionHandler(ClassCastException e) {
+    public ApiResult<String> classCastExceptionHandler(ClassCastException e) {
         log.error("类型转换异常:", e);
         return ApiResult.fail("类型转换异常:" + e.getMessage());
     }
@@ -165,7 +165,7 @@ public class MyGlobalExceptionHandler {
      * 数组越界异常
      */
     @ExceptionHandler(ArrayIndexOutOfBoundsException.class)
-    public ApiResult arrayIndexOutOfBoundsException(ArrayIndexOutOfBoundsException e) {
+    public ApiResult<String> arrayIndexOutOfBoundsException(ArrayIndexOutOfBoundsException e) {
         log.error("数组越界异常:", e);
         return ApiResult.fail("数组越界异常:" + e.getMessage());
     }
@@ -174,7 +174,7 @@ public class MyGlobalExceptionHandler {
      * 包含调用处理程序抛出的未声明的检查异常
      */
     @ExceptionHandler({UndeclaredThrowableException.class})
-    public ApiResult exception(UndeclaredThrowableException e) {
+    public ApiResult<String> exception(UndeclaredThrowableException e) {
         log.error("UndeclaredThrowableException:", e);
         Throwable cause = e.getCause();
         if (cause == null) {
@@ -187,7 +187,7 @@ public class MyGlobalExceptionHandler {
      * 其他错误
      */
     @ExceptionHandler({Exception.class})
-    public ApiResult exception(Exception e) {
+    public ApiResult<String> exception(Exception e) {
         log.error("其他错误:", e);
         return ApiResult.fail(500, "其他错误：" + e);
     }

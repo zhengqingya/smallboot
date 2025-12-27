@@ -2,6 +2,7 @@ package com.zhengqing.mall.api.mini;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.common.base.constant.ServiceConstant;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.mall.model.dto.SmsShopLatelyDTO;
 import com.zhengqing.mall.model.dto.SmsShopPageDTO;
@@ -34,14 +35,14 @@ public class MiniSmsShopController extends BaseController {
 
     @GetMapping("page")
     @ApiOperation("分页列表")
-    public IPage<SmsShopBaseVO> page(@Validated @ModelAttribute SmsShopPageDTO params) {
-        return this.smsShopService.page(params);
+    public ApiResult<IPage<SmsShopBaseVO>> page(@Validated @ModelAttribute SmsShopPageDTO params) {
+        return ApiResult.ok(this.smsShopService.page(params));
     }
 
     @GetMapping("lately")
     @ApiOperation("最近门店")
-    public SmsShopBaseVO lately(@Validated @ModelAttribute SmsShopLatelyDTO params) {
-        return this.smsShopService.lately(params);
+    public ApiResult<SmsShopBaseVO> lately(@Validated @ModelAttribute SmsShopLatelyDTO params) {
+        return ApiResult.ok(this.smsShopService.lately(params));
     }
 
 }

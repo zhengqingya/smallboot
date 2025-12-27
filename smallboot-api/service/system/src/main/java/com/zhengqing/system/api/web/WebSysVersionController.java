@@ -2,6 +2,7 @@ package com.zhengqing.system.api.web;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.common.base.constant.ServiceConstant;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.common.core.custom.repeatsubmit.NoRepeatSubmit;
 import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
@@ -33,29 +34,31 @@ public class WebSysVersionController extends BaseController {
 
     @GetMapping("page")
     @ApiOperation("分页列表")
-    public IPage<SysVersionBaseVO> page(@Validated @ModelAttribute SysVersionBaseDTO params) {
-        return this.iSysVersionService.page(params);
+    public ApiResult<IPage<SysVersionBaseVO>> page(@Validated @ModelAttribute SysVersionBaseDTO params) {
+        return ApiResult.ok(this.iSysVersionService.page(params));
     }
 
     @GetMapping("lately")
     @ApiOperation("最近的一条版本记录")
-    public SysVersionBaseVO lately() {
-        return this.iSysVersionService.lately();
+    public ApiResult<SysVersionBaseVO> lately() {
+        return ApiResult.ok(this.iSysVersionService.lately());
     }
 
     @NoRepeatSubmit
     @PostMapping("add")
     @ApiOperation("新增")
-    public void add(@Validated @RequestBody SysVersionSaveDTO params) {
+    public ApiResult<Void> add(@Validated @RequestBody SysVersionSaveDTO params) {
         params.setId(null);
         this.iSysVersionService.addOrUpdateData(params);
+        return ApiResult.ok();
     }
 
     @NoRepeatSubmit
     @PutMapping("update")
     @ApiOperation("更新")
-    public void update(@Validated(UpdateGroup.class) @RequestBody SysVersionSaveDTO params) {
+    public ApiResult<Void> update(@Validated(UpdateGroup.class) @RequestBody SysVersionSaveDTO params) {
         this.iSysVersionService.addOrUpdateData(params);
+        return ApiResult.ok();
     }
 
 //    @DeleteMapping("delete")

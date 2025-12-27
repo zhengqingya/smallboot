@@ -1,6 +1,7 @@
 package com.zhengqing.wf.config;
 
 import com.zhengqing.common.base.config.CommonProperty;
+import com.zhengqing.common.base.constant.BaseConstant;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.boot.context.properties.ConfigurationProperties;

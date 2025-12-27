@@ -2,6 +2,7 @@ package com.zhengqing.mall.api.web;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.common.base.constant.ServiceConstant;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import com.zhengqing.mall.model.dto.OmsOrderAfterSalePageDTO;
 import com.zhengqing.mall.model.dto.WebOmsOrderAfterSaleUpdateDTO;
 import com.zhengqing.mall.model.vo.MallTabConditionListVO;
@@ -33,28 +34,28 @@ public class WebOmsOrderAfterSaleController {
 
     @GetMapping("getTabCondition")
     @ApiOperation("获取tab条件")
-    public List<MallTabConditionListVO> getTabCondition(@ModelAttribute OmsOrderAfterSalePageDTO params) {
+    public ApiResult<List<MallTabConditionListVO>> getTabCondition(@ModelAttribute OmsOrderAfterSalePageDTO params) {
         params.setTabValue(null);
-        return this.iOmsOrderAfterSaleService.getTabCondition(params);
+        return ApiResult.ok(this.iOmsOrderAfterSaleService.getTabCondition(params));
     }
 
     @GetMapping("page")
     @ApiOperation("列表分页")
-    public IPage<OmsOrderAfterSaleBaseVO> page(@Validated @ModelAttribute OmsOrderAfterSalePageDTO params) {
-        return this.iOmsOrderAfterSaleService.page(params);
+    public ApiResult<IPage<OmsOrderAfterSaleBaseVO>> page(@Validated @ModelAttribute OmsOrderAfterSalePageDTO params) {
+        return ApiResult.ok(this.iOmsOrderAfterSaleService.page(params));
     }
 
     @GetMapping("")
     @ApiOperation("详情")
-    public OmsOrderAfterSaleBaseVO detail(@RequestParam String afterSaleNo) {
-        return this.iOmsOrderAfterSaleService.detail(afterSaleNo);
+    public ApiResult<OmsOrderAfterSaleBaseVO> detail(@RequestParam String afterSaleNo) {
+        return ApiResult.ok(this.iOmsOrderAfterSaleService.detail(afterSaleNo));
     }
 
     @PutMapping("")
     @ApiOperation("更新售后信息（退款/退货退款/换货）")
-    public Boolean updateData(@Validated @RequestBody WebOmsOrderAfterSaleUpdateDTO params) {
+    public ApiResult<Boolean> updateData(@Validated @RequestBody WebOmsOrderAfterSaleUpdateDTO params) {
         this.iOmsOrderAfterSaleService.updateDataByWeb(params);
-        return true;
+        return ApiResult.ok(true);
     }
 
 }

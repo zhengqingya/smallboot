@@ -1,6 +1,7 @@
 package com.zhengqing.mall.api.web;
 
 import com.zhengqing.common.base.constant.ServiceConstant;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
 import com.zhengqing.mall.model.dto.WebPmsAttrKeyListDTO;
 import com.zhengqing.mall.model.dto.WebPmsAttrSaveDTO;
@@ -33,33 +34,34 @@ public class WebPmsAttrKeyController {
 
     @GetMapping("list")
     @ApiOperation("列表")
-    public List<WebPmsAttrKeyListVO> list(@Validated @ModelAttribute WebPmsAttrKeyListDTO params) {
-        return this.iPmsAttrKeyService.list(params);
+    public ApiResult<List<WebPmsAttrKeyListVO>> list(@Validated @ModelAttribute WebPmsAttrKeyListDTO params) {
+        return ApiResult.ok(this.iPmsAttrKeyService.list(params));
     }
 
     @GetMapping("listByIdList")
     @ApiOperation("根据ids查询列表数据")
-    public List<WebPmsAttrVO> listByIdList(@RequestParam List<String> idList) {
-        return this.iPmsAttrKeyService.listByIdList(idList);
+    public ApiResult<List<WebPmsAttrVO>> listByIdList(@RequestParam List<String> idList) {
+        return ApiResult.ok(this.iPmsAttrKeyService.listByIdList(idList));
     }
 
     @PostMapping("")
     @ApiOperation("新增")
-    public String add(@Validated @RequestBody WebPmsAttrSaveDTO params) {
+    public ApiResult<String> add(@Validated @RequestBody WebPmsAttrSaveDTO params) {
         params.setId(null);
-        return this.iPmsAttrKeyService.addOrUpdateData(params);
+        return ApiResult.ok(this.iPmsAttrKeyService.addOrUpdateData(params));
     }
 
     @PutMapping("")
     @ApiOperation("更新")
-    public String update(@Validated(UpdateGroup.class) @RequestBody WebPmsAttrSaveDTO params) {
-        return this.iPmsAttrKeyService.addOrUpdateData(params);
+    public ApiResult<String> update(@Validated(UpdateGroup.class) @RequestBody WebPmsAttrSaveDTO params) {
+        return ApiResult.ok(this.iPmsAttrKeyService.addOrUpdateData(params));
     }
 
     @DeleteMapping("")
     @ApiOperation("删除")
-    public void delete(@RequestParam String id) {
+    public ApiResult<Void> delete(@RequestParam String id) {
         this.iPmsAttrKeyService.deleteData(id);
+        return ApiResult.ok();
     }
 
 }

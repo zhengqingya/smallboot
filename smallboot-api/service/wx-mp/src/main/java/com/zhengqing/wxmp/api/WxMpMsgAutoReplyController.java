@@ -8,6 +8,7 @@ import com.zhengqing.wxmp.model.dto.WxMpMsgAutoReplyPageDTO;
 import com.zhengqing.wxmp.model.dto.WxMpMsgAutoReplySaveDTO;
 import com.zhengqing.wxmp.model.vo.WxMpMsgAutoReplyPageVO;
 import com.zhengqing.wxmp.service.IWxMpMsgAutoReplyService;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -32,27 +33,30 @@ public class WxMpMsgAutoReplyController extends BaseController {
 
     @GetMapping("page")
     @ApiOperation("分页列表")
-    public IPage<WxMpMsgAutoReplyPageVO> page(@Validated @ModelAttribute WxMpMsgAutoReplyPageDTO params) {
-        return this.wxMsgAutoReplyService.page(params);
+    public ApiResult<IPage<WxMpMsgAutoReplyPageVO>> page(@Validated @ModelAttribute WxMpMsgAutoReplyPageDTO params) {
+        return ApiResult.ok(this.wxMsgAutoReplyService.page(params));
     }
 
     @PostMapping("add")
     @ApiOperation("新增")
-    public void add(@Validated @RequestBody WxMpMsgAutoReplySaveDTO params) {
+    public ApiResult<Void> add(@Validated @RequestBody WxMpMsgAutoReplySaveDTO params) {
         params.setId(null);
         this.wxMsgAutoReplyService.addOrUpdateData(params);
+        return ApiResult.ok();
     }
 
     @PutMapping("update")
     @ApiOperation("更新")
-    public void update(@Validated(UpdateGroup.class) @RequestBody WxMpMsgAutoReplySaveDTO params) {
+    public ApiResult<Void> update(@Validated(UpdateGroup.class) @RequestBody WxMpMsgAutoReplySaveDTO params) {
         this.wxMsgAutoReplyService.addOrUpdateData(params);
+        return ApiResult.ok();
     }
 
     @DeleteMapping("delete")
     @ApiOperation("删除")
-    public void delete(@RequestParam Integer id) {
+    public ApiResult<Void> delete(@RequestParam Integer id) {
         this.wxMsgAutoReplyService.deleteData(id);
+        return ApiResult.ok();
     }
 
 }

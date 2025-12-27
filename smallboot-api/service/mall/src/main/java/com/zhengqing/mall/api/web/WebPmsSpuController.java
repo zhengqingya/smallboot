@@ -2,6 +2,7 @@ package com.zhengqing.mall.api.web;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.common.base.constant.ServiceConstant;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
 import com.zhengqing.common.core.custom.validator.common.ValidList;
 import com.zhengqing.mall.model.dto.*;
@@ -35,82 +36,82 @@ public class WebPmsSpuController {
 
     @GetMapping("getTabCondition")
     @ApiOperation("获取tab条件")
-    public List<MallTabConditionListVO> getTabCondition(@Validated @ModelAttribute PmsSpuPageDTO params) {
+    public ApiResult<List<MallTabConditionListVO>> getTabCondition(@Validated @ModelAttribute PmsSpuPageDTO params) {
         params.setTabValue(null);
-        return this.iPmsSpuService.getTabCondition(params);
+        return ApiResult.ok(this.iPmsSpuService.getTabCondition(params));
     }
 
     @GetMapping("page")
     @ApiOperation("列表分页")
-    public IPage<PmsSpuBaseVO> page(@Validated @ModelAttribute PmsSpuPageDTO params) {
-        return this.iPmsSpuService.page(params);
+    public ApiResult<IPage<PmsSpuBaseVO>> page(@Validated @ModelAttribute PmsSpuPageDTO params) {
+        return ApiResult.ok(this.iPmsSpuService.page(params));
     }
 
     @GetMapping("list")
     @ApiOperation("列表")
-    public List<WebPmsSpuListVO> list(@Validated @ModelAttribute PmsSpuListDTO params) {
-        return this.iPmsSpuService.list(params);
+    public ApiResult<List<WebPmsSpuListVO>> list(@Validated @ModelAttribute PmsSpuListDTO params) {
+        return ApiResult.ok(this.iPmsSpuService.list(params));
     }
 
     @GetMapping("")
     @ApiOperation("详情")
-    public PmsSpuBaseVO detail(@RequestParam String id) {
-        return this.iPmsSpuService.detail(id);
+    public ApiResult<PmsSpuBaseVO> detail(@RequestParam String id) {
+        return ApiResult.ok(this.iPmsSpuService.detail(id));
     }
 
     @PostMapping("")
     @ApiOperation("新增")
-    public String add(@Validated @RequestBody WebPmsSpuSaveDTO params) {
+    public ApiResult<String> add(@Validated @RequestBody WebPmsSpuSaveDTO params) {
         params.setId(null);
-        return this.iPmsSpuService.addOrUpdateData(params);
+        return ApiResult.ok(this.iPmsSpuService.addOrUpdateData(params));
     }
 
     @PutMapping("")
     @ApiOperation("更新")
-    public String update(@Validated(UpdateGroup.class) @RequestBody WebPmsSpuSaveDTO params) {
-        return this.iPmsSpuService.addOrUpdateData(params);
+    public ApiResult<String> update(@Validated(UpdateGroup.class) @RequestBody WebPmsSpuSaveDTO params) {
+        return ApiResult.ok(this.iPmsSpuService.addOrUpdateData(params));
     }
 
     @PutMapping("updateBatchPut")
     @ApiOperation("批量更新上下架状态")
-    public Boolean updateBatchPut(@Validated @RequestBody WebPmsSpuEditPutDTO params) {
+    public ApiResult<Boolean> updateBatchPut(@Validated @RequestBody WebPmsSpuEditPutDTO params) {
         this.iPmsSpuService.updateBatchPut(params);
-        return true;
+        return ApiResult.ok(true);
     }
 
     @PutMapping("updateBatchShow")
     @ApiOperation("批量更新显示状态")
-    public Boolean updateBatchShow(@Validated @RequestBody WebPmsSpuEditShowDTO params) {
+    public ApiResult<Boolean> updateBatchShow(@Validated @RequestBody WebPmsSpuEditShowDTO params) {
         this.iPmsSpuService.updateBatchShow(params);
-        return true;
+        return ApiResult.ok(true);
     }
 
     @PutMapping("updateBatchPresell")
     @ApiOperation("批量更新预售状态")
-    public Boolean updateBatchPresell(@Validated @RequestBody WebPmsSpuEditPresellDTO params) {
+    public ApiResult<Boolean> updateBatchPresell(@Validated @RequestBody WebPmsSpuEditPresellDTO params) {
         this.iPmsSpuService.updateBatchPresell(params);
-        return true;
+        return ApiResult.ok(true);
     }
 
     @DeleteMapping("deleteBatch")
     @ApiOperation("批量删除")
-    public Boolean deleteBatch(@Validated @ModelAttribute WebPmsSpuDeleteDTO params) {
+    public ApiResult<Boolean> deleteBatch(@Validated @ModelAttribute WebPmsSpuDeleteDTO params) {
         this.iPmsSpuService.deleteBatchForBusiness(params);
-        return true;
+        return ApiResult.ok(true);
     }
 
     @PutMapping("updateBatchSort")
     @ApiOperation("批量排序")
-    public Boolean updateBatchSort(@Validated @RequestBody ValidList<WebPmsSpuEditSortListDTO> list) {
+    public ApiResult<Boolean> updateBatchSort(@Validated @RequestBody ValidList<WebPmsSpuEditSortListDTO> list) {
         this.iPmsSpuService.updateBatchSort(list);
-        return true;
+        return ApiResult.ok(true);
     }
 
     @PutMapping("updateBatchVirtualUseStock")
     @ApiOperation("批量修改虚拟销量")
-    public Boolean updateBatchVirtualUseStock(@Validated @RequestBody ValidList<WebPmsSpuEditVirtualUseStockDTO> list) {
+    public ApiResult<Boolean> updateBatchVirtualUseStock(@Validated @RequestBody ValidList<WebPmsSpuEditVirtualUseStockDTO> list) {
         this.iPmsSpuService.updateBatchVirtualUseStock(list);
-        return true;
+        return ApiResult.ok(true);
     }
 
 }

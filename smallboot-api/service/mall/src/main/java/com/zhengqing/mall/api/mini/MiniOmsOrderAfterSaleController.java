@@ -10,6 +10,7 @@ import com.zhengqing.mall.model.dto.OmsOrderAfterSalePageDTO;
 import com.zhengqing.mall.enums.OmsOrderAfterSaleStatusEnum;
 import com.zhengqing.mall.model.vo.OmsOrderAfterSaleBaseVO;
 import com.zhengqing.mall.service.IOmsOrderAfterSaleService;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -34,19 +35,19 @@ public class MiniOmsOrderAfterSaleController {
 
     @GetMapping("page")
     @ApiOperation("列表分页")
-    public IPage<OmsOrderAfterSaleBaseVO> page(@Validated @ModelAttribute OmsOrderAfterSalePageDTO params) {
-        return this.iOmsOrderAfterSaleService.page(params);
+    public ApiResult<IPage<OmsOrderAfterSaleBaseVO>> page(@Validated @ModelAttribute OmsOrderAfterSalePageDTO params) {
+        return ApiResult.ok(this.iOmsOrderAfterSaleService.page(params));
     }
 
     @GetMapping("")
     @ApiOperation("详情")
-    public OmsOrderAfterSaleBaseVO detail(@RequestParam String afterSaleNo) {
-        return this.iOmsOrderAfterSaleService.detail(afterSaleNo);
+    public ApiResult<OmsOrderAfterSaleBaseVO> detail(@RequestParam String afterSaleNo) {
+        return ApiResult.ok(this.iOmsOrderAfterSaleService.detail(afterSaleNo));
     }
 
     @PutMapping("")
     @ApiOperation("更新售后信息（退款/退货退款/换货）")
-    public Boolean updateData(@Validated @RequestBody MiniOmsOrderAfterSaleUpdateDTO params) {
+    public ApiResult<Boolean> updateData(@Validated @RequestBody MiniOmsOrderAfterSaleUpdateDTO params) {
         this.iOmsOrderAfterSaleService.updateData(OmsOrderAfterSale.builder()
                 .afterSaleNo(params.getAfterSaleNo())
                 // 买家填写退货单号后，申请退款处理
@@ -55,21 +56,21 @@ public class MiniOmsOrderAfterSaleController {
                 .returnLogisticsNo(params.getReturnLogisticsNo())
                 .returnAddress(params.getReturnAddress())
                 .build());
-        return true;
+        return ApiResult.ok(true);
     }
 
     @PostMapping("repeal")
     @ApiOperation("撤销")
-    public Boolean repeal(@Validated @RequestBody MiniOmsOrderRepealAfterSaleDTO params) {
+    public ApiResult<Boolean> repeal(@Validated @RequestBody MiniOmsOrderRepealAfterSaleDTO params) {
         this.iOmsOrderAfterSaleService.repeal(params);
-        return true;
+        return ApiResult.ok(true);
     }
 
     @DeleteMapping("deleteBatch")
     @ApiOperation("批量删除")
-    public Boolean deleteBatch(@Validated @ModelAttribute OmsOrderAfterSaleDeleteDTO params) {
+    public ApiResult<Boolean> deleteBatch(@Validated @ModelAttribute OmsOrderAfterSaleDeleteDTO params) {
         this.iOmsOrderAfterSaleService.deleteBatch(params);
-        return true;
+        return ApiResult.ok(true);
     }
 
 }

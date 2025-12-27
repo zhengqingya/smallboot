@@ -2,6 +2,7 @@ package com.zhengqing.system.api.web;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.common.base.constant.ServiceConstant;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.common.core.custom.repeatsubmit.NoRepeatSubmit;
 import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
@@ -41,50 +42,51 @@ public class WebSysRoleController extends BaseController {
 
     @GetMapping("page")
     @ApiOperation("列表分页")
-    public IPage<SysRoleBaseVO> page(@ModelAttribute SysRoleBaseDTO params) {
-        return this.iSysRoleService.listPage(params);
+    public ApiResult<IPage<SysRoleBaseVO>> page(@ModelAttribute SysRoleBaseDTO params) {
+        return ApiResult.ok(this.iSysRoleService.listPage(params));
     }
 
     @GetMapping("tree")
     @ApiOperation("树")
-    public List<SysRoleBaseVO> tree(@Validated @ModelAttribute SysRoleBaseDTO params) {
-        return this.iSysRoleService.tree(params);
+    public ApiResult<List<SysRoleBaseVO>> tree(@Validated @ModelAttribute SysRoleBaseDTO params) {
+        return ApiResult.ok(this.iSysRoleService.tree(params));
     }
 
     @GetMapping("list")
     @ApiOperation("列表")
-    public List<SysRoleBaseVO> list(@ModelAttribute SysRoleBaseDTO params) {
-        return this.iSysRoleService.list(params);
+    public ApiResult<List<SysRoleBaseVO>> list(@ModelAttribute SysRoleBaseDTO params) {
+        return ApiResult.ok(this.iSysRoleService.list(params));
     }
 
     @NoRepeatSubmit
     @PostMapping("")
     @ApiOperation("新增")
-    public Integer add(@Validated @RequestBody SysRoleSaveDTO params) {
+    public ApiResult<Integer> add(@Validated @RequestBody SysRoleSaveDTO params) {
         params.setRoleId(null);
-        return this.iSysRoleService.addOrUpdateData(params);
+        return ApiResult.ok(this.iSysRoleService.addOrUpdateData(params));
     }
 
     @NoRepeatSubmit
     @PutMapping("")
     @ApiOperation("更新")
-    public Integer update(@Validated(UpdateGroup.class) @RequestBody SysRoleSaveDTO params) {
+    public ApiResult<Integer> update(@Validated(UpdateGroup.class) @RequestBody SysRoleSaveDTO params) {
         Integer roleId = this.iSysRoleService.addOrUpdateData(params);
         this.iSysPermBusinessService.logoutUserByRole(roleId);
-        return roleId;
+        return ApiResult.ok(roleId);
     }
 
     @GetMapping("detail")
     @ApiOperation("详情(角色信息+菜单树+按钮+所拥有的权限)")
-    public SysRoleAllPermissionDetailVO detail(@RequestParam Integer roleId) {
-        return this.iSysPermBusinessService.permissionDetail(roleId);
+    public ApiResult<SysRoleAllPermissionDetailVO> detail(@RequestParam Integer roleId) {
+        return ApiResult.ok(this.iSysPermBusinessService.permissionDetail(roleId));
     }
 
     @DeleteMapping("")
     @ApiOperation("删除")
-    public void delete(@RequestParam Integer roleId) {
+    public ApiResult<Void> delete(@RequestParam Integer roleId) {
         this.iSysRoleService.deleteRoleAndRoleMenu(roleId);
         this.iSysPermBusinessService.logoutUserByRole(roleId);
+        return ApiResult.ok();
     }
 
 }

@@ -11,6 +11,7 @@ import com.zhengqing.system.model.dto.SysPostSaveDTO;
 import com.zhengqing.system.model.vo.SysPostListVO;
 import com.zhengqing.system.model.vo.SysPostPageVO;
 import com.zhengqing.system.service.ISysPostService;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -37,35 +38,38 @@ public class WebSysPostController extends BaseController {
 
     @GetMapping("page")
     @ApiOperation("分页列表")
-    public IPage<SysPostPageVO> page(@Validated @ModelAttribute SysPostPageDTO params) {
-        return this.iSysPostService.page(params);
+    public ApiResult<IPage<SysPostPageVO>> page(@Validated @ModelAttribute SysPostPageDTO params) {
+        return ApiResult.ok(this.iSysPostService.page(params));
     }
 
     @GetMapping("list")
     @ApiOperation("列表")
-    public List<SysPostListVO> list(@Validated @ModelAttribute SysPostListDTO params) {
-        return this.iSysPostService.list(params);
+    public ApiResult<List<SysPostListVO>> list(@Validated @ModelAttribute SysPostListDTO params) {
+        return ApiResult.ok(this.iSysPostService.list(params));
     }
 
     @NoRepeatSubmit
     @PostMapping("add")
     @ApiOperation("新增")
-    public void add(@Validated @RequestBody SysPostSaveDTO params) {
+    public ApiResult<Void> add(@Validated @RequestBody SysPostSaveDTO params) {
         params.setId(null);
         this.iSysPostService.addOrUpdateData(params);
+        return ApiResult.ok();
     }
 
     @NoRepeatSubmit
     @PutMapping("update")
     @ApiOperation("更新")
-    public void update(@Validated(UpdateGroup.class) @RequestBody SysPostSaveDTO params) {
+    public ApiResult<Void> update(@Validated(UpdateGroup.class) @RequestBody SysPostSaveDTO params) {
         this.iSysPostService.addOrUpdateData(params);
+        return ApiResult.ok();
     }
 
     @DeleteMapping("delete")
     @ApiOperation("删除")
-    public void delete(@RequestParam Integer id) {
+    public ApiResult<Void> delete(@RequestParam Integer id) {
         this.iSysPostService.deleteData(id);
+        return ApiResult.ok();
     }
 
 }

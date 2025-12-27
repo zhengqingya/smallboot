@@ -2,6 +2,7 @@ package com.zhengqing.app.api;
 
 import com.zhengqing.common.auth.custom.open.ApiOpen;
 import com.zhengqing.common.base.constant.ServiceConstant;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.common.redis.model.bo.RedisGeoPoint;
 import com.zhengqing.common.redis.util.RedisGeoUtil;
@@ -43,10 +44,10 @@ public class TestRedisGeoController extends BaseController {
      */
     @ApiOpen
     @GetMapping("geoAdd")
-    public List<Point> geoAdd(String cityId, String driverId, Double lng, Double lat) {
+    public ApiResult<List<Point>> geoAdd(String cityId, String driverId, Double lng, Double lat) {
         String redisKey = this.buildRedisKey(this.GEO_KEY, cityId);
         RedisGeoUtil.geoAdd(redisKey, new Point(lng, lat), driverId);
-        return RedisGeoUtil.geoPos(redisKey, driverId);
+        return ApiResult.ok(RedisGeoUtil.geoPos(redisKey, driverId));
     }
 
     /**
@@ -55,9 +56,9 @@ public class TestRedisGeoController extends BaseController {
      */
     @ApiOpen
     @GetMapping("geoNear")
-    public List<RedisGeoPoint> geoNear(String cityId, Double lng, Double lat) {
+    public ApiResult<List<RedisGeoPoint>> geoNear(String cityId, Double lng, Double lat) {
         String redisKey = this.buildRedisKey(this.GEO_KEY, cityId);
-        return RedisGeoUtil.geoNear(redisKey, lng, lat, 1, RedisGeoCommands.DistanceUnit.KILOMETERS, 5);
+        return ApiResult.ok(RedisGeoUtil.geoNear(redisKey, lng, lat, 1, RedisGeoCommands.DistanceUnit.KILOMETERS, 5));
     }
 
     /**
@@ -66,9 +67,9 @@ public class TestRedisGeoController extends BaseController {
      */
     @ApiOpen
     @GetMapping("geoDist")
-    public Object geoDist(String cityId, String m1, String m2) {
+    public ApiResult<Object> geoDist(String cityId, String m1, String m2) {
         String redisKey = this.buildRedisKey(this.GEO_KEY, cityId);
-        return RedisGeoUtil.geoDist(redisKey, m1, m2, RedisGeoCommands.DistanceUnit.METERS);
+        return ApiResult.ok(RedisGeoUtil.geoDist(redisKey, m1, m2, RedisGeoCommands.DistanceUnit.METERS));
     }
 
     /**
@@ -77,8 +78,8 @@ public class TestRedisGeoController extends BaseController {
      */
     @ApiOpen
     @GetMapping("geoDistance")
-    public Object geoDistance(Double aLng, Double aLat, Double bLng, Double bLat) {
-        return RedisGeoUtil.geoDist(aLng, aLat, bLng, bLat, RedisGeoCommands.DistanceUnit.METERS);
+    public ApiResult<Object> geoDistance(Double aLng, Double aLat, Double bLng, Double bLat) {
+        return ApiResult.ok(RedisGeoUtil.geoDist(aLng, aLat, bLng, bLat, RedisGeoCommands.DistanceUnit.METERS));
     }
 
 }

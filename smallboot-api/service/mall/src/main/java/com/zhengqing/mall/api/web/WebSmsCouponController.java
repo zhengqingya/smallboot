@@ -2,6 +2,7 @@ package com.zhengqing.mall.api.web;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.common.base.constant.ServiceConstant;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.common.core.custom.repeatsubmit.NoRepeatSubmit;
 import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
@@ -33,29 +34,32 @@ public class WebSmsCouponController extends BaseController {
 
     @GetMapping("page")
     @ApiOperation("分页列表")
-    public IPage<SmsCouponPageVO> page(@Validated @ModelAttribute SmsCouponPageDTO params) {
-        return this.smsCouponService.page(params);
+    public ApiResult<IPage<SmsCouponPageVO>> page(@Validated @ModelAttribute SmsCouponPageDTO params) {
+        return ApiResult.ok(this.smsCouponService.page(params));
     }
 
     @NoRepeatSubmit
     @PostMapping("add")
     @ApiOperation("新增")
-    public void add(@Validated @RequestBody SmsCouponSaveDTO params) {
+    public ApiResult<Void> add(@Validated @RequestBody SmsCouponSaveDTO params) {
         params.setId(null);
         this.smsCouponService.addOrUpdateData(params);
+        return ApiResult.ok();
     }
 
     @NoRepeatSubmit
     @PutMapping("update")
     @ApiOperation("更新")
-    public void update(@Validated(UpdateGroup.class) @RequestBody SmsCouponSaveDTO params) {
+    public ApiResult<Void> update(@Validated(UpdateGroup.class) @RequestBody SmsCouponSaveDTO params) {
         this.smsCouponService.addOrUpdateData(params);
+        return ApiResult.ok();
     }
 
     @DeleteMapping("delete")
     @ApiOperation("删除")
-    public void delete(@RequestParam Long id) {
+    public ApiResult<Void> delete(@RequestParam Long id) {
         this.smsCouponService.deleteData(id);
+        return ApiResult.ok();
     }
 
 }

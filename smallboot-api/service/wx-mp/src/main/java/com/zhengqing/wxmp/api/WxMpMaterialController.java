@@ -13,6 +13,7 @@ import lombok.SneakyThrows;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.mp.api.WxMpMaterialService;
 import me.chanjar.weixin.mp.api.WxMpService;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import me.chanjar.weixin.mp.bean.material.WxMpMaterial;
 import me.chanjar.weixin.mp.bean.material.WxMpMaterialFileBatchGetResult;
 import me.chanjar.weixin.mp.bean.material.WxMpMaterialNewsBatchGetResult;
@@ -40,7 +41,7 @@ public class WxMpMaterialController {
     @GetMapping("/page")
     @ApiOperation("分页列表")
     @SneakyThrows(Exception.class)
-    public Object page(@Validated @ModelAttribute WxMpMaterialPageDTO params) {
+    public ApiResult<Object> page(@Validated @ModelAttribute WxMpMaterialPageDTO params) {
         String mediaType = params.getMediaType();
         Integer pageNum = params.getPageNum();
         Integer pageSize = params.getPageSize();
@@ -57,20 +58,20 @@ public class WxMpMaterialController {
             WxMpMaterialNewsBatchGetResult wxMpMaterialNewsBatchGetResult = materialService.materialNewsBatchGet(offset, pageSize);
             result.setTotal(wxMpMaterialNewsBatchGetResult.getTotalCount());
             result.setRecords(wxMpMaterialNewsBatchGetResult.getItems());
-            return result;
+            return ApiResult.ok(result);
         }
 
         // 其它素材
         WxMpMaterialFileBatchGetResult wxMpMaterialFileBatchGetResult = materialService.materialFileBatchGet(mediaType, offset, pageSize);
         result.setTotal(wxMpMaterialFileBatchGetResult.getTotalCount());
         result.setRecords(wxMpMaterialFileBatchGetResult.getItems());
-        return result;
+        return ApiResult.ok(result);
     }
 
     @PostMapping("/add")
     @ApiOperation("新增")
     @SneakyThrows(Exception.class)
-    public WxMpMaterialUploadResult add(@RequestPart @RequestParam MultipartFile file,
+    public ApiResult<WxMpMaterialUploadResult> add(@RequestPart @RequestParam MultipartFile file,
                                         @RequestParam String appId,
                                         @RequestParam String mediaType) {
         File wxFile = MyFileUtil.multipartFileToFile(file);
@@ -78,7 +79,7 @@ public class WxMpMaterialController {
         wxMaterial.setFile(wxFile);
         WxMpMaterialUploadResult wxMpMaterialUploadResult = this.wxMpService.switchoverTo(appId).getMaterialService().materialFileUpload(mediaType, wxMaterial);
         FileUtil.del(wxFile);
-        return wxMpMaterialUploadResult;
+        return ApiResult.ok(wxMpMaterialUploadResult);
     }
 
 

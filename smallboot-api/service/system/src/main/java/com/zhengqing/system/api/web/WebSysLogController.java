@@ -7,6 +7,7 @@ import com.zhengqing.common.db.util.TenantUtil;
 import com.zhengqing.system.model.dto.SysLogPageDTO;
 import com.zhengqing.system.model.vo.SysLogPageVO;
 import com.zhengqing.system.service.ISysLogService;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -31,14 +32,15 @@ public class WebSysLogController extends BaseController {
 
     @GetMapping("page")
     @ApiOperation("分页列表")
-    public IPage<SysLogPageVO> page(@Validated @ModelAttribute SysLogPageDTO params) {
-        return this.iSysLogService.page(params);
+    public ApiResult<IPage<SysLogPageVO>> page(@Validated @ModelAttribute SysLogPageDTO params) {
+        return ApiResult.ok(this.iSysLogService.page(params));
     }
 
     @DeleteMapping("deleteDataBeforeDay")
     @ApiOperation("清理n天前的日志")
-    public void deleteDataBeforeDay(@RequestParam Integer day) {
+    public ApiResult<Void> deleteDataBeforeDay(@RequestParam Integer day) {
         TenantUtil.executeRemoveFlag(() -> this.iSysLogService.deleteDataBeforeDay(day));
+        return ApiResult.ok();
     }
 
 }

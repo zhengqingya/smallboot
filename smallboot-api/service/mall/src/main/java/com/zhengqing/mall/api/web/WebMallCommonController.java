@@ -4,6 +4,7 @@ import com.zhengqing.common.base.constant.ServiceConstant;
 import com.zhengqing.mall.model.dto.OmsLogisticDTO;
 import com.zhengqing.mall.model.vo.OmsLogisticVO;
 import com.zhengqing.mall.service.IOmsLogisticService;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -28,14 +29,15 @@ public class WebMallCommonController {
 
     @GetMapping("getLogisticInfo")
     @ApiOperation("查询物流")
-    public OmsLogisticVO getLogisticInfo(@Validated @ModelAttribute OmsLogisticDTO params) {
-        return this.omsLogisticService.detail(params);
+    public ApiResult<OmsLogisticVO> getLogisticInfo(@Validated @ModelAttribute OmsLogisticDTO params) {
+        return ApiResult.ok(this.omsLogisticService.detail(params));
     }
 
     @PostMapping("updateLogisticForDb")
     @ApiOperation("更新数据库中的物流信息")
-    public void updateLogisticForDb() {
+    public ApiResult<Void> updateLogisticForDb() {
         this.omsLogisticService.updateDb();
+        return ApiResult.ok();
     }
 
 }

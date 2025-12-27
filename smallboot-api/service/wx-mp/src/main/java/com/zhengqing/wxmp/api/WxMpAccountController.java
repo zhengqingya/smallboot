@@ -10,6 +10,7 @@ import com.zhengqing.wxmp.model.dto.WxMpAccountSaveDTO;
 import com.zhengqing.wxmp.model.vo.WxMpAccountListVO;
 import com.zhengqing.wxmp.model.vo.WxMpAccountPageVO;
 import com.zhengqing.wxmp.service.IWxMpAccountService;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -36,33 +37,36 @@ public class WxMpAccountController extends BaseController {
 
     @GetMapping("page")
     @ApiOperation("分页列表")
-    public IPage<WxMpAccountPageVO> page(@Validated @ModelAttribute WxMpAccountPageDTO params) {
-        return this.wxAccountService.page(params);
+    public ApiResult<IPage<WxMpAccountPageVO>> page(@Validated @ModelAttribute WxMpAccountPageDTO params) {
+        return ApiResult.ok(this.wxAccountService.page(params));
     }
 
     @GetMapping("list")
     @ApiOperation("分页列表")
-    public List<WxMpAccountListVO> list(@Validated @ModelAttribute WxMpAccountListDTO params) {
-        return this.wxAccountService.list(params);
+    public ApiResult<List<WxMpAccountListVO>> list(@Validated @ModelAttribute WxMpAccountListDTO params) {
+        return ApiResult.ok(this.wxAccountService.list(params));
     }
 
     @PostMapping("add")
     @ApiOperation("新增")
-    public void add(@Validated @RequestBody WxMpAccountSaveDTO params) {
+    public ApiResult<Void> add(@Validated @RequestBody WxMpAccountSaveDTO params) {
         params.setId(null);
         this.wxAccountService.addOrUpdateData(params);
+        return ApiResult.ok();
     }
 
     @PutMapping("update")
     @ApiOperation("更新")
-    public void update(@Validated(UpdateGroup.class) @RequestBody WxMpAccountSaveDTO params) {
+    public ApiResult<Void> update(@Validated(UpdateGroup.class) @RequestBody WxMpAccountSaveDTO params) {
         this.wxAccountService.addOrUpdateData(params);
+        return ApiResult.ok();
     }
 
     @DeleteMapping("delete")
     @ApiOperation("删除")
-    public void delete(@RequestParam Integer id) {
+    public ApiResult<Void> delete(@RequestParam Integer id) {
         this.wxAccountService.deleteData(id);
+        return ApiResult.ok();
     }
 
 }

@@ -1,5 +1,6 @@
 package com.zhengqing.common.file.api;
 
+import com.zhengqing.common.base.model.vo.ApiResult;
 import com.zhengqing.common.file.config.MinIoProperties;
 import com.zhengqing.common.file.util.MinIoUtil;
 import io.swagger.annotations.Api;
@@ -29,8 +30,8 @@ public class MinIoController {
 
     @ApiOperation(value = "上传文件")
     @PostMapping(value = "/upload")
-    public String upload(@RequestPart @RequestParam MultipartFile file) {
-        return MinIoUtil.upload(this.minIoProperties.getBucketName(), file);
+    public ApiResult<String> upload(@RequestPart @RequestParam MultipartFile file) {
+        return ApiResult.ok(MinIoUtil.upload(this.minIoProperties.getBucketName(), file));
     }
 
     @ApiOperation(value = "下载文件")
@@ -41,9 +42,9 @@ public class MinIoController {
 
     @ApiOperation(value = "删除文件")
     @GetMapping(value = "/delete")
-    public String delete(@RequestParam("fileName") String fileName) {
+    public ApiResult<String> delete(@RequestParam("fileName") String fileName) {
         MinIoUtil.deleteFile(this.minIoProperties.getBucketName(), fileName);
-        return "删除成功";
+        return ApiResult.ok("删除成功");
     }
 
 }

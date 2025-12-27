@@ -6,6 +6,7 @@ import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.wxmp.model.dto.WxMpUserPageDTO;
 import com.zhengqing.wxmp.model.vo.WxMpUserPageVO;
 import com.zhengqing.wxmp.service.IWxMpUserService;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -30,14 +31,15 @@ public class WxMpUserController extends BaseController {
 
     @GetMapping("page")
     @ApiOperation("分页列表")
-    public IPage<WxMpUserPageVO> page(@Validated @ModelAttribute WxMpUserPageDTO params) {
-        return this.wxUserService.page(params);
+    public ApiResult<IPage<WxMpUserPageVO>> page(@Validated @ModelAttribute WxMpUserPageDTO params) {
+        return ApiResult.ok(this.wxUserService.page(params));
     }
 
     @PostMapping("sync")
     @ApiOperation("同步公众号用户数据")
-    public void sync(@RequestHeader String appId) {
+    public ApiResult<Void> sync(@RequestHeader String appId) {
         this.wxUserService.sync(appId);
+        return ApiResult.ok();
     }
 
 }

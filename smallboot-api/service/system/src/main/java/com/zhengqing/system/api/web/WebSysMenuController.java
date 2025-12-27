@@ -1,6 +1,7 @@
 package com.zhengqing.system.api.web;
 
 import com.zhengqing.common.base.constant.ServiceConstant;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.common.core.custom.repeatsubmit.NoRepeatSubmit;
 import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
@@ -40,32 +41,35 @@ public class WebSysMenuController extends BaseController {
 
     @GetMapping("tree")
     @ApiOperation("菜单树")
-    public List<SysMenuTree> tree(@Validated @ModelAttribute SysMenuTreeDTO params) {
-        return this.iSysMenuService.tree(params);
+    public ApiResult<List<SysMenuTree>> tree(@Validated @ModelAttribute SysMenuTreeDTO params) {
+        return ApiResult.ok(this.iSysMenuService.tree(params));
     }
 
     @NoRepeatSubmit
     @PostMapping("")
     @ApiOperation("新增")
-    public void add(@Validated @RequestBody SysMenuSaveDTO params) {
+    public ApiResult<Void> add(@Validated @RequestBody SysMenuSaveDTO params) {
         params.setId(null);
         this.iSysMenuService.addOrUpdateData(params);
         this.refreshPerm();
+        return ApiResult.ok();
     }
 
     @NoRepeatSubmit
     @PutMapping("")
     @ApiOperation("更新")
-    public void update(@Validated(UpdateGroup.class) @RequestBody SysMenuSaveDTO params) {
+    public ApiResult<Void> update(@Validated(UpdateGroup.class) @RequestBody SysMenuSaveDTO params) {
         this.iSysMenuService.addOrUpdateData(params);
         this.refreshPerm();
+        return ApiResult.ok();
     }
 
     @DeleteMapping("")
     @ApiOperation("删除")
-    public void delete(@RequestParam Integer id) {
+    public ApiResult<Void> delete(@RequestParam Integer id) {
         this.iSysMenuService.deleteData(id);
         this.refreshPerm();
+        return ApiResult.ok();
     }
 
     /**

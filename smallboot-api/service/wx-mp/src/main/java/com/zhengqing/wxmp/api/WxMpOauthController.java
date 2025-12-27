@@ -12,6 +12,7 @@ import me.chanjar.weixin.common.bean.WxOAuth2UserInfo;
 import me.chanjar.weixin.common.bean.oauth2.WxOAuth2AccessToken;
 import me.chanjar.weixin.common.service.WxOAuth2Service;
 import me.chanjar.weixin.mp.api.WxMpService;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,8 +36,8 @@ public class WxMpOauthController {
 
     @GetMapping("/getAuthorizationUrl")
     @ApiOperation("获取授权URL")
-    public String getAuthorizationUrl(@RequestParam String appId) {
-        return this.wxMpService.switchoverTo(appId).getOAuth2Service().buildAuthorizationUrl(this.wxMpDomain + "/wx/mp/oauth/callback/" + appId, WxConsts.OAuth2Scope.SNSAPI_USERINFO, "STATE");
+    public ApiResult<String> getAuthorizationUrl(@RequestParam String appId) {
+        return ApiResult.ok(this.wxMpService.switchoverTo(appId).getOAuth2Service().buildAuthorizationUrl(this.wxMpDomain + "/wx/mp/oauth/callback/" + appId, WxConsts.OAuth2Scope.SNSAPI_USERINFO, "STATE"));
     }
 
     @SneakyThrows(Exception.class)

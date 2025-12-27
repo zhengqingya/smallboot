@@ -1,5 +1,7 @@
 package com.zhengqing.mall.constant;
 
+import com.zhengqing.common.base.constant.BaseConstant;
+
 import java.util.concurrent.TimeUnit;
 
 /**

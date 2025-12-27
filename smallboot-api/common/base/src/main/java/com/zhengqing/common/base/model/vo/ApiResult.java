@@ -4,9 +4,7 @@ import com.zhengqing.common.base.enums.ApiResultCodeEnum;
 import com.zhengqing.common.base.exception.MyException;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -20,8 +18,6 @@ import lombok.Setter;
  */
 @Setter
 @Getter
-@AllArgsConstructor
-@NoArgsConstructor
 @ApiModel(value = "API返回参数")
 public class ApiResult<T> {
 
@@ -45,35 +41,31 @@ public class ApiResult<T> {
         this.msg = msg;
     }
 
-    public static ApiResult ok() {
-        return new ApiResult(ApiResultCodeEnum.SUCCESS.getCode(), "OK", null);
+    public ApiResult(Integer code, String msg, T data) {
+        this.code = code;
+        this.msg = msg;
+        this.data = data;
+    }
+
+    public static ApiResult<Void> ok() {
+        return new ApiResult<>(ApiResultCodeEnum.SUCCESS.getCode(), "OK", null);
     }
 
     public static <E> ApiResult<E> ok(E o) {
         // 支持Controller层直接返回ApiResult
-        ApiResult result = new ApiResult(ApiResultCodeEnum.SUCCESS);
         if (o instanceof ApiResult) {
-            result = ((ApiResult) o);
+            return (ApiResult<E>) o;
         } else {
             // 其他obj封装进data,保持返回格式统一
-            result.setData(o);
+            return new ApiResult<>(ApiResultCodeEnum.SUCCESS.getCode(), "OK", o);
         }
-        return result;
-    }
-
-    public static ApiResult ok(String data) {
-        return new ApiResult(ApiResultCodeEnum.SUCCESS.getCode(), "OK", data);
-    }
-
-    public static ApiResult ok(Object data, String msg) {
-        return new ApiResult(ApiResultCodeEnum.SUCCESS.getCode(), msg, data);
     }
 
     /**
      * 自定义返回码
      */
-    public static ApiResult ok(Integer code, String msg) {
-        return new ApiResult(code, msg);
+    public static <E> ApiResult<E> ok(Integer code, String msg) {
+        return new ApiResult<>(code, msg);
     }
 
     /**
@@ -84,8 +76,8 @@ public class ApiResult<T> {
      * @param data 返回数据
      * @return 响应体
      */
-    public static ApiResult ok(Integer code, String msg, Object data) {
-        return new ApiResult(code, msg, data);
+    public static <E> ApiResult<E> ok(Integer code, String msg, E data) {
+        return new ApiResult<>(code, msg, data);
     }
 
     /**
@@ -94,16 +86,13 @@ public class ApiResult<T> {
      * @param msg 消息内容
      * @return 响应体
      */
-    public static ApiResult expired(String msg) {
-        return new ApiResult(ApiResultCodeEnum.TOKEN_EXPIRED.getCode(), msg, null);
+    public static <E> ApiResult<E> expired(String msg) {
+        return new ApiResult<>(ApiResultCodeEnum.TOKEN_EXPIRED.getCode(), msg, null);
     }
 
-    public static ApiResult fail(String msg) {
-        return new ApiResult(ApiResultCodeEnum.FAILURE.getCode(), msg, null);
-    }
 
-    public static ApiResult busy() {
-        return new ApiResult(ApiResultCodeEnum.FAILURE.getCode(), "服务繁忙", null);
+    public static <E> ApiResult<E> busy() {
+        return new ApiResult<>(ApiResultCodeEnum.FAILURE.getCode(), "服务繁忙", null);
     }
 
     /***
@@ -113,8 +102,12 @@ public class ApiResult<T> {
      * @param msg 消息内容
      * @return 响应体
      */
-    public static ApiResult fail(Integer code, String msg) {
-        return new ApiResult(code, msg, null);
+    public static <E> ApiResult<E> fail(Integer code, String msg) {
+        return new ApiResult<>(code, msg, null);
+    }
+
+    public static <E> ApiResult<E> fail(String msg) {
+        return fail(ApiResultCodeEnum.FAILURE.getCode(), msg);
     }
 
     /**

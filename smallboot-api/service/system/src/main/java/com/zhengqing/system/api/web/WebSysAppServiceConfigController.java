@@ -1,6 +1,7 @@
 package com.zhengqing.system.api.web;
 
 import com.zhengqing.common.base.constant.ServiceConstant;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.common.core.custom.repeatsubmit.NoRepeatSubmit;
 import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
@@ -31,15 +32,16 @@ public class WebSysAppServiceConfigController extends BaseController {
 
     @GetMapping("detail")
     @ApiOperation("详情")
-    public SysAppServiceConfigDetailVO detail() {
-        return this.iSysAppServiceConfigService.detail();
+    public ApiResult<SysAppServiceConfigDetailVO> detail() {
+        return ApiResult.ok(this.iSysAppServiceConfigService.detail());
     }
 
     @NoRepeatSubmit
     @PutMapping("update")
     @ApiOperation("更新")
-    public void update(@Validated(UpdateGroup.class) @RequestBody SysAppServiceConfigSaveDTO params) {
+    public ApiResult<Void> update(@Validated(UpdateGroup.class) @RequestBody SysAppServiceConfigSaveDTO params) {
         this.iSysAppServiceConfigService.addOrUpdateData(params);
+        return ApiResult.ok();
     }
 
 }

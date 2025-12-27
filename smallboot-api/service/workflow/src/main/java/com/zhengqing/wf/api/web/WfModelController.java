@@ -10,6 +10,7 @@ import com.zhengqing.wf.model.dto.WfModelSaveDTO;
 import com.zhengqing.wf.model.vo.WfModelDetailVO;
 import com.zhengqing.wf.model.vo.WfModelPageVO;
 import com.zhengqing.wf.service.IWfModelService;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -34,29 +35,31 @@ public class WfModelController extends BaseController {
 
     @GetMapping("page")
     @ApiOperation("分页列表")
-    public IPage<WfModelPageVO> page(@Validated @ModelAttribute WfModelPageDTO params) {
-        return this.iWfModelService.page(params);
+    public ApiResult<IPage<WfModelPageVO>> page(@Validated @ModelAttribute WfModelPageDTO params) {
+        return ApiResult.ok(this.iWfModelService.page(params));
     }
 
     @GetMapping("detail")
     @ApiOperation("详情")
-    public WfModelDetailVO detail(@RequestParam String id) {
-        return this.iWfModelService.detail(id);
+    public ApiResult<WfModelDetailVO> detail(@RequestParam String id) {
+        return ApiResult.ok(this.iWfModelService.detail(id));
     }
 
     @NoRepeatSubmit
     @PostMapping("add")
     @ApiOperation("新增")
-    public void add(@Validated @RequestBody WfModelSaveDTO params) {
+    public ApiResult<Void> add(@Validated @RequestBody WfModelSaveDTO params) {
         params.setId(null);
         this.iWfModelService.addOrUpdateData(params);
+        return ApiResult.ok();
     }
 
     @NoRepeatSubmit
     @PutMapping("update")
     @ApiOperation("更新")
-    public void update(@Validated(UpdateGroup.class) @RequestBody WfModelSaveDTO params) {
+    public ApiResult<Void> update(@Validated(UpdateGroup.class) @RequestBody WfModelSaveDTO params) {
         this.iWfModelService.addOrUpdateData(params);
+        return ApiResult.ok();
     }
 
 

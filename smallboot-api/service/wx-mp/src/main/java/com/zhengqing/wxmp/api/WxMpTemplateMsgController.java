@@ -7,6 +7,7 @@ import com.zhengqing.wxmp.model.dto.WxMpTemplateMsgPageDTO;
 import com.zhengqing.wxmp.model.dto.WxMpTemplateMsgSendDTO;
 import com.zhengqing.wxmp.model.vo.WxMpTemplateMsgPageVO;
 import com.zhengqing.wxmp.service.IWxMpTemplateMsgService;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -31,21 +32,23 @@ public class WxMpTemplateMsgController extends BaseController {
 
     @GetMapping("page")
     @ApiOperation("分页列表")
-    public IPage<WxMpTemplateMsgPageVO> page(@PathVariable String appId, @Validated @ModelAttribute WxMpTemplateMsgPageDTO params) {
+    public ApiResult<IPage<WxMpTemplateMsgPageVO>> page(@PathVariable String appId, @Validated @ModelAttribute WxMpTemplateMsgPageDTO params) {
         params.setAppId(appId);
-        return this.wxTemplateMsgService.page(params);
+        return ApiResult.ok(this.wxTemplateMsgService.page(params));
     }
 
     @PostMapping("sync")
     @ApiOperation("同步模板数据")
-    public void sync(@PathVariable String appId) {
+    public ApiResult<Void> sync(@PathVariable String appId) {
         this.wxTemplateMsgService.sync(appId);
+        return ApiResult.ok();
     }
 
     @PostMapping("sendMsg")
     @ApiOperation("发送消息")
-    public void sendMsg(@Validated @RequestBody WxMpTemplateMsgSendDTO params) {
+    public ApiResult<Void> sendMsg(@Validated @RequestBody WxMpTemplateMsgSendDTO params) {
         this.wxTemplateMsgService.sendMsg(params);
+        return ApiResult.ok();
     }
 
 }

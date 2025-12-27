@@ -7,6 +7,7 @@ import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
 import com.zhengqing.system.entity.SysDictType;
 import com.zhengqing.system.model.dto.SysDictTypeSaveDTO;
 import com.zhengqing.system.service.ISysDictTypeService;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -38,27 +39,28 @@ public class WebSysDictTypeController extends BaseController {
 
     @GetMapping("list")
     @ApiOperation("列表")
-    public List<SysDictType> list() {
-        return this.iSysDictTypeService.list().stream().sorted(Comparator.comparing(SysDictType::getSort)).collect(Collectors.toList());
+    public ApiResult<List<SysDictType>> list() {
+        return ApiResult.ok(this.iSysDictTypeService.list().stream().sorted(Comparator.comparing(SysDictType::getSort)).collect(Collectors.toList()));
     }
 
     @PostMapping("")
     @ApiOperation("新增")
-    public Integer add(@Validated(CreateGroup.class) @RequestBody SysDictTypeSaveDTO params) {
+    public ApiResult<Integer> add(@Validated(CreateGroup.class) @RequestBody SysDictTypeSaveDTO params) {
         params.setId(null);
-        return this.iSysDictTypeService.addOrUpdateData(params);
+        return ApiResult.ok(this.iSysDictTypeService.addOrUpdateData(params));
     }
 
     @PutMapping("")
     @ApiOperation("更新")
-    public Integer update(@Validated(UpdateGroup.class) @RequestBody SysDictTypeSaveDTO params) {
-        return this.iSysDictTypeService.addOrUpdateData(params);
+    public ApiResult<Integer> update(@Validated(UpdateGroup.class) @RequestBody SysDictTypeSaveDTO params) {
+        return ApiResult.ok(this.iSysDictTypeService.addOrUpdateData(params));
     }
 
     @DeleteMapping("")
     @ApiOperation("删除")
-    public void delete(@RequestParam Integer id) {
+    public ApiResult<Void> delete(@RequestParam Integer id) {
         this.iSysDictTypeService.deleteType(id);
+        return ApiResult.ok();
     }
 
 }

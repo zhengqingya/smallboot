@@ -54,8 +54,9 @@ public class WebAuthController {
     @ApiOpen
     @DeleteMapping("logout")
     @ApiOperation("注销登录")
-    public void logout() {
+    public ApiResult<Void> logout() {
         StpUtil.logout();
+        return ApiResult.ok();
     }
 
     @ApiOpen

@@ -2,6 +2,7 @@ package com.zhengqing.mall.api.web;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zhengqing.common.base.constant.ServiceConstant;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import com.zhengqing.common.core.api.BaseController;
 import com.zhengqing.common.core.custom.repeatsubmit.NoRepeatSubmit;
 import com.zhengqing.common.core.custom.validator.common.UpdateGroup;
@@ -34,42 +35,45 @@ public class WebSmsShopController extends BaseController {
 
     @GetMapping("page")
     @ApiOperation("分页列表")
-    public IPage<SmsShopBaseVO> page(@Validated @ModelAttribute SmsShopPageDTO params) {
-        return this.iSmsShopService.page(params);
+    public ApiResult<IPage<SmsShopBaseVO>> page(@Validated @ModelAttribute SmsShopPageDTO params) {
+        return ApiResult.ok(this.iSmsShopService.page(params));
     }
 
     @GetMapping("detail")
     @ApiOperation("详情")
-    public SmsShopBaseVO detail(@Validated @ModelAttribute SmsShopPageDTO params) {
-        return this.iSmsShopService.detail(params);
+    public ApiResult<SmsShopBaseVO> detail(@Validated @ModelAttribute SmsShopPageDTO params) {
+        return ApiResult.ok(this.iSmsShopService.detail(params));
     }
 
     @NoRepeatSubmit
     @PostMapping("add")
     @ApiOperation("新增")
-    public void add(@Validated @RequestBody WebSmsShopSaveDTO params) {
+    public ApiResult<Void> add(@Validated @RequestBody WebSmsShopSaveDTO params) {
         params.setShopId(null);
         this.iSmsShopService.addOrUpdateData(params);
+        return ApiResult.ok();
     }
 
     @NoRepeatSubmit
     @PutMapping("update")
     @ApiOperation("更新")
-    public void update(@Validated(UpdateGroup.class) @RequestBody WebSmsShopSaveDTO params) {
+    public ApiResult<Void> update(@Validated(UpdateGroup.class) @RequestBody WebSmsShopSaveDTO params) {
         this.iSmsShopService.addOrUpdateData(params);
+        return ApiResult.ok();
     }
 
     @DeleteMapping("delete")
     @ApiOperation("删除")
-    public void delete(@RequestParam Integer shopId) {
+    public ApiResult<Void> delete(@RequestParam Integer shopId) {
         this.iSmsShopService.deleteData(shopId);
+        return ApiResult.ok();
     }
 
     @PutMapping("updateBatchStatus")
     @ApiOperation("批量更新状态")
-    public Boolean updateBatchStatus(@Validated @RequestBody WebSmsShopEditStatusDTO params) {
+    public ApiResult<Boolean> updateBatchStatus(@Validated @RequestBody WebSmsShopEditStatusDTO params) {
         this.iSmsShopService.updateBatchStatus(params);
-        return true;
+        return ApiResult.ok(true);
     }
 
 }

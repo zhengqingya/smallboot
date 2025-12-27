@@ -9,6 +9,7 @@ import com.zhengqing.system.model.dto.SysScopeDataBaseDTO;
 import com.zhengqing.system.model.dto.SysScopeDataSaveDTO;
 import com.zhengqing.system.model.vo.SysScopeDataBaseVO;
 import com.zhengqing.system.service.ISysScopeDataService;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -35,41 +36,44 @@ public class WebSysScopeDataController extends BaseController {
 
     @GetMapping("page")
     @ApiOperation("分页列表")
-    public IPage<SysScopeDataBaseVO> page(@Validated @ModelAttribute SysScopeDataBaseDTO params) {
-        return this.sysScopeDataService.page(params);
+    public ApiResult<IPage<SysScopeDataBaseVO>> page(@Validated @ModelAttribute SysScopeDataBaseDTO params) {
+        return ApiResult.ok(this.sysScopeDataService.page(params));
     }
 
     @GetMapping("list")
     @ApiOperation("列表")
-    public List<SysScopeDataBaseVO> list(@Validated @ModelAttribute SysScopeDataBaseDTO params) {
-        return this.sysScopeDataService.list(params);
+    public ApiResult<List<SysScopeDataBaseVO>> list(@Validated @ModelAttribute SysScopeDataBaseDTO params) {
+        return ApiResult.ok(this.sysScopeDataService.list(params));
     }
 
     @GetMapping("tree")
     @ApiOperation("树")
-    public List<SysScopeDataBaseVO> tree(@Validated @ModelAttribute SysScopeDataBaseDTO params) {
-        return this.sysScopeDataService.tree(params);
+    public ApiResult<List<SysScopeDataBaseVO>> tree(@Validated @ModelAttribute SysScopeDataBaseDTO params) {
+        return ApiResult.ok(this.sysScopeDataService.tree(params));
     }
 
     @NoRepeatSubmit
     @PostMapping("add")
     @ApiOperation("新增")
-    public void add(@Validated @RequestBody SysScopeDataSaveDTO params) {
+    public ApiResult<Void> add(@Validated @RequestBody SysScopeDataSaveDTO params) {
         params.setId(null);
         this.sysScopeDataService.addOrUpdateData(params);
+        return ApiResult.ok();
     }
 
     @NoRepeatSubmit
     @PutMapping("update")
     @ApiOperation("更新")
-    public void update(@Validated(UpdateGroup.class) @RequestBody SysScopeDataSaveDTO params) {
+    public ApiResult<Void> update(@Validated(UpdateGroup.class) @RequestBody SysScopeDataSaveDTO params) {
         this.sysScopeDataService.addOrUpdateData(params);
+        return ApiResult.ok();
     }
 
     @DeleteMapping("delete")
     @ApiOperation("删除")
-    public void delete(@RequestParam Integer id) {
+    public ApiResult<Void> delete(@RequestParam Integer id) {
         this.sysScopeDataService.deleteData(id);
+        return ApiResult.ok();
     }
 
 }

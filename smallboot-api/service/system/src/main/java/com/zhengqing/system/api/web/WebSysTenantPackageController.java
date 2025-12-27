@@ -11,6 +11,7 @@ import com.zhengqing.system.model.dto.SysTenantPackageSaveDTO;
 import com.zhengqing.system.model.vo.SysTenantPackageListVO;
 import com.zhengqing.system.model.vo.SysTenantPackagePageVO;
 import com.zhengqing.system.service.ISysTenantPackageService;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -37,35 +38,38 @@ public class WebSysTenantPackageController extends BaseController {
 
     @GetMapping("page")
     @ApiOperation("分页列表")
-    public IPage<SysTenantPackagePageVO> page(@Validated @ModelAttribute SysTenantPackagePageDTO params) {
-        return this.iSysTenantPackageService.page(params);
+    public ApiResult<IPage<SysTenantPackagePageVO>> page(@Validated @ModelAttribute SysTenantPackagePageDTO params) {
+        return ApiResult.ok(this.iSysTenantPackageService.page(params));
     }
 
     @GetMapping("list")
     @ApiOperation("列表")
-    public List<SysTenantPackageListVO> list(@Validated @ModelAttribute SysTenantPackageListDTO params) {
-        return this.iSysTenantPackageService.list(params);
+    public ApiResult<List<SysTenantPackageListVO>> list(@Validated @ModelAttribute SysTenantPackageListDTO params) {
+        return ApiResult.ok(this.iSysTenantPackageService.list(params));
     }
 
     @NoRepeatSubmit
     @PostMapping("add")
     @ApiOperation("新增")
-    public void add(@Validated @RequestBody SysTenantPackageSaveDTO params) {
+    public ApiResult<Void> add(@Validated @RequestBody SysTenantPackageSaveDTO params) {
         params.setId(null);
         this.iSysTenantPackageService.addOrUpdateData(params);
+        return ApiResult.ok();
     }
 
     @NoRepeatSubmit
     @PutMapping("update")
     @ApiOperation("更新")
-    public void update(@Validated(UpdateGroup.class) @RequestBody SysTenantPackageSaveDTO params) {
+    public ApiResult<Void> update(@Validated(UpdateGroup.class) @RequestBody SysTenantPackageSaveDTO params) {
         this.iSysTenantPackageService.addOrUpdateData(params);
+        return ApiResult.ok();
     }
 
     @DeleteMapping("delete")
     @ApiOperation("删除")
-    public void delete(@RequestParam Integer id) {
+    public ApiResult<Void> delete(@RequestParam Integer id) {
         this.iSysTenantPackageService.deleteData(id);
+        return ApiResult.ok();
     }
 
 }

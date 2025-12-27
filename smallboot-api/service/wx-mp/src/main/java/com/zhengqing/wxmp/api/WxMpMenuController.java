@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import me.chanjar.weixin.common.bean.menu.WxMenu;
 import me.chanjar.weixin.mp.api.WxMpService;
+import com.zhengqing.common.base.model.vo.ApiResult;
 import me.chanjar.weixin.mp.bean.menu.WxMpMenu;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,15 +28,16 @@ public class WxMpMenuController {
     @GetMapping("/detail")
     @ApiOperation("详情")
     @SneakyThrows(Exception.class)
-    public WxMpMenu detail(@RequestHeader String appId) {
-        return this.wxService.switchoverTo(appId).getMenuService().menuGet();
+    public ApiResult<WxMpMenu> detail(@RequestHeader String appId) {
+        return ApiResult.ok(this.wxService.switchoverTo(appId).getMenuService().menuGet());
     }
 
     @PutMapping("/update")
     @ApiOperation("更新")
     @SneakyThrows(Exception.class)
-    public void update(@RequestHeader String appId, @RequestBody WxMenu menu) {
+    public ApiResult<Void> update(@RequestHeader String appId, @RequestBody WxMenu menu) {
         this.wxService.switchoverTo(appId).getMenuService().menuCreate(menu);
+        return ApiResult.ok();
     }
 
 }
